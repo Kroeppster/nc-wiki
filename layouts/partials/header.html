@@ -1,0 +1,48 @@
+<header class="site">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ relLangURL "/" }}">
+      <img class="brand-mark" src="{{ "images/logo.svg" | relURL }}" alt="" aria-hidden="true">
+      <span>{{ .Site.Title }}</span>
+    </a>
+    <nav class="main-nav" aria-label="Hauptnavigation">
+      <ul>
+        {{ range .Site.Menus.main }}
+        <li{{ if .HasChildren }} class="has-children"{{ end }}>
+          <a href="{{ relLangURL .URL }}">{{ .Name }}</a>
+          {{ if .HasChildren }}
+          <ul class="submenu">
+            {{ range .Children }}
+            <li><a href="{{ relLangURL .URL }}">{{ .Name }}</a></li>
+            {{ end }}
+          </ul>
+          {{ end }}
+        </li>
+        {{ end }}
+      </ul>
+    </nav>
+    <div id="search"></div>
+    <script src="{{ "pagefind/pagefind-ui.js" | relURL }}"></script>
+    <script>
+      new PagefindUI({ element: "#search" });
+    </script>
+    <div class="lang-switch" aria-label="Sprache">
+      {{ $page := . }}
+      {{ range hugo.Sites }}
+        {{ $lang := .Language.Lang }}
+        {{ if eq $lang $page.Language.Lang }}
+        <span class="active">{{ $lang | upper }}</span>
+        {{ else }}
+          {{ $translated := false }}
+          {{ range $page.Translations }}
+            {{ if eq .Language.Lang $lang }}{{ $translated = . }}{{ end }}
+          {{ end }}
+          {{ if $translated }}
+          <a href="{{ $translated.RelPermalink }}">{{ $lang | upper }}</a>
+          {{ else }}
+          <a href="{{ .Home.RelPermalink }}">{{ $lang | upper }}</a>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</header>

@@ -1,0 +1,29 @@
+{{ define "main" }}
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow">{{ .Section }}</p><h2>{{ .Title }}</h2></div>
+      </div>
+      {{ with .Content }}{{ . }}{{ end }}
+      {{ with .Params.downloads }}
+      <ul class="download-list">
+        {{ range . }}
+        <li>{{ partial "download-link.html" (dict "path" .path "label" .label) }}</li>
+        {{ end }}
+      </ul>
+      {{ end }}
+      {{ $paginator := .Paginate .Pages }}
+      <ul class="card-grid">
+        {{ range $paginator.Pages }}
+        <li class="card">
+          {{ with .Params.eyebrow }}<p class="eyebrow">{{ . }}</p>{{ end }}
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <p>{{ .Summary }}</p>
+          <a class="more" href="{{ .RelPermalink }}">Mehr erfahren →</a>
+        </li>
+        {{ end }}
+      </ul>
+      {{ template "_internal/pagination.html" . }}
+    </div>
+  </section>
+{{ end }}

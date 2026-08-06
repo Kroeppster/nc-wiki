@@ -1,0 +1,11 @@
+{{ $lang := .Site.Language.Lang }}
+<ol class="subtest-grid">
+  {{ range hugo.Data.subtests }}
+  <li class="subtest-card">
+    <a href="{{ relLangURL (printf "ems/uebungsaufgaben/%s/" .slug) }}">
+      <span class="subtest-num">{{ .number }}</span>
+      <span class="subtest-name">{{ index . $lang }}</span>
+    </a>
+  </li>
+  {{ end }}
+</ol>

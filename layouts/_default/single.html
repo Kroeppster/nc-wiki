@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <section>
+    <div class="wrap">
+      {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
+      <h1>{{ .Title }}</h1>
+      {{ .Content }}
+      {{ with .Params.downloads }}
+      <ul class="download-list">
+        {{ range . }}
+        <li>{{ partial "download-link.html" (dict "path" .path "label" .label) }}</li>
+        {{ end }}
+      </ul>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

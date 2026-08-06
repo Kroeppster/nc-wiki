@@ -1,0 +1,18 @@
+{{- $path := .path }}
+{{- $label := .label }}
+{{- if not $label }}{{ $label = path.Base $path }}{{ end }}
+{{- $size := 0 }}
+{{- with os.Stat (printf "static/%s" $path) }}{{ $size = .Size }}{{ end }}
+{{- $sizeStr := "" }}
+{{- if $size }}
+  {{- if lt $size 1048576 }}
+    {{- $sizeStr = printf "%d KB" (div $size 1024) }}
+  {{- else }}
+    {{- $mbTenths := div (mul $size 10) 1048576 }}
+    {{- $sizeStr = printf "%d.%d MB" (div $mbTenths 10) (mod $mbTenths 10) }}
+  {{- end }}
+{{- end }}
+<a class="download-link" href="{{ $path | relURL }}" download>
+  <span class="download-label">{{ $label }}</span>
+  {{- if $sizeStr }}<span class="download-size">{{ $sizeStr }}</span>{{ end }}
+</a>

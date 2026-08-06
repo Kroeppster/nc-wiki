@@ -1,0 +1,32 @@
+baseURL = 'http://localhost:1313/'
+title = 'NCWiki'
+
+defaultContentLanguage = 'de'
+defaultContentLanguageInSubdir = false
+
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 12
+
+[languages]
+  [languages.de]
+    label = 'Deutsch'
+    locale = 'de-CH'
+    weight = 1
+    title = 'NCWiki'
+    contentDir = 'content/de'
+
+  [languages.fr]
+    label = 'Français'
+    locale = 'fr-CH'
+    weight = 2
+    title = 'NCWiki'
+    contentDir = 'content/fr'
+
+  [languages.it]
+    label = 'Italiano'
+    locale = 'it-CH'
+    weight = 3
+    title = 'NCWiki'
+    contentDir = 'content/it'

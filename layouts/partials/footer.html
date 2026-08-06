@@ -1,0 +1,100 @@
+<footer class="site" id="footer-kontakt">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>{{ .Site.Title }}</h4>
+        <p style="color:#C9C7BC;font-size:.9rem;max-width:22rem;">Kostenlose EMS-Vorbereitung von Studierenden für Studierende.</p>
+        <p style="color:#8B8A7E;font-size:.85rem;margin-top:1rem;">Musterstrasse 1<br>4051 Basel<br>info@nc-wiki.ch</p>
+      </div>
+      <div>
+        <h4>Hauptmenü</h4>
+        <ul>
+          {{ range .Site.Menus.main }}
+          <li><a href="{{ relLangURL .URL }}">{{ .Name }}</a></li>
+          {{ end }}
+        </ul>
+      </div>
+      <div>
+        <h4>Rechtliches</h4>
+        <ul>
+          {{ range .Site.Menus.legal }}
+          <li><a href="{{ relLangURL .URL }}">{{ .Name }}</a></li>
+          {{ end }}
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h4>Newsletter</h4>
+        <label for="nl-email" style="display:block;font-size:.85rem;color:#C9C7BC;margin-bottom:.5rem;">Bleib informiert über Termine &amp; neues Material.</label>
+        <input type="email" id="nl-email" placeholder="deine@email.ch">
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" type="button">Anmelden</button>
+        <div class="footer-social">
+          <a href="#">Instagram</a><a href="#">Discord</a><a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {{ now.Year }} {{ .Site.Title }} · Design-Beispiel, nicht die echte Seite</span>
+      <span>Gebaut mit Hugo · gehostet auf GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie-Hinweis">
+  <p>Diese Beispielseite setzt keine echten Cookies. Auf der fertigen Website: nur technisch notwendige.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-ghost" type="button" data-cookie-action="details">Details</button>
+    <button class="btn btn-primary" type="button" data-cookie-action="accepted">Akzeptieren</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var target = new Date('2027-07-09T08:00:00+02:00').getTime();
+    var elD=document.getElementById('cd-d'), elH=document.getElementById('cd-h'),
+        elM=document.getElementById('cd-m'), elS=document.getElementById('cd-s');
+    function pad(n){ return String(n).padStart(2,'0'); }
+    function tick(){
+      var diff = Math.max(0, target - Date.now());
+      var d = Math.floor(diff/86400000);
+      var h = Math.floor((diff%86400000)/3600000);
+      var m = Math.floor((diff%3600000)/60000);
+      var s = Math.floor((diff%60000)/1000);
+      if(elD) elD.textContent = d;
+      if(elH) elH.textContent = pad(h);
+      if(elM) elM.textContent = pad(m);
+      if(elS) elS.textContent = pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+  (function(){
+    var STORAGE_KEY = 'cookie-consent';
+    var banner = document.getElementById('cookieBanner');
+    if(!banner) return;
+
+    function reserveSpace(){
+      if(banner.classList.contains('hidden')){
+        document.body.style.paddingBottom = '';
+      }else{
+        document.body.style.paddingBottom = banner.getBoundingClientRect().height + 'px';
+      }
+    }
+
+    function hideBanner(){
+      banner.classList.add('hidden');
+      reserveSpace();
+    }
+
+    var stored;
+    try{ stored = localStorage.getItem(STORAGE_KEY); }catch(e){ stored = null; }
+    if(stored){ hideBanner(); }else{ reserveSpace(); window.addEventListener('resize', reserveSpace); }
+
+    var btns = document.querySelectorAll('[data-cookie-action]');
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        try{ localStorage.setItem(STORAGE_KEY, b.getAttribute('data-cookie-action')); }catch(e){}
+        hideBanner();
+      });
+    });
+  })();
+</script>

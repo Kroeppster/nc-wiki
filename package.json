@@ -1,0 +1,10 @@
+{
+  "name": "nc-wiki",
+  "private": true,
+  "scripts": {
+    "build": "hugo --minify && npx pagefind --site public"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
+  }
+}
