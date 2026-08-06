@@ -1,0 +1,22 @@
+{{- $lang := .Site.Language.Lang }}
+{{- $t := dict
+  "de" (dict "name" "Name" "email" "E-Mail" "message" "Nachricht" "submit" "Senden")
+  "fr" (dict "name" "Nom" "email" "E-mail" "message" "Message" "submit" "Envoyer")
+  "it" (dict "name" "Nome" "email" "E-mail" "message" "Messaggio" "submit" "Invia")
+}}
+{{- $labels := index $t $lang }}
+<form class="contact-form" action="https://formspree.io/f/mvkpgrpl" method="POST">
+  <div>
+    <label for="cf-name">{{ $labels.name }}</label>
+    <input type="text" name="name" id="cf-name" required>
+  </div>
+  <div>
+    <label for="cf-email">{{ $labels.email }}</label>
+    <input type="email" name="email" id="cf-email" required>
+  </div>
+  <div>
+    <label for="cf-message">{{ $labels.message }}</label>
+    <textarea name="message" id="cf-message" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">{{ $labels.submit }}</button>
+</form>

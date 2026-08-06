@@ -11,6 +11,7 @@
         {{ end }}
       </ul>
       {{ end }}
+      {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
     </div>
   </section>
 {{ end }}

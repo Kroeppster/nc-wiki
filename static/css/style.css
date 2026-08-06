@@ -138,6 +138,13 @@
   .download-link:hover{border-color:var(--signal);color:var(--signal);}
   .download-link .download-size{font-family:var(--font-mono);font-size:.75rem;color:var(--stone);white-space:nowrap;}
 
+  /* contact form */
+  .contact-form{display:grid;gap:1.1rem;max-width:32rem;margin-top:1.6rem;}
+  .contact-form label{display:block;font-size:.85rem;color:var(--ink-soft);margin-bottom:.4rem;}
+  .contact-form input,.contact-form textarea{width:100%;padding:.7rem .8rem;border:1px solid var(--hairline);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);font-family:var(--font-display);font-size:.95rem;}
+  .contact-form textarea{min-height:140px;resize:vertical;}
+  .contact-form button{justify-self:start;}
+
   @media (max-width:860px){
     header.site{position:static;}
     #search{order:4;flex:1 1 100%;max-width:none;}

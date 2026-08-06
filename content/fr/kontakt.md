@@ -1,5 +1,6 @@
 ---
 title: "Contact"
+contact_form: true
 menu:
   main:
     identifier: kontakt
