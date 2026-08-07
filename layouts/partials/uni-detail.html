@@ -1,0 +1,81 @@
+{{- /* Detailansicht einer Uniguide-Seite. Erwartet .Params.uni_slug, Daten aus data/unis.yaml. */}}
+{{- $lang := .Site.Language.Lang }}
+{{- $t := dict
+  "de" (dict
+    "kanton" "Kanton"
+    "sprache" "Sprache"
+    "studiengaenge" "Studiengänge"
+    "ems" "EMS erforderlich"
+    "ems_ja" "Ja" "ems_nein" "Nein" "ems_teilweise" "Teilweise"
+    "auswahlverfahren" "Auswahlverfahren"
+    "studienplaetze" "Studienplätze"
+    "places_unknown" "Wird geprüft"
+    "besonderheiten" "Besonderheiten"
+    "website" "Website der Universität"
+    "stand" "Stand"
+    "quelle" "Quelle"
+    "report" "Angabe veraltet? Melde es uns"
+    "not_found" "Für diese Seite wurden keine Daten gefunden."
+  )
+  "fr" (dict
+    "kanton" "Canton"
+    "sprache" "Langue"
+    "studiengaenge" "Filières"
+    "ems" "EMS requis"
+    "ems_ja" "Oui" "ems_nein" "Non" "ems_teilweise" "Partiellement"
+    "auswahlverfahren" "Procédure de sélection"
+    "studienplaetze" "Places d'étude"
+    "places_unknown" "En cours de vérification"
+    "besonderheiten" "Particularités"
+    "website" "Site de l'université"
+    "stand" "Dernière vérification"
+    "quelle" "Source"
+    "report" "Information obsolète ? Signale-le-nous"
+    "not_found" "Für diese Seite wurden keine Daten gefunden."
+  )
+  "it" (dict
+    "kanton" "Cantone"
+    "sprache" "Lingua"
+    "studiengaenge" "Corsi di laurea"
+    "ems" "EMS richiesto"
+    "ems_ja" "Sì" "ems_nein" "No" "ems_teilweise" "Parzialmente"
+    "auswahlverfahren" "Procedura di selezione"
+    "studienplaetze" "Posti di studio"
+    "places_unknown" "In verifica"
+    "besonderheiten" "Particolarità"
+    "website" "Sito dell'università"
+    "stand" "Ultima verifica"
+    "quelle" "Fonte"
+    "report" "Informazione superata? Segnalacelo"
+    "not_found" "Für diese Seite wurden keine Daten gefunden."
+  )
+}}
+{{- $lbl := index $t $lang }}
+{{- $emsLabels := dict "ja" $lbl.ems_ja "nein" $lbl.ems_nein "teilweise" $lbl.ems_teilweise }}
+
+{{- $slug := .Params.uni_slug }}
+{{- $uni := "" }}
+{{- range .Site.Data.unis }}{{ if eq .slug $slug }}{{ $uni = . }}{{ end }}{{ end }}
+
+{{ if not $uni }}
+<p class="download-empty">{{ $lbl.not_found }}</p>
+{{ else }}
+<dl class="uni-detail">
+  <div><dt>{{ $lbl.kanton }}</dt><dd>{{ $uni.kanton }}</dd></div>
+  <div><dt>{{ $lbl.sprache }}</dt><dd>{{ delimit $uni.sprache ", " }}</dd></div>
+  <div><dt>{{ $lbl.ems }}</dt><dd><span class="badge badge-{{ $uni.ems_erforderlich }}">{{ index $emsLabels $uni.ems_erforderlich }}</span></dd></div>
+  <div><dt>{{ $lbl.studiengaenge }}</dt><dd>{{ delimit $uni.studiengaenge ", " }}</dd></div>
+  <div><dt>{{ $lbl.studienplaetze }}</dt><dd>{{ if $uni.studienplaetze }}{{ $uni.studienplaetze }}{{ else }}{{ $lbl.places_unknown }}{{ end }}</dd></div>
+  <div><dt>{{ $lbl.auswahlverfahren }}</dt><dd>{{ $uni.auswahlverfahren }}</dd></div>
+  {{ with $uni.besonderheiten }}
+  <div><dt>{{ $lbl.besonderheiten }}</dt><dd>
+    <ul class="tag-pills">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+  </dd></div>
+  {{ end }}
+  <div><dt>{{ $lbl.website }}</dt><dd><a href="{{ $uni.website }}" target="_blank" rel="noopener">{{ $uni.website }}</a></dd></div>
+</dl>
+
+<p class="uni-report"><a href="{{ relLangURL "kontakt/" }}">{{ $lbl.report }} →</a></p>
+
+<p class="uni-stand">{{ $lbl.stand }}: {{ $uni.stand }} · {{ $lbl.quelle }}: <a href="{{ $uni.quelle }}" target="_blank" rel="noopener">{{ $uni.quelle }}</a></p>
+{{ end }}

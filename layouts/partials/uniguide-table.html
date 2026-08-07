@@ -1,0 +1,160 @@
+{{- /*
+  Vergleichstabelle Uniguide, gespeist aus data/unis.yaml.
+  Erwartet je Eintrag: slug, name, kanton, sprache (Liste), studiengaenge (Liste),
+  ems_erforderlich (ja/nein/teilweise), auswahlverfahren, studienplaetze (Zahl/null),
+  besonderheiten (Liste), website, stand, quelle.
+*/}}
+{{- $lang := .Site.Language.Lang }}
+{{- $t := dict
+  "de" (dict
+    "disclaimer" "Angaben ohne Gewähr. Verbindlich sind ausschliesslich die offiziellen Informationen von"
+    "disclaimer_link" "swissuniversities"
+    "disclaimer_and" "und den jeweiligen Universitäten."
+    "filter_lang_label" "Nach Sprache filtern"
+    "filter_ems_label" "Nach EMS filtern"
+    "all" "Alle"
+    "with_ems" "Mit EMS"
+    "without_ems" "Ohne EMS"
+    "th_uni" "Universität"
+    "th_sprache" "Sprache"
+    "th_ems" "EMS"
+    "th_studiengaenge" "Studiengänge"
+    "th_studienplaetze" "Studienplätze"
+    "places_unknown" "wird geprüft"
+    "ems_ja" "Ja"
+    "ems_nein" "Nein"
+    "ems_teilweise" "Teilweise"
+    "empty" "Noch keine Universitäten hinterlegt."
+  )
+  "fr" (dict
+    "disclaimer" "Indications sans garantie. Seules les informations officielles de"
+    "disclaimer_link" "swissuniversities"
+    "disclaimer_and" "et des universités concernées font foi."
+    "filter_lang_label" "Filtrer par langue"
+    "filter_ems_label" "Filtrer par EMS"
+    "all" "Tous"
+    "with_ems" "Avec EMS"
+    "without_ems" "Sans EMS"
+    "th_uni" "Université"
+    "th_sprache" "Langue"
+    "th_ems" "EMS"
+    "th_studiengaenge" "Filières"
+    "th_studienplaetze" "Places d'étude"
+    "places_unknown" "en cours de vérification"
+    "ems_ja" "Oui"
+    "ems_nein" "Non"
+    "ems_teilweise" "Partiellement"
+    "empty" "Aucune université disponible pour l'instant."
+  )
+  "it" (dict
+    "disclaimer" "Informazioni senza garanzia. Fanno fede esclusivamente le informazioni ufficiali di"
+    "disclaimer_link" "swissuniversities"
+    "disclaimer_and" "e delle rispettive università."
+    "filter_lang_label" "Filtra per lingua"
+    "filter_ems_label" "Filtra per EMS"
+    "all" "Tutte"
+    "with_ems" "Con EMS"
+    "without_ems" "Senza EMS"
+    "th_uni" "Università"
+    "th_sprache" "Lingua"
+    "th_ems" "EMS"
+    "th_studiengaenge" "Corsi di laurea"
+    "th_studienplaetze" "Posti di studio"
+    "places_unknown" "in verifica"
+    "ems_ja" "Sì"
+    "ems_nein" "No"
+    "ems_teilweise" "Parzialmente"
+    "empty" "Nessuna università disponibile al momento."
+  )
+}}
+{{- $lbl := index $t $lang }}
+{{- $emsLabels := dict "ja" $lbl.ems_ja "nein" $lbl.ems_nein "teilweise" $lbl.ems_teilweise }}
+
+{{- $unis := .Site.Data.unis }}
+{{- $unis = sort $unis "name" }}
+
+<div class="uniguide-disclaimer" role="note">
+  <strong>⚠</strong>
+  {{ $lbl.disclaimer }} <a href="https://www.swissuniversities.ch/" target="_blank" rel="noopener">{{ $lbl.disclaimer_link }}</a> {{ $lbl.disclaimer_and }}
+</div>
+
+{{ if eq (len $unis) 0 }}
+<p class="download-empty">{{ $lbl.empty }}</p>
+{{ else }}
+
+{{- $sprachen := slice }}
+{{- range $unis }}{{ range .sprache }}{{ $sprachen = $sprachen | append . }}{{ end }}{{ end }}
+{{- $sprachen = $sprachen | uniq | sort }}
+
+<div class="uniguide-filters">
+  <div class="report-filters" role="group" aria-label="{{ $lbl.filter_lang_label }}">
+    <button type="button" class="filter-pill is-active" data-filter-group="sprache" data-filter-value="all" aria-pressed="true">{{ $lbl.all }}</button>
+    {{ range $sprachen }}
+    <button type="button" class="filter-pill" data-filter-group="sprache" data-filter-value="{{ . }}" aria-pressed="false">{{ . }}</button>
+    {{ end }}
+  </div>
+  <div class="report-filters" role="group" aria-label="{{ $lbl.filter_ems_label }}">
+    <button type="button" class="filter-pill is-active" data-filter-group="ems" data-filter-value="all" aria-pressed="true">{{ $lbl.all }}</button>
+    <button type="button" class="filter-pill" data-filter-group="ems" data-filter-value="mit" aria-pressed="false">{{ $lbl.with_ems }}</button>
+    <button type="button" class="filter-pill" data-filter-group="ems" data-filter-value="ohne" aria-pressed="false">{{ $lbl.without_ems }}</button>
+  </div>
+</div>
+
+<div class="table-scroll">
+  <table class="uniguide-table" id="uniguide-table">
+    <thead>
+      <tr>
+        <th>{{ $lbl.th_uni }}</th>
+        <th>{{ $lbl.th_sprache }}</th>
+        <th>{{ $lbl.th_ems }}</th>
+        <th>{{ $lbl.th_studiengaenge }}</th>
+        <th>{{ $lbl.th_studienplaetze }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $unis }}
+      {{- $emsBucket := "ohne" }}
+      {{- if in (slice "ja" "teilweise") .ems_erforderlich }}{{ $emsBucket = "mit" }}{{ end }}
+      <tr data-sprachen="{{ delimit .sprache "|" }}" data-ems="{{ $emsBucket }}">
+        <td><a href="{{ printf "/ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></td>
+        <td>{{ delimit .sprache ", " }}</td>
+        <td><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>
+        <td>{{ delimit .studiengaenge ", " }}</td>
+        <td>{{ if .studienplaetze }}{{ .studienplaetze }}{{ else }}<span class="report-meta">{{ $lbl.places_unknown }}</span>{{ end }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+
+<script>
+(function(){
+  var table = document.getElementById('uniguide-table');
+  if(!table) return;
+  var rows = table.querySelectorAll('tbody tr');
+  var active = { sprache: 'all', ems: 'all' };
+
+  function apply(){
+    rows.forEach(function(row){
+      var okSprache = active.sprache === 'all' || row.getAttribute('data-sprachen').split('|').indexOf(active.sprache) !== -1;
+      var okEms = active.ems === 'all' || row.getAttribute('data-ems') === active.ems;
+      row.hidden = !(okSprache && okEms);
+    });
+  }
+
+  document.querySelectorAll('.uniguide-filters .filter-pill').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var group = btn.getAttribute('data-filter-group');
+      active[group] = btn.getAttribute('data-filter-value');
+      document.querySelectorAll('.uniguide-filters .filter-pill[data-filter-group="' + group + '"]').forEach(function(b){
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+      apply();
+    });
+  });
+})();
+</script>
+{{ end }}

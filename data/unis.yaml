@@ -1,0 +1,125 @@
+# Uniguide-Daten. Recherchiert am 2026-08-07 anhand offizieller Quellen
+# (swissuniversities.ch, jeweilige Universitäts-Website). Zahlen (studienplaetze)
+# absichtlich NICHT recherchiert/eingetragen, siehe Projektvorgabe - bitte selbst
+# auf den offiziellen Seiten prüfen und eintragen.
+#
+# Felder: slug, name, kanton, sprache (Liste), studiengaenge (Liste),
+# ems_erforderlich (ja/nein/teilweise), auswahlverfahren (Kurztext),
+# studienplaetze (Zahl oder null), besonderheiten (Liste), website, stand, quelle.
+
+- slug: "basel"
+  name: "Universität Basel"
+  kanton: "Basel-Stadt"
+  sprache: ["Deutsch"]
+  studiengaenge: ["Bachelor", "Master"]
+  ems_erforderlich: "ja"
+  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  studienplaetze: null
+  besonderheiten: ["Bachelor-Studienplätze für USI Lugano werden vollständig in Basel absolviert"]
+  website: "https://www.unibas.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
+
+- slug: "bern"
+  name: "Universität Bern"
+  kanton: "Bern"
+  sprache: ["Deutsch"]
+  studiengaenge: ["Bachelor", "Master"]
+  ems_erforderlich: "ja"
+  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  studienplaetze: null
+  besonderheiten: []
+  website: "https://www.unibe.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
+
+- slug: "zuerich"
+  name: "Universität Zürich"
+  kanton: "Zürich"
+  sprache: ["Deutsch"]
+  studiengaenge: ["Bachelor", "Master"]
+  ems_erforderlich: "ja"
+  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  studienplaetze: null
+  besonderheiten: ["Klinische Ausbildung teils auch in Kooperation mit Luzern oder St. Gallen möglich"]
+  website: "https://www.uzh.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
+
+- slug: "eth-zuerich"
+  name: "ETH Zürich"
+  kanton: "Zürich"
+  sprache: ["Deutsch"]
+  studiengaenge: ["Bachelor"]
+  ems_erforderlich: "ja"
+  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  studienplaetze: null
+  besonderheiten: ["Nur Bachelor an der ETH; wo der Master fortgesetzt wird: TODO: prüfen"]
+  website: "https://www.ethz.ch"
+  stand: "2026-08-07"
+  quelle: "https://ethz.ch/content/dam/ethz/main/education/admission/bachelor/andere-qual/medizin/vorgehensweise-medizin-und-ap-de.pdf"
+
+- slug: "freiburg"
+  name: "Universität Freiburg"
+  kanton: "Freiburg/Fribourg"
+  sprache: ["Deutsch", "Français"]
+  studiengaenge: ["Bachelor"]
+  ems_erforderlich: "ja"
+  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS); zweisprachiges Bachelor-Studium (Deutsch/Französisch)."
+  studienplaetze: null
+  besonderheiten: ["Nur Bachelor; Wechsel an eine andere Universität für den Master nötig"]
+  website: "https://www.unifr.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.unifr.ch/med/fr/studies/bsc/med/admission.html"
+
+- slug: "genf"
+  name: "Université de Genève"
+  kanton: "Genève"
+  sprache: ["Français"]
+  studiengaenge: ["Bachelor", "Master"]
+  ems_erforderlich: "nein"
+  auswahlverfahren: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+  studienplaetze: null
+  besonderheiten: []
+  website: "https://www.unige.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
+
+- slug: "lausanne"
+  name: "Université de Lausanne"
+  kanton: "Vaud"
+  sprache: ["Français"]
+  studiengaenge: ["Bachelor", "Master"]
+  ems_erforderlich: "nein"
+  auswahlverfahren: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+  studienplaetze: null
+  besonderheiten: []
+  website: "https://www.unil.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
+
+- slug: "lugano"
+  name: "Università della Svizzera italiana (USI)"
+  kanton: "Ticino"
+  sprache: ["Italiano"]
+  studiengaenge: ["Master"]
+  ems_erforderlich: "ja"
+  auswahlverfahren: "EMS-Zulassung für die national geregelten Bachelor-Plätze; das Bachelor-Studium wird vollständig an der Universität Basel absolviert (dort auf Deutsch), der Master anschliessend an der USI in Lugano auf Italienisch."
+  studienplaetze: null
+  besonderheiten: ["Eigener Bachelor-Abschluss berechtigt zum Master an der USI"]
+  website: "https://www.usi.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.biomed.usi.ch/it/studiare/studiare-medicina/master-in-medicina/ammissione"
+
+- slug: "neuenburg"
+  name: "Université de Neuchâtel"
+  kanton: "Neuchâtel"
+  sprache: ["Français"]
+  studiengaenge: ["Bachelor"]
+  ems_erforderlich: "nein"
+  auswahlverfahren: "Bietet nur das 1. Bachelor-Jahr an, kein EMS. Übertritt ins 2. Jahr an der Uni Genf oder Lausanne erfordert das Bestehen von deren Eliminationsprüfung."
+  studienplaetze: null
+  besonderheiten: ["Nur 1. Studienjahr; danach zwingender Wechsel nach Genf oder Lausanne"]
+  website: "https://www.unine.ch"
+  stand: "2026-08-07"
+  quelle: "https://www.unine.ch/sciences/es/home/formations/bachelors/medecine/conditions_admission.html"
