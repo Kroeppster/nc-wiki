@@ -1,0 +1,95 @@
+{{- /*
+  Filterbare Kartenübersicht für EMS-Erfahrungsberichte.
+  Erwartet direkte Unterseiten mit Frontmatter: name, jahr, ort (optional), tags (optional).
+  Seiten ohne "jahr" (z.B. das Formular "Bericht einreichen") werden nicht als Bericht gelistet,
+  aber als CTA verlinkt. Ohne Foto: farbiger Platzhalter mit Initialen.
+*/}}
+{{- $lang := .Site.Language.Lang }}
+{{- $t := dict
+  "de" (dict "all" "Alle" "cta" "Bericht einreichen" "empty" "Noch keine Erfahrungsberichte vorhanden." "ems" "EMS")
+  "fr" (dict "all" "Tous" "cta" "Soumettre un témoignage" "empty" "Aucun témoignage disponible pour l'instant." "ems" "EMS")
+  "it" (dict "all" "Tutti" "cta" "Invia una testimonianza" "empty" "Nessuna testimonianza disponibile al momento." "ems" "EMS")
+}}
+{{- $lbl := index $t $lang }}
+
+{{- $ctaURL := "" }}
+{{- range .Pages }}{{ if .Params.experience_form }}{{ $ctaURL = .RelPermalink }}{{ end }}{{ end }}
+
+{{- $reports := slice }}
+{{- range .Pages }}
+  {{- if .Params.jahr }}{{ $reports = $reports | append . }}{{ end }}
+{{- end }}
+{{- $reports = sort $reports "Params.jahr" "desc" }}
+
+{{- $years := slice }}
+{{- range $reports }}{{ $years = $years | append .Params.jahr }}{{ end }}
+{{- $years = $years | uniq | sort | collections.Reverse }}
+
+<div class="report-toolbar">
+  {{ with $ctaURL }}<a class="btn btn-primary" href="{{ . }}">{{ $lbl.cta }}</a>{{ end }}
+  {{ if gt (len $years) 1 }}
+  <div class="report-filters" role="group" aria-label="{{ $lbl.ems }}-Jahr">
+    <button type="button" class="filter-pill is-active" data-year="all" aria-pressed="true">{{ $lbl.all }}</button>
+    {{ range $years }}
+    <button type="button" class="filter-pill" data-year="{{ . }}" aria-pressed="false">{{ . }}</button>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>
+
+{{ if eq (len $reports) 0 }}
+<p class="download-empty">{{ $lbl.empty }}</p>
+{{ else }}
+<ul class="card-grid report-grid" id="report-grid">
+  {{ range $reports }}
+  {{- $name := .Params.name }}
+  {{- $nameParts := split (strings.TrimSpace $name) " " }}
+  {{- $initials := "" }}
+  {{- if ge (len $nameParts) 1 }}{{ $initials = substr (index $nameParts 0) 0 1 }}{{ end }}
+  {{- if ge (len $nameParts) 2 }}{{ $initials = printf "%s%s" $initials (substr (index $nameParts 1) 0 1) }}{{ end }}
+  {{- $initials = upper $initials }}
+  {{- $colorIdx := mod (hash.FNV32a $name) 6 }}
+  <li class="card report-card" data-year="{{ .Params.jahr }}">
+    <div class="report-head">
+      <span class="avatar avatar-{{ $colorIdx }}" aria-hidden="true">{{ $initials }}</span>
+      <div>
+        <h3>{{ $name }}</h3>
+        <p class="report-meta">{{ $lbl.ems }} {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
+      </div>
+    </div>
+    {{ .Summary }}
+    {{ with .Params.tags }}
+    <ul class="tag-pills">
+      {{ range . }}<li>{{ . }}</li>{{ end }}
+    </ul>
+    {{ end }}
+    <a class="more" href="{{ .RelPermalink }}">Ganzen Bericht lesen →</a>
+  </li>
+  {{ end }}
+</ul>
+{{ end }}
+
+{{ if gt (len $years) 1 }}
+<script>
+(function(){
+  var grid = document.getElementById('report-grid');
+  if(!grid) return;
+  var buttons = document.querySelectorAll('.report-filters .filter-pill');
+  var cards = grid.querySelectorAll('.report-card');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var year = btn.getAttribute('data-year');
+      buttons.forEach(function(b){
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+      cards.forEach(function(card){
+        card.hidden = !(year === 'all' || card.getAttribute('data-year') === year);
+      });
+    });
+  });
+})();
+</script>
+{{ end }}

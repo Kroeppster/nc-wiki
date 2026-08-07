@@ -1,0 +1,241 @@
+{{- $lang := .Site.Language.Lang }}
+{{- $t := dict
+  "de" (dict
+    "display_name" "Anzeigename"
+    "display_name_hint" "Vorname oder Pseudonym genügt."
+    "email" "E-Mail"
+    "email_hint" "Nur für Rückfragen, wird nicht veröffentlicht."
+    "year" "EMS-Jahr"
+    "year_placeholder" "Bitte wählen"
+    "year_earlier" "früher"
+    "uni" "Studienort / Wunschuniversität"
+    "uni_hint" "Optional."
+    "prep" "Wie hast du dich vorbereitet?"
+    "helped" "Was hat dir am meisten geholfen?"
+    "tip" "Dein Tipp an zukünftige Teilnehmende?"
+    "consent" "Ich bin einverstanden, dass mein Bericht unter dem angegebenen Anzeigenamen veröffentlicht wird. Ich kann diese Einwilligung jederzeit per E-Mail an info@nc-wiki.ch widerrufen."
+    "submit" "Bericht einreichen"
+    "sending" "Wird gesendet…"
+    "success_heading" "Danke für deinen Bericht!"
+    "success_body" "Wir haben deinen Bericht erhalten und melden uns bei Rückfragen."
+    "error_heading" "Das hat leider nicht geklappt."
+    "error_body" "Bitte versuch es nochmal oder schreib uns direkt an info@nc-wiki.ch."
+  )
+  "fr" (dict
+    "display_name" "Nom affiché"
+    "display_name_hint" "Prénom ou pseudonyme suffit."
+    "email" "E-mail"
+    "email_hint" "Uniquement pour d'éventuelles questions, ne sera pas publié."
+    "year" "Année EMS"
+    "year_placeholder" "Choisir"
+    "year_earlier" "avant"
+    "uni" "Lieu d'études / université souhaitée"
+    "uni_hint" "Facultatif."
+    "prep" "Comment t'es-tu préparé·e ?"
+    "helped" "Qu'est-ce qui t'a le plus aidé·e ?"
+    "tip" "Ton conseil pour les futur·e·s participant·e·s ?"
+    "consent" "J'accepte que mon témoignage soit publié sous le nom affiché indiqué. Je peux révoquer ce consentement à tout moment par e-mail à info@nc-wiki.ch."
+    "submit" "Envoyer le témoignage"
+    "sending" "Envoi en cours…"
+    "success_heading" "Merci pour ton témoignage !"
+    "success_body" "Nous avons bien reçu ton témoignage et te recontacterons en cas de question."
+    "error_heading" "Une erreur est survenue."
+    "error_body" "Merci de réessayer ou de nous écrire directement à info@nc-wiki.ch."
+  )
+  "it" (dict
+    "display_name" "Nome visualizzato"
+    "display_name_hint" "Basta il nome o uno pseudonimo."
+    "email" "E-mail"
+    "email_hint" "Solo per eventuali domande, non verrà pubblicata."
+    "year" "Anno EMS"
+    "year_placeholder" "Seleziona"
+    "year_earlier" "prima"
+    "uni" "Sede di studio / università desiderata"
+    "uni_hint" "Facoltativo."
+    "prep" "Come ti sei preparata/o?"
+    "helped" "Cosa ti ha aiutato di più?"
+    "tip" "Il tuo consiglio per le future candidate e i futuri candidati?"
+    "consent" "Acconsento alla pubblicazione della mia testimonianza con il nome visualizzato indicato. Posso revocare questo consenso in qualsiasi momento scrivendo a info@nc-wiki.ch."
+    "submit" "Invia la testimonianza"
+    "sending" "Invio in corso…"
+    "success_heading" "Grazie per la tua testimonianza!"
+    "success_body" "Abbiamo ricevuto la tua testimonianza e ti ricontatteremo in caso di domande."
+    "error_heading" "Qualcosa è andato storto."
+    "error_body" "Riprova oppure scrivici direttamente a info@nc-wiki.ch."
+  )
+}}
+{{- $lbl := index $t $lang }}
+{{- $years := slice 2027 2026 2025 2024 2023 2022 2021 2020 }}
+
+<form class="contact-form experience-form" action="https://formspree.io/f/xaewqwoj" method="POST" novalidate>
+  <div>
+    <label for="ef-name">{{ $lbl.display_name }}</label>
+    <input type="text" name="display_name" id="ef-name" required>
+    <p class="form-hint">{{ $lbl.display_name_hint }}</p>
+  </div>
+  <div>
+    <label for="ef-email">{{ $lbl.email }}</label>
+    <input type="email" name="email" id="ef-email" required>
+    <p class="form-hint">{{ $lbl.email_hint }}</p>
+  </div>
+  <div>
+    <label for="ef-year">{{ $lbl.year }}</label>
+    <select name="ems_jahr" id="ef-year" required>
+      <option value="" disabled selected>{{ $lbl.year_placeholder }}</option>
+      {{ range $years }}<option value="{{ . }}">{{ . }}</option>{{ end }}
+      <option value="{{ $lbl.year_earlier }}">{{ $lbl.year_earlier }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="ef-uni">{{ $lbl.uni }}</label>
+    <input type="text" name="studienort" id="ef-uni">
+    <p class="form-hint">{{ $lbl.uni_hint }}</p>
+  </div>
+  <div>
+    <label for="ef-prep">{{ $lbl.prep }}</label>
+    <textarea name="vorbereitung" id="ef-prep" required></textarea>
+  </div>
+  <div>
+    <label for="ef-helped">{{ $lbl.helped }}</label>
+    <textarea name="was_geholfen" id="ef-helped" required></textarea>
+  </div>
+  <div>
+    <label for="ef-tip">{{ $lbl.tip }}</label>
+    <textarea name="tipp" id="ef-tip" required></textarea>
+  </div>
+  <div class="form-consent">
+    <label>
+      <input type="checkbox" name="einverstaendnis" value="ja" required>
+      <span>{{ $lbl.consent }}</span>
+    </label>
+  </div>
+
+  <div class="visually-hidden-field" aria-hidden="true">
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+  </div>
+
+  {{- /* Von JS beim Absenden befüllt - siehe <script> unten. Kein Unterstrich am Namensanfang
+     (ausser _subject), sonst behandelt Formspree das Feld als Steuerfeld statt als Formulardaten. */}}
+  <input type="hidden" name="dateiname">
+  <input type="hidden" name="dateiinhalt">
+  <input type="hidden" name="_subject">
+
+  <button type="submit" class="btn btn-primary">{{ $lbl.submit }}</button>
+
+  <div class="form-success" role="status" tabindex="-1" hidden>
+    <strong>{{ $lbl.success_heading }}</strong>
+    <p>{{ $lbl.success_body }}</p>
+  </div>
+  <div class="form-error" role="alert" tabindex="-1" hidden>
+    <strong>{{ $lbl.error_heading }}</strong>
+    <p>{{ $lbl.error_body }}</p>
+  </div>
+</form>
+
+<script>
+(function(){
+  var sendingLabel = {{ $lbl.sending }};
+
+  var DIACRITIC_MARKS = new RegExp(String.fromCharCode(91) + String.fromCharCode(0x0300) + '-' + String.fromCharCode(0x036f) + String.fromCharCode(93), 'g');
+
+  function slugify(str){
+    return String(str)
+      .toLowerCase()
+      .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+      .normalize('NFD').replace(DIACRITIC_MARKS, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function yamlEscape(str){
+    return String(str)
+      .replace(/\\/g, '\\\\')
+      .replace(/"/g, '\\"')
+      .replace(/\r\n/g, '\\n')
+      .replace(/[\r\n]/g, '\\n');
+  }
+
+  function todayISO(){
+    var d = new Date();
+    var mm = String(d.getMonth() + 1).padStart(2, '0');
+    var dd = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + mm + '-' + dd;
+  }
+
+  function buildDateiinhalt(name, jahr, ort, vorbereitung, geholfen, tipp){
+    var lines = [];
+    lines.push('---');
+    lines.push('title: "Erfahrungsbericht von ' + yamlEscape(name) + '"');
+    lines.push('name: "' + yamlEscape(name) + '"');
+    lines.push('jahr: ' + jahr);
+    if(ort && ort.trim()){
+      lines.push('ort: "' + yamlEscape(ort) + '"');
+    }
+    lines.push('date: ' + todayISO());
+    lines.push('draft: false');
+    lines.push('---');
+    lines.push('');
+    lines.push('## Wie ich mich vorbereitet habe');
+    lines.push('');
+    lines.push(vorbereitung);
+    lines.push('');
+    lines.push('## Was mir am meisten geholfen hat');
+    lines.push('');
+    lines.push(geholfen);
+    lines.push('');
+    lines.push('## Mein Tipp');
+    lines.push('');
+    lines.push(tipp);
+    return lines.join('\n');
+  }
+
+  document.querySelectorAll('.experience-form').forEach(function(form){
+    var success = form.querySelector('.form-success');
+    var error = form.querySelector('.form-error');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var submitLabel = submitBtn ? submitBtn.textContent : '';
+
+    form.addEventListener('submit', function(evt){
+      evt.preventDefault();
+      if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+      }
+
+      var name = form.elements['display_name'].value.trim();
+      var jahr = form.elements['ems_jahr'].value;
+      var ort = form.elements['studienort'].value.trim();
+      var vorbereitung = form.elements['vorbereitung'].value.trim();
+      var geholfen = form.elements['was_geholfen'].value.trim();
+      var tipp = form.elements['tipp'].value.trim();
+
+      form.elements['dateiname'].value = jahr + '-' + slugify(name) + '.md';
+      form.elements['dateiinhalt'].value = buildDateiinhalt(name, jahr, ort, vorbereitung, geholfen, tipp);
+      form.elements['_subject'].value = 'Neuer Erfahrungsbericht: ' + name + ' (' + jahr + ')';
+
+      error.hidden = true;
+      if(submitBtn){
+        submitBtn.disabled = true;
+        submitBtn.textContent = sendingLabel;
+      }
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(response){
+        if(!response.ok){ throw new Error('request failed'); }
+        form.querySelectorAll('input, textarea, select, button').forEach(function(el){ el.disabled = true; });
+        success.hidden = false;
+        success.focus();
+      }).catch(function(){
+        error.hidden = false;
+        error.focus();
+        if(submitBtn){
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitLabel;
+        }
+      });
+    });
+  });
+})();
+</script>
