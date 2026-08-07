@@ -39,6 +39,14 @@
     --error-bg:#3A2020;--error-border:#5E3232;--error-text:#F0A8A0;
     --warn-bg:#3A2E12;--warn-text:#E8B95C;
     color-scheme:dark;
+    /* Pagefind's Default UI ships its own :root vars (light-only by default);
+       :root[data-theme="dark"] outranks Pagefind's plain :root regardless of
+       stylesheet load order, so this reliably overrides it. */
+    --pagefind-ui-primary:#5B8FE0;
+    --pagefind-ui-text:#F1EFE9;
+    --pagefind-ui-background:#1E2025;
+    --pagefind-ui-border:#33342E;
+    --pagefind-ui-tag:#2A2C31;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
