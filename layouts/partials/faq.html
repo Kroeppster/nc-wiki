@@ -1,0 +1,62 @@
+{{- /*
+  Q&A-Seite, gespeist aus data/faq.yaml. Rendert eine nach Kategorie gruppierte
+  Akkordeon-Liste (native <details>/<summary>, kein JS nötig, Text bleibt für
+  Suchmaschinen/Pagefind im DOM) und ein FAQPage-JSON-LD-Schema für Rich Results.
+  Ein Eintrag mit "dynamic: subtests" hängt die Liste aus data/subtests.yaml live an,
+  damit sie nie einzeln gepflegt werden muss.
+*/}}
+{{- $lang := .Site.Language.Lang }}
+{{- $faq := .Site.Data.faq }}
+{{- $subtests := .Site.Data.subtests }}
+
+{{- $categories := slice }}
+{{- range $faq }}
+  {{- $cat := index .category $lang }}
+  {{- if not (in $categories $cat) }}{{ $categories = $categories | append $cat }}{{ end }}
+{{- end }}
+
+<div class="faq">
+  {{- range $categories }}
+  {{- $cat := . }}
+  <div class="faq-category">
+    <h3>{{ $cat }}</h3>
+    {{- range $faq }}
+    {{- if eq (index .category $lang) $cat }}
+    <details class="faq-item">
+      <summary>{{ index .question $lang }}</summary>
+      <div class="faq-answer">
+        <p>{{ index .answer $lang }}</p>
+        {{- if eq .dynamic "subtests" }}
+        <ol class="faq-subtest-list">
+          {{- range $subtests }}
+          <li>{{ index . $lang }}</li>
+          {{- end }}
+        </ol>
+        {{- end }}
+        {{- with .link }}
+        <a class="more" href="{{ relLangURL .href }}">{{ index .label $lang }}</a>
+        {{- end }}
+      </div>
+    </details>
+    {{- end }}
+    {{- end }}
+  </div>
+  {{- end }}
+</div>
+
+{{- $faqEntities := slice }}
+{{- range $faq }}
+  {{- $answerText := index .answer $lang }}
+  {{- if eq .dynamic "subtests" }}
+    {{- $names := slice }}
+    {{- range $subtests }}{{ $names = $names | append (index . $lang) }}{{ end }}
+    {{- $answerText = printf "%s %s" $answerText (delimit $names ", ") }}
+  {{- end }}
+  {{- $faqEntities = $faqEntities | append (dict
+    "@type" "Question"
+    "name" (index .question $lang)
+    "acceptedAnswer" (dict "@type" "Answer" "text" $answerText)
+  ) }}
+{{- end }}
+{{- $faqSchema := dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $faqEntities }}
+<script type="application/ld+json">{{ $faqSchema | jsonify (dict "indent" "  ") | safeJS }}</script>
