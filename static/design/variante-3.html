@@ -1,0 +1,351 @@
+<!--
+  Richtung: "Weich" (Soft/Friendly)
+  Ein blasses Himmelblau als Fläche, durchgehend grosszügige Rundungen und weiche
+  Schatten statt harter Kanten, dazu eine handgezeichnet wirkende Blob-Illustration im
+  Hero. Die Untertests liegen als locker umbrechendes Chip-Band statt als starres Raster,
+  bewusst gegen den sonst eher nüchternen Prüfungsvorbereitungs-Ton gesetzt.
+-->
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCWiki — Entwurf 3: Weich</title>
+<style>
+  :root{
+    --paper:#EFF5FC;
+    --paper-raised:#FFFFFF;
+    --ink:#1B3A5C;
+    --ink-soft:#5B7591;
+    --signal:#3B82C4;
+    --signal-deep:#2C64A0;
+    --peach:#FF9B71;
+    --hairline:#D7E6F2;
+    --focus:#C2410C;
+    --radius:1.4rem;
+    --font-display:'Trebuchet MS','Segoe UI',sans-serif;
+    --font-body:Verdana,'Segoe UI',sans-serif;
+    --max:1160px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+  }
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  h1,h2,h3{line-height:1.2;text-wrap:balance;font-family:var(--font-display);font-weight:700;margin:0;}
+  p{margin:0;}
+  .wrap{max-width:var(--max);margin-inline:auto;padding-inline:1.5rem;}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:.4rem;}
+  .skip-link{position:absolute;left:-999px;top:0;background:var(--signal-deep);color:#fff;padding:.7rem 1.1rem;z-index:100;border-radius:0 0 .8rem 0;}
+  .skip-link:focus{left:0;}
+
+  .eyebrow{font-family:var(--font-display);font-size:.8rem;font-weight:700;letter-spacing:.02em;color:var(--signal-deep);margin:0 0 .7rem;display:inline-flex;align-items:center;gap:.4rem;}
+  .eyebrow::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--peach);display:inline-block;}
+
+  header{padding-block:1.3rem;}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;background:var(--paper-raised);border-radius:999px;padding:.7rem 1.2rem;box-shadow:0 8px 24px rgba(59,130,196,.14);}
+  .brand{display:flex;align-items:center;gap:.55rem;font-weight:700;font-size:1.1rem;text-decoration:none;font-family:var(--font-display);}
+  .brand-mark{width:2.1rem;height:2.1rem;border-radius:50%;background:var(--signal);color:#fff;display:inline-grid;place-items:center;font-size:.7rem;font-weight:700;}
+  nav ul{display:flex;gap:1.4rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;font-size:.9rem;font-weight:700;}
+  nav a{text-decoration:none;padding:.4rem .3rem;}
+  nav a:hover{color:var(--signal-deep);}
+  .langs{display:flex;gap:.4rem;font-size:.75rem;font-weight:700;}
+  .langs span{padding:.3rem .6rem;border-radius:999px;background:var(--paper);color:var(--ink-soft);}
+  .langs .active{background:var(--signal);color:#fff;}
+
+  section{padding-block:4rem;}
+  .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2rem;flex-wrap:wrap;gap:.8rem;}
+  .section-head h2{font-size:1.9rem;}
+  .more{font-family:var(--font-display);font-size:.85rem;font-weight:700;color:var(--signal-deep);text-decoration:none;white-space:nowrap;}
+
+  /* hero */
+  .hero-grid{display:grid;grid-template-columns:1.15fr .9fr;gap:3rem;align-items:center;}
+  .hero h1{font-size:clamp(2rem,4.2vw,3.2rem);margin:.3rem 0 1.2rem;}
+  .hero .lede{font-size:1.08rem;color:var(--ink-soft);max-width:32rem;margin:0 0 1.8rem;}
+  .hero-actions{display:flex;gap:.9rem;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.85rem 1.5rem;font-size:.92rem;font-weight:700;border-radius:999px;border:2px solid transparent;cursor:pointer;font-family:var(--font-display);text-decoration:none;}
+  .btn-primary{background:var(--signal);color:#fff;}
+  .btn-primary:hover{background:var(--signal-deep);}
+  .btn-ghost{border-color:var(--signal);color:var(--signal-deep);background:var(--paper-raised);}
+  .btn-ghost:hover{background:var(--signal);color:#fff;}
+
+  .hero-illustration{position:relative;}
+  .hero-illustration svg{display:block;width:100%;height:auto;}
+  .countdown-card{margin-top:-2.5rem;position:relative;background:var(--paper-raised);border-radius:var(--radius);box-shadow:0 16px 36px rgba(27,58,92,.14);padding:1.4rem 1.6rem;}
+  .countdown-label{font-family:var(--font-display);font-size:.78rem;font-weight:700;color:var(--ink-soft);margin:0 0 .8rem;}
+  .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;text-align:center;}
+  .countdown div{background:var(--paper);border-radius:1rem;padding:.6rem 0;}
+  .countdown .num{display:block;font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--signal-deep);font-variant-numeric:tabular-nums;}
+  .countdown .unit{font-size:.65rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;}
+
+  /* news */
+  .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;list-style:none;margin:0;padding:0;}
+  .card{background:var(--paper-raised);border-radius:var(--radius);box-shadow:0 10px 26px rgba(27,58,92,.1);overflow:hidden;}
+  .card .thumb{aspect-ratio:16/9;}
+  .card .thumb svg{display:block;width:100%;height:100%;}
+  .card .body{padding:1.5rem;}
+  .card h3{margin:.3rem 0 .6rem;font-size:1.12rem;}
+  .card p{color:var(--ink-soft);font-size:.94rem;margin:0 0 .9rem;}
+
+  /* subtests as chip wrap */
+  .subtest-wrap{display:flex;flex-wrap:wrap;gap:.9rem;list-style:none;margin:0;padding:0;}
+  .subtest-chip{display:flex;align-items:center;gap:.7rem;background:var(--paper-raised);border-radius:999px;padding:.6rem 1.2rem .6rem .6rem;box-shadow:0 6px 18px rgba(27,58,92,.09);}
+  .subtest-chip .circle{width:2.3rem;height:2.3rem;border-radius:50%;background:var(--signal);color:#fff;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:.85rem;flex-shrink:0;}
+  .subtest-chip:nth-child(3n+2) .circle{background:var(--peach);}
+  .subtest-chip:nth-child(3n) .circle{background:var(--signal-deep);}
+  .subtest-chip .name{font-size:.92rem;font-weight:700;}
+
+  /* mission */
+  .mission-lede{font-size:1.4rem;max-width:38rem;margin:0 0 2.4rem;}
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+  .feature{background:var(--paper-raised);border-radius:var(--radius);padding:1.7rem;box-shadow:0 10px 26px rgba(27,58,92,.1);}
+  .feature .circle{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--paper);display:grid;place-items:center;margin-bottom:1rem;font-size:1.1rem;}
+  .feature h3{font-size:1.05rem;margin:0 0 .5rem;}
+  .feature p{color:var(--ink-soft);font-size:.92rem;}
+
+  /* support */
+  .support{background:var(--signal);color:#fff;}
+  .support-inner{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+  .support h2{font-size:1.7rem;margin-bottom:.4rem;}
+  .support p{color:#E4F0FB;max-width:28rem;}
+  .support .btn-primary{background:#fff;color:var(--signal-deep);}
+  .support .btn-primary:hover{background:var(--paper);}
+
+  /* footer */
+  footer.site{padding-block:3.5rem 1.8rem;}
+  .footer-card{background:var(--paper-raised);border-radius:var(--radius);box-shadow:0 12px 30px rgba(27,58,92,.1);padding:2.4rem;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:2rem;margin-bottom:2rem;}
+  .footer-grid h4{font-family:var(--font-display);font-size:.75rem;font-weight:700;color:var(--ink-soft);margin:0 0 .9rem;text-transform:uppercase;letter-spacing:.03em;}
+  .footer-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:.6rem;font-size:.9rem;}
+  .footer-grid a{text-decoration:none;}
+  .footer-grid a:hover{color:var(--signal-deep);}
+  .footer-newsletter input{width:100%;padding:.7rem .9rem;border:2px solid var(--hairline);border-radius:999px;background:var(--paper);color:var(--ink);margin-bottom:.7rem;font-family:var(--font-body);}
+  .footer-bottom{border-top:1px solid var(--hairline);padding-top:1.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.8rem;color:var(--ink-soft);}
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-illustration{order:-1;}
+    .countdown-card{margin-top:0;}
+    .card-grid{grid-template-columns:1fr;}
+    .feature-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .footer-card{padding:1.6rem;}
+  }
+  @media (max-width:520px){
+    .footer-grid{grid-template-columns:1fr;}
+    .countdown{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="#main"><span class="brand-mark">NC</span>NCWiki</a>
+    <nav aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="#main">Startseite</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#subtests">EMS</a></li>
+        <li><a href="#support">Unterstützer:innen</a></li>
+        <li><a href="#mission">Über Uns</a></li>
+        <li><a href="#footer">Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="langs"><span class="active">DE</span><span>FR</span><span>IT</span></div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">EMS 2027 · Kostenlose Vorbereitung</p>
+        <h1>Wir unterstützen die Mediziner:innen von morgen.</h1>
+        <p class="lede">Kostenloses Übungsmaterial, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium (EMS) – von Studierenden für Studierende, schweizweit.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#subtests">Übungsaufgaben ansehen</a>
+          <a class="btn btn-ghost" href="#footer">Newsletter abonnieren</a>
+        </div>
+      </div>
+      <div>
+        <div class="hero-illustration">
+          <svg viewBox="0 0 560 460" role="img" aria-label="Platzhalter-Illustration 560×460" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="v3g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#3B82C4"/>
+                <stop offset="1" stop-color="#1B3A5C"/>
+              </linearGradient>
+            </defs>
+            <path d="M120 60 C220 -10 400 10 460 110 C520 210 480 330 380 390 C280 450 120 440 70 350 C20 260 20 130 120 60 Z" fill="url(#v3g1)"/>
+            <circle cx="420" cy="120" r="26" fill="#FF9B71" opacity=".85"/>
+            <circle cx="110" cy="360" r="16" fill="#FFFFFF" opacity=".5"/>
+            <text x="280" y="235" text-anchor="middle" fill="#FFFFFF" fill-opacity=".7" font-family="Verdana,sans-serif" font-size="19">Illustration 560×460</text>
+          </svg>
+        </div>
+        <div class="countdown-card">
+          <p class="countdown-label">Noch bis zum EMS 2027 (09.07.)</p>
+          <div class="countdown">
+            <div><span class="num" id="cd-d">–</span><span class="unit">Tage</span></div>
+            <div><span class="num" id="cd-h">–</span><span class="unit">Std</span></div>
+            <div><span class="num" id="cd-m">–</span><span class="unit">Min</span></div>
+            <div><span class="num" id="cd-s">–</span><span class="unit">Sek</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap">
+      <div class="section-head">
+        <div><p class="eyebrow">Aktuell</p><h2>News</h2></div>
+        <a class="more" href="#news">Alle News →</a>
+      </div>
+      <ul class="card-grid">
+        <li class="card">
+          <div class="thumb">
+            <svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Platzhalterbild 640×360" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="v3g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3B82C4"/><stop offset="1" stop-color="#FF9B71"/></linearGradient></defs>
+              <rect width="640" height="360" fill="url(#v3g2)"/>
+              <text x="320" y="180" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF" fill-opacity=".8" font-family="Verdana,sans-serif" font-size="19">News 640×360</text>
+            </svg>
+          </div>
+          <div class="body">
+            <p class="eyebrow">Update</p>
+            <h3>Änderungen beim EMS 2027</h3>
+            <p>Ein Untertest wird 2027 leicht angepasst. Wir aktualisieren laufend unser Übungsmaterial und halten euch hier auf dem Laufenden.</p>
+            <a class="more" href="#news">Mehr erfahren →</a>
+          </div>
+        </li>
+        <li class="card">
+          <div class="thumb">
+            <svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Platzhalterbild 640×360" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="v3g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B3A5C"/><stop offset="1" stop-color="#3B82C4"/></linearGradient></defs>
+              <rect width="640" height="360" fill="url(#v3g3)"/>
+              <text x="320" y="180" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF" fill-opacity=".8" font-family="Verdana,sans-serif" font-size="19">News 640×360</text>
+            </svg>
+          </div>
+          <div class="body">
+            <p class="eyebrow">Anmeldung offen</p>
+            <h3>Testsimulation 2027: Plätze sichern</h3>
+            <p>Unsere Testsimulation findet wieder an mehreren Schweizer Hochschulstandorten statt – nach dem Prinzip first come, first served.</p>
+            <a class="more" href="#news">Mehr erfahren →</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="subtests">
+    <div class="wrap">
+      <p class="eyebrow">Übungsaufgaben</p>
+      <h2>10 Untertests, ein Ziel</h2>
+      <ul class="subtest-wrap" style="margin-top:1.6rem;">
+        <li class="subtest-chip"><span class="circle">01</span><span class="name">Testsimulationen</span></li>
+        <li class="subtest-chip"><span class="circle">02</span><span class="name">Muster zuordnen</span></li>
+        <li class="subtest-chip"><span class="circle">03</span><span class="name">Med.-nat. Grundverständnis</span></li>
+        <li class="subtest-chip"><span class="circle">04</span><span class="name">Objekte im Raum</span></li>
+        <li class="subtest-chip"><span class="circle">05</span><span class="name">Quantitative &amp; formale Probleme</span></li>
+        <li class="subtest-chip"><span class="circle">06</span><span class="name">Konzentriertes Arbeiten</span></li>
+        <li class="subtest-chip"><span class="circle">07</span><span class="name">Figuren einprägen</span></li>
+        <li class="subtest-chip"><span class="circle">08</span><span class="name">Fakten einprägen</span></li>
+        <li class="subtest-chip"><span class="circle">09</span><span class="name">Textverständnis</span></li>
+        <li class="subtest-chip"><span class="circle">10</span><span class="name">Diagramme &amp; Tabellen</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="mission">
+    <div class="wrap">
+      <p class="eyebrow">Wieso es uns gibt</p>
+      <h2 class="mission-lede">Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt.</h2>
+      <div class="feature-grid">
+        <div class="feature"><span class="circle" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C64A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.3"/></svg></span><h3>Schweizweit</h3><p>Ein mehrsprachiger Studentenverein, aktiv an Hochschulstandorten in der ganzen Schweiz.</p></div>
+        <div class="feature"><span class="circle" aria-hidden="true"><svg width="24" height="22" viewBox="0 0 26 22" fill="none" stroke="#2C64A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.4"/><circle cx="19" cy="7" r="3.4"/><path d="M2 20c.6-3.6 3.3-6 7-6s6.4 2.4 7 6"/><path d="M12 20c.6-3.6 3.3-6 7-6s6.4 2.4 7 6"/></svg></span><h3>Community</h3><p>Regelmässige Anlässe bringen zukünftige Mediziner:innen zusammen und lockern den Lernalltag auf.</p></div>
+        <div class="feature"><span class="circle" aria-hidden="true"><svg width="22" height="20" viewBox="0 0 24 22" fill="none" stroke="#2C64A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20S2 13.8 2 7.6A5 5 0 0 1 12 5.5 5 5 0 0 1 22 7.6C22 13.8 12 20 12 20Z"/></svg></span><h3>Mit Sinn</h3><p>Freiwillige unterstützen kommende Generationen von Studierenden auf ihrem Weg ins Medizinstudium.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="support" id="support">
+    <div class="wrap support-inner">
+      <div>
+        <h2>Ihr macht das möglich.</h2>
+        <p>Unser Material bleibt kostenlos – dank Spenden und Sponsoring.</p>
+      </div>
+      <a class="btn btn-primary" href="#footer">Jetzt unterstützen</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site" id="footer">
+  <div class="wrap">
+    <div class="footer-card">
+      <div class="footer-grid">
+        <div>
+          <h4>NCWiki</h4>
+          <p style="color:var(--ink-soft);font-size:.9rem;max-width:22rem;">Kostenlose EMS-Vorbereitung von Studierenden für Studierende.</p>
+          <p style="color:var(--ink-soft);font-size:.85rem;margin-top:1rem;">Musterstrasse 1<br>4051 Basel<br>info@nc-wiki.ch</p>
+        </div>
+        <div>
+          <h4>Hauptmenü</h4>
+          <ul>
+            <li><a href="#main">Startseite</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#subtests">EMS</a></li>
+            <li><a href="#support">Unterstützer:innen</a></li>
+            <li><a href="#mission">Über Uns</a></li>
+            <li><a href="#footer">Kontakt</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Rechtliches</h4>
+          <ul>
+            <li><a href="#">Impressum</a></li>
+            <li><a href="#">Nutzungsbedingungen</a></li>
+            <li><a href="#">Datenschutz</a></li>
+          </ul>
+        </div>
+        <div class="footer-newsletter">
+          <h4>Newsletter</h4>
+          <label for="nl-email" style="display:block;font-size:.85rem;color:var(--ink-soft);margin-bottom:.5rem;">Bleib informiert über Termine &amp; neues Material.</label>
+          <input type="email" id="nl-email" placeholder="deine@email.ch">
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" type="button">Anmelden</button>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 NCWiki · Entwurf 3 / Weich</span>
+        <span>Gebaut mit Hugo · gehostet auf GitHub Pages</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var target = new Date('2027-07-09T08:00:00+02:00').getTime();
+    var elD=document.getElementById('cd-d'), elH=document.getElementById('cd-h'),
+        elM=document.getElementById('cd-m'), elS=document.getElementById('cd-s');
+    function pad(n){ return String(n).padStart(2,'0'); }
+    function tick(){
+      var diff = Math.max(0, target - Date.now());
+      var d = Math.floor(diff/86400000);
+      var h = Math.floor((diff%86400000)/3600000);
+      var m = Math.floor((diff%3600000)/60000);
+      var s = Math.floor((diff%60000)/1000);
+      if(elD) elD.textContent = d;
+      if(elH) elH.textContent = pad(h);
+      if(elM) elM.textContent = pad(m);
+      if(elS) elS.textContent = pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
+</body>
+</html>

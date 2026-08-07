@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCWiki — Design-Richtungen im Vergleich</title>
+<style>
+  :root{
+    --ink:#1C1B17;
+    --ink-soft:#55534A;
+    --paper:#FAF9F5;
+    --paper-raised:#FFFFFF;
+    --hairline:#E3E1D6;
+    --stone:#8B8A7E;
+    --focus:#1D4ED8;
+    --font-display:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+    --max:1080px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-display);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:3px;}
+  .wrap{max-width:var(--max);margin-inline:auto;padding-inline:1.5rem;}
+  header{padding-block:3.2rem 2.4rem;border-bottom:1px solid var(--hairline);}
+  .eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--focus);margin:0 0 .8rem;}
+  h1{font-size:clamp(1.8rem,3.6vw,2.5rem);margin:0 0 1rem;letter-spacing:-.01em;}
+  header p{color:var(--ink-soft);max-width:38rem;font-size:1.02rem;margin:0;}
+
+  main{padding-block:3rem 4rem;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+  .card{background:var(--paper-raised);border:1px solid var(--hairline);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;}
+  .swatch{height:.6rem;display:flex;}
+  .swatch span{flex:1;}
+  .card-body{padding:1.5rem 1.6rem 1.7rem;display:flex;flex-direction:column;flex:1;}
+  .card-index{font-family:var(--font-mono);font-size:.72rem;color:var(--stone);letter-spacing:.06em;margin:0 0 .5rem;}
+  .card h2{font-size:1.28rem;margin:0 0 .7rem;}
+  .card p{color:var(--ink-soft);font-size:.94rem;margin:0 0 1.4rem;flex:1;}
+  .card-link{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-mono);font-size:.85rem;font-weight:700;color:var(--focus);text-decoration:none;align-self:flex-start;padding:.5rem 0;}
+  .card-link:hover{text-decoration:underline;}
+
+  footer{border-top:1px solid var(--hairline);padding-block:1.6rem;font-size:.82rem;color:var(--stone);font-family:var(--font-mono);}
+
+  .card.wide{grid-column:1 / -1;max-width:calc(50% - .7rem);}
+
+  @media (max-width:720px){
+    .grid{grid-template-columns:1fr;}
+    .card.wide{max-width:none;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Design-Exploration · Startseite</p>
+    <h1>5 Design-Richtungen im Vergleich</h1>
+    <p>Dieselbe Startseite – Hero, EMS-Countdown, News, die 10 Untertests, Mission, Unterstützer-Band und Footer – einmal in fünf klar unterschiedlichen visuellen Richtungen umgesetzt. Alle bleiben bei Blau als Vereinsfarbe, variieren aber Typografie, Layout und Bildsprache. Jede Datei ist eigenständig und direkt aufrufbar.</p>
+  </div>
+</header>
+<main>
+  <div class="wrap grid">
+    <article class="card">
+      <div class="swatch"><span style="background:#14213D;"></span><span style="background:#1D4ED8;"></span><span style="background:#F5F4EF;"></span></div>
+      <div class="card-body">
+        <p class="card-index">Entwurf 1</p>
+        <h2>Bulletin — Swiss-Editorial</h2>
+        <p>Strenges Hairline-Raster, Grotesk plus Mono-Daten, keine grossen Bildflächen. Die Untertests laufen als nummerierte Liste – wie ein gedrucktes Programmheft, nicht wie eine App.</p>
+        <a class="card-link" href="variante-1.html">Ansehen →</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="swatch"><span style="background:#0B2E86;"></span><span style="background:#FF6A3D;"></span><span style="background:#FFFFFF;"></span></div>
+      <div class="card-body">
+        <p class="card-index">Entwurf 2</p>
+        <h2>Manifest — Poster/Bold</h2>
+        <p>Tiefes Kobaltblau als Fläche statt als Akzent, riesige fette Typografie als Heldenbild. Ein einzelner Orange-Akzent wird bewusst sparsam eingesetzt.</p>
+        <a class="card-link" href="variante-2.html">Ansehen →</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="swatch"><span style="background:#3B82C4;"></span><span style="background:#FF9B71;"></span><span style="background:#EFF5FC;"></span></div>
+      <div class="card-body">
+        <p class="card-index">Entwurf 3</p>
+        <h2>Weich — Soft/Friendly</h2>
+        <p>Blasses Himmelblau, durchgehend grosszügige Rundungen und weiche Schatten. Die Untertests liegen als locker umbrechendes Chip-Band statt als starres Raster.</p>
+        <a class="card-link" href="variante-3.html">Ansehen →</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="swatch"><span style="background:#0A1420;"></span><span style="background:#38BDF8;"></span><span style="background:#101E2E;"></span></div>
+      <div class="card-body">
+        <p class="card-index">Entwurf 4</p>
+        <h2>Konsole — Dark Tech</h2>
+        <p>Durchgehend dunkles Navy, Mono-Schrift für Zahlen und Titel, ein Cyan-Akzent für Status und Fokus. Der Countdown liest sich wie eine Live-Messstation.</p>
+        <a class="card-link" href="variante-4.html">Ansehen →</a>
+      </div>
+    </article>
+    <article class="card wide">
+      <div class="swatch"><span style="background:#1E3A8A;"></span><span style="background:#A9781E;"></span><span style="background:#EDEFF2;"></span></div>
+      <div class="card-body">
+        <p class="card-index">Entwurf 5</p>
+        <h2>Magazin — Photo-led</h2>
+        <p>Grossformatige Bildflächen führen statt Text: Vollbild-Hero mit Serif-Headline, die Untertests laufen als horizontal scrollbares Bildband. Serifenschrift plus zurückhaltender Gold-Akzent für einen redaktionellen Ton.</p>
+        <a class="card-link" href="variante-5.html">Ansehen →</a>
+      </div>
+    </article>
+  </div>
+</main>
+<footer>
+  <div class="wrap">static/design/ · nicht Teil der echten Hugo-Navigation, dient nur dem internen Vergleich</div>
+</footer>
+</body>
+</html>
