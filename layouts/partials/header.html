@@ -1,7 +1,7 @@
 <header class="site">
   <div class="wrap header-inner">
     <a class="brand" href="{{ relLangURL "/" }}">
-      <img class="brand-mark" src="{{ "images/logo.svg" | relURL }}" alt="" aria-hidden="true">
+      <span class="brand-mark" aria-hidden="true">NC</span>
       <span>{{ .Site.Title }}</span>
     </a>
     <nav class="main-nav" aria-label="Hauptnavigation">
@@ -25,6 +25,15 @@
     <script>
       new PagefindUI({ element: "#search" });
     </script>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Farbschema umschalten">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.5"/>
+        <path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M18.4 18.4l-2.1-2.1M7.7 7.7 5.6 5.6"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+      </svg>
+    </button>
     <div class="lang-switch" aria-label="Sprache">
       {{ $page := . }}
       {{ range hugo.Sites }}

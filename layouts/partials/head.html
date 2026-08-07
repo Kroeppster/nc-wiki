@@ -1,6 +1,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
+<script>
+(function(){
+  try {
+    var stored = localStorage.getItem('theme-preference');
+    var theme = stored === 'light' || stored === 'dark'
+      ? stored
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+})();
+</script>
 {{- $pageTitle := .Title }}
 {{- if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ $pageTitle }}{{ end }}</title>
