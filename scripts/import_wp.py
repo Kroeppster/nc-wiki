@@ -210,6 +210,8 @@ def write_markdown_file(out_dir: Path, item: dict, post_type: str, lang: str, pa
 
 
 def main() -> None:
+    global REQUEST_DELAY_SECONDS
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-dir", default="import", help="Output directory (default: import/)")
     parser.add_argument(
@@ -220,7 +222,6 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    global REQUEST_DELAY_SECONDS
     REQUEST_DELAY_SECONDS = args.delay
 
     out_dir = Path(args.out_dir)
