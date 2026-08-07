@@ -2,7 +2,17 @@
   <section>
     <div class="wrap">
       {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
-      <h1>{{ .Title }}</h1>
+      {{ $pageTitle := .Title }}
+      {{ if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
+      <h1>{{ $pageTitle }}</h1>
+      {{ if and .Params.name .Params.jahr }}
+      <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
+      {{ with .Params.tags }}
+      <ul class="tag-pills">
+        {{ range . }}<li>{{ . }}</li>{{ end }}
+      </ul>
+      {{ end }}
+      {{ end }}
       {{ with .Params.featured_image }}
       <figure class="featured-image">
         {{ partial "image.html" (dict "src" . "alt" (or $.Params.featured_image_alt $.Title) "sizes" "(max-width:900px) 100vw, 900px") }}
@@ -20,6 +30,8 @@
       {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
       {{ end }}
       {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
+      {{ if .Params.experience_form }}{{ partial "experience-form.html" . }}{{ end }}
+      {{ if .Params.uni_slug }}{{ partial "uni-detail.html" . }}{{ end }}
     </div>
   </section>
 {{ end }}

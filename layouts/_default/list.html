@@ -25,6 +25,13 @@
       {{ else if strings.Contains .Path "ems/vorbereitungskurse" }}
       {{ partial "download-list.html" (dict "path" "downloads/kursskripte" "page" .) }}
       {{ end }}
+      {{ if eq .Path "/ems/erfahrungsberichte" }}
+      {{ partial "erfahrungsbericht-grid.html" . }}
+      {{ else if eq .Path "/ems/uniguide" }}
+      {{ partial "uniguide-table.html" . }}
+      {{ else if eq .Path "/ems/qa" }}
+      {{ partial "faq.html" . }}
+      {{ else }}
       {{ $paginator := .Paginate .Pages }}
       <ul class="card-grid">
         {{ range $paginator.Pages }}
@@ -36,12 +43,13 @@
           {{ end }}
           {{ with .Params.eyebrow }}<p class="eyebrow">{{ . }}</p>{{ end }}
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-          <p>{{ .Summary }}</p>
+          {{ .Summary }}
           <a class="more" href="{{ .RelPermalink }}">Mehr erfahren →</a>
         </li>
         {{ end }}
       </ul>
       {{ template "_internal/pagination.html" . }}
+      {{ end }}
     </div>
   </section>
 {{ end }}

@@ -1,11 +1,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ .Title }}{{ end }}</title>
+{{- $pageTitle := .Title }}
+{{- if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ $pageTitle }}{{ end }}</title>
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
 <link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">
 
-{{- $ogTitle := .Title }}
+{{- $ogTitle := $pageTitle }}
 {{- if .IsHome }}{{ $ogTitle = .Site.Title }}{{ end }}
 {{- $ogDescription := .Description }}
 {{- if not $ogDescription }}{{ $ogDescription = .Summary }}{{ end }}
