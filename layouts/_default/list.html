@@ -4,7 +4,15 @@
       <div class="section-head">
         <div><p class="eyebrow">{{ .Section }}</p><h2>{{ .Title }}</h2></div>
       </div>
+      {{ with .Params.featured_image }}
+      <figure class="featured-image">
+        {{ partial "image.html" (dict "src" . "alt" (or $.Params.featured_image_alt $.Title) "sizes" "(max-width:900px) 100vw, 900px") }}
+      </figure>
+      {{ end }}
       {{ with .Content }}{{ . }}{{ end }}
+      {{ if eq .Path "/unterstuetzer-innen" }}
+      {{ partial "sponsor-grid.html" . }}
+      {{ end }}
       {{ with .Params.downloads }}
       <ul class="download-list">
         {{ range . }}
@@ -12,10 +20,20 @@
         {{ end }}
       </ul>
       {{ end }}
+      {{ if strings.Contains .Path "ems/testsimulationen" }}
+      {{ partial "download-list.html" (dict "path" "downloads/testsimulationen" "page" .) }}
+      {{ else if strings.Contains .Path "ems/vorbereitungskurse" }}
+      {{ partial "download-list.html" (dict "path" "downloads/kursskripte" "page" .) }}
+      {{ end }}
       {{ $paginator := .Paginate .Pages }}
       <ul class="card-grid">
         {{ range $paginator.Pages }}
         <li class="card">
+          {{ if and (eq .Section "news") .Params.featured_image }}
+          <div class="card-thumb">
+            {{ partial "image.html" (dict "src" .Params.featured_image "alt" (or .Params.featured_image_alt .Title) "sizes" "(max-width:600px) 100vw, 360px") }}
+          </div>
+          {{ end }}
           {{ with .Params.eyebrow }}<p class="eyebrow">{{ . }}</p>{{ end }}
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
           <p>{{ .Summary }}</p>

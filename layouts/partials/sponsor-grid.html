@@ -1,0 +1,30 @@
+{{- /*
+  Sponsoren-Raster, gespeist aus data/sponsors.yaml.
+  Erwartet je Eintrag: name, logo (Dateiname relativ zu assets/images/sponsors/), website.
+  Fehlt eine Logo-Datei (noch) auf der Platte, wird der Name als Text-Fallback gezeigt -
+  kein kaputtes Layout, solange Logos noch nicht nachgereicht wurden.
+*/}}
+{{- $sponsors := .Site.Data.sponsors }}
+{{- if $sponsors }}
+<ul class="sponsor-grid">
+  {{- range $sponsors }}
+  {{- $logoRes := "" }}
+  {{- with .logo }}{{ with resources.Get (printf "images/sponsors/%s" .) }}{{ $logoRes = . }}{{ end }}{{ end }}
+  <li class="sponsor-tile">
+    {{- $inner := "" }}
+    {{- if $logoRes }}
+      {{- $inner = partial "image.html" (dict "src" (printf "sponsors/%s" .logo) "alt" .name "sizes" "200px" "class" "sponsor-logo") }}
+    {{- else }}
+      {{- $inner = printf "<span class=\"sponsor-name\">%s</span>" .name }}
+    {{- end }}
+    {{- if .website }}
+    <a href="{{ .website }}" target="_blank" rel="noopener">{{ $inner | safeHTML }}</a>
+    {{- else }}
+    {{ $inner | safeHTML }}
+    {{- end }}
+  </li>
+  {{- end }}
+</ul>
+{{- else }}
+<p class="download-empty">Noch keine Sponsor:innen hinterlegt.</p>
+{{- end }}

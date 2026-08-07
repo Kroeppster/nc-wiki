@@ -1,0 +1,64 @@
+{{- /*
+  Responsive Bild-Partial mit Hugo Image Processing.
+  Parameter (dict):
+    src   - Dateiname relativ zu assets/images/, z.B. "team-2026.jpg" (erforderlich)
+    alt   - Alt-Text (erforderlich, sonst Build-Fehler)
+    class - zusätzliche CSS-Klasse(n) auf dem <img> (optional)
+    sizes - sizes-Attribut (optional, Default "100vw")
+  Rendert nichts (nur eine Build-Warnung), wenn das Bild fehlt -
+  damit Seiten ohne Bild sauber bleiben, solange Logos/Fotos noch fehlen.
+*/}}
+{{- $src := .src }}
+{{- $alt := .alt }}
+{{- $class := .class }}
+{{- $sizes := .sizes }}
+{{- if not $sizes }}{{ $sizes = "100vw" }}{{ end }}
+
+{{- $img := "" }}
+{{- if $src }}
+  {{- with resources.Get (printf "images/%s" $src) }}{{ $img = . }}{{ end }}
+  {{- if not $img }}{{ warnf "image.html: Bild nicht gefunden: assets/images/%s" $src }}{{ end }}
+{{- end }}
+
+{{- if $img }}
+  {{- if not $alt }}{{ errorf "image.html: alt-Attribut fehlt für Bild %s" $src }}{{ end }}
+{{- end }}
+
+{{- if and $img (strings.HasSuffix (lower $src) ".svg") }}
+  {{- /* Vektorgrafik: keine Rasterverarbeitung, direkt ausliefern */}}
+<img
+  src="{{ $img.RelPermalink }}"
+  alt="{{ $alt }}"
+  loading="lazy"
+  {{- with $class }} class="{{ . }}"{{ end -}}
+>
+{{- else if $img }}
+  {{- $widths := slice 480 960 1440 }}
+  {{- $variants := slice }}
+  {{- range $widths }}
+    {{- if le . $img.Width }}
+      {{- $variants = $variants | append (dict "w" . "res" ($img.Resize (printf "%dx webp q82" .))) }}
+    {{- end }}
+  {{- end }}
+  {{- if eq (len $variants) 0 }}
+    {{- $variants = $variants | append (dict "w" $img.Width "res" ($img.Resize (printf "%dx webp q82" $img.Width))) }}
+  {{- end }}
+
+  {{- $srcsetParts := slice }}
+  {{- range $variants }}
+    {{- $srcsetParts = $srcsetParts | append (printf "%s %dw" .res.RelPermalink .w) }}
+  {{- end }}
+
+  {{- $fallback := index $variants (sub (len $variants) 1) }}
+
+<img
+  src="{{ $fallback.res.RelPermalink }}"
+  srcset="{{ delimit $srcsetParts ", " }}"
+  sizes="{{ $sizes }}"
+  alt="{{ $alt }}"
+  loading="lazy"
+  width="{{ $fallback.res.Width }}"
+  height="{{ $fallback.res.Height }}"
+  {{- with $class }} class="{{ . }}"{{ end -}}
+>
+{{- end -}}

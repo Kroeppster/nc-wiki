@@ -1,0 +1,14 @@
+# Sponsoren-Raster (Unterstützer:innen-Seite).
+# logo = Dateiname relativ zu assets/images/sponsors/ (SVG oder Raster, wird noch nachgereicht).
+- name: "VSAO"
+  logo: "vsao.svg"
+  website: "https://vsao.ch/"
+- name: "SAMW"
+  logo: "samw.svg"
+  website: "https://www.samw.ch/"
+- name: "swimsa"
+  logo: "swimsa.svg"
+  website: "https://swimsa.ch/"
+- name: "chirosuisse"
+  logo: "chirosuisse.svg"
+  website: "https://www.chirosuisse.ch/"

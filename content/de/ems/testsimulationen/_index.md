@@ -4,9 +4,6 @@ menu:
   main:
     parent: ems
     weight: 2
-downloads:
-  - path: "downloads/testsimulationen/TESTHEFT_2026_DE_V6_postSIM_ohne_Loesung.pdf"
-    label: "Testheft 2026 (PDF, ohne Lösung)"
 ---
 
 Platzhaltertext: Alles Wichtige zu unseren Testsimulationen.

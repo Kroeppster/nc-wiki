@@ -91,6 +91,24 @@
   .card{background:var(--paper-raised);border:1px solid var(--hairline);padding:1.4rem;border-radius:var(--radius);}
   .card h3{margin:.3rem 0 .5rem;font-size:1.1rem;}
   .card p{color:var(--ink-soft);font-size:.94rem;margin:0 0 .9rem;}
+  .card-thumb{margin:-1.4rem -1.4rem 1rem;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0;}
+  .card-thumb img{width:100%;height:180px;object-fit:cover;display:block;}
+
+  /* featured image (Seitenkopf) */
+  .featured-image{margin:1.4rem 0 1.8rem;}
+  .featured-image img{width:100%;height:auto;max-height:480px;object-fit:cover;display:block;border-radius:var(--radius);}
+
+  /* wide image band (Startseite) */
+  #story-image{padding-block:0;}
+  .wide-image img{width:100%;height:auto;max-height:520px;object-fit:cover;display:block;}
+
+  /* sponsor grid */
+  .sponsor-grid{list-style:none;margin:1.6rem 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
+  .sponsor-tile{background:var(--paper-raised);border:1px solid var(--hairline);border-radius:var(--radius);min-height:96px;}
+  .sponsor-tile a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:96px;padding:1.2rem;}
+  .sponsor-logo{max-width:100%;max-height:56px;width:auto;height:auto;filter:grayscale(1);opacity:.75;transition:filter .15s,opacity .15s;}
+  .sponsor-tile a:hover .sponsor-logo,.sponsor-tile a:focus-visible .sponsor-logo{filter:none;opacity:1;}
+  .sponsor-name{font-family:var(--font-mono);font-size:.85rem;color:var(--ink-soft);text-align:center;padding:1.2rem;display:block;}
 
   /* subtests */
   .subtest-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.9rem;list-style:none;margin:1.6rem 0 0;padding:0;}
@@ -137,6 +155,11 @@
   .download-link{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--paper-raised);border:1px solid var(--hairline);border-radius:var(--radius);padding:.75rem 1rem;}
   .download-link:hover{border-color:var(--signal);color:var(--signal);}
   .download-link .download-size{font-family:var(--font-mono);font-size:.75rem;color:var(--stone);white-space:nowrap;}
+  .download-item{display:flex;flex-direction:column;gap:.3rem;}
+  .download-empty{color:var(--stone);font-size:.9rem;font-style:italic;margin:1.4rem 0 0;}
+  .report-error{margin:0 0 0 .2rem;}
+  .report-error button{background:none;border:none;padding:0;font:inherit;font-family:var(--font-display);font-size:.76rem;color:var(--stone);text-decoration:underline;cursor:pointer;}
+  .report-error button:hover{color:var(--signal);}
 
   /* contact form */
   .contact-form{display:grid;gap:1.1rem;max-width:32rem;margin-top:1.6rem;}
@@ -156,6 +179,7 @@
     .card-grid{grid-template-columns:1fr;}
     .subtest-grid{grid-template-columns:repeat(2,1fr);}
     .feature-grid{grid-template-columns:1fr;gap:1.5rem;}
+    .sponsor-grid{grid-template-columns:repeat(2,1fr);}
     .footer-grid{grid-template-columns:1fr 1fr;gap:1.8rem;}
     .support-inner{text-align:left;}
   }

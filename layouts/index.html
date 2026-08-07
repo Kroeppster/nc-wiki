@@ -40,6 +40,11 @@
       <ul class="card-grid">
         {{ range first 2 (where .Site.RegularPages "Section" "news") }}
         <li class="card">
+          {{ if .Params.featured_image }}
+          <div class="card-thumb">
+            {{ partial "image.html" (dict "src" .Params.featured_image "alt" (or .Params.featured_image_alt .Title) "sizes" "(max-width:600px) 100vw, 360px") }}
+          </div>
+          {{ end }}
           <p class="eyebrow">{{ .Params.eyebrow }}</p>
           <h3>{{ .Title }}</h3>
           <p>{{ .Summary }}</p>
@@ -69,6 +74,14 @@
       </div>
     </div>
   </section>
+
+  {{ with .Params.story_image }}
+  <section id="story-image">
+    <figure class="wide-image">
+      {{ partial "image.html" (dict "src" . "alt" (or $.Params.story_image_alt $.Title) "sizes" "100vw") }}
+    </figure>
+  </section>
+  {{ end }}
 
   <section class="support" id="support">
     <div class="wrap support-inner">

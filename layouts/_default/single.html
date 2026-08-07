@@ -3,6 +3,11 @@
     <div class="wrap">
       {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
       <h1>{{ .Title }}</h1>
+      {{ with .Params.featured_image }}
+      <figure class="featured-image">
+        {{ partial "image.html" (dict "src" . "alt" (or $.Params.featured_image_alt $.Title) "sizes" "(max-width:900px) 100vw, 900px") }}
+      </figure>
+      {{ end }}
       {{ .Content }}
       {{ with .Params.downloads }}
       <ul class="download-list">
@@ -10,6 +15,9 @@
         <li>{{ partial "download-link.html" (dict "path" .path "label" .label) }}</li>
         {{ end }}
       </ul>
+      {{ end }}
+      {{ if strings.Contains .Path "uebungsaufgaben" }}
+      {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
       {{ end }}
       {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
     </div>

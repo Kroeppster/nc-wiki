@@ -1,0 +1,24 @@
+# Overrides für automatisch generierte Download-Anzeigenamen.
+# Key = Dateiname ohne Endung ".pdf", Wert = Anzeigename pro Sprache.
+# Fehlt der Eintrag für die aktuelle Seitensprache, wird "de" verwendet.
+#
+# Beispiel:
+# overrides:
+#   UT3_A2_2026:
+#     de: "Übungsserie UT3 – A2 2026"
+#     fr: "Série d'exercices UT3 – A2 2026"
+#     it: "Serie di esercizi UT3 – A2 2026"
+
+overrides:
+  UT3_A2_2026:
+    de: "Übungsserie UT3 – A2 2026"
+    fr: "Série d'exercices UT3 – A2 2026"
+    it: "Serie di esercizi UT3 – A2 2026"
+  TESTHEFT_2026_DE_V6_postSIM_ohne_Loesung:
+    de: "Testheft 2026 (ohne Lösung)"
+    fr: "Cahier de test 2026 (sans corrigé)"
+    it: "Fascicolo del test 2026 (senza soluzione)"
+  NCWiki_Kursskript_2026_deutsch:
+    de: "Kursskript 2026 (Deutsch)"
+    fr: "Script de cours 2026 (allemand)"
+    it: "Dispensa del corso 2026 (tedesco)"

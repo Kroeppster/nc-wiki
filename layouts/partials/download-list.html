@@ -1,0 +1,69 @@
+{{- /*
+  Automatische Download-Liste.
+  Parameter (dict):
+    path - Ordnerpfad relativ zu assets/, z.B. "downloads/kursskripte"
+    page - die aktuelle Page (für Sprache und relPermalink)
+  Formspree-Endpoint für "Fehler melden" ist noch ein Platzhalter.
+*/}}
+{{- $folder := .path }}
+{{- $page := .page }}
+{{- $site := $page.Site }}
+{{- $lang := $site.Language.Lang }}
+{{- $overrides := $site.Data.downloads.overrides }}
+{{- $formspreeEndpoint := "https://formspree.io/f/REPLACE_ME" }}
+
+{{- $t := dict
+  "de" (dict "empty" "Aktuell kein Material verfügbar." "report" "Fehler melden")
+  "fr" (dict "empty" "Aucun document disponible pour le moment." "report" "Signaler une erreur")
+  "it" (dict "empty" "Al momento nessun materiale disponibile." "report" "Segnala un errore")
+}}
+{{- $labels := or (index $t $lang) $t.de }}
+
+{{- $files := resources.Match (printf "%s/*.pdf" $folder) }}
+{{- $files = sort $files "Name" "desc" }}
+
+{{- if eq (len $files) 0 }}
+  <p class="download-empty">{{ $labels.empty }}</p>
+{{- else }}
+  <ul class="download-list">
+    {{- range $files }}
+      {{- $name := path.Base .Name }}
+      {{- $stem := strings.TrimSuffix ".pdf" $name }}
+      {{- $displayName := "" }}
+      {{- with index $overrides $stem }}
+        {{- $displayName = or (index . $lang) (index . "de") }}
+      {{- end }}
+      {{- if not $displayName }}
+        {{- $parts := split $stem "_" }}
+        {{- if and (ge (len $parts) 3) (gt (len (findRE "^[0-9]{4}$" (index $parts 0) 1)) 0) }}
+          {{- $year := index $parts 0 }}
+          {{- $thema := index $parts 1 }}
+          {{- $rest := delimit (after 2 $parts) "_" }}
+          {{- $displayName = printf "%s – %s (%s)" (title (replaceRE "[_-]" " " $thema)) (title (replaceRE "[_-]" " " $rest)) $year }}
+        {{- else }}
+          {{- $displayName = title (replaceRE "[_-]" " " $stem) }}
+        {{- end }}
+      {{- end }}
+      {{- $size := 0 }}
+      {{- with os.Stat (printf "assets/%s" .Name) }}{{ $size = .Size }}{{ end }}
+      {{- $sizeStr := "" }}
+      {{- if lt $size 1048576 }}
+        {{- $sizeStr = printf "%d KB" (div $size 1024) }}
+      {{- else }}
+        {{- $mbTenths := div (mul $size 10) 1048576 }}
+        {{- $sizeStr = printf "%d.%d MB" (div $mbTenths 10) (mod $mbTenths 10) }}
+      {{- end }}
+      <li class="download-item">
+        <a class="download-link" href="{{ .RelPermalink }}" download>
+          <span class="download-label">{{ $displayName }}</span>
+          <span class="download-size">{{ $sizeStr }}</span>
+        </a>
+        <form class="report-error" action="{{ $formspreeEndpoint }}" method="POST">
+          <input type="hidden" name="dateiname" value="{{ $name }}">
+          <input type="hidden" name="seite" value="{{ $page.RelPermalink }}">
+          <button type="submit">{{ $labels.report }}</button>
+        </form>
+      </li>
+    {{- end }}
+  </ul>
+{{- end }}
