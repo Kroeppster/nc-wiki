@@ -31,28 +31,36 @@
         </div>
       </div>
 
-      {{/* Das auffällige Kästchen rechts neben dem Hero-Text: eine Anspielung auf
-           den EMS-Antwortbogen (Multiple-Choice-Kreise, teils "ausgefüllt" in
-           Blau) mit kleinen Eckmarkierungen (wie Passmarken auf gedrucktem
-           Papier) und dem Countdown bis zum EMS-Termin darunter. Rein
-           dekorativ (aria-hidden="true" = für Screenreader unsichtbar), das
+      {{/* Das auffällige Kästchen rechts neben dem Hero-Text: gestaltet wie
+           eine "Zulassungskarte" zum EMS (Anspielung auf ein echtes
+           Prüfungs-/Eintritts-Ticket), mit kleinen Eckmarkierungen (wie
+           Passmarken auf gedrucktem Papier), einer perforierten Trennlinie
+           (wie bei einem Ticket-Abriss) und dem Live-Countdown bis zum
+           EMS-Termin als grösstem, zentralem Element - bewusst NICHT mehr
+           mit rein dekorativen, bedeutungslosen Kreisen (Feedback vom
+           2026-08-08: "diese Kreise gefallen mir nicht"), sondern mit der
+           einen Zahl, die hier wirklich zählt. Rein dekorativ bis auf die
+           Zahlen selbst (aria-hidden="true" auf den Schmuckelementen), das
            Datum für den Countdown kommt aus hugo.toml (Feld ems_exam_date)
-           und wird per JavaScript in footer.html hochgezählt. */}}
+           und wird per JavaScript in footer.html hochgezählt - die IDs
+           (cd-d/cd-h/cd-m/cd-s) sind unverändert, das bestehende Skript
+           funktioniert ohne Anpassung weiter. */}}
       <div class="hero-panel">
         <span class="reg-mark tl" aria-hidden="true"></span><span class="reg-mark tr" aria-hidden="true"></span>
         <span class="reg-mark bl" aria-hidden="true"></span><span class="reg-mark br" aria-hidden="true"></span>
-        <div class="answer-grid" aria-hidden="true">
-          <span class="bubble"></span><span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
-          <span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span>
-          <span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble is-filled"></span>
-          <span class="bubble"></span><span class="bubble"></span><span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
-        </div>
-        <div class="panel-divider" aria-hidden="true"></div>
+
+        <p class="ticket-label" aria-hidden="true">{{ .Params.hero.ticket_label }}</p>
+
         <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
-        <div class="countdown">
+        <div class="countdown-hero">
+          <span class="num" id="cd-d">–</span><span class="unit">{{ i18n "countdown_days" }}</span>
+        </div>
+
+        <div class="ticket-perforation" aria-hidden="true"></div>
+
+        <div class="countdown countdown-sub">
           {{/* Die "–" Platzhalter-Striche werden beim Laden der Seite sofort
                durch das JavaScript in footer.html mit echten Zahlen ersetzt. */}}
-          <div class="countdown-cell"><span class="num" id="cd-d">–</span><span class="unit">{{ i18n "countdown_days" }}</span></div>
           <div class="countdown-cell"><span class="num" id="cd-h">–</span><span class="unit">{{ i18n "countdown_hours" }}</span></div>
           <div class="countdown-cell"><span class="num" id="cd-m">–</span><span class="unit">{{ i18n "countdown_minutes" }}</span></div>
           <div class="countdown-cell"><span class="num" id="cd-s">–</span><span class="unit">{{ i18n "countdown_seconds" }}</span></div>
