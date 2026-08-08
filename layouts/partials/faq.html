@@ -70,6 +70,15 @@
   {{- end }}
 </div>
 
+{{/* Abschliessender Hinweis unter der ganzen Fragenliste, mit Link zum
+     Kontaktformular - für alle, deren Frage nicht dabei war. Feste
+     UI-Chrome-Texte, deshalb aus i18n/ statt hier fest hinterlegt (siehe
+     Erklärung zu i18n vs. Frontmatter in docs/WARTUNG.md bzw. im
+     Dateikopf von i18n/de.yaml). */}}
+<p class="faq-contact">
+  {{ i18n "faq_contact_prompt" }} <a class="more" href="{{ relLangURL "kontakt/" }}">{{ i18n "faq_contact_cta" }}</a>
+</p>
+
 {{- /* Ab hier: der unsichtbare Datenblock für Suchmaschinen (siehe Erklärung
        im Dateikopf oben). Baut dieselben Fragen/Antworten nochmal in einem
        maschinenlesbaren Format ("JSON-LD") - kein HTML, wird nirgends direkt

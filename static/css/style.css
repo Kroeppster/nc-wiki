@@ -331,6 +331,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .faq-answer .more{display:inline-block;margin-top:.2rem;}
 .faq-subtest-list{margin:0 0 var(--space-3);padding-left:1.3rem;color:var(--color-ink-soft);font-size:var(--text-base);}
 .faq-subtest-list li{margin-bottom:.2rem;}
+.faq-contact{max-width:44rem;margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-line);color:var(--color-ink-soft);font-size:var(--text-sm);}
 
 /* Bild-Header einer Seite */
 .featured-image{margin:var(--space-6) 0 var(--space-8);}

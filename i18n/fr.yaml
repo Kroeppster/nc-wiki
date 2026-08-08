@@ -112,3 +112,6 @@ uniguide_table_th_uni: "Université"
 uniguide_table_th_ems: "EMS"
 uniguide_table_places_unknown: "en cours de vérification"
 uniguide_table_empty: "Aucune université disponible pour l'instant."
+
+faq_contact_prompt: "Ta question n'y figure pas ?"
+faq_contact_cta: "Écris-nous →"

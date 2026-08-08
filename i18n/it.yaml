@@ -111,3 +111,6 @@ uniguide_table_th_uni: "Università"
 uniguide_table_th_ems: "EMS"
 uniguide_table_places_unknown: "in verifica"
 uniguide_table_empty: "Nessuna università disponibile al momento."
+
+faq_contact_prompt: "Non trovi la tua domanda?"
+faq_contact_cta: "Scrivici →"

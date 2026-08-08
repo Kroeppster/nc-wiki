@@ -112,3 +112,6 @@ uniguide_table_th_uni: "Universität"
 uniguide_table_th_ems: "EMS"
 uniguide_table_places_unknown: "wird geprüft"
 uniguide_table_empty: "Noch keine Universitäten hinterlegt."
+
+faq_contact_prompt: "Deine Frage ist nicht dabei?"
+faq_contact_cta: "Schreib uns →"
