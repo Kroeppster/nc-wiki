@@ -140,7 +140,7 @@
 - slug: "st-gallen"
   name: "Universität St.Gallen"
   kanton: "St. Gallen"
-  sprache: ["TODO: prüfen"]
+  sprache: ["Deutsch"]
   studiengaenge: ["Master"]
   ems_erforderlich: "ja"
   auswahlverfahren: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'St.Galler Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in St.Gallen studiert."
