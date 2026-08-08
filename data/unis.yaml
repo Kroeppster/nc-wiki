@@ -77,10 +77,10 @@
   ems_erforderlich: "ja"
   auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
   studienplaetze: null
-  besonderheiten: ["Nur Bachelor an der ETH; wo der Master fortgesetzt wird: TODO: prüfen"]
+  besonderheiten: ["Nur Bachelor an der ETH. Der Master wird an der Universität Zürich (20 Plätze), der Universität Basel oder der Università della Svizzera italiana (Lugano) fortgesetzt - die Zuteilung erfolgt durch die ETH Zürich zu Beginn des dritten Bachelor-Jahres, der Studienplatz für den Master ist dank Transferabkommen garantiert."]
   website: "https://www.ethz.ch"
-  stand: "2026-08-07"
-  quelle: "https://ethz.ch/content/dam/ethz/main/education/admission/bachelor/andere-qual/medizin/vorgehensweise-medizin-und-ap-de.pdf"
+  stand: "2026-08-08"
+  quelle: "https://ethz.ch/en/studies/bachelor/application/bachelor-human-medicine.html"
 
 - slug: "freiburg"
   name: "Universität Freiburg"
