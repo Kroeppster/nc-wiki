@@ -2,7 +2,7 @@
 title: "Simulations de test"
 menu:
   main:
-    parent: ems
+    parent: vorbereitung
     weight: 2
 ---
 

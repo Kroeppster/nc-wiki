@@ -20,18 +20,46 @@
       <span>{{ .Site.Title }}</span>
     </a>
 
+    {{/* Hamburger-Knopf: nur auf schmalen Bildschirmen sichtbar (siehe
+         @media max-width:860px in style.css), klappt das ganze Hauptmenü
+         auf/zu. Auf breiten Bildschirmen ist er per CSS ausgeblendet und tut
+         nichts - dort ist das Menü immer sichtbar. Die eigentliche Klick-Logik
+         steht im gemeinsamen <script>-Block in footer.html. */}}
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNavList" aria-label="{{ i18n "nav_toggle_aria_label" }}">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+
     {{/* Hauptmenü: geht automatisch alle Seiten durch, die irgendwo im
          Frontmatter "menu: main: ..." eingetragen haben, und baut daraus
          diese Liste - inklusive Untermenüs (has-children), falls eine Seite
-         als "parent" einer anderen eingetragen ist. Reihenfolge kommt vom
-         "weight"-Feld im Frontmatter (kleinere Zahl = weiter vorne). */}}
+         als "parent" einer anderen eingetragen ist (oder als "parent" eines
+         der beiden rein konfigurationsbasierten Gruppen-Punkte "vorbereitung"/
+         "austausch", die in hugo.toml definiert sind, siehe dort). Reihenfolge
+         kommt vom "weight"-Feld im Frontmatter (kleinere Zahl = weiter vorne).
+
+         Ein Menüpunkt ohne eigene URL (die beiden Gruppen-Punkte oben) wird
+         als reiner Text (<span>) statt als Link (<a>) angezeigt - er dient
+         nur zum Aufklappen seiner Kinder, es gibt keine Seite, zu der er
+         führen könnte. Hat ein Menüpunkt Kinder, kommt zusätzlich ein
+         Aufklapp-Knopf (submenu-toggle) dazu, der per Klick/Tap zuverlässig
+         funktioniert (nicht nur per Maus-Hover, siehe Klick-Logik in
+         footer.html) - wichtig für Touch-Geräte. */}}
     <nav class="main-nav" aria-label="{{ i18n "nav_aria_label" }}">
-      <ul>
+      <ul id="mainNavList">
         {{ range .Site.Menus.main }}
         <li{{ if .HasChildren }} class="has-children"{{ end }}>
+          {{ if .URL }}
           <a href="{{ .URL }}">{{ .Name }}</a>
+          {{ else }}
+          <span>{{ .Name }}</span>
+          {{ end }}
           {{ if .HasChildren }}
-          <ul class="submenu">
+          <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="submenu-{{ .Identifier }}" aria-label="{{ .Name }} {{ i18n "submenu_toggle_aria_label" }}">
+            <svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.2 6 7.8l3.5-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="submenu" id="submenu-{{ .Identifier }}">
             {{ range .Children }}
             <li><a href="{{ .URL }}">{{ .Name }}</a></li>
             {{ end }}

@@ -4,7 +4,7 @@ contact_form: true
 menu:
   main:
     identifier: kontakt
-    weight: 6
+    weight: 8
 ---
 
 Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente di medicina, contattaci pure!

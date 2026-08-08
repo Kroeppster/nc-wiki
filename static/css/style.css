@@ -208,12 +208,41 @@ img.brand-mark{object-fit:contain;padding:2px;}
 nav.main-nav{order:2;flex:1 1 auto;}
 nav.main-nav>ul{display:flex;gap:var(--space-6);list-style:none;margin:0;padding:0;align-items:center;flex-wrap:wrap;}
 nav.main-nav li{position:relative;}
-nav.main-nav>ul>li>a{font-size:var(--text-sm);font-weight:600;padding:var(--space-2) 0;display:inline-block;}
+nav.main-nav>ul>li>a,nav.main-nav>ul>li>span{font-size:var(--text-sm);font-weight:600;padding:var(--space-2) 0;display:inline-block;}
 nav.main-nav>ul>li>a:hover{color:var(--color-signal);}
+/* Menüpunkte ohne eigene URL (reine Dropdown-Gruppen wie "Vorbereitung",
+   siehe header.html) werden als <span> statt <a> gerendert - etwas gedämpfter
+   eingefärbt, damit optisch klar ist, dass hier kein Klick zu einer eigenen
+   Seite führt, nur das Aufklappen der Kinder passiert. */
+nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .has-children>.submenu{display:none;position:absolute;top:100%;left:0;background:var(--color-surface);border:1px solid var(--color-line);min-width:220px;padding:var(--space-2);margin:0;list-style:none;box-shadow:0 16px 32px rgba(16,26,51,.1);border-radius:var(--radius-md);}
 .has-children:hover>.submenu,.has-children:focus-within>.submenu{display:block;}
+/* Zusätzlich zum Hover (Maus) öffnet/schliesst die Klick/Tap-Logik aus
+   footer.html das Untermenü über diese Klasse - siehe dort. Das ist der
+   verlässliche Mechanismus für Touch-Geräte, Hover bleibt als Bonus für
+   Maus-Geräte bestehen. */
+.has-children.is-open>.submenu{display:block;}
 .submenu li a{display:block;padding:var(--space-2) var(--space-3);font-size:var(--text-sm);font-weight:400;border-radius:var(--radius-sm);}
 .submenu li a:hover{background:var(--color-surface-sunken);color:var(--color-signal);}
+
+/* Kleiner Pfeil-Knopf neben Menüpunkten mit Untermenü, öffnet/schliesst per
+   Klick/Tap (siehe .has-children.is-open oben und die Klick-Logik in
+   footer.html). Eigenes <button>-Element statt den Link selbst abzufangen,
+   damit der Linktext (falls vorhanden) weiterhin normal zur eigenen Seite
+   führt und nur der Pfeil fürs Auf-/Zuklappen zuständig ist. */
+.submenu-toggle{background:none;border:none;padding:.3rem;margin-left:.05rem;cursor:pointer;color:var(--color-ink-faint);display:inline-flex;align-items:center;vertical-align:middle;}
+.submenu-toggle:hover{color:var(--color-signal);}
+.submenu-toggle .chevron{width:10px;height:10px;transition:transform .15s;}
+.has-children.is-open>.submenu-toggle .chevron{transform:rotate(180deg);}
+
+/* Hamburger-Knopf: nur auf schmalen Bildschirmen sichtbar gemacht (siehe
+   @media max-width:860px weiter unten) - auf breiten Bildschirmen per
+   display:none ausgeblendet, dort ist das Menü ohnehin immer sichtbar. */
+.nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:2.1rem;height:2.1rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:var(--color-surface);cursor:pointer;padding:0;order:1;}
+.nav-toggle-bar{display:block;width:1.1rem;height:1.5px;background:var(--color-ink);transition:transform .15s,opacity .15s;}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2){opacity:0;}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
 .lang-switch{display:flex;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--text-xs);order:3;}
 #search{order:2;flex:0 0 200px;max-width:240px;}
 .lang-switch span,.lang-switch a{padding:.25rem .5rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);color:var(--color-ink-faint);}
@@ -500,10 +529,25 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 @media (max-width:860px){
   header.site{position:static;}
   #search{order:4;flex:1 1 100%;max-width:none;}
-  nav.main-nav>ul{gap:var(--space-4);}
-  .submenu{position:static !important;border:none;box-shadow:none;padding-left:var(--space-3);}
+
+  /* Hauptmenü wird zum Hamburger-Menü: der Knopf ist jetzt sichtbar, und die
+     Liste ist standardmässig eingeklappt (display:none) - sie erscheint erst,
+     wenn nav.main-nav die Klasse "is-open" bekommt (Klick auf den
+     Hamburger-Knopf, siehe Klick-Logik in footer.html). Vorher (ohne diese
+     Regeln) waren auf schmalen Bildschirmen IMMER alle Menüpunkte inkl.
+     Untermenü-Links sichtbar und gestapelt - das nahm einen grossen Teil des
+     Bildschirms ein, bevor überhaupt Seiteninhalt zu sehen war. */
+  .nav-toggle{display:flex;}
+  nav.main-nav{order:5;flex:1 1 100%;}
+  nav.main-nav>ul{display:none;flex-direction:column;align-items:stretch;gap:0;width:100%;padding-top:var(--space-3);}
+  nav.main-nav.is-open>ul{display:flex;}
+  nav.main-nav>ul>li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;border-top:1px solid var(--color-line);}
+  nav.main-nav>ul>li>a,nav.main-nav>ul>li>span{padding:var(--space-3) 0;flex:1 1 auto;}
+  .submenu-toggle{padding:var(--space-3);}
+  .submenu{position:static !important;border:none;box-shadow:none;padding-left:var(--space-3);flex:0 0 100%;}
   .has-children>.submenu{display:none;}
   .has-children:hover>.submenu,.has-children:focus-within>.submenu{display:block;}
+
   .hero{padding-block:var(--space-12) var(--space-10);}
   section{padding-block:var(--space-12);}
   .hero-grid{grid-template-columns:1fr;}

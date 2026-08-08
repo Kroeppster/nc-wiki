@@ -3,7 +3,8 @@ title: "Unterstützer:innen"
 menu:
   main:
     identifier: unterstuetzer-innen
-    weight: 4
+    weight: 7
+    name: "Unterstützen"
 ---
 
 Unser Angebot bleibt kostenlos – dank Spenden, Sponsoring und dem Engagement unserer Unterstützer:innen. Wir danken herzlich unseren Gönner\*innen:

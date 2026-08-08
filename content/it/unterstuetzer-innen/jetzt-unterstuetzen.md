@@ -1,5 +1,9 @@
 ---
 title: "Sostienici ora"
+menu:
+  main:
+    parent: unterstuetzer-innen
+    weight: 1
 ---
 
 Le nostre offerte sono completamente gratuite. Se ne benefici e desideri fare una piccola donazione, saremo lieti di ricevere il tuo sostegno per coprire costi come quelli di stampa.

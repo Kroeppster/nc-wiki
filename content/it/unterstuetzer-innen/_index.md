@@ -3,7 +3,8 @@ title: "Sostenitori e sostenitrici"
 menu:
   main:
     identifier: unterstuetzer-innen
-    weight: 4
+    weight: 7
+    name: "Sostieni"
 ---
 
 La nostra offerta rimane gratuita – grazie a donazioni, sponsorizzazioni e all'impegno delle nostre sostenitrici e dei nostri sostenitori. Ringraziamo di cuore i nostri sponsor:

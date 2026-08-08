@@ -3,7 +3,7 @@ title: "Archiv"
 menu:
   main:
     parent: ueber-uns
-    weight: 5
+    weight: 4
 ---
 
 Platzhaltertext: Ältere Inhalte, vergangene Kampagnen und historische Dokumente von NCWiki.

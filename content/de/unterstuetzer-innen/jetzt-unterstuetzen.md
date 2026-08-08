@@ -1,5 +1,9 @@
 ---
 title: "Jetzt unterstützen"
+menu:
+  main:
+    parent: unterstuetzer-innen
+    weight: 1
 ---
 
 Unsere Angebote sind komplett kostenlos. Wenn du von ihnen profitierst und einen kleinen Betrag spenden möchtest, freuen wir uns sehr über deine Unterstützung, um Sachen wie Druckkosten zu decken.

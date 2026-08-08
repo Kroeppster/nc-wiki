@@ -1,5 +1,9 @@
 ---
 title: "Soutenir maintenant"
+menu:
+  main:
+    parent: unterstuetzer-innen
+    weight: 1
 ---
 
 Ce que nous offrons est entièrement gratuit. Si tu en profites et que tu souhaites faire un don, nous nous réjouissons de ton soutien pour couvrir des frais comme l'impression.

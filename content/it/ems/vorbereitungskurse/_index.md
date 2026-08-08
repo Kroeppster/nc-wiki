@@ -2,7 +2,7 @@
 title: "Corsi di preparazione"
 menu:
   main:
-    parent: ems
+    parent: vorbereitung
     weight: 3
 ---
 

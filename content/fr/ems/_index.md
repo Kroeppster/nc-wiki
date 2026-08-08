@@ -3,7 +3,9 @@ title: "EMS"
 menu:
   main:
     identifier: ems
-    weight: 3
+    parent: vorbereitung
+    weight: 1
+    name: "Déroulement & conseils"
 ---
 
 ## 1. Préparation au NC

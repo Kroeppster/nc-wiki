@@ -24,6 +24,8 @@
 
 skip_to_content: "Vai al contenuto"
 nav_aria_label: "Navigazione principale"
+nav_toggle_aria_label: "Apri/chiudi il menu"
+submenu_toggle_aria_label: "Apri il sottomenu"
 theme_toggle_aria_label: "Cambia tema"
 lang_switch_aria_label: "Lingua"
 site_tagline: "Preparazione gratuita all'EMS, da studenti per studenti."

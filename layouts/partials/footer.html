@@ -27,9 +27,18 @@
       <div>
         <h4>{{ i18n "footer_main_menu_heading" }}</h4>
         <ul>
-          {{/* Gleiche automatische Menü-Logik wie im Hauptmenü oben, siehe header.html */}}
+          {{/* Gleiche automatische Menü-Logik wie im Hauptmenü oben, siehe
+               header.html - anders als dort ist diese Liste hier aber flach
+               (keine Untermenüs), darum werden die beiden rein
+               gruppierenden Menüpunkte ohne eigene Seite ("Vorbereitung",
+               "Austausch", siehe hugo.toml) hier einfach übersprungen: ein
+               Link ohne Ziel-URL wäre in einer einfachen Fusszeilen-Liste nur
+               verwirrend, ihre Kinder stehen ohnehin schon einzeln bei den
+               jeweiligen Themenseiten verlinkt. */}}
           {{ range .Site.Menus.main }}
+          {{ if .URL }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+          {{ end }}
           {{ end }}
         </ul>
       </div>
@@ -166,6 +175,50 @@
       var next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+    });
+  })();
+
+  {{/* ---- Teil 4: Hauptnavigation - Hamburger (Mobile) + Klick/Tap für Untermenüs ----
+       Ergänzt die reine CSS-Hover-Lösung (funktioniert nur mit einer Maus) um
+       einen Klick/Tap-Mechanismus, der auch auf Touch-Geräten zuverlässig
+       funktioniert, und klappt auf schmalen Bildschirmen das ganze Hauptmenü
+       hinter einem Hamburger-Knopf ein/aus (siehe header.html/style.css). */}}
+  (function(){
+    var navToggle = document.getElementById('navToggle');
+    var nav = document.querySelector('nav.main-nav');
+    if(navToggle && nav){
+      navToggle.addEventListener('click', function(){
+        var isOpen = nav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+
+    function closeSubmenu(li){
+      li.classList.remove('is-open');
+      var btn = li.querySelector('.submenu-toggle');
+      if(btn) btn.setAttribute('aria-expanded', 'false');
+    }
+
+    document.querySelectorAll('.submenu-toggle').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var li = btn.closest('.has-children');
+        if(!li) return;
+        var willOpen = !li.classList.contains('is-open');
+        {{/* Andere offene Untermenüs schliessen, damit nicht mehrere
+             gleichzeitig offen stehen bleiben. */}}
+        document.querySelectorAll('.has-children.is-open').forEach(function(other){
+          if(other !== li) closeSubmenu(other);
+        });
+        li.classList.toggle('is-open', willOpen);
+        btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+    });
+
+    {{/* Aussen-Klick schliesst offene Untermenüs (nicht das Mobile-Hauptmenü
+         selbst - das bleibt offen, bis der Hamburger erneut angeklickt wird). */}}
+    document.addEventListener('click', function(e){
+      if(e.target.closest('.has-children')) return;
+      document.querySelectorAll('.has-children.is-open').forEach(closeSubmenu);
     });
   })();
 </script>
