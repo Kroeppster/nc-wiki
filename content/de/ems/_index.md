@@ -22,7 +22,7 @@ Bitte denk daran, dass du dich **bis zum 15. Februar** über [swissuniversities]
 
 Bei der Anmeldung musst du nach Priorität angeben, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Hierbei solltest du auf zwei Dinge achten:
 
-- Dein steuerlicher Wohnsitz garantiert dir bei Bestehen des EMS einen Studienplatz in deinem Kanton – aber nur, falls die Universität deines Kantons auch den Medizin-Studiengang anbietet. Baselland gilt hier auch als Uni-Kanton für die Universität Basel. Zürich gilt aber nur als Uni-Kanton für die Universität Zürich, nicht für die ETH Zürich, da diese eine eidgenössische Hochschule ist. Details zu den einzelnen Universitäten findest du in unserem [Uniguide](/ems/uniguide/).
+- Dein steuerlicher Wohnsitz garantiert dir bei Bestehen des EMS einen Studienplatz in deinem Kanton – aber nur, falls die Universität deines Kantons auch den Medizin-Studiengang anbietet. Baselland gilt hier auch als Uni-Kanton für die Universität Basel. Zürich gilt aber nur als Uni-Kanton für die Universität Zürich, nicht für die ETH Zürich, da diese eine eidgenössische Hochschule ist. Details zu den einzelnen Universitäten findest du in unserem [Uniguide]({{< relref "/ems/uniguide" >}}).
 - Manche Universitäten sind beliebter, weshalb man einen höheren Rangplatz im Vergleich zu anderen Kandidierenden benötigt. Deine erste Priorität wird dabei immer zuerst berücksichtigt. Beispiel: Du wählst die ETH als erste Wahl und Uni Zürich als zweite Wahl. Die ETH ist für Humanmedizin weniger beliebt als die Uni Zürich. Da du bei deinem Testresultat unter den 1 % Besten warst, wirst du nun deiner Erstwahl (ETH) zugeteilt.
 
 ### 1.4 Aufgabenstellungen auswendig kennen
@@ -99,7 +99,7 @@ Zwischen den Untertests gibt es keine Pausen – es heisst immer gleich weiterbl
 | Konzentriertes und sorgfältiges Arbeiten | 1600 Zeichen | 18 | 8 min |
 | **Gesamt** | **144 + 1600 Zeichen** | **162** | **ca. 3 Std. 55 Min (netto)** |
 
-Guides zu allen Untertests findest du unter [Übungsaufgaben](/ems/uebungsaufgaben/).
+Guides zu allen Untertests findest du unter [Übungsaufgaben]({{< relref "/ems/uebungsaufgaben" >}}).
 
 ### 3.1 Antwortbogen vervollständigen und strategisches Raten
 
@@ -113,4 +113,4 @@ Du hast den Eignungstest hinter dir – das ist eine starke Leistung, gönn dir 
 
 ## 5. Erfahrungsberichte
 
-Schau bei den [Erfahrungsberichten](/ems/erfahrungsberichte/) früherer Teilnehmender vorbei – oder [reiche selbst einen ein](/ems/erfahrungsberichte/bericht-einreichen/).
+Schau bei den [Erfahrungsberichten]({{< relref "/ems/erfahrungsberichte" >}}) früherer Teilnehmender vorbei – oder [reiche selbst einen ein]({{< relref "/ems/erfahrungsberichte/bericht-einreichen" >}}).

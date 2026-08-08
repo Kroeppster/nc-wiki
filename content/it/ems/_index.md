@@ -22,7 +22,7 @@ Ricorda che devi iscriverti entro il **15 febbraio**. Se hai un piano B, ricorda
 
 Quando ti iscrivi, devi indicare in ordine di priorità in quale università vorresti studiare medicina umana, dentaria o veterinaria. Presta attenzione a due cose:
 
-- Se superi l'EMS, il tuo domicilio fiscale ti garantisce un posto all'università del tuo cantone – ma solo se l'università del tuo cantone offre anche un corso di laurea in medicina. Basilea Campagna è considerato cantone universitario per l'Università di Basilea. Dettagli sulle singole università nel nostro [Uniguide](/it/ems/uniguide/).
+- Se superi l'EMS, il tuo domicilio fiscale ti garantisce un posto all'università del tuo cantone – ma solo se l'università del tuo cantone offre anche un corso di laurea in medicina. Basilea Campagna è considerato cantone universitario per l'Università di Basilea. Dettagli sulle singole università nel nostro [Uniguide]({{< relref "/ems/uniguide" >}}).
 - Alcune università sono più richieste e quindi serve un piazzamento migliore rispetto ad altre candidate e candidati. La tua prima scelta viene comunque sempre considerata per prima. Esempio: scegli il Politecnico di Zurigo (ETH) come prima scelta e l'Università di Zurigo (UZH) come seconda. L'ETH è generalmente meno richiesto per medicina rispetto all'UZH. Se sei tra il migliore 1%, verrai comunque assegnat\* alla tua prima scelta (ETH).
 
 ### 1.4 Conoscere le consegne a memoria
@@ -99,7 +99,7 @@ Non ci sono pause tra i sottotest, si passa sempre subito al successivo.
 | Lavoro concentrato e accurato | 1600 simboli | 18 | 8 min |
 | **Totale** | **144 + 1600 simboli** | **162** | **ca. 3 ore e 55 min (netto)** |
 
-Trovi le nostre guide per tutti i sottotest sotto [Esercizi](/it/ems/uebungsaufgaben/).
+Trovi le nostre guide per tutti i sottotest sotto [Esercizi]({{< relref "/ems/uebungsaufgaben" >}}).
 
 ### 3.1 Completare il foglio delle risposte e tirare a indovinare strategicamente
 
@@ -113,4 +113,4 @@ Hai terminato il test attitudinale – congratulazioni, è un grande traguardo! 
 
 ## 5. Testimonianze
 
-Dai un'occhiata alle [testimonianze](/it/ems/erfahrungsberichte/) di chi ha partecipato in passato – oppure [invia la tua](/it/ems/erfahrungsberichte/bericht-einreichen/).
+Dai un'occhiata alle [testimonianze]({{< relref "/ems/erfahrungsberichte" >}}) di chi ha partecipato in passato – oppure [invia la tua]({{< relref "/ems/erfahrungsberichte/bericht-einreichen" >}}).

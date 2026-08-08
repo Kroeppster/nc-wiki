@@ -101,4 +101,4 @@ Wir danken unseren ehemaligen Verantwortlichen für ihr besonderes Engagement in
 
 ## Mitmachen
 
-Für Fragen, Anregungen oder wenn du dich als Medizinstudent\*in auch bei uns engagieren möchtest, melde dich gerne über unser [Kontaktformular](/kontakt/)!
+Für Fragen, Anregungen oder wenn du dich als Medizinstudent\*in auch bei uns engagieren möchtest, melde dich gerne über unser [Kontaktformular]({{< relref "/kontakt" >}})!

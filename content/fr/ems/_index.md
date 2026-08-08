@@ -22,7 +22,7 @@ N'oublie pas que tu dois t'inscrire **avant le 15 février**. N'oublie pas non p
 
 Lors de l'inscription, tu dois indiquer, par ordre de priorité, dans quelle université tu souhaites effectuer tes études de médecine humaine, dentaire ou vétérinaire. Fais attention à deux choses :
 
-- Si tu réussis l'EMS, ton domicile fiscal te garantit une place dans l'université de ton canton de résidence – mais seulement si l'université de ton canton propose aussi un cursus de médecine. Bâle-Campagne est aussi considéré comme un canton universitaire pour l'Université de Bâle. Détails sur chaque université dans notre [Uniguide](/fr/ems/uniguide/).
+- Si tu réussis l'EMS, ton domicile fiscal te garantit une place dans l'université de ton canton de résidence – mais seulement si l'université de ton canton propose aussi un cursus de médecine. Bâle-Campagne est aussi considéré comme un canton universitaire pour l'Université de Bâle. Détails sur chaque université dans notre [Uniguide]({{< relref "/ems/uniguide" >}}).
 - Certaines universités sont plus populaires et demandent donc un meilleur classement par rapport aux autres candidat·e·s. Ta première priorité est cependant toujours considérée en premier. Exemple : tu choisis l'ETH comme premier choix et l'Uni Zurich comme deuxième choix. L'ETH est moins populaire pour la médecine humaine qu'Uni Zurich. Même si tu fais partie du 1 % le plus performant, tu seras quand même affecté·e à ton premier choix (ETH).
 
 ### 1.4 Connaître les consignes par cœur
@@ -103,7 +103,7 @@ Il n'y a pas de pause entre les sous-tests, il faut donc toujours tourner la pag
 | Travail avec soin et concentration | 1600 symboles | 18 | 8 min |
 | **Total** | **144 + 1600 symboles** | **162** | **env. 3 h 55 (net)** |
 
-Retrouve nos guides pour tous les sous-tests sous [Exercices](/fr/ems/uebungsaufgaben/).
+Retrouve nos guides pour tous les sous-tests sous [Exercices]({{< relref "/ems/uebungsaufgaben" >}}).
 
 ### 3.1 Remplir la feuille de réponses et deviner stratégiquement
 
@@ -117,4 +117,4 @@ Tu as terminé le test d'aptitude – félicitations, c'est une belle performanc
 
 ## 5. Témoignages
 
-Jette un coup d'œil aux [témoignages](/fr/ems/erfahrungsberichte/) des années précédentes – ou [soumets le tien](/fr/ems/erfahrungsberichte/bericht-einreichen/).
+Jette un coup d'œil aux [témoignages]({{< relref "/ems/erfahrungsberichte" >}}) des années précédentes – ou [soumets le tien]({{< relref "/ems/erfahrungsberichte/bericht-einreichen" >}}).

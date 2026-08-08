@@ -10,8 +10,8 @@ Verein NCWiki
 Basellandschaftliche Kantonalbank  
 IBAN : CH16 0076 9436 6089 3200 1
 
-Un don est aussi possible par Twint – contacte-nous via notre [formulaire de contact](/fr/kontakt/) pour obtenir le code QR.
+Un don est aussi possible par Twint – contacte-nous via notre [formulaire de contact]({{< relref "/kontakt" >}}) pour obtenir le code QR.
 
 ## Sponsoring
 
-Vous souhaitez soutenir NCWiki en tant qu'organisation ? Contactez-nous via notre [formulaire de contact](/fr/kontakt/) – nous nous réjouissons de l'échange.
+Vous souhaitez soutenir NCWiki en tant qu'organisation ? Contactez-nous via notre [formulaire de contact]({{< relref "/kontakt" >}}) – nous nous réjouissons de l'échange.

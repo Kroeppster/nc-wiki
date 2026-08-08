@@ -101,4 +101,4 @@ Ringraziamo i nostri ex responsabili per il loro particolare impegno nelle loro 
 
 ## Partecipare
 
-Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente delle facoltà mediche, contattaci tramite il nostro [modulo di contatto](/it/kontakt/)!
+Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente delle facoltà mediche, contattaci tramite il nostro [modulo di contatto]({{< relref "/kontakt" >}})!

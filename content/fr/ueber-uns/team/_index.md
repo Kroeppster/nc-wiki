@@ -101,4 +101,4 @@ Nous remercions tou·te·s nos ancien·ne·s responsables pour leur engagement p
 
 ## S'engager
 
-Pour toute question, suggestion ou si tu souhaites t'engager avec nous en tant qu'étudiant·e en médecine, contacte-nous via notre [formulaire de contact](/fr/kontakt/) !
+Pour toute question, suggestion ou si tu souhaites t'engager avec nous en tant qu'étudiant·e en médecine, contacte-nous via notre [formulaire de contact]({{< relref "/kontakt" >}}) !
