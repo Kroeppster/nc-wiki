@@ -12,20 +12,21 @@
         </div>
       </div>
       <div class="hero-panel">
-        <span class="tick tl" aria-hidden="true"></span><span class="tick tr" aria-hidden="true"></span>
-        <span class="tick bl" aria-hidden="true"></span><span class="tick br" aria-hidden="true"></span>
-        <div class="pattern-grid" aria-hidden="true">
-          <span></span><span class="on"></span><span></span><span></span>
-          <span></span><span></span><span class="on"></span><span></span>
-          <span class="on"></span><span></span><span></span><span class="on"></span>
-          <span></span><span class="on"></span><span></span><span></span>
+        <span class="reg-mark tl" aria-hidden="true"></span><span class="reg-mark tr" aria-hidden="true"></span>
+        <span class="reg-mark bl" aria-hidden="true"></span><span class="reg-mark br" aria-hidden="true"></span>
+        <div class="answer-grid" aria-hidden="true">
+          <span class="bubble"></span><span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
+          <span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span>
+          <span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble is-filled"></span>
+          <span class="bubble"></span><span class="bubble"></span><span class="bubble is-filled"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
         </div>
+        <div class="panel-divider" aria-hidden="true"></div>
         <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
         <div class="countdown">
-          <div><span class="num" id="cd-d">–</span><span class="unit">{{ i18n "countdown_days" }}</span></div>
-          <div><span class="num" id="cd-h">–</span><span class="unit">{{ i18n "countdown_hours" }}</span></div>
-          <div><span class="num" id="cd-m">–</span><span class="unit">{{ i18n "countdown_minutes" }}</span></div>
-          <div><span class="num" id="cd-s">–</span><span class="unit">{{ i18n "countdown_seconds" }}</span></div>
+          <div class="countdown-cell"><span class="num" id="cd-d">–</span><span class="unit">{{ i18n "countdown_days" }}</span></div>
+          <div class="countdown-cell"><span class="num" id="cd-h">–</span><span class="unit">{{ i18n "countdown_hours" }}</span></div>
+          <div class="countdown-cell"><span class="num" id="cd-m">–</span><span class="unit">{{ i18n "countdown_minutes" }}</span></div>
+          <div class="countdown-cell"><span class="num" id="cd-s">–</span><span class="unit">{{ i18n "countdown_seconds" }}</span></div>
         </div>
       </div>
     </div>
@@ -68,8 +69,8 @@
       <p class="eyebrow">{{ .Params.mission.eyebrow }}</p>
       <h2 class="mission-lede">{{ .Params.mission.heading }}</h2>
       <div class="feature-grid">
-        {{ range $i, $feature := .Params.mission.features }}
-        <div class="feature"><span class="num">{{ printf "%02d" (add $i 1) }}</span><h3>{{ $feature.title }}</h3><p>{{ $feature.text }}</p></div>
+        {{ range .Params.mission.features }}
+        <div class="feature"><span class="num" aria-hidden="true"></span><h3>{{ .title }}</h3><p>{{ .text }}</p></div>
         {{ end }}
       </div>
     </div>

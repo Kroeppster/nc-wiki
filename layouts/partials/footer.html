@@ -3,8 +3,8 @@
     <div class="footer-grid">
       <div>
         <h4>{{ .Site.Title }}</h4>
-        <p style="color:#C9C7BC;font-size:.9rem;max-width:22rem;">{{ i18n "site_tagline" }}</p>
-        <p style="color:#8B8A7E;font-size:.85rem;margin-top:1rem;">{{ .Site.Params.org_name }}<br>{{ .Site.Params.org_address }}<br>{{ .Site.Params.org_email }}</p>
+        <p class="footer-lead">{{ i18n "site_tagline" }}</p>
+        <p class="footer-address">{{ .Site.Params.org_name }}<br>{{ .Site.Params.org_address }}<br>{{ .Site.Params.org_email }}</p>
       </div>
       <div>
         <h4>{{ i18n "footer_main_menu_heading" }}</h4>
@@ -25,8 +25,8 @@
       <div class="footer-newsletter">
         {{ with .Site.Params.newsletter_url }}
         <h4>{{ i18n "footer_newsletter_heading" }}</h4>
-        <p style="font-size:.85rem;color:#C9C7BC;margin-bottom:.5rem;">{{ i18n "footer_newsletter_text" }}</p>
-        <a class="btn btn-primary" style="width:100%;justify-content:center;" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "footer_newsletter_submit" }}</a>
+        <p class="footer-lead">{{ i18n "footer_newsletter_text" }}</p>
+        <a class="btn btn-primary btn-block" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "footer_newsletter_submit" }}</a>
         {{ end }}
         <div class="footer-social">
           {{ with .Site.Params.social_instagram }}<a href="{{ . }}" class="social-instagram" target="_blank" rel="noopener">Instagram</a>{{ end }}
