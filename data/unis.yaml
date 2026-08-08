@@ -1,11 +1,34 @@
-# Uniguide-Daten. Recherchiert am 2026-08-07 anhand offizieller Quellen
-# (swissuniversities.ch, jeweilige Universitäts-Website). Zahlen (studienplaetze)
-# absichtlich NICHT recherchiert/eingetragen, siehe Projektvorgabe - bitte selbst
-# auf den offiziellen Seiten prüfen und eintragen.
+# ============================================================================
+# UNIGUIDE-DATEN (alle Schweizer Universitäten mit Medizinstudium)
+# ============================================================================
+# Wird für zwei Ansichten verwendet: die grosse Vergleichstabelle (siehe
+# layouts/partials/uniguide-table.html) und die Detailseite jeder einzelnen
+# Universität (siehe layouts/partials/uni-detail.html). Jede Universität
+# braucht dafür ZWEI Dinge: einen Eintrag hier UND eine passende, fast leere
+# Seite unter content/<sprache>/ems/uniguide/<slug>.md (nur "title" und
+# "uni_slug" - Beispiel: content/de/ems/uniguide/basel.md) - ohne diese
+# Seite würde der Link von der Tabelle zur Detailseite ins Leere führen.
 #
-# Felder: slug, name, kanton, sprache (Liste), studiengaenge (Liste),
-# ems_erforderlich (ja/nein/teilweise), auswahlverfahren (Kurztext),
-# studienplaetze (Zahl oder null), besonderheiten (Liste), website, stand, quelle.
+# Recherchiert am 2026-08-07 anhand offizieller Quellen (swissuniversities.ch,
+# jeweilige Universitäts-Website). Zahlen (studienplaetze) absichtlich NICHT
+# recherchiert/eingetragen, siehe Projektvorgabe - bitte selbst auf den
+# offiziellen Seiten prüfen und eintragen. Wo etwas unsicher/nicht
+# bestätigt ist, steht statt eines erfundenen Werts "TODO: prüfen".
+#
+# Felder je Eintrag:
+#   slug             - technischer Name für die Web-Adresse, z.B. "basel"
+#   name             - offizieller Name der Universität (wird NICHT übersetzt,
+#                       auch auf FR/IT-Seiten steht der echte, offizielle Name)
+#   kanton           - Standort-Kanton
+#   sprache          - Liste der Unterrichtssprache(n)
+#   studiengaenge    - Liste, z.B. ["Bachelor", "Master"]
+#   ems_erforderlich - "ja", "nein" oder "teilweise"
+#   auswahlverfahren - Kurztext zum Zulassungsverfahren
+#   studienplaetze   - Zahl oder null (siehe Hinweis oben)
+#   besonderheiten   - Liste mit Stichpunkten zu Sonderfällen (optional, kann leer sein)
+#   website          - offizielle Website der Universität
+#   stand            - Datum, an dem diese Angaben zuletzt geprüft wurden
+#   quelle           - Link zur Quelle dieser Angaben (Nachvollziehbarkeit)
 
 - slug: "basel"
   name: "Universität Basel"

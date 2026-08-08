@@ -1,13 +1,26 @@
 {{- /*
-  Sponsoren-Raster, gespeist aus data/sponsors.yaml.
-  Erwartet je Eintrag: name, logo (Dateiname relativ zu assets/images/sponsors/), website.
-  Fehlt eine Logo-Datei (noch) auf der Platte, wird der Name als Text-Fallback gezeigt -
-  kein kaputtes Layout, solange Logos noch nicht nachgereicht wurden.
+  ============================================================================
+  SPONSOREN-LOGO-RASTER (auf der "Unterstützer:innen"-Seite)
+  ============================================================================
+  Gespeist aus data/sponsors.yaml - dort steht pro Sponsor: name, logo
+  (Dateiname der Logo-Datei unter assets/images/sponsors/) und website.
+
+  Um einen neuen Sponsor hinzuzufügen: einen neuen Eintrag in
+  data/sponsors.yaml ergänzen UND die Logo-Datei unter
+  assets/images/sponsors/<dateiname> hochladen.
+
+  Fehlt die Logo-Datei (noch) auf der Platte - z.B. weil ein neuer Sponsor
+  schon eingetragen wurde, das Logo aber noch nicht hochgeladen ist -, wird
+  automatisch stattdessen einfach der NAME des Sponsors als Text angezeigt.
+  Kein kaputtes Layout, kein fehlendes Bild-Symbol, einfach ein sauberer
+  Text-Platzhalter, bis das Logo nachgereicht wird.
+  ============================================================================
 */}}
 {{- $sponsors := .Site.Data.sponsors }}
 {{- if $sponsors }}
 <ul class="sponsor-grid">
   {{- range $sponsors }}
+  {{- /* Prüfen, ob die Logo-Datei tatsächlich existiert (siehe Erklärung oben) */ -}}
   {{- $logoRes := "" }}
   {{- with .logo }}{{ with resources.Get (printf "images/sponsors/%s" .) }}{{ $logoRes = . }}{{ end }}{{ end }}
   <li class="sponsor-tile">
@@ -17,6 +30,9 @@
     {{- else }}
       {{- $inner = printf "<span class=\"sponsor-name\">%s</span>" .name }}
     {{- end }}
+    {{- /* Die ganze Kachel ist anklickbar und führt zur Website des Sponsors,
+           falls eine hinterlegt ist - sonst wird das Logo/der Name einfach
+           ohne Link angezeigt. */ -}}
     {{- if .website }}
     <a href="{{ .website }}" target="_blank" rel="noopener">{{ $inner | safeHTML }}</a>
     {{- else }}

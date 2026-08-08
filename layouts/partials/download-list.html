@@ -1,9 +1,26 @@
 {{- /*
-  Automatische Download-Liste.
-  Parameter (dict):
+  ============================================================================
+  AUTOMATISCHE DOWNLOAD-LISTE (scannt einen Ordner, kein Frontmatter nötig)
+  ============================================================================
+  Wird für Testsimulationen und Kursskripte verwendet (siehe list.html).
+  Der grosse Vorteil: um ein neues PDF hinzuzufügen, muss man NICHTS in
+  einer Textdatei eintragen - einfach die PDF-Datei in den richtigen Ordner
+  unter assets/downloads/ hochladen, und sie erscheint beim nächsten Bauen
+  der Website automatisch in der Liste (siehe docs/WARTUNG.md, Abschnitt
+  "Wie füge ich ein PDF hinzu?").
+
+  Parameter, die diese Datei erwartet:
     path - Ordnerpfad relativ zu assets/, z.B. "downloads/kursskripte"
-    page - die aktuelle Page (für Sprache und relPermalink)
-  Formspree-Endpoint für "Fehler melden" ist noch ein Platzhalter.
+    page - die aktuelle Seite (wird für die Sprache und für den "Fehler
+           melden"-Link gebraucht)
+
+  WICHTIG - bekannte Lücke: Der "Fehler melden"-Knopf bei jedem Download
+  soll eigentlich eine Meldung per Formspree (externer Formular-Dienst,
+  siehe docs/WARTUNG.md) verschicken. Die Formspree-Adresse dafür ist noch
+  nicht eingerichtet ("REPLACE_ME" unten) - der Knopf funktioniert aktuell
+  also noch NICHT wirklich. Muss noch durch eine echte Formspree-Adresse
+  ersetzt werden.
+  ============================================================================
 */}}
 {{- $folder := .path }}
 {{- $page := .page }}
@@ -12,16 +29,30 @@
 {{- $overrides := $site.Data.downloads.overrides }}
 {{- $formspreeEndpoint := "https://formspree.io/f/REPLACE_ME" }}
 
+{{- /* Alle PDF-Dateien im angegebenen Ordner finden, neueste (alphabetisch
+       letzte, meist die mit der höchsten Jahreszahl im Namen) zuerst. */ -}}
 {{- $files := resources.Match (printf "%s/*.pdf" $folder) }}
 {{- $files = sort $files "Name" "desc" }}
 
 {{- if eq (len $files) 0 }}
+  {{- /* Kein Fehler, wenn der Ordner leer ist - einfach ein freundlicher Hinweistext */}}
   <p class="download-empty">{{ i18n "downloads_empty" }}</p>
 {{- else }}
   <ul class="download-list">
     {{- range $files }}
       {{- $name := path.Base .Name }}
       {{- $stem := strings.TrimSuffix ".pdf" $name }}
+
+      {{- /* Anzeigename der Datei herausfinden - zwei Möglichkeiten:
+             1. Ein von Hand eingetragener "schöner" Name in data/downloads.yaml
+                (unter "overrides:", pro Dateiname) - hat immer Vorrang.
+             2. Sonst wird der Name automatisch aus dem Dateinamen abgeleitet:
+                erwartet wird ein Muster wie "2027_Muster_A1.pdf" (Jahr,
+                Unterstrich, Thema, Unterstrich, Rest) und baut daraus
+                "Muster – A1 (2027)". Passt der Dateiname nicht in dieses
+                Muster (z.B. keine 4-stellige Jahreszahl am Anfang), wird
+                einfach der rohe Dateiname hübsch formatiert (Striche durch
+                Leerzeichen ersetzt, erste Buchstaben gross). */ -}}
       {{- $displayName := "" }}
       {{- with index $overrides $stem }}
         {{- $displayName = or (index . $lang) (index . "de") }}
@@ -37,6 +68,8 @@
           {{- $displayName = title (replaceRE "[_-]" " " $stem) }}
         {{- end }}
       {{- end }}
+
+      {{- /* Dateigrösse automatisch von der Festplatte auslesen und in KB/MB umrechnen */ -}}
       {{- $size := 0 }}
       {{- with os.Stat (printf "assets/%s" .Name) }}{{ $size = .Size }}{{ end }}
       {{- $sizeStr := "" }}
@@ -51,6 +84,7 @@
           <span class="download-label">{{ $displayName }}</span>
           <span class="download-size">{{ $sizeStr }}</span>
         </a>
+        {{/* "Fehler melden" - siehe Hinweis oben im Dateikopf, Formspree-Adresse fehlt noch */}}
         <form class="report-error" action="{{ $formspreeEndpoint }}" method="POST">
           <input type="hidden" name="dateiname" value="{{ $name }}">
           <input type="hidden" name="seite" value="{{ $page.RelPermalink }}">

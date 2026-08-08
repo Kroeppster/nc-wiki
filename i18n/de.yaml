@@ -1,6 +1,27 @@
-# Feste UI-Texte (Chrome), die in mehreren Templates/Seiten identisch wiederverwendet werden.
-# Seitenspezifische Inhalte (Hero, Mission etc.) stehen NICHT hier, sondern im Frontmatter
-# der jeweiligen content/<lang>/_index.md.
+# ============================================================================
+# FESTE BEDIENELEMENT-TEXTE AUF DEUTSCH ("Übersetzungsdatei")
+# ============================================================================
+# Hier stehen alle festen Texte, die NICHT zu einer bestimmten Seite gehören,
+# sondern überall auf der Website in derselben Form wiederverwendet werden -
+# Knopf-Beschriftungen, Menü-Überschriften, Fehlermeldungen, Formular-Labels
+# usw. (z.B. "Senden", "Mehr erfahren", "Akzeptieren").
+#
+# Diese Datei gehört zu drei Dateien, die IMMER alle drei zusammen bearbeitet
+# werden sollten: i18n/de.yaml (diese hier), i18n/fr.yaml, i18n/it.yaml - je
+# eine pro Sprache, mit denselben "Schlüsseln" (den Namen links vom
+# Doppelpunkt) links, aber übersetzten Texten rechts. Ändert man einen Text
+# hier, aber vergisst die Übersetzung in den anderen beiden Dateien
+# anzupassen, bleibt dort der alte (oder ein fehlender) Text stehen.
+#
+# Seiteneigene Inhalte (Hero-Text, Mission-Text der Startseite usw.) stehen
+# NICHT hier, sondern im Frontmatter der jeweiligen
+# content/<sprache>/_index.md-Datei - die sind ja pro Seite unterschiedlich,
+# nicht überall gleich wiederverwendet.
+#
+# Wie man einen Text hier ändert: den Wert rechts vom Doppelpunkt anpassen
+# (in Anführungszeichen), NICHT den Namen links vom Doppelpunkt (der wird
+# von den Vorlagen-Dateien unter layouts/ direkt angesprochen und darf sich
+# nicht ändern, sonst funktioniert die Verknüpfung nicht mehr).
 
 skip_to_content: "Zum Inhalt springen"
 nav_aria_label: "Hauptnavigation"

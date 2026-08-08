@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 """
+HINWEIS AUF DEUTSCH: Dieses Skript wurde einmalig verwendet, um die alten
+Inhalte von der früheren WordPress-Website (nc-wiki.ch) herunterzuladen und
+in Textdateien umzuwandeln, als die neue Hugo-Website aufgebaut wurde. Es
+ist ein technisches Werkzeug für einmaligen Gebrauch, das Python-Kenntnisse
+und eine Kommandozeile braucht - für die normale Pflege der Website (neue
+Seiten, News, PDFs) wird es NICHT gebraucht und kann ignoriert werden, siehe
+stattdessen docs/WARTUNG.md. Der Rest dieser Datei ist auf Englisch, wie im
+Quellcode-Projekt sonst auch üblich.
+
 Export all pages and posts (all WPML languages) from the nc-wiki.ch WordPress
 REST API into Hugo-flavored Markdown files under import/.
 

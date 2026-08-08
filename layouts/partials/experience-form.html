@@ -1,3 +1,36 @@
+{{- /*
+  ============================================================================
+  FORMULAR "ERFAHRUNGSBERICHT EINREICHEN"
+  ============================================================================
+  Das ist der Weg, wie normale Besucher:innen (ohne GitHub-Kenntnisse) einen
+  eigenen Erfahrungsbericht beitragen können. So funktioniert das im Ganzen,
+  über mehrere Systeme hinweg:
+
+    1. Jemand füllt dieses Formular hier auf der Website aus und klickt
+       "Bericht einreichen".
+    2. Das JavaScript weiter unten baut daraus im Hintergrund automatisch
+       eine fertige Markdown-Textdatei (die Datei, wie sie später im Repo
+       liegen würde) und schickt ALLES zusammen an Formspree (den externen
+       Formular-Dienst, der auch das normale Kontaktformular bedient).
+    3. Formspree ist so eingerichtet (nicht hier im Code, sondern in den
+       Formspree-Kontoeinstellungen!), dass es bei dieser einen Adresse
+       automatisch GitHub benachrichtigt.
+    4. Das löst die Automatisierung in
+       .github/workflows/erfahrungsbericht-intake.yml aus, die daraus einen
+       fertigen Pull Request mit der neuen Bericht-Seite baut.
+    5. Jemand aus dem Team muss diesen Pull Request nur noch kurz prüfen und
+       bestätigen (mergen) - dann ist der Bericht live.
+
+  Diese Datei hier ist also nur Schritt 1+2 von diesem Ablauf. Wichtig zu
+  wissen: Der Text, den das JavaScript hier zusammenbaut (siehe
+  buildDateiinhalt weiter unten), wird von Schritt 4 gar nicht direkt
+  verwendet - der Workflow in erfahrungsbericht-intake.yml baut die Datei
+  sicherheitshalber NOCHMAL selbst aus den einzelnen Formularfeldern. Die
+  Überschriften ("## Wie ich mich vorbereitet habe" usw.) sollten deshalb in
+  beiden Dateien gleich sein, auch wenn nur eine davon tatsächlich verwendet
+  wird.
+  ============================================================================
+*/ -}}
 {{- $years := slice 2027 2026 2025 2024 2023 2022 2021 2020 }}
 
 <form class="contact-form experience-form" action="https://formspree.io/f/xaewqwoj" method="POST" novalidate>
@@ -43,6 +76,9 @@
     </label>
   </div>
 
+  {{/* Für Menschen unsichtbares Extra-Feld, das nur Spam-Roboter ausfüllen
+       (die füllen automatisch JEDES Feld aus, echte Besucher:innen sehen es
+       gar nicht und lassen es deshalb leer). Formspree erkennt daran Spam. */}}
   <div class="visually-hidden-field" aria-hidden="true">
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
   </div>
@@ -55,6 +91,9 @@
 
   <button type="submit" class="btn btn-primary">{{ i18n "experience_form_submit" }}</button>
 
+  {{/* Erfolgs-/Fehlermeldung: beide sind standardmässig "hidden" (versteckt)
+       und werden nur per JavaScript sichtbar gemacht, je nachdem ob das
+       Absenden geklappt hat oder nicht - siehe ganz unten im Skript. */}}
   <div class="form-success" role="status" tabindex="-1" hidden>
     <strong>{{ i18n "experience_form_success_heading" }}</strong>
     <p>{{ i18n "experience_form_success_body" }}</p>
@@ -69,8 +108,15 @@
 (function(){
   var sendingLabel = {{ i18n "experience_form_sending" }};
 
+  {{/* Erkennt Umlaute/Akzente (ä, é, ñ, usw.), damit slugify() sie unten
+       entfernen kann - technischer Kniff, damit das nicht mit Sonderzeichen
+       im Programmcode selbst kollidiert. */}}
   var DIACRITIC_MARKS = new RegExp(String.fromCharCode(91) + String.fromCharCode(0x0300) + '-' + String.fromCharCode(0x036f) + String.fromCharCode(93), 'g');
 
+  {{/* Macht aus einem Namen einen für Dateinamen geeigneten Text: alles
+       klein geschrieben, Umlaute ausgeschrieben (ä→ae usw.), alles andere
+       als Buchstaben/Zahlen wird zu einem Bindestrich. Aus "Anna K." wird
+       so z.B. "anna-k" - das wird gleich für den Dateinamen gebraucht. */}}
   function slugify(str){
     return String(str)
       .toLowerCase()
@@ -80,6 +126,10 @@
       .replace(/^-+|-+$/g, '');
   }
 
+  {{/* Macht einen frei eingegebenen Text sicher für die Verwendung in einer
+       YAML-Textdatei (dem Frontmatter-Block) - z.B. werden Anführungszeichen
+       im eingegebenen Text so behandelt, dass sie die Datei nicht "kaputt"
+       machen. */}}
   function yamlEscape(str){
     return String(str)
       .replace(/\\/g, '\\\\')
@@ -88,6 +138,7 @@
       .replace(/[\r\n]/g, '\\n');
   }
 
+  {{/* Heutiges Datum im Format JJJJ-MM-TT, wie es im Frontmatter gebraucht wird */}}
   function todayISO(){
     var d = new Date();
     var mm = String(d.getMonth() + 1).padStart(2, '0');
@@ -95,6 +146,11 @@
     return d.getFullYear() + '-' + mm + '-' + dd;
   }
 
+  {{/* Baut aus den Formular-Antworten eine fertige Markdown-Textdatei, wie
+       sie später als Erfahrungsbericht-Seite im Repo liegen würde (siehe
+       Erklärung ganz oben im Dateikopf - dieser Text wird zwar mitgeschickt,
+       aber der GitHub-Workflow baut die tatsächliche Datei sicherheitshalber
+       nochmal selbst aus den Rohdaten). */}}
   function buildDateiinhalt(name, jahr, ort, vorbereitung, geholfen, tipp){
     var lines = [];
     lines.push('---');
@@ -122,6 +178,7 @@
     return lines.join('\n');
   }
 
+  {{/* Ab hier: was beim Klick auf "Bericht einreichen" tatsächlich passiert. */}}
   document.querySelectorAll('.experience-form').forEach(function(form){
     var success = form.querySelector('.form-success');
     var error = form.querySelector('.form-error');
@@ -129,6 +186,9 @@
     var submitLabel = submitBtn ? submitBtn.textContent : '';
 
     form.addEventListener('submit', function(evt){
+      {{/* Verhindert das normale, sofortige Absenden des Formulars durch den
+           Browser - stattdessen übernimmt der Code hier die Kontrolle, damit
+           er vorher noch die versteckten Felder befüllen kann. */}}
       evt.preventDefault();
       if(!form.checkValidity()){
         form.reportValidity();
@@ -142,6 +202,9 @@
       var geholfen = form.elements['was_geholfen'].value.trim();
       var tipp = form.elements['tipp'].value.trim();
 
+      {{/* Die drei versteckten Felder aus dem Formular (dateiname,
+           dateiinhalt, _subject) jetzt mit den berechneten Werten befüllen,
+           bevor die Daten verschickt werden. */}}
       form.elements['dateiname'].value = jahr + '-' + slugify(name) + '.md';
       form.elements['dateiinhalt'].value = buildDateiinhalt(name, jahr, ort, vorbereitung, geholfen, tipp);
       form.elements['_subject'].value = 'Neuer Erfahrungsbericht: ' + name + ' (' + jahr + ')';
@@ -151,6 +214,8 @@
         submitBtn.disabled = true;
         submitBtn.textContent = sendingLabel;
       }
+      {{/* Schickt das Formular per "fetch" (moderne Art, Daten im Hintergrund
+           zu verschicken, ohne die Seite neu zu laden) an Formspree. */}}
       fetch(form.action, {
         method: 'POST',
         body: new FormData(form),

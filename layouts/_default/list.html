@@ -1,18 +1,51 @@
+{{- /*
+  ============================================================================
+  VORLAGE FÜR ÜBERSICHTSSEITEN (z.B. "News", "EMS", "Übungsaufgaben")
+  ============================================================================
+  Diese Datei steuert, wie eine "_index.md"-Seite aussieht - also die
+  Übersichtsseite eines ganzen Themenbereichs (Ordner). Hugo verwendet diese
+  Vorlage automatisch für JEDE Übersichtsseite, ausser eine speziellere
+  Vorlage existiert (gibt es hier nicht - alle Übersichtsseiten laufen über
+  diese eine Datei, das Aussehen wird je nach URL der Seite angepasst).
+
+  Bestimmte Übersichtsseiten brauchen einen komplett anderen Aufbau als eine
+  normale Liste von Unterseiten - z.B. die Uniguide-Tabelle oder die Q&A-Liste
+  mit den aufklappbaren Fragen. Das steuert dieser Datei über einfache
+  "wenn die Webadresse (Pfad) so-und-so lautet, dann zeig X statt der
+  normalen Kartenliste"-Regeln (das sind die "if"/"else if"-Zeilen unten).
+
+  Wer NUR den Text auf einer Übersichtsseite ändern will (z.B. die Einleitung
+  auf der News-Seite), bearbeitet stattdessen die passende "_index.md"-Datei
+  unter content/ - nicht diese Datei hier.
+  ============================================================================
+*/ -}}
 {{ define "main" }}
   <section>
     <div class="wrap">
       <div class="section-head">
+        {{/* .Section = der Ordnername (z.B. "news"), .Title = der Titel aus
+             der _index.md-Datei dieser Übersichtsseite */}}
         <div><p class="eyebrow">{{ .Section }}</p><h2>{{ .Title }}</h2></div>
       </div>
+
+      {{/* Optionales Titelbild, falls "featured_image" im Frontmatter gesetzt ist */}}
       {{ with .Params.featured_image }}
       <figure class="featured-image">
         {{ partial "image.html" (dict "src" . "alt" (or $.Params.featured_image_alt $.Title) "sizes" "(max-width:900px) 100vw, 900px") }}
       </figure>
       {{ end }}
+
+      {{/* Der eigentliche Fliesstext aus der _index.md-Datei dieser Seite */}}
       {{ with .Content }}{{ . }}{{ end }}
+
+      {{/* Auf der Seite "Unterstützer:innen" zusätzlich das Sponsoren-Logo-Raster zeigen */}}
       {{ if eq .Path "/unterstuetzer-innen" }}
       {{ partial "sponsor-grid.html" . }}
       {{ end }}
+
+      {{/* Manuelle Download-Liste: falls im Frontmatter der Seite eine Liste
+           "downloads:" mit path/label-Paaren steht, wird daraus diese Liste
+           gebaut. Wird z.B. für Jahresberichte verwendet. */}}
       {{ with .Params.downloads }}
       <ul class="download-list">
         {{ range . }}
@@ -20,11 +53,23 @@
         {{ end }}
       </ul>
       {{ end }}
+
+      {{/* Automatische Download-Liste: für Testsimulationen und Vorbereitungskurse
+           werden ALLE PDF-Dateien im passenden assets/downloads/-Ordner automatisch
+           aufgelistet - dafür muss NICHTS im Frontmatter eingetragen werden, einfach
+           PDF hochladen und sie erscheint automatisch (siehe download-list.html). */}}
       {{ if strings.Contains .Path "ems/testsimulationen" }}
       {{ partial "download-list.html" (dict "path" "downloads/testsimulationen" "page" .) }}
       {{ else if strings.Contains .Path "ems/vorbereitungskurse" }}
       {{ partial "download-list.html" (dict "path" "downloads/kursskripte" "page" .) }}
       {{ end }}
+
+      {{/* Drei Übersichtsseiten haben einen komplett eigenen Aufbau statt der
+           normalen Kartenliste weiter unten: Erfahrungsberichte (Filterbare
+           Kartenübersicht mit Foto-Kreisen), Uniguide (Vergleichstabelle) und
+           Q&A (aufklappbare Fragen). Alle anderen Übersichtsseiten (News,
+           Übungsaufgaben, usw.) fallen in den "else"-Zweig: eine normale,
+           seitenweise Liste von Karten mit Titel/Vorschautext/Link. */}}
       {{ if eq .Path "/ems/erfahrungsberichte" }}
       {{ partial "erfahrungsbericht-grid.html" . }}
       {{ else if eq .Path "/ems/uniguide" }}
@@ -32,10 +77,13 @@
       {{ else if eq .Path "/ems/qa" }}
       {{ partial "faq.html" . }}
       {{ else }}
+      {{/* Paginate = die Unterseiten in Päckchen aufteilen (z.B. 12 pro Seite,
+           siehe pagerSize in hugo.toml), damit die Liste nicht endlos lang wird */}}
       {{ $paginator := .Paginate .Pages }}
       <ul class="card-grid">
         {{ range $paginator.Pages }}
         <li class="card">
+          {{/* Bild nur bei News-Beiträgen mit gesetztem featured_image zeigen */}}
           {{ if and (eq .Section "news") .Params.featured_image }}
           <div class="card-thumb">
             {{ partial "image.html" (dict "src" .Params.featured_image "alt" (or .Params.featured_image_alt .Title) "sizes" "(max-width:600px) 100vw, 360px") }}
@@ -43,11 +91,15 @@
           {{ end }}
           {{ with .Params.eyebrow }}<p class="eyebrow">{{ . }}</p>{{ end }}
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          {{/* .Summary = automatisch die ersten Sätze des Seiteninhalts als Vorschau,
+               oder der Text bis zu einer manuellen "<!--more-->"-Markierung */}}
           {{ .Summary }}
           <a class="more" href="{{ .RelPermalink }}">{{ i18n "read_more" }}</a>
         </li>
         {{ end }}
       </ul>
+      {{/* Baut automatisch die "Seite 1 / 2 / 3"-Navigation unten, falls es
+           mehr Unterseiten gibt, als auf eine Seite passen */}}
       {{ template "_internal/pagination.html" . }}
       {{ end }}
     </div>

@@ -1,17 +1,44 @@
+{{- /*
+  ============================================================================
+  GRUNDGERÜST DER SEITE ("baseof" = "base of")
+  ============================================================================
+  Das ist die äusserste Hülle, in die JEDE Seite der Website eingesetzt wird -
+  egal ob Startseite, News-Beitrag oder Kontaktformular. Hugo (das Programm,
+  das aus den Textdateien in content/ die fertige Website baut) nimmt dieses
+  Gerüst und füllt den mittleren Teil ("Hauptinhalt") mit dem Inhalt der
+  jeweiligen Seite. Header (Menü oben) und Footer (Fussbereich unten) kommen
+  aus separaten Dateien und werden hier nur "eingebunden" (partial), damit
+  man sie nicht auf jeder einzelnen Seite neu bauen muss.
+
+  Wer NUR den Text/Inhalt einer Seite ändern will, ist hier falsch - das
+  passiert in den Dateien unter content/. Diese Datei bestimmt nur die
+  Struktur drumherum (Kopfzeile, Fusszeile, Grundgerüst des HTML).
+  ============================================================================
+*/ -}}
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}">
 <head>
+{{/* Alles im <head> (Titel, Meta-Angaben, CSS-Datei einbinden usw.) steckt in head.html */}}
 {{ partial "head.html" . }}
 </head>
 <body>
+{{/* Unsichtbarer Link ganz oben, nur für Tastatur-Nutzer:innen und Screenreader:
+     erlaubt es, direkt zum Hauptinhalt zu springen, ohne erst durch das ganze
+     Menü tabben zu müssen. Wird erst sichtbar, wenn man ihn per Tab-Taste anspringt. */}}
 <a class="skip-link" href="#main">{{ i18n "skip_to_content" }}</a>
 
+{{/* Kopfzeile mit Logo, Hauptmenü, Suche, Hell/Dunkel-Umschalter und Sprachwahl */}}
 {{ partial "header.html" . }}
 
 <main id="main">
+{{/* Hier kommt der eigentliche Inhalt der jeweiligen Seite hinein. Jede Seite
+     "definiert" an anderer Stelle einen Block namens "main" (z.B. in
+     layouts/index.html für die Startseite, oder layouts/_default/single.html
+     für eine normale Unterseite) - Hugo setzt diesen Inhalt hier automatisch ein. */}}
 {{ block "main" . }}{{ end }}
 </main>
 
+{{/* Fusszeile mit Adresse, Links, Newsletter, Cookie-Banner */}}
 {{ partial "footer.html" . }}
 </body>
 </html>

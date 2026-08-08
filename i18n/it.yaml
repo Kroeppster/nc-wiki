@@ -1,6 +1,26 @@
-# Testi fissi dell'interfaccia (chrome), riutilizzati identici in più template/pagine.
-# I contenuti specifici di una pagina (hero, mission, ecc.) NON stanno qui, ma nel frontmatter
-# del rispettivo content/it/_index.md.
+# ============================================================================
+# TESTI FISSI DELL'INTERFACCIA IN ITALIANO (file di "traduzione")
+# ============================================================================
+# Qui si trovano tutti i testi fissi che NON appartengono a una pagina
+# specifica, ma vengono riutilizzati identici in tutto il sito - etichette
+# dei pulsanti, titoli dei menu, messaggi di errore, etichette dei moduli,
+# ecc. (per es. "Invia", "Scopri di più", "Accetta").
+#
+# Questo file va sempre modificato insieme ad altri due: i18n/de.yaml,
+# i18n/fr.yaml, i18n/it.yaml (questo qui) - uno per lingua, con le stesse
+# "chiavi" (il nome a sinistra dei due punti) ma testi tradotti a destra.
+# Se un testo viene modificato qui senza aggiornare la traduzione negli
+# altri due file, lì rimane il testo vecchio (o mancante).
+#
+# I contenuti specifici di una pagina (testo dell'hero, testo della mission
+# nella homepage, ecc.) NON stanno qui, ma nel frontmatter del rispettivo
+# file content/it/_index.md - questi contenuti sono diversi da pagina a
+# pagina, non riutilizzati ovunque allo stesso modo.
+#
+# Come modificare un testo qui: cambiare solo il valore a destra dei due
+# punti (tra virgolette), NON il nome a sinistra (viene usato direttamente
+# dai file in layouts/ e non deve cambiare, altrimenti il collegamento non
+# funziona più).
 
 skip_to_content: "Vai al contenuto"
 nav_aria_label: "Navigazione principale"

@@ -1,6 +1,26 @@
+{{- /*
+  ============================================================================
+  EIN EINZELNER DOWNLOAD-LINK (mit automatisch berechneter Dateigrösse)
+  ============================================================================
+  Wird für die MANUELLE Download-Liste verwendet (Frontmatter-Feld
+  "downloads:", siehe archetypes/jahresbericht.md für ein Beispiel) - NICHT
+  für die automatisch aus einem Ordner erzeugten Listen, dafür ist
+  download-list.html zuständig.
+
+  Parameter, die diese Datei erwartet (übergeben beim Aufruf per "partial"):
+    path  - Dateipfad relativ zum static/-Ordner, z.B. "downloads/jahresberichte/2027.pdf"
+    label - der angezeigte Text des Links (optional - fehlt er, wird
+            automatisch der Dateiname als Text verwendet)
+  ============================================================================
+*/ -}}
 {{- $path := .path }}
 {{- $label := .label }}
 {{- if not $label }}{{ $label = path.Base $path }}{{ end }}
+
+{{- /* Dateigrösse automatisch von der Festplatte auslesen und in KB/MB
+       umrechnen, damit man das nicht von Hand pflegen muss. Existiert die
+       Datei (noch) nicht, bleibt $size einfach 0 und es wird keine Grösse
+       angezeigt (kein Fehler, kein kaputtes Layout). */ -}}
 {{- $size := 0 }}
 {{- with os.Stat (printf "static/%s" $path) }}{{ $size = .Size }}{{ end }}
 {{- $sizeStr := "" }}

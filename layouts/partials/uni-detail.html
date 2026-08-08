@@ -1,11 +1,31 @@
-{{- /* Detailansicht einer Uniguide-Seite. Erwartet .Params.uni_slug, Daten aus data/unis.yaml. */}}
+{{- /*
+  ============================================================================
+  DETAILANSICHT EINER EINZELNEN UNIVERSITÄT (Uniguide)
+  ============================================================================
+  Erscheint auf einer Uniguide-Unterseite (z.B. "Universität Basel"), sobald
+  im Frontmatter dieser Seite "uni_slug: basel" gesetzt ist (siehe
+  layouts/_default/single.html - dort wird diese Datei nur bei gesetztem
+  uni_slug überhaupt eingebunden). Die eigentlichen Daten (Kanton, Sprache,
+  EMS-Pflicht usw.) werden anhand dieses "slug" in data/unis.yaml gesucht -
+  diese Datei hier zeigt nur an, was dort steht, ändert aber nichts daran.
+
+  Um Angaben zu einer Universität zu ändern: data/unis.yaml bearbeiten,
+  NICHT diese Datei.
+  ============================================================================
+*/}}
+{{- /* "Ja"/"Nein"/"Teilweise" in der richtigen Sprache, für die EMS-Pflicht-Angabe unten */ -}}
 {{- $emsLabels := dict "ja" (i18n "ems_status_ja") "nein" (i18n "ems_status_nein") "teilweise" (i18n "ems_status_teilweise") }}
 
+{{- /* Die passende Universität aus data/unis.yaml heraussuchen, anhand des
+       "slug" im Frontmatter dieser Seite (z.B. "basel"). */ -}}
 {{- $slug := .Params.uni_slug }}
 {{- $uni := "" }}
 {{- range .Site.Data.unis }}{{ if eq .slug $slug }}{{ $uni = . }}{{ end }}{{ end }}
 
 {{ if not $uni }}
+{{/* Sollte eigentlich nie passieren (jeder .md-Seite mit uni_slug sollte ein
+     passender Eintrag in data/unis.yaml gegenüberstehen) - falls doch, lieber
+     eine freundliche Meldung als eine leere/kaputte Seite. */}}
 <p class="download-empty">{{ i18n "uni_detail_not_found" }}</p>
 {{ else }}
 <dl class="uni-detail">
@@ -13,8 +33,13 @@
   <div><dt>{{ i18n "label_sprache" }}</dt><dd>{{ delimit $uni.sprache ", " }}</dd></div>
   <div><dt>{{ i18n "uni_detail_ems" }}</dt><dd><span class="badge badge-{{ $uni.ems_erforderlich }}">{{ index $emsLabels $uni.ems_erforderlich }}</span></dd></div>
   <div><dt>{{ i18n "label_studiengaenge" }}</dt><dd>{{ delimit $uni.studiengaenge ", " }}</dd></div>
+  {{/* "Studienplätze" ist im Datensatz absichtlich (fast) immer leer/null,
+       siehe data/unis.yaml - Fallback-Text "wird geprüft" statt einer
+       nicht-recherchierten Zahl. */}}
   <div><dt>{{ i18n "label_studienplaetze" }}</dt><dd>{{ if $uni.studienplaetze }}{{ $uni.studienplaetze }}{{ else }}{{ i18n "uni_detail_places_unknown" }}{{ end }}</dd></div>
   <div><dt>{{ i18n "uni_detail_auswahlverfahren" }}</dt><dd>{{ $uni.auswahlverfahren }}</dd></div>
+  {{/* Besonderheiten-Feld ist optional (Liste kann auch leer sein) - dann
+       wird dieser ganze Abschnitt einfach übersprungen. */}}
   {{ with $uni.besonderheiten }}
   <div><dt>{{ i18n "uni_detail_besonderheiten" }}</dt><dd>
     <ul class="tag-pills">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
@@ -25,5 +50,8 @@
 
 <p class="uni-report"><a href="{{ relLangURL "kontakt/" }}">{{ i18n "uni_detail_report" }} →</a></p>
 
+{{/* "Stand" und "Quelle" zeigen, wann und woher diese Angaben recherchiert
+     wurden - wichtig, weil Zulassungsbedingungen sich ändern können und
+     diese Angaben "ohne Gewähr" sind (siehe Disclaimer in uniguide-table.html). */}}
 <p class="uni-stand">{{ i18n "uni_detail_stand" }}: {{ $uni.stand }} · {{ i18n "uni_detail_quelle" }}: <a href="{{ $uni.quelle }}" target="_blank" rel="noopener">{{ $uni.quelle }}</a></p>
 {{ end }}

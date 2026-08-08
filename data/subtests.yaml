@@ -1,3 +1,21 @@
+# ============================================================================
+# DIE 10 UNTERTESTS DES EMS (feste, offizielle Reihenfolge)
+# ============================================================================
+# Wird an mehreren Stellen der Website verwendet: das nummerierte Kachel-
+# Raster auf der Startseite und der Übungsaufgaben-Übersicht (siehe
+# layouts/partials/subtest-grid.html), sowie die Untertest-Liste, die bei
+# einer bestimmten Frage in der Q&A-Seite automatisch angehängt wird (siehe
+# data/faq.yaml, Eintrag mit "dynamic: subtests"). Diese Liste hier ist also
+# die EINZIGE Stelle, an der die Untertests gepflegt werden müssen - überall
+# sonst wird sie automatisch mitverwendet.
+#
+# Jeder Eintrag braucht:
+#   number - die offizielle Nummer (01-10), als Text mit führender Null
+#   slug   - technischer Name für die Web-Adresse, z.B. "muster-zuordnen"
+#            (muss zum entsprechenden Ordnernamen unter
+#            content/<sprache>/ems/uebungsaufgaben/ passen)
+#   de/fr/it - der angezeigte Name in den drei Sprachen
+# ============================================================================
 - number: "01"
   slug: testsimulationen
   de: "Testsimulationen"

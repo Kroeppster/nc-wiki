@@ -1,24 +1,44 @@
 {{- /*
-  Filterbare Kartenübersicht für EMS-Erfahrungsberichte.
-  Erwartet direkte Unterseiten mit Frontmatter: name, jahr, ort (optional), tags (optional).
-  Seiten ohne "jahr" (z.B. das Formular "Bericht einreichen") werden nicht als Bericht gelistet,
-  aber als CTA verlinkt. Ohne Foto: farbiger Platzhalter mit Initialen.
+  ============================================================================
+  FILTERBARE KARTENÜBERSICHT DER ERFAHRUNGSBERICHTE
+  ============================================================================
+  Erwartet direkte Unterseiten mit Frontmatter: name, jahr, ort (optional),
+  tags (optional). Seiten OHNE "jahr" (das betrifft nur die Seite
+  "Bericht einreichen") werden NICHT als Bericht in der Liste angezeigt,
+  aber ihr Link wird stattdessen als "Bericht einreichen"-Knopf oben
+  verwendet (siehe $ctaURL unten) - so muss dieser Link nicht doppelt von
+  Hand gepflegt werden.
+
+  Hat eine Person kein Foto hochgeladen (was bei Erfahrungsberichten nie der
+  Fall ist - es gibt hier gar kein Foto-Feld), wird stattdessen automatisch
+  ein farbiger Kreis mit den Initialen des Namens angezeigt (siehe weiter
+  unten: "Initialen berechnen" und "Farbe berechnen").
+  ============================================================================
 */}}
+{{- /* Die Seite mit "experience_form: true" im Frontmatter (also
+       "Bericht einreichen") herausfischen und ihren Link für den
+       CTA-Knopf oben merken. */ -}}
 {{- $ctaURL := "" }}
 {{- range .Pages }}{{ if .Params.experience_form }}{{ $ctaURL = .RelPermalink }}{{ end }}{{ end }}
 
+{{- /* Nur Seiten MIT einem "jahr"-Feld gelten als echter Erfahrungsbericht,
+       neuestes Jahr zuerst sortiert. */ -}}
 {{- $reports := slice }}
 {{- range .Pages }}
   {{- if .Params.jahr }}{{ $reports = $reports | append . }}{{ end }}
 {{- end }}
 {{- $reports = sort $reports "Params.jahr" "desc" }}
 
+{{- /* Liste aller VORKOMMENDEN Jahre (ohne Duplikate), neuestes zuerst -
+       daraus werden unten automatisch die Filter-Knöpfe (2027/2026/...) gebaut. */ -}}
 {{- $years := slice }}
 {{- range $reports }}{{ $years = $years | append .Params.jahr }}{{ end }}
 {{- $years = $years | uniq | sort | collections.Reverse }}
 
 <div class="report-toolbar">
   {{ with $ctaURL }}<a class="btn btn-primary" href="{{ . }}">{{ i18n "experience_reports_cta" }}</a>{{ end }}
+  {{/* Die Jahres-Filter-Knöpfe erscheinen nur, wenn es überhaupt mehr als
+       1 Jahrgang gibt (bei nur einem Jahr wäre Filtern sinnlos) */}}
   {{ if gt (len $years) 1 }}
   <div class="report-filters" role="group" aria-label="{{ i18n "ems_year_label" }}">
     <button type="button" class="filter-pill is-active" data-year="all" aria-pressed="true">{{ i18n "experience_reports_all" }}</button>
@@ -34,12 +54,20 @@
 {{ else }}
 <ul class="card-grid report-grid" id="report-grid">
   {{ range $reports }}
+  {{- /* Initialen berechnen: erster Buchstabe von Vor- und Nachname
+         (z.B. "Anna K." -> "AK"), falls nur ein Name-Teil vorhanden ist,
+         wird eben nur mit dem einen Buchstaben gearbeitet. */ -}}
   {{- $name := .Params.name }}
   {{- $nameParts := split (strings.TrimSpace $name) " " }}
   {{- $initials := "" }}
   {{- if ge (len $nameParts) 1 }}{{ $initials = substr (index $nameParts 0) 0 1 }}{{ end }}
   {{- if ge (len $nameParts) 2 }}{{ $initials = printf "%s%s" $initials (substr (index $nameParts 1) 0 1) }}{{ end }}
   {{- $initials = upper $initials }}
+  {{- /* Farbe berechnen: aus dem Namen wird eine "Prüfsumme" (Zahl)
+         errechnet, die IMMER gleich bleibt für denselben Namen (derselbe
+         Name bekommt also bei jedem Seitenaufbau dieselbe Farbe, wirkt
+         aber trotzdem "zufällig" verteilt zwischen den 6 Farben in
+         style.css unter .avatar-0 bis .avatar-5). */ -}}
   {{- $colorIdx := mod (hash.FNV32a $name) 6 }}
   <li class="card report-card" data-year="{{ .Params.jahr }}">
     <div class="report-head">
@@ -61,6 +89,10 @@
 </ul>
 {{ end }}
 
+{{/* Das Filtern selbst (Klick auf einen Jahres-Knopf blendet die anderen
+     Karten aus) passiert komplett im Browser per JavaScript, nicht durch
+     erneutes Laden der Seite - dafür braucht es kein Hugo/Server, es blendet
+     einfach die Karten ein/aus, deren data-year nicht zum gewählten Jahr passt. */}}
 {{ if gt (len $years) 1 }}
 <script>
 (function(){

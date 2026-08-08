@@ -1,6 +1,32 @@
-# Q&A-Inhalte für /ems/qa/. Jede Antwort ist bewusst reiner Text (kein HTML/Markdown)
-# - Formatierung/Links kommen über das optionale "link"-Feld, nicht per Inline-Markup,
-# damit dieselben Antworten 1:1 auch im FAQPage-JSON-LD landen können.
+# ============================================================================
+# FRAGEN & ANTWORTEN für die Q&A-Seite (/ems/qa/)
+# ============================================================================
+# Jede Frage ist ein Eintrag (beginnt mit "- id: ..."), mit folgenden Feldern:
+#   id       - interner technischer Name, muss innerhalb dieser Datei
+#              einmalig sein, taucht auf der Website selbst nicht auf
+#   category - unter welcher Überschrift die Frage einsortiert wird, pro
+#              Sprache (neue Kategorie = einfach einen neuen Text eintragen,
+#              erscheint automatisch als neue Gruppe)
+#   question - die Frage selbst, in allen 3 Sprachen
+#   answer   - die Antwort, in allen 3 Sprachen. Bewusst reiner Text (kein
+#              HTML oder Markdown wie **fett** oder [Links](...)) - Links
+#              kommen stattdessen über das separate "link:"-Feld (siehe
+#              unten), Formatierung wird bewusst nicht unterstützt. Grund:
+#              dieselben Antworten landen 1:1 auch in einem unsichtbaren
+#              Datenblock für Suchmaschinen (siehe layouts/partials/faq.html)
+#              - dafür muss der Text ohne Formatierungs-Code auskommen.
+#   link     - optional: ein zusätzlicher "Mehr erfahren"-Link unter der
+#              Antwort. "href" ist das Ziel (wie bei relLangURL-Aufrufen in
+#              Templates: ohne führenden Schrägstrich, z.B. "ems/uniguide/"),
+#              "label" der Linktext pro Sprache.
+#   dynamic  - optional: bei "dynamic: subtests" wird automatisch die
+#              aktuelle Liste aller 10 Untertests aus data/subtests.yaml als
+#              Aufzählung unter der Antwort angehängt (wird für die Frage
+#              "Welche Untertests gibt es?" verwendet, damit diese Liste nur
+#              an einer Stelle im Projekt gepflegt werden muss).
+#
+# Neue Frage hinzufügen: einfach einen neuen Eintrag nach demselben Muster
+# unten anhängen - erscheint automatisch auf der Q&A-Seite, kein Code nötig.
 
 - id: "was-ist-ems"
   category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }

@@ -1,4 +1,17 @@
-# Overrides für automatisch generierte Download-Anzeigenamen.
+# ============================================================================
+# ANZEIGENAMEN FÜR AUTOMATISCH GEFUNDENE PDF-DOWNLOADS
+# ============================================================================
+# Testsimulationen, Kursskripte und Übungsserien werden automatisch aus den
+# Ordnern unter assets/downloads/ aufgelistet (siehe
+# layouts/partials/download-list.html) - ohne dass man dafür etwas in einer
+# Textdatei eintragen müsste. Der angezeigte Name wird dabei normalerweise
+# automatisch aus dem Dateinamen abgeleitet (z.B. "2027_Muster_A1.pdf" wird
+# zu "Muster – A1 (2027)").
+#
+# Diese Datei hier ist NUR dafür da, diesen automatischen Namen bei Bedarf
+# durch einen von Hand gewählten, schöneren Namen zu ersetzen - optional,
+# nicht jede Datei braucht einen Eintrag hier.
+#
 # Key = Dateiname ohne Endung ".pdf", Wert = Anzeigename pro Sprache.
 # Fehlt der Eintrag für die aktuelle Seitensprache, wird "de" verwendet.
 #

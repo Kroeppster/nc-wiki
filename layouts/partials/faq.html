@@ -1,14 +1,37 @@
 {{- /*
-  Q&A-Seite, gespeist aus data/faq.yaml. Rendert eine nach Kategorie gruppierte
-  Akkordeon-Liste (native <details>/<summary>, kein JS nötig, Text bleibt für
-  Suchmaschinen/Pagefind im DOM) und ein FAQPage-JSON-LD-Schema für Rich Results.
-  Ein Eintrag mit "dynamic: subtests" hängt die Liste aus data/subtests.yaml live an,
-  damit sie nie einzeln gepflegt werden muss.
+  ============================================================================
+  Q&A-SEITE (aufklappbare Fragen)
+  ============================================================================
+  Die Fragen und Antworten selbst stehen NICHT hier, sondern in
+  data/faq.yaml (dort pro Sprache getrennt: question.de/question.fr/
+  question.it usw.) - diese Datei liest sie nur aus und ordnet sie
+  automatisch nach Kategorie.
+
+  Technischer Kniff: statt eines "Aufklappen"-JavaScript-Programms wird das
+  eingebaute HTML-Element <details>/<summary> verwendet - der Browser kann
+  das von sich aus auf- und zuklappen, ganz ohne eigenen Programmcode. Das
+  hat zwei Vorteile: es funktioniert auch, falls JavaScript beim Besuch aus
+  irgendeinem Grund nicht läuft, und Suchmaschinen (und unsere eigene Suche)
+  sehen den vollständigen Text jeder Antwort, auch wenn sie zugeklappt ist.
+
+  Ein FAQ-Eintrag mit "dynamic: subtests" (siehe data/faq.yaml) bekommt
+  automatisch die aktuelle Liste aller 10 Untertests aus data/subtests.yaml
+  als Aufzählung angehängt - so muss diese Liste nur an einer einzigen
+  Stelle (data/subtests.yaml) gepflegt werden, nicht zusätzlich hier.
+
+  Ganz unten wird ausserdem ein unsichtbarer Datenblock ("FAQPage
+  JSON-LD-Schema") erzeugt - das ist ein von Google & Co. verstandenes
+  Format, das dazu führen kann, dass Fragen direkt in den Suchergebnissen
+  aufklappbar angezeigt werden ("Rich Results"). Für Besucher:innen auf der
+  Seite selbst unsichtbar, nur für Suchmaschinen gedacht.
+  ============================================================================
 */}}
 {{- $lang := .Site.Language.Lang }}
 {{- $faq := .Site.Data.faq }}
 {{- $subtests := .Site.Data.subtests }}
 
+{{- /* Liste aller vorkommenden Kategorien einsammeln (ohne Duplikate),
+       in der Reihenfolge, in der sie in data/faq.yaml zum ersten Mal auftauchen. */ -}}
 {{- $categories := slice }}
 {{- range $faq }}
   {{- $cat := index .category $lang }}
@@ -20,12 +43,15 @@
   {{- $cat := . }}
   <div class="faq-category">
     <h3>{{ $cat }}</h3>
+    {{- /* Alle Fragen ausgeben, die zu dieser Kategorie gehören */ -}}
     {{- range $faq }}
     {{- if eq (index .category $lang) $cat }}
     <details class="faq-item">
       <summary>{{ index .question $lang }}</summary>
       <div class="faq-answer">
         <p>{{ index .answer $lang }}</p>
+        {{- /* Nur bei der einen speziellen Frage: die 10 Untertests live
+               aus data/subtests.yaml anhängen (siehe Erklärung oben) */ -}}
         {{- if eq .dynamic "subtests" }}
         <ol class="faq-subtest-list">
           {{- range $subtests }}
@@ -44,6 +70,10 @@
   {{- end }}
 </div>
 
+{{- /* Ab hier: der unsichtbare Datenblock für Suchmaschinen (siehe Erklärung
+       im Dateikopf oben). Baut dieselben Fragen/Antworten nochmal in einem
+       maschinenlesbaren Format ("JSON-LD") - kein HTML, wird nirgends direkt
+       angezeigt. */ -}}
 {{- $faqEntities := slice }}
 {{- range $faq }}
   {{- $answerText := index .answer $lang }}

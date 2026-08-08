@@ -1,9 +1,27 @@
+{{- /*
+  ============================================================================
+  RASTER MIT DEN 10 UNTERTESTS (nummeriert 01-10)
+  ============================================================================
+  Wird auf der Startseite und auf der Übungsaufgaben-Übersicht verwendet.
+  Namen, Reihenfolge und Nummern der Untertests kommen aus data/subtests.yaml
+  (dort ändern, nicht hier) - jede Kachel verlinkt automatisch zur passenden
+  Übungsaufgaben-Unterseite.
+
+  Anders als bei den Mission-Karten auf der Startseite ist die Nummerierung
+  hier bewusst vorhanden: die EMS-Prüfung hat tatsächlich genau 10
+  offiziell nummerierte Untertests, die Zahlen sind also echte Information,
+  keine Dekoration.
+  ============================================================================
+*/}}
 {{ $lang := .Site.Language.Lang }}
 <ol class="subtest-grid">
   {{ range hugo.Data.subtests }}
   <li class="subtest-card">
     <a href="{{ relLangURL (printf "ems/uebungsaufgaben/%s/" .slug) }}">
       <span class="subtest-num">{{ .number }}</span>
+      {{/* Jeder Untertest-Name ist in data/subtests.yaml in allen 3 Sprachen
+           hinterlegt - "index . $lang" holt sich automatisch die passende
+           Übersetzung für die gerade angezeigte Sprachversion der Website. */}}
       <span class="subtest-name">{{ index . $lang }}</span>
     </a>
   </li>

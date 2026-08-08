@@ -1,3 +1,18 @@
+{{- /*
+  ============================================================================
+  KONTAKTFORMULAR
+  ============================================================================
+  Wird auf der Kontaktseite eingeblendet (dort steht im Frontmatter
+  "contact_form: true", siehe layouts/_default/single.html).
+
+  Die Website selbst hat KEINEN eigenen Server, der E-Mails verschicken
+  könnte - deshalb schickt dieses Formular seine Daten an einen externen
+  Dienst namens Formspree (die Webadresse in "action=" unten gehört zu einem
+  Formspree-Konto). Formspree nimmt die Eingaben entgegen und leitet sie per
+  E-Mail weiter. Mehr dazu und wie man das Formular verwaltet/ändert:
+  docs/WARTUNG.md, Abschnitt "Drittdienste".
+  ============================================================================
+*/ -}}
 <form class="contact-form" action="https://formspree.io/f/mvkpgrpl" method="POST">
   <div>
     <label for="cf-name">{{ i18n "form_name" }}</label>

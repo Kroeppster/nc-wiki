@@ -1,10 +1,36 @@
+{{- /*
+  ============================================================================
+  VORLAGE FÜR EINZELSEITEN (z.B. ein News-Beitrag, ein Erfahrungsbericht,
+  eine Kontaktseite)
+  ============================================================================
+  Das ist die Standard-Vorlage für JEDE einzelne Unterseite der Website -
+  also alles, was KEINE Übersichtsseite eines Ordners ist (dafür ist
+  list.html zuständig). Ein News-Artikel, ein Erfahrungsbericht, die
+  Kontaktseite, eine Uniguide-Detailseite: alle laufen über diese eine Datei.
+
+  Manche Bereiche (Formular auf der Kontaktseite, Uni-Detailtabelle) werden
+  nur eingeblendet, wenn im Frontmatter der jeweiligen Seite ein bestimmtes
+  Feld gesetzt ist (z.B. "contact_form: true"). So kann dieselbe Vorlage für
+  ganz unterschiedliche Seiteninhalte wiederverwendet werden, ohne für jede
+  Kombination eine eigene Datei zu brauchen.
+  ============================================================================
+*/ -}}
 {{ define "main" }}
   <section>
     <div class="wrap">
+      {{/* Kleines Schlagwort über dem Titel = der Ordnername (z.B. "News", "EMS") */}}
       {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
+
+      {{/* Normalerweise kommt der Titel direkt aus dem Frontmatter ("title:").
+           Ausnahme: Erfahrungsberichte haben absichtlich KEIN title-Feld -
+           dort wird der Titel automatisch aus "name" und "jahr" gebaut
+           (z.B. "Anna K. – EMS 2027"), siehe archetypes/erfahrungsbericht.md. */}}
       {{ $pageTitle := .Title }}
       {{ if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
       <h1>{{ $pageTitle }}</h1>
+
+      {{/* Nur bei Erfahrungsberichten: Jahr/Ort-Angabe und Schlagwort-Pills
+           unter dem Titel anzeigen */}}
       {{ if and .Params.name .Params.jahr }}
       <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
       {{ with .Params.tags }}
@@ -13,12 +39,19 @@
       </ul>
       {{ end }}
       {{ end }}
+
+      {{/* Optionales Titelbild, falls "featured_image" im Frontmatter gesetzt ist */}}
       {{ with .Params.featured_image }}
       <figure class="featured-image">
         {{ partial "image.html" (dict "src" . "alt" (or $.Params.featured_image_alt $.Title) "sizes" "(max-width:900px) 100vw, 900px") }}
       </figure>
       {{ end }}
+
+      {{/* Der eigentliche Fliesstext der Seite (alles nach dem Frontmatter-Block) */}}
       {{ .Content }}
+
+      {{/* Manuelle Download-Liste aus dem Frontmatter (Feld "downloads:") -
+           wird z.B. für Jahresberichte verwendet, siehe archetypes/jahresbericht.md */}}
       {{ with .Params.downloads }}
       <ul class="download-list">
         {{ range . }}
@@ -26,9 +59,19 @@
         {{ end }}
       </ul>
       {{ end }}
+
+      {{/* Für Übungsaufgaben-Unterseiten (z.B. "muster-zuordnen") werden
+           automatisch alle PDFs im passenden Unterordner unter
+           assets/downloads/uebungsaufgaben/ aufgelistet - der Ordnername wird
+           dabei automatisch aus dem Dateinamen dieser Seite abgeleitet. */}}
       {{ if strings.Contains .Path "uebungsaufgaben" }}
       {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
       {{ end }}
+
+      {{/* Diese drei Bausteine erscheinen NUR, wenn das jeweilige Feld im
+           Frontmatter der Seite auf "true" gesetzt ist (bzw. bei uni_slug:
+           auf einen Wert gesetzt ist). So bekommt z.B. nur die Kontaktseite
+           ein Kontaktformular, nicht jede Seite der Website. */}}
       {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
       {{ if .Params.experience_form }}{{ partial "experience-form.html" . }}{{ end }}
       {{ if .Params.uni_slug }}{{ partial "uni-detail.html" . }}{{ end }}

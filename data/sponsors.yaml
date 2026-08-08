@@ -1,5 +1,18 @@
-# Sponsoren-Raster (Unterstützer:innen-Seite).
-# logo = Dateiname relativ zu assets/images/sponsors/ (SVG oder Raster, wird noch nachgereicht).
+# ============================================================================
+# SPONSOREN (erscheinen als Logo-Kacheln auf der "Unterstützer:innen"-Seite)
+# ============================================================================
+# Diese Datei ist eine einfache Liste - jeder Eintrag (beginnt mit "- ") ist
+# ein Sponsor mit drei Angaben:
+#   name    - wird nur angezeigt, falls die Logo-Datei fehlt (Text-Ersatz)
+#   logo    - Dateiname der Logo-Datei, muss unter assets/images/sponsors/
+#             liegen (SVG bevorzugt, geht aber auch als PNG/JPG)
+#   website - wohin die Logo-Kachel verlinkt (mit https:// davor)
+#
+# Neuen Sponsor hinzufügen: hier einen neuen Eintrag ergänzen UND die
+# Logo-Datei unter assets/images/sponsors/ hochladen (Dateiname muss exakt
+# mit dem "logo:"-Wert hier übereinstimmen). Ohne hochgeladene Logo-Datei
+# wird automatisch nur der Name als Text angezeigt - kein kaputtes Bild.
+# ============================================================================
 - name: "VSAO"
   logo: "vsao.svg"
   website: "https://vsao.ch/"

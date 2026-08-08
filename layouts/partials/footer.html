@@ -1,14 +1,33 @@
+{{- /*
+  ============================================================================
+  FUSSZEILE (erscheint unten auf JEDER Seite) + Cookie-Banner + gemeinsames
+  JavaScript der ganzen Website
+  ============================================================================
+  Diese Datei enthält drei Dinge, die auf jeder Seite gebraucht werden:
+  1. Die eigentliche Fusszeile (Adresse, Menüs, Newsletter, Social-Media)
+  2. Den Cookie-Hinweis, der ganz unten rechts eingeblendet wird
+  3. Ein <script>-Block mit drei kleinen, unabhängigen Programmteilen:
+     Countdown-Uhr, Cookie-Banner-Logik, Hell/Dunkel-Umschalter-Logik.
+     "Unabhängig" heisst: jeder Teil in runden Klammern (function(){...})()
+     macht sein eigenes Ding und stört die anderen nicht.
+  ============================================================================
+*/ -}}
 <footer class="site" id="footer-kontakt">
   <div class="wrap">
     <div class="footer-grid">
       <div>
         <h4>{{ .Site.Title }}</h4>
         <p class="footer-lead">{{ i18n "site_tagline" }}</p>
+        {{/* Adresse/E-Mail kommen NICHT aus dieser Datei, sondern aus
+             hugo.toml (Bereich [params]) - dort ändern, nicht hier, dann
+             wirkt sich das automatisch überall aus, wo diese Angaben
+             gebraucht werden. */}}
         <p class="footer-address">{{ .Site.Params.org_name }}<br>{{ .Site.Params.org_address }}<br>{{ .Site.Params.org_email }}</p>
       </div>
       <div>
         <h4>{{ i18n "footer_main_menu_heading" }}</h4>
         <ul>
+          {{/* Gleiche automatische Menü-Logik wie im Hauptmenü oben, siehe header.html */}}
           {{ range .Site.Menus.main }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
           {{ end }}
@@ -17,18 +36,29 @@
       <div>
         <h4>{{ i18n "footer_legal_heading" }}</h4>
         <ul>
+          {{/* "legal"-Menü = eigenes, zweites Menü nur für rechtliche Seiten
+               (Impressum usw.) - genauso über "menu: legal:" im Frontmatter
+               der jeweiligen Seite gesteuert. */}}
           {{ range .Site.Menus.legal }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
           {{ end }}
         </ul>
       </div>
       <div class="footer-newsletter">
+        {{/* Der ganze Newsletter-Block erscheint NUR, wenn in hugo.toml unter
+             [params] ein echter Wert bei newsletter_url eingetragen ist -
+             solange das Feld leer ist, wird hier absichtlich nichts
+             angezeigt (kein Knopf, der ins Leere führt). */}}
         {{ with .Site.Params.newsletter_url }}
         <h4>{{ i18n "footer_newsletter_heading" }}</h4>
         <p class="footer-lead">{{ i18n "footer_newsletter_text" }}</p>
         <a class="btn btn-primary btn-block" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "footer_newsletter_submit" }}</a>
         {{ end }}
         <div class="footer-social">
+          {{/* Genauso: jeder Social-Media-Knopf erscheint nur, wenn die
+               passende URL in hugo.toml [params] gesetzt ist (social_instagram,
+               social_discord, social_linkedin). Fehlt eine URL, wird der
+               Knopf komplett weggelassen statt auf "#" zu verlinken. */}}
           {{ with .Site.Params.social_instagram }}<a href="{{ . }}" class="social-instagram" target="_blank" rel="noopener">Instagram</a>{{ end }}
           {{ with .Site.Params.social_discord }}<a href="{{ . }}" class="social-discord" target="_blank" rel="noopener">Discord</a>{{ end }}
           {{ with .Site.Params.social_linkedin }}<a href="{{ . }}" class="social-linkedin" target="_blank" rel="noopener">LinkedIn</a>{{ end }}
@@ -42,6 +72,10 @@
   </div>
 </footer>
 
+{{/* Cookie-Hinweis unten rechts. Wird per JavaScript weiter unten
+     ausgeblendet, sobald jemand einmal "Details" oder "Akzeptieren"
+     angeklickt hat (Merker liegt im Browser-Speicher, nicht in einem
+     echten Cookie - siehe Text im Banner). */}}
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="{{ i18n "cookie_aria_label" }}">
   <p>{{ i18n "cookie_text" }}</p>
   <div class="cookie-actions">
@@ -51,6 +85,12 @@
 </div>
 
 <script>
+  {{/* ---- Teil 1: Countdown-Uhr auf der Startseite ----
+       Zählt die Zeit bis zum EMS-Termin (Datum kommt aus hugo.toml, Feld
+       ems_exam_date) im Sekundentakt herunter und schreibt Tage/Std/Min/Sek
+       in die vier Zahlenfelder im Hero-Panel (siehe layouts/index.html).
+       Auf allen anderen Seiten gibt es diese Felder gar nicht - dann passiert
+       hier einfach nichts (die "if(elD)"-Prüfungen fangen das ab). */}}
   (function(){
     var target = new Date('{{ .Site.Params.ems_exam_date }}').getTime();
     var elD=document.getElementById('cd-d'), elH=document.getElementById('cd-h'),
@@ -70,11 +110,18 @@
     tick();
     setInterval(tick, 1000);
   })();
+
+  {{/* ---- Teil 2: Cookie-Banner ein-/ausblenden und Wahl merken ----
+       Merkt sich die getroffene Wahl (Details/Akzeptieren) im lokalen
+       Browser-Speicher (localStorage, Schlüssel "cookie-consent") - beim
+       nächsten Besuch bleibt der Banner dann automatisch verborgen. */}}
   (function(){
     var STORAGE_KEY = 'cookie-consent';
     var banner = document.getElementById('cookieBanner');
     if(!banner) return;
 
+    {{/* Reserviert unten auf der Seite Platz in der Höhe des Banners, damit
+         er nicht andere Inhalte (z.B. den Footer) überdeckt. */}}
     function reserveSpace(){
       if(banner.classList.contains('hidden')){
         document.body.style.paddingBottom = '';
@@ -100,6 +147,14 @@
       });
     });
   })();
+
+  {{/* ---- Teil 3: Hell/Dunkel-Umschalter-Knopf ----
+       Die eigentliche ENTSCHEIDUNG, welches Farbschema beim Laden der Seite
+       verwendet wird, passiert in head.html (dort, weil es VOR dem ersten
+       sichtbaren Bild passieren muss). Dieser Teil hier reagiert nur auf den
+       Klick auf den Sonne/Mond-Knopf in der Kopfzeile: schaltet um und merkt
+       sich die Wahl im Browser-Speicher, damit sie beim nächsten Besuch
+       wieder verwendet wird. */}}
   (function(){
     var THEME_KEY = 'theme-preference';
     var toggle = document.getElementById('themeToggle');

@@ -1,9 +1,39 @@
+# ==============================================================================
+# ERFAHRUNGSBERICHTE AUTOMATISCH ALS PULL REQUEST ANLEGEN
+# ==============================================================================
+# Das ist die zweite Hälfte des Ablaufs, der beginnt, wenn jemand auf der
+# Website das Formular "Erfahrungsbericht einreichen" ausfüllt (siehe
+# layouts/partials/experience-form.html für die erste Hälfte, dort auch der
+# ganze Ablauf Schritt für Schritt erklärt).
+#
+# Kurzfassung: Formspree (der externe Formular-Dienst) nimmt die Antworten
+# entgegen und benachrichtigt daraufhin GitHub automatisch (diese Verbindung
+# ist NICHT in diesem Code sichtbar, sondern in den Formspree-Kontoeinstel-
+# lungen konfiguriert - siehe docs/WARTUNG.md, Abschnitt 6). Das startet
+# diese Automatisierung hier: sie baut aus den einzelnen Formular-Antworten
+# selbst eine fertige Markdown-Seite und öffnet dafür automatisch einen
+# Pull Request. Jemand aus dem Team muss diesen PR danach nur noch kurz
+# durchlesen und bestätigen (mergen) - der Bericht ist dann live.
+#
+# WICHTIG: Diese Automatisierung baut die Textdatei UNABHÄNGIG und NOCHMAL
+# neu aus den rohen Formular-Antworten (siehe unten) - sie verwendet NICHT
+# die vom JavaScript im Browser vorbereitete Version. Das ist Absicht (mehr
+# Kontrolle/Sicherheit über das, was tatsächlich ins Repo kommt), heisst
+# aber auch: ändert sich hier die Struktur der erzeugten Datei (z.B. die
+# Zwischenüberschriften), sollte man das idealerweise auch in
+# experience-form.html anpassen, damit beide Wege zum gleichen Ergebnis führen.
+# ==============================================================================
+
 name: Erfahrungsbericht-Einreichung verarbeiten
 
+# Läuft NICHT bei jedem Push, sondern nur, wenn GitHub von aussen (von
+# Formspree) ein "repository_dispatch"-Signal mit genau diesem Namen erhält.
 on:
   repository_dispatch:
     types: [erfahrungsbericht-submitted]
 
+# Erlaubt dieser Automatisierung, eine neue Datei ins Repo zu schreiben und
+# einen Pull Request dafür zu eröffnen.
 permissions:
   contents: write
   pull-requests: write
@@ -15,6 +45,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Dieser Schritt ist ein kleines JavaScript-Programm (kein Hugo, keine
+      # normale Konfiguration) - es liest die Formular-Antworten aus, prüft
+      # sie, und baut daraus von Hand eine fertige .md-Datei, genau wie sie
+      # später im Repo liegen soll (mit Frontmatter-Block und Fliesstext).
       - name: Bericht-Markdown aus Formulardaten erzeugen
         id: build
         uses: actions/github-script@v7
@@ -23,8 +57,14 @@ jobs:
             const fs = require('fs');
             const path = require('path');
 
+            // "client_payload" sind die rohen Formular-Antworten, wie sie von
+            // Formspree an GitHub weitergereicht wurden.
             const p = context.payload.client_payload || {};
 
+            // Kleine Hilfsfunktion: bricht mit einer klaren Fehlermeldung ab,
+            // falls ein Pflichtfeld leer angekommen ist (sollte durch die
+            // Formular-Validierung im Browser eigentlich nie passieren, ist
+            // aber eine zusätzliche Absicherung).
             function req(field) {
               const v = (p[field] ?? '').toString().trim();
               if (!v) throw new Error(`Pflichtfeld fehlt oder leer: ${field}`);
@@ -46,6 +86,11 @@ jobs:
             // "nur für Rückfragen, wird nicht veröffentlicht" - landet also
             // weder im Markdown noch im PR (der PR ist im Repo öffentlich sichtbar).
 
+            // Macht aus dem eingegebenen Namen einen für Dateinamen geeigneten
+            // Text (Umlaute ausgeschrieben, alles klein, Sonderzeichen zu
+            // Bindestrichen) - genau wie die gleichnamige Funktion im
+            // JavaScript in experience-form.html, nur hier nochmal unabhängig
+            // nachgebaut.
             function slugify(s) {
               return s
                 .toLowerCase()
@@ -54,6 +99,10 @@ jobs:
                 .replace(/^-+|-+$/g, '') || 'anonym';
             }
 
+            // "stamp" = eine auf die aktuelle Uhrzeit basierende, garantiert
+            // einmalige Zeichenfolge - verhindert, dass zwei Berichte mit
+            // ähnlichem Namen sich gegenseitig eine bereits bestehende Datei
+            // überschreiben.
             const stamp = Date.now().toString(36);
             const slug = `bericht-${slugify(name)}-${stamp}`;
             const filePath = `content/de/ems/erfahrungsberichte/${slug}.md`;
@@ -62,6 +111,8 @@ jobs:
             // und übernimmt dabei automatisch das Escaping von Anführungszeichen etc.
             const y = (v) => JSON.stringify(v);
 
+            // Baut den Frontmatter-Block (den Textblock zwischen den beiden
+            // "---"-Zeilen ganz oben in der Datei) von Hand zusammen.
             let fm = '---\n';
             fm += `name: ${y(name)}\n`;
             fm += `jahr: ${jahr}\n`;
@@ -70,6 +121,9 @@ jobs:
             fm += `draft: true\n`;
             fm += '---\n\n';
 
+            // Baut den eigentlichen Berichtstext mit denselben drei
+            // Zwischenüberschriften wie in archetypes/erfahrungsbericht.md -
+            // so sehen manuell und automatisch angelegte Berichte gleich aus.
             let body = '';
             if (vorbereitung) body += `## Wie hast du dich vorbereitet?\n\n${vorbereitung}\n\n`;
             if (geholfen) body += `## Was hat dir am meisten geholfen?\n\n${geholfen}\n\n`;
@@ -78,11 +132,17 @@ jobs:
             fs.mkdirSync(path.dirname(filePath), { recursive: true });
             fs.writeFileSync(filePath, fm + body, 'utf8');
 
+            // Diese Werte werden an den nächsten Schritt weitergereicht
+            // (siehe "${{ steps.build.outputs.xxx }}" weiter unten).
             core.setOutput('file_path', filePath);
             core.setOutput('name', name);
             core.setOutput('jahr', String(jahr));
             core.setOutput('slug', slug);
 
+      # Öffnet automatisch einen fertigen, review-bereiten Pull Request mit
+      # genau der einen neuen Datei von oben - inklusive aussagekräftigem
+      # Titel/Beschreibung und den Labels "erfahrungsbericht"/"needs-review",
+      # damit das Team ihn im GitHub-Issues-Tab leicht wiederfindet.
       - name: Pull Request öffnen
         uses: peter-evans/create-pull-request@v6
         with:

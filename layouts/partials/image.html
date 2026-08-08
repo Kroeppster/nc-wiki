@@ -1,12 +1,36 @@
 {{- /*
-  Responsive Bild-Partial mit Hugo Image Processing.
-  Parameter (dict):
-    src   - Dateiname relativ zu assets/images/, z.B. "team-2026.jpg" (erforderlich)
-    alt   - Alt-Text (erforderlich, sonst Build-Fehler)
-    class - zusätzliche CSS-Klasse(n) auf dem <img> (optional)
-    sizes - sizes-Attribut (optional, Default "100vw")
-  Rendert nichts (nur eine Build-Warnung), wenn das Bild fehlt -
-  damit Seiten ohne Bild sauber bleiben, solange Logos/Fotos noch fehlen.
+  ============================================================================
+  RESPONSIVES BILD (passt sich automatisch der Bildschirmgrösse an)
+  ============================================================================
+  Wird überall dort verwendet, wo irgendwo auf der Website ein Bild gezeigt
+  wird (Titelbilder, News-Vorschaubilder, Team-Fotos usw.) - immer über
+  "{{ partial "image.html" (dict ...) }}", nie ein direktes <img>-Tag.
+
+  Der Grund: aus EINER hochgeladenen Bilddatei erzeugt Hugo hier automatisch
+  MEHRERE verkleinerte Kopien in unterschiedlichen Grössen (480/960/1440
+  Pixel breit) und speichert sie im Web-Format WebP (deutlich kleinere
+  Dateigrösse als JPG/PNG, bei gleicher Bildqualität). Der Browser wählt
+  dann selbst die passende Grösse aus - ein Handy lädt die kleine Version,
+  ein grosser Bildschirm die grosse. Das spart Ladezeit, ohne dass man als
+  Website-Pflegerin selbst mehrere Bildgrössen von Hand exportieren müsste.
+
+  Parameter, die diese Datei erwartet (übergeben beim Aufruf per "partial"):
+    src   - Dateiname relativ zu assets/images/, z.B. "team-2026.jpg" (Pflicht)
+    alt   - Alt-Text/Bildbeschreibung für Screenreader (Pflicht, siehe unten)
+    class - zusätzliche CSS-Klasse(n) auf dem Bild (optional)
+    sizes - wie breit das Bild ungefähr im Layout dargestellt wird
+            (optional, Standardwert: "100vw" = volle Bildschirmbreite)
+
+  Fehlt die Bilddatei (z.B. weil ein Foto noch nicht hochgeladen wurde),
+  wird einfach GAR NICHTS angezeigt (nur eine Warnung beim Bauen der Seite,
+  kein sichtbarer Fehler) - damit Seiten auch ohne Bild sauber aussehen,
+  solange noch nicht alle Fotos vorhanden sind.
+
+  Fehlt hingegen der "alt"-Text bei einem VORHANDENEN Bild, bricht das Bauen
+  der Website mit einem Fehler ab (statt nur einer Warnung) - Alt-Texte sind
+  wichtig für Screenreader (Sehbehinderte) und werden deshalb bewusst nicht
+  optional gemacht.
+  ============================================================================
 */}}
 {{- $src := .src }}
 {{- $alt := .alt }}
@@ -25,7 +49,9 @@
 {{- end }}
 
 {{- if and $img (strings.HasSuffix (lower $src) ".svg") }}
-  {{- /* Vektorgrafik: keine Rasterverarbeitung, direkt ausliefern */}}
+  {{- /* Vektorgrafiken (SVG, z.B. Logos) werden NICHT verkleinert/umgewandelt -
+         die sehen bei jeder Grösse gleich scharf aus, das automatische
+         Verkleinern wäre hier unnötig und würde nur schaden. */}}
 <img
   src="{{ $img.RelPermalink }}"
   alt="{{ $alt }}"
@@ -33,6 +59,9 @@
   {{- with $class }} class="{{ . }}"{{ end -}}
 >
 {{- else if $img }}
+  {{- /* Normales Foto: bis zu 3 verkleinerte Kopien erzeugen (480/960/1440px
+         breit), aber nur die, die auch kleiner sind als das Originalbild -
+         ein bereits kleines Bild wird nicht künstlich vergrössert. */}}
   {{- $widths := slice 480 960 1440 }}
   {{- $variants := slice }}
   {{- range $widths }}
@@ -40,15 +69,22 @@
       {{- $variants = $variants | append (dict "w" . "res" ($img.Resize (printf "%dx webp q82" .))) }}
     {{- end }}
   {{- end }}
+  {{- /* Falls das Originalbild kleiner ist als sogar die kleinste Stufe
+         (480px), wird trotzdem mindestens EINE Version in Originalgrösse erzeugt */}}
   {{- if eq (len $variants) 0 }}
     {{- $variants = $variants | append (dict "w" $img.Width "res" ($img.Resize (printf "%dx webp q82" $img.Width))) }}
   {{- end }}
 
+  {{- /* "srcset" ist die Liste aller erzeugten Grössen, die dem Browser zur
+         Auswahl angeboten wird - er sucht sich selbst die passende aus. */}}
   {{- $srcsetParts := slice }}
   {{- range $variants }}
     {{- $srcsetParts = $srcsetParts | append (printf "%s %dw" .res.RelPermalink .w) }}
   {{- end }}
 
+  {{- /* Die grösste erzeugte Version dient als Ersatzbild ("src") für
+         Browser, die srcset nicht verstehen (praktisch keine mehr, aber
+         sicherheitshalber) */}}
   {{- $fallback := index $variants (sub (len $variants) 1) }}
 
 <img

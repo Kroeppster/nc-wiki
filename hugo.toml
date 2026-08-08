@@ -1,24 +1,77 @@
+# ==============================================================================
+# GRUNDEINSTELLUNGEN DER WEBSITE
+# ==============================================================================
+# Diese Datei ist die zentrale Konfiguration von Hugo (dem Programm, das aus
+# allen Textdateien im Repo die fertige Website baut). Hier stehen keine
+# Seiteninhalte, sondern grundsätzliche Einstellungen: welche Sprachen es
+# gibt, wo die Website später erreichbar sein wird, und ein paar
+# Konzern-/Kontaktangaben, die an mehreren Stellen der Website gebraucht
+# werden (siehe [params] weiter unten).
+# ==============================================================================
+
+# Die Webadresse, unter der die fertige Website erreichbar ist. Wird beim
+# echten Bauen/Veröffentlichen der Seite automatisch überschrieben (siehe
+# .github/workflows/hugo.yml) - dieser Wert hier ist nur für den lokalen
+# Test-Server (falls jemand die Seite mit Hugo auf dem eigenen Computer
+# ansieht) gedacht und hat auf die veröffentlichte Website keinen Einfluss.
 baseURL = 'http://localhost:1313/'
+
 title = 'NCWiki'
 
+# Deutsch ist die "Standardsprache" - deren Seiten liegen direkt unter der
+# Haupt-Webadresse (also z.B. .../news/ statt .../de/news/), Französisch und
+# Italienisch bekommen automatisch ein "/fr/" bzw. "/it/" vor die Adresse
+# gesetzt (siehe defaultContentLanguageInSubdir).
 defaultContentLanguage = 'de'
 defaultContentLanguageInSubdir = false
 
+# Erzeugt automatisch eine robots.txt-Datei (sagt Suchmaschinen, welche
+# Seiten sie durchsuchen dürfen - hier: alle).
 enableRobotsTXT = true
 
+# ------------------------------------------------------------------------------
+# Site-weite Angaben, die an mehreren Stellen der Website gebraucht werden
+# (z.B. in der Fusszeile, siehe layouts/partials/footer.html). Hier zentral
+# ändern, statt an mehreren Stellen im Code - wirkt sich automatisch überall
+# aus, wo diese Werte verwendet werden.
+# ------------------------------------------------------------------------------
 [params]
+  # Vereinsname/-adresse/-E-Mail, erscheinen in der Fusszeile jeder Seite.
   org_name = 'NCWiki'
   org_address = '4000 Basel'
   org_email = 'info@nc-wiki.ch'
+
+  # Social-Media-Links für die Fusszeile. WICHTIG: bleibt eine dieser drei
+  # Zeilen leer (''), wird der entsprechende Knopf auf der Website komplett
+  # ausgeblendet, statt auf eine leere/kaputte Adresse zu verlinken. Sobald
+  # es z.B. einen LinkedIn-Auftritt gibt, hier einfach die echte Adresse
+  # eintragen - der Knopf erscheint dann automatisch.
   social_instagram = 'https://www.instagram.com/ncwiki.ch/'
   social_discord = 'https://discord.com/invite/DhgYpUGss9'
   social_linkedin = ''
+
+  # Newsletter-Anmeldelink für den Footer-Block - genauso: bleibt das Feld
+  # leer, wird der ganze Newsletter-Bereich in der Fusszeile ausgeblendet.
   newsletter_url = ''
+
+  # Datum und Uhrzeit des nächsten EMS-Prüfungstermins, für die Countdown-Uhr
+  # auf der Startseite (siehe layouts/index.html und das Countdown-Skript in
+  # layouts/partials/footer.html). Format: JJJJ-MM-TTTHH:MM:SS+ZZ:ZZ
+  # (+02:00 = Schweizer Sommerzeit).
   ems_exam_date = '2027-07-09T08:00:00+02:00'
 
+# Wie viele Einträge pro Seite angezeigt werden, bevor eine "Seite 2 / 3 / ..."
+# -Navigation erscheint (betrifft z.B. die News-Übersicht, falls es mehr als
+# 12 Beiträge gibt).
 [pagination]
   pagerSize = 12
 
+# ------------------------------------------------------------------------------
+# Die drei Sprachversionen der Website. "weight" bestimmt die Reihenfolge in
+# der Sprachauswahl oben rechts (kleinere Zahl = weiter vorne/links).
+# "contentDir" sagt Hugo, in welchem Unterordner von content/ die Texte
+# dieser Sprache liegen.
+# ------------------------------------------------------------------------------
 [languages]
   [languages.de]
     label = 'Deutsch'

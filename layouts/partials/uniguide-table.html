@@ -1,8 +1,17 @@
 {{- /*
-  Vergleichstabelle Uniguide, gespeist aus data/unis.yaml.
-  Erwartet je Eintrag: slug, name, kanton, sprache (Liste), studiengaenge (Liste),
-  ems_erforderlich (ja/nein/teilweise), auswahlverfahren, studienplaetze (Zahl/null),
-  besonderheiten (Liste), website, stand, quelle.
+  ============================================================================
+  UNIGUIDE-VERGLEICHSTABELLE (Übersicht aller Universitäten)
+  ============================================================================
+  Gespeist aus data/unis.yaml - dort ändern, nicht hier, um Angaben zu einer
+  Universität zu ändern oder eine neue hinzuzufügen. Erwartet je Eintrag:
+  slug, name, kanton, sprache (Liste), studiengaenge (Liste),
+  ems_erforderlich (ja/nein/teilweise), auswahlverfahren,
+  studienplaetze (Zahl/null), besonderheiten (Liste), website, stand, quelle.
+
+  Diese Tabelle ist per Sprache und EMS-Pflicht filterbar - siehe das
+  <script> ganz unten, das die Filter-Logik im Browser übernimmt (kein
+  erneutes Laden der Seite nötig).
+  ============================================================================
 */}}
 {{- $emsLabels := dict "ja" (i18n "ems_status_ja") "nein" (i18n "ems_status_nein") "teilweise" (i18n "ems_status_teilweise") }}
 
@@ -18,6 +27,9 @@
 <p class="download-empty">{{ i18n "uniguide_table_empty" }}</p>
 {{ else }}
 
+{{- /* Liste aller vorkommenden Sprachen (ohne Duplikate) einsammeln - daraus
+       werden unten automatisch die Sprach-Filter-Knöpfe gebaut. Neue Sprache
+       in data/unis.yaml eintragen -> Filter-Knopf erscheint automatisch. */ -}}
 {{- $sprachen := slice }}
 {{- range $unis }}{{ range .sprache }}{{ $sprachen = $sprachen | append . }}{{ end }}{{ end }}
 {{- $sprachen = $sprachen | uniq | sort }}
@@ -49,8 +61,13 @@
     </thead>
     <tbody>
       {{ range $unis }}
+      {{- /* "teilweise" EMS-Pflicht zählt für den Filter als "mit EMS" -
+             sonst müsste man beim Filtern nach 3 statt 2 Gruppen suchen. */ -}}
       {{- $emsBucket := "ohne" }}
       {{- if in (slice "ja" "teilweise") .ems_erforderlich }}{{ $emsBucket = "mit" }}{{ end }}
+      {{- /* Diese beiden "data-..."-Attribute sind für Menschen unsichtbar,
+             das JavaScript weiter unten liest sie aus, um beim Filtern zu
+             wissen, welche Zeile es ein-/ausblenden muss. */ -}}
       <tr data-sprachen="{{ delimit .sprache "|" }}" data-ems="{{ $emsBucket }}">
         <td><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></td>
         <td>{{ delimit .sprache ", " }}</td>
@@ -63,6 +80,10 @@
   </table>
 </div>
 
+{{/* Filter-Logik: läuft komplett im Browser, ohne die Seite neu zu laden.
+     Merkt sich in "active", welcher Sprach- und EMS-Filter gerade gewählt
+     ist, und blendet dann alle Tabellenzeilen aus/ein, die (nicht) dazu
+     passen - anhand der data-sprachen/data-ems-Attribute von oben. */}}
 <script>
 (function(){
   var table = document.getElementById('uniguide-table');

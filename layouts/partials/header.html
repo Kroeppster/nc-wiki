@@ -1,9 +1,28 @@
+{{- /*
+  ============================================================================
+  KOPFZEILE (erscheint oben auf JEDER Seite, bleibt beim Scrollen sichtbar)
+  ============================================================================
+  Enthält: Logo, Hauptmenü, Suchfeld, Hell/Dunkel-Umschalter, Sprachauswahl.
+  Menüpunkte kommen NICHT aus dieser Datei, sondern werden automatisch aus
+  dem Frontmatter der jeweiligen Seiten zusammengestellt (jede Seite, die im
+  Menü erscheinen soll, hat einen "menu:"-Block im Frontmatter, siehe z.B.
+  content/de/news/_index.md). Wer eine neue Seite ins Menü bringen will,
+  bearbeitet also NICHT diese Datei, sondern die jeweilige Seite selbst.
+  ============================================================================
+*/ -}}
 <header class="site">
   <div class="wrap header-inner">
+    {{/* Logo/Markenname links, verlinkt immer zur Startseite der aktuellen Sprache */}}
     <a class="brand" href="{{ .Site.Home.RelPermalink }}">
       <span class="brand-mark" aria-hidden="true">NC</span>
       <span>{{ .Site.Title }}</span>
     </a>
+
+    {{/* Hauptmenü: geht automatisch alle Seiten durch, die irgendwo im
+         Frontmatter "menu: main: ..." eingetragen haben, und baut daraus
+         diese Liste - inklusive Untermenüs (has-children), falls eine Seite
+         als "parent" einer anderen eingetragen ist. Reihenfolge kommt vom
+         "weight"-Feld im Frontmatter (kleinere Zahl = weiter vorne). */}}
     <nav class="main-nav" aria-label="{{ i18n "nav_aria_label" }}">
       <ul>
         {{ range .Site.Menus.main }}
@@ -20,11 +39,22 @@
         {{ end }}
       </ul>
     </nav>
+
+    {{/* Suchfeld: nur ein leerer Platzhalter-Container - die eigentliche
+         Suchfunktion (Pagefind) klinkt sich per JavaScript hier ein. Der
+         durchsuchbare Suchindex wird beim Bauen der Website automatisch aus
+         allen Seiteninhalten erzeugt, nicht von Hand gepflegt. */}}
     <div id="search"></div>
     <script src="{{ "pagefind/pagefind-ui.js" | relURL }}"></script>
     <script>
       new PagefindUI({ element: "#search" });
     </script>
+
+    {{/* Hell/Dunkel-Umschalter: zeigt je nach aktuellem Farbschema entweder
+         das Sonnen- oder das Mond-Symbol (gesteuert per CSS, siehe
+         static/css/style.css). Der eigentliche Klick-Handler, der das
+         Farbschema umschaltet und merkt, liegt in footer.html (im
+         gemeinsamen <script>-Block ganz unten auf der Seite). */}}
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="{{ i18n "theme_toggle_aria_label" }}">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4.5"/>
@@ -34,6 +64,11 @@
         <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
       </svg>
     </button>
+
+    {{/* Sprachauswahl (DE/FR/IT): die aktuelle Sprache wird hervorgehoben
+         (nicht anklickbar), die anderen beiden verlinken zur übersetzten
+         Version DERSELBEN Seite, falls es die gibt - sonst zur Startseite
+         der jeweiligen Sprache (besser als ein kaputter Link). */}}
     <div class="lang-switch" aria-label="{{ i18n "lang_switch_aria_label" }}">
       {{ $page := . }}
       {{ range hugo.Sites }}
@@ -41,6 +76,7 @@
         {{ if eq $lang $page.Language.Lang }}
         <span class="active">{{ $lang | upper }}</span>
         {{ else }}
+          {{/* Prüfen, ob es von der AKTUELLEN Seite eine Übersetzung in $lang gibt */}}
           {{ $translated := false }}
           {{ range $page.Translations }}
             {{ if eq .Language.Lang $lang }}{{ $translated = . }}{{ end }}

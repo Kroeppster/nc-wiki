@@ -1,5 +1,24 @@
+{{- /*
+  ============================================================================
+  STARTSEITE
+  ============================================================================
+  Diese Datei baut speziell nur die Startseite (und zwar exakt und
+  ausschliesslich die Startseite - anders als list.html/single.html, die für
+  viele verschiedene Seiten gleichzeitig zuständig sind). Alle Texte hier
+  (Hero-Titel, Mission-Text, Newsletter-Überschrift usw.) kommen NICHT aus
+  dieser Datei selbst, sondern aus dem Frontmatter der Startseiten-Textdatei
+  (content/de/_index.md, content/fr/_index.md, content/it/_index.md) - dort
+  gibt es Blöcke wie "hero:", "mission:" usw. mit den jeweiligen Texten pro
+  Sprache. Diese Datei hier bestimmt nur, WO diese Texte auf der Seite
+  landen und wie sie aussehen (Layout), nicht WAS drinsteht.
+
+  Willst du also den Hero-Text, die Mission-Aussage o.ä. ändern: das passiert
+  in den drei content/.../_index.md-Dateien, NICHT hier.
+  ============================================================================
+*/ -}}
 {{ define "main" }}
 
+  {{/* ================= HERO (grosser Bereich ganz oben) ================= */}}
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
@@ -11,6 +30,14 @@
           <a class="btn btn-ghost" href="#footer-kontakt">{{ .Params.hero.cta_secondary }}</a>
         </div>
       </div>
+
+      {{/* Das auffällige Kästchen rechts neben dem Hero-Text: eine Anspielung auf
+           den EMS-Antwortbogen (Multiple-Choice-Kreise, teils "ausgefüllt" in
+           Blau) mit kleinen Eckmarkierungen (wie Passmarken auf gedrucktem
+           Papier) und dem Countdown bis zum EMS-Termin darunter. Rein
+           dekorativ (aria-hidden="true" = für Screenreader unsichtbar), das
+           Datum für den Countdown kommt aus hugo.toml (Feld ems_exam_date)
+           und wird per JavaScript in footer.html hochgezählt. */}}
       <div class="hero-panel">
         <span class="reg-mark tl" aria-hidden="true"></span><span class="reg-mark tr" aria-hidden="true"></span>
         <span class="reg-mark bl" aria-hidden="true"></span><span class="reg-mark br" aria-hidden="true"></span>
@@ -23,6 +50,8 @@
         <div class="panel-divider" aria-hidden="true"></div>
         <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
         <div class="countdown">
+          {{/* Die "–" Platzhalter-Striche werden beim Laden der Seite sofort
+               durch das JavaScript in footer.html mit echten Zahlen ersetzt. */}}
           <div class="countdown-cell"><span class="num" id="cd-d">–</span><span class="unit">{{ i18n "countdown_days" }}</span></div>
           <div class="countdown-cell"><span class="num" id="cd-h">–</span><span class="unit">{{ i18n "countdown_hours" }}</span></div>
           <div class="countdown-cell"><span class="num" id="cd-m">–</span><span class="unit">{{ i18n "countdown_minutes" }}</span></div>
@@ -32,6 +61,7 @@
     </div>
   </section>
 
+  {{/* ================= NEWS-VORSCHAU (2 neueste Beiträge) ================= */}}
   <section id="news">
     <div class="wrap">
       <div class="section-head">
@@ -39,6 +69,9 @@
         <a class="more" href="{{ relLangURL "news/" }}">{{ .Params.news.cta }}</a>
       </div>
       <ul class="card-grid">
+        {{/* "first 2" = nur die ersten 2 Treffer nehmen. .Site.RegularPages mit
+             Section "news" = alle echten Unterseiten (keine Übersichtsseiten)
+             im news-Ordner, automatisch neuestes Datum zuerst sortiert. */}}
         {{ range first 2 (where .Site.RegularPages "Section" "news") }}
         <li class="card">
           {{ if .Params.featured_image }}
@@ -56,19 +89,29 @@
     </div>
   </section>
 
+  {{/* ================= DIE 10 UNTERTESTS ================= */}}
   <section id="subtests">
     <div class="wrap">
       <p class="eyebrow">{{ .Params.subtests.eyebrow }}</p>
       <h2>{{ .Params.subtests.heading }}</h2>
+      {{/* Das Raster mit den 10 nummerierten Kacheln kommt aus einer eigenen
+           Datei, siehe layouts/partials/subtest-grid.html - die Reihenfolge/
+           Namen der Untertests stehen in data/subtests.yaml. */}}
       {{ partial "subtest-grid.html" . }}
     </div>
   </section>
 
+  {{/* ================= MISSION / "WARUM ES UNS GIBT" ================= */}}
   <section id="mission">
     <div class="wrap">
       <p class="eyebrow">{{ .Params.mission.eyebrow }}</p>
       <h2 class="mission-lede">{{ .Params.mission.heading }}</h2>
       <div class="feature-grid">
+        {{/* Die drei Gründe/Werte kommen als Liste aus dem Frontmatter
+             (mission.features: mit je title + text). Absichtlich KEINE
+             Nummerierung (01/02/03) hier, weil die drei Punkte keine echte
+             Reihenfolge haben - nur eine kleine, rein dekorative Markierung
+             (".num", ein kleines Quadrat, siehe style.css). */}}
         {{ range .Params.mission.features }}
         <div class="feature"><span class="num" aria-hidden="true"></span><h3>{{ .title }}</h3><p>{{ .text }}</p></div>
         {{ end }}
@@ -76,6 +119,9 @@
     </div>
   </section>
 
+  {{/* ================= OPTIONALES BREITES BILD ================= */}}
+  {{/* Erscheint nur, wenn im Frontmatter "story_image:" gesetzt ist - sonst
+       wird dieser ganze Abschnitt einfach übersprungen. */}}
   {{ with .Params.story_image }}
   <section id="story-image">
     <figure class="wide-image">
@@ -84,6 +130,7 @@
   </section>
   {{ end }}
 
+  {{/* ================= SPENDEN-BANNER (dunkles Band) ================= */}}
   <section class="support" id="support">
     <div class="wrap support-inner">
       <div>

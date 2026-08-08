@@ -1,6 +1,28 @@
+{{- /*
+  ============================================================================
+  UNSICHTBARER KOPFBEREICH JEDER SEITE (<head>)
+  ============================================================================
+  Alles hier ist für Besucher:innen nicht direkt SICHTBAR auf der Seite -
+  es sind technische Angaben für den Browser und für Suchmaschinen/
+  Social-Media-Vorschauen (z.B. wenn jemand einen Link auf WhatsApp oder
+  Facebook teilt, holt sich die Vorschau-Karte ihre Angaben von hier).
+  ============================================================================
+*/ -}}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{/* Sagt dem Browser: diese Seite unterstützt sowohl helles als auch dunkles
+     Farbschema (betrifft z.B. die Farbe der Scrollbar, bevor unser eigenes
+     CSS geladen ist) */}}
 <meta name="color-scheme" content="light dark">
+
+{{/* WICHTIG: Dieses Skript läuft absichtlich SOFORT, bevor die Seite überhaupt
+     sichtbar wird (nicht erst am Ende der Seite) - sonst würde man beim Laden
+     kurz einen "Blitz" von hell sehen, bevor auf dunkel umgeschaltet wird.
+     Es schaut nach, ob die Person schon einmal manuell hell/dunkel gewählt
+     hat (gespeichert im Browser unter "theme-preference"), und falls nicht,
+     verwendet es die Systemeinstellung des Geräts. Das Ergebnis wird als
+     data-theme="hell/dunkel" auf die <html>-Seite geschrieben - das ganze
+     CSS in static/css/style.css reagiert auf genau dieses Attribut. */}}
 <script>
 (function(){
   try {
@@ -12,12 +34,26 @@
   } catch (e) {}
 })();
 </script>
+
+{{/* Seitentitel (steht im Browser-Tab). Normalerweise aus dem "title:"-Feld
+     der Seite, ausser bei Erfahrungsberichten (siehe single.html - dort gibt
+     es absichtlich kein title-Feld, der Titel wird aus Name+Jahr gebaut). */}}
 {{- $pageTitle := .Title }}
 {{- if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ $pageTitle }}{{ end }}</title>
+
+{{/* Das Aussehen der ganzen Website kommt aus GENAU dieser einen CSS-Datei -
+     alle Farben/Schriftgrössen/Abstände sind dort ganz oben als Variablen
+     definiert und lassen sich dort zentral anpassen. */}}
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+{{/* Stylesheet der Suchfunktion (Pagefind) - wird separat beim Bauen der
+     Seite generiert, nicht von Hand gepflegt. */}}
 <link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">
 
+{{- /* Ab hier: Angaben für Vorschau-Karten beim Teilen des Links (Open
+       Graph/Twitter-Card-Standard). Titel/Text/Bild werden automatisch aus
+       den Seiteninhalten abgeleitet, mit sinnvollen Ersatzwerten, falls
+       etwas fehlt (z.B. Standard-Beschreibung, Standard-Vorschaubild). */ -}}
 {{- $ogTitle := $pageTitle }}
 {{- if .IsHome }}{{ $ogTitle = .Site.Title }}{{ end }}
 {{- $ogDescription := .Description }}

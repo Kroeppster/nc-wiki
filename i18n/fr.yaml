@@ -1,6 +1,27 @@
-# Textes d'interface fixes (chrome), réutilisés à l'identique dans plusieurs templates/pages.
-# Le contenu propre à une page (hero, mission, etc.) n'est PAS ici, mais dans le frontmatter
-# de content/fr/_index.md correspondant.
+# ============================================================================
+# TEXTES FIXES DE L'INTERFACE EN FRANÇAIS (fichier de « traduction »)
+# ============================================================================
+# On trouve ici tous les textes fixes qui n'appartiennent PAS à une page en
+# particulier, mais sont réutilisés à l'identique partout sur le site -
+# libellés de boutons, titres de menus, messages d'erreur, labels de
+# formulaires, etc. (p. ex. « Envoyer », « En savoir plus », « Accepter »).
+#
+# Ce fichier va toujours de pair avec deux autres, à modifier ensemble :
+# i18n/de.yaml, i18n/fr.yaml (celui-ci), i18n/it.yaml - un par langue, avec
+# les mêmes « clés » (le nom à gauche des deux-points) mais des textes
+# traduits à droite. Si un texte est modifié ici sans adapter la traduction
+# dans les deux autres fichiers, l'ancien texte (ou un texte manquant) reste
+# affiché là-bas.
+#
+# Le contenu propre à une page (texte du hero, texte de la mission de la
+# page d'accueil, etc.) n'est PAS ici, mais dans le frontmatter du fichier
+# content/fr/_index.md correspondant - ce contenu est différent d'une page
+# à l'autre, pas réutilisé partout à l'identique.
+#
+# Pour modifier un texte ici : changer uniquement la valeur à droite des
+# deux-points (entre guillemets), PAS le nom à gauche (il est utilisé
+# directement par les fichiers dans layouts/ et ne doit pas changer, sinon
+# le lien ne fonctionne plus).
 
 skip_to_content: "Aller au contenu"
 nav_aria_label: "Navigation principale"
