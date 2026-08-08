@@ -34,6 +34,7 @@ footer_main_menu_heading: "Hauptmenü"
 footer_legal_heading: "Rechtliches"
 footer_newsletter_heading: "Newsletter"
 footer_newsletter_text: "Bleib informiert über Termine & neues Material."
+footer_newsletter_placeholder: "deine@email.ch"
 footer_newsletter_submit: "Anmelden"
 footer_built_with: "Gebaut mit Hugo · gehostet auf GitHub Pages"
 

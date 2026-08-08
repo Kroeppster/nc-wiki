@@ -33,6 +33,7 @@ footer_main_menu_heading: "Menu principale"
 footer_legal_heading: "Informazioni legali"
 footer_newsletter_heading: "Newsletter"
 footer_newsletter_text: "Resta aggiornato/a su date e nuovo materiale."
+footer_newsletter_placeholder: "tua@email.ch"
 footer_newsletter_submit: "Iscriviti"
 footer_built_with: "Costruito con Hugo · ospitato su GitHub Pages"
 

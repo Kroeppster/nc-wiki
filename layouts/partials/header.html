@@ -12,9 +12,11 @@
 */ -}}
 <header class="site">
   <div class="wrap header-inner">
-    {{/* Logo/Markenname links, verlinkt immer zur Startseite der aktuellen Sprache */}}
+    {{/* Logo/Markenname links, verlinkt immer zur Startseite der aktuellen Sprache.
+         Bildlogo aus static/images/logo.svg - NICHT ohne Rücksprache wieder durch
+         einen Text-Platzhalter ersetzen. */}}
     <a class="brand" href="{{ .Site.Home.RelPermalink }}">
-      <span class="brand-mark" aria-hidden="true">NC</span>
+      <img class="brand-mark" src="{{ "images/logo.svg" | relURL }}" alt="" aria-hidden="true">
       <span>{{ .Site.Title }}</span>
     </a>
 

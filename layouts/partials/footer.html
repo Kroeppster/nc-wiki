@@ -45,15 +45,17 @@
         </ul>
       </div>
       <div class="footer-newsletter">
-        {{/* Der ganze Newsletter-Block erscheint NUR, wenn in hugo.toml unter
-             [params] ein echter Wert bei newsletter_url eingetragen ist -
-             solange das Feld leer ist, wird hier absichtlich nichts
-             angezeigt (kein Knopf, der ins Leere führt). */}}
-        {{ with .Site.Params.newsletter_url }}
+        {{/* Newsletter-Block: immer sichtbar (nicht mehr an newsletter_url
+             gekoppelt - auf ausdrücklichen Wunsch wiederhergestellt, siehe
+             Commit-Beschreibung). Ist noch nicht an einen echten
+             Anmelde-Dienst angebunden - der Knopf tut beim Klick aktuell
+             nichts. Sobald es eine echte Anmelde-URL gibt, kann sie in
+             hugo.toml [params] unter newsletter_url eingetragen und hier
+             als href des Knopfs verwendet werden. */}}
         <h4>{{ i18n "footer_newsletter_heading" }}</h4>
-        <p class="footer-lead">{{ i18n "footer_newsletter_text" }}</p>
-        <a class="btn btn-primary btn-block" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "footer_newsletter_submit" }}</a>
-        {{ end }}
+        <label for="nl-email" class="footer-lead">{{ i18n "footer_newsletter_text" }}</label>
+        <input type="email" id="nl-email" placeholder="{{ i18n "footer_newsletter_placeholder" }}">
+        <button class="btn btn-primary btn-block" type="button">{{ i18n "footer_newsletter_submit" }}</button>
         <div class="footer-social">
           {{/* Genauso: jeder Social-Media-Knopf erscheint nur, wenn die
                passende URL in hugo.toml [params] gesetzt ist (social_instagram,
