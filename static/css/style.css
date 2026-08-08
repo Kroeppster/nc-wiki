@@ -127,6 +127,7 @@
   --color-note-bg:#302711;    --color-note-line:#5C4A24;    --color-note-text:#E6C87E;
   --color-warn-bg:#2E2013;    --color-warn-text:#F0975A;
   color-scheme:dark;
+  --header-bg:rgba(10,15,31,.88);
 
   --pagefind-ui-primary:var(--color-signal);
   --pagefind-ui-text:var(--color-ink);
