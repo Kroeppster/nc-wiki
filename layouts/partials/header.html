@@ -75,9 +75,18 @@
          durchsuchbare Suchindex wird beim Bauen der Website automatisch aus
          allen Seiteninhalten erzeugt, nicht von Hand gepflegt. */}}
     <div id="search"></div>
-    <script src="{{ "pagefind/pagefind-ui.js" | relURL }}"></script>
+    {{/* "defer" lädt das Skript im Hintergrund weiter, statt das Rendern der
+         restlichen Seite zu blockieren, bis es fertig heruntergeladen ist -
+         die Suchfunktion ist nicht sofort beim ersten Anzeigen nötig. Ein
+         "defer" auf einem Inline-Skript OHNE eigenes "src" (wie beim zweiten
+         Skript unten) wird vom Browser ignoriert - deshalb der
+         DOMContentLoaded-Wrapper darum, der sicherstellt, dass PagefindUI
+         garantiert schon geladen und definiert ist, wenn der Aufruf läuft. */}}
+    <script src="{{ "pagefind/pagefind-ui.js" | relURL }}" defer></script>
     <script>
-      new PagefindUI({ element: "#search" });
+      document.addEventListener('DOMContentLoaded', function () {
+        new PagefindUI({ element: "#search" });
+      });
     </script>
 
     {{/* Hell/Dunkel-Umschalter: zeigt je nach aktuellem Farbschema entweder
