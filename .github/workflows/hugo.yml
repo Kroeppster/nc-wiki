@@ -1,36 +1,81 @@
+# ==============================================================================
+# AUTOMATISCHER BAU + VERÖFFENTLICHUNG DER WEBSITE
+# ==============================================================================
+# Das ist die "Automatisierung", die im Hintergrund läuft, sobald jemand
+# etwas an der Website ändert und es in den "main"-Branch übernimmt (mergt).
+# Sie macht - ohne dass jemand etwas von Hand tun muss - genau das, was man
+# sonst am eigenen Computer eintippen müsste: die Website mit Hugo bauen,
+# die Suchfunktion vorbereiten, prüfen ob alle internen Links funktionieren,
+# und das Ergebnis live auf GitHub Pages veröffentlichen.
+#
+# WICHTIG zu wissen (siehe auch docs/WARTUNG.md, Abschnitt 7 "Was tun, wenn
+# der Build rot wird?"): Diese Automatisierung läuft NICHT direkt auf einem
+# Pull Request, sondern erst NACHDEM etwas gemerged wurde. Man sieht also
+# keine rote/grüne Markierung beim Erstellen eines Pull Requests - nur
+# danach, im Tab "Actions" auf GitHub. Und: schlägt dieser Ablauf fehl,
+# heisst das NICHT, dass die Website offline ist - die zuletzt erfolgreich
+# gebaute Version bleibt online, bis der Fehler behoben ist.
+# ==============================================================================
+
 name: Deploy Hugo site to GitHub Pages
 
+# Läuft automatisch bei jeder Änderung auf dem "main"-Branch, oder kann von
+# Hand über den "Actions"-Tab auf GitHub gestartet werden (workflow_dispatch).
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
 
+# Erlaubt dieser Automatisierung, den Inhalt des Repos zu lesen und die
+# fertige Website auf GitHub Pages zu veröffentlichen.
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Verhindert, dass zwei Veröffentlichungen gleichzeitig laufen und sich
+# gegenseitig ins Gehege kommen - läuft bereits eine, wartet die nächste,
+# statt eine bereits laufende abzubrechen (cancel-in-progress: false).
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
+  # ---------------------------------------------------------------------------
+  # SCHRITT 1: Die Website bauen und auf Fehler prüfen
+  # ---------------------------------------------------------------------------
   build:
     runs-on: ubuntu-latest
+    # Absicherung: ohne diese Zeile darf ein einzelner Lauf bis zu 6 Stunden
+    # dauern, bevor GitHub ihn von selbst abbricht - das ist viel zu lange,
+    # falls (wie am 2026-08-08 passiert) ein einzelner Schritt aus
+    # irgendeinem Grund hängen bleibt (siehe Hinweis beim externen
+    # Link-Check weiter unten). Bricht der ganze Ablauf hier nach 15 Minuten
+    # ab, blockiert das wegen der "concurrency"-Einstellung oben auch nicht
+    # mehr stundenlang alle nachfolgenden Veröffentlichungen.
+    timeout-minutes: 15
     steps:
+      # Holt den aktuellen Stand des Repos auf den (virtuellen) Rechner, auf
+      # dem diese Automatisierung läuft.
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Bereitet GitHub Pages vor und liefert u.a. die endgültige Webadresse
+      # der Seite (wird gleich beim Hugo-Bauen gebraucht).
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
+      # Installiert Hugo selbst (das Programm, das aus den Textdateien die
+      # fertige Website baut) auf diesem virtuellen Rechner.
       - name: Install Hugo (Extended)
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "latest"
           extended: true
 
+      # Installiert Node.js, wird für die Suchfunktion (Pagefind, ein
+      # npm-Paket) gebraucht.
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -40,12 +85,28 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
+      # Der eigentliche Bau-Schritt: baut aus allen Textdateien die fertige
+      # Website (landet im Ordner "public/"). "--baseURL" sorgt dafür, dass
+      # alle Links auf der Website auf die ECHTE, endgültige Webadresse
+      # zeigen (nicht auf localhost wie in hugo.toml lokal eingestellt).
       - name: Build with Hugo
         run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
+      # Baut den durchsuchbaren Suchindex für die Suchfunktion oben rechts
+      # auf der Website (Pagefind durchsucht dafür den fertigen "public/"-
+      # Ordner von eben und legt seinen Index dort mit ab).
       - name: Build search index with Pagefind
         run: npx pagefind --site public
 
+      # Technischer Zwischenschritt für die Link-Prüfung gleich danach: die
+      # fertigen Seiten enthalten absolute Links wie "/nc-wiki/fr/news/"
+      # (inklusive des GitHub-Pages-Unterpfads "/nc-wiki/") - damit das
+      # Prüf-Werkzeug (lychee) diese Links trotzdem auf der Festplatte
+      # wiederfindet, wird hier ein Verweis ("symbolischer Link") namens
+      # z.B. "linkcheck-root/nc-wiki" angelegt, der auf den echten
+      # "public/"-Ordner zeigt. Falls die Website später auf eine eigene
+      # Domain ohne Unterpfad umzieht, passt sich das automatisch an - der
+      # Pfad wird dann einfach aus der jeweils aktuellen Webadresse abgeleitet.
       - name: Prepare link-check root
         id: linkcheck
         run: |
@@ -55,6 +116,12 @@ jobs:
           ln -s "$(pwd)/public" "$target"
           echo "root=$(pwd)/linkcheck-root" >> "$GITHUB_OUTPUT"
 
+      # Prüft ALLE internen Links (Verweise auf andere Seiten INNERHALB
+      # dieser Website) - zeigt einer davon ins Leere (z.B. Tippfehler,
+      # gelöschte Seite), schlägt dieser Schritt fehl und die ganze
+      # Veröffentlichung wird gestoppt (fail: true), damit keine kaputte
+      # Version live geht. "--offline" heisst: es werden dabei bewusst KEINE
+      # externen Websites angefragt (dafür ist der nächste Schritt da).
       - name: Check internal links (fails build if broken)
         uses: lycheeverse/lychee-action@v2
         with:
@@ -65,21 +132,49 @@ jobs:
             "./public/**/*.html"
           fail: true
 
+      # Prüft ZUSÄTZLICH auch Links zu ANDEREN Websites (z.B. zu
+      # swissuniversities.ch) - aber rein informativ: ist so ein externer
+      # Link kaputt (weil sich die andere Website geändert hat, was wir
+      # nicht beeinflussen können), wird das nur im Job-Summary auf GitHub
+      # angezeigt, die Veröffentlichung läuft trotzdem normal weiter
+      # (fail: false).
+      #
+      # WICHTIG (Lehre aus einem echten Vorfall am 2026-08-08): dieser
+      # Schritt fragt echte, fremde Websites im Internet an - blockiert eine
+      # davon Anfragen von GitHub (z.B. als Bot-Schutz) oder antwortet sehr
+      # langsam, wartet lychee ohne diese Einstellungen hier sehr lange mit
+      # mehreren Wiederholungsversuchen pro Adresse. Das hat einmal einen
+      # einzelnen Lauf über 30 Minuten blockiert und wegen der
+      # "concurrency"-Einstellung oben dadurch auch alle nachfolgenden
+      # Veröffentlichungen in die Warteschlange gezwungen. "--timeout" (max.
+      # Wartezeit pro Adresse) und "--max-retries" (nur noch 1
+      # Wiederholungsversuch statt mehrerer) sorgen dafür, dass eine einzelne
+      # störrische externe Adresse diesen Schritt nicht mehr über wenige
+      # Minuten hinaus verzögern kann. "timeout-minutes" ist eine zusätzliche
+      # harte Notbremse von GitHub selbst, falls trotzdem einmal etwas hängt.
       - name: Check external links (warn only)
         uses: lycheeverse/lychee-action@v2
+        timeout-minutes: 5
         with:
           args: >-
             --no-progress
+            --timeout 10
+            --max-retries 1
             --root-dir "${{ steps.linkcheck.outputs.root }}"
             "./public/**/*.html"
           fail: false
           jobSummary: true
 
+      # Verpackt den fertigen "public/"-Ordner zur Übergabe an den
+      # Veröffentlichungs-Schritt (den zweiten "job" unten).
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
+  # ---------------------------------------------------------------------------
+  # SCHRITT 2: Veröffentlichen (läuft nur, wenn Schritt 1 komplett erfolgreich war)
+  # ---------------------------------------------------------------------------
   deploy:
     environment:
       name: github-pages
