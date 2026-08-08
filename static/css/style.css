@@ -86,6 +86,24 @@
   --space-20:5rem;
   --space-24:6rem;
 
+  /* ---- Feste Kontrast-Farben (bewusst NICHT im Dark-Mode-Block unten
+     überschrieben) ---- */
+  /* Text auf der Marken-/Signalfarbe (Buttons, Skip-Link) - Weiss bleibt in
+     beiden Modi gleich, weil es sich um Text AUF einer eigenen Akzentfläche
+     handelt, nicht um normalen Seitentext. */
+  --color-on-signal:#fff;
+  /* Feste Hintergrundfarben für die 6 Avatar-Kreise bei Erfahrungsberichten
+     (Reihum zugewiesen, keine feste Bedeutung pro Person) - jede Nummer ein
+     eigener Token, absichtlich NICHT mit --color-signal zusammengelegt (auch
+     wenn --color-avatar-0 zufällig denselben Wert hat), damit eine spätere
+     Anpassung der Markenfarbe nicht versehentlich alle Avatare umfärbt. */
+  --color-avatar-0:#223FCB;
+  --color-avatar-1:#1C6B3F;
+  --color-avatar-2:#7A3FA0;
+  --color-avatar-3:#B5562F;
+  --color-avatar-4:#3F6B3A;
+  --color-avatar-5:#A6741E;
+
   /* ---- Logo-Kachel (Sponsoren) ---- */
   /* Absichtlich NICHT im Dark-Mode-Block weiter unten überschrieben: Logos
      sind fremde, feste Bild-Dateien (mal helle, mal dunkle Tinte, mal mit
@@ -192,7 +210,7 @@ h3{font-size:var(--text-md);}
 p{margin:0 0 var(--space-4);}
 .wrap{max-width:var(--max-width);margin-inline:auto;padding-inline:var(--space-5);}
 
-.skip-link{position:absolute;left:-999px;top:0;background:var(--color-signal);color:#fff;padding:var(--space-3) var(--space-4);z-index:1000;border-radius:0 0 var(--radius-md) 0;font-family:var(--font-body);font-weight:600;}
+.skip-link{position:absolute;left:-999px;top:0;background:var(--color-signal);color:var(--color-on-signal);padding:var(--space-3) var(--space-4);z-index:1000;border-radius:0 0 var(--radius-md) 0;font-family:var(--font-body);font-weight:600;}
 .skip-link:focus{left:0;}
 
 .eyebrow{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-3);}
@@ -258,7 +276,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Buttons
    ========================================================================== */
 .btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:.85rem 1.4rem;font-size:var(--text-sm);font-weight:600;font-family:var(--font-body);border-radius:var(--radius-sm);border:1px solid transparent;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s;}
-.btn-primary{background:var(--color-signal);color:#fff;}
+.btn-primary{background:var(--color-signal);color:var(--color-on-signal);}
 .btn-primary:hover{background:var(--color-signal-strong);}
 .btn-ghost{border-color:var(--color-ink);color:var(--color-ink);background:transparent;}
 .btn-ghost:hover{background:var(--color-ink);color:var(--color-paper);}
@@ -341,15 +359,15 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .filter-pill.is-active{background:var(--color-ink);color:var(--color-paper);border-color:var(--color-ink);}
 .report-grid{grid-template-columns:repeat(2,1fr);}
 .report-head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);}
-.avatar{flex-shrink:0;width:2.7rem;height:2.7rem;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--font-mono);font-size:var(--text-sm);font-weight:700;}
+.avatar{flex-shrink:0;width:2.7rem;height:2.7rem;border-radius:50%;display:grid;place-items:center;color:var(--color-on-signal);font-family:var(--font-mono);font-size:var(--text-sm);font-weight:700;}
 .report-head h3{margin:0;font-size:var(--text-base);}
 .report-meta{margin:.15rem 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);font-family:var(--font-mono);}
-.avatar-0{background:#223FCB;}
-.avatar-1{background:#1C6B3F;}
-.avatar-2{background:#7A3FA0;}
-.avatar-3{background:#B5562F;}
-.avatar-4{background:#3F6B3A;}
-.avatar-5{background:#A6741E;}
+.avatar-0{background:var(--color-avatar-0);}
+.avatar-1{background:var(--color-avatar-1);}
+.avatar-2{background:var(--color-avatar-2);}
+.avatar-3{background:var(--color-avatar-3);}
+.avatar-4{background:var(--color-avatar-4);}
+.avatar-5{background:var(--color-avatar-5);}
 .tag-pills{list-style:none;display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-4);padding:0;}
 .tag-pills li{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-signal);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-full);padding:.2rem .65rem;}
 
@@ -469,7 +487,12 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 .footer-newsletter input{width:100%;padding:.6rem .7rem;border:1px solid var(--color-band-line);background:rgba(255,255,255,.06);color:var(--color-band-text);border-radius:var(--radius-sm);margin-bottom:var(--space-3);font-family:var(--font-body);}
 .footer-newsletter input::placeholder{color:var(--color-band-text-soft);}
 .footer-social{display:flex;gap:var(--space-2);margin-top:var(--space-4);flex-wrap:wrap;}
-.footer-social a{border:1px solid transparent;padding:.4rem .8rem;border-radius:var(--radius-sm);font-size:var(--text-sm);color:#fff;}
+.footer-social a{border:1px solid transparent;padding:.4rem .8rem;border-radius:var(--radius-sm);font-size:var(--text-sm);color:var(--color-on-signal);}
+/* Die Social-Media-Farben unten bleiben bewusst als feste Hex-Werte statt als
+   Design-Token: das sind fixe, fremd vorgegebene Markenfarben von Instagram/
+   Discord/LinkedIn, kein Teil des eigenen NCWiki-Designsystems - anders als
+   z.B. --color-signal sollen/dürfen sie sich nie mitändern, wenn irgendwann
+   die eigene Markenfarbe angepasst wird. */
 .social-instagram{background:#C13584;}
 .social-instagram:hover{background:#A32A6E;}
 .social-discord{background:#5865F2;}
