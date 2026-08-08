@@ -46,6 +46,35 @@ jobs:
       - name: Build search index with Pagefind
         run: npx pagefind --site public
 
+      - name: Prepare link-check root
+        id: linkcheck
+        run: |
+          base_path=$(echo "${{ steps.pages.outputs.base_url }}" | sed -E 's#^https?://[^/]+##; s#/$##')
+          target="linkcheck-root${base_path}"
+          mkdir -p "$(dirname "$target")"
+          ln -s "$(pwd)/public" "$target"
+          echo "root=$(pwd)/linkcheck-root" >> "$GITHUB_OUTPUT"
+
+      - name: Check internal links (fails build if broken)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --no-progress
+            --root-dir "${{ steps.linkcheck.outputs.root }}"
+            "./public/**/*.html"
+          fail: true
+
+      - name: Check external links (warn only)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --root-dir "${{ steps.linkcheck.outputs.root }}"
+            "./public/**/*.html"
+          fail: false
+          jobSummary: true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
