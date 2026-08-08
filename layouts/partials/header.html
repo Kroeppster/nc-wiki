@@ -1,6 +1,6 @@
 <header class="site">
   <div class="wrap header-inner">
-    <a class="brand" href="{{ relLangURL "/" }}">
+    <a class="brand" href="{{ .Site.Home.RelPermalink }}">
       <span class="brand-mark" aria-hidden="true">NC</span>
       <span>{{ .Site.Title }}</span>
     </a>
@@ -8,11 +8,11 @@
       <ul>
         {{ range .Site.Menus.main }}
         <li{{ if .HasChildren }} class="has-children"{{ end }}>
-          <a href="{{ relLangURL .URL }}">{{ .Name }}</a>
+          <a href="{{ .URL }}">{{ .Name }}</a>
           {{ if .HasChildren }}
           <ul class="submenu">
             {{ range .Children }}
-            <li><a href="{{ relLangURL .URL }}">{{ .Name }}</a></li>
+            <li><a href="{{ .URL }}">{{ .Name }}</a></li>
             {{ end }}
           </ul>
           {{ end }}

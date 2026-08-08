@@ -10,7 +10,7 @@
         <h4>Hauptmenü</h4>
         <ul>
           {{ range .Site.Menus.main }}
-          <li><a href="{{ relLangURL .URL }}">{{ .Name }}</a></li>
+          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
           {{ end }}
         </ul>
       </div>
@@ -18,7 +18,7 @@
         <h4>Rechtliches</h4>
         <ul>
           {{ range .Site.Menus.legal }}
-          <li><a href="{{ relLangURL .URL }}">{{ .Name }}</a></li>
+          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
           {{ end }}
         </ul>
       </div>

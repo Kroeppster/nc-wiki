@@ -116,7 +116,7 @@
       {{- $emsBucket := "ohne" }}
       {{- if in (slice "ja" "teilweise") .ems_erforderlich }}{{ $emsBucket = "mit" }}{{ end }}
       <tr data-sprachen="{{ delimit .sprache "|" }}" data-ems="{{ $emsBucket }}">
-        <td><a href="{{ printf "/ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></td>
+        <td><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></td>
         <td>{{ delimit .sprache ", " }}</td>
         <td><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>
         <td>{{ delimit .studiengaenge ", " }}</td>
