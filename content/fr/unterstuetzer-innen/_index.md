@@ -16,3 +16,5 @@ Notre offre reste gratuite – grâce aux dons, au sponsoring et à l'engagement
 - [ASSA ABLOY](https://www.assaabloy.com/ch/fr) – premier fabricant et fournisseur mondial de systèmes de fermeture et de sécurité pour portes
 
 Nous remercions également les universités qui nous soutiennent dans la réalisation des simulations de test : Université de Fribourg, Université de Berne, Université de Zurich, EPFZ, Université de Bâle et Université de la Suisse italienne (Lugano).
+
+Accrédité par l'[UZH Impulsfabrik](https://impulsfabrik.vsuzh.ch/de/portfolio/ncwiki).
