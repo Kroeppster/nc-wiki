@@ -45,6 +45,17 @@
 {{/* Das Aussehen der ganzen Website kommt aus GENAU dieser einen CSS-Datei -
      alle Farben/Schriftgrössen/Abstände sind dort ganz oben als Variablen
      definiert und lassen sich dort zentral anpassen. */}}
+{{/* Browser-Tab-Icon (Favicon). Erzeugt aus static/images/logo.svg, aber
+     NICHT die 213KB-Roh-SVG selbst (die enthält technisch ein eingebettetes
+     Screenshot-Bild und würde diese Grösse auf jede Seitenanfrage
+     übertragen) - stattdessen kleine, vorab generierte PNG/ICO-Dateien
+     (nur der "NC"-Icon-Teil des Logos, ohne den "WIKI"-Schriftzug, der bei
+     16x16px ohnehin unlesbar wäre). Die SVG-Quelldatei selbst bleibt dabei
+     unverändert. */}}
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
+<link rel="icon" href="{{ "favicon-32.png" | relURL }}" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
 {{/* Stylesheet der Suchfunktion (Pagefind) - wird separat beim Bauen der
      Seite generiert, nicht von Hand gepflegt. */}}
