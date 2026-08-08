@@ -4,14 +4,6 @@
   Seiten ohne "jahr" (z.B. das Formular "Bericht einreichen") werden nicht als Bericht gelistet,
   aber als CTA verlinkt. Ohne Foto: farbiger Platzhalter mit Initialen.
 */}}
-{{- $lang := .Site.Language.Lang }}
-{{- $t := dict
-  "de" (dict "all" "Alle" "cta" "Bericht einreichen" "empty" "Noch keine Erfahrungsberichte vorhanden." "ems" "EMS")
-  "fr" (dict "all" "Tous" "cta" "Soumettre un témoignage" "empty" "Aucun témoignage disponible pour l'instant." "ems" "EMS")
-  "it" (dict "all" "Tutti" "cta" "Invia una testimonianza" "empty" "Nessuna testimonianza disponibile al momento." "ems" "EMS")
-}}
-{{- $lbl := index $t $lang }}
-
 {{- $ctaURL := "" }}
 {{- range .Pages }}{{ if .Params.experience_form }}{{ $ctaURL = .RelPermalink }}{{ end }}{{ end }}
 
@@ -26,10 +18,10 @@
 {{- $years = $years | uniq | sort | collections.Reverse }}
 
 <div class="report-toolbar">
-  {{ with $ctaURL }}<a class="btn btn-primary" href="{{ . }}">{{ $lbl.cta }}</a>{{ end }}
+  {{ with $ctaURL }}<a class="btn btn-primary" href="{{ . }}">{{ i18n "experience_reports_cta" }}</a>{{ end }}
   {{ if gt (len $years) 1 }}
-  <div class="report-filters" role="group" aria-label="{{ $lbl.ems }}-Jahr">
-    <button type="button" class="filter-pill is-active" data-year="all" aria-pressed="true">{{ $lbl.all }}</button>
+  <div class="report-filters" role="group" aria-label="{{ i18n "ems_year_label" }}">
+    <button type="button" class="filter-pill is-active" data-year="all" aria-pressed="true">{{ i18n "experience_reports_all" }}</button>
     {{ range $years }}
     <button type="button" class="filter-pill" data-year="{{ . }}" aria-pressed="false">{{ . }}</button>
     {{ end }}
@@ -38,7 +30,7 @@
 </div>
 
 {{ if eq (len $reports) 0 }}
-<p class="download-empty">{{ $lbl.empty }}</p>
+<p class="download-empty">{{ i18n "experience_reports_empty" }}</p>
 {{ else }}
 <ul class="card-grid report-grid" id="report-grid">
   {{ range $reports }}
@@ -54,7 +46,7 @@
       <span class="avatar avatar-{{ $colorIdx }}" aria-hidden="true">{{ $initials }}</span>
       <div>
         <h3>{{ $name }}</h3>
-        <p class="report-meta">{{ $lbl.ems }} {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
+        <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
       </div>
     </div>
     {{ .Summary }}
@@ -63,7 +55,7 @@
       {{ range . }}<li>{{ . }}</li>{{ end }}
     </ul>
     {{ end }}
-    <a class="more" href="{{ .RelPermalink }}">Ganzen Bericht lesen →</a>
+    <a class="more" href="{{ .RelPermalink }}">{{ i18n "experience_reports_read_more" }}</a>
   </li>
   {{ end }}
 </ul>

@@ -44,7 +44,7 @@
           {{ with .Params.eyebrow }}<p class="eyebrow">{{ . }}</p>{{ end }}
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
           {{ .Summary }}
-          <a class="more" href="{{ .RelPermalink }}">Mehr erfahren →</a>
+          <a class="more" href="{{ .RelPermalink }}">{{ i18n "read_more" }}</a>
         </li>
         {{ end }}
       </ul>

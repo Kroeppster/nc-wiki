@@ -4,7 +4,7 @@
       <span class="brand-mark" aria-hidden="true">NC</span>
       <span>{{ .Site.Title }}</span>
     </a>
-    <nav class="main-nav" aria-label="Hauptnavigation">
+    <nav class="main-nav" aria-label="{{ i18n "nav_aria_label" }}">
       <ul>
         {{ range .Site.Menus.main }}
         <li{{ if .HasChildren }} class="has-children"{{ end }}>
@@ -25,7 +25,7 @@
     <script>
       new PagefindUI({ element: "#search" });
     </script>
-    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Farbschema umschalten">
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="{{ i18n "theme_toggle_aria_label" }}">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4.5"/>
         <path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M18.4 18.4l-2.1-2.1M7.7 7.7 5.6 5.6"/>
@@ -34,7 +34,7 @@
         <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
       </svg>
     </button>
-    <div class="lang-switch" aria-label="Sprache">
+    <div class="lang-switch" aria-label="{{ i18n "lang_switch_aria_label" }}">
       {{ $page := . }}
       {{ range hugo.Sites }}
         {{ $lang := .Language.Lang }}

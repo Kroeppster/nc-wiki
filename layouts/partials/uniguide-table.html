@@ -4,82 +4,18 @@
   ems_erforderlich (ja/nein/teilweise), auswahlverfahren, studienplaetze (Zahl/null),
   besonderheiten (Liste), website, stand, quelle.
 */}}
-{{- $lang := .Site.Language.Lang }}
-{{- $t := dict
-  "de" (dict
-    "disclaimer" "Angaben ohne Gewähr. Verbindlich sind ausschliesslich die offiziellen Informationen von"
-    "disclaimer_link" "swissuniversities"
-    "disclaimer_and" "und den jeweiligen Universitäten."
-    "filter_lang_label" "Nach Sprache filtern"
-    "filter_ems_label" "Nach EMS filtern"
-    "all" "Alle"
-    "with_ems" "Mit EMS"
-    "without_ems" "Ohne EMS"
-    "th_uni" "Universität"
-    "th_sprache" "Sprache"
-    "th_ems" "EMS"
-    "th_studiengaenge" "Studiengänge"
-    "th_studienplaetze" "Studienplätze"
-    "places_unknown" "wird geprüft"
-    "ems_ja" "Ja"
-    "ems_nein" "Nein"
-    "ems_teilweise" "Teilweise"
-    "empty" "Noch keine Universitäten hinterlegt."
-  )
-  "fr" (dict
-    "disclaimer" "Indications sans garantie. Seules les informations officielles de"
-    "disclaimer_link" "swissuniversities"
-    "disclaimer_and" "et des universités concernées font foi."
-    "filter_lang_label" "Filtrer par langue"
-    "filter_ems_label" "Filtrer par EMS"
-    "all" "Tous"
-    "with_ems" "Avec EMS"
-    "without_ems" "Sans EMS"
-    "th_uni" "Université"
-    "th_sprache" "Langue"
-    "th_ems" "EMS"
-    "th_studiengaenge" "Filières"
-    "th_studienplaetze" "Places d'étude"
-    "places_unknown" "en cours de vérification"
-    "ems_ja" "Oui"
-    "ems_nein" "Non"
-    "ems_teilweise" "Partiellement"
-    "empty" "Aucune université disponible pour l'instant."
-  )
-  "it" (dict
-    "disclaimer" "Informazioni senza garanzia. Fanno fede esclusivamente le informazioni ufficiali di"
-    "disclaimer_link" "swissuniversities"
-    "disclaimer_and" "e delle rispettive università."
-    "filter_lang_label" "Filtra per lingua"
-    "filter_ems_label" "Filtra per EMS"
-    "all" "Tutte"
-    "with_ems" "Con EMS"
-    "without_ems" "Senza EMS"
-    "th_uni" "Università"
-    "th_sprache" "Lingua"
-    "th_ems" "EMS"
-    "th_studiengaenge" "Corsi di laurea"
-    "th_studienplaetze" "Posti di studio"
-    "places_unknown" "in verifica"
-    "ems_ja" "Sì"
-    "ems_nein" "No"
-    "ems_teilweise" "Parzialmente"
-    "empty" "Nessuna università disponibile al momento."
-  )
-}}
-{{- $lbl := index $t $lang }}
-{{- $emsLabels := dict "ja" $lbl.ems_ja "nein" $lbl.ems_nein "teilweise" $lbl.ems_teilweise }}
+{{- $emsLabels := dict "ja" (i18n "ems_status_ja") "nein" (i18n "ems_status_nein") "teilweise" (i18n "ems_status_teilweise") }}
 
 {{- $unis := .Site.Data.unis }}
 {{- $unis = sort $unis "name" }}
 
 <div class="uniguide-disclaimer" role="note">
   <strong>⚠</strong>
-  {{ $lbl.disclaimer }} <a href="https://www.swissuniversities.ch/" target="_blank" rel="noopener">{{ $lbl.disclaimer_link }}</a> {{ $lbl.disclaimer_and }}
+  {{ i18n "uniguide_table_disclaimer" }} <a href="https://www.swissuniversities.ch/" target="_blank" rel="noopener">{{ i18n "uniguide_table_disclaimer_link" }}</a> {{ i18n "uniguide_table_disclaimer_and" }}
 </div>
 
 {{ if eq (len $unis) 0 }}
-<p class="download-empty">{{ $lbl.empty }}</p>
+<p class="download-empty">{{ i18n "uniguide_table_empty" }}</p>
 {{ else }}
 
 {{- $sprachen := slice }}
@@ -87,16 +23,16 @@
 {{- $sprachen = $sprachen | uniq | sort }}
 
 <div class="uniguide-filters">
-  <div class="report-filters" role="group" aria-label="{{ $lbl.filter_lang_label }}">
-    <button type="button" class="filter-pill is-active" data-filter-group="sprache" data-filter-value="all" aria-pressed="true">{{ $lbl.all }}</button>
+  <div class="report-filters" role="group" aria-label="{{ i18n "uniguide_table_filter_lang_label" }}">
+    <button type="button" class="filter-pill is-active" data-filter-group="sprache" data-filter-value="all" aria-pressed="true">{{ i18n "uniguide_table_all" }}</button>
     {{ range $sprachen }}
     <button type="button" class="filter-pill" data-filter-group="sprache" data-filter-value="{{ . }}" aria-pressed="false">{{ . }}</button>
     {{ end }}
   </div>
-  <div class="report-filters" role="group" aria-label="{{ $lbl.filter_ems_label }}">
-    <button type="button" class="filter-pill is-active" data-filter-group="ems" data-filter-value="all" aria-pressed="true">{{ $lbl.all }}</button>
-    <button type="button" class="filter-pill" data-filter-group="ems" data-filter-value="mit" aria-pressed="false">{{ $lbl.with_ems }}</button>
-    <button type="button" class="filter-pill" data-filter-group="ems" data-filter-value="ohne" aria-pressed="false">{{ $lbl.without_ems }}</button>
+  <div class="report-filters" role="group" aria-label="{{ i18n "uniguide_table_filter_ems_label" }}">
+    <button type="button" class="filter-pill is-active" data-filter-group="ems" data-filter-value="all" aria-pressed="true">{{ i18n "uniguide_table_all" }}</button>
+    <button type="button" class="filter-pill" data-filter-group="ems" data-filter-value="mit" aria-pressed="false">{{ i18n "uniguide_table_with_ems" }}</button>
+    <button type="button" class="filter-pill" data-filter-group="ems" data-filter-value="ohne" aria-pressed="false">{{ i18n "uniguide_table_without_ems" }}</button>
   </div>
 </div>
 
@@ -104,11 +40,11 @@
   <table class="uniguide-table" id="uniguide-table">
     <thead>
       <tr>
-        <th>{{ $lbl.th_uni }}</th>
-        <th>{{ $lbl.th_sprache }}</th>
-        <th>{{ $lbl.th_ems }}</th>
-        <th>{{ $lbl.th_studiengaenge }}</th>
-        <th>{{ $lbl.th_studienplaetze }}</th>
+        <th>{{ i18n "uniguide_table_th_uni" }}</th>
+        <th>{{ i18n "label_sprache" }}</th>
+        <th>{{ i18n "uniguide_table_th_ems" }}</th>
+        <th>{{ i18n "label_studiengaenge" }}</th>
+        <th>{{ i18n "label_studienplaetze" }}</th>
       </tr>
     </thead>
     <tbody>
@@ -120,7 +56,7 @@
         <td>{{ delimit .sprache ", " }}</td>
         <td><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>
         <td>{{ delimit .studiengaenge ", " }}</td>
-        <td>{{ if .studienplaetze }}{{ .studienplaetze }}{{ else }}<span class="report-meta">{{ $lbl.places_unknown }}</span>{{ end }}</td>
+        <td>{{ if .studienplaetze }}{{ .studienplaetze }}{{ else }}<span class="report-meta">{{ i18n "uniguide_table_places_unknown" }}</span>{{ end }}</td>
       </tr>
       {{ end }}
     </tbody>

@@ -12,18 +12,11 @@
 {{- $overrides := $site.Data.downloads.overrides }}
 {{- $formspreeEndpoint := "https://formspree.io/f/REPLACE_ME" }}
 
-{{- $t := dict
-  "de" (dict "empty" "Aktuell kein Material verfügbar." "report" "Fehler melden")
-  "fr" (dict "empty" "Aucun document disponible pour le moment." "report" "Signaler une erreur")
-  "it" (dict "empty" "Al momento nessun materiale disponibile." "report" "Segnala un errore")
-}}
-{{- $labels := or (index $t $lang) $t.de }}
-
 {{- $files := resources.Match (printf "%s/*.pdf" $folder) }}
 {{- $files = sort $files "Name" "desc" }}
 
 {{- if eq (len $files) 0 }}
-  <p class="download-empty">{{ $labels.empty }}</p>
+  <p class="download-empty">{{ i18n "downloads_empty" }}</p>
 {{- else }}
   <ul class="download-list">
     {{- range $files }}
@@ -61,7 +54,7 @@
         <form class="report-error" action="{{ $formspreeEndpoint }}" method="POST">
           <input type="hidden" name="dateiname" value="{{ $name }}">
           <input type="hidden" name="seite" value="{{ $page.RelPermalink }}">
-          <button type="submit">{{ $labels.report }}</button>
+          <button type="submit">{{ i18n "downloads_report_error" }}</button>
         </form>
       </li>
     {{- end }}

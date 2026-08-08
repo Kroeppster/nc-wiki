@@ -3,11 +3,11 @@
     <div class="footer-grid">
       <div>
         <h4>{{ .Site.Title }}</h4>
-        <p style="color:#C9C7BC;font-size:.9rem;max-width:22rem;">Kostenlose EMS-Vorbereitung von Studierenden für Studierende.</p>
-        <p style="color:#8B8A7E;font-size:.85rem;margin-top:1rem;">NCWiki<br>4000 Basel<br>info@nc-wiki.ch</p>
+        <p style="color:#C9C7BC;font-size:.9rem;max-width:22rem;">{{ i18n "site_tagline" }}</p>
+        <p style="color:#8B8A7E;font-size:.85rem;margin-top:1rem;">{{ .Site.Params.org_name }}<br>{{ .Site.Params.org_address }}<br>{{ .Site.Params.org_email }}</p>
       </div>
       <div>
-        <h4>Hauptmenü</h4>
+        <h4>{{ i18n "footer_main_menu_heading" }}</h4>
         <ul>
           {{ range .Site.Menus.main }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
@@ -15,7 +15,7 @@
         </ul>
       </div>
       <div>
-        <h4>Rechtliches</h4>
+        <h4>{{ i18n "footer_legal_heading" }}</h4>
         <ul>
           {{ range .Site.Menus.legal }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
@@ -23,27 +23,27 @@
         </ul>
       </div>
       <div class="footer-newsletter">
-        <h4>Newsletter</h4>
-        <label for="nl-email" style="display:block;font-size:.85rem;color:#C9C7BC;margin-bottom:.5rem;">Bleib informiert über Termine &amp; neues Material.</label>
-        <input type="email" id="nl-email" placeholder="deine@email.ch">
-        <button class="btn btn-primary" style="width:100%;justify-content:center;" type="button">Anmelden</button>
+        <h4>{{ i18n "footer_newsletter_heading" }}</h4>
+        <label for="nl-email" style="display:block;font-size:.85rem;color:#C9C7BC;margin-bottom:.5rem;">{{ i18n "footer_newsletter_text" }}</label>
+        <input type="email" id="nl-email" placeholder="{{ i18n "footer_newsletter_placeholder" }}">
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" type="button">{{ i18n "footer_newsletter_submit" }}</button>
         <div class="footer-social">
           <a href="#" class="social-instagram">Instagram</a><a href="#" class="social-discord">Discord</a><a href="#" class="social-linkedin">LinkedIn</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; {{ now.Year }} {{ .Site.Title }} · Design-Beispiel, nicht die echte Seite</span>
-      <span>Gebaut mit Hugo · gehostet auf GitHub Pages</span>
+      <span>&copy; {{ now.Year }} {{ .Site.Title }} · {{ i18n "footer_copyright_note" }}</span>
+      <span>{{ i18n "footer_built_with" }}</span>
     </div>
   </div>
 </footer>
 
-<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie-Hinweis">
-  <p>Diese Beispielseite setzt keine echten Cookies. Auf der fertigen Website: nur technisch notwendige.</p>
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="{{ i18n "cookie_aria_label" }}">
+  <p>{{ i18n "cookie_text" }}</p>
   <div class="cookie-actions">
-    <button class="btn btn-ghost" type="button" data-cookie-action="details">Details</button>
-    <button class="btn btn-primary" type="button" data-cookie-action="accepted">Akzeptieren</button>
+    <button class="btn btn-ghost" type="button" data-cookie-action="details">{{ i18n "cookie_details" }}</button>
+    <button class="btn btn-primary" type="button" data-cookie-action="accepted">{{ i18n "cookie_accept" }}</button>
   </div>
 </div>
 

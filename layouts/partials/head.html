@@ -22,7 +22,7 @@
 {{- if .IsHome }}{{ $ogTitle = .Site.Title }}{{ end }}
 {{- $ogDescription := .Description }}
 {{- if not $ogDescription }}{{ $ogDescription = .Summary }}{{ end }}
-{{- if not $ogDescription }}{{ $ogDescription = "Kostenlose EMS-Vorbereitung von Studierenden für Studierende." }}{{ end }}
+{{- if not $ogDescription }}{{ $ogDescription = i18n "site_tagline" }}{{ end }}
 {{- $ogDescription = $ogDescription | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace }}
 {{- $ogImage := "" }}
 {{- with .Params.image }}{{ $ogImage = . | absURL }}{{ end }}

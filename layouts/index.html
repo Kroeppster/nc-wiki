@@ -3,12 +3,12 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">EMS 2027 · Kostenlose Vorbereitung</p>
-        <h1>Wir unterstützen die Mediziner:innen von morgen.</h1>
-        <p class="lede">Kostenloses Übungsmaterial, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium (EMS) – von Studierenden für Studierende, schweizweit.</p>
+        <p class="eyebrow">{{ .Params.hero.eyebrow }}</p>
+        <h1>{{ .Params.hero.title }}</h1>
+        <p class="lede">{{ .Params.hero.lede }}</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#subtests">Übungsaufgaben ansehen</a>
-          <a class="btn btn-ghost" href="#footer-kontakt">Newsletter abonnieren</a>
+          <a class="btn btn-primary" href="#subtests">{{ .Params.hero.cta_primary }}</a>
+          <a class="btn btn-ghost" href="#footer-kontakt">{{ .Params.hero.cta_secondary }}</a>
         </div>
       </div>
       <div class="hero-panel">
@@ -20,12 +20,12 @@
           <span class="on"></span><span></span><span></span><span class="on"></span>
           <span></span><span class="on"></span><span></span><span></span>
         </div>
-        <p class="countdown-label">Noch bis zum EMS 2027 (09.07.)</p>
+        <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
         <div class="countdown">
-          <div><span class="num" id="cd-d">–</span><span class="unit">Tage</span></div>
-          <div><span class="num" id="cd-h">–</span><span class="unit">Std</span></div>
-          <div><span class="num" id="cd-m">–</span><span class="unit">Min</span></div>
-          <div><span class="num" id="cd-s">–</span><span class="unit">Sek</span></div>
+          <div><span class="num" id="cd-d">–</span><span class="unit">{{ i18n "countdown_days" }}</span></div>
+          <div><span class="num" id="cd-h">–</span><span class="unit">{{ i18n "countdown_hours" }}</span></div>
+          <div><span class="num" id="cd-m">–</span><span class="unit">{{ i18n "countdown_minutes" }}</span></div>
+          <div><span class="num" id="cd-s">–</span><span class="unit">{{ i18n "countdown_seconds" }}</span></div>
         </div>
       </div>
     </div>
@@ -34,8 +34,8 @@
   <section id="news">
     <div class="wrap">
       <div class="section-head">
-        <div><p class="eyebrow">Aktuell</p><h2>News</h2></div>
-        <a class="more" href="{{ relLangURL "news/" }}">Alle News →</a>
+        <div><p class="eyebrow">{{ .Params.news.eyebrow }}</p><h2>{{ .Params.news.heading }}</h2></div>
+        <a class="more" href="{{ relLangURL "news/" }}">{{ .Params.news.cta }}</a>
       </div>
       <ul class="card-grid">
         {{ range first 2 (where .Site.RegularPages "Section" "news") }}
@@ -48,7 +48,7 @@
           <p class="eyebrow">{{ .Params.eyebrow }}</p>
           <h3>{{ .Title }}</h3>
           {{ .Summary }}
-          <a class="more" href="{{ .RelPermalink }}">Mehr erfahren →</a>
+          <a class="more" href="{{ .RelPermalink }}">{{ i18n "read_more" }}</a>
         </li>
         {{ end }}
       </ul>
@@ -57,20 +57,20 @@
 
   <section id="subtests">
     <div class="wrap">
-      <p class="eyebrow">Übungsaufgaben</p>
-      <h2>10 Untertests, ein Ziel</h2>
+      <p class="eyebrow">{{ .Params.subtests.eyebrow }}</p>
+      <h2>{{ .Params.subtests.heading }}</h2>
       {{ partial "subtest-grid.html" . }}
     </div>
   </section>
 
   <section id="mission">
     <div class="wrap">
-      <p class="eyebrow">Wieso es uns gibt</p>
-      <h2 class="mission-lede">Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt.</h2>
+      <p class="eyebrow">{{ .Params.mission.eyebrow }}</p>
+      <h2 class="mission-lede">{{ .Params.mission.heading }}</h2>
       <div class="feature-grid">
-        <div class="feature"><span class="num">01</span><h3>Schweizweit</h3><p>Ein mehrsprachiger Studentenverein, aktiv an Hochschulstandorten in der ganzen Schweiz.</p></div>
-        <div class="feature"><span class="num">02</span><h3>Community</h3><p>Regelmässige Anlässe bringen zukünftige Mediziner:innen zusammen und lockern den Lernalltag auf.</p></div>
-        <div class="feature"><span class="num">03</span><h3>Mit Sinn</h3><p>Freiwillige unterstützen kommende Generationen von Studierenden auf ihrem Weg ins Medizinstudium.</p></div>
+        {{ range $i, $feature := .Params.mission.features }}
+        <div class="feature"><span class="num">{{ printf "%02d" (add $i 1) }}</span><h3>{{ $feature.title }}</h3><p>{{ $feature.text }}</p></div>
+        {{ end }}
       </div>
     </div>
   </section>
@@ -86,10 +86,10 @@
   <section class="support" id="support">
     <div class="wrap support-inner">
       <div>
-        <h2>Ihr macht das möglich.</h2>
-        <p>Unser Material bleibt kostenlos – dank Spenden und Sponsoring.</p>
+        <h2>{{ .Params.support.heading }}</h2>
+        <p>{{ .Params.support.text }}</p>
       </div>
-      <a class="btn btn-primary" href="{{ relLangURL "unterstuetzer-innen/jetzt-unterstuetzen/" }}">Jetzt unterstützen</a>
+      <a class="btn btn-primary" href="{{ relLangURL "unterstuetzer-innen/jetzt-unterstuetzen/" }}">{{ .Params.support.cta }}</a>
     </div>
   </section>
 

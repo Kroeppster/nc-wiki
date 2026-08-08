@@ -6,6 +6,11 @@ defaultContentLanguageInSubdir = false
 
 enableRobotsTXT = true
 
+[params]
+  org_name = 'NCWiki'
+  org_address = '4000 Basel'
+  org_email = 'info@nc-wiki.ch'
+
 [pagination]
   pagerSize = 12
 
