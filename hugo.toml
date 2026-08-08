@@ -10,6 +10,11 @@ enableRobotsTXT = true
   org_name = 'NCWiki'
   org_address = '4000 Basel'
   org_email = 'info@nc-wiki.ch'
+  social_instagram = 'https://www.instagram.com/ncwiki.ch/'
+  social_discord = 'https://discord.com/invite/DhgYpUGss9'
+  social_linkedin = ''
+  newsletter_url = ''
+  ems_exam_date = '2027-07-09T08:00:00+02:00'
 
 [pagination]
   pagerSize = 12

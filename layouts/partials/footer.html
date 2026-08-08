@@ -23,17 +23,20 @@
         </ul>
       </div>
       <div class="footer-newsletter">
+        {{ with .Site.Params.newsletter_url }}
         <h4>{{ i18n "footer_newsletter_heading" }}</h4>
-        <label for="nl-email" style="display:block;font-size:.85rem;color:#C9C7BC;margin-bottom:.5rem;">{{ i18n "footer_newsletter_text" }}</label>
-        <input type="email" id="nl-email" placeholder="{{ i18n "footer_newsletter_placeholder" }}">
-        <button class="btn btn-primary" style="width:100%;justify-content:center;" type="button">{{ i18n "footer_newsletter_submit" }}</button>
+        <p style="font-size:.85rem;color:#C9C7BC;margin-bottom:.5rem;">{{ i18n "footer_newsletter_text" }}</p>
+        <a class="btn btn-primary" style="width:100%;justify-content:center;" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "footer_newsletter_submit" }}</a>
+        {{ end }}
         <div class="footer-social">
-          <a href="#" class="social-instagram">Instagram</a><a href="#" class="social-discord">Discord</a><a href="#" class="social-linkedin">LinkedIn</a>
+          {{ with .Site.Params.social_instagram }}<a href="{{ . }}" class="social-instagram" target="_blank" rel="noopener">Instagram</a>{{ end }}
+          {{ with .Site.Params.social_discord }}<a href="{{ . }}" class="social-discord" target="_blank" rel="noopener">Discord</a>{{ end }}
+          {{ with .Site.Params.social_linkedin }}<a href="{{ . }}" class="social-linkedin" target="_blank" rel="noopener">LinkedIn</a>{{ end }}
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; {{ now.Year }} {{ .Site.Title }} · {{ i18n "footer_copyright_note" }}</span>
+      <span>&copy; {{ now.Year }} {{ .Site.Title }}</span>
       <span>{{ i18n "footer_built_with" }}</span>
     </div>
   </div>
@@ -49,7 +52,7 @@
 
 <script>
   (function(){
-    var target = new Date('2027-07-09T08:00:00+02:00').getTime();
+    var target = new Date('{{ .Site.Params.ems_exam_date }}').getTime();
     var elD=document.getElementById('cd-d'), elH=document.getElementById('cd-h'),
         elM=document.getElementById('cd-m'), elS=document.getElementById('cd-s');
     function pad(n){ return String(n).padStart(2,'0'); }
