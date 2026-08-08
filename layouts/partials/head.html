@@ -74,3 +74,44 @@
 <meta name="twitter:title" content="{{ $ogTitle }}">
 <meta name="twitter:description" content="{{ $ogDescription }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
+
+{{- /* ============================================================================
+       CANONICAL + HREFLANG + og:locale:alternate
+       ============================================================================
+       Sagt Suchmaschinen explizit: "diese Seite gibt es auch in diesen
+       anderen Sprachen, hier sind die genauen Adressen" - ohne das rät
+       Google bei einer dreisprachigen Seite selbst (oft fehlerhaft), welche
+       Sprachversionen zusammengehören, und kann z.B. die falsche
+       Sprachversion in den Suchergebnissen eines Landes zeigen.
+
+       Gleiches Muster wie beim sichtbaren DE/FR/IT-Umschalter oben in
+       header.html (expliziter Zweig für die aktuelle Sprache + Suche in
+       .Translations für den Rest) - ABSICHTLICH OHNE dessen Rückfall auf die
+       jeweilige Startseite: ein hreflang-Tag muss auf die WIRKLICH
+       übersetzte Seite zeigen, sonst wird eine Suchmaschine aktiv
+       fehlgeleitet. Gibt es für eine Sprache keine Übersetzung dieser
+       Seite, wird für sie einfach kein Tag ausgegeben. */ -}}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- $page := . }}
+{{- range hugo.Sites }}
+  {{- $lang := .Language.Lang }}
+  {{- if eq $lang $page.Language.Lang }}
+<link rel="alternate" hreflang="{{ $lang }}" href="{{ $page.Permalink }}">
+  {{- else }}
+    {{- range $page.Translations }}
+      {{- if eq .Language.Lang $lang }}
+<link rel="alternate" hreflang="{{ $lang }}" href="{{ .Permalink }}">
+<meta property="og:locale:alternate" content="{{ $lang }}">
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- /* x-default: zeigt auf die deutsche Version (Standardsprache des
+       Projekts) - Fallback auf die aktuelle Seite, falls es wirklich mal
+       keine deutsche Version geben sollte (kommt nach Projektkonvention
+       nicht vor, jede Seite existiert zuerst auf Deutsch). */ -}}
+{{- $deURL := "" }}
+{{- if eq .Language.Lang "de" }}{{ $deURL = .Permalink }}{{ end }}
+{{- range .Translations }}{{ if eq .Language.Lang "de" }}{{ $deURL = .Permalink }}{{ end }}{{ end }}
+{{- if not $deURL }}{{ $deURL = .Permalink }}{{ end }}
+<link rel="alternate" hreflang="x-default" href="{{ $deURL }}">
