@@ -67,11 +67,17 @@ jobs:
         uses: actions/configure-pages@v5
 
       # Installiert Hugo selbst (das Programm, das aus den Textdateien die
-      # fertige Website baut) auf diesem virtuellen Rechner.
+      # fertige Website baut) auf diesem virtuellen Rechner. Feste Version
+      # statt "latest": so baut die Seite immer mit genau der Hugo-Version,
+      # die auch lokal getestet wurde - "latest" könnte sich unbemerkt
+      # ändern und beim nächsten Bauen ohne Vorwarnung etwas kaputt machen.
+      # Ermittelt über das <meta name="generator">-Tag der zuletzt live
+      # deployten Seite (zuverlässiger als die lokal installierte Version).
+      # Beim Erhöhen: Version hier UND lokal aktualisieren, dann neu testen.
       - name: Install Hugo (Extended)
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "latest"
+          hugo-version: "0.164.0"
           extended: true
 
       # Installiert Node.js, wird für die Suchfunktion (Pagefind, ein
