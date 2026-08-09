@@ -12,7 +12,7 @@ Wer doch lokal arbeiten will/kann: dann helfen `docs/vorlage-news.md`,
 ## 1. Aufbau des Projekts in einfachen Worten
 
 Die Website wird aus einfachen Textdateien gebaut. Man schreibt eine Textdatei, lädt sie
-ins Repository ("Repo") hoch, und ein Roboter (GitHub Actions, siehe Abschnitt 8) baut
+ins Repository ("Repo") hoch, und ein Roboter (GitHub Actions, siehe Abschnitt 7) baut
 daraus automatisch die fertige Website neu – innerhalb von ein bis zwei Minuten.
 
 Die wichtigsten Ordner:
@@ -164,7 +164,7 @@ Kurzfassung (Details und fertiger Copy-Paste-Block in
 | Dienst | Wofür | Wo im Code sichtbar |
 | --- | --- | --- |
 | **GitHub Pages** | Hosting der fertigen Website. Aktuell erreichbar unter `kroeppster.github.io/nc-wiki/`; ein Umzug auf die eigene Domain `nc-wiki.ch` ist technisch vorbereitet, aber noch nicht aktiv (keine `CNAME`-Datei im Repo, DNS noch nicht umgestellt). | `.github/workflows/hugo.yml` |
-| **GitHub Actions** | Baut die Website bei jeder Änderung an `main` automatisch neu und prüft dabei, ob interne Links noch stimmen (siehe Abschnitt 8). Kein eigenständiger Dienst, sondern Teil von GitHub selbst. | `.github/workflows/` |
+| **GitHub Actions** | Baut die Website bei jeder Änderung an `main` automatisch neu und prüft dabei, ob interne Links noch stimmen (siehe Abschnitt 7). Kein eigenständiger Dienst, sondern Teil von GitHub selbst. | `.github/workflows/` |
 | **Formspree** | Nimmt Formular-Einsendungen entgegen, da die Website selbst keinen eigenen Server hat. Drei Formulare sind eingerichtet: Kontaktformular (`kontakt`-Seite), Erfahrungsbericht-Formular (löst zusätzlich automatisch einen Pull Request aus, siehe `.github/workflows/erfahrungsbericht-intake.yml`), und ein "Fehler melden"-Link bei jedem PDF-Download – **letzterer ist noch nicht fertig eingerichtet** (zeigt aktuell `REPLACE_ME` in `layouts/partials/download-list.html`, muss noch durch eine echte Formspree-Adresse ersetzt werden). | `layouts/partials/contact-form.html`, `experience-form.html`, `download-list.html` |
 | **Pagefind** | Die Suchfunktion oben im Header. Läuft komplett im Browser der Besucher:innen, kein externer Dienst zur Laufzeit – wird nur beim Bauen der Website als durchsuchbarer Index generiert. | `.github/workflows/hugo.yml`, `package.json` |
 | **Newsletter** | **Noch nicht angebunden.** In `hugo.toml` gibt es dafür schon ein Feld (`newsletter_url` unter `[params]`), aber es ist absichtlich leer – der Newsletter-Block im Footer erscheint erst, sobald dort eine echte Anmelde-URL eines Newsletter-Anbieters (z. B. Mailchimp) eingetragen wird. | `hugo.toml`, `layouts/partials/footer.html` |
@@ -231,3 +231,30 @@ Grund zur Eile.
 **Wenn man selbst nicht weiterkommt:** ein Issue im Repo eröffnen (Tab "Issues" →
 "New issue") mit einem Link zum fehlgeschlagenen Actions-Lauf, damit jemand mit
 Hugo-Kenntnissen es sich anschauen kann.
+
+---
+
+## 8. Wie lösche ich eine Datei?
+
+Egal ob PDF, Bild oder eine ganze Seite (`.md`-Datei) – das Löschen läuft für jede Datei
+gleich ab:
+
+1. Im Repo zur Datei navigieren und sie anklicken, damit sie geöffnet wird.
+2. Oben rechts auf das Papierkorb-Symbol klicken (bei manchen Dateitypen stattdessen über
+   die drei Punkte "..." → "Delete file").
+3. Unten bei "Commit changes" – genau wie beim Anlegen einer Seite (Abschnitt 2) –
+   **"Create a new branch for this commit and start a pull request"** wählen, nicht
+   direkt in `main` speichern.
+4. Pull Request erstellen. Jemand aus dem Team schaut kurz drüber und merged ihn.
+
+Nach dem Merge verschwindet die Datei automatisch von der Live-Seite (derselbe
+automatische Bau-Vorgang wie bei jeder anderen Änderung).
+
+**Achtung bei Übungsserien-PDFs:** Löscht man nur die Aufgaben-Datei, aber nicht die
+zugehörige `..._Loesung`-Datei (oder umgekehrt), bleibt die andere als eigener,
+einzelner Eintrag stehen (siehe `assets/downloads/uebungsaufgaben/README.md`) – meist
+will man beide zusammen löschen.
+
+**Falls die gelöschte Datei noch irgendwo verlinkt ist:** Der automatische Link-Check
+(Abschnitt 7) macht den nächsten Build rot, sobald ein interner Link ins Leere zeigt –
+das ist gewollt und zeigt zuverlässig, wo noch aufgeräumt werden muss.
