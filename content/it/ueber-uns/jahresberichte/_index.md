@@ -6,4 +6,4 @@ menu:
     weight: 3
 ---
 
-Testo segnaposto: I rapporti annuali di attività e finanziari dell'associazione NCWiki da consultare.
+Il primo rapporto annuale di NCWiki è in preparazione e verrà pubblicato qui non appena disponibile.

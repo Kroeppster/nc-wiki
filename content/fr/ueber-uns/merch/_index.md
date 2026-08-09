@@ -6,4 +6,4 @@ menu:
     weight: 2
 ---
 
-Texte de remplacement : Notre merch NCWiki – des t-shirts aux autocollants. Disponible lors de nos événements et dans la boutique en ligne.
+Lors de nos simulations de test et d'autres événements, il y a toujours du merch NCWiki à découvrir sur notre stand. Ça vaut le détour !

@@ -6,4 +6,4 @@ menu:
     weight: 4
 ---
 
-Texte de remplacement : Anciens contenus, campagnes passées et documents historiques de NCWiki.
+Cette page est en cours de préparation. Son contenu futur est encore en cours de définition.

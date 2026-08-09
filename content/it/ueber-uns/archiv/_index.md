@@ -6,4 +6,4 @@ menu:
     weight: 4
 ---
 
-Testo segnaposto: Contenuti più datati, campagne passate e documenti storici di NCWiki.
+Questa pagina è in fase di preparazione. Il suo contenuto futuro è ancora in definizione.

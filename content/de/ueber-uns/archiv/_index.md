@@ -6,4 +6,4 @@ menu:
     weight: 4
 ---
 
-Platzhaltertext: Ältere Inhalte, vergangene Kampagnen und historische Dokumente von NCWiki.
+Diese Seite befindet sich im Aufbau. Was hier künftig zu finden sein wird, wird zurzeit noch festgelegt.

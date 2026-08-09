@@ -6,7 +6,7 @@ menu:
     weight: 2
 ---
 
-Testo segnaposto: Tutto quello che c'è da sapere sulle nostre simulazioni del test.
+Tutto quello che c'è da sapere sulle nostre simulazioni del test.
 
 **Iscrizione:** L'iscrizione avviene online non appena sono fissate le date del prossimo turno – chi prima arriva, meglio alloggia.
 

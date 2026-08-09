@@ -6,4 +6,4 @@ menu:
     weight: 3
 ---
 
-Texte de remplacement : Les rapports d'activité et financiers annuels de l'association NCWiki à consulter.
+Le premier rapport annuel de NCWiki est en préparation et sera publié ici dès qu'il sera disponible.

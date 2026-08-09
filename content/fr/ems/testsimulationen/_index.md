@@ -6,7 +6,7 @@ menu:
     weight: 2
 ---
 
-Texte de remplacement : Tout ce qu'il faut savoir sur nos simulations de test.
+Tout ce qu'il faut savoir sur nos simulations de test.
 
 **Inscription :** L'inscription se fait en ligne dès que les dates de la prochaine session sont fixées – premier arrivé, premier servi.
 

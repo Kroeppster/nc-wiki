@@ -6,4 +6,4 @@ menu:
     weight: 2
 ---
 
-Platzhaltertext: Kostenlose Übungsaufgaben zu allen 10 Untertests des EMS – von Studierenden für Studierende zusammengestellt.
+Kostenlose Übungsaufgaben zu allen 10 Untertests des EMS – von Studierenden für Studierende zusammengestellt.

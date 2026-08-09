@@ -6,4 +6,4 @@ menu:
     weight: 4
 ---
 
-Platzhaltertext: Überblick über die Schweizer Universitäten mit Medizinstudium – Sprache, Zulassungsverfahren und mehr im Vergleich.
+Überblick über die Schweizer Universitäten mit Medizinstudium – Sprache, Zulassungsverfahren und mehr im Vergleich.

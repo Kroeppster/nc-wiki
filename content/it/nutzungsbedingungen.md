@@ -6,4 +6,4 @@ menu:
     weight: 2
 ---
 
-Testo segnaposto: Questa pagina è un esempio di design e non contiene ancora termini di utilizzo vincolanti.
+Questa pagina è in fase di preparazione. Termini di utilizzo vincolanti verranno aggiunti non appena disponibili. Nel frattempo, per le informazioni legali vedi [Impressum](/it/impressum/) e [Informativa sulla privacy](/it/datenschutzbestimmungen/); per domande scrivici a info@nc-wiki.ch.

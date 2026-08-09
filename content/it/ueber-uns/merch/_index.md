@@ -6,4 +6,4 @@ menu:
     weight: 2
 ---
 
-Testo segnaposto: Il nostro merch NCWiki – dalle t-shirt agli adesivi. Disponibile ai nostri eventi e nello shop online.
+Alle nostre simulazioni del test e ad altri eventi trovi sempre il merch NCWiki al nostro stand informativo. Vale la pena passare a dare un'occhiata!

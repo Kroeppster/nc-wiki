@@ -42,6 +42,14 @@ overrides:
     de: "Kursskript 2026 (Deutsch)"
     fr: "Script de cours 2026 (allemand)"
     it: "Dispensa del corso 2026 (tedesco)"
+  2025_Kursskript:
+    de: "Kursskript 2025 (PDF)"
+    fr: "Script de cours 2025 (PDF)"
+    it: "Dispensa del corso 2025 (PDF)"
+  2024_Kursskript:
+    de: "Kursskript 2024 (PDF)"
+    fr: "Script de cours 2024 (PDF)"
+    it: "Dispensa del corso 2024 (PDF)"
 
   # ---- Testsimulation (testsimulationen) ----
   2026_testsimulationen_Testsimulation:

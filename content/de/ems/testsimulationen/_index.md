@@ -6,7 +6,7 @@ menu:
     weight: 2
 ---
 
-Platzhaltertext: Alles Wichtige zu unseren Testsimulationen.
+Alles Wichtige zu unseren Testsimulationen.
 
 **Anmeldung:** Die Anmeldung erfolgt online, sobald die Termine für die nächste Runde feststehen – first come, first served.
 

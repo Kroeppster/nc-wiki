@@ -6,4 +6,4 @@ menu:
     weight: 2
 ---
 
-Testo segnaposto: Risposte alle domande più frequenti su EMS, iscrizione e la nostra offerta.
+Risposte alle domande più frequenti su EMS, iscrizione e la nostra offerta.

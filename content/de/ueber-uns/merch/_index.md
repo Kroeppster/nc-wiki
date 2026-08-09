@@ -6,4 +6,4 @@ menu:
     weight: 2
 ---
 
-Platzhaltertext: Unser NCWiki-Merch – von T-Shirts bis Stickern. Erhältlich an unseren Veranstaltungen und im Online-Shop.
+An unseren Testsimulationen und anderen Veranstaltungen gibt es jeweils NCWiki-Merch am Infostand zu entdecken. Vorbeischauen lohnt sich!

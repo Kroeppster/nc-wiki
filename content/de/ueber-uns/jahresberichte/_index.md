@@ -6,4 +6,4 @@ menu:
     weight: 3
 ---
 
-Platzhaltertext: Die jährlichen Tätigkeits- und Finanzberichte des Vereins NCWiki zum Nachlesen.
+Der erste Jahresbericht von NCWiki ist in Vorbereitung und wird hier veröffentlicht, sobald er vorliegt.
