@@ -283,4 +283,42 @@
       });
     });
   })();
+
+  {{/* ---- Teil 6: Such-Knopf (Lupe) klappt das Suchfeld auf/zu ----
+       Auf breiten Bildschirmen ist #search per CSS standardmässig
+       eingeklappt (siehe style.css) - ein Klick auf die Lupe schaltet die
+       Klasse "is-open" um und setzt den Fokus in Pagefinds Eingabefeld,
+       sobald es (asynchron von pagefind-ui.js) im DOM steht. Ein Klick
+       ausserhalb schliesst das Suchfeld wieder, ausser es enthält bereits
+       Text - dann bleibt es offen, damit man das Ergebnis nicht verliert. */}}
+  (function(){
+    var toggle = document.getElementById('searchToggle');
+    var search = document.getElementById('search');
+    if(!toggle || !search) return;
+
+    function open(){
+      search.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      setTimeout(function(){
+        var input = search.querySelector('input');
+        if(input) input.focus();
+      }, 50);
+    }
+    function close(){
+      search.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', function(){
+      if(search.classList.contains('is-open')){ close(); } else { open(); }
+    });
+
+    document.addEventListener('click', function(evt){
+      if(!search.classList.contains('is-open')) return;
+      if(search.contains(evt.target) || toggle.contains(evt.target)) return;
+      var input = search.querySelector('input');
+      if(input && input.value) return;
+      close();
+    });
+  })();
 </script>

@@ -70,6 +70,20 @@
       </ul>
     </nav>
 
+    {{/* Such-Knopf: auf breiten Bildschirmen ist das Suchfeld standardmässig
+         eingeklappt (nur dieses Lupen-Symbol sichtbar) und klappt erst per
+         Klick auf - spart dauerhaft ca. 200px Platz in der Kopfzeile, die
+         sonst dem leeren Suchfeld reserviert wären (siehe Klick-Logik in
+         footer.html, Teil 6). Auf schmalen Bildschirmen (Hamburger-Menü)
+         bleibt das Suchfeld wie bisher immer ausgeklappt sichtbar, siehe
+         @media max-width:860px in style.css - dort ist dieser Knopf per CSS
+         ausgeblendet. */}}
+    <button type="button" class="search-toggle" id="searchToggle" aria-expanded="false" aria-controls="search" aria-label="{{ i18n "search_toggle_aria_label" }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="m20 20-3.5-3.5"/>
+      </svg>
+    </button>
     {{/* Suchfeld: nur ein leerer Platzhalter-Container - die eigentliche
          Suchfunktion (Pagefind) klinkt sich per JavaScript hier ein. Der
          durchsuchbare Suchindex wird beim Bauen der Website automatisch aus

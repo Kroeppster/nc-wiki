@@ -219,14 +219,14 @@ p{margin:0 0 var(--space-4);}
    Kopfzeile
    ========================================================================== */
 header.site{border-bottom:1px solid var(--color-line);background:var(--header-bg);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100;}
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding-block:var(--space-3);gap:var(--space-5);flex-wrap:wrap;}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding-block:var(--space-3);gap:var(--space-4);flex-wrap:wrap;}
 .brand{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-weight:700;font-size:var(--text-md);letter-spacing:var(--tracking-tight);}
 .brand-mark{display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;background:var(--color-surface);color:var(--color-signal);border:1px solid var(--color-line);font-family:var(--font-mono);font-size:.68rem;font-weight:700;border-radius:var(--radius-sm);}
 img.brand-mark{object-fit:contain;padding:2px;}
 nav.main-nav{order:2;flex:1 1 auto;}
-nav.main-nav>ul{display:flex;gap:var(--space-6);list-style:none;margin:0;padding:0;align-items:center;flex-wrap:wrap;}
+nav.main-nav>ul{display:flex;gap:var(--space-4);list-style:none;margin:0;padding:0;align-items:center;flex-wrap:wrap;}
 nav.main-nav li{position:relative;}
-nav.main-nav>ul>li>a,nav.main-nav>ul>li>span{font-size:var(--text-sm);font-weight:600;padding:var(--space-2) 0;display:inline-block;}
+nav.main-nav>ul>li>a,nav.main-nav>ul>li>span{font-size:.82rem;font-weight:600;padding:var(--space-2) 0;display:inline-block;}
 nav.main-nav>ul>li>a:hover{color:var(--color-signal);}
 /* Menüpunkte ohne eigene URL (reine Dropdown-Gruppen wie "Vorbereitung",
    siehe header.html) werden als <span> statt <a> gerendert - etwas gedämpfter
@@ -248,7 +248,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    footer.html). Eigenes <button>-Element statt den Link selbst abzufangen,
    damit der Linktext (falls vorhanden) weiterhin normal zur eigenen Seite
    führt und nur der Pfeil fürs Auf-/Zuklappen zuständig ist. */
-.submenu-toggle{background:none;border:none;padding:.3rem;margin-left:.05rem;cursor:pointer;color:var(--color-ink-faint);display:inline-flex;align-items:center;vertical-align:middle;}
+.submenu-toggle{background:none;border:none;padding:.15rem;margin-left:0;cursor:pointer;color:var(--color-ink-faint);display:inline-flex;align-items:center;vertical-align:middle;}
 .submenu-toggle:hover{color:var(--color-signal);}
 .submenu-toggle .chevron{width:10px;height:10px;transition:transform .15s;}
 .has-children.is-open>.submenu-toggle .chevron{transform:rotate(180deg);}
@@ -262,7 +262,17 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2){opacity:0;}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
 .lang-switch{display:flex;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--text-xs);order:3;}
-#search{order:2;flex:0 0 200px;max-width:240px;}
+/* Such-Knopf (Lupe): gleiche Optik wie der Hell/Dunkel-Knopf daneben. Klick
+   klappt das eigentliche Suchfeld auf (Klasse "is-open" auf #search, siehe
+   Klick-Logik in footer.html) statt es dauerhaft ~200px Platz in der
+   Kopfzeile reservieren zu lassen - das war der Hauptgrund, wieso Sprachwahl
+   und Hell/Dunkel-Knopf bei mittleren Bildschirmbreiten in eine zweite Zeile
+   rutschten. */
+.search-toggle{order:2;flex:0 0 auto;display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-ink-soft);cursor:pointer;padding:0;}
+.search-toggle:hover{color:var(--color-signal);border-color:var(--color-signal);}
+.search-toggle svg{width:1.05rem;height:1.05rem;}
+#search{order:2;flex:0 0 auto;width:0;max-width:0;opacity:0;overflow:hidden;margin-left:calc(var(--space-4) * -1);transition:width .2s ease,opacity .15s ease,margin-left .2s ease;}
+#search.is-open{width:220px;max-width:240px;opacity:1;margin-left:0;}
 .lang-switch span,.lang-switch a{padding:.25rem .5rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);color:var(--color-ink-faint);}
 .lang-switch .active{background:var(--color-ink);color:var(--color-paper);border-color:var(--color-ink);}
 .theme-toggle{order:3;display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-ink-soft);cursor:pointer;padding:0;}
@@ -561,7 +571,12 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
    ========================================================================== */
 @media (max-width:860px){
   header.site{position:static;}
-  #search{order:4;flex:1 1 100%;max-width:none;}
+  /* Auf schmalen Bildschirmen bleibt das Suchfeld wie bisher immer
+     ausgeklappt sichtbar (kein Platzproblem mehr, da das Hauptmenü hier
+     ohnehin hinter dem Hamburger-Knopf verschwindet) - der Lupen-Knopf ist
+     hier überflüssig und wird ausgeblendet. */
+  .search-toggle{display:none;}
+  #search{order:4;flex:1 1 100%;width:auto;max-width:none;opacity:1;overflow:visible;margin-left:0;}
 
   /* Hauptmenü wird zum Hamburger-Menü: der Knopf ist jetzt sichtbar, und die
      Liste ist standardmässig eingeklappt (display:none) - sie erscheint erst,
