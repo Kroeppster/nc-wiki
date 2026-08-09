@@ -144,8 +144,8 @@
   studienplaetze: null
   besonderheiten: ["Nur 1. Studienjahr; danach zwingender Wechsel nach Genf oder Lausanne"]
   website: "https://www.unine.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.unine.ch/sciences/es/home/formations/bachelors/medecine/conditions_admission.html"
+  stand: "2026-08-09"
+  quelle: "https://www.unine.ch/formation/bachelor-of-science-en-medecine-humaine"
 
 - slug: "luzern"
   name: "Universität Luzern"
