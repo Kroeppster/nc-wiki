@@ -83,14 +83,15 @@
   </div>
 </footer>
 
-{{/* Cookie-Hinweis unten rechts. Wird per JavaScript weiter unten
-     ausgeblendet, sobald jemand einmal "Details" oder "Akzeptieren"
-     angeklickt hat (Merker liegt im Browser-Speicher, nicht in einem
-     echten Cookie - siehe Text im Banner). */}}
+{{/* Cookie-Banner unten rechts - ECHTE Einwilligungsabfrage (nicht nur ein
+     Hinweis): Google Analytics wird NUR geladen, wenn "Akzeptieren" gewählt
+     wird (siehe Teil 2 im <script> weiter unten). Die Wahl (akzeptiert/
+     abgelehnt) liegt im Browser-Speicher (localStorage), nicht in einem
+     echten Cookie, und bleibt bis zum manuellen Zurücksetzen bestehen. */}}
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="{{ i18n "cookie_aria_label" }}">
-  <p>{{ i18n "cookie_text" }}</p>
+  <p>{{ i18n "cookie_text" }} {{ with .Site.GetPage "/datenschutzbestimmungen" }}<a href="{{ .RelPermalink }}">{{ i18n "cookie_details" }}</a>{{ end }}</p>
   <div class="cookie-actions">
-    <button class="btn btn-ghost" type="button" data-cookie-action="details">{{ i18n "cookie_details" }}</button>
+    <button class="btn btn-ghost" type="button" data-cookie-action="rejected">{{ i18n "cookie_reject" }}</button>
     <button class="btn btn-primary" type="button" data-cookie-action="accepted">{{ i18n "cookie_accept" }}</button>
   </div>
 </div>
@@ -122,13 +123,37 @@
     setInterval(tick, 1000);
   })();
 
-  {{/* ---- Teil 2: Cookie-Banner ein-/ausblenden und Wahl merken ----
-       Merkt sich die getroffene Wahl (Details/Akzeptieren) im lokalen
+  {{/* ---- Teil 2: Cookie-Banner ein-/ausblenden, Wahl merken, Google
+       Analytics NUR bei Einwilligung laden ----
+       Merkt sich die getroffene Wahl (akzeptiert/abgelehnt) im lokalen
        Browser-Speicher (localStorage, Schlüssel "cookie-consent") - beim
-       nächsten Besuch bleibt der Banner dann automatisch verborgen. */}}
+       nächsten Besuch bleibt der Banner dann automatisch verborgen UND es
+       wird direkt wieder entsprechend der letzten Wahl geladen (oder eben
+       nicht geladen). Ohne "akzeptiert" wird das Google-Skript zu keinem
+       Zeitpunkt nachgeladen - es existiert schlicht nicht auf der Seite,
+       nicht einmal "pausiert". */}}
   (function(){
     var STORAGE_KEY = 'cookie-consent';
+    var GA_ID = {{ .Site.Params.google_analytics_id }};
     var banner = document.getElementById('cookieBanner');
+
+    function loadGoogleAnalytics(){
+      if(!GA_ID) return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    }
+
+    var stored;
+    try{ stored = localStorage.getItem(STORAGE_KEY); }catch(e){ stored = null; }
+    if(stored === 'accepted'){ loadGoogleAnalytics(); }
+
     if(!banner) return;
 
     {{/* Reserviert unten auf der Seite Platz in der Höhe des Banners, damit
@@ -146,14 +171,14 @@
       reserveSpace();
     }
 
-    var stored;
-    try{ stored = localStorage.getItem(STORAGE_KEY); }catch(e){ stored = null; }
     if(stored){ hideBanner(); }else{ reserveSpace(); window.addEventListener('resize', reserveSpace); }
 
     var btns = document.querySelectorAll('[data-cookie-action]');
     btns.forEach(function(b){
       b.addEventListener('click', function(){
-        try{ localStorage.setItem(STORAGE_KEY, b.getAttribute('data-cookie-action')); }catch(e){}
+        var choice = b.getAttribute('data-cookie-action');
+        try{ localStorage.setItem(STORAGE_KEY, choice); }catch(e){}
+        if(choice === 'accepted'){ loadGoogleAnalytics(); }
         hideBanner();
       });
     });

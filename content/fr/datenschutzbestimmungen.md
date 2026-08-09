@@ -65,6 +65,7 @@ Ce site utilise les services externes suivants :
 
 - **Formspree** (envoi des formulaires de contact, de témoignages et de signalement d'erreurs) – les données saisies sont alors transmises à Formspree Inc. (États-Unis).
 - **Pagefind** (fonction de recherche) et polices auto-hébergées – fonctionnent entièrement dans le navigateur ou sont fournies par notre propre hébergement, aucune donnée n'est transmise à des tiers à cette occasion.
+- **Google Analytics** (mesure d'audience) – n'est chargé que si vous choisissez activement « Accepter » dans la bannière de cookies (voir la section « Cookies » ci-dessous). Sans ce consentement, aucun script Google n'est chargé et aucun cookie correspondant n'est déposé. En cas de consentement, Google Analytics collecte notamment des informations sur les pages visitées, la durée de visite et une origine géographique approximative (pays/région, pas la position exacte), traitées sur des serveurs de Google Ireland Limited ou de Google LLC (États-Unis). Le consentement peut être révoqué à tout moment en supprimant les données de navigateur de ce site, ce qui fera réapparaître la bannière de cookies.
 
 D'autres contenus de tiers intégrés (par ex. liens vers Instagram) n'entraînent une transmission de données au fournisseur concerné qu'en cas de clic actif.
 
@@ -88,4 +89,6 @@ Pour toute question relative à la protection des données, merci de nous écrir
 
 ## Cookies
 
-Ce site n'utilise aucun cookie de suivi ou marketing. Dans le stockage local de votre navigateur, nous ne conservons que ce qui est techniquement nécessaire – par exemple votre réglage de thème et ce choix relatif aux cookies lui-même.
+Seuls quelques éléments techniquement nécessaires sont stockés dans le stockage local de votre navigateur, pas un cookie à proprement parler – par exemple votre réglage de thème et votre choix relatif aux cookies lui-même.
+
+De plus, la bannière de cookies vous permet d'activer Google Analytics pour la mesure d'audience. Celui-ci n'est chargé qu'avec votre consentement actif et ne dépose un cookie qu'à ce moment-là ; sans consentement, aucune transmission à Google n'a lieu. Détails dans la section « Services de tiers » ci-dessus.

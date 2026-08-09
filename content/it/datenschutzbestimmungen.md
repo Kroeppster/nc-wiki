@@ -65,6 +65,7 @@ Questo sito utilizza i seguenti servizi esterni:
 
 - **Formspree** (invio dei moduli di contatto, testimonianze e segnalazioni di errori) – i dati inseriti vengono trasmessi a Formspree Inc. (USA).
 - **Pagefind** (funzione di ricerca) e font auto-ospitati – funzionano interamente nel browser o vengono forniti dal nostro stesso hosting, senza trasmissione di dati a terzi.
+- **Google Analytics** (misurazione dell'audience) – viene caricato solo se scegli attivamente "Accetta" nel banner dei cookie (vedi la sezione "Cookie" qui sotto). Senza questo consenso non viene caricato alcuno script Google e non viene impostato alcun cookie corrispondente. In caso di consenso, Google Analytics raccoglie tra l'altro informazioni sulle pagine visitate, la durata della visita e un'origine geografica approssimativa (paese/regione, non la posizione esatta), trattate su server di Google Ireland Limited o Google LLC (USA). Il consenso può essere revocato in qualsiasi momento cancellando i dati del browser relativi a questo sito, dopodiché il banner dei cookie ricomparirà.
 
 Altri contenuti di terzi integrati (ad es. link a Instagram) comportano una trasmissione di dati al rispettivo fornitore solo in caso di clic attivo.
 
@@ -88,4 +89,6 @@ Per domande relative alla protezione dei dati, scrivici a info@nc-wiki.ch.
 
 ## Cookie
 
-Questo sito non utilizza cookie di tracciamento o marketing. Nella memoria locale del tuo browser conserviamo solo ciò che è tecnicamente necessario – ad esempio la tua impostazione del tema e questa scelta relativa ai cookie.
+Nella memoria locale del tuo browser conserviamo solo pochi elementi tecnicamente necessari, non un vero e proprio cookie – ad esempio la tua impostazione del tema e questa stessa scelta relativa ai cookie.
+
+Inoltre, tramite il banner dei cookie puoi attivare Google Analytics per la misurazione dell'audience. Questo viene caricato solo con il tuo consenso attivo e imposta un cookie solo a quel punto; senza consenso non avviene alcuna trasmissione a Google. Dettagli nella sezione "Servizi di terzi" qui sopra.

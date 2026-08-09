@@ -60,6 +60,15 @@ enableRobotsTXT = true
   # (+02:00 = Schweizer Sommerzeit).
   ems_exam_date = '2027-07-09T08:00:00+02:00'
 
+  # Google Analytics Measurement-ID (Format "G-XXXXXXXXXX", zu finden in
+  # Google Analytics unter Verwaltung -> Datenstreams -> [Datenstream
+  # auswählen]). Wird NUR geladen, wenn im Cookie-Banner aktiv "Akzeptieren"
+  # gewählt wurde (siehe layouts/partials/footer.html) - ohne Einwilligung
+  # wird kein Skript nachgeladen und kein Google-Cookie gesetzt. Leer lassen,
+  # um Google Analytics komplett zu deaktivieren (Cookie-Banner zeigt dann
+  # nur noch Akzeptieren/Ablehnen ohne Wirkung).
+  google_analytics_id = 'G-CDT499WMXN'
+
 # Wie viele Einträge pro Seite angezeigt werden, bevor eine "Seite 2 / 3 / ..."
 # -Navigation erscheint (betrifft z.B. die News-Übersicht, falls es mehr als
 # 12 Beiträge gibt).

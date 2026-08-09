@@ -45,8 +45,9 @@ footer_newsletter_submit: "Iscriviti"
 footer_built_with: "Costruito con Hugo · ospitato su GitHub Pages"
 
 cookie_aria_label: "Informazioni sui cookie"
-cookie_text: "Non utilizziamo cookie di tracciamento o marketing. Nella memoria locale del tuo browser conserviamo solo ciò che è tecnicamente necessario – ad esempio la tua impostazione del tema e questa scelta sui cookie."
-cookie_details: "Dettagli"
+cookie_text: "Oltre a quanto tecnicamente necessario (per es. la tua impostazione del tema), utilizziamo cookie aggiuntivi solo con il tuo consenso – attualmente Google Analytics, per capire come viene utilizzato il sito."
+cookie_details: "Maggiori informazioni"
+cookie_reject: "Rifiuta"
 cookie_accept: "Accetta"
 
 countdown_days: "giorni"
