@@ -321,4 +321,29 @@
       close();
     });
   })();
+
+  {{/* ---- Teil 7: "reveal-at"-Shortcode - Inhalt erst ab Zeitpunkt X zeigen ----
+       Siehe layouts/shortcodes/reveal-at.html für die Verwendung im
+       Beitragstext. Prüft beim Laden UND danach jede Sekunde (gleicher
+       Rhythmus wie die Countdown-Uhr), ob der eingetragene Zeitpunkt schon
+       erreicht ist - läuft die Seite über den Zeitpunkt hinweg offen,
+       erscheint der Inhalt von selbst, ohne dass neu geladen werden muss.
+       Fehlt "data-reveal-at" oder ist der Wert kein gültiges Datum, bleibt
+       der Inhalt absichtlich dauerhaft versteckt (lieber zu spät als zu
+       früh sichtbar). */}}
+  (function(){
+    var els = document.querySelectorAll('.reveal-at');
+    if(!els.length) return;
+    function check(){
+      var now = Date.now();
+      els.forEach(function(el){
+        if(el.classList.contains('is-revealed')) return;
+        var raw = el.getAttribute('data-reveal-at');
+        var when = raw ? new Date(raw).getTime() : NaN;
+        if(!isNaN(when) && now >= when){ el.classList.add('is-revealed'); }
+      });
+    }
+    check();
+    setInterval(check, 1000);
+  })();
 </script>

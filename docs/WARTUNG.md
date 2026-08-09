@@ -258,3 +258,57 @@ will man beide zusammen löschen.
 **Falls die gelöschte Datei noch irgendwo verlinkt ist:** Der automatische Link-Check
 (Abschnitt 7) macht den nächsten Build rot, sobald ein interner Link ins Leere zeigt –
 das ist gewollt und zeigt zuverlässig, wo noch aufgeräumt werden muss.
+
+---
+
+## 9. Wie füge ich ein Bild hinzu?
+
+Bilder werden nicht mitten im Fliesstext eingefügt, sondern als **ein** Titelbild pro
+Seite (erscheint oben auf der Seite selbst und als Vorschaubild in Übersichten, z. B.
+bei News-Beiträgen).
+
+1. Bilddatei hochladen nach `assets/images/<bereich>/<dateiname>.jpg` (oder `.png`),
+   z. B. `assets/images/news/testsimulation-2027.jpg` – **"Add file" → "Upload files"**,
+   Pull Request erstellen wie in Abschnitt 2 beschrieben.
+2. Im Frontmatter der Seite zwei Felder ergänzen:
+
+   ```yaml
+   featured_image: "news/testsimulation-2027.jpg"
+   featured_image_alt: "Kurze Bildbeschreibung für Screenreader"
+   ```
+
+   `featured_image` ist der Pfad relativ zu `assets/images/` (ohne `assets/images/`
+   davor). `featured_image_alt` ist **Pflicht**, sobald ein Bild gesetzt ist – ohne
+   Beschreibung schlägt der Bau der Website fehl (wichtig für Sehbehinderte, die die
+   Seite per Screenreader nutzen). Eine Vorlage mit beiden Feldern gibt es in
+   `archetypes/news.md`.
+
+Hugo erzeugt daraus beim Bauen automatisch mehrere verkleinerte Kopien – nichts
+weiter nötig, auch nicht bei sehr grossen Originaldateien.
+
+---
+
+## 10. Wie zeige ich einen Teil eines Beitrags erst ab einer bestimmten Uhrzeit?
+
+Für Fälle wie "der Anmeldelink soll erst heute Abend um 22:00 Uhr sichtbar werden" –
+der Rest des Beitrags bleibt sofort sichtbar, nur der markierte Teil erscheint
+automatisch zum eingetragenen Zeitpunkt (ohne dass jemand die Seite neu laden muss).
+
+Im Beitragstext den betreffenden Teil so einrahmen:
+
+```
+{{< reveal-at when="2026-08-10T22:00:00+02:00" >}}
+[Jetzt anmelden](https://...)
+{{< /reveal-at >}}
+```
+
+`when` ist Datum und Uhrzeit im Format `JJJJ-MM-TTTHH:MM:SS+ZZ:ZZ` – die Zeitzone am
+Ende **muss** dabei sein (`+02:00` = Schweizer Sommerzeit, `+01:00` = Winterzeit),
+sonst ist nicht eindeutig gemeint, wann genau. Fehlt `when` oder ist das Datum
+ungültig, bleibt der Inhalt absichtlich für immer versteckt statt sofort zu
+erscheinen.
+
+**Wichtig zu wissen:** Das Verstecken passiert nur im Browser (per CSS/JavaScript) –
+im Seiten-Quelltext steht der Inhalt schon vor dem Freigabe-Zeitpunkt, nur unsichtbar.
+Für einen Link, der zur richtigen Zeit öffentlich auffindbar werden soll, reicht das
+– für etwas, das wirklich geheim bleiben muss (z. B. ein Passwort), nicht geeignet.

@@ -1,0 +1,33 @@
+{{- /*
+  ============================================================================
+  TEIL EINES BEITRAGS ERST AB EINEM BESTIMMTEN ZEITPUNKT ANZEIGEN
+  ============================================================================
+  Für Fälle wie "der Anmeldelink soll erst heute Abend um 22:00 Uhr sichtbar
+  werden" - der Rest des Beitrags ist sofort sichtbar, nur der markierte Teil
+  bleibt bis zum angegebenen Zeitpunkt versteckt und erscheint dann von selbst
+  (die Seite muss dafür nicht neu geladen werden).
+
+  Verwendung im Markdown-Text eines Beitrags: siehe docs/WARTUNG.md, Abschnitt
+  10, für das genaue Schreibmuster (SPITZE Klammern, nicht Prozent-Klammern -
+  der Inhalt dazwischen wird trotzdem ganz normal als Markdown/Link
+  verarbeitet, das übernimmt "RenderString" weiter unten selbst. Mit
+  Prozent-Klammern würde der umschliessende <span> von Hugos
+  Markdown-Renderer aus Sicherheitsgründen stillschweigend entfernt, siehe
+  https://gohugo.io/getting-started/configuration-markup/#rendererunsafe).
+
+  Der Zeitpunkt MUSS die Uhrzeit-Zone mit angeben (+02:00 = Schweizer
+  Sommerzeit, +01:00 = Winterzeit) - sonst ist nicht eindeutig, in welcher
+  Zeitzone gemeint ist. Ohne "when" (oder mit ungültigem Datum) bleibt der
+  Inhalt aus Sicherheitsgründen dauerhaft versteckt statt sofort zu
+  erscheinen - im Zweifel lieber zu spät als zu früh sichtbar.
+
+  WICHTIG zu wissen: Das Verstecken passiert nur per CSS/JavaScript im
+  Browser - der Text steht bereits VOR dem Freigabe-Zeitpunkt unsichtbar im
+  Seiten-Code (im Quelltext/"Element untersuchen" könnte ihn also schon vor
+  22:00 Uhr sehen, wer gezielt danach sucht). Für einen Anmeldelink, der
+  einfach nur zum richtigen Zeitpunkt öffentlich auffindbar werden soll,
+  reicht das - für etwas, das wirklich geheim bleiben muss, nicht.
+  ============================================================================
+*/ -}}
+{{- $when := .Get "when" -}}
+<span class="reveal-at" data-reveal-at="{{ $when }}">{{ .Page.RenderString (dict "display" "inline") .Inner }}</span>
