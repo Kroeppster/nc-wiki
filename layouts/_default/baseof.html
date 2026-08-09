@@ -30,11 +30,18 @@
 {{/* Kopfzeile mit Logo, Hauptmenü, Suche, Hell/Dunkel-Umschalter und Sprachwahl */}}
 {{ partial "header.html" . }}
 
-<main id="main">
+<main id="main" data-pagefind-body>
 {{/* Hier kommt der eigentliche Inhalt der jeweiligen Seite hinein. Jede Seite
      "definiert" an anderer Stelle einen Block namens "main" (z.B. in
      layouts/index.html für die Startseite, oder layouts/_default/single.html
-     für eine normale Unterseite) - Hugo setzt diesen Inhalt hier automatisch ein. */}}
+     für eine normale Unterseite) - Hugo setzt diesen Inhalt hier automatisch ein.
+
+     "data-pagefind-body": sagt der Suchfunktion (Pagefind), NUR den Inhalt
+     innerhalb von <main> zu durchsuchen/indexieren - ohne dieses Attribut
+     durchsucht Pagefind standardmässig die GANZE Seite inkl. Kopf- und
+     Fusszeile (Menü, Sprachauswahl "DE FR IT", Newsletter-Text usw.), was
+     dazu führte, dass Suchergebnis-Ausschnitte irrelevanten Menütext statt
+     echtem Seiteninhalt zeigten. */}}
 {{ block "main" . }}{{ end }}
 </main>
 

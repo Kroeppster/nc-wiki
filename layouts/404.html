@@ -1,0 +1,28 @@
+{{- /*
+  ============================================================================
+  FEHLERSEITE "404 - Seite nicht gefunden"
+  ============================================================================
+  Wird von GitHub Pages automatisch angezeigt, wenn jemand eine Adresse
+  aufruft, die es auf der Website nicht (mehr) gibt (z.B. Tippfehler in der
+  URL, oder eine alte, inzwischen gelöschte/umbenannte Seite). Ohne diese
+  Datei würde GitHub stattdessen seine eigene, nichtssagende Standard-
+  Fehlerseite zeigen - ohne NCWiki-Logo, ohne Navigation, ohne Möglichkeit,
+  von dort aus zurück auf die Website zu finden.
+
+  Nutzt dasselbe Grundgerüst (baseof.html) wie jede andere Seite, damit Kopf-
+  und Fusszeile inkl. Menü und Suche ganz normal vorhanden sind - man landet
+  also nicht in einer Sackgasse.
+  ============================================================================
+*/ -}}
+{{ define "main" }}
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">{{ i18n "error_404_eyebrow" }}</p>
+      <h1>{{ i18n "error_404_title" }}</h1>
+      <p class="lede">{{ i18n "error_404_text" }}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ .Site.Home.RelPermalink }}">{{ i18n "error_404_cta" }}</a>
+      </div>
+    </div>
+  </section>
+{{ end }}

@@ -221,4 +221,41 @@
       document.querySelectorAll('.has-children.is-open').forEach(closeSubmenu);
     });
   })();
+
+  {{/* ---- Teil 5: "Fehler melden"-Formulare bei PDF-Downloads ----
+       Diese kleinen Formulare (eines pro Download, siehe download-list.html)
+       hatten bisher KEIN JavaScript - ein Klick hat den Browser das Formular
+       ganz normal absenden lassen, was bei einem funktionierenden Formspree-
+       Ziel eine neue Seite (Formspree-Dankesseite) geöffnet hätte, bei der
+       aktuell noch fehlenden echten Formspree-Adresse aber zu einer rohen
+       Fehlerseite AUSSERHALB von NCWiki navigiert. Dieser Teil verschickt die
+       Meldung stattdessen im Hintergrund (wie beim Kontakt-/Erfahrungsbericht-
+       Formular) und zeigt das Ergebnis direkt im Knopftext an - man bleibt
+       auf der Seite, so oder so. Sobald eine echte Formspree-Adresse
+       eingetragen ist (siehe download-list.html), funktioniert die Meldung
+       damit automatisch richtig, ohne dass hier noch etwas geändert werden müsste. */}}
+  (function(){
+    document.querySelectorAll('form.report-error').forEach(function(form){
+      var btn = form.querySelector('button[type="submit"]');
+      if(!btn) return;
+      var originalLabel = btn.textContent;
+      form.addEventListener('submit', function(evt){
+        evt.preventDefault();
+        btn.disabled = true;
+        btn.textContent = '{{ i18n "downloads_report_sending" }}';
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then(function(response){
+          if(!response.ok){ throw new Error('request failed'); }
+          btn.textContent = '{{ i18n "downloads_report_sent" }}';
+        }).catch(function(){
+          btn.textContent = '{{ i18n "downloads_report_failed" }}';
+          btn.disabled = false;
+          setTimeout(function(){ btn.textContent = originalLabel; }, 5000);
+        });
+      });
+    });
+  })();
 </script>

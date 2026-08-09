@@ -1,0 +1,19 @@
+{{- /*
+  ============================================================================
+  robots.txt - Anweisungen für Suchmaschinen
+  ============================================================================
+  Ersetzt Hugos eingebaute Standard-Datei (die nur "User-agent: *" ohne
+  weitere Angaben enthielt) um eine "Sitemap:"-Zeile - die zeigt
+  Suchmaschinen direkt, wo die komplette Liste aller Seiten liegt
+  (sitemap.xml, wird von Hugo automatisch erzeugt), damit neue/geänderte
+  Seiten schneller gefunden werden, statt dass die Suchmaschine sie erst
+  selbst über Links entdecken muss.
+
+  "Disallow:" bleibt absichtlich leer = keine Einschränkungen, alle Seiten
+  dürfen von Suchmaschinen durchsucht werden.
+  ============================================================================
+*/ -}}
+User-agent: *
+Disallow:
+
+Sitemap: {{ "sitemap.xml" | absURL }}
