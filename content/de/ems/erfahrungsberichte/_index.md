@@ -6,4 +6,4 @@ menu:
     weight: 1
 ---
 
-Platzhaltertext: Ehemalige Teilnehmende berichten von ihrer EMS-Vorbereitung und ihrem Weg ins Medizinstudium.
+Ehemalige Teilnehmende berichten von ihrer EMS-Vorbereitung und ihrem Weg ins Medizinstudium.

@@ -6,4 +6,4 @@ menu:
     weight: 1
 ---
 
-Testo segnaposto: Ex partecipanti raccontano la loro preparazione all'EMS e il loro percorso verso gli studi di medicina.
+Ex partecipanti raccontano la loro preparazione all'EMS e il loro percorso verso gli studi di medicina.
