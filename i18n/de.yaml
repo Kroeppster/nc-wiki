@@ -64,6 +64,9 @@ contact_form_submit: "Senden"
 
 downloads_empty: "Aktuell kein Material verfügbar."
 downloads_report_error: "Fehler melden"
+uebungsaufgaben_license_prefix: "Diese Übungsaufgaben stehen unter der Lizenz"
+uebungsaufgaben_license_link: "CC BY-NC 4.0"
+uebungsaufgaben_license_suffix: "– Weitergabe mit Namensnennung erlaubt, keine kommerzielle Nutzung."
 
 ems_year_label: "EMS-Jahr"
 ems_status_ja: "Ja"

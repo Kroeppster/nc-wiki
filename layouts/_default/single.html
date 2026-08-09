@@ -66,6 +66,17 @@
            dabei automatisch aus dem Dateinamen dieser Seite abgeleitet. */}}
       {{ if strings.Contains .Path "uebungsaufgaben" }}
       {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
+
+      {{/* Lizenzhinweis für die Übungsaufgaben (CC BY-NC 4.0, siehe README.md
+           und assets/downloads/uebungsaufgaben/README.md). Die passende
+           Sprachversion des offiziellen Lizenztexts wird direkt aus dem
+           Sprachcode der Seite gebaut (de/fr/it passen genau auf die
+           "deed.xx"-Adressen von creativecommons.org). */}}
+      <p class="uebungsaufgaben-license">
+        {{ i18n "uebungsaufgaben_license_prefix" }}
+        <a href="{{ printf "https://creativecommons.org/licenses/by-nc/4.0/deed.%s" .Site.Language.Lang }}" target="_blank" rel="noopener">{{ i18n "uebungsaufgaben_license_link" }}</a>
+        {{ i18n "uebungsaufgaben_license_suffix" }}
+      </p>
       {{ end }}
 
       {{/* Diese drei Bausteine erscheinen NUR, wenn das jeweilige Feld im

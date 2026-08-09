@@ -63,6 +63,9 @@ contact_form_submit: "Invia"
 
 downloads_empty: "Al momento nessun materiale disponibile."
 downloads_report_error: "Segnala un errore"
+uebungsaufgaben_license_prefix: "Questi esercizi sono sotto licenza"
+uebungsaufgaben_license_link: "CC BY-NC 4.0"
+uebungsaufgaben_license_suffix: "– condivisione consentita con attribuzione, nessun uso commerciale."
 
 ems_year_label: "Anno EMS"
 ems_status_ja: "Sì"

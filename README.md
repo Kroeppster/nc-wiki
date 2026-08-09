@@ -39,3 +39,14 @@ npm run build
 
 Vorlagen für neue Inhaltstypen (News, Erfahrungsbericht, Jahresbericht) liegen unter
 `archetypes/`; reine Copy-Paste-Vorlagen für den Browser unter `docs/vorlage-*.md`.
+
+## Lizenz
+
+Die **Übungsaufgaben** (Inhalte unter `content/*/ems/uebungsaufgaben/` sowie die
+zugehörigen Aufgabenblätter unter `assets/downloads/uebungsaufgaben/`) stehen unter
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.de) –
+Weitergabe mit Namensnennung erlaubt, keine kommerzielle Nutzung. Siehe auch
+[`assets/downloads/uebungsaufgaben/README.md`](assets/downloads/uebungsaufgaben/README.md).
+
+Für den Rest der Website (Code, Layouts, übrige Inhalte) gibt es aktuell keine
+gesonderte Lizenz.

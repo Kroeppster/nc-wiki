@@ -415,6 +415,9 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .faq-subtest-list li{margin-bottom:.2rem;}
 .faq-contact{max-width:44rem;margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-line);color:var(--color-ink-soft);font-size:var(--text-sm);}
 
+.uebungsaufgaben-license{margin-top:var(--space-6);font-size:var(--text-xs);color:var(--color-ink-faint);}
+.uebungsaufgaben-license a{color:inherit;text-decoration:underline;}
+
 /* Bild-Header einer Seite */
 .featured-image{margin:var(--space-6) 0 var(--space-8);}
 .featured-image img{width:100%;height:auto;max-height:480px;object-fit:cover;display:block;border-radius:var(--radius-md);}
