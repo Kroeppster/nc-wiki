@@ -15,6 +15,13 @@
 # Key = Dateiname ohne Endung ".pdf", Wert = Anzeigename pro Sprache.
 # Fehlt der Eintrag für die aktuelle Seitensprache, wird "de" verwendet.
 #
+# Die grosse Mehrheit der Einträge unten (Übungsserien-Archiv 2021-2026)
+# wurde am 2026-08-09 automatisch beim Migrieren der alten Website erzeugt -
+# nicht von Hand tippen, sondern bei neuen Serien einfach dem bestehenden
+# Muster "<Jahr>_<Untertest-Ordnername>_S<Nummer>" folgen, dann greift auch
+# die "Aufgabe + Lösung nebeneinander"-Anzeige automatisch (siehe
+# assets/downloads/uebungsaufgaben/README.md).
+#
 # Beispiel:
 # overrides:
 #   UT3_A2_2026:
@@ -35,3 +42,579 @@ overrides:
     de: "Kursskript 2026 (Deutsch)"
     fr: "Script de cours 2026 (allemand)"
     it: "Dispensa del corso 2026 (tedesco)"
+
+  # ---- Testsimulation (testsimulationen) ----
+  2026_testsimulationen_Testsimulation:
+    de: "Testsimulation 2026"
+    fr: "Simulation de test 2026"
+    it: "Simulazione del test 2026"
+  2026_testsimulationen_Loesung:
+    de: "Lösung Testsimulation 2026"
+    fr: "Corrigé de la simulation de test 2026"
+    it: "Soluzione della simulazione del test 2026"
+  2026_testsimulationen_Vergleich-Testprozentrang:
+    de: "Vergleich Testprozentrang 2026"
+    fr: "Comparaison des rangs percentiles 2026"
+    it: "Confronto dei ranghi percentili 2026"
+  2025_testsimulationen_Testsimulation:
+    de: "Testsimulation 2025"
+    fr: "Simulation de test 2025"
+    it: "Simulazione del test 2025"
+  2025_testsimulationen_Loesung-Auswertung-Konzentrationstest:
+    de: "Lösung & Auswertung Konzentrationstest 2025"
+    fr: "Corrigé et évaluation du test de concentration 2025"
+    it: "Soluzione e valutazione del test di concentrazione 2025"
+  2025_testsimulationen_Vergleich-Testprozentrang:
+    de: "Vergleich Testprozentrang 2025"
+    fr: "Comparaison des rangs percentiles 2025"
+    it: "Confronto dei ranghi percentili 2025"
+  2024_testsimulationen_Testsimulation:
+    de: "Testsimulation 2024"
+    fr: "Simulation de test 2024"
+    it: "Simulazione del test 2024"
+  2024_testsimulationen_Loesung:
+    de: "Lösung Testsimulation 2024"
+    fr: "Corrigé de la simulation de test 2024"
+    it: "Soluzione della simulazione del test 2024"
+  2024_testsimulationen_Punktezahl-Instruktionen-Konzentrationstest:
+    de: "Punktzahl & Instruktionen Konzentrationstest 2024"
+    fr: "Points et instructions du test de concentration 2024"
+    it: "Punteggio e istruzioni del test di concentrazione 2024"
+  2024_testsimulationen_Vergleich-Testprozentrang:
+    de: "Vergleich Testprozentrang 2024"
+    fr: "Comparaison des rangs percentiles 2024"
+    it: "Confronto dei ranghi percentili 2024"
+  2023_testsimulationen_Testsimulation:
+    de: "Testsimulation 2023"
+    fr: "Simulation de test 2023"
+    it: "Simulazione del test 2023"
+  2023_testsimulationen_Loesung:
+    de: "Lösung Testsimulation 2023"
+    fr: "Corrigé de la simulation de test 2023"
+    it: "Soluzione della simulazione del test 2023"
+  2023_testsimulationen_Loesung-Konzentrationstest:
+    de: "Lösung Konzentrationstest 2023"
+    fr: "Corrigé du test de concentration 2023"
+    it: "Soluzione del test di concentrazione 2023"
+  2023_testsimulationen_Konzentrationstest-Auswertung:
+    de: "Auswertung Konzentrationstest 2023"
+    fr: "Évaluation du test de concentration 2023"
+    it: "Valutazione del test di concentrazione 2023"
+  2023_testsimulationen_Vergleich-Testprozentrang:
+    de: "Vergleich Testprozentrang 2023"
+    fr: "Comparaison des rangs percentiles 2023"
+    it: "Confronto dei ranghi percentili 2023"
+  2022_testsimulationen_Testsimulation:
+    de: "Testsimulation 2022"
+    fr: "Simulation de test 2022"
+    it: "Simulazione del test 2022"
+  2022_testsimulationen_Loesung:
+    de: "Lösung Testsimulation 2022"
+    fr: "Corrigé de la simulation de test 2022"
+    it: "Soluzione della simulazione del test 2022"
+  2022_testsimulationen_Loesung-Konzentrationstest:
+    de: "Lösung Konzentrationstest 2022"
+    fr: "Corrigé du test de concentration 2022"
+    it: "Soluzione del test di concentrazione 2022"
+  2022_testsimulationen_Auswertung-Konzentrationstest:
+    de: "Auswertung Konzentrationstest 2022"
+    fr: "Évaluation du test de concentration 2022"
+    it: "Valutazione del test di concentrazione 2022"
+  2022_testsimulationen_Vergleich-Testprozentrang:
+    de: "Vergleich Testprozentrang 2022"
+    fr: "Comparaison des rangs percentiles 2022"
+    it: "Confronto dei ranghi percentili 2022"
+
+  # ---- Muster zuordnen (muster-zuordnen) ----
+  2026_muster-zuordnen_S02:
+    de: "Muster zuordnen – Serie 2 (2026)"
+    fr: "Association de motifs – Série 2 (2026)"
+    it: "Abbinamento di schemi – Serie 2 (2026)"
+  2026_muster-zuordnen_S03:
+    de: "Muster zuordnen – Serie 3 (2026)"
+    fr: "Association de motifs – Série 3 (2026)"
+    it: "Abbinamento di schemi – Serie 3 (2026)"
+  2026_muster-zuordnen_S04:
+    de: "Muster zuordnen – Serie 4 (2026)"
+    fr: "Association de motifs – Série 4 (2026)"
+    it: "Abbinamento di schemi – Serie 4 (2026)"
+  2025_muster-zuordnen_S02:
+    de: "Muster zuordnen – Serie 2 (2025)"
+    fr: "Association de motifs – Série 2 (2025)"
+    it: "Abbinamento di schemi – Serie 2 (2025)"
+  2025_muster-zuordnen_S03:
+    de: "Muster zuordnen – Serie 3 (2025)"
+    fr: "Association de motifs – Série 3 (2025)"
+    it: "Abbinamento di schemi – Serie 3 (2025)"
+  2025_muster-zuordnen_S04:
+    de: "Muster zuordnen – Serie 4 (2025)"
+    fr: "Association de motifs – Série 4 (2025)"
+    it: "Abbinamento di schemi – Serie 4 (2025)"
+  2025_muster-zuordnen_S05:
+    de: "Muster zuordnen – Serie 5 (2025)"
+    fr: "Association de motifs – Série 5 (2025)"
+    it: "Abbinamento di schemi – Serie 5 (2025)"
+  2024_muster-zuordnen_S02:
+    de: "Muster zuordnen – Serie 2 (2024) · inkl. Lösung"
+    fr: "Association de motifs – Série 2 (2024) · avec corrigé"
+    it: "Abbinamento di schemi – Serie 2 (2024) · con soluzione"
+  2024_muster-zuordnen_S03:
+    de: "Muster zuordnen – Serie 3 (2024) · inkl. Lösung"
+    fr: "Association de motifs – Série 3 (2024) · avec corrigé"
+    it: "Abbinamento di schemi – Serie 3 (2024) · con soluzione"
+  2022_muster-zuordnen_S02:
+    de: "Muster zuordnen – Serie 2 (2022)"
+    fr: "Association de motifs – Série 2 (2022)"
+    it: "Abbinamento di schemi – Serie 2 (2022)"
+  2021_muster-zuordnen_S01:
+    de: "Muster zuordnen – Serie 1 (2021)"
+    fr: "Association de motifs – Série 1 (2021)"
+    it: "Abbinamento di schemi – Serie 1 (2021)"
+  2021_muster-zuordnen_S02:
+    de: "Muster zuordnen – Serie 2 (2021)"
+    fr: "Association de motifs – Série 2 (2021)"
+    it: "Abbinamento di schemi – Serie 2 (2021)"
+
+  # ---- Med.-nat. Grundverständnis (med-nat-grundverstaendnis) ----
+  2026_med-nat-grundverstaendnis_S02:
+    de: "Med.-nat. Grundverständnis – Serie 2 (2026) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 2 (2026) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 2 (2026) · con soluzione"
+  2026_med-nat-grundverstaendnis_S03:
+    de: "Med.-nat. Grundverständnis – Serie 3 (2026) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 3 (2026) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 3 (2026) · con soluzione"
+  2025_med-nat-grundverstaendnis_S02:
+    de: "Med.-nat. Grundverständnis – Serie 2 (2025) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 2 (2025) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 2 (2025) · con soluzione"
+  2025_med-nat-grundverstaendnis_S03:
+    de: "Med.-nat. Grundverständnis – Serie 3 (2025) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 3 (2025) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 3 (2025) · con soluzione"
+  2025_med-nat-grundverstaendnis_S04:
+    de: "Med.-nat. Grundverständnis – Serie 4 (2025) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 4 (2025) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 4 (2025) · con soluzione"
+  2025_med-nat-grundverstaendnis_S05:
+    de: "Med.-nat. Grundverständnis – Serie 5 (2025) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 5 (2025) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 5 (2025) · con soluzione"
+  2024_med-nat-grundverstaendnis_S02:
+    de: "Med.-nat. Grundverständnis – Serie 2 (2024) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 2 (2024) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 2 (2024) · con soluzione"
+  2024_med-nat-grundverstaendnis_S03:
+    de: "Med.-nat. Grundverständnis – Serie 3 (2024) · inkl. Lösung"
+    fr: "Compréhension médico-scientifique – Série 3 (2024) · avec corrigé"
+    it: "Comprensione medico-scientifica – Serie 3 (2024) · con soluzione"
+  2022_med-nat-grundverstaendnis_S01:
+    de: "Med.-nat. Grundverständnis – Serie 1 (2022)"
+    fr: "Compréhension médico-scientifique – Série 1 (2022)"
+    it: "Comprensione medico-scientifica – Serie 1 (2022)"
+  2022_med-nat-grundverstaendnis_S02:
+    de: "Med.-nat. Grundverständnis – Serie 2 (2022)"
+    fr: "Compréhension médico-scientifique – Série 2 (2022)"
+    it: "Comprensione medico-scientifica – Serie 2 (2022)"
+  2021_med-nat-grundverstaendnis_S01:
+    de: "Med.-nat. Grundverständnis – Serie 1 (2021)"
+    fr: "Compréhension médico-scientifique – Série 1 (2021)"
+    it: "Comprensione medico-scientifica – Serie 1 (2021)"
+  2021_med-nat-grundverstaendnis_S02:
+    de: "Med.-nat. Grundverständnis – Serie 2 (2021)"
+    fr: "Compréhension médico-scientifique – Série 2 (2021)"
+    it: "Comprensione medico-scientifica – Serie 2 (2021)"
+  2021_med-nat-grundverstaendnis_S03:
+    de: "Med.-nat. Grundverständnis – Serie 3 (2021)"
+    fr: "Compréhension médico-scientifique – Série 3 (2021)"
+    it: "Comprensione medico-scientifica – Serie 3 (2021)"
+
+  # ---- Objekte im Raum (objekte-im-raum) ----
+  2026_objekte-im-raum_S02:
+    de: "Objekte im Raum – Serie 2 (2026) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 2 (2026) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 2 (2026) · con soluzione"
+  2026_objekte-im-raum_S03:
+    de: "Objekte im Raum – Serie 3 (2026) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 3 (2026) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 3 (2026) · con soluzione"
+  2026_objekte-im-raum_S04:
+    de: "Objekte im Raum – Serie 4 (2026) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 4 (2026) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 4 (2026) · con soluzione"
+  2026_objekte-im-raum_S05:
+    de: "Objekte im Raum – Serie 5 (2026) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 5 (2026) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 5 (2026) · con soluzione"
+  2026_objekte-im-raum_S06:
+    de: "Objekte im Raum – Serie 6 (2026) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 6 (2026) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 6 (2026) · con soluzione"
+  2025_objekte-im-raum_S02:
+    de: "Objekte im Raum – Serie 2 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 2 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 2 (2025) · con soluzione"
+  2025_objekte-im-raum_S03:
+    de: "Objekte im Raum – Serie 3 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 3 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 3 (2025) · con soluzione"
+  2025_objekte-im-raum_S04:
+    de: "Objekte im Raum – Serie 4 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 4 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 4 (2025) · con soluzione"
+  2025_objekte-im-raum_S05:
+    de: "Objekte im Raum – Serie 5 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 5 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 5 (2025) · con soluzione"
+  2025_objekte-im-raum_S06:
+    de: "Objekte im Raum – Serie 6 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 6 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 6 (2025) · con soluzione"
+  2025_objekte-im-raum_S07:
+    de: "Objekte im Raum – Serie 7 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 7 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 7 (2025) · con soluzione"
+  2025_objekte-im-raum_S08:
+    de: "Objekte im Raum – Serie 8 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 8 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 8 (2025) · con soluzione"
+  2025_objekte-im-raum_S09:
+    de: "Objekte im Raum – Serie 9 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 9 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 9 (2025) · con soluzione"
+  2025_objekte-im-raum_S10:
+    de: "Objekte im Raum – Serie 10 (2025) · inkl. Lösung"
+    fr: "Objets dans l'espace – Série 10 (2025) · avec corrigé"
+    it: "Oggetti nello spazio – Serie 10 (2025) · con soluzione"
+
+  # ---- Quantitative und formale Probleme (quantitative-probleme) ----
+  2026_quantitative-probleme_S02:
+    de: "Quantitative und formale Probleme – Serie 2 (2026)"
+    fr: "Problèmes quantitatifs et formels – Série 2 (2026)"
+    it: "Problemi quantitativi e formali – Serie 2 (2026)"
+  2026_quantitative-probleme_S03:
+    de: "Quantitative und formale Probleme – Serie 3 (2026)"
+    fr: "Problèmes quantitatifs et formels – Série 3 (2026)"
+    it: "Problemi quantitativi e formali – Serie 3 (2026)"
+  2025_quantitative-probleme_S02:
+    de: "Quantitative und formale Probleme – Serie 2 (2025) · inkl. Lösung"
+    fr: "Problèmes quantitatifs et formels – Série 2 (2025) · avec corrigé"
+    it: "Problemi quantitativi e formali – Serie 2 (2025) · con soluzione"
+  2025_quantitative-probleme_S04:
+    de: "Quantitative und formale Probleme – Serie 4 (2025) · inkl. Lösung"
+    fr: "Problèmes quantitatifs et formels – Série 4 (2025) · avec corrigé"
+    it: "Problemi quantitativi e formali – Serie 4 (2025) · con soluzione"
+  2025_quantitative-probleme_S05:
+    de: "Quantitative und formale Probleme – Serie 5 (2025) · inkl. Lösung"
+    fr: "Problèmes quantitatifs et formels – Série 5 (2025) · avec corrigé"
+    it: "Problemi quantitativi e formali – Serie 5 (2025) · con soluzione"
+  2024_quantitative-probleme_S02:
+    de: "Quantitative und formale Probleme – Serie 2 (2024) · inkl. Lösung"
+    fr: "Problèmes quantitatifs et formels – Série 2 (2024) · avec corrigé"
+    it: "Problemi quantitativi e formali – Serie 2 (2024) · con soluzione"
+  2024_quantitative-probleme_S03:
+    de: "Quantitative und formale Probleme – Serie 3 (2024) · inkl. Lösung"
+    fr: "Problèmes quantitatifs et formels – Série 3 (2024) · avec corrigé"
+    it: "Problemi quantitativi e formali – Serie 3 (2024) · con soluzione"
+  2022_quantitative-probleme_S02:
+    de: "Quantitative und formale Probleme – Serie 2 (2022)"
+    fr: "Problèmes quantitatifs et formels – Série 2 (2022)"
+    it: "Problemi quantitativi e formali – Serie 2 (2022)"
+  2021_quantitative-probleme_S01:
+    de: "Quantitative und formale Probleme – Serie 1 (2021)"
+    fr: "Problèmes quantitatifs et formels – Série 1 (2021)"
+    it: "Problemi quantitativi e formali – Serie 1 (2021)"
+  2021_quantitative-probleme_S02:
+    de: "Quantitative und formale Probleme – Serie 2 (2021)"
+    fr: "Problèmes quantitatifs et formels – Série 2 (2021)"
+    it: "Problemi quantitativi e formali – Serie 2 (2021)"
+
+  # ---- Textverständnis (textverstaendnis) ----
+  2026_textverstaendnis_S02:
+    de: "Textverständnis – Serie 2 (2026) · inkl. Lösung"
+    fr: "Compréhension de texte – Série 2 (2026) · avec corrigé"
+    it: "Comprensione del testo – Serie 2 (2026) · con soluzione"
+  2026_textverstaendnis_S03:
+    de: "Textverständnis – Serie 3 (2026) · inkl. Lösung"
+    fr: "Compréhension de texte – Série 3 (2026) · avec corrigé"
+    it: "Comprensione del testo – Serie 3 (2026) · con soluzione"
+  2025_textverstaendnis_S02:
+    de: "Textverständnis – Serie 2 (2025) · inkl. Lösung"
+    fr: "Compréhension de texte – Série 2 (2025) · avec corrigé"
+    it: "Comprensione del testo – Serie 2 (2025) · con soluzione"
+  2025_textverstaendnis_S03:
+    de: "Textverständnis – Serie 3 (2025) · inkl. Lösung"
+    fr: "Compréhension de texte – Série 3 (2025) · avec corrigé"
+    it: "Comprensione del testo – Serie 3 (2025) · con soluzione"
+  2024_textverstaendnis_S02:
+    de: "Textverständnis – Serie 2 (2024) · inkl. Lösung"
+    fr: "Compréhension de texte – Série 2 (2024) · avec corrigé"
+    it: "Comprensione del testo – Serie 2 (2024) · con soluzione"
+  2024_textverstaendnis_S03:
+    de: "Textverständnis – Serie 3 (2024) · inkl. Lösung"
+    fr: "Compréhension de texte – Série 3 (2024) · avec corrigé"
+    it: "Comprensione del testo – Serie 3 (2024) · con soluzione"
+  2022_textverstaendnis_S02:
+    de: "Textverständnis – Serie 2 (2022)"
+    fr: "Compréhension de texte – Série 2 (2022)"
+    it: "Comprensione del testo – Serie 2 (2022)"
+  2021_textverstaendnis_S01:
+    de: "Textverständnis – Serie 1 (2021)"
+    fr: "Compréhension de texte – Série 1 (2021)"
+    it: "Comprensione del testo – Serie 1 (2021)"
+  2021_textverstaendnis_S02:
+    de: "Textverständnis – Serie 2 (2021)"
+    fr: "Compréhension de texte – Série 2 (2021)"
+    it: "Comprensione del testo – Serie 2 (2021)"
+
+  # ---- Fakten einprägen (fakten-einpraegen) ----
+  2026_fakten-einpraegen_S02:
+    de: "Fakten einprägen – Serie 2 (2026) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 2 (2026) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 2 (2026) · con soluzione"
+  2026_fakten-einpraegen_S03:
+    de: "Fakten einprägen – Serie 3 (2026) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 3 (2026) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 3 (2026) · con soluzione"
+  2025_fakten-einpraegen_S02:
+    de: "Fakten einprägen – Serie 2 (2025) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 2 (2025) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 2 (2025) · con soluzione"
+  2025_fakten-einpraegen_S03:
+    de: "Fakten einprägen – Serie 3 (2025) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 3 (2025) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 3 (2025) · con soluzione"
+  2025_fakten-einpraegen_S04:
+    de: "Fakten einprägen – Serie 4 (2025) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 4 (2025) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 4 (2025) · con soluzione"
+  2025_fakten-einpraegen_S05:
+    de: "Fakten einprägen – Serie 5 (2025) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 5 (2025) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 5 (2025) · con soluzione"
+  2024_fakten-einpraegen_S02:
+    de: "Fakten einprägen – Serie 2 (2024) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 2 (2024) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 2 (2024) · con soluzione"
+  2024_fakten-einpraegen_S03:
+    de: "Fakten einprägen – Serie 3 (2024) · inkl. Lösung"
+    fr: "Mémorisation de faits – Série 3 (2024) · avec corrigé"
+    it: "Memorizzazione di fatti – Serie 3 (2024) · con soluzione"
+  2022_fakten-einpraegen_S02_Einpraegephase:
+    de: "Fakten einprägen – Serie 2 (2022) · Einprägephase"
+    fr: "Mémorisation de faits – Série 2 (2022) · phase de mémorisation"
+    it: "Memorizzazione di fatti – Serie 2 (2022) · fase di memorizzazione"
+  2022_fakten-einpraegen_S02:
+    de: "Fakten einprägen – Serie 2 (2022) · Reproduktionsphase"
+    fr: "Mémorisation de faits – Série 2 (2022) · phase de reproduction"
+    it: "Memorizzazione di fatti – Serie 2 (2022) · fase di riproduzione"
+  2022_fakten-einpraegen_S03_Einpraegephase:
+    de: "Fakten einprägen – Serie 3 (2022) · Einprägephase"
+    fr: "Mémorisation de faits – Série 3 (2022) · phase de mémorisation"
+    it: "Memorizzazione di fatti – Serie 3 (2022) · fase di memorizzazione"
+  2022_fakten-einpraegen_S03:
+    de: "Fakten einprägen – Serie 3 (2022) · Reproduktionsphase"
+    fr: "Mémorisation de faits – Série 3 (2022) · phase de reproduction"
+    it: "Memorizzazione di fatti – Serie 3 (2022) · fase di riproduzione"
+  2022_fakten-einpraegen_S04_Einpraegephase:
+    de: "Fakten einprägen – Serie 4 (2022) · Einprägephase"
+    fr: "Mémorisation de faits – Série 4 (2022) · phase de mémorisation"
+    it: "Memorizzazione di fatti – Serie 4 (2022) · fase di memorizzazione"
+  2022_fakten-einpraegen_S04:
+    de: "Fakten einprägen – Serie 4 (2022) · Reproduktionsphase"
+    fr: "Mémorisation de faits – Série 4 (2022) · phase de reproduction"
+    it: "Memorizzazione di fatti – Serie 4 (2022) · fase di riproduzione"
+
+  # ---- Figuren einprägen (figuren-einpraegen) ----
+  2026_figuren-einpraegen_S02:
+    de: "Figuren einprägen – Serie 2 (2026) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 2 (2026) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 2 (2026) · con soluzione"
+  2026_figuren-einpraegen_S03:
+    de: "Figuren einprägen – Serie 3 (2026) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 3 (2026) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 3 (2026) · con soluzione"
+  2026_figuren-einpraegen_S04:
+    de: "Figuren einprägen – Serie 4 (2026) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 4 (2026) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 4 (2026) · con soluzione"
+  2025_figuren-einpraegen_S02:
+    de: "Figuren einprägen – Serie 2 (2025) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 2 (2025) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 2 (2025) · con soluzione"
+  2025_figuren-einpraegen_S03:
+    de: "Figuren einprägen – Serie 3 (2025) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 3 (2025) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 3 (2025) · con soluzione"
+  2025_figuren-einpraegen_S04:
+    de: "Figuren einprägen – Serie 4 (2025) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 4 (2025) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 4 (2025) · con soluzione"
+  2025_figuren-einpraegen_S05:
+    de: "Figuren einprägen – Serie 5 (2025) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 5 (2025) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 5 (2025) · con soluzione"
+  2024_figuren-einpraegen_S02:
+    de: "Figuren einprägen – Serie 2 (2024) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 2 (2024) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 2 (2024) · con soluzione"
+  2024_figuren-einpraegen_S03:
+    de: "Figuren einprägen – Serie 3 (2024) · inkl. Lösung"
+    fr: "Mémorisation de figures – Série 3 (2024) · avec corrigé"
+    it: "Memorizzazione di figure – Serie 3 (2024) · con soluzione"
+  2022_figuren-einpraegen_S01_Einpraegephase:
+    de: "Figuren einprägen – Serie 1 (2022) · Einprägephase"
+    fr: "Mémorisation de figures – Série 1 (2022) · phase de mémorisation"
+    it: "Memorizzazione di figure – Serie 1 (2022) · fase di memorizzazione"
+  2022_figuren-einpraegen_S01:
+    de: "Figuren einprägen – Serie 1 (2022) · Reproduktionsphase"
+    fr: "Mémorisation de figures – Série 1 (2022) · phase de reproduction"
+    it: "Memorizzazione di figure – Serie 1 (2022) · fase di riproduzione"
+  2022_figuren-einpraegen_S02_Einpraegephase:
+    de: "Figuren einprägen – Serie 2 (2022) · Einprägephase"
+    fr: "Mémorisation de figures – Série 2 (2022) · phase de mémorisation"
+    it: "Memorizzazione di figure – Serie 2 (2022) · fase di memorizzazione"
+  2022_figuren-einpraegen_S02:
+    de: "Figuren einprägen – Serie 2 (2022) · Reproduktionsphase"
+    fr: "Mémorisation de figures – Série 2 (2022) · phase de reproduction"
+    it: "Memorizzazione di figure – Serie 2 (2022) · fase di riproduzione"
+
+  # ---- Diagramme und Tabellen (diagramme-tabellen) ----
+  2026_diagramme-tabellen_S02:
+    de: "Diagramme und Tabellen – Serie 2 (2026) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 2 (2026) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 2 (2026) · con soluzione"
+  2026_diagramme-tabellen_S03:
+    de: "Diagramme und Tabellen – Serie 3 (2026) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 3 (2026) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 3 (2026) · con soluzione"
+  2025_diagramme-tabellen_S02:
+    de: "Diagramme und Tabellen – Serie 2 (2025) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 2 (2025) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 2 (2025) · con soluzione"
+  2025_diagramme-tabellen_S03:
+    de: "Diagramme und Tabellen – Serie 3 (2025) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 3 (2025) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 3 (2025) · con soluzione"
+  2025_diagramme-tabellen_S04:
+    de: "Diagramme und Tabellen – Serie 4 (2025) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 4 (2025) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 4 (2025) · con soluzione"
+  2025_diagramme-tabellen_S05:
+    de: "Diagramme und Tabellen – Serie 5 (2025) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 5 (2025) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 5 (2025) · con soluzione"
+  2024_diagramme-tabellen_S02:
+    de: "Diagramme und Tabellen – Serie 2 (2024) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 2 (2024) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 2 (2024) · con soluzione"
+  2024_diagramme-tabellen_S03:
+    de: "Diagramme und Tabellen – Serie 3 (2024) · inkl. Lösung"
+    fr: "Diagrammes et tableaux – Série 3 (2024) · avec corrigé"
+    it: "Diagrammi e tabelle – Serie 3 (2024) · con soluzione"
+  2023_diagramme-tabellen_S02:
+    de: "Diagramme und Tabellen – Serie 2 (2023)"
+    fr: "Diagrammes et tableaux – Série 2 (2023)"
+    it: "Diagrammi e tabelle – Serie 2 (2023)"
+  2022_diagramme-tabellen_S02:
+    de: "Diagramme und Tabellen – Serie 2 (2022)"
+    fr: "Diagrammes et tableaux – Série 2 (2022)"
+    it: "Diagrammi e tabelle – Serie 2 (2022)"
+
+  # ---- Konzentriertes und sorgfältiges Arbeiten (konzentriertes-arbeiten) ----
+  2025_konzentriertes-arbeiten_S02:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 2 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 2 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 2 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S03:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 3 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 3 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 3 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S04:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 4 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 4 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 4 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S05:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 5 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 5 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 5 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S06:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 6 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 6 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 6 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S07:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 7 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 7 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 7 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S08:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 8 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 8 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 8 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S09:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 9 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 9 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 9 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S10:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 10 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 10 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 10 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S11:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 11 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 11 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 11 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S12:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 12 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 12 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 12 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S13:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 13 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 13 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 13 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S14:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 14 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 14 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 14 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S15:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 15 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 15 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 15 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S16:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 16 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 16 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 16 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S17:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 17 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 17 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 17 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S18:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 18 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 18 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 18 (2025) · con soluzione"
+  2025_konzentriertes-arbeiten_S19:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 19 (2025) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 19 (2025) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 19 (2025) · con soluzione"
+  2024_konzentriertes-arbeiten_S02:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 2 (2024) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 2 (2024) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 2 (2024) · con soluzione"
+  2024_konzentriertes-arbeiten_S03:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 3 (2024) · inkl. Lösung"
+    fr: "Travail concentré et soigné – Série 3 (2024) · avec corrigé"
+    it: "Lavoro concentrato e accurato – Serie 3 (2024) · con soluzione"
+  2022_konzentriertes-arbeiten_S02:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 2 (2022)"
+    fr: "Travail concentré et soigné – Série 2 (2022)"
+    it: "Lavoro concentrato e accurato – Serie 2 (2022)"
+  2022_konzentriertes-arbeiten_Negatives-Template:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Negatives Template (2022)"
+    fr: "Travail concentré et soigné – Negatives Template (2022)"
+    it: "Lavoro concentrato e accurato – Negatives Template (2022)"
+  2021_konzentriertes-arbeiten_S02:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 2 (2021)"
+    fr: "Travail concentré et soigné – Série 2 (2021)"
+    it: "Lavoro concentrato e accurato – Serie 2 (2021)"
+  2021_konzentriertes-arbeiten_S03:
+    de: "Konzentriertes und sorgfältiges Arbeiten – Serie 3 (2021)"
+    fr: "Travail concentré et soigné – Série 3 (2021)"
+    it: "Lavoro concentrato e accurato – Serie 3 (2021)"

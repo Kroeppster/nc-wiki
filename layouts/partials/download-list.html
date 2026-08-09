@@ -2,17 +2,27 @@
   ============================================================================
   AUTOMATISCHE DOWNLOAD-LISTE (scannt einen Ordner, kein Frontmatter nötig)
   ============================================================================
-  Wird für Testsimulationen und Kursskripte verwendet (siehe list.html).
-  Der grosse Vorteil: um ein neues PDF hinzuzufügen, muss man NICHTS in
-  einer Textdatei eintragen - einfach die PDF-Datei in den richtigen Ordner
-  unter assets/downloads/ hochladen, und sie erscheint beim nächsten Bauen
-  der Website automatisch in der Liste (siehe docs/WARTUNG.md, Abschnitt
+  Wird für Testsimulationen, Kursskripte und Übungsserien verwendet (siehe
+  list.html/single.html). Der grosse Vorteil: um ein neues PDF hinzuzufügen,
+  muss man NICHTS in einer Textdatei eintragen - einfach die PDF-Datei in den
+  richtigen Ordner unter assets/ hochladen, und sie erscheint beim nächsten
+  Bauen der Website automatisch in der Liste (siehe docs/WARTUNG.md, Abschnitt
   "Wie füge ich ein PDF hinzu?").
 
   Parameter, die diese Datei erwartet:
     path - Ordnerpfad relativ zu assets/, z.B. "downloads/kursskripte"
     page - die aktuelle Seite (wird für die Sprache und für den "Fehler
            melden"-Link gebraucht)
+
+  AUFGABE + LÖSUNG als EIN Eintrag: Heisst eine PDF-Datei genau wie eine
+  andere plus die Endung "_Loesung" (z.B. "2026_MusterZuordnen_A2.pdf" und
+  "2026_MusterZuordnen_A2_Loesung.pdf"), werden beide zu EINEM Listeneintrag
+  mit zwei Knöpfen ("Aufgabe" + "Lösung") zusammengeführt, statt als zwei
+  getrennte Zeilen zu erscheinen. Eine Datei ohne passendes "_Loesung"-
+  Gegenstück (z.B. weil Aufgabe und Lösung schon in einer einzigen PDF-Datei
+  zusammen stecken) erscheint weiterhin ganz normal als einzelner Eintrag -
+  in dem Fall am besten über data/downloads.yaml einen Anzeigenamen setzen,
+  der klarmacht, dass die Lösung schon enthalten ist (z.B. "... (inkl. Lösung)").
 
   WICHTIG - bekannte Lücke: Der "Fehler melden"-Knopf bei jedem Download
   soll eigentlich eine Meldung per Formspree (externer Formular-Dienst,
@@ -38,59 +48,103 @@
   {{- /* Kein Fehler, wenn der Ordner leer ist - einfach ein freundlicher Hinweistext */}}
   <p class="download-empty">{{ i18n "downloads_empty" }}</p>
 {{- else }}
+  {{- /* Erster Durchgang: Dateien nach ihrem "Basisnamen" gruppieren (Endung
+         "_Loesung" wird dafür abgeschnitten) - so landen Aufgabe und Lösung
+         im selben Eintrag. $order merkt sich die Reihenfolge, in der die
+         Basisnamen zuerst auftauchen (Hugo-Dicts haben sonst keine
+         garantierte Reihenfolge). */ -}}
+  {{- $groups := dict }}
+  {{- $order := slice }}
+  {{- range $files }}
+    {{- $name := path.Base .Name }}
+    {{- $stem := strings.TrimSuffix ".pdf" $name }}
+    {{- $isLoesung := strings.HasSuffix $stem "_Loesung" }}
+    {{- $baseStem := $stem }}
+    {{- if $isLoesung }}{{ $baseStem = strings.TrimSuffix "_Loesung" $stem }}{{ end }}
+    {{- $entry := dict }}
+    {{- $isNewGroup := true }}
+    {{- with index $groups $baseStem }}{{ $entry = . }}{{ $isNewGroup = false }}{{ end }}
+    {{- if $isLoesung }}
+      {{- $entry = merge $entry (dict "loesung" .) }}
+    {{- else }}
+      {{- $entry = merge $entry (dict "aufgabe" . "stem" $stem) }}
+    {{- end }}
+    {{- $groups = merge $groups (dict $baseStem $entry) }}
+    {{- if $isNewGroup }}{{ $order = $order | append $baseStem }}{{ end }}
+  {{- end }}
+
   <ul class="download-list">
-    {{- range $files }}
-      {{- $name := path.Base .Name }}
-      {{- $stem := strings.TrimSuffix ".pdf" $name }}
+    {{- range $baseStem := $order }}
+      {{- $entry := index $groups $baseStem }}
+      {{- /* Eine reine "_Loesung"-Datei ohne passende Aufgabendatei kann nicht
+             sauber dargestellt werden (kein Basis-Eintrag, an den sie
+             angehängt werden könnte) - so etwas sollte beim Hochladen nicht
+             vorkommen, wird hier aber sicherheitshalber übersprungen statt
+             einen kaputten Eintrag zu zeigen. */}}
+      {{- if $entry.aufgabe }}
+        {{- $stem := $entry.stem }}
+        {{- $aufgabeRes := $entry.aufgabe }}
 
-      {{- /* Anzeigename der Datei herausfinden - zwei Möglichkeiten:
-             1. Ein von Hand eingetragener "schöner" Name in data/downloads.yaml
-                (unter "overrides:", pro Dateiname) - hat immer Vorrang.
-             2. Sonst wird der Name automatisch aus dem Dateinamen abgeleitet:
-                erwartet wird ein Muster wie "2027_Muster_A1.pdf" (Jahr,
-                Unterstrich, Thema, Unterstrich, Rest) und baut daraus
-                "Muster – A1 (2027)". Passt der Dateiname nicht in dieses
-                Muster (z.B. keine 4-stellige Jahreszahl am Anfang), wird
-                einfach der rohe Dateiname hübsch formatiert (Striche durch
-                Leerzeichen ersetzt, erste Buchstaben gross). */ -}}
-      {{- $displayName := "" }}
-      {{- with index $overrides $stem }}
-        {{- $displayName = or (index . $lang) (index . "de") }}
-      {{- end }}
-      {{- if not $displayName }}
-        {{- $parts := split $stem "_" }}
-        {{- if and (ge (len $parts) 3) (gt (len (findRE "^[0-9]{4}$" (index $parts 0) 1)) 0) }}
-          {{- $year := index $parts 0 }}
-          {{- $thema := index $parts 1 }}
-          {{- $rest := delimit (after 2 $parts) "_" }}
-          {{- $displayName = printf "%s – %s (%s)" (title (replaceRE "[_-]" " " $thema)) (title (replaceRE "[_-]" " " $rest)) $year }}
-        {{- else }}
-          {{- $displayName = title (replaceRE "[_-]" " " $stem) }}
+        {{- /* Anzeigename der Datei herausfinden - zwei Möglichkeiten:
+               1. Ein von Hand eingetragener "schöner" Name in data/downloads.yaml
+                  (unter "overrides:", pro Dateiname) - hat immer Vorrang.
+               2. Sonst wird der Name automatisch aus dem Dateinamen abgeleitet:
+                  erwartet wird ein Muster wie "2027_Muster_A1.pdf" (Jahr,
+                  Unterstrich, Thema, Unterstrich, Rest) und baut daraus
+                  "Muster – A1 (2027)". Passt der Dateiname nicht in dieses
+                  Muster (z.B. keine 4-stellige Jahreszahl am Anfang), wird
+                  einfach der rohe Dateiname hübsch formatiert (Striche durch
+                  Leerzeichen ersetzt, erste Buchstaben gross). */ -}}
+        {{- $displayName := "" }}
+        {{- with index $overrides $stem }}
+          {{- $displayName = or (index . $lang) (index . "de") }}
         {{- end }}
-      {{- end }}
+        {{- if not $displayName }}
+          {{- $parts := split $stem "_" }}
+          {{- if and (ge (len $parts) 3) (gt (len (findRE "^[0-9]{4}$" (index $parts 0) 1)) 0) }}
+            {{- $year := index $parts 0 }}
+            {{- $thema := index $parts 1 }}
+            {{- $rest := delimit (after 2 $parts) "_" }}
+            {{- $displayName = printf "%s – %s (%s)" (title (replaceRE "[_-]" " " $thema)) (title (replaceRE "[_-]" " " $rest)) $year }}
+          {{- else }}
+            {{- $displayName = title (replaceRE "[_-]" " " $stem) }}
+          {{- end }}
+        {{- end }}
 
-      {{- /* Dateigrösse automatisch von der Festplatte auslesen und in KB/MB umrechnen */ -}}
-      {{- $size := 0 }}
-      {{- with os.Stat (printf "assets/%s" .Name) }}{{ $size = .Size }}{{ end }}
-      {{- $sizeStr := "" }}
-      {{- if lt $size 1048576 }}
-        {{- $sizeStr = printf "%d KB" (div $size 1024) }}
-      {{- else }}
-        {{- $mbTenths := div (mul $size 10) 1048576 }}
-        {{- $sizeStr = printf "%d.%d MB" (div $mbTenths 10) (mod $mbTenths 10) }}
+        {{- /* Dateigrösse automatisch von der Festplatte auslesen und in KB/MB umrechnen */ -}}
+        {{- $size := 0 }}
+        {{- with os.Stat (printf "assets/%s" $aufgabeRes.Name) }}{{ $size = .Size }}{{ end }}
+        {{- $sizeStr := "" }}
+        {{- if lt $size 1048576 }}
+          {{- $sizeStr = printf "%d KB" (div $size 1024) }}
+        {{- else }}
+          {{- $mbTenths := div (mul $size 10) 1048576 }}
+          {{- $sizeStr = printf "%d.%d MB" (div $mbTenths 10) (mod $mbTenths 10) }}
+        {{- end }}
+        <li class="download-item">
+          <div class="download-buttons">
+            <a class="download-link" href="{{ $aufgabeRes.RelPermalink }}" download>
+              <span class="download-label">{{ $displayName }}</span>
+              <span class="download-size">{{ $sizeStr }}</span>
+            </a>
+            {{- with $entry.loesung }}
+            {{- /* Zweiter Knopf nur, wenn es eine passende "_Loesung"-Datei
+                   gibt (siehe Gruppierung oben) - dezenter gestaltet als der
+                   Haupt-Knopf (siehe .download-link-solution in style.css),
+                   damit man nicht aus Versehen zuerst auf die Lösung klickt. */}}
+            <a class="download-link download-link-solution" href="{{ .RelPermalink }}" download>
+              <span class="download-label">{{ i18n "downloads_solution_label" }}</span>
+            </a>
+            {{- end }}
+          </div>
+          {{/* "Fehler melden" - siehe Hinweis oben im Dateikopf, Formspree-Adresse fehlt noch */}}
+          <form class="report-error" action="{{ $formspreeEndpoint }}" method="POST">
+            <input type="hidden" name="dateiname" value="{{ $aufgabeRes.Name }}">
+            <input type="hidden" name="seite" value="{{ $page.RelPermalink }}">
+            <button type="submit">{{ i18n "downloads_report_error" }}</button>
+          </form>
+        </li>
       {{- end }}
-      <li class="download-item">
-        <a class="download-link" href="{{ .RelPermalink }}" download>
-          <span class="download-label">{{ $displayName }}</span>
-          <span class="download-size">{{ $sizeStr }}</span>
-        </a>
-        {{/* "Fehler melden" - siehe Hinweis oben im Dateikopf, Formspree-Adresse fehlt noch */}}
-        <form class="report-error" action="{{ $formspreeEndpoint }}" method="POST">
-          <input type="hidden" name="dateiname" value="{{ $name }}">
-          <input type="hidden" name="seite" value="{{ $page.RelPermalink }}">
-          <button type="submit">{{ i18n "downloads_report_error" }}</button>
-        </form>
-      </li>
     {{- end }}
   </ul>
 {{- end }}

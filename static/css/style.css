@@ -520,10 +520,17 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 /* margin-top wie .sponsor-grid/.card-grid: einheitlicher Abstand zu einer
    evtl. direkt folgenden weiteren Box (siehe Erklärung bei .card-grid oben). */
 .download-list{list-style:none;margin:var(--space-8) 0 0;padding:0;display:grid;gap:var(--space-3);max-width:32rem;}
-.download-link{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);}
+.download-link{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);flex:1 1 auto;}
 .download-link:hover{border-color:var(--color-signal);color:var(--color-signal);}
 .download-link .download-size{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-ink-faint);white-space:nowrap;}
 .download-item{display:flex;flex-direction:column;gap:.3rem;}
+/* Aufgabe + Lösung nebeneinander (siehe download-list.html) - der
+   Lösungs-Knopf ist bewusst schmaler und optisch zurückhaltender als der
+   Aufgaben-Knopf (kein eigener Dateiname/keine Grösse angezeigt, blasserer
+   Rahmen), damit man ihn nicht mit dem Hauptdownload verwechselt. */
+.download-buttons{display:flex;gap:var(--space-2);}
+.download-link-solution{flex:0 0 auto;justify-content:center;border-style:dashed;color:var(--color-ink-soft);}
+.download-link-solution:hover{border-style:solid;}
 .download-empty{color:var(--color-ink-faint);font-size:var(--text-base);font-style:italic;margin:var(--space-6) 0 0;}
 .report-error{margin:0 0 0 .2rem;}
 .report-error button{background:none;border:none;padding:0;font:inherit;font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-ink-faint);text-decoration:underline;cursor:pointer;}
