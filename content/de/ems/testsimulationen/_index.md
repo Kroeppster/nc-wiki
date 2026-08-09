@@ -4,6 +4,8 @@ menu:
   main:
     parent: vorbereitung
     weight: 2
+featured_image: "testsimulationen/testsimulation-2023.jpg"
+featured_image_alt: "Ausgefüllter EMS-Antwortbogen im Vordergrund, dahinter ein voller Hörsaal während einer NCWiki-Testsimulation"
 ---
 
 Alles Wichtige zu unseren Testsimulationen.

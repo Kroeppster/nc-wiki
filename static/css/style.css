@@ -496,6 +496,30 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .feature h3{font-size:var(--text-base);margin:0 0 .4rem;}
 .feature p{color:var(--color-ink-soft);font-size:var(--text-sm);margin:0;}
 
+/* Marken-Band (Logo + dekorative Symbole, siehe layouts/partials/brand-band.html) -
+   dieselben --color-band-Tokens wie der Spenden-Banner direkt darunter,
+   damit beide wie ein zusammenhängendes dunkles Band wirken. */
+.brand-band{background:var(--color-band);border-bottom:none;padding-block:var(--space-16);overflow:hidden;}
+.brand-band-inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:var(--space-4);text-align:center;min-height:9rem;justify-content:center;}
+.brand-band-logo{width:clamp(64px,9vw,110px);height:auto;object-fit:contain;position:relative;z-index:1;}
+.brand-band-tagline{position:relative;z-index:1;margin:0;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-band-text-soft);}
+/* Die Symbole sind rein dekorativ (siehe aria-hidden im Partial) und um das
+   Logo herum verteilt - Positionen/Drehungen/Grössen bewusst uneinheitlich,
+   damit es nicht wie ein steifes Raster wirkt. Auf schmalen Bildschirmen
+   verschwinden die äusseren zwei, damit nichts mit dem Logo überlappt. */
+.brand-icon{position:absolute;color:var(--color-band-line);opacity:.55;pointer-events:none;}
+.icon-stethoscope{width:52px;top:-8px;left:8%;transform:rotate(-12deg);}
+.icon-hammer{width:38px;bottom:0;left:22%;transform:rotate(8deg);}
+.icon-pulse{width:64px;top:6px;right:6%;transform:rotate(4deg);}
+.icon-pill{width:40px;bottom:-4px;right:20%;transform:rotate(-6deg);}
+.icon-cross{width:26px;top:50%;left:2%;transform:translateY(-50%) rotate(10deg);opacity:.35;}
+.icon-vial{width:30px;top:38%;right:2%;transform:rotate(-8deg);opacity:.35;}
+@media (max-width:700px){
+  .icon-pulse,.icon-cross,.icon-vial{display:none;}
+  .icon-stethoscope{width:40px;left:4%;}
+  .icon-pill{width:32px;right:8%;}
+}
+
 /* Spenden-Band */
 .support{background:var(--color-band);color:var(--color-band-text);border-bottom:none;}
 .support-inner{display:flex;justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap;}

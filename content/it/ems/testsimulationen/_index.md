@@ -4,6 +4,8 @@ menu:
   main:
     parent: vorbereitung
     weight: 2
+featured_image: "testsimulationen/testsimulation-2023.jpg"
+featured_image_alt: "Foglio di risposta EMS compilato in primo piano, sullo sfondo un'aula magna piena durante una simulazione del test NCWiki"
 ---
 
 Tutto quello che c'è da sapere sulle nostre simulazioni del test.

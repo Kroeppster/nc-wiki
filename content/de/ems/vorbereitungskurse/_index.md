@@ -4,6 +4,8 @@ menu:
   main:
     parent: vorbereitung
     weight: 3
+featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
+featured_image_alt: "Gedrucktes NCWiki-Kursskript zum EMS-Vorbereitungskurs vom März 2024 auf einem Hörsaaltisch"
 ---
 
 Unsere kostenlosen Vorbereitungskurse finden jeweils an mehreren Schweizer Hochschulstandorten statt (u. a. Zürich, Bern und Basel). An zwei Tagen vermitteln wir dir die wichtigsten Strategien zu den Untertests und wie du dich optimal auf den EMS vorbereitest – in Kleingruppen und begleitet von erfahrenen Medizinstudierenden als Tutor:innen, die selbst den EMS durchlaufen haben. Der Kurs beinhaltet ein Kursskript mit integrierten Übungseinheiten, und du lernst gleichzeitig Leute kennen, mit denen sich Lerngruppen bilden lassen.

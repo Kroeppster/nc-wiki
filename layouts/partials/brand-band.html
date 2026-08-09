@@ -1,0 +1,32 @@
+{{- /*
+  ============================================================================
+  MARKEN-BAND AUF DER STARTSEITE (zwischen Mission und Spenden-Banner)
+  ============================================================================
+  Ersetzt die frühere Foto-Sektion (die auf breiten Bildschirmen zu wenig
+  vom Bild zeigte, siehe Git-Historie) durch eine rein grafische Sektion:
+  das echte Logo, gross und ruhig platziert, umgeben von ein paar
+  dezenten medizinischen Symbolen (Stethoskop, Reflexhammer, Puls-Linie,
+  Tablette, Kreuz) als reine Verzierung - aria-hidden, da sie nichts
+  Inhaltliches transportieren. Reine Vektorgrafik statt Foto heisst: kein
+  Zuschneide-Problem mehr bei irgendeiner Fensterbreite, sieht auf jedem
+  Bildschirm gleich gut aus.
+
+  Nutzt bewusst dieselben --color-band-Tokens wie der Spenden-Banner und
+  die Fusszeile direkt darunter (siehe style.css) - so wirken alle drei
+  wie ein zusammenhängendes dunkles Band am Seitenende, nicht wie drei
+  zufällig aneinandergereihte Abschnitte.
+  ============================================================================
+*/ -}}
+<section class="brand-band" aria-hidden="true">
+  <div class="wrap brand-band-inner">
+    <svg class="brand-icon icon-stethoscope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v6a4 4 0 0 0 8 0V3"/><path d="M9 13v2a6 6 0 0 0 12 0v-3"/><circle cx="21" cy="10" r="2"/></svg>
+    <svg class="brand-icon icon-hammer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21 16 10"/><path d="m13 7 4-4 4 4-4 4-2-2z"/></svg>
+    <svg class="brand-icon icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l1.5-4 3 8L13 9l1.5 3H22"/></svg>
+    <svg class="brand-icon icon-pill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-35 12 12)"/><line x1="12" y1="6.5" x2="12" y2="17.5" transform="rotate(-35 12 12)"/></svg>
+    <svg class="brand-icon icon-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>
+    <svg class="brand-icon icon-vial" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6"/><path d="M10 2v7L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9V2"/><path d="M6 15h12"/></svg>
+
+    <img class="brand-band-logo" src="{{ "images/logo.svg" | relURL }}" alt="{{ .Site.Title }}" loading="lazy">
+    <p class="brand-band-tagline">{{ i18n "site_tagline" }}</p>
+  </div>
+</section>

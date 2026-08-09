@@ -127,16 +127,8 @@
     </div>
   </section>
 
-  {{/* ================= OPTIONALES BREITES BILD ================= */}}
-  {{/* Erscheint nur, wenn im Frontmatter "story_image:" gesetzt ist - sonst
-       wird dieser ganze Abschnitt einfach übersprungen. */}}
-  {{ with .Params.story_image }}
-  <section id="story-image">
-    <figure class="wide-image">
-      {{ partial "image.html" (dict "src" . "alt" (or $.Params.story_image_alt $.Title) "sizes" "100vw") }}
-    </figure>
-  </section>
-  {{ end }}
+  {{/* ================= MARKEN-BAND (Logo + Symbole) ================= */}}
+  {{ partial "brand-band.html" . }}
 
   {{/* ================= SPENDEN-BANNER (dunkles Band) ================= */}}
   <section class="support" id="support">
