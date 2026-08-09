@@ -22,7 +22,7 @@
      hat (gespeichert im Browser unter "theme-preference"), und falls nicht,
      verwendet es die Systemeinstellung des Geräts. Das Ergebnis wird als
      data-theme="hell/dunkel" auf die <html>-Seite geschrieben - das ganze
-     CSS in static/css/style.css reagiert auf genau dieses Attribut. */}}
+     CSS in assets/css/style.css reagiert auf genau dieses Attribut. */}}
 <script>
 (function(){
   try {
@@ -56,7 +56,21 @@
 <link rel="icon" href="{{ "favicon-32.png" | relURL }}" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
 
-<link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+{{/* Läuft über Hugos Asset-Pipeline statt als einfache Datei aus static/ -
+     der Dateiname bekommt dadurch automatisch einen Hash-Anhang, der sich
+     bei jeder inhaltlichen Änderung ändert (z.B. style.a1b2c3.css). Ohne
+     das würden Browser eine ältere, im Cache gespeicherte Version der CSS-
+     Datei weiterverwenden, bis der eigene Cache von Hand geleert wird -
+     ist bei diesem Projekt an einem Tag mit vielen Design-Änderungen
+     tatsächlich schon passiert (kurzzeitig kaputt aussehende Seite trotz
+     korrektem Code, weil der Browser noch die alte CSS-Datei hatte). Mit
+     Fingerprint bekommt jede neue Version automatisch eine neue Adresse,
+     der Browser lädt sie garantiert neu. */}}
+{{ with resources.Get "css/style.css" }}
+  {{ with . | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+  {{ end }}
+{{ end }}
 {{/* Stylesheet der Suchfunktion (Pagefind) - wird separat beim Bauen der
      Seite generiert, nicht von Hand gepflegt. */}}
 <link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">

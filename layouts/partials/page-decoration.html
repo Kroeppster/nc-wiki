@@ -1,0 +1,37 @@
+{{- /*
+  ============================================================================
+  DEKORATIVE SYMBOLE IN DEN SEITENRÄNDERN (JEDE SEITE)
+  ============================================================================
+  Nur auf sehr breiten Bildschirmen sichtbar (siehe @media in style.css) -
+  dort, wo neben dem zentrierten Inhalt (max. 1160px, siehe --max-width)
+  sonst einfach leere Fläche wäre. Rein dekorativ (aria-hidden), position:
+  fixed relativ zum Bildschirm (nicht zur Seite) - dadurch funktioniert das
+  unabhängig von der Länge der jeweiligen Seite, ohne dass pro Seitentyp
+  unterschiedlich viele/wenige Symbole nötig wären. Eingebunden in
+  layouts/_default/baseof.html, gilt also für die ganze Website.
+
+  Zwei der Symbole (stethoscope-logo.png) sind keine gezeichnete Form,
+  sondern direkt aus dem echten Logo ausgeschnitten (siehe
+  static/images/deco/stethoscope-logo.png - das handgezeichnete
+  Stethoskop, das im Logo um den Buchstaben "N" gelegt ist, freigestellt
+  ohne den Buchstaben selbst).
+  ============================================================================
+*/ -}}
+<div class="page-deco" aria-hidden="true">
+  <svg class="deco-icon deco-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v6a4 4 0 0 0 8 0V3"/><path d="M9 13v2a6 6 0 0 0 12 0v-3"/><circle cx="21" cy="10" r="2"/></svg>
+  <svg class="deco-icon deco-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l1.5-4 3 8L13 9l1.5 3H22"/></svg>
+  <svg class="deco-icon deco-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-35 12 12)"/><line x1="12" y1="6.5" x2="12" y2="17.5" transform="rotate(-35 12 12)"/></svg>
+  <img class="deco-icon deco-4" src="{{ "images/deco/stethoscope-logo.png" | relURL }}" alt="">
+  <svg class="deco-icon deco-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>
+  <svg class="deco-icon deco-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21 16 10"/><path d="m13 7 4-4 4 4-4 4-2-2z"/></svg>
+  <svg class="deco-icon deco-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6"/><path d="M10 2v7L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9V2"/><path d="M6 15h12"/></svg>
+  <img class="deco-icon deco-8" src="{{ "images/deco/stethoscope-logo.png" | relURL }}" alt="">
+
+  {{/* Zusätzliche Symbole, NUR auf sehr breiten Bildschirmen (siehe
+       @media in style.css) - je breiter der Bildschirm, desto mehr los in
+       den Rändern, statt einer festen Anzahl unabhängig von der Breite. */}}
+  <svg class="deco-icon deco-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v6a4 4 0 0 0 8 0V3"/><path d="M9 13v2a6 6 0 0 0 12 0v-3"/><circle cx="21" cy="10" r="2"/></svg>
+  <svg class="deco-icon deco-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>
+  <img class="deco-icon deco-11" src="{{ "images/deco/stethoscope-logo.png" | relURL }}" alt="">
+  <svg class="deco-icon deco-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l1.5-4 3 8L13 9l1.5 3H22"/></svg>
+</div>

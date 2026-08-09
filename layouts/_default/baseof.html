@@ -27,6 +27,12 @@
      Menü tabben zu müssen. Wird erst sichtbar, wenn man ihn per Tab-Taste anspringt. */}}
 <a class="skip-link" href="#main">{{ i18n "skip_to_content" }}</a>
 
+{{/* Dekorative Symbole in den Seitenrändern - auf JEDER Seite, nicht nur der
+     Startseite (siehe layouts/partials/page-decoration.html). Bewusst
+     position:fixed statt an der Seitenlänge orientiert, damit es auf jeder
+     Seite unabhängig von deren Länge gleich gut funktioniert. */}}
+{{ partial "page-decoration.html" . }}
+
 {{/* Kopfzeile mit Logo, Hauptmenü, Suche, Hell/Dunkel-Umschalter und Sprachwahl */}}
 {{ partial "header.html" . }}
 
