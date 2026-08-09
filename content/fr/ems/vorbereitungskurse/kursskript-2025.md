@@ -12,4 +12,4 @@ Le script contient :
 - Des informations et astuces sur le déroulement de l'examen
 - Des exercices
 
-Tu trouveras le téléchargement sur la [page d'aperçu des cours de préparation](/fr/ems/vorbereitungskurse/).
+Tu trouveras le téléchargement sur la [page d'aperçu des cours de préparation]({{< ref "/ems/vorbereitungskurse" >}}).

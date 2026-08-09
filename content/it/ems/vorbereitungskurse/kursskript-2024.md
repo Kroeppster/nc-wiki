@@ -12,4 +12,4 @@ La dispensa comprende:
 - Informazioni e consigli sulla situazione d'esame
 - Esercizi (dalla serie di esercizi NCWiki 2022) incluse le soluzioni
 
-Trovi il download nella [pagina panoramica dei corsi di preparazione](/it/ems/vorbereitungskurse/), disponibile ancora come versione d'archivio.
+Trovi il download nella [pagina panoramica dei corsi di preparazione]({{< ref "/ems/vorbereitungskurse" >}}), disponibile ancora come versione d'archivio.

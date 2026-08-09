@@ -12,4 +12,4 @@ Le script contient :
 - Des informations et astuces sur le déroulement de l'examen
 - Des exercices (issus de la série d'exercices NCWiki 2022) avec corrigés
 
-Tu trouveras le téléchargement sur la [page d'aperçu des cours de préparation](/fr/ems/vorbereitungskurse/), disponible en version archive.
+Tu trouveras le téléchargement sur la [page d'aperçu des cours de préparation]({{< ref "/ems/vorbereitungskurse" >}}), disponible en version archive.

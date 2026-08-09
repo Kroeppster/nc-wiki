@@ -12,4 +12,4 @@ Das Skript beinhaltet:
 - Informationen und Tipps zur Prüfungssituation
 - Übungsaufgaben
 
-Den Download findest du auf der [Übersichtsseite der Vorbereitungskurse](/ems/vorbereitungskurse/).
+Den Download findest du auf der [Übersichtsseite der Vorbereitungskurse]({{< ref "/ems/vorbereitungskurse" >}}).

@@ -12,4 +12,4 @@ Das Skript beinhaltet:
 - Informationen und Tipps zur Prüfungssituation
 - Übungsaufgaben (aus der NCWiki-Übungsserie 2022) inklusive Lösungen
 
-Den Download findest du auf der [Übersichtsseite der Vorbereitungskurse](/ems/vorbereitungskurse/), als Archivversion weiterhin verfügbar.
+Den Download findest du auf der [Übersichtsseite der Vorbereitungskurse]({{< ref "/ems/vorbereitungskurse" >}}), als Archivversion weiterhin verfügbar.

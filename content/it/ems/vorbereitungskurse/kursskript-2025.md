@@ -12,4 +12,4 @@ La dispensa comprende:
 - Informazioni e consigli sulla situazione d'esame
 - Esercizi
 
-Trovi il download nella [pagina panoramica dei corsi di preparazione](/it/ems/vorbereitungskurse/).
+Trovi il download nella [pagina panoramica dei corsi di preparazione]({{< ref "/ems/vorbereitungskurse" >}}).
