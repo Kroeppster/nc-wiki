@@ -440,7 +440,17 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 
 /* breites Bildband (Startseite) */
 #story-image{padding-block:0;}
-.wide-image img{width:100%;height:auto;max-height:520px;object-fit:cover;display:block;}
+/* aspect-ratio statt einer festen max-height: bei einer festen Pixel-Höhe
+   wurde die Box auf breiten Bildschirmen (dieser Abschnitt ist bewusst nicht
+   auf --max-width begrenzt, geht randlos über die volle Fensterbreite) immer
+   breiter, aber nie höher - vom Bild blieb dann nur noch ein sehr schmaler
+   Streifen sichtbar. Mit aspect-ratio wächst die Höhe mit der Breite mit,
+   der sichtbare Bildausschnitt bleibt bei jeder Fensterbreite ähnlich gross.
+   object-position rückt den Ausschnitt zusätzlich Richtung unteren
+   Bildrand, weil das eigentliche Motiv (z.B. das Testheft im Vordergrund)
+   oft im unteren Bereich des hochformatigen Originalfotos liegt - bei
+   reiner Zentrierung würde genau das oft weggeschnitten. */
+.wide-image img{width:100%;height:auto;aspect-ratio:16/7;max-height:640px;object-fit:cover;object-position:center 75%;display:block;}
 
 /* Sponsoren */
 /* margin-top:var(--space-8) statt vorher --space-6: einheitlicher Abstand

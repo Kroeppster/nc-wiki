@@ -34,6 +34,8 @@ support:
   heading: "C'est grâce à vous."
   text: "Notre matériel reste gratuit – grâce aux dons et au sponsoring."
   cta: "Soutenir maintenant"
+story_image: "home/testsimulation-2023.jpg"
+story_image_alt: "Feuille de réponses EMS remplie au premier plan, avec en arrière-plan un amphithéâtre plein pendant une simulation de test NCWiki"
 ---
 
 Texte de remplacement : Page d'accueil de NCWiki. Le contenu réel de cette page est généré via le template de la page d'accueil (layouts/index.html).

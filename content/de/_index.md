@@ -34,6 +34,8 @@ support:
   heading: "Ihr macht das möglich."
   text: "Unser Material bleibt kostenlos – dank Spenden und Sponsoring."
   cta: "Jetzt unterstützen"
+story_image: "home/testsimulation-2023.jpg"
+story_image_alt: "Ausgefüllter EMS-Antwortbogen im Vordergrund, dahinter ein voller Hörsaal während einer NCWiki-Testsimulation"
 ---
 
 Platzhaltertext: Startseite von NCWiki. Der eigentliche Inhalt dieser Seite wird über das Homepage-Template (layouts/index.html) gerendert.

@@ -34,6 +34,8 @@ support:
   heading: "Siete voi a renderlo possibile."
   text: "Il nostro materiale resta gratuito – grazie a donazioni e sponsorizzazioni."
   cta: "Sostieni ora"
+story_image: "home/testsimulation-2023.jpg"
+story_image_alt: "Foglio di risposta EMS compilato in primo piano, sullo sfondo un'aula magna piena durante una simulazione del test NCWiki"
 ---
 
 Testo segnaposto: Pagina iniziale di NCWiki. Il contenuto effettivo di questa pagina viene generato tramite il template della homepage (layouts/index.html).
