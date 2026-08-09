@@ -64,6 +64,7 @@ contact_form_submit: "Envoyer"
 
 downloads_empty: "Aucun document disponible pour le moment."
 downloads_report_error: "Signaler une erreur"
+uebungsaufgaben_downloads_heading: "Séries d'exercices à télécharger"
 uebungsaufgaben_license_prefix: "Ces exercices sont sous licence"
 uebungsaufgaben_license_link: "CC BY-NC 4.0"
 uebungsaufgaben_license_suffix: "– partage autorisé avec attribution, aucune utilisation commerciale."

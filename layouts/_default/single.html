@@ -65,6 +65,11 @@
            assets/downloads/uebungsaufgaben/ aufgelistet - der Ordnername wird
            dabei automatisch aus dem Dateinamen dieser Seite abgeleitet. */}}
       {{ if strings.Contains .Path "uebungsaufgaben" }}
+      {{/* Eigene Überschrift direkt über den Downloads, damit der Übergang
+           vom Fliesstext (Tipps, Erklärungen) zu den tatsächlichen
+           Aufgabenblättern klarer sichtbar ist - vorher ging die
+           Download-Liste optisch nahtlos in den letzten Textabschnitt über. */}}
+      <h2>{{ i18n "uebungsaufgaben_downloads_heading" }}</h2>
       {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
 
       {{/* Lizenzhinweis für die Übungsaufgaben (CC BY-NC 4.0, siehe README.md
