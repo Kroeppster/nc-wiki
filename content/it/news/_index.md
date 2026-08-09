@@ -6,4 +6,4 @@ menu:
     weight: 5
 ---
 
-Testo segnaposto: Qui trovate regolarmente novità sull'EMS, sulla nostra associazione e sui nostri eventi.
+Qui trovate regolarmente novità sull'EMS, sulla nostra associazione e sui nostri eventi.

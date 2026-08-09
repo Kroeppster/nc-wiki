@@ -6,4 +6,4 @@ menu:
     weight: 5
 ---
 
-Platzhaltertext: Hier findet ihr laufend Neuigkeiten rund um den EMS, unseren Verein und unsere Veranstaltungen.
+Hier findet ihr laufend Neuigkeiten rund um den EMS, unseren Verein und unsere Veranstaltungen.
