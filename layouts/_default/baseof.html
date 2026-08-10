@@ -27,6 +27,11 @@
      Menü tabben zu müssen. Wird erst sichtbar, wenn man ihn per Tab-Taste anspringt. */}}
 <a class="skip-link" href="#main">{{ i18n "skip_to_content" }}</a>
 
+{{/* Hinweis-Popup beim Öffnen der Seite (siehe layouts/partials/
+     alpha-notice.html) - aktuell ein Warnhinweis, dass die Website noch
+     eine unfertige Alpha-Version ist. */}}
+{{ partial "alpha-notice.html" . }}
+
 {{/* Dekorative Symbole in den Seitenrändern - auf JEDER Seite, nicht nur der
      Startseite (siehe layouts/partials/page-decoration.html). Bewusst
      position:fixed statt an der Seitenlänge orientiert, damit es auf jeder

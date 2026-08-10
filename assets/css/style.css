@@ -532,16 +532,28 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .page-deco{display:none;position:fixed;inset:0;pointer-events:none;z-index:1;}
 .deco-icon{position:fixed;color:var(--color-ink-faint);opacity:.15;}
 img.deco-icon{opacity:.1;}
-.deco-1{width:52px;top:130px;left:2.5%;transform:rotate(-15deg);}
-.deco-2{width:62px;top:130px;right:3%;transform:rotate(6deg);}
-.deco-3{width:42px;top:38vh;left:4%;transform:rotate(-25deg);}
-.deco-4{width:56px;top:38vh;right:2.5%;transform:rotate(10deg);}
-.deco-5{width:36px;top:64vh;left:3%;transform:rotate(12deg);}
-.deco-6{width:46px;top:64vh;right:4%;transform:rotate(-8deg);}
-.deco-7{width:40px;bottom:6vh;left:2.5%;transform:rotate(20deg);}
-.deco-8{width:50px;bottom:6vh;right:3%;transform:rotate(-18deg);}
-@media (min-width:1400px){
+.deco-1{width:38px;top:130px;left:1%;transform:rotate(-15deg);}
+.deco-2{width:44px;top:130px;right:1%;transform:rotate(6deg);}
+.deco-3{width:32px;top:38vh;left:1%;transform:rotate(-25deg);}
+.deco-4{width:40px;top:38vh;right:1%;transform:rotate(10deg);}
+.deco-5{width:28px;top:64vh;left:1%;transform:rotate(12deg);}
+.deco-6{width:34px;top:64vh;right:1%;transform:rotate(-8deg);}
+.deco-7{width:30px;bottom:6vh;left:1%;transform:rotate(20deg);}
+.deco-8{width:36px;bottom:6vh;right:1%;transform:rotate(-18deg);}
+@media (min-width:1300px){
   .page-deco{display:block;}
+}
+/* Ab hier (mittelbreite Bildschirme) sind die Symbole etwas grösser und
+   etwas weiter vom Rand weg, weil mehr Platz da ist. */
+@media (min-width:1500px){
+  .deco-1{width:52px;left:2.5%;}
+  .deco-2{width:62px;right:3%;}
+  .deco-3{width:42px;left:4%;}
+  .deco-4{width:56px;right:2.5%;}
+  .deco-5{width:36px;left:3%;}
+  .deco-6{width:46px;right:4%;}
+  .deco-7{width:40px;left:2.5%;}
+  .deco-8{width:50px;right:3%;}
 }
 /* Auf sehr breiten Bildschirmen kommen 4 weitere Symbole dazu, weiter
    aussen platziert als deco-1 bis deco-8 - je breiter der Bildschirm,
@@ -596,6 +608,18 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 .cookie-banner p{margin:0;font-size:var(--text-sm);flex:1 1 240px;color:var(--color-ink-soft);}
 .cookie-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;}
 .cookie-banner.hidden{display:none;}
+
+/* ==========================================================================
+   Hinweis-Popup beim Öffnen der Seite (siehe layouts/partials/
+   alpha-notice.html) - abgedunkelter Hintergrund, zentriertes Fenster,
+   höherer z-index als Kopfzeile und Cookie-Banner, weil das die wichtigste
+   Meldung ist und über allem anderen liegen soll.
+   ========================================================================== */
+.alpha-notice-backdrop{position:fixed;inset:0;background:rgba(6,10,24,.55);display:flex;align-items:center;justify-content:center;padding:var(--space-5);z-index:300;}
+.alpha-notice-backdrop[hidden]{display:none;}
+.alpha-notice{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-6);max-width:26rem;box-shadow:0 24px 60px rgba(10,17,40,.28);}
+.alpha-notice h2{margin:0 0 var(--space-3);font-size:var(--text-lg);}
+.alpha-notice p{margin:0 0 var(--space-5);color:var(--color-ink-soft);font-size:var(--text-sm);}
 
 .note{background:var(--color-note-bg);border:1px solid var(--color-note-line);border-radius:var(--radius-md);padding:.5rem .8rem;font-size:var(--text-xs);color:var(--color-note-text);margin-top:var(--space-2);display:inline-block;}
 

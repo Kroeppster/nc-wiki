@@ -45,6 +45,11 @@ footer_newsletter_placeholder: "tua@email.ch"
 footer_newsletter_submit: "Iscriviti"
 footer_built_with: "Costruito con Hugo · ospitato su GitHub Pages"
 
+alpha_notice_aria_label: "Avviso importante"
+alpha_notice_title: "Versione alpha"
+alpha_notice_text: "Questo sito è ancora in fase di sviluppo. Alcuni contenuti sono provvisori e alcune funzionalità potrebbero cambiare o essere incomplete. Grazie per la comprensione!"
+alpha_notice_dismiss: "Capito"
+
 cookie_aria_label: "Informazioni sui cookie"
 cookie_text: "Oltre a quanto tecnicamente necessario (per es. la tua impostazione del tema), utilizziamo cookie aggiuntivi solo con il tuo consenso – attualmente Google Analytics, per capire come viene utilizzato il sito."
 cookie_details: "Maggiori informazioni"

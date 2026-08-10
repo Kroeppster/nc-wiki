@@ -346,4 +346,38 @@
     check();
     setInterval(check, 1000);
   })();
+
+  {{/* ---- Teil 8: Hinweis-Popup beim Öffnen der Seite ----
+       Zeigt das Popup (siehe layouts/partials/alpha-notice.html) nur, wenn
+       es noch nie geschlossen wurde (Merker in localStorage, Schlüssel
+       "alpha-notice-seen") - danach bleibt es beim nächsten Seitenaufruf
+       weg. Schliessen geht über den Knopf, per Klick auf den abgedunkelten
+       Hintergrund, oder mit der Escape-Taste. */}}
+  (function(){
+    var STORAGE_KEY = 'alpha-notice-seen';
+    var backdrop = document.getElementById('alphaNoticeBackdrop');
+    var dismissBtn = document.getElementById('alphaNoticeDismiss');
+    if(!backdrop || !dismissBtn) return;
+
+    var alreadySeen;
+    try{ alreadySeen = localStorage.getItem(STORAGE_KEY); }catch(e){ alreadySeen = null; }
+
+    function close(){
+      backdrop.hidden = true;
+      try{ localStorage.setItem(STORAGE_KEY, '1'); }catch(e){}
+    }
+
+    if(!alreadySeen){
+      backdrop.hidden = false;
+      dismissBtn.focus();
+    }
+
+    dismissBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', function(evt){
+      if(evt.target === backdrop){ close(); }
+    });
+    document.addEventListener('keydown', function(evt){
+      if(evt.key === 'Escape' && !backdrop.hidden){ close(); }
+    });
+  })();
 </script>

@@ -1,0 +1,25 @@
+{{- /*
+  ============================================================================
+  HINWEIS-POPUP BEIM ÖFFNEN DER SEITE
+  ============================================================================
+  Erscheint einmal, wenn die Website zum ersten Mal (bzw. nach Löschen des
+  Browser-Speichers) geöffnet wird - ein zentriertes Fenster mit
+  abgedunkeltem Hintergrund, wird über einen Knopf, per Klick daneben oder
+  mit der Escape-Taste wieder geschlossen. Die Wahl "schon gesehen" merkt
+  sich der Browser (localStorage, Schlüssel "alpha-notice-seen"), danach
+  erscheint es nicht mehr erneut - siehe Klick-Logik in footer.html.
+
+  Aktueller Inhalt (siehe i18n/*.yaml, "alpha_notice_..."): ein Warnhinweis,
+  dass die Website noch eine unfertige Alpha-Version ist. Der Text lässt
+  sich jederzeit in den drei i18n-Dateien anpassen, ohne dass hier am Code
+  etwas geändert werden müsste - z.B. später für eine andere Ankündigung
+  wiederverwendbar.
+  ============================================================================
+*/ -}}
+<div class="alpha-notice-backdrop" id="alphaNoticeBackdrop" hidden>
+  <div class="alpha-notice" role="dialog" aria-modal="true" aria-labelledby="alphaNoticeTitle" aria-label="{{ i18n "alpha_notice_aria_label" }}">
+    <h2 id="alphaNoticeTitle">{{ i18n "alpha_notice_title" }}</h2>
+    <p>{{ i18n "alpha_notice_text" }}</p>
+    <button type="button" class="btn btn-primary" id="alphaNoticeDismiss">{{ i18n "alpha_notice_dismiss" }}</button>
+  </div>
+</div>
