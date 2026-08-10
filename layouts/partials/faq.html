@@ -15,7 +15,7 @@
   sehen den vollständigen Text jeder Antwort, auch wenn sie zugeklappt ist.
 
   Ein FAQ-Eintrag mit "dynamic: subtests" (siehe data/faq.yaml) bekommt
-  automatisch die aktuelle Liste aller 10 Untertests aus data/subtests.yaml
+  automatisch die aktuelle Liste aller 9 Untertests aus data/subtests.yaml
   als Aufzählung angehängt - so muss diese Liste nur an einer einzigen
   Stelle (data/subtests.yaml) gepflegt werden, nicht zusätzlich hier.
 
@@ -50,7 +50,7 @@
       <summary>{{ index .question $lang }}</summary>
       <div class="faq-answer">
         <p>{{ index .answer $lang }}</p>
-        {{- /* Nur bei der einen speziellen Frage: die 10 Untertests live
+        {{- /* Nur bei der einen speziellen Frage: die 9 Untertests live
                aus data/subtests.yaml anhängen (siehe Erklärung oben) */ -}}
         {{- if eq .dynamic "subtests" }}
         <ol class="faq-subtest-list">

@@ -19,7 +19,7 @@ news:
   cta: "Tutte le news →"
 subtests:
   eyebrow: "Esercizi"
-  heading: "10 sottotest, un obiettivo"
+  heading: "9 sottotest, un obiettivo"
 mission:
   eyebrow: "Perché esistiamo"
   heading: "Ci impegniamo affinché la preparazione all'EMS non dipenda dal portafoglio."

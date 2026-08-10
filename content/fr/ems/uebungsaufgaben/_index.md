@@ -6,4 +6,4 @@ menu:
     weight: 2
 ---
 
-Exercices gratuits pour les 10 sous-tests de l'EMS – préparés par des étudiant·e·s pour des étudiant·e·s.
+Exercices gratuits pour les 9 sous-tests de l'EMS – préparés par des étudiant·e·s pour des étudiant·e·s.

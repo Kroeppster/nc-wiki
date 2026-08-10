@@ -20,7 +20,7 @@
 #              Templates: ohne führenden Schrägstrich, z.B. "ems/uniguide/"),
 #              "label" der Linktext pro Sprache.
 #   dynamic  - optional: bei "dynamic: subtests" wird automatisch die
-#              aktuelle Liste aller 10 Untertests aus data/subtests.yaml als
+#              aktuelle Liste aller 9 Untertests aus data/subtests.yaml als
 #              Aufzählung unter der Antwort angehängt (wird für die Frage
 #              "Welche Untertests gibt es?" verwendet, damit diese Liste nur
 #              an einer Stelle im Projekt gepflegt werden muss).
@@ -57,9 +57,9 @@
     fr: "Quels sont les sous-tests de l'EMS ?"
     it: "Quali sono i sottotest dell'EMS?"
   answer:
-    de: "Der EMS besteht aus 10 Untertests, die kognitive Fähigkeiten und schulisches Grundlagenwissen prüfen. Die genaue Liste findest du unten."
-    fr: "L'EMS comprend 10 sous-tests qui évaluent des capacités cognitives et des connaissances scolaires de base. La liste précise se trouve ci-dessous."
-    it: "L'EMS è composto da 10 sottotest che valutano capacità cognitive e conoscenze scolastiche di base. L'elenco preciso si trova qui sotto."
+    de: "Der EMS besteht aus 9 Untertests, die kognitive Fähigkeiten und schulisches Grundlagenwissen prüfen. Die genaue Liste findest du unten."
+    fr: "L'EMS comprend 9 sous-tests qui évaluent des capacités cognitives et des connaissances scolaires de base. La liste précise se trouve ci-dessous."
+    it: "L'EMS è composto da 9 sottotest che valutano capacità cognitive e conoscenze scolastiche di base. L'elenco preciso si trova qui sotto."
   dynamic: "subtests"
 
 - id: "punkte-noetig"

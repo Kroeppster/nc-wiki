@@ -1,5 +1,5 @@
 # ============================================================================
-# DIE 10 UNTERTESTS DES EMS (feste, offizielle Reihenfolge)
+# DIE 9 UNTERTESTS DES EMS (feste, offizielle Reihenfolge)
 # ============================================================================
 # Wird an mehreren Stellen der Website verwendet: das nummerierte Kachel-
 # Raster auf der Startseite und der Übungsaufgaben-Übersicht (siehe
@@ -10,58 +10,61 @@
 # sonst wird sie automatisch mitverwendet.
 #
 # Jeder Eintrag braucht:
-#   number - die offizielle Nummer (01-10), als Text mit führender Null
+#   number - die offizielle Nummer (01-09), als Text mit führender Null
 #   slug   - technischer Name für die Web-Adresse, z.B. "muster-zuordnen"
 #            (muss zum entsprechenden Ordnernamen unter
 #            content/<sprache>/ems/uebungsaufgaben/ passen)
 #   de/fr/it - der angezeigte Name in den drei Sprachen
+#
+# HINWEIS (2026-08-10): Es gab hier vorher zusätzlich einen 10. Eintrag
+# "Testsimulationen" - das ist aber kein echter Untertest des EMS, sondern
+# ein eigenes Angebot (ganze Testsimulationen, siehe /ems/testsimulationen/),
+# und stand fälschlicherweise auch hier als Untertest-01-Kachel. Der
+# migrierte News-Beitrag "Umstrukturierung des EMS ab 2022" bestätigt die
+# echte Zahl: "Die 9 Aufgabengruppen blieben gleich" - der EMS hat also
+# wirklich 9 Untertests, nicht 10.
 # ============================================================================
 - number: "01"
-  slug: testsimulationen
-  de: "Testsimulationen"
-  fr: "Simulations de test"
-  it: "Simulazioni del test"
-- number: "02"
   slug: muster-zuordnen
   de: "Muster zuordnen"
   fr: "Association de motifs"
   it: "Abbinamento di schemi"
-- number: "03"
+- number: "02"
   slug: med-nat-grundverstaendnis
   de: "Med.-nat. Grundverständnis"
   fr: "Compréhension médico-scientifique"
   it: "Comprensione medico-scientifica"
-- number: "04"
+- number: "03"
   slug: objekte-im-raum
   de: "Objekte im Raum"
   fr: "Objets dans l'espace"
   it: "Oggetti nello spazio"
-- number: "05"
+- number: "04"
   slug: quantitative-probleme
   de: "Quantitative und formale Probleme"
   fr: "Problèmes quantitatifs et formels"
   it: "Problemi quantitativi e formali"
-- number: "06"
+- number: "05"
   slug: konzentriertes-arbeiten
   de: "Konzentriertes und sorgfältiges Arbeiten"
   fr: "Travail concentré et soigné"
   it: "Lavoro concentrato e accurato"
-- number: "07"
+- number: "06"
   slug: figuren-einpraegen
   de: "Figuren einprägen"
   fr: "Mémorisation de figures"
   it: "Memorizzazione di figure"
-- number: "08"
+- number: "07"
   slug: fakten-einpraegen
   de: "Fakten einprägen"
   fr: "Mémorisation de faits"
   it: "Memorizzazione di fatti"
-- number: "09"
+- number: "08"
   slug: textverstaendnis
   de: "Textverständnis"
   fr: "Compréhension de texte"
   it: "Comprensione del testo"
-- number: "10"
+- number: "09"
   slug: diagramme-tabellen
   de: "Diagramme und Tabellen"
   fr: "Diagrammes et tableaux"
