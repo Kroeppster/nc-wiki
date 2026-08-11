@@ -7,6 +7,12 @@ und nur einen Browser** haben – kein Programm muss installiert werden. Alles h
 Wer doch lokal arbeiten will/kann: dann helfen `docs/vorlage-news.md`,
 `docs/vorlage-erfahrungsbericht.md` und die Dateien in `archetypes/` zusätzlich weiter.
 
+Dies ist die **Kurzfassung** für die alltäglichen Aufgaben (neue Seite, PDF hochladen,
+News schreiben, Datei löschen, Bild einfügen). Für alles Seltenere – Navigation umbauen,
+Logo/Sponsor:innen/Team pflegen, Farben & Design, Countdown-Datum, Google Analytics,
+Formulare, Übersetzungsdateien und mehr – siehe die ausführliche Version:
+[`docs/WARTUNG-DETAILLIERT.md`](WARTUNG-DETAILLIERT.md).
+
 ---
 
 ## 1. Aufbau des Projekts in einfachen Worten
