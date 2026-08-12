@@ -2,27 +2,23 @@
   ============================================================================
   DEKORATIVE SYMBOLE IN DEN SEITENRÄNDERN (JEDE SEITE)
   ============================================================================
-  Nur auf sehr breiten Bildschirmen sichtbar (siehe @media in style.css) -
-  dort, wo neben dem zentrierten Inhalt (max. 1160px, siehe --max-width)
-  sonst einfach leere Fläche wäre. Rein dekorativ (aria-hidden). Eingebunden
-  in layouts/_default/baseof.html, gilt also für die ganze Website.
+  Nur auf breiten Bildschirmen sichtbar (siehe @media in style.css) - dort,
+  wo neben dem zentrierten Inhalt (max. 1160px, siehe --max-width) sonst
+  einfach leere Fläche wäre. Rein dekorativ (aria-hidden). Eingebunden in
+  layouts/_default/baseof.html, gilt also für die ganze Website.
 
-  Sechs Streifen (2 pro Ring x 3 Ringe): jeder Streifen ist ein leeres div,
-  die eigentliche Grafik kommt komplett aus einer sich vertikal
-  wiederholenden SVG-Hintergrundkachel in style.css (background-repeat:
-  repeat-y) - dadurch deckt die Deko jede Seite über ihre GESAMTE Länge ab,
-  unabhängig davon wie lang die jeweilige Seite ist, und scrollt mit dem
-  Inhalt mit statt starr am Bildschirm zu kleben. Der rechte Streifen jedes
-  Rings nutzt dieselbe Kachel wie der linke, nur gespiegelt (siehe
-  transform:scaleX(-1) in style.css), damit nicht zwei fast identische
-  Kachel-Grafiken gepflegt werden müssen.
+  Zwei leere divs (links/rechts vom Inhalt) - die eigentliche Grafik kommt
+  komplett aus einer sich in BEIDE Richtungen wiederholenden
+  SVG-Hintergrundkachel in style.css (background-repeat:repeat), die den
+  jeweiligen Block von der Bildschirmkante bis zum Inhaltsrand und über die
+  GESAMTE Dokumenthöhe füllt - dadurch ist der Rand auf jeder Seitenlänge
+  UND jeder Bildschirmbreite komplett gefüllt (kein Leerraum, egal wie breit
+  das Fenster wird), und die Deko scrollt mit dem Inhalt mit statt starr am
+  Bildschirm zu kleben. Der rechte Block nutzt dieselbe Kachel wie der linke,
+  nur gespiegelt (siehe transform:scaleX(-1) in style.css).
   ============================================================================
 */ -}}
 <div class="page-deco" aria-hidden="true">
-  <div class="deco-strip deco-ring1 deco-l"></div>
-  <div class="deco-strip deco-ring1 deco-r"></div>
-  <div class="deco-strip deco-ring2 deco-l"></div>
-  <div class="deco-strip deco-ring2 deco-r"></div>
-  <div class="deco-strip deco-ring3 deco-l"></div>
-  <div class="deco-strip deco-ring3 deco-r"></div>
+  <div class="deco-margin deco-left"></div>
+  <div class="deco-margin deco-right"></div>
 </div>
