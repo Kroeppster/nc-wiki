@@ -51,7 +51,7 @@
         {{ range .Site.Menus.main }}
         <li{{ if .HasChildren }} class="has-children"{{ end }}>
           {{ if .URL }}
-          <a href="{{ .URL }}">{{ .Name }}</a>
+          <a href="{{ .URL }}"{{ if eq .Identifier "kontakt" }} class="nav-cta"{{ end }}>{{ .Name }}</a>
           {{ else }}
           <span>{{ .Name }}</span>
           {{ end }}
@@ -118,29 +118,37 @@
       </svg>
     </button>
 
-    {{/* Sprachauswahl (DE/FR/IT): die aktuelle Sprache wird hervorgehoben
-         (nicht anklickbar), die anderen beiden verlinken zur übersetzten
-         Version DERSELBEN Seite, falls es die gibt - sonst zur Startseite
-         der jeweiligen Sprache (besser als ein kaputter Link). */}}
-    <div class="lang-switch" aria-label="{{ i18n "lang_switch_aria_label" }}">
-      {{ $page := . }}
-      {{ range hugo.Sites }}
-        {{ $lang := .Language.Lang }}
-        {{ if eq $lang $page.Language.Lang }}
-        <span class="active">{{ $lang | upper }}</span>
-        {{ else }}
-          {{/* Prüfen, ob es von der AKTUELLEN Seite eine Übersetzung in $lang gibt */}}
-          {{ $translated := false }}
-          {{ range $page.Translations }}
-            {{ if eq .Language.Lang $lang }}{{ $translated = . }}{{ end }}
-          {{ end }}
-          {{ if $translated }}
-          <a href="{{ $translated.RelPermalink }}">{{ $lang | upper }}</a>
-          {{ else }}
-          <a href="{{ .Home.RelPermalink }}">{{ $lang | upper }}</a>
+    {{/* Sprachauswahl: "DE ▾"-Knopf klappt per Klick/Tap die anderen beiden
+         Sprachen auf (dieselbe has-children/submenu-toggle-Logik wie bei den
+         Untermenüs oben, siehe footer.html - kein eigenes Skript nötig, die
+         dortige Klick-/Aussenklick-Logik wählt Elemente generisch über diese
+         Klassen aus). Jede andere Sprache verlinkt zur übersetzten Version
+         DERSELBEN Seite, falls es die gibt - sonst zur Startseite der
+         jeweiligen Sprache (besser als ein kaputter Link). */}}
+    <div class="lang-switch has-children" aria-label="{{ i18n "lang_switch_aria_label" }}">
+      <span class="lang-switch-current">{{ .Language.Lang | upper }}</span>
+      <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="langSwitchList" aria-label="{{ i18n "lang_switch_toggle_aria_label" }}">
+        <svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.2 6 7.8l3.5-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="submenu" id="langSwitchList">
+        {{ $page := . }}
+        {{ range hugo.Sites }}
+          {{ $lang := .Language.Lang }}
+          {{ if ne $lang $page.Language.Lang }}
+            {{ $translated := false }}
+            {{ range $page.Translations }}
+              {{ if eq .Language.Lang $lang }}{{ $translated = . }}{{ end }}
+            {{ end }}
+            <li>
+              {{ if $translated }}
+              <a href="{{ $translated.RelPermalink }}">{{ $lang | upper }}</a>
+              {{ else }}
+              <a href="{{ .Home.RelPermalink }}">{{ $lang | upper }}</a>
+              {{ end }}
+            </li>
           {{ end }}
         {{ end }}
-      {{ end }}
+      </ul>
     </div>
   </div>
 </header>

@@ -3,10 +3,17 @@ title: "EMS"
 menu:
   main:
     identifier: ems
-    parent: vorbereitung
-    weight: 1
-    name: "Ablauf & Tipps"
+    weight: 3
 ---
+
+## Direkt zu den Bereichen
+
+- [Übungsaufgaben]({{< ref "/ems/uebungsaufgaben" >}})
+- [Testsimulationen]({{< ref "/ems/testsimulationen" >}})
+- [Vorbereitungskurse]({{< ref "/ems/vorbereitungskurse" >}})
+- [Uniguide]({{< ref "/ems/uniguide" >}})
+- [Erfahrungsberichte]({{< ref "/ems/erfahrungsberichte" >}})
+- [Q&A]({{< ref "/ems/qa" >}})
 
 ## 1. Vorbereitung auf den NC
 

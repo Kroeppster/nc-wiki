@@ -3,7 +3,7 @@ title: "Sostenitori e sostenitrici"
 menu:
   main:
     identifier: unterstuetzer-innen
-    weight: 7
+    weight: 4
     name: "Sostieni"
 ---
 

@@ -231,10 +231,11 @@ nav.main-nav>ul{display:flex;gap:var(--space-4);list-style:none;margin:0;padding
 nav.main-nav li{position:relative;}
 nav.main-nav>ul>li>a,nav.main-nav>ul>li>span{font-size:.82rem;font-weight:600;padding:var(--space-2) 0;display:inline-block;}
 nav.main-nav>ul>li>a:hover{color:var(--color-signal);}
-/* Menüpunkte ohne eigene URL (reine Dropdown-Gruppen wie "Vorbereitung",
-   siehe header.html) werden als <span> statt <a> gerendert - etwas gedämpfter
-   eingefärbt, damit optisch klar ist, dass hier kein Klick zu einer eigenen
-   Seite führt, nur das Aufklappen der Kinder passiert. */
+/* Absicherung für den generischen Fall, dass ein Menüpunkt mal keine eigene
+   URL hätte (siehe header.html) - würde dann als <span> statt <a> gerendert,
+   etwas gedämpfter eingefärbt, damit optisch klar ist, dass hier kein Klick
+   zu einer eigenen Seite führt. Aktuell hat aber jeder Hauptmenüpunkt eine
+   echte Seite. */
 nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .has-children>.submenu{display:none;position:absolute;top:100%;left:0;background:var(--color-surface);border:1px solid var(--color-line);min-width:220px;padding:var(--space-2);margin:0;list-style:none;box-shadow:0 16px 32px rgba(16,26,51,.1);border-radius:var(--radius-md);}
 .has-children:hover>.submenu,.has-children:focus-within>.submenu{display:block;}
@@ -264,7 +265,15 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2){opacity:0;}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
-.lang-switch{display:flex;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--text-xs);order:3;}
+.lang-switch{position:relative;display:flex;align-items:center;gap:.15rem;font-family:var(--font-mono);font-size:var(--text-xs);order:3;}
+.lang-switch-current{padding:.25rem .3rem .25rem .5rem;color:var(--color-ink-faint);}
+.lang-switch>.submenu{left:auto;right:0;min-width:0;}
+.lang-switch>.submenu li a{white-space:nowrap;}
+/* "Kontakt"-Knopf hebt sich als eigene Umrandung vom restlichen, schlichten
+   Menü ab (wie ein Call-to-Action), statt wie die anderen Punkte ein reiner
+   Textlink zu sein. */
+.nav-cta{border:1px solid var(--color-signal);border-radius:var(--radius-md);padding:.3rem .8rem !important;color:var(--color-signal) !important;}
+.nav-cta:hover{background:var(--color-signal);color:#fff !important;}
 /* Such-Knopf (Lupe): gleiche Optik wie der Hell/Dunkel-Knopf daneben. Klick
    klappt das eigentliche Suchfeld auf (Klasse "is-open" auf #search, siehe
    Klick-Logik in footer.html) statt es dauerhaft ~200px Platz in der

@@ -30,6 +30,7 @@ submenu_toggle_aria_label: "Ouvrir le sous-menu"
 search_toggle_aria_label: "Ouvrir la recherche"
 theme_toggle_aria_label: "Changer de thème"
 lang_switch_aria_label: "Langue"
+lang_switch_toggle_aria_label: "Ouvrir le sélecteur de langue"
 site_tagline: "Préparation gratuite au EMS, par des étudiant·e·s pour des étudiant·e·s."
 read_more: "En savoir plus →"
 

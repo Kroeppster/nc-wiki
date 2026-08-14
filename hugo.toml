@@ -89,22 +89,6 @@ enableRobotsTXT = true
     title = 'NCWiki'
     contentDir = 'content/de'
 
-    # Zwei zusätzliche Hauptmenü-Punkte, die NICHT zu einer echten Seite
-    # gehören, sondern rein als Dropdown-Überschrift dienen (kein Klick-Ziel,
-    # nur ein Aufklapp-Menü mit den unten aufgeführten "identifier"-Werten als
-    # "parent:" - siehe z.B. content/de/ems/testsimulationen/_index.md). Das
-    # erlaubt eine Menü-Gruppierung, die von der Ordnerstruktur unter content/
-    # abweicht, ohne dass irgendwelche Seiten verschoben oder URLs geändert
-    # werden müssten.
-    [[languages.de.menu.main]]
-      identifier = 'vorbereitung'
-      name = 'Vorbereitung'
-      weight = 3
-    [[languages.de.menu.main]]
-      identifier = 'austausch'
-      name = 'Austausch'
-      weight = 4
-
   [languages.fr]
     label = 'Français'
     locale = 'fr-CH'
@@ -112,27 +96,9 @@ enableRobotsTXT = true
     title = 'NCWiki'
     contentDir = 'content/fr'
 
-    [[languages.fr.menu.main]]
-      identifier = 'vorbereitung'
-      name = 'Préparation'
-      weight = 3
-    [[languages.fr.menu.main]]
-      identifier = 'austausch'
-      name = 'Échanges'
-      weight = 4
-
   [languages.it]
     label = 'Italiano'
     locale = 'it-CH'
     weight = 3
     title = 'NCWiki'
     contentDir = 'content/it'
-
-    [[languages.it.menu.main]]
-      identifier = 'vorbereitung'
-      name = 'Preparazione'
-      weight = 3
-    [[languages.it.menu.main]]
-      identifier = 'austausch'
-      name = 'Scambi'
-      weight = 4

@@ -3,7 +3,7 @@ title: "Über Uns"
 menu:
   main:
     identifier: ueber-uns
-    weight: 6
+    weight: 5
 ---
 
 ## Unsere Mission

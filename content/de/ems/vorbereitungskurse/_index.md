@@ -2,7 +2,7 @@
 title: "Vorbereitungskurse"
 menu:
   main:
-    parent: vorbereitung
+    parent: ems
     weight: 3
 featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Gedrucktes NCWiki-Kursskript zum EMS-Vorbereitungskurs vom März 2024 auf einem Hörsaaltisch"

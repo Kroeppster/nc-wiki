@@ -3,7 +3,7 @@ title: "Nos soutiens"
 menu:
   main:
     identifier: unterstuetzer-innen
-    weight: 7
+    weight: 4
     name: "Soutenir"
 ---
 

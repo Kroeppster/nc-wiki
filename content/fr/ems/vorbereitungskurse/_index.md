@@ -2,7 +2,7 @@
 title: "Cours de préparation"
 menu:
   main:
-    parent: vorbereitung
+    parent: ems
     weight: 3
 featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Script de cours NCWiki imprimé pour le cours de préparation à l'EMS de mars 2024, posé sur une table d'amphithéâtre"

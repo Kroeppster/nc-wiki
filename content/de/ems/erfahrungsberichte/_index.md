@@ -2,8 +2,8 @@
 title: "Erfahrungsberichte"
 menu:
   main:
-    parent: austausch
-    weight: 1
+    parent: ems
+    weight: 5
 ---
 
 Ehemalige Teilnehmende berichten von ihrer EMS-Vorbereitung und ihrem Weg ins Medizinstudium.

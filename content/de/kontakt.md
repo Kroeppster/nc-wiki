@@ -4,7 +4,7 @@ contact_form: true
 menu:
   main:
     identifier: kontakt
-    weight: 8
+    weight: 6
 ---
 
 Wir freuen uns auf deine Nachricht! Melde dich gerne bei Fragen, Anregungen oder wenn du dich als Medizinstudent\*in bei uns engagieren möchtest.

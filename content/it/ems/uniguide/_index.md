@@ -2,7 +2,7 @@
 title: "Uniguide"
 menu:
   main:
-    parent: vorbereitung
+    parent: ems
     weight: 4
 ---
 
