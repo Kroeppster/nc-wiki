@@ -97,27 +97,62 @@
 </div>
 
 <script>
-  {{/* ---- Teil 1: Countdown-Uhr auf der Startseite ----
+  {{/* ---- Teil 1: Flip-Clock-Countdown-Uhr auf der Startseite ----
        Zählt die Zeit bis zum EMS-Termin (Datum kommt aus hugo.toml, Feld
        ems_exam_date) im Sekundentakt herunter und schreibt Tage/Std/Min/Sek
-       in die vier Zahlenfelder im Hero-Panel (siehe layouts/index.html).
-       Auf allen anderen Seiten gibt es diese Felder gar nicht - dann passiert
-       hier einfach nichts (die "if(elD)"-Prüfungen fangen das ab). */}}
+       als einzelne Ziffern-Kacheln ins Hero-Panel (siehe layouts/index.html
+       und layouts/partials/flip-group.html für den HTML-Aufbau). Auf allen
+       anderen Seiten gibt es diese Felder gar nicht - dann passiert hier
+       einfach nichts (die "if(container)"-Prüfung fängt das ab). Jede
+       Kachel merkt sich ihre aktuelle Ziffer in data-value und "klappt" nur
+       dann um, wenn sich diese Ziffer wirklich geändert hat (nicht bei
+       jedem Tick alle neu). */}}
   (function(){
     var target = new Date('{{ .Site.Params.ems_exam_date }}').getTime();
-    var elD=document.getElementById('cd-d'), elH=document.getElementById('cd-h'),
-        elM=document.getElementById('cd-m'), elS=document.getElementById('cd-s');
-    function pad(n){ return String(n).padStart(2,'0'); }
+    var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function flipTile(tile, oldDigit){
+      if(reducedMotion) return;
+      var flap = document.createElement('span');
+      flap.className = 'flip-flap';
+      flap.innerHTML = '<span class="glyph">' + oldDigit + '</span>';
+      tile.appendChild(flap);
+      requestAnimationFrame(function(){ flap.classList.add('flip-flap-anim'); });
+      flap.addEventListener('animationend', function(){ flap.remove(); });
+    }
+
+    function setGroup(id, valueStr){
+      var container = document.getElementById(id);
+      if(!container) return;
+      var tiles = container.querySelectorAll('.flip-digit');
+      for(var i = 0; i < tiles.length; i++){
+        var newDigit = valueStr[i];
+        var tile = tiles[i];
+        var oldDigit = tile.getAttribute('data-value');
+        if(oldDigit === newDigit) continue;
+        tile.querySelector('.top .glyph').textContent = newDigit;
+        tile.querySelector('.bottom .glyph').textContent = newDigit;
+        if(oldDigit !== null) flipTile(tile, oldDigit);
+        tile.setAttribute('data-value', newDigit);
+      }
+    }
+
+    function pad(n, len){ return String(n).padStart(len, '0'); }
+
+    var elSr = document.getElementById('cd-sr');
+    var srLabels = elSr ? elSr.dataset : {};
+
     function tick(){
       var diff = Math.max(0, target - Date.now());
       var d = Math.floor(diff/86400000);
       var h = Math.floor((diff%86400000)/3600000);
       var m = Math.floor((diff%3600000)/60000);
       var s = Math.floor((diff%60000)/1000);
-      if(elD) elD.textContent = d;
-      if(elH) elH.textContent = pad(h);
-      if(elM) elM.textContent = pad(m);
-      if(elS) elS.textContent = pad(s);
+      setGroup('cd-d', pad(d, 3));
+      setGroup('cd-h', pad(h, 2));
+      setGroup('cd-m', pad(m, 2));
+      setGroup('cd-s', pad(s, 2));
+      if(elSr) elSr.textContent = d + ' ' + srLabels.days + ', ' + h + ' ' + srLabels.hours + ', ' + m + ' ' + srLabels.minutes + ', ' + s + ' ' + srLabels.seconds;
     }
     tick();
     setInterval(tick, 1000);

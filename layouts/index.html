@@ -52,19 +52,27 @@
         <p class="ticket-label" aria-hidden="true">{{ .Params.hero.ticket_label }}</p>
 
         <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
-        <div class="countdown-hero">
-          <span class="num" id="cd-d">–</span><span class="unit">{{ i18n "countdown_days" }}</span>
+
+        {{/* Flip-Clock-Countdown (Kacheln mit Ziffern, die beim Wechsel
+             "umklappen") statt einer grossen Zahl + drei kleinen Feldern -
+             vier gleich grosse Gruppen (Tage/Std/Min/Sek), jede Ziffer eine
+             eigene Kachel. Aufgebaut über die partial flip-group.html,
+             tatsächlich befüllt/animiert per JavaScript in footer.html
+             (Teil 1) - die "0"-Platzhalter hier werden beim Laden sofort
+             ersetzt. */}}
+        <div class="flip-countdown">
+          {{ partial "flip-group.html" (dict "id" "cd-d" "digits" 3 "label" (i18n "countdown_days")) }}
+          {{ partial "flip-group.html" (dict "id" "cd-h" "digits" 2 "label" (i18n "countdown_hours")) }}
+          {{ partial "flip-group.html" (dict "id" "cd-m" "digits" 2 "label" (i18n "countdown_minutes")) }}
+          {{ partial "flip-group.html" (dict "id" "cd-s" "digits" 2 "label" (i18n "countdown_seconds")) }}
         </div>
+        {{/* Text-Alternative für Screenreader, da die Kacheln oben rein
+             dekorativ/aria-hidden sind (die Ziffern selbst sind ohnehin nur
+             eine von vielen Möglichkeiten, dieselbe Information wie oben in
+             .countdown-label darzustellen). */}}
+        <p class="visually-hidden-field" id="cd-sr" data-days="{{ i18n "countdown_days" }}" data-hours="{{ i18n "countdown_hours" }}" data-minutes="{{ i18n "countdown_minutes" }}" data-seconds="{{ i18n "countdown_seconds" }}"></p>
 
         <div class="ticket-perforation" aria-hidden="true"></div>
-
-        <div class="countdown countdown-sub">
-          {{/* Die "–" Platzhalter-Striche werden beim Laden der Seite sofort
-               durch das JavaScript in footer.html mit echten Zahlen ersetzt. */}}
-          <div class="countdown-cell"><span class="num" id="cd-h">–</span><span class="unit">{{ i18n "countdown_hours" }}</span></div>
-          <div class="countdown-cell"><span class="num" id="cd-m">–</span><span class="unit">{{ i18n "countdown_minutes" }}</span></div>
-          <div class="countdown-cell"><span class="num" id="cd-s">–</span><span class="unit">{{ i18n "countdown_seconds" }}</span></div>
-        </div>
       </div>
     </div>
   </section>

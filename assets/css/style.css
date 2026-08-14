@@ -332,28 +332,58 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Begründung, wieso das die vorherigen dekorativen Kreise ersetzt). */
 .ticket-label{font-family:var(--font-mono);font-size:var(--text-xs);font-weight:700;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-8);}
 
-.countdown-label{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-ink-faint);margin:0 0 var(--space-2);}
-
-/* Die grosse Tage-Zahl: clamp() lässt sie auf grossen Screens selbstbewusst
-   gross wirken, ohne auf kleinen Screens das Panel zu sprengen. */
-.countdown-hero{display:flex;align-items:baseline;gap:var(--space-3);margin:0 0 var(--space-6);}
-.countdown-hero .num{font-family:var(--font-mono);font-size:clamp(3.75rem,2.5rem + 6vw,5.5rem);font-weight:700;line-height:.9;color:var(--color-ink);letter-spacing:var(--tracking-tight);}
-.countdown-hero .unit{font-family:var(--font-mono);font-size:var(--text-base);color:var(--color-ink-faint);text-transform:uppercase;letter-spacing:.05em;}
+.countdown-label{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-ink-faint);margin:0 0 var(--space-3);}
 
 /* Perforierte Trennlinie wie beim Abriss eines echten Tickets: gestrichelte
    Linie plus zwei runde "Ausstanzungen" an den Panel-Rändern, eingefärbt in
    der Seiten-Hintergrundfarbe (--color-paper) - dadurch wirkt es wie ein
    echter Ausschnitt statt wie ein aufgemaltes Muster. */
-.ticket-perforation{position:relative;height:0;border-top:2px dashed var(--color-line-strong);margin:0 0 var(--space-6);}
+.ticket-perforation{position:relative;height:0;border-top:2px dashed var(--color-line-strong);margin:var(--space-6) 0 0;}
 .ticket-perforation::before,.ticket-perforation::after{content:"";position:absolute;top:-10px;width:20px;height:20px;border-radius:50%;background:var(--color-paper);}
 .ticket-perforation::before{left:calc(var(--space-6) * -1);}
 .ticket-perforation::after{right:calc(var(--space-6) * -1);}
 
-.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-2);text-align:center;}
-.countdown-sub{grid-template-columns:repeat(3,1fr);}
-.countdown-cell{background:var(--color-surface-sunken);border-radius:var(--radius-sm);padding:.6rem .2rem .5rem;}
-.countdown-cell .num{display:block;font-family:var(--font-mono);font-size:var(--text-xl);font-weight:700;color:var(--color-ink);}
-.countdown-cell .unit{font-size:.65rem;color:var(--color-ink-faint);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-mono);}
+/* ---- Flip-Clock-Countdown (Kacheln, die beim Ziffernwechsel "umklappen") -
+   siehe layouts/partials/flip-group.html für den HTML-Aufbau und Teil 1 im
+   <script> in footer.html für die Animationslogik. Bleibt bewusst IMMER
+   dunkel eingefärbt (unabhängig von Hell-/Dunkelmodus), wie ein echtes
+   Flip-Clock-Display - dieselbe Logik wie bei den Rand-Symbolen weiter
+   unten in dieser Datei, nur mit fest einprogrammierten statt aus
+   Theme-Variablen kommenden Farben, weil es hier ein bewusst eigenständiges,
+   "geräthaftes" Element sein soll statt sich in die Seitenfarben einzufügen. */
+.flip-countdown{display:flex;gap:var(--space-4);flex-wrap:wrap;}
+.flip-group{display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.flip-group-digits{display:flex;gap:3px;}
+.flip-group-label{font-family:var(--font-mono);font-size:.68rem;color:var(--color-ink-faint);letter-spacing:.03em;}
+
+/* Eine einzelne Ziffern-Kachel: zwei "Hälften" (oben/unten, leicht
+   unterschiedlich eingefärbt) mit einer Trennlinie dazwischen - jede Hälfte
+   zeigt via overflow:hidden nur ihre Hälfte derselben Ziffer, siehe .glyph
+   unten für die Positionierungs-Mathematik dahinter. */
+.flip-digit{position:relative;width:clamp(24px,4vw,34px);height:clamp(32px,5.6vw,44px);border-radius:4px;box-shadow:0 2px 5px rgba(0,0,0,.3);}
+.flip-digit .half{position:absolute;left:0;width:100%;height:50%;overflow:hidden;}
+.flip-digit .half.top{top:0;background:#2a3145;border-radius:4px 4px 0 0;}
+.flip-digit .half.bottom{bottom:0;background:#1b2030;border-radius:0 0 4px 4px;}
+/* .glyph sitzt selbst absolut INNERHALB von .half (50% hoch) - eine Höhe
+   von 200% ist deshalb 100% der KACHEL (der nächste positionierte Vorfahre
+   von .half ist .flip-digit). Beide Hälften zeigen so exakt dieselbe, volle
+   Ziffer, nur oben top:0 (zeigt ihre obere Hälfte) bzw. unten top:-100%
+   (verschiebt dieselbe Ziffer um eine Kachelhöhe nach oben, wodurch die
+   untere Hälfte im sichtbaren Fenster landet). */
+.flip-digit .glyph{position:absolute;left:0;top:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;color:#fff;font-size:clamp(17px,3.4vw,25px);}
+.flip-digit .half.bottom .glyph{top:-100%;}
+.flip-digit::after{content:"";position:absolute;left:0;right:0;top:calc(50% - .5px);height:1px;background:rgba(0,0,0,.45);z-index:2;pointer-events:none;}
+
+/* Die eigentliche "Flap" beim Ziffernwechsel: eine dritte, temporäre Kachel-
+   Hälfte mit der ALTEN Ziffer, die per JavaScript eingefügt wird (siehe
+   footer.html) und dann nach hinten wegklappt - darunter liegt bereits die
+   NEUE Ziffer (in .half.top oben schon aktualisiert), die so sichtbar wird.
+   perspective auf der Kachel selbst sorgt für den 3D-Effekt der Drehung. */
+.flip-digit{perspective:120px;}
+.flip-flap{position:absolute;left:0;top:0;width:100%;height:50%;overflow:hidden;background:#2a3145;border-radius:4px 4px 0 0;transform-origin:bottom center;backface-visibility:hidden;z-index:3;}
+.flip-flap .glyph{position:absolute;left:0;top:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;color:#fff;font-size:clamp(17px,3.4vw,25px);}
+.flip-flap-anim{animation:flipDown .38s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes flipDown{ from{transform:rotateX(0deg);} to{transform:rotateX(-100deg);} }
 
 /* ==========================================================================
    Generische Sektionen

@@ -1,0 +1,24 @@
+{{- /*
+  ============================================================================
+  EINE ZAHLENGRUPPE DER FLIP-CLOCK-COUNTDOWN-UHR (z.B. "Tage": 3 Kacheln)
+  ============================================================================
+  Erwartet ein dict mit:
+    id     - die ID, unter der das JavaScript in footer.html (Teil 1) die
+             Ziffern dieser Gruppe aktualisiert (z.B. "cd-d")
+    digits - Anzahl Ziffern-Kacheln (z.B. 3 für Tage, 2 für Stunden/Min/Sek)
+    label  - Beschriftung darunter (z.B. "Tage")
+  Die Kacheln starten alle bei "0" - das JavaScript ersetzt sie beim Laden
+  sofort durch die echten Werte (inkl. der ersten Flip-Animation, siehe dort).
+  ============================================================================
+*/ -}}
+<div class="flip-group">
+  <div class="flip-group-digits" id="{{ .id }}">
+    {{ range seq .digits }}
+    <span class="flip-digit" aria-hidden="true">
+      <span class="half top"><span class="glyph">0</span></span>
+      <span class="half bottom"><span class="glyph">0</span></span>
+    </span>
+    {{ end }}
+  </div>
+  <span class="flip-group-label">{{ .label }}</span>
+</div>
