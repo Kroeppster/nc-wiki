@@ -9,20 +9,28 @@
 # und das Ergebnis live auf GitHub Pages veröffentlichen.
 #
 # WICHTIG zu wissen (siehe auch docs/WARTUNG.md, Abschnitt 7 "Was tun, wenn
-# der Build rot wird?"): Diese Automatisierung läuft NICHT direkt auf einem
-# Pull Request, sondern erst NACHDEM etwas gemerged wurde. Man sieht also
-# keine rote/grüne Markierung beim Erstellen eines Pull Requests - nur
-# danach, im Tab "Actions" auf GitHub. Und: schlägt dieser Ablauf fehl,
-# heisst das NICHT, dass die Website offline ist - die zuletzt erfolgreich
-# gebaute Version bleibt online, bis der Fehler behoben ist.
+# der Build rot wird?"): Der Bau- und Link-Prüf-Teil läuft seit 2026-08-15
+# auch direkt auf jedem Pull Request gegen "main" - man sieht die rote/grüne
+# Markierung (inkl. kaputter interner Links) also schon VOR dem Mergen,
+# direkt im Pull Request. Veröffentlicht (auf GitHub Pages deployt) wird
+# trotzdem ausschliesslich bei einem echten Push auf "main", NIE bei einem
+# Pull Request (siehe die "if"-Bedingung beim "deploy"-Job weiter unten) -
+# ein Pull Request kann also nie versehentlich etwas live schalten. Und:
+# schlägt dieser Ablauf bei einem Push auf main fehl, heisst das NICHT, dass
+# die Website offline ist - die zuletzt erfolgreich gebaute Version bleibt
+# online, bis der Fehler behoben ist.
 # ==============================================================================
 
 name: Deploy Hugo site to GitHub Pages
 
-# Läuft automatisch bei jeder Änderung auf dem "main"-Branch, oder kann von
-# Hand über den "Actions"-Tab auf GitHub gestartet werden (workflow_dispatch).
+# Läuft automatisch bei jeder Änderung auf dem "main"-Branch, bei jedem Pull
+# Request gegen "main" (nur zur Vorab-Prüfung, siehe "deploy"-Job unten für
+# die Einschränkung aufs eigentliche Veröffentlichen), oder kann von Hand
+# über den "Actions"-Tab auf GitHub gestartet werden (workflow_dispatch).
 on:
   push:
+    branches: ["main"]
+  pull_request:
     branches: ["main"]
   workflow_dispatch:
 
@@ -35,10 +43,15 @@ permissions:
 
 # Verhindert, dass zwei Veröffentlichungen gleichzeitig laufen und sich
 # gegenseitig ins Gehege kommen - läuft bereits eine, wartet die nächste,
-# statt eine bereits laufende abzubrechen (cancel-in-progress: false).
+# statt eine bereits laufende abzubrechen (cancel-in-progress: false). Für
+# Pull Requests gilt das NICHT: dort bekommt jeder PR seine eigene Gruppe
+# (anhand der PR-Nummer) und ein neuer Push auf denselben PR-Branch bricht
+# den vorherigen, überholten Prüf-Lauf ab (cancel-in-progress: true) - so
+# wartet man nicht unnötig auf einen veralteten Lauf, und PR-Prüfungen
+# blockieren nie die "push"-Gruppe (und damit ein echtes Deployment).
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: "pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'push' }}"
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # ---------------------------------------------------------------------------
@@ -182,16 +195,23 @@ jobs:
           jobSummary: true
 
       # Verpackt den fertigen "public/"-Ordner zur Übergabe an den
-      # Veröffentlichungs-Schritt (den zweiten "job" unten).
+      # Veröffentlichungs-Schritt (den zweiten "job" unten). Nur bei einem
+      # echten Push auf main nötig - bei einem Pull Request läuft der
+      # "deploy"-Job ohnehin nicht (siehe dessen "if"-Bedingung), das
+      # Artefakt würde also nie gebraucht.
       - name: Upload artifact
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
   # ---------------------------------------------------------------------------
-  # SCHRITT 2: Veröffentlichen (läuft nur, wenn Schritt 1 komplett erfolgreich war)
+  # SCHRITT 2: Veröffentlichen (läuft nur, wenn Schritt 1 komplett erfolgreich
+  # war UND es sich um einen echten Push auf main handelt - bei einem Pull
+  # Request wird nur geprüft/gebaut, nie veröffentlicht).
   # ---------------------------------------------------------------------------
   deploy:
+    if: github.event_name == 'push'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
