@@ -29,12 +29,11 @@
         <ul>
           {{/* Gleiche automatische Menü-Logik wie im Hauptmenü oben, siehe
                header.html - anders als dort ist diese Liste hier aber flach
-               (keine Untermenüs), darum werden die beiden rein
-               gruppierenden Menüpunkte ohne eigene Seite ("Vorbereitung",
-               "Austausch", siehe hugo.toml) hier einfach übersprungen: ein
-               Link ohne Ziel-URL wäre in einer einfachen Fusszeilen-Liste nur
-               verwirrend, ihre Kinder stehen ohnehin schon einzeln bei den
-               jeweiligen Themenseiten verlinkt. */}}
+               (nur die obersten Menüpunkte, keine Untermenüs): ".Site.Menus.main"
+               enthält beim direkten "range" ohnehin nur die Punkte ohne
+               "parent" (die Kinder hängen an ".Children"), das "if .URL" ist
+               nur eine zusätzliche Absicherung für den Fall, dass mal ein
+               reiner Gruppen-Punkt ohne eigene Seite dazukäme. */}}
           {{ range .Site.Menus.main }}
           {{ if .URL }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
@@ -54,17 +53,18 @@
         </ul>
       </div>
       <div class="footer-newsletter">
-        {{/* Newsletter-Block: immer sichtbar (nicht mehr an newsletter_url
-             gekoppelt - auf ausdrücklichen Wunsch wiederhergestellt, siehe
-             Commit-Beschreibung). Ist noch nicht an einen echten
-             Anmelde-Dienst angebunden - der Knopf tut beim Klick aktuell
-             nichts. Sobald es eine echte Anmelde-URL gibt, kann sie in
-             hugo.toml [params] unter newsletter_url eingetragen und hier
-             als href des Knopfs verwendet werden. */}}
+        {{/* Drittes Footer-Menü "Newsletter": genau die gleiche Menü-Logik
+             wie beim "legal"-Menü daneben (siehe dort) - Einschreiben/
+             Abmelden sind zwei echte Seiten (newsletter-einschreiben.md und
+             newsletter-abmelden.md, je Sprache) mit "menu: newsletter: ..."
+             im Frontmatter, keine feste Liste hier in der Vorlage. */}}
         <h4>{{ i18n "footer_newsletter_heading" }}</h4>
-        <label for="nl-email" class="footer-lead">{{ i18n "footer_newsletter_text" }}</label>
-        <input type="email" id="nl-email" placeholder="{{ i18n "footer_newsletter_placeholder" }}">
-        <button class="btn btn-primary btn-block" type="button">{{ i18n "footer_newsletter_submit" }}</button>
+        <p class="footer-lead">{{ i18n "footer_newsletter_text" }}</p>
+        <ul>
+          {{ range .Site.Menus.newsletter }}
+          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+          {{ end }}
+        </ul>
         <div class="footer-social">
           {{/* Genauso: jeder Social-Media-Knopf erscheint nur, wenn die
                passende URL in hugo.toml [params] gesetzt ist (social_instagram,
@@ -265,9 +265,17 @@
         if(!li) return;
         var willOpen = !li.classList.contains('is-open');
         {{/* Andere offene Untermenüs schliessen, damit nicht mehrere
-             gleichzeitig offen stehen bleiben. */}}
+             gleichzeitig offen stehen bleiben - AUSSER es handelt sich um
+             ein umschliessendes Eltern-Untermenü von "li" selbst (wichtig
+             seit es 3 Menü-Ebenen gibt, z.B. EMS > Testsimulationen >
+             Gedruckte Versionen): sonst würde ein Klick auf den
+             Aufklapp-Knopf von "Testsimulationen" das bereits offene
+             "EMS"-Untermenü, in dem er selbst liegt, gleich wieder
+             zuklappen. */}}
         document.querySelectorAll('.has-children.is-open').forEach(function(other){
-          if(other !== li) closeSubmenu(other);
+          if(other === li) return;
+          if(other.contains(li)) return;
+          closeSubmenu(other);
         });
         li.classList.toggle('is-open', willOpen);
         btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');

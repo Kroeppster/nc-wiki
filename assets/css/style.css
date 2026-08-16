@@ -246,6 +246,16 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .has-children.is-open>.submenu{display:block;}
 .submenu li a{display:block;padding:var(--space-2) var(--space-3);font-size:var(--text-sm);font-weight:400;border-radius:var(--radius-sm);}
 .submenu li a:hover{background:var(--color-surface-sunken);color:var(--color-signal);}
+/* Untermenü-Punkt, der selbst wieder Kinder hat (3. Ebene, z.B.
+   "Testsimulationen" mit "Gedruckte Versionen" darunter): braucht wie ein
+   Haupt-Menüpunkt Platz für Text UND Aufklapp-Pfeil nebeneinander, statt wie
+   ein normaler (kinderloser) Untermenü-Punkt ein reiner Blocklink zu sein. */
+.submenu li.has-children{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+.submenu li.has-children>a{flex:1 1 auto;}
+/* Auf breiten Bildschirmen fliegt ein verschachteltes Untermenü seitlich
+   (rechts daneben) statt nach unten aus - sonst würde es die folgenden
+   Zeilen des übergeordneten Untermenüs überdecken. */
+.submenu .has-children>.submenu{top:0;left:100%;}
 
 /* Kleiner Pfeil-Knopf neben Menüpunkten mit Untermenü, öffnet/schliesst per
    Klick/Tap (siehe .has-children.is-open oben und die Klick-Logik in
@@ -627,8 +637,6 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 .footer-lead{color:var(--color-band-text-soft);font-size:var(--text-sm);max-width:22rem;}
 .footer-address{color:var(--color-band-text-soft);font-size:var(--text-sm);margin-top:var(--space-4);}
 .footer-newsletter .footer-lead{display:block;margin-bottom:var(--space-3);}
-.footer-newsletter input{width:100%;padding:.6rem .7rem;border:1px solid var(--color-band-line);background:rgba(255,255,255,.06);color:var(--color-band-text);border-radius:var(--radius-sm);margin-bottom:var(--space-3);font-family:var(--font-body);}
-.footer-newsletter input::placeholder{color:var(--color-band-text-soft);}
 .footer-social{display:flex;gap:var(--space-2);margin-top:var(--space-4);flex-wrap:wrap;}
 .footer-social a{border:1px solid transparent;padding:.4rem .8rem;border-radius:var(--radius-sm);font-size:var(--text-sm);color:var(--color-on-signal);}
 /* Die Social-Media-Farben unten bleiben bewusst als feste Hex-Werte statt als
@@ -737,6 +745,10 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
   .submenu{position:static !important;border:none;box-shadow:none;padding-left:var(--space-3);flex:0 0 100%;}
   .has-children>.submenu{display:none;}
   .has-children:hover>.submenu,.has-children:focus-within>.submenu{display:block;}
+  /* 3. Ebene (z.B. "Gedruckte Versionen" unter "Testsimulationen") bekommt
+     im eingeklappten Hamburger-Menü etwas mehr Einzug als die 2. Ebene,
+     damit die Verschachtelung optisch erkennbar bleibt. */
+  .submenu .submenu{padding-left:var(--space-6);}
 
   .hero{padding-block:var(--space-12) var(--space-10);}
   section{padding-block:var(--space-12);}

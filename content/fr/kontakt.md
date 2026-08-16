@@ -5,6 +5,9 @@ menu:
   main:
     identifier: kontakt
     weight: 6
+  legal:
+    identifier: kontakt
+    weight: 4
 ---
 
 Nous sommes heureux de répondre à tes questions ! Pour toute question, suggestion ou si tu souhaites t'impliquer avec nous en tant qu'étudiant·e en médecine, n'hésite pas à nous contacter.

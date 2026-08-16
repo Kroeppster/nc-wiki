@@ -34,38 +34,18 @@
     {{/* Hauptmenü: geht automatisch alle Seiten durch, die irgendwo im
          Frontmatter "menu: main: ..." eingetragen haben, und baut daraus
          diese Liste - inklusive Untermenüs (has-children), falls eine Seite
-         als "parent" einer anderen eingetragen ist (oder als "parent" eines
-         der beiden rein konfigurationsbasierten Gruppen-Punkte "vorbereitung"/
-         "austausch", die in hugo.toml definiert sind, siehe dort). Reihenfolge
-         kommt vom "weight"-Feld im Frontmatter (kleinere Zahl = weiter vorne).
+         als "parent" einer anderen eingetragen ist. Reihenfolge kommt vom
+         "weight"-Feld im Frontmatter (kleinere Zahl = weiter vorne).
 
-         Ein Menüpunkt ohne eigene URL (die beiden Gruppen-Punkte oben) wird
-         als reiner Text (<span>) statt als Link (<a>) angezeigt - er dient
-         nur zum Aufklappen seiner Kinder, es gibt keine Seite, zu der er
-         führen könnte. Hat ein Menüpunkt Kinder, kommt zusätzlich ein
-         Aufklapp-Knopf (submenu-toggle) dazu, der per Klick/Tap zuverlässig
-         funktioniert (nicht nur per Maus-Hover, siehe Klick-Logik in
-         footer.html) - wichtig für Touch-Geräte. */}}
+         Das eigentliche Rendern (inkl. beliebig tiefer Verschachtelung -
+         aktuell bis zu 3 Ebenen, z.B. EMS > Testsimulationen > Gedruckte
+         Versionen) übernimmt die rekursive partial nav-menu-item.html, die
+         sich für jedes Kind selbst wieder aufruft, statt den Aufklapp-Code
+         für jede Ebene einzeln zu duplizieren. */}}
     <nav class="main-nav" aria-label="{{ i18n "nav_aria_label" }}">
       <ul id="mainNavList">
         {{ range .Site.Menus.main }}
-        <li{{ if .HasChildren }} class="has-children"{{ end }}>
-          {{ if .URL }}
-          <a href="{{ .URL }}"{{ if eq .Identifier "kontakt" }} class="nav-cta"{{ end }}>{{ .Name }}</a>
-          {{ else }}
-          <span>{{ .Name }}</span>
-          {{ end }}
-          {{ if .HasChildren }}
-          <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="submenu-{{ .Identifier }}" aria-label="{{ .Name }} {{ i18n "submenu_toggle_aria_label" }}">
-            <svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.2 6 7.8l3.5-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <ul class="submenu" id="submenu-{{ .Identifier }}">
-            {{ range .Children }}
-            <li><a href="{{ .URL }}">{{ .Name }}</a></li>
-            {{ end }}
-          </ul>
-          {{ end }}
-        </li>
+        {{ partial "nav-menu-item.html" (dict "entry" .) }}
         {{ end }}
       </ul>
     </nav>

@@ -2,8 +2,8 @@
 title: "Merch"
 menu:
   main:
-    parent: unterstuetzer-innen
-    weight: 2
+    parent: ueber-uns
+    weight: 3
 ---
 
 An unseren Testsimulationen und anderen Veranstaltungen gibt es jeweils NCWiki-Merch am Infostand zu entdecken. Vorbeischauen lohnt sich!

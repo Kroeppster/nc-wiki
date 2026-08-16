@@ -8,7 +8,7 @@ menu:
 hero:
   eyebrow: "EMS 2027 · Kostenlose Vorbereitung"
   ticket_label: "EMS-Zulassung"
-  title: "Wir unterstützen die Mediziner:innen von morgen."
+  title: "Wir unterstützen die Mediziner:innen von Morgen!"
   lede: "Kostenloses Übungsmaterial, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium (EMS) – von Studierenden für Studierende, schweizweit."
   cta_primary: "Übungsaufgaben ansehen"
   cta_secondary: "Newsletter abonnieren"

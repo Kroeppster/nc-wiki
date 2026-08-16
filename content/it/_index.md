@@ -8,7 +8,7 @@ menu:
 hero:
   eyebrow: "EMS 2027 · Preparazione gratuita"
   ticket_label: "Ammissione EMS"
-  title: "Sosteniamo i medici di domani."
+  title: "Sosteniamo i medici di domani!"
   lede: "Materiale di esercitazione gratuito, simulazioni del test e corsi di preparazione per il test attitudinale per gli studi di medicina (EMS) – da studenti per studenti, in tutta la Svizzera."
   cta_primary: "Vedi gli esercizi"
   cta_secondary: "Iscriviti alla newsletter"

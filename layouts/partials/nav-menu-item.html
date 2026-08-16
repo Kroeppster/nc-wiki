@@ -1,0 +1,31 @@
+{{- /*
+  ============================================================================
+  EIN EINZELNER HAUPTMENÜ-PUNKT (ruft sich selbst für seine Kinder auf)
+  ============================================================================
+  Erwartet ein dict mit "entry" (ein Eintrag aus .Site.Menus.main). Rendert
+  <li>Link/Text[, Aufklapp-Knopf + <ul> mit den Kindern]</li> - und ruft sich
+  für jedes Kind selbst wieder auf. Dadurch funktionieren beliebig viele
+  Menü-Ebenen (aktuell gebraucht: 3 Ebenen, z.B. EMS > Testsimulationen >
+  Gedruckte Versionen), ohne den Aufklapp-Code für jede Ebene einzeln
+  duplizieren zu müssen - ein neues 4. Level würde automatisch genauso
+  funktionieren, falls es je gebraucht würde.
+  ============================================================================
+*/ -}}
+{{ $entry := .entry }}
+<li{{ if $entry.HasChildren }} class="has-children"{{ end }}>
+  {{ if $entry.URL }}
+  <a href="{{ $entry.URL }}"{{ if eq $entry.Identifier "kontakt" }} class="nav-cta"{{ end }}>{{ $entry.Name }}</a>
+  {{ else }}
+  <span>{{ $entry.Name }}</span>
+  {{ end }}
+  {{ if $entry.HasChildren }}
+  <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="submenu-{{ $entry.Identifier }}" aria-label="{{ $entry.Name }} {{ i18n "submenu_toggle_aria_label" }}">
+    <svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.2 6 7.8l3.5-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <ul class="submenu" id="submenu-{{ $entry.Identifier }}">
+    {{ range $entry.Children }}
+    {{ partial "nav-menu-item.html" (dict "entry" .) }}
+    {{ end }}
+  </ul>
+  {{ end }}
+</li>

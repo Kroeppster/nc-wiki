@@ -1,7 +1,8 @@
 ---
-title: "Verein"
+title: "Studentenverein"
 menu:
   main:
+    identifier: verein
     parent: ueber-uns
     weight: 2
 ---

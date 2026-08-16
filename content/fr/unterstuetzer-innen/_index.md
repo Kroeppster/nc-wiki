@@ -4,7 +4,6 @@ menu:
   main:
     identifier: unterstuetzer-innen
     weight: 4
-    name: "Soutenir"
 ---
 
 Notre offre reste gratuite – grâce aux dons, au sponsoring et à l'engagement de nos soutiens. Nous tenons à remercier chaleureusement nos donateur·rice·s :

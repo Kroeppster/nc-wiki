@@ -1,5 +1,5 @@
 ---
-title: "Jetzt unterstützen"
+title: "Jetzt unterstützen!"
 menu:
   main:
     parent: unterstuetzer-innen

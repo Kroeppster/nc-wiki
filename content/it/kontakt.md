@@ -5,6 +5,9 @@ menu:
   main:
     identifier: kontakt
     weight: 6
+  legal:
+    identifier: kontakt
+    weight: 4
 ---
 
 Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente di medicina, contattaci pure!

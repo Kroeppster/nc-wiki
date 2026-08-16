@@ -5,6 +5,9 @@ menu:
   main:
     identifier: kontakt
     weight: 6
+  legal:
+    identifier: kontakt
+    weight: 4
 ---
 
 Wir freuen uns auf deine Nachricht! Melde dich gerne bei Fragen, Anregungen oder wenn du dich als Medizinstudent\*in bei uns engagieren möchtest.

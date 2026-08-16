@@ -1,7 +1,8 @@
 ---
-title: "Associazione"
+title: "Associazione studentesca"
 menu:
   main:
+    identifier: verein
     parent: ueber-uns
     weight: 2
 ---
