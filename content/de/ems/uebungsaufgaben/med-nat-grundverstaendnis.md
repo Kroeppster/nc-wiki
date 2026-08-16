@@ -1,11 +1,11 @@
 ---
-title: "Med.-nat. Grundverständnis"
+title: "Medizinisch-naturwissenschaftliches Grundverständnis"
 weight: 3
 ---
 
 ## Kurze Zusammenfassung
 
-Im Untertest „Med.-nat. Grundverständnis" geht es darum, kurze Texte so zu verstehen, dass inhaltliche Fragen dazu beantwortet werden können – pro Text ist eine Frage zu lösen. Die Textabschnitte behandeln meist medizinische Zusammenhänge, Signalkaskaden oder anatomische Beschreibungen.
+Im Untertest „Medizinisch-naturwissenschaftliches Grundverständnis" geht es darum, kurze Texte so zu verstehen, dass inhaltliche Fragen dazu beantwortet werden können – pro Text ist eine Frage zu lösen. Die Textabschnitte behandeln meist medizinische Zusammenhänge, Signalkaskaden oder anatomische Beschreibungen.
 
 ## Test-Eckdaten
 

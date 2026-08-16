@@ -274,13 +274,30 @@ Besonderheiten:
 
 ## 8. Untertests verwalten
 
-Die "9 Untertests"-Übersicht (Startseite, Übungsaufgaben-Raster, FAQ-Antwort) wird aus
-`data/subtests.yaml` erzeugt. Jeder Eintrag hat eine Nummer, einen Namen (pro Sprache)
-und einen Kurzbeschrieb. Ändert sich die offizielle Anzahl oder Reihenfolge der
-EMS-Untertests (kommt selten vor, aber offiziell schon vorgekommen), hier die Liste
-anpassen – die Startseite, das Übungsaufgaben-Raster und die FAQ-Antwort ziehen die Zahl
-automatisch aus dieser Datei nach, nirgends muss die Zahl von Hand an mehreren Stellen im
-Text geändert werden.
+Die nummerierte Kachel-Übersicht auf der Startseite wird aus `data/subtests.yaml`
+erzeugt. Jeder Eintrag hat eine Nummer, einen Slug (muss zum Ordnernamen unter
+`content/<sprache>/ems/uebungsaufgaben/` passen) und einen Namen pro Sprache. Auf der
+Q&A-Seite hängt die Antwort zur Frage "Welche Untertests gibt es?" (siehe
+`data/faq.yaml`, Feld `dynamic: subtests`) automatisch dieselbe Liste als Aufzählung an –
+die Liste selbst muss also nur an dieser einen Stelle gepflegt werden.
+
+**Wichtig, seit der Zusammenlegung von "Figuren einprägen" und "Fakten einprägen" zu
+"Figuren & Fakten lernen" (2026-08-16):** `data/subtests.yaml` zählt jetzt bewusst nur
+noch 8 Einträge, weil zwei thematisch sehr ähnliche Übungsaufgaben-Seiten zu einer
+zusammengefasst wurden. Das ist eine reine Organisationsentscheidung für die
+Übungsseiten dieser Website – die echte EMS-Prüfung hat nach wie vor 9 offiziell
+getaktete Untertests (siehe Tagesablauf-Tabelle auf `/ems/`). Die FAQ-Antwort selbst
+("Der EMS besteht aus 9 Untertests...") ist deshalb bewusst **nicht** automatisch aus
+`data/subtests.yaml` abgeleitet, sondern ein fest formulierter Satz in `data/faq.yaml` –
+nur die darunter angehängte Aufzählung kommt aus `data/subtests.yaml`. Ändert sich die
+offizielle Anzahl oder Reihenfolge der echten EMS-Untertests (kommt selten vor, aber
+offiziell schon passiert), beide Stellen prüfen: den Text in `data/faq.yaml` UND die
+Liste in `data/subtests.yaml`.
+
+Wird ein Eintrag in `data/subtests.yaml` umbenannt oder verschoben, das gleiche `weight:`
+(Reihenfolge) im Frontmatter der passenden Seite unter `content/<sprache>/ems/
+uebungsaufgaben/` nachziehen, damit die (unnummerierte) Kartenliste auf der
+Übungsaufgaben-Übersichtsseite dieselbe Reihenfolge zeigt.
 
 ---
 

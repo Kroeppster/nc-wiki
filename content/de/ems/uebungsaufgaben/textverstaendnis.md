@@ -1,6 +1,6 @@
 ---
 title: "Textverständnis"
-weight: 9
+weight: 6
 ---
 
 ## Kurze Zusammenfassung

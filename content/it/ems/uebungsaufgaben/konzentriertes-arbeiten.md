@@ -1,6 +1,6 @@
 ---
 title: "Lavoro concentrato e accurato"
-weight: 6
+weight: 8
 ---
 
 ## Breve riassunto

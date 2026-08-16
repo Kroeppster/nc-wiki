@@ -1,6 +1,6 @@
 ---
 title: "Konzentriertes und sorgfältiges Arbeiten"
-weight: 6
+weight: 8
 ---
 
 ## Kurze Zusammenfassung

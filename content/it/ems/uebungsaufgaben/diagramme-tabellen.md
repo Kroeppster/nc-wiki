@@ -1,6 +1,6 @@
 ---
 title: "Diagrammi e tabelle"
-weight: 10
+weight: 7
 ---
 
 ## Breve riassunto

@@ -1,6 +1,6 @@
 ---
 title: "Association de motifs"
-weight: 2
+weight: 1
 ---
 
 ## Bref résumé

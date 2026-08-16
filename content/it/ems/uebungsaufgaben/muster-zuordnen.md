@@ -1,6 +1,6 @@
 ---
 title: "Abbinamento di schemi"
-weight: 2
+weight: 1
 ---
 
 ## Breve riassunto

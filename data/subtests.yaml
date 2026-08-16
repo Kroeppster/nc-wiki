@@ -1,20 +1,22 @@
 # ============================================================================
-# DIE 9 UNTERTESTS DES EMS (feste, offizielle Reihenfolge)
+# DIE 8 ÜBUNGSAUFGABEN-THEMEN AUF NCWIKI (nicht zu verwechseln mit den 9
+# offiziell getakteten Untertests der echten EMS-Prüfung, siehe Hinweis unten)
 # ============================================================================
 # Wird an mehreren Stellen der Website verwendet: das nummerierte Kachel-
-# Raster auf der Startseite und der Übungsaufgaben-Übersicht (siehe
-# layouts/partials/subtest-grid.html), sowie die Untertest-Liste, die bei
-# einer bestimmten Frage in der Q&A-Seite automatisch angehängt wird (siehe
-# data/faq.yaml, Eintrag mit "dynamic: subtests"). Diese Liste hier ist also
-# die EINZIGE Stelle, an der die Untertests gepflegt werden müssen - überall
-# sonst wird sie automatisch mitverwendet.
+# Raster auf der Startseite (siehe layouts/partials/subtest-grid.html), sowie
+# die Untertest-Liste, die bei einer bestimmten Frage in der Q&A-Seite
+# automatisch angehängt wird (siehe data/faq.yaml, Eintrag mit
+# "dynamic: subtests"). Diese Liste hier ist also die EINZIGE Stelle, an der
+# diese Themen gepflegt werden müssen - überall sonst wird sie automatisch
+# mitverwendet.
 #
 # Jeder Eintrag braucht:
-#   number - die offizielle Nummer (01-09), als Text mit führender Null
+#   number - die Position in diesem Raster (01-08), als Text mit führender Null
 #   slug   - technischer Name für die Web-Adresse, z.B. "muster-zuordnen"
 #            (muss zum entsprechenden Ordnernamen unter
 #            content/<sprache>/ems/uebungsaufgaben/ passen)
-#   de/fr/it - der angezeigte Name in den drei Sprachen
+#   de/fr/it - der angezeigte Name in den drei Sprachen (immer ausgeschrieben,
+#            keine Abkürzungen)
 #
 # HINWEIS (2026-08-10): Es gab hier vorher zusätzlich einen 10. Eintrag
 # "Testsimulationen" - das ist aber kein echter Untertest des EMS, sondern
@@ -23,6 +25,15 @@
 # migrierte News-Beitrag "Umstrukturierung des EMS ab 2022" bestätigt die
 # echte Zahl: "Die 9 Aufgabengruppen blieben gleich" - der EMS hat also
 # wirklich 9 Untertests, nicht 10.
+#
+# HINWEIS (2026-08-16): "Figuren einprägen" und "Fakten einprägen" wurden zu
+# EINER gemeinsamen Übungsaufgaben-Seite "Figuren & Fakten lernen"
+# zusammengelegt (beides Gedächtnisübungen mit sehr ähnlichem Ablauf) - diese
+# Liste hier zählt deshalb nur noch 8 Einträge statt 9. Das ist eine reine
+# Organisationsentscheidung für die ÜBUNGSSEITEN dieser Website: die echte
+# EMS-Prüfung selbst hat nach wie vor 9 einzeln getaktete Untertests (siehe
+# den Tagesablauf auf /ems/, wo Figuren und Fakten einprägen weiterhin als
+# zwei separate, eigenständig bewertete Untertests aufgeführt sind).
 # ============================================================================
 - number: "01"
   slug: muster-zuordnen
@@ -30,42 +41,37 @@
   fr: "Association de motifs"
   it: "Abbinamento di schemi"
 - number: "02"
-  slug: med-nat-grundverstaendnis
-  de: "Med.-nat. Grundverständnis"
-  fr: "Compréhension médico-scientifique"
-  it: "Comprensione medico-scientifica"
-- number: "03"
   slug: objekte-im-raum
   de: "Objekte im Raum"
   fr: "Objets dans l'espace"
   it: "Oggetti nello spazio"
+- number: "03"
+  slug: med-nat-grundverstaendnis
+  de: "Medizinisch-naturwissenschaftliches Grundverständnis"
+  fr: "Compréhension médico-scientifique"
+  it: "Comprensione medico-scientifica"
 - number: "04"
   slug: quantitative-probleme
   de: "Quantitative und formale Probleme"
   fr: "Problèmes quantitatifs et formels"
   it: "Problemi quantitativi e formali"
 - number: "05"
-  slug: konzentriertes-arbeiten
-  de: "Konzentriertes und sorgfältiges Arbeiten"
-  fr: "Travail concentré et soigné"
-  it: "Lavoro concentrato e accurato"
+  slug: figuren-fakten-lernen
+  de: "Figuren & Fakten lernen"
+  fr: "Apprendre figures & faits"
+  it: "Imparare figure & fatti"
 - number: "06"
-  slug: figuren-einpraegen
-  de: "Figuren einprägen"
-  fr: "Mémorisation de figures"
-  it: "Memorizzazione di figure"
-- number: "07"
-  slug: fakten-einpraegen
-  de: "Fakten einprägen"
-  fr: "Mémorisation de faits"
-  it: "Memorizzazione di fatti"
-- number: "08"
   slug: textverstaendnis
   de: "Textverständnis"
   fr: "Compréhension de texte"
   it: "Comprensione del testo"
-- number: "09"
+- number: "07"
   slug: diagramme-tabellen
   de: "Diagramme und Tabellen"
   fr: "Diagrammes et tableaux"
   it: "Diagrammi e tabelle"
+- number: "08"
+  slug: konzentriertes-arbeiten
+  de: "Konzentriertes und sorgfältiges Arbeiten"
+  fr: "Travail concentré et soigné"
+  it: "Lavoro concentrato e accurato"

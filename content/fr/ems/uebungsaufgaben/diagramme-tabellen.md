@@ -1,6 +1,6 @@
 ---
 title: "Diagrammes et tableaux"
-weight: 10
+weight: 7
 ---
 
 ## Bref résumé

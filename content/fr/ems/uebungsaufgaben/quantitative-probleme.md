@@ -1,6 +1,6 @@
 ---
 title: "Problèmes quantitatifs et formels"
-weight: 5
+weight: 4
 ---
 
 ## Bref résumé

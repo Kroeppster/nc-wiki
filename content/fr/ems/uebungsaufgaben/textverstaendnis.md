@@ -1,6 +1,6 @@
 ---
 title: "Compréhension de texte"
-weight: 9
+weight: 6
 ---
 
 ## Bref résumé

@@ -1,6 +1,6 @@
 ---
 title: "Objets dans l'espace"
-weight: 4
+weight: 2
 ---
 
 ## Bref résumé

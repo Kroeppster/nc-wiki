@@ -1,6 +1,6 @@
 ---
 title: "Muster zuordnen"
-weight: 2
+weight: 1
 ---
 
 ## Kurze Zusammenfassung

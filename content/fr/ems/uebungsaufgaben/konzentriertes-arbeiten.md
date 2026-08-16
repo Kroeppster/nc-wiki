@@ -1,6 +1,6 @@
 ---
 title: "Travail concentré et soigné"
-weight: 6
+weight: 8
 ---
 
 ## Bref résumé

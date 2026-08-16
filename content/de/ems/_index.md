@@ -40,14 +40,14 @@ Du sparst dir wertvolle Zeit am NC, wenn du die Aufgabenstellungen schon kennst 
 
 ### 1.5 Ungefähr benötigter Zeitaufwand für eine seriöse Vorbereitung
 
-- Viel Zeit: Quantitative und formale Probleme, Textverständnis, Med.-nat. Grundverständnis, Diagramme und Tabellen
+- Viel Zeit: Quantitative und formale Probleme, Textverständnis, Medizinisch-naturwissenschaftliches Grundverständnis, Diagramme und Tabellen
 - Mittel viel Zeit: Figuren einprägen, Fakten einprägen, Muster zuordnen, Objekte im Raum
 - Wenig Zeit: Konzentriertes und sorgfältiges Arbeiten
 
 | Untertest | Beginn [Monate vor Test] | Male pro Woche | Serien pro Mal |
 | --- | --- | --- | --- |
 | Muster zuordnen | 1.5–2 | 3–4 | 1 |
-| Med.-nat. Grundverständnis | 1–2 | 2–3 | 1 |
+| Medizinisch-naturwissenschaftliches Grundverständnis | 1–2 | 2–3 | 1 |
 | Objekte im Raum | 1–2 | 3–4 | 1 |
 | Quantitative und formale Probleme | 2–3 | 2–3 | 1 |
 | Konzentriertes und sorgfältiges Arbeiten | 1.5–2 | 5–6 | 1 |
@@ -96,7 +96,7 @@ Zwischen den Untertests gibt es keine Pausen – es heisst immer gleich weiterbl
 | Aufgabengruppe | Aufgaben | Max. Punktzahl | Bearbeitungszeit |
 | --- | --- | --- | --- |
 | Muster zuordnen | 18 | 18 | 16 min |
-| Med.-nat. Grundverständnis | 18 | 18 | 45 min |
+| Medizinisch-naturwissenschaftliches Grundverständnis | 18 | 18 | 45 min |
 | Objekte im Raum | 18 | 18 | 10 min |
 | Quantitative und formale Probleme | 18 | 18 | 45 min |
 | Figuren einprägen (Einprägephase) | – | – | 4 min |

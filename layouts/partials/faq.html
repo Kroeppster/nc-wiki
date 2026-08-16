@@ -15,9 +15,10 @@
   sehen den vollständigen Text jeder Antwort, auch wenn sie zugeklappt ist.
 
   Ein FAQ-Eintrag mit "dynamic: subtests" (siehe data/faq.yaml) bekommt
-  automatisch die aktuelle Liste aller 9 Untertests aus data/subtests.yaml
-  als Aufzählung angehängt - so muss diese Liste nur an einer einzigen
-  Stelle (data/subtests.yaml) gepflegt werden, nicht zusätzlich hier.
+  automatisch die aktuelle Liste der Übungsaufgaben-Themen aus
+  data/subtests.yaml als Aufzählung angehängt - so muss diese Liste nur an
+  einer einzigen Stelle (data/subtests.yaml) gepflegt werden, nicht
+  zusätzlich hier.
 
   Ganz unten wird ausserdem ein unsichtbarer Datenblock ("FAQPage
   JSON-LD-Schema") erzeugt - das ist ein von Google & Co. verstandenes
@@ -50,8 +51,8 @@
       <summary>{{ index .question $lang }}</summary>
       <div class="faq-answer">
         <p>{{ index .answer $lang }}</p>
-        {{- /* Nur bei der einen speziellen Frage: die 9 Untertests live
-               aus data/subtests.yaml anhängen (siehe Erklärung oben) */ -}}
+        {{- /* Nur bei der einen speziellen Frage: die Übungsaufgaben-Themen
+               live aus data/subtests.yaml anhängen (siehe Erklärung oben) */ -}}
         {{- if eq .dynamic "subtests" }}
         <ol class="faq-subtest-list">
           {{- range $subtests }}

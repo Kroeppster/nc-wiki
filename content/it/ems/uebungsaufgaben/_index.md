@@ -7,4 +7,4 @@ menu:
     weight: 1
 ---
 
-Esercizi gratuiti per tutti i 9 sottotest dell'EMS – realizzati da studenti per studenti.
+Esercizi gratuiti per tutti gli 8 ambiti dell'EMS – realizzati da studenti per studenti.

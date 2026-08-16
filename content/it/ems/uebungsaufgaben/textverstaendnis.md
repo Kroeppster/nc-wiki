@@ -1,6 +1,6 @@
 ---
 title: "Comprensione del testo"
-weight: 9
+weight: 6
 ---
 
 ## Breve riassunto

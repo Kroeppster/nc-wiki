@@ -7,4 +7,4 @@ menu:
     weight: 1
 ---
 
-Kostenlose Übungsaufgaben zu allen 9 Untertests des EMS – von Studierenden für Studierende zusammengestellt.
+Kostenlose Übungsaufgaben zu allen 8 Themenbereichen des EMS – von Studierenden für Studierende zusammengestellt.

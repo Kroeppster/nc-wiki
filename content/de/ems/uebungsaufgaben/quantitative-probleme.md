@@ -1,6 +1,6 @@
 ---
 title: "Quantitative und formale Probleme"
-weight: 5
+weight: 4
 ---
 
 ## Kurze Zusammenfassung
