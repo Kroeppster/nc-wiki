@@ -1,0 +1,15 @@
+{{- /*
+  ============================================================================
+  AUFFÄLLIGER SPONSORING-HINWEIS (nur auf "Jetzt unterstützen")
+  ============================================================================
+  Vorher stand das nur als kleiner Absatz ("## Sponsoring") ganz unten im
+  Fliesstext und ging dadurch leicht unter. Jetzt eine eigene, farblich
+  abgesetzte Box mit echtem Knopf statt eines reinen Text-Links - deutlich
+  sichtbarer, ohne dass man erst bis zum Ende des Fliesstexts lesen muss.
+  ============================================================================
+*/ -}}
+<div class="sponsoring-cta">
+  <h2>{{ i18n "sponsoring_heading" }}</h2>
+  <p>{{ i18n "sponsoring_text" }}</p>
+  <a class="btn btn-primary" href="{{ relLangURL "kontakt/" }}">{{ i18n "sponsoring_cta_button" }}</a>
+</div>

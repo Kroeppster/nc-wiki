@@ -11,8 +11,7 @@
 
   Parameter, die diese Datei erwartet:
     path - Ordnerpfad relativ zu assets/, z.B. "downloads/kursskripte"
-    page - die aktuelle Seite (wird für die Sprache und für den "Fehler
-           melden"-Link gebraucht)
+    page - die aktuelle Seite (wird für die Sprache gebraucht)
 
   AUFGABE + LÖSUNG als EIN Eintrag: Heisst eine PDF-Datei genau wie eine
   andere plus die Endung "_Loesung" (z.B. "2026_MusterZuordnen_A2.pdf" und
@@ -24,12 +23,11 @@
   in dem Fall am besten über data/downloads.yaml einen Anzeigenamen setzen,
   der klarmacht, dass die Lösung schon enthalten ist (z.B. "... (inkl. Lösung)").
 
-  WICHTIG - bekannte Lücke: Der "Fehler melden"-Knopf bei jedem Download
-  soll eigentlich eine Meldung per Formspree (externer Formular-Dienst,
-  siehe docs/WARTUNG.md) verschicken. Die Formspree-Adresse dafür ist noch
-  nicht eingerichtet ("REPLACE_ME" unten) - der Knopf funktioniert aktuell
-  also noch NICHT wirklich. Muss noch durch eine echte Formspree-Adresse
-  ersetzt werden.
+  Kein "Fehler melden"-Knopf mehr pro einzelnem Download: dafür gibt es
+  stattdessen das eine allgemeine Fehlerformular auf der Übungsaufgaben-
+  Übersicht (siehe report-error-general.html), das dieselbe Aufgabe für die
+  ganze Sammlung auf einmal übernimmt, statt bei jeder einzelnen PDF-Datei
+  ein eigenes kleines Formular zu zeigen.
   ============================================================================
 */}}
 {{- $folder := .path }}
@@ -37,7 +35,6 @@
 {{- $site := $page.Site }}
 {{- $lang := $site.Language.Lang }}
 {{- $overrides := $site.Data.downloads.overrides }}
-{{- $formspreeEndpoint := "https://formspree.io/f/REPLACE_ME" }}
 
 {{- /* Alle PDF-Dateien im angegebenen Ordner finden, neueste (alphabetisch
        letzte, meist die mit der höchsten Jahreszahl im Namen) zuerst. */ -}}
@@ -137,12 +134,6 @@
             </a>
             {{- end }}
           </div>
-          {{/* "Fehler melden" - siehe Hinweis oben im Dateikopf, Formspree-Adresse fehlt noch */}}
-          <form class="report-error" action="{{ $formspreeEndpoint }}" method="POST">
-            <input type="hidden" name="dateiname" value="{{ $aufgabeRes.Name }}">
-            <input type="hidden" name="seite" value="{{ $page.RelPermalink }}">
-            <button type="submit">{{ i18n "downloads_report_error" }}</button>
-          </form>
         </li>
       {{- end }}
     {{- end }}

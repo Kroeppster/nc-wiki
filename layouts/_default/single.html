@@ -63,6 +63,11 @@
       {{/* Der eigentliche Fliesstext der Seite (alles nach dem Frontmatter-Block) */}}
       {{ .Content }}
 
+      {{/* Auffälliger Sponsoring-Hinweis NUR auf "Jetzt unterstützen" - siehe
+           sponsoring-cta.html. Vorher war das nur ein kleiner Absatz im
+           Fliesstext ganz unten und ging leicht unter. */}}
+      {{ if eq .Path "/unterstuetzer-innen/jetzt-unterstuetzen" }}{{ partial "sponsoring-cta.html" . }}{{ end }}
+
       {{/* Manuelle Download-Liste aus dem Frontmatter (Feld "downloads:") -
            wird z.B. für Jahresberichte verwendet, siehe archetypes/jahresbericht.md */}}
       {{ with .Params.downloads }}
@@ -88,6 +93,18 @@
       <div class="uebungsaufgaben-downloads">
         <h2>{{ i18n "uebungsaufgaben_downloads_heading" }}</h2>
         {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
+
+        {{/* Zusätzlicher Copyright-Hinweis direkt bei den Downloads (der
+             grosse Lizenzhinweis oben unter dem Titel bleibt zusätzlich
+             bestehen). "downloads_notice" ist ein optionales Frontmatter-
+             Feld für einen zweiten, auffälligen Hinweis daneben (z.B.
+             "Neues Layout!"), falls es für eine Serie mal etwas Besonderes
+             zu vermerken gibt - einfach im Frontmatter der jeweiligen Seite
+             ergänzen, wird sonst nicht angezeigt. */}}
+        <div class="uebungsaufgaben-badges">
+          <a class="badge-license" href="{{ printf "https://creativecommons.org/licenses/by-nc/4.0/deed.%s" .Site.Language.Lang }}" target="_blank" rel="noopener">{{ i18n "uebungsaufgaben_license_link" }}</a>
+          {{ with .Params.downloads_notice }}<span class="badge-notice">{{ . }}</span>{{ end }}
+        </div>
       </div>
 
       {{/* Diskreter Spendenaufruf ganz am Seitenende - bewusst klein und

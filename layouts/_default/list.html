@@ -35,8 +35,15 @@
       </figure>
       {{ end }}
 
-      {{/* Der eigentliche Fliesstext aus der _index.md-Datei dieser Seite */}}
+      {{/* Der eigentliche Fliesstext aus der _index.md-Datei dieser Seite -
+           AUSSER bei der Übungsaufgaben-Übersicht: dort baut
+           uebungsaufgaben-overview.html eine dreispaltige Ansicht
+           (Themen-Navigation | dieser Text | Fehlerformular) und rendert
+           ".Content" deshalb selbst an der richtigen Stelle in der Mitte,
+           statt ihn hier schon vollbreit über allem anzuzeigen. */}}
+      {{ if ne .Path "/ems/uebungsaufgaben" }}
       {{ with .Content }}{{ . }}{{ end }}
+      {{ end }}
 
       {{/* Auf der Seite "Unterstützer:innen" zusätzlich das Sponsoren-Logo-Raster zeigen */}}
       {{ if eq .Path "/unterstuetzer-innen" }}

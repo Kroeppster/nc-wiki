@@ -1,17 +1,18 @@
 {{- /*
   ============================================================================
-  ÜBUNGSAUFGABEN-ÜBERSICHT: THEMEN-NAVIGATION + FEHLERFORMULAR
+  ÜBUNGSAUFGABEN-ÜBERSICHT: DREISPALTIGE ANSICHT
   ============================================================================
-  Ersetzt hier die generische Kartenliste (siehe list.html) durch eine
-  zweispaltige Ansicht: links eine einfache Liste aller 8 Übungsaufgaben-
-  Themen (aus data/subtests.yaml, dieselbe Quelle wie das nummerierte
-  Kachel-Raster auf der Startseite), rechts ein allgemeines Fehlerformular
-  für die ganze Übungsaufgaben-Sammlung (siehe report-error-general.html).
-
-  Der einleitende Text der Seite (aus content/<sprache>/ems/uebungsaufgaben/
-  _index.md) erscheint bereits automatisch DARÜBER, ganz normal über
-  "{{ with .Content }}" in list.html - hier drunter geht es nur noch um
-  Navigation + Formular.
+  Ersetzt hier die generische Kartenliste (siehe list.html) durch drei
+  Spalten nebeneinander:
+    1. Themen-Navigation (links) - einfache Liste aller 8 Übungsaufgaben-
+       Themen, aus data/subtests.yaml (dieselbe Quelle wie das nummerierte
+       Kachel-Raster auf der Startseite).
+    2. Der einleitende Text der Seite (Mitte) - kommt aus
+       content/<sprache>/ems/uebungsaufgaben/_index.md. Wird bewusst HIER
+       gerendert statt schon vollbreit in list.html, damit er wirklich
+       zwischen Navigation und Formular sitzt, nicht darüber.
+    3. Allgemeines Fehlerformular (rechts) für die ganze Übungsaufgaben-
+       Sammlung (siehe report-error-general.html).
   ============================================================================
 */ -}}
 {{- $lang := .Site.Language.Lang }}
@@ -23,6 +24,9 @@
       {{ end }}
     </ul>
   </nav>
+  <div class="uebungsaufgaben-intro">
+    {{ with .Content }}{{ . }}{{ end }}
+  </div>
   <div class="uebungsaufgaben-report">
     <h2>{{ i18n "uebungsaufgaben_error_form_heading" }}</h2>
     {{ partial "report-error-general.html" . }}

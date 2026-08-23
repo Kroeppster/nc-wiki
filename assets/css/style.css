@@ -511,17 +511,39 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .uebungsaufgaben-downloads{margin-top:var(--space-8);padding:var(--space-6);background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-md);}
 .uebungsaufgaben-downloads h2{margin-top:0;}
 .uebungsaufgaben-downloads .download-list{margin-top:var(--space-5);}
+/* Copyright-/Hinweis-Badges direkt bei den Downloads (siehe single.html) */
+.uebungsaufgaben-badges{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5);}
+.badge-license,.badge-notice{display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:var(--text-xs);padding:.3rem .75rem;border-radius:var(--radius-full);border:1px solid var(--color-line);}
+.badge-license{color:var(--color-ink-faint);background:var(--color-surface);}
+.badge-license:hover{color:var(--color-signal);}
+.badge-notice{color:var(--color-warn-text);background:var(--color-warn-bg);border-color:transparent;}
+
+/* Auffällige Sponsoring-Box auf "Jetzt unterstützen" (siehe
+   sponsoring-cta.html) - deutlich sichtbarer als der vorherige kleine
+   Textabsatz: farblich abgesetzte Fläche + echter Knopf statt Text-Link. */
+.sponsoring-cta{margin-top:var(--space-8);padding:var(--space-6);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-md);}
+.sponsoring-cta h2{margin-top:0;}
+.sponsoring-cta p{margin-bottom:var(--space-4);}
 
 /* Diskreter Spendenaufruf ganz am Seitenende (siehe donation-note.html) -
    bewusst unauffällig: kleine Schrift, dezente Trennlinie, keine Box. */
 .donation-note{margin-top:var(--space-8);padding-top:var(--space-4);border-top:1px solid var(--color-line);font-size:var(--text-xs);color:var(--color-ink-faint);}
 .donation-note a{color:var(--color-signal);text-decoration:underline;}
 
-/* Übungsaufgaben-Übersicht: Themen-Navigation links, allgemeines
-   Fehlerformular rechts (siehe uebungsaufgaben-overview.html). */
-.uebungsaufgaben-layout{display:grid;grid-template-columns:14rem 1fr;gap:var(--space-8);margin-top:var(--space-8);align-items:start;}
-.uebungsaufgaben-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-2);}
-.uebungsaufgaben-nav a{display:block;padding:.3rem 0;font-weight:600;font-size:var(--text-sm);}
+/* Übungsaufgaben-Übersicht: Themen-Navigation | Einleitungstext | Fehler-
+   formular nebeneinander (siehe uebungsaufgaben-overview.html) - bewusst
+   dreigeteilt, damit der Platzhalter-/Einleitungstext klar erkennbar
+   zwischen den beiden anderen Teilen sitzt statt vollbreit darüber. */
+.uebungsaufgaben-layout{display:grid;grid-template-columns:13rem 1fr 18rem;gap:var(--space-8);margin-top:var(--space-8);align-items:start;}
+.uebungsaufgaben-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-1);}
+/* Klar als klickbare Links erkennbar (Signalfarbe + Hover + Pfeil), statt
+   wie normaler Fliesstext auszusehen - reine Textfarbe ("inherit") wie bei
+   den meisten Links auf dieser Website wäre hier zu unauffällig, da es eine
+   ganze Liste von NUR Links ist. */
+.uebungsaufgaben-nav a{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);padding:.5rem .6rem;border-radius:var(--radius-sm);font-weight:600;font-size:var(--text-sm);color:var(--color-signal);}
+.uebungsaufgaben-nav a:hover{background:var(--color-surface-sunken);text-decoration:underline;}
+.uebungsaufgaben-nav a::after{content:"→";font-weight:400;opacity:.55;}
+.uebungsaufgaben-intro{min-width:0;}
 .uebungsaufgaben-report{background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-6);}
 .uebungsaufgaben-report h2{margin-top:0;font-size:var(--text-md);}
 

@@ -336,6 +336,22 @@ Wird ein Eintrag in `data/subtests.yaml` umbenannt oder verschoben, das gleiche 
 uebungsaufgaben/` nachziehen, damit die (unnummerierte) Kartenliste auf der
 Übungsaufgaben-Übersichtsseite dieselbe Reihenfolge zeigt.
 
+### Zusatz-Hinweis bei den Downloads einer Übungsaufgaben-Seite
+
+Direkt beim Download-Bereich jeder Übungsaufgaben-Unterseite erscheint automatisch ein
+kleines "CC BY-NC 4.0"-Badge (zusätzlich zum grossen Lizenzhinweis oben unter dem
+Titel). Braucht eine Serie mal einen zusätzlichen, auffälligen Hinweis daneben – z. B.
+weil sich das Format kürzlich geändert hat –, im Frontmatter der jeweiligen Seite
+einfach ergänzen:
+
+```yaml
+downloads_notice: "Neues Layout!"
+```
+
+Ohne dieses Feld erscheint nur das Lizenz-Badge, kein zusätzlicher Hinweis. Der Text ist
+frei wählbar und wird nicht automatisch übersetzt – bei Bedarf pro Sprachdatei einzeln
+eintragen.
+
 ---
 
 ## 9. Countdown-Datum ändern
