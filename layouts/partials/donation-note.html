@@ -1,0 +1,15 @@
+{{- /*
+  ============================================================================
+  DISKRETER SPENDENAUFRUF (aktuell nur am Ende jeder Übungsaufgaben-Seite)
+  ============================================================================
+  Bewusst klein und unaufdringlich (ein einzeiliger Text, kein Banner, kein
+  Bild, keine grelle Farbe) - die Seite dient in erster Linie dem Üben, das
+  Spendensammeln soll nicht im Vordergrund stehen. Verlinkt auf dieselbe
+  Seite wie der grosse "Jetzt unterstützen"-Knopf im Spenden-Banner der
+  Startseite (layouts/index.html).
+  ============================================================================
+*/ -}}
+<p class="donation-note">
+  {{ i18n "donation_note_text" }}
+  <a href="{{ relLangURL "unterstuetzer-innen/jetzt-unterstuetzen/" }}">{{ i18n "donation_note_link" }}</a>
+</p>

@@ -1,0 +1,30 @@
+{{- /*
+  ============================================================================
+  ÜBUNGSAUFGABEN-ÜBERSICHT: THEMEN-NAVIGATION + FEHLERFORMULAR
+  ============================================================================
+  Ersetzt hier die generische Kartenliste (siehe list.html) durch eine
+  zweispaltige Ansicht: links eine einfache Liste aller 8 Übungsaufgaben-
+  Themen (aus data/subtests.yaml, dieselbe Quelle wie das nummerierte
+  Kachel-Raster auf der Startseite), rechts ein allgemeines Fehlerformular
+  für die ganze Übungsaufgaben-Sammlung (siehe report-error-general.html).
+
+  Der einleitende Text der Seite (aus content/<sprache>/ems/uebungsaufgaben/
+  _index.md) erscheint bereits automatisch DARÜBER, ganz normal über
+  "{{ with .Content }}" in list.html - hier drunter geht es nur noch um
+  Navigation + Formular.
+  ============================================================================
+*/ -}}
+{{- $lang := .Site.Language.Lang }}
+<div class="uebungsaufgaben-layout">
+  <nav class="uebungsaufgaben-nav" aria-label="{{ i18n "uebungsaufgaben_nav_aria_label" }}">
+    <ul>
+      {{ range hugo.Data.subtests }}
+      <li><a href="{{ relLangURL (printf "ems/uebungsaufgaben/%s/" .slug) }}">{{ index . $lang }}</a></li>
+      {{ end }}
+    </ul>
+  </nav>
+  <div class="uebungsaufgaben-report">
+    <h2>{{ i18n "uebungsaufgaben_error_form_heading" }}</h2>
+    {{ partial "report-error-general.html" . }}
+  </div>
+</div>

@@ -382,11 +382,25 @@ Adresse steht direkt im jeweiligen Partial:
 | --- | --- |
 | Kontaktformular | `layouts/partials/contact-form.html` |
 | Erfahrungsbericht-Einreichung | `layouts/partials/experience-form.html` |
-| "Fehler melden" bei PDF-Downloads | `layouts/partials/download-list.html` |
+| "Fehler melden" bei einem einzelnen PDF-Download | `layouts/partials/download-list.html` |
+| Allgemeines Fehlerformular auf der Übungsaufgaben-Übersicht | `layouts/partials/report-error-general.html` |
 
 Um ein Formular an ein anderes Formspree-Konto/-Formular umzuhängen: die Adresse in der
 jeweiligen Datei ersetzen. Der Zugang zum Formspree-Konto selbst (Login) gehört in den
 gemeinsamen Passwort-Manager des Teams, nicht ins Repo (siehe Kurzguide, Abschnitt 6).
+
+**Bekannte Lücke:** sowohl `download-list.html` (Fehler melden pro PDF) als auch das neue
+`report-error-general.html` (ein Formular für die ganze Übungsaufgaben-Sammlung, verlinkt
+von `/ems/uebungsaufgaben/`) haben noch die Platzhalter-Adresse `REPLACE_ME` eingetragen –
+beide Formulare funktionieren erst, sobald hier je eine echte Formspree-Adresse
+eingetragen wird. Bis dahin zeigt der "Senden"-Knopf zwar Rückmeldungen an (Absenden
+läuft technisch), die Meldung kommt aber bei niemandem an.
+
+Beide neuen Formulare nutzen dieselbe generische Klasse `report-error` wie die
+bestehenden PDF-Fehlermeldungen – das dazugehörige JavaScript (Senden per Fetch im
+Hintergrund, Status-Text im Knopf) liegt zentral in `layouts/partials/footer.html`
+(Teil 5) und muss für ein neues Formular dieser Art NICHT angepasst werden, solange das
+Formular die Klasse `report-error` und einen `button[type="submit"]` hat.
 
 Ein **neues** Formular an einer anderen Stelle der Website einzubauen, ist keine reine
 Copy-Paste-Aufgabe mehr (neues HTML-Formular + neue Formspree-Adresse einrichten) – siehe

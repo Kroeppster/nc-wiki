@@ -1,0 +1,49 @@
+{{- /*
+  ============================================================================
+  ALLGEMEINES FEHLER-MELDE-FORMULAR (Übungsaufgaben-Übersicht)
+  ============================================================================
+  Ein einziges, zentrales Formular für Fehlermeldungen zu den
+  Übungsaufgaben-PDFs, als Ergänzung zu den automatischen "Fehler
+  melden"-Knöpfen bei jedem einzelnen Download weiter unten auf den
+  Unterseiten (siehe download-list.html) - hier trägt man selbst ein,
+  welche Übung betroffen ist, statt dafür extra zur passenden Unterseite
+  navigieren zu müssen.
+
+  Nutzt dieselbe generische Klasse "report-error" wie die Download-
+  Fehlermeldungen, darum braucht es KEIN eigenes JavaScript: der bereits
+  vorhandene Code in footer.html (Teil 5) findet und behandelt jedes
+  Formular mit dieser Klasse automatisch gleich (Senden per Fetch im
+  Hintergrund, Status-Text direkt im Knopf statt Seitenwechsel).
+
+  WICHTIG - gleiche bekannte Lücke wie bei download-list.html: die
+  Formspree-Adresse ist noch ein Platzhalter ("REPLACE_ME") und muss vor
+  dem produktiven Einsatz durch eine echte ersetzt werden (siehe
+  docs/WARTUNG-DETAILLIERT.md, Abschnitt "Formulare").
+  ============================================================================
+*/ -}}
+<form class="contact-form report-error report-error-general" action="https://formspree.io/f/REPLACE_ME" method="POST">
+  <div>
+    <label for="ef-item">{{ i18n "uebungsaufgaben_error_item_label" }}</label>
+    <input type="text" name="uebung" id="ef-item" required>
+  </div>
+  <div>
+    <label for="ef-desc">{{ i18n "uebungsaufgaben_error_desc_label" }}</label>
+    <textarea name="beschreibung" id="ef-desc" required></textarea>
+  </div>
+  <div>
+    <label for="ef-name">{{ i18n "form_name" }}</label>
+    <input type="text" name="name" id="ef-name">
+  </div>
+  <div>
+    <label for="ef-email">{{ i18n "form_email" }}</label>
+    <input type="email" name="email" id="ef-email">
+  </div>
+
+  {{/* Für Menschen unsichtbares Extra-Feld, das nur Spam-Roboter ausfüllen
+       (siehe experience-form.html für dieselbe Technik). */}}
+  <div class="visually-hidden-field" aria-hidden="true">
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+  </div>
+
+  <button type="submit" class="btn btn-primary">{{ i18n "uebungsaufgaben_error_submit" }}</button>
+</form>

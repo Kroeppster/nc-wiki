@@ -499,8 +499,31 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .faq-subtest-list li{margin-bottom:.2rem;}
 .faq-contact{max-width:44rem;margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-line);color:var(--color-ink-soft);font-size:var(--text-sm);}
 
-.uebungsaufgaben-license{margin-top:var(--space-6);font-size:var(--text-xs);color:var(--color-ink-faint);}
-.uebungsaufgaben-license a{color:inherit;text-decoration:underline;}
+/* Steht jetzt direkt unter dem Titel (siehe single.html) statt wie früher
+   ganz unten nach den Downloads - deshalb als kleines, gut sichtbares
+   Badge gestaltet statt als unauffällige Fussnotenzeile. */
+.uebungsaufgaben-license{display:inline-flex;align-items:center;gap:.4rem;margin:var(--space-3) 0 var(--space-6);padding:.35rem .8rem;font-size:var(--text-xs);color:var(--color-ink-faint);background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-full);}
+.uebungsaufgaben-license a{color:var(--color-signal);text-decoration:underline;}
+
+/* Eigene, optisch abgesetzte Box um die Download-Liste (siehe single.html) -
+   trennt sichtbar die Tipps/Erklärungen (normaler Seitenhintergrund) von den
+   tatsächlichen Downloads (leicht getönte Fläche mit Rahmen). */
+.uebungsaufgaben-downloads{margin-top:var(--space-8);padding:var(--space-6);background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-md);}
+.uebungsaufgaben-downloads h2{margin-top:0;}
+.uebungsaufgaben-downloads .download-list{margin-top:var(--space-5);}
+
+/* Diskreter Spendenaufruf ganz am Seitenende (siehe donation-note.html) -
+   bewusst unauffällig: kleine Schrift, dezente Trennlinie, keine Box. */
+.donation-note{margin-top:var(--space-8);padding-top:var(--space-4);border-top:1px solid var(--color-line);font-size:var(--text-xs);color:var(--color-ink-faint);}
+.donation-note a{color:var(--color-signal);text-decoration:underline;}
+
+/* Übungsaufgaben-Übersicht: Themen-Navigation links, allgemeines
+   Fehlerformular rechts (siehe uebungsaufgaben-overview.html). */
+.uebungsaufgaben-layout{display:grid;grid-template-columns:14rem 1fr;gap:var(--space-8);margin-top:var(--space-8);align-items:start;}
+.uebungsaufgaben-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-2);}
+.uebungsaufgaben-nav a{display:block;padding:.3rem 0;font-weight:600;font-size:var(--text-sm);}
+.uebungsaufgaben-report{background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-6);}
+.uebungsaufgaben-report h2{margin-top:0;font-size:var(--text-md);}
 
 /* Bild-Header einer Seite */
 .featured-image{margin:var(--space-6) 0 var(--space-8);}
@@ -711,6 +734,15 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 .report-error{margin:0 0 0 .2rem;}
 .report-error button{background:none;border:none;padding:0;font:inherit;font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-ink-faint);text-decoration:underline;cursor:pointer;}
 .report-error button:hover{color:var(--color-signal);}
+/* Der Knopf im allgemeinen Fehlerformular (siehe report-error-general.html)
+   soll trotz der gemeinsamen "report-error"-Klasse (nur fürs geteilte
+   JavaScript in footer.html gebraucht) wie ein normaler Haupt-Knopf
+   aussehen, nicht wie die dezenten "Fehler melden"-Text-Links bei
+   einzelnen PDF-Downloads oben - deshalb hier gezielt wieder das
+   .btn/.btn-primary-Aussehen herstellen (überschreibt ".report-error
+   button" oben, weil hier spezifischer benannt UND weiter unten im Code). */
+.report-error-general button{background:var(--color-signal);color:var(--color-on-signal);border:1px solid transparent;padding:.85rem 1.4rem;border-radius:var(--radius-sm);font:inherit;font-size:var(--text-sm);font-weight:600;text-decoration:none;cursor:pointer;}
+.report-error-general button:hover{background:var(--color-signal-strong);color:var(--color-on-signal);}
 
 /* ==========================================================================
    Formulare
@@ -775,6 +807,7 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
      Name), dass mehrere pro Zeile auch auf schmalen Bildschirmen noch gut
      lesbar bleiben, statt eine sehr lange senkrechte Liste zu ergeben. */
   .team-grid{grid-template-columns:repeat(auto-fill,minmax(7rem,1fr));}
+  .uebungsaufgaben-layout{grid-template-columns:1fr;}
   .subtest-grid{grid-template-columns:repeat(2,1fr);}
   .feature-grid{grid-template-columns:1fr;gap:var(--space-6);}
   .sponsor-grid{grid-template-columns:repeat(2,1fr);}

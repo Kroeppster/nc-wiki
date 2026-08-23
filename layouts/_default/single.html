@@ -29,6 +29,19 @@
       {{ if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
       <h1>{{ $pageTitle }}</h1>
 
+      {{/* Lizenzhinweis bei Übungsaufgaben-Unterseiten (z.B. "muster-zuordnen")
+           steht bewusst GANZ OBEN, direkt unter dem Titel, statt wie früher
+           erst ganz unten nach den Downloads - so ist sofort klar, unter
+           welcher Lizenz die Materialien stehen, bevor man überhaupt zu den
+           Tipps oder Downloads scrollt. */}}
+      {{ if strings.Contains .Path "uebungsaufgaben" }}
+      <p class="uebungsaufgaben-license">
+        {{ i18n "uebungsaufgaben_license_prefix" }}
+        <a href="{{ printf "https://creativecommons.org/licenses/by-nc/4.0/deed.%s" .Site.Language.Lang }}" target="_blank" rel="noopener">{{ i18n "uebungsaufgaben_license_link" }}</a>
+        {{ i18n "uebungsaufgaben_license_suffix" }}
+      </p>
+      {{ end }}
+
       {{/* Nur bei Erfahrungsberichten: Jahr/Ort-Angabe und Schlagwort-Pills
            unter dem Titel anzeigen */}}
       {{ if and .Params.name .Params.jahr }}
@@ -63,25 +76,24 @@
       {{/* Für Übungsaufgaben-Unterseiten (z.B. "muster-zuordnen") werden
            automatisch alle PDFs im passenden Unterordner unter
            assets/downloads/uebungsaufgaben/ aufgelistet - der Ordnername wird
-           dabei automatisch aus dem Dateinamen dieser Seite abgeleitet. */}}
+           dabei automatisch aus dem Dateinamen dieser Seite abgeleitet.
+           Bewusst in einer eigenen, optisch abgesetzten Box (eigener
+           Hintergrund + Rahmen, siehe .uebungsaufgaben-downloads in
+           style.css), damit klar erkennbar ist: alles darüber (Tipps,
+           Erklärungen) ist Lesestoff, alles hier drin sind die eigentlichen
+           herunterladbaren Aufgabenblätter - keine optische Vermischung
+           mehr wie vorher, wo die Download-Liste nahtlos in den letzten
+           Textabschnitt überging. */}}
       {{ if strings.Contains .Path "uebungsaufgaben" }}
-      {{/* Eigene Überschrift direkt über den Downloads, damit der Übergang
-           vom Fliesstext (Tipps, Erklärungen) zu den tatsächlichen
-           Aufgabenblättern klarer sichtbar ist - vorher ging die
-           Download-Liste optisch nahtlos in den letzten Textabschnitt über. */}}
-      <h2>{{ i18n "uebungsaufgaben_downloads_heading" }}</h2>
-      {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
+      <div class="uebungsaufgaben-downloads">
+        <h2>{{ i18n "uebungsaufgaben_downloads_heading" }}</h2>
+        {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
+      </div>
 
-      {{/* Lizenzhinweis für die Übungsaufgaben (CC BY-NC 4.0, siehe README.md
-           und assets/downloads/uebungsaufgaben/README.md). Die passende
-           Sprachversion des offiziellen Lizenztexts wird direkt aus dem
-           Sprachcode der Seite gebaut (de/fr/it passen genau auf die
-           "deed.xx"-Adressen von creativecommons.org). */}}
-      <p class="uebungsaufgaben-license">
-        {{ i18n "uebungsaufgaben_license_prefix" }}
-        <a href="{{ printf "https://creativecommons.org/licenses/by-nc/4.0/deed.%s" .Site.Language.Lang }}" target="_blank" rel="noopener">{{ i18n "uebungsaufgaben_license_link" }}</a>
-        {{ i18n "uebungsaufgaben_license_suffix" }}
-      </p>
+      {{/* Diskreter Spendenaufruf ganz am Seitenende - bewusst klein und
+           unaufdringlich (kleiner Text, kein Banner), die Seite dient in
+           erster Linie dem Üben, nicht dem Spendensammeln. */}}
+      {{ partial "donation-note.html" . }}
       {{ end }}
 
       {{/* Diese drei Bausteine erscheinen NUR, wenn das jeweilige Feld im

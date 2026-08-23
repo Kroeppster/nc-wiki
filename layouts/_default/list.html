@@ -64,18 +64,21 @@
       {{ partial "download-list.html" (dict "path" "downloads/kursskripte" "page" .) }}
       {{ end }}
 
-      {{/* Drei Übersichtsseiten haben einen komplett eigenen Aufbau statt der
+      {{/* Vier Übersichtsseiten haben einen komplett eigenen Aufbau statt der
            normalen Kartenliste weiter unten: Erfahrungsberichte (Filterbare
-           Kartenübersicht mit Foto-Kreisen), Uniguide (Vergleichstabelle) und
-           Q&A (aufklappbare Fragen). Alle anderen Übersichtsseiten (News,
-           Übungsaufgaben, usw.) fallen in den "else"-Zweig: eine normale,
-           seitenweise Liste von Karten mit Titel/Vorschautext/Link. */}}
+           Kartenübersicht mit Foto-Kreisen), Uniguide (Vergleichstabelle),
+           Q&A (aufklappbare Fragen) und Übungsaufgaben (Themen-Navigation +
+           allgemeines Fehlerformular statt Kartenliste). Alle anderen
+           Übersichtsseiten (News, usw.) fallen in den "else"-Zweig: eine
+           normale, seitenweise Liste von Karten mit Titel/Vorschautext/Link. */}}
       {{ if eq .Path "/ems/erfahrungsberichte" }}
       {{ partial "erfahrungsbericht-grid.html" . }}
       {{ else if eq .Path "/ems/uniguide" }}
       {{ partial "uniguide-table.html" . }}
       {{ else if eq .Path "/ems/qa" }}
       {{ partial "faq.html" . }}
+      {{ else if eq .Path "/ems/uebungsaufgaben" }}
+      {{ partial "uebungsaufgaben-overview.html" . }}
       {{ else }}
       {{/* Paginate = die Unterseiten in Päckchen aufteilen (z.B. 12 pro Seite,
            siehe pagerSize in hugo.toml), damit die Liste nicht endlos lang wird */}}
