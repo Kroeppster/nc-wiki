@@ -4,26 +4,42 @@ menu:
   main:
     parent: ueber-uns
     weight: 1
+leitungsteam:
+  - name: "Alessio Iseli"
+    rolle: "Koordinator"
+  - name: "Kron Mustafa"
+    rolle: "Events & Qualitätskontrolle"
+  - name: "Selina Buchser"
+    rolle: "Koordinatorin Romandie"
+  - name: "Margherita Bernasconi"
+    rolle: "Koordinatorin Ticino"
+  - name: "Francesca Serra"
+    rolle: "Vorbereitungskurse"
+  - name: "Matthias Schütz"
+    rolle: "Übungsserien"
+  - name: "Olivia Schiess"
+    rolle: "Testsimulation"
+  - name: "Sabrina Zeller"
+    rolle: "Testsimulation"
+  - name: "Edgar Brändle"
+    rolle: "Website"
+  - name: "Valentina Nocito"
+    rolle: "Marketing"
+  - name: "Lea Meyer"
+    rolle: "Finanzen"
+  - name: "Isabel Kretschi"
+    rolle: "Public Relations"
+  - name: "Kilian Belohlavek"
+    rolle: "Protokoll & Daten"
+  - name: "Johanna Denz"
+    rolle: "Social & Onboarding"
 ---
 
 Im NCWiki-Team engagieren sich über 70 Medizinstudierende aus der ganzen Schweiz.
 
 ## Aktuelles Leitungsteam
 
-- **Alessio Iseli** – Koordinator / Coordinateur / Coordinazione generale
-- **Kron Mustafa** – Events & Qualitätskontrolle / Events & Contrôle Qualité / Eventi e Controlli di Qualità
-- **Selina Buchser** – Koordinatorin Romandie / Coordinatrice Romandie / Coordinatrice Francofona
-- **Margherita Bernasconi** – Koordinatorin Ticino / Coordinatrice Ticino / Coordinatrice Italofona
-- **Francesca Serra** – Vorbereitungskurse / Cours de Préparation / Corso di Preparazione
-- **Matthias Schütz** – Übungsserien / Séries d'Exercices / Esercizi
-- **Olivia Schiess** – Testsimulation / Simulation de Test / Simulazione del Test
-- **Sabrina Zeller** – Testsimulation / Simulation de Test / Simulazione del Test
-- **Edgar Brändle** – Website / Site Web / Sito Web
-- **Valentina Nocito** – Marketing
-- **Lea Meyer** – Finanzen / Finances / Finanze
-- **Isabel Kretschi** – Public Relations
-- **Kilian Belohlavek** – Protokoll & Daten / Protocole & Dates / Protocollo & Dati
-- **Johanna Denz** – Social & Onboarding
+{{< team-leitung >}}
 
 ## Team Saison 2025/26
 

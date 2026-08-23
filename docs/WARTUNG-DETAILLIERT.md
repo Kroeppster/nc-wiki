@@ -218,16 +218,53 @@ Logo-Datei selbst zu bearbeiten.
 ## 5. Team-Seite pflegen
 
 Die Team-Seite (`content/de/ueber-uns/team/_index.md`, plus `content/fr/...` und
-`content/it/...`) ist **keine Datenliste**, sondern ganz normaler Markdown-Fliesstext mit
-Überschriften und Aufzählungen – neue Team-Mitglieder werden einfach als neue
-Aufzählungspunkte unter der passenden Überschrift ergänzt bzw. beim Saisonwechsel der
-ganze Abschnitt "Aktuelles Leitungsteam" durch die neue Besetzung ersetzt (die bisherige
-Besetzung wandert dann sinnvollerweise unter "Frühere Saisons", nach demselben Muster
-wie die bereits dort stehenden Jahrgänge).
+`content/it/...`) hat zwei verschiedene Bereiche, die unterschiedlich gepflegt werden:
 
-Da es sich um drei separate Dateien handelt (eine pro Sprache), muss eine Namensänderung
-oder ein neues Teammitglied in allen dreien nachgezogen werden, damit die Seite überall
-gleich aktuell ist.
+### Aktuelles Leitungsteam (Foto-Karten-Raster)
+
+Dieser Bereich wird NICHT als Fliesstext gepflegt, sondern als strukturierte Liste im
+Frontmatter jeder der drei Dateien, Feld `leitungsteam:`:
+
+```yaml
+leitungsteam:
+  - name: "Alessio Iseli"
+    rolle: "Koordinator"
+  - name: "Kron Mustafa"
+    rolle: "Events & Qualitätskontrolle"
+```
+
+Der Shortcode `{{</* team-leitung */>}}` im Markdown-Text (direkt unter der Überschrift
+"Aktuelles Leitungsteam") liest diese Liste aus und baut daraus automatisch das
+Karten-Raster (siehe `layouts/shortcodes/team-leitung.html`).
+
+**Foto oder Platzhalter:** Jeder Eintrag kann zusätzlich ein Feld `foto:` bekommen, mit
+dem Pfad zum Foto relativ zu `assets/images/`, z. B.:
+
+```yaml
+  - name: "Alessio Iseli"
+    rolle: "Koordinator"
+    foto: "team/alessio-iseli.jpg"
+```
+
+Die Bilddatei kommt dann nach `assets/images/team/alessio-iseli.jpg` (Ordner bei Bedarf
+neu anlegen). **Fehlt das Feld `foto:` (der Normalfall, solange noch nicht für alle
+Personen ein Foto vorliegt), erscheint automatisch ein farbiger Kreis mit den Initialen
+als Platzhalter** – dieselbe Darstellung, die auch bei Erfahrungsberichten ohne Foto
+verwendet wird. Es muss also nichts Zusätzliches eingerichtet werden, damit die Seite
+auch ohne Fotos sauber aussieht.
+
+Da es sich um drei separate Dateien handelt (eine pro Sprache), muss ein neues
+Teammitglied (Name **und** übersetzte Rolle) in allen dreien nachgezogen werden. Der
+Name bleibt dabei überall gleich, nur `rolle:` wird pro Sprache übersetzt.
+
+### Frühere Saisons, Content Creators, Ehemalige Verantwortliche
+
+Alles unterhalb von "Aktuelles Leitungsteam" bleibt ganz normaler Markdown-Fliesstext mit
+Überschriften und Aufzählungen (keine Fotos, kein Karten-Raster) – neue Namen werden
+einfach als neue Aufzählungspunkte ergänzt. Beim Saisonwechsel wandert die bisherige
+Besetzung des Leitungsteams (aus `leitungsteam:` oben) sinnvollerweise als neuer
+Textabschnitt unter "Frühere Saisons", nach demselben Muster wie die bereits dort
+stehenden Jahrgänge, bevor `leitungsteam:` mit der neuen Besetzung überschrieben wird.
 
 ---
 

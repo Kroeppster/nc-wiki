@@ -1,0 +1,43 @@
+{{- /*
+  ============================================================================
+  AKTUELLES LEITUNGSTEAM ALS FOTO-KARTEN-RASTER
+  ============================================================================
+  Verwendung im Markdown-Text: der Shortcode "team-leitung" ohne Parameter
+  (siehe content/de/ueber-uns/team/_index.md fuer ein Beispiel). Liest die
+  Liste aus dem Frontmatter
+  der Seite (Feld "leitungsteam:", siehe docs/WARTUNG-DETAILLIERT.md,
+  Abschnitt "Team-Seite pflegen").
+
+  Hat eine Person ein Foto hinterlegt (Feld "foto:" pro Eintrag, Pfad
+  relativ zu assets/images/, z. B. "team/alessio-iseli.jpg"), wird das Foto
+  rund zugeschnitten gezeigt. Fehlt das Foto (der Normalfall, solange noch
+  nicht alle Fotos vorliegen), erscheint automatisch ein farbiger Kreis mit
+  den Initialen als Platzhalter - exakt dieselbe Darstellung, die auch bei
+  Erfahrungsberichten ohne Foto verwendet wird (siehe
+  erfahrungsbericht-grid.html), damit die Website konsistent aussieht statt
+  irgendwo ein generisches "Bild fehlt"-Symbol zu zeigen.
+  ============================================================================
+*/ -}}
+{{- $items := .Page.Params.leitungsteam -}}
+<ul class="card-grid team-grid">
+  {{- range $items }}
+  {{- $name := .name }}
+  {{- $nameParts := split (strings.TrimSpace $name) " " }}
+  {{- $initials := "" }}
+  {{- if ge (len $nameParts) 1 }}{{ $initials = substr (index $nameParts 0) 0 1 }}{{ end }}
+  {{- if ge (len $nameParts) 2 }}{{ $initials = printf "%s%s" $initials (substr (index $nameParts 1) 0 1) }}{{ end }}
+  {{- $initials = upper $initials }}
+  {{- $colorIdx := mod (hash.FNV32a $name) 6 }}
+  <li class="card team-card">
+    {{- if .foto }}
+    <div class="team-photo">
+      {{ partial "image.html" (dict "src" .foto "alt" $name "sizes" "96px") }}
+    </div>
+    {{- else }}
+    <span class="avatar avatar-{{ $colorIdx }} avatar-lg" aria-hidden="true">{{ $initials }}</span>
+    {{- end }}
+    <h3>{{ $name }}</h3>
+    <p class="report-meta">{{ .rolle }}</p>
+  </li>
+  {{- end }}
+</ul>

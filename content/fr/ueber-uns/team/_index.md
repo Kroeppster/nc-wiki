@@ -4,26 +4,42 @@ menu:
   main:
     parent: ueber-uns
     weight: 1
+leitungsteam:
+  - name: "Alessio Iseli"
+    rolle: "Coordinateur"
+  - name: "Kron Mustafa"
+    rolle: "Events & Contrôle Qualité"
+  - name: "Selina Buchser"
+    rolle: "Coordinatrice Romandie"
+  - name: "Margherita Bernasconi"
+    rolle: "Coordinatrice Ticino"
+  - name: "Francesca Serra"
+    rolle: "Cours de Préparation"
+  - name: "Matthias Schütz"
+    rolle: "Séries d'Exercices"
+  - name: "Olivia Schiess"
+    rolle: "Simulation de Test"
+  - name: "Sabrina Zeller"
+    rolle: "Simulation de Test"
+  - name: "Edgar Brändle"
+    rolle: "Site Web"
+  - name: "Valentina Nocito"
+    rolle: "Marketing"
+  - name: "Lea Meyer"
+    rolle: "Finances"
+  - name: "Isabel Kretschi"
+    rolle: "Public Relations"
+  - name: "Kilian Belohlavek"
+    rolle: "Protocole & Dates"
+  - name: "Johanna Denz"
+    rolle: "Social & Onboarding"
 ---
 
 Plus de 70 étudiant·e·s en médecine de toute la Suisse sont impliqué·e·s dans l'équipe de NCWiki.
 
 ## Équipe dirigeante actuelle
 
-- **Alessio Iseli** – Koordinator / Coordinateur / Coordinazione generale
-- **Kron Mustafa** – Events / Contrôle Qualité / Eventi e Controlli di Qualità
-- **Selina Buchser** – Coordinatrice Romandie / Coordinatrice Francofona
-- **Margherita Bernasconi** – Coordinatrice Ticino / Coordinatrice Italofona
-- **Francesca Serra** – Cours de Préparation
-- **Matthias Schütz** – Séries d'Exercices
-- **Olivia Schiess** – Simulation de Test
-- **Sabrina Zeller** – Simulation de Test
-- **Edgar Brändle** – Site Web
-- **Valentina Nocito** – Marketing
-- **Lea Meyer** – Finances
-- **Isabel Kretschi** – Public Relations
-- **Kilian Belohlavek** – Protocole & Dates
-- **Johanna Denz** – Social & Onboarding
+{{< team-leitung >}}
 
 ## Équipe saison 2025/26
 
