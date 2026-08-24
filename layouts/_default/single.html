@@ -18,6 +18,19 @@
 {{ define "main" }}
   <section>
     <div class="wrap">
+      {{/* "Zurück"-Knopf oben links zur übergeordneten Übersichtsseite (z.B.
+           von einer Uniguide-Uni-Seite zurück zu "Uniguide", von einem
+           Untertest wie "Muster zuordnen" zurück zu "Übungsaufgaben", von
+           einem News-Beitrag zurück zu "News", von einem Erfahrungsbericht
+           zurück zu "Erfahrungsberichte"). ".Parent" ist die Seite eine
+           Ebene höher im Ordnerbaum - funktioniert automatisch für JEDE
+           Einzelseite dieser Vorlage, ohne pro Bereich extra Code. Bei
+           Seiten ohne echten übergeordneten Bereich (z.B. direkt die
+           Startseite) gibt es keinen ".Parent" und der Knopf bleibt weg. */}}
+      {{ with .Parent }}
+      <a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>
+      {{ end }}
+
       {{/* Kleines Schlagwort über dem Titel = der Ordnername (z.B. "News", "EMS") */}}
       {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
 
@@ -28,6 +41,10 @@
       {{ $pageTitle := .Title }}
       {{ if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
       <h1>{{ $pageTitle }}</h1>
+
+      {{/* Datum nur bei News-Beiträgen anzeigen, damit sofort klar ist, von
+           wann eine Meldung ist - sprachabhängig formatiert. */}}
+      {{ if eq .Section "news" }}<p class="report-meta">{{ .Date | time.Format ":date_long" }}</p>{{ end }}
 
       {{/* Lizenzhinweis bei Übungsaufgaben-Unterseiten (z.B. "muster-zuordnen")
            steht bewusst GANZ OBEN, direkt unter dem Titel, statt wie früher
