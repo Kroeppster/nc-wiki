@@ -47,6 +47,10 @@ sonst fehl.
 - Übungsaufgaben-Inhalte (`content/*/ems/uebungsaufgaben/` und zugehörige PDFs unter
   `assets/downloads/uebungsaufgaben/`) stehen unter CC BY-NC 4.0 — Lizenzhinweis nicht
   entfernen.
-- Commits: `git -c user.name="Kroeppster" -c user.email="kronmustafa@gmail.com" commit ...`
+- Commit-Identität: Es ist bewusst keine globale Git-Identität gesetzt. Nach einem
+  frischen Clone einmalig `git config --local user.name "..."` und
+  `git config --local user.email "..."` setzen — danach genügen normale `git commit`
+  ohne `-c`-Flags. `.git/config` ist nicht versioniert, die Angaben landen also nicht
+  im Repo.
 - Nach jedem Push den GitHub-Actions-Run per API prüfen (`.../actions/runs?per_page=1`),
   bis `conclusion: success`, bevor die Aufgabe als erledigt gilt.
