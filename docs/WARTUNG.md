@@ -190,6 +190,10 @@ Diese Zuordnung gehört stattdessen in einen gemeinsamen Passwort-Manager fürs 
 das Einrichten eines solchen sinnvoll – darin sollte mindestens festgehalten werden:
 
 - **GitHub:** wer Owner/Admin des Repos `Kroeppster/nc-wiki` ist.
+- **Das Passwort des Mitgliederbereichs** – auf GitHub als Secret `MITGLIEDER_PASSWORT`
+  hinterlegt und dort nicht mehr auslesbar, nur überschreibbar. Deshalb gehört es
+  zusätzlich in den Passwort-Manager, sonst kennt es irgendwann niemand mehr
+  (siehe Abschnitt 11).
 - **Formspree:** Login-Zugang zum Konto, und welches der drei Formulare
   (`mvkpgrpl`, `xaewqwoj`, das noch fehlende dritte) wozu gehört, sowie welche
   E-Mail-Adresse die Einsendungen empfängt.
@@ -318,3 +322,109 @@ erscheinen.
 im Seiten-Quelltext steht der Inhalt schon vor dem Freigabe-Zeitpunkt, nur unsichtbar.
 Für einen Link, der zur richtigen Zeit öffentlich auffindbar werden soll, reicht das
 – für etwas, das wirklich geheim bleiben muss (z. B. ein Passwort), nicht geeignet.
+
+---
+
+## 11. Mitgliederbereich (passwortgeschützte Seiten)
+
+Unter `content/de|fr|it/mitglieder/` liegen Seiten, die nicht zufällig gefunden werden
+sollen – aktuell die Mitgliederevents und das Spesenformular. Sie sind **absichtlich
+nicht im Menü verlinkt** und bekommen beim Veröffentlichen eine Passwort-Abfrage
+vorgeschaltet.
+
+### Was der Schutz leistet – und was nicht
+
+**Bitte einmal ganz lesen, bevor etwas in diesen Bereich gestellt wird.**
+
+Der Schutz hält Suchmaschinen und zufällige Besucher:innen zuverlässig fern. Er ist
+**kein richtiger Login**:
+
+- Alle Mitglieder teilen sich **ein** Passwort. Wer es weitergibt, lässt sich nicht
+  einzeln aussperren – es hilft nur, das Passwort für alle zu ändern.
+- Die verschlüsselte Seite liegt öffentlich im Netz. Wer sie herunterlädt, kann in
+  aller Ruhe Passwörter durchprobieren, ohne dass das jemand bemerkt oder bremst.
+  Deshalb **muss** das Passwort lang und zufällig sein (siehe unten).
+- **Die verlinkten PDF-Dateien sind nicht geschützt.** Nur die *Seite* liegt hinter
+  dem Passwort. Die PDFs selbst liegen ganz normal auf dem Webserver und sind für
+  jede Person abrufbar, die ihre genaue Adresse kennt oder errät. Der Schutz besteht
+  praktisch darin, dass diese Adressen nirgends öffentlich stehen – nicht darin, dass
+  der Server jemanden abweisen würde.
+
+Daraus folgt: In den Mitgliederbereich gehören interne Termine, Formulare und
+Merkblätter – also Dinge, die schlicht niemanden ausserhalb des Vereins interessieren.
+**Nicht** hierher gehören Personendaten von Mitgliedern, Kontoauszüge,
+Bewerbungsunterlagen oder sonst irgendetwas, dessen Veröffentlichung echten Schaden
+anrichten würde.
+
+### Wie füge ich eine neue geschützte Seite hinzu?
+
+Genau wie jede andere Seite (siehe Abschnitt 2), mit **einer** Ergänzung im
+Frontmatter – und wie immer in allen drei Sprachen:
+
+```
+---
+title: "Titel der Seite"
+geschuetzt: true
+---
+```
+
+Das `geschuetzt: true` erledigt alles Weitere automatisch: Die Seite bekommt
+`noindex`, fällt aus der Suchfunktion, aus der `sitemap.xml` und aus allen
+RSS-Feeds heraus, und bekommt beim Veröffentlichen die Passwort-Abfrage.
+
+Soll auf einer Seite eine automatische PDF-Liste erscheinen, zusätzlich:
+
+```
+download_ordner: "downloads/mitglieder"
+```
+
+Die PDFs kommen dann nach `assets/downloads/mitglieder/` (siehe die README-Datei
+dort und Abschnitt 3).
+
+### Wie ändere ich das Passwort?
+
+Das Passwort steht **nicht im Repository** (es gehört dort auch nicht hin, siehe
+Abschnitt 6), sondern in einem GitHub-Secret:
+
+1. Auf GitHub im Repo `Kroeppster/nc-wiki` auf **Settings** → in der linken Spalte
+   **Secrets and variables** → **Actions**.
+2. Beim Eintrag **`MITGLIEDER_PASSWORT`** auf das Stift-Symbol klicken
+   (bzw. **New repository secret**, falls er noch nicht existiert).
+3. Neues Passwort eintragen und speichern. **Mindestens 16 zufällige Zeichen** – am
+   besten vom Passwort-Manager erzeugen lassen, kein selbst ausgedachtes Wort.
+4. Das Passwort wirkt erst nach dem nächsten Bauen der Website. Entweder auf die
+   nächste inhaltliche Änderung warten, oder auf GitHub unter **Actions** den
+   Workflow "Deploy Hugo site to GitHub Pages" auswählen und **Run workflow** auf
+   `main` starten.
+5. Das neue Passwort im gemeinsamen Passwort-Manager hinterlegen (Abschnitt 6) und
+   den Mitgliedern mitteilen.
+
+**Wo ist das Passwort dokumentiert?** Im gemeinsamen Passwort-Manager des Vereins,
+zusammen mit den übrigen Zugängen – siehe Abschnitt 6. Nicht in git, nicht in einer
+Datei im Repo, auch nicht in einer "privaten": Die Historie eines Repos bleibt für
+immer einsehbar, auch wenn eine Datei später gelöscht wird.
+
+### Der Build ist rot und meldet etwas mit "Kein Passwort gesetzt"
+
+Dann fehlt das Secret `MITGLIEDER_PASSWORT` oder es ist falsch geschrieben. Der
+Ablauf bricht an dieser Stelle **absichtlich** ab, statt den Mitgliederbereich
+unverschlüsselt zu veröffentlichen. Secret wie oben beschrieben anlegen, danach den
+Workflow erneut starten. Die zuletzt erfolgreich gebaute Version der Website bleibt
+in der Zwischenzeit online (siehe Abschnitt 7).
+
+Bei einem Pull Request ist das anders: Dort wird nur gewarnt und unverschlüsselt
+weitergebaut, weil das Secret dort nicht immer zur Verfügung steht – veröffentlicht
+wird bei einem Pull Request ohnehin nie.
+
+### Lokal ausprobieren
+
+`hugo server -D` zeigt die Seiten ganz normal ohne Passwort an – die Verschlüsselung
+passiert erst beim Veröffentlichen. Wer die Passwort-Abfrage selbst sehen will:
+
+```bash
+npm run build
+STATICRYPT_PASSWORD='test-passwort' npm run schuetzen
+```
+
+Danach liegt in `public/mitglieder/` die geschützte Fassung. Wichtig: `public/` ist
+nur ein lokaler Bau-Ordner und landet nie in git.

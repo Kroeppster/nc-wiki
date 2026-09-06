@@ -31,6 +31,16 @@
       <a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>
       {{ end }}
 
+      {{/* Sichtbarer Hinweis auf Seiten des Mitgliederbereichs
+           ("geschuetzt: true" im Frontmatter). Erinnert daran, dass die
+           Seite zwar hinter einer Passwort-Abfrage liegt, das Passwort aber
+           unter allen Mitgliedern geteilt wird - sie ist also so vertraulich
+           wie eine Nachricht in einer grossen Gruppenchat-Gruppe, nicht wie
+           ein persönliches Postfach. */}}
+      {{ if .Params.geschuetzt }}
+      <p class="note">{{ i18n "mitglieder_interner_hinweis" }}</p>
+      {{ end }}
+
       {{/* Kleines Schlagwort über dem Titel = der Ordnername (z.B. "News", "EMS") */}}
       {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
 
@@ -93,6 +103,22 @@
         <li>{{ partial "download-link.html" (dict "path" .path "label" .label) }}</li>
         {{ end }}
       </ul>
+      {{ end }}
+
+      {{/* Automatische Download-Liste über das Frontmatter-Feld
+           "download_ordner". Damit kann JEDE Seite eine automatisch gefüllte
+           PDF-Liste bekommen, ohne dass dafür - wie beim Übungsaufgaben-Block
+           weiter unten - erst eine feste Regel pro Bereich in diese Vorlage
+           geschrieben werden muss. Der Wert ist der Ordnerpfad unterhalb von
+           assets/, zum Beispiel:
+
+             download_ordner: "downloads/mitglieder"
+
+           Eine neue PDF-Datei einfach in diesen Ordner legen - sie erscheint
+           beim nächsten Bauen automatisch in der Liste (siehe
+           layouts/partials/download-list.html). */}}
+      {{ with .Params.download_ordner }}
+      {{ partial "download-list.html" (dict "path" . "page" $) }}
       {{ end }}
 
       {{/* Für Übungsaufgaben-Unterseiten (z.B. "muster-zuordnen") werden

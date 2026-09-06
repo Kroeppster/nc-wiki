@@ -2,9 +2,11 @@
   "name": "nc-wiki",
   "private": true,
   "scripts": {
-    "build": "hugo --minify && npx pagefind --site public"
+    "build": "hugo --minify && npx pagefind --site public",
+    "schuetzen": "node scripts/encrypt-protected-pages.mjs public"
   },
   "devDependencies": {
-    "pagefind": "1.5.2"
+    "pagefind": "1.5.2",
+    "staticrypt": "^3.5.4"
   }
 }

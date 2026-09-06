@@ -146,3 +146,21 @@ uniguide_table_empty: "Aucune université disponible pour l'instant."
 
 faq_contact_prompt: "Ta question n'y figure pas ?"
 faq_contact_cta: "Écris-nous →"
+
+# ---------------------------------------------------------------------------
+# ESPACE MEMBRES (pages protégées par mot de passe)
+# ---------------------------------------------------------------------------
+# Ces cinq textes "schutz" n'apparaissent PAS sur le site lui-même, mais sur
+# la demande de mot de passe placée devant la page lors de la génération du
+# site (voir scripts/encrypt-protected-pages.mjs). Ils y sont transmis par
+# head.html sous forme de balises <meta> invisibles - il suffit donc de les
+# modifier ici, comme n'importe quel autre texte.
+mitglieder_schutz_titel: "Espace membres"
+mitglieder_schutz_hinweis: "Cette page est réservée aux membres de NCWiki. Le comité te communique le mot de passe."
+mitglieder_schutz_button: "Déverrouiller"
+mitglieder_schutz_platzhalter: "Mot de passe"
+mitglieder_schutz_fehler: "Mot de passe incorrect."
+
+# Bandeau d'information visible en haut de chaque page de l'espace membres
+# (voir layouts/_default/single.html et list.html).
+mitglieder_interner_hinweis: "Page interne – merci de ne pas la diffuser publiquement."

@@ -75,6 +75,40 @@
      Seite generiert, nicht von Hand gepflegt. */}}
 <link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">
 
+{{- /* ============================================================================
+       PASSWORTGESCHÜTZTE SEITEN (Mitgliederbereich)
+       ============================================================================
+       Seiten mit "geschuetzt: true" im Frontmatter (aktuell alles unter
+       content/<sprache>/mitglieder/) sollen nicht zufällig gefunden werden.
+       Dieser Block macht dafür zwei Dinge:
+
+       1. "noindex, nofollow" bittet Suchmaschinen, die Seite weder in den
+          Suchindex aufzunehmen noch den Links darauf zu folgen. Das gilt für
+          die Seite, wie Hugo sie baut - die Passwort-Abfrage, die beim
+          Veröffentlichen davorgeschaltet wird, bekommt ihr eigenes
+          noindex direkt vom Verschlüsselungs-Skript (siehe unten).
+
+       2. Die "ncwiki-schutz-..."-Angaben sind eine Nachricht an genau dieses
+          Skript (scripts/encrypt-protected-pages.mjs): An "ncwiki-geschuetzt"
+          erkennt es, WELCHE der fertig gebauten Seiten es verschlüsseln muss,
+          und die übrigen Angaben nimmt es als Beschriftung für die
+          Passwort-Abfrage. Umweg über <meta>, damit diese Texte ganz normal
+          in i18n/de|fr|it.yaml gepflegt werden können, obwohl die
+          Passwort-Seite selbst gar nicht von Hugo gebaut wird.
+
+       Nach dem Verschlüsseln sind alle diese Angaben verschwunden - sie
+       stecken dann zusammen mit dem Rest der Seite im verschlüsselten Teil,
+       den nur mit Passwort jemand zu sehen bekommt. */ -}}
+{{- if .Params.geschuetzt }}
+<meta name="robots" content="noindex, nofollow">
+<meta name="ncwiki-geschuetzt" content="ja">
+<meta name="ncwiki-schutz-titel" content="{{ i18n "mitglieder_schutz_titel" }}">
+<meta name="ncwiki-schutz-hinweis" content="{{ i18n "mitglieder_schutz_hinweis" }}">
+<meta name="ncwiki-schutz-button" content="{{ i18n "mitglieder_schutz_button" }}">
+<meta name="ncwiki-schutz-platzhalter" content="{{ i18n "mitglieder_schutz_platzhalter" }}">
+<meta name="ncwiki-schutz-fehler" content="{{ i18n "mitglieder_schutz_fehler" }}">
+{{- end }}
+
 {{- /* Ab hier: Angaben für Vorschau-Karten beim Teilen des Links (Open
        Graph/Twitter-Card-Standard). Titel/Text/Bild werden automatisch aus
        den Seiteninhalten abgeleitet, mit sinnvollen Ersatzwerten, falls

@@ -145,3 +145,21 @@ uniguide_table_empty: "Nessuna università disponibile al momento."
 
 faq_contact_prompt: "Non trovi la tua domanda?"
 faq_contact_cta: "Scrivici →"
+
+# ---------------------------------------------------------------------------
+# AREA SOCI (pagine protette da password)
+# ---------------------------------------------------------------------------
+# Questi cinque testi "schutz" NON compaiono sul sito stesso, ma nella
+# richiesta di password che viene anteposta alla pagina durante la
+# generazione del sito (vedi scripts/encrypt-protected-pages.mjs). Vengono
+# trasmessi da head.html sotto forma di tag <meta> invisibili - basta quindi
+# modificarli qui, come qualsiasi altro testo.
+mitglieder_schutz_titel: "Area soci"
+mitglieder_schutz_hinweis: "Questa pagina è riservata ai soci di NCWiki. La password ti viene comunicata dal comitato."
+mitglieder_schutz_button: "Sblocca"
+mitglieder_schutz_platzhalter: "Password"
+mitglieder_schutz_fehler: "Password errata."
+
+# Banda informativa visibile in alto su ogni pagina dell'area soci
+# (vedi layouts/_default/single.html e list.html).
+mitglieder_interner_hinweis: "Pagina interna – da non diffondere pubblicamente."

@@ -1,0 +1,45 @@
+{{- /*
+  ============================================================================
+  SITEMAP ("Inhaltsverzeichnis für Suchmaschinen")
+  ============================================================================
+  Die sitemap.xml ist eine maschinenlesbare Liste ALLER Seiten dieser
+  Website, die Suchmaschinen automatisch abholen, um zu wissen, was es hier
+  überhaupt gibt. Hugo erzeugt so eine Liste von sich aus - diese Datei
+  ersetzt die eingebaute Version aus genau einem Grund:
+
+  Seiten mit "geschuetzt: true" im Frontmatter (der Mitgliederbereich unter
+  content/<sprache>/mitglieder/) sollen NICHT darin auftauchen. Sonst würde
+  die Website Suchmaschinen die Adressen genau der Seiten mitteilen, die
+  nicht zufällig gefunden werden sollen - das "noindex" auf diesen Seiten
+  (siehe layouts/partials/head.html) würde zwar trotzdem verhindern, dass
+  sie in den Suchergebnissen landen, aber die Adresse selbst stünde damit
+  in einer öffentlich abrufbaren Liste.
+
+  Ausser diesem Filter macht die Datei dasselbe wie Hugos eingebaute
+  Version: pro Seite die Adresse, das Datum der letzten Änderung und
+  Querverweise auf die anderen Sprachversionen derselben Seite.
+
+  ACHTUNG beim Bearbeiten: Das ist eine XML-Datei, kein HTML - hier gibt es
+  keine Kopf-/Fusszeile und kein CSS, und Suchmaschinen lesen sie strikt.
+  Wer hier etwas ändert, sollte danach unbedingt lokal "hugo --minify"
+  laufen lassen und einmal in public/sitemap.xml hineinschauen.
+  ============================================================================
+*/ -}}
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{- range .Pages }}
+  {{- if not .Params.geschuetzt }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if not .Lastmod.IsZero }}
+    <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>
+    {{- end }}
+    {{- if .IsTranslated }}
+    {{- range .AllTranslations }}
+    <xhtml:link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}"/>
+    {{- end }}
+    {{- end }}
+  </url>
+  {{- end }}
+  {{- end }}
+</urlset>
