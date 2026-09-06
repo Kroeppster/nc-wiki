@@ -1,26 +1,57 @@
 {{- /*
   ============================================================================
-  RASTER MIT DEN 8 ÜBUNGSAUFGABEN-THEMEN (nummeriert 01-08)
+  RASTER MIT DEN 8 ÜBUNGSAUFGABEN-THEMEN
   ============================================================================
   Wird auf der Startseite verwendet (NICHT auf der Übungsaufgaben-Übersicht -
   die zeigt ihre Unterseiten über die generische Kartenliste in list.html).
-  Namen, Reihenfolge und Nummern kommen aus data/subtests.yaml (dort ändern,
-  nicht hier) - jede Kachel verlinkt automatisch zur passenden
-  Übungsaufgaben-Unterseite.
+  Namen und Reihenfolge kommen aus data/subtests.yaml (dort ändern, nicht
+  hier) - jede Kachel verlinkt automatisch zur passenden Unterseite.
 
-  Anders als bei den Mission-Karten auf der Startseite ist die Nummerierung
-  hier bewusst vorhanden, auch wenn diese 8 Kacheln aus organisatorischen
-  Gründen nicht mehr 1:1 den 9 offiziell getakteten Untertests der echten
-  EMS-Prüfung entsprechen (siehe HINWEIS 2026-08-16 in data/subtests.yaml,
-  Figuren und Fakten einprägen teilen sich hier eine gemeinsame Kachel).
+  ZU DEN ZEICHEN: Jede Kachel trägt ein kleines Symbol, das aus der AUFGABE
+  des jeweiligen Untertests abgeleitet ist - überlappende Formen fürs
+  Musterzuordnen, ein Würfel für Objekte im Raum, Balken für Diagramme, ein
+  Punktraster mit einer abweichenden Zelle fürs konzentrierte Arbeiten. Sie
+  sind bewusst KEINE allgemeinen Medizin-Symbole (Stethoskop, Kreuz,
+  Tablette): Solche Bilder sagen nichts darüber, was in der jeweiligen
+  Aufgabe eigentlich verlangt wird.
+
+  Bis August 2026 stand hier statt des Zeichens eine laufende Nummer 01-08.
+  Die ist entfallen, weil sie nichts aussagte: Seit "Figuren einprägen" und
+  "Fakten einprägen" zu einer gemeinsamen Kachel zusammengelegt wurden,
+  entsprach die Nummerierung ohnehin nicht mehr der Reihenfolge der echten
+  EMS-Prüfung (siehe HINWEIS 2026-08-16 in data/subtests.yaml).
+
+  NEUEN UNTERTEST HINZUFÜGEN: Eintrag in data/subtests.yaml ergänzen und
+  unten in $zeichen ein passendes Symbol unter demselben "slug" hinterlegen.
+  Fehlt das Symbol, erscheint ersatzweise ein neutraler Kreis - die Kachel
+  bleibt also funktionsfähig, sieht nur unspezifisch aus.
   ============================================================================
 */}}
 {{ $lang := .Site.Language.Lang }}
-<ol class="subtest-grid">
+
+{{- /* Der Inhalt jedes <svg>: gezeichnet auf einem 24x24-Raster, ohne
+       Farbangaben - Strichfarbe und Grösse kommen aus dem CSS
+       (.subtest-glyph in style.css), damit die Zeichen im Hell- und
+       Dunkelmodus automatisch mitgehen. */ -}}
+{{ $zeichen := dict
+  "muster-zuordnen"            `<rect x="3" y="3" width="12" height="12" rx="3"/><rect x="9" y="9" width="12" height="12" rx="3"/>`
+  "objekte-im-raum"            `<path d="M12 2.6 21 7.5v9L12 21.4 3 16.5v-9z"/><path d="M3 7.5l9 4.9 9-4.9"/><path d="M12 12.4v9"/>`
+  "med-nat-grundverstaendnis"  `<circle cx="6" cy="17" r="2.6"/><circle cx="18" cy="17" r="2.6"/><circle cx="12" cy="5.5" r="2.6"/><path d="M10.6 7.9 7.4 14.6M13.4 7.9l3.2 6.7M8.6 17h6.8"/>`
+  "quantitative-probleme"      `<path d="M12 4v16"/><path d="M4.5 9h15"/><path d="M4.5 9 2 15h5z"/><path d="M19.5 9 17 15h5z"/>`
+  "figuren-fakten-lernen"      `<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor" stroke="none"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/>`
+  "textverstaendnis"           `<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M7.5 9h9M7.5 12.5h9M7.5 16h5"/>`
+  "diagramme-tabellen"         `<path d="M4 20h16"/><rect x="5.5" y="12" width="3.6" height="5.5" rx="1.2"/><rect x="10.2" y="7" width="3.6" height="10.5" rx="1.2"/><rect x="14.9" y="9.5" width="3.6" height="8" rx="1.2"/>`
+  "konzentriertes-arbeiten"    `<circle cx="5.5" cy="5.5" r="1.6"/><circle cx="12" cy="5.5" r="1.6"/><circle cx="18.5" cy="5.5" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="12" cy="12" r="3.2"/><circle cx="18.5" cy="12" r="1.6"/><circle cx="5.5" cy="18.5" r="1.6"/><circle cx="12" cy="18.5" r="1.6"/><circle cx="18.5" cy="18.5" r="1.6"/>`
+}}
+
+<ul class="subtest-grid">
   {{ range hugo.Data.subtests }}
   <li class="subtest-card">
     <a href="{{ relLangURL (printf "ems/uebungsaufgaben/%s/" .slug) }}">
-      <span class="subtest-num">{{ .number }}</span>
+      {{- $svg := index $zeichen .slug | default `<circle cx="12" cy="12" r="8"/>` }}
+      <span class="subtest-glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ $svg | safeHTML }}</svg>
+      </span>
       {{/* Jeder Untertest-Name ist in data/subtests.yaml in allen 3 Sprachen
            hinterlegt - "index . $lang" holt sich automatisch die passende
            Übersetzung für die gerade angezeigte Sprachversion der Website. */}}
@@ -28,4 +59,4 @@
     </a>
   </li>
   {{ end }}
-</ol>
+</ul>

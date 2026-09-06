@@ -46,9 +46,6 @@
            (cd-d/cd-h/cd-m/cd-s) sind unverändert, das bestehende Skript
            funktioniert ohne Anpassung weiter. */}}
       <div class="hero-panel">
-        <span class="reg-mark tl" aria-hidden="true"></span><span class="reg-mark tr" aria-hidden="true"></span>
-        <span class="reg-mark bl" aria-hidden="true"></span><span class="reg-mark br" aria-hidden="true"></span>
-
         <p class="ticket-label" aria-hidden="true">{{ .Params.hero.ticket_label }}</p>
 
         <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
@@ -71,8 +68,6 @@
              eine von vielen Möglichkeiten, dieselbe Information wie oben in
              .countdown-label darzustellen). */}}
         <p class="visually-hidden-field" id="cd-sr" data-days="{{ i18n "countdown_days" }}" data-hours="{{ i18n "countdown_hours" }}" data-minutes="{{ i18n "countdown_minutes" }}" data-seconds="{{ i18n "countdown_seconds" }}"></p>
-
-        <div class="ticket-perforation" aria-hidden="true"></div>
       </div>
     </div>
   </section>
