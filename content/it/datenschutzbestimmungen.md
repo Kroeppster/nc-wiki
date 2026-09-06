@@ -9,7 +9,7 @@ menu:
 Il responsabile del trattamento ai sensi delle leggi sulla protezione dei dati, in particolare del Regolamento generale sulla protezione dei dati dell'UE (GDPR), è:
 
 NCWiki
-4000 Basilea
+8000 Zurigo
 
 E-mail: info@nc-wiki.ch
 Sito web: https://nc-wiki.ch/

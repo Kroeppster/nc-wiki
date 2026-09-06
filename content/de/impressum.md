@@ -7,7 +7,7 @@ menu:
 ---
 
 NCWiki  
-4000 Basel
+8000 Zürich
 
 E-Mail: info@nc-wiki.ch
 

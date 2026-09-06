@@ -471,8 +471,8 @@ Schriftarten als benannte Variablen:
 :root{
   --color-signal:#223FCB;         /* Primärfarbe */
   --color-accent:#E2792E;
-  --font-display:'Space Grotesk','Arial Narrow',sans-serif;
-  --font-body:'Source Sans 3',system-ui,-apple-system,sans-serif;
+  --font-display:'Poppins','Trebuchet MS',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   ...
 }
 ```
@@ -480,6 +480,20 @@ Schriftarten als benannte Variablen:
 Eine Variable dort ändern (z. B. `--color-signal`) wirkt sich **automatisch überall** auf
 der Website aus, wo diese Farbe verwendet wird (Knöpfe, Links, Hervorhebungen) – nicht
 einzeln pro Seite oder Element ändern.
+
+**Zu den Schriften:** Die Website nutzt zwei Schriftarten – **Poppins** für Überschriften
+und **Inter** für den Fliesstext. Beide liegen als Dateien im Ordner `static/fonts/` und
+werden von dort ausgeliefert, **nicht** von Google Fonts nachgeladen: So bekommt Google
+beim Besuch der Website keine IP-Adressen unserer Besucher:innen zu sehen. Wer eine
+Schrift austauschen will, muss deshalb beides tun – die `.woff2`-Datei in `static/fonts/`
+ablegen **und** den passenden `@font-face`-Block in `assets/css/style.css` anpassen; es
+reicht nicht, nur den Namen in der Variable zu ändern.
+
+Bis August 2026 waren hier Space Grotesk und Space Mono im Einsatz. Beide wurden ersetzt,
+weil die Kombination technisch/"cyber" wirkte – für eine Lernplattform für Maturand:innen
+der falsche Ton. Eine Monospace-Schrift gibt es seither gar nicht mehr: Labels und
+Eyebrows tragen ihren Charakter jetzt über Versalien und Sperrung statt über die
+Schriftart.
 
 **Wichtig: Zwei getrennte Paletten für Hell- und Dunkelmodus.** Direkt unter dem ersten
 `:root{...}`-Block (helle Palette) folgt weiter unten in derselben Datei ein zweiter

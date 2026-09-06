@@ -16,4 +16,4 @@ Tu trouveras des réponses aux questions fréquentes plus rapidement dans notre 
 
 Nous essayons de travailler avec le plus grand soin, mais si tu remarques quelque chose d'anormal, nous sommes très heureux de recevoir tes commentaires !
 
-NCWiki · 4000 Bâle · info@nc-wiki.ch
+NCWiki · 8000 Zurich · info@nc-wiki.ch

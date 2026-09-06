@@ -111,14 +111,46 @@
     var target = new Date('{{ .Site.Params.ems_exam_date }}').getTime();
     var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function flipTile(tile, oldDigit){
-      if(reducedMotion) return;
-      var flap = document.createElement('span');
-      flap.className = 'flip-flap';
-      flap.innerHTML = '<span class="glyph">' + oldDigit + '</span>';
-      tile.appendChild(flap);
-      requestAnimationFrame(function(){ flap.classList.add('flip-flap-anim'); });
-      flap.addEventListener('animationend', function(){ flap.remove(); });
+    /* Gesamtdauer der zwei Animationsphasen aus style.css (.26s + .26s
+       Verzoegerung + .26s) - wird nur fuer das Sicherheitsnetz unten
+       gebraucht. Wer die Dauer im CSS aendert, passt sie hier mit an. */
+    var DAUER = 520;
+
+    /* Laesst EINE Kachel umklappen. Zwei temporaere Haelften:
+       "front" faellt mit der ALTEN Ziffer nach unten weg, danach klappt
+       "back" mit der NEUEN Ziffer hoch. Die statische untere Haelfte
+       uebernimmt die neue Ziffer erst ganz am Schluss - sonst saehe man
+       unten schon die neue, waehrend oben noch die alte faellt. */
+    function flipTile(tile, oldDigit, newDigit){
+      var reste = tile.querySelectorAll('.flip-flap');
+      for(var i = 0; i < reste.length; i++) reste[i].remove();
+
+      var vorn = document.createElement('span');
+      vorn.className = 'flip-flap front';
+      vorn.innerHTML = '<span class="glyph">' + oldDigit + '</span>';
+
+      var hinten = document.createElement('span');
+      hinten.className = 'flip-flap back';
+      hinten.innerHTML = '<span class="glyph">' + newDigit + '</span>';
+
+      tile.appendChild(vorn);
+      tile.appendChild(hinten);
+
+      var erledigt = false;
+      function abschluss(){
+        if(erledigt) return;
+        erledigt = true;
+        tile.querySelector('.bottom .glyph').textContent = newDigit;
+        vorn.remove();
+        hinten.remove();
+      }
+      hinten.addEventListener('animationend', abschluss);
+
+      /* Sicherheitsnetz: In einem Hintergrund-Tab drosselt der Browser
+         CSS-Animationen, "animationend" kommt dann nicht mehr. Ohne diesen
+         Rueckfall blieben die Klappen liegen und die untere Haelfte stuende
+         dauerhaft auf der alten Ziffer. */
+      setTimeout(abschluss, DAUER + 120);
     }
 
     function setGroup(id, valueStr){
@@ -131,8 +163,11 @@
         var oldDigit = tile.getAttribute('data-value');
         if(oldDigit === newDigit) continue;
         tile.querySelector('.top .glyph').textContent = newDigit;
-        tile.querySelector('.bottom .glyph').textContent = newDigit;
-        if(oldDigit !== null) flipTile(tile, oldDigit);
+        if(reducedMotion || oldDigit === null){
+          tile.querySelector('.bottom .glyph').textContent = newDigit;
+        } else {
+          flipTile(tile, oldDigit, newDigit);
+        }
         tile.setAttribute('data-value', newDigit);
       }
     }
@@ -154,8 +189,38 @@
       setGroup('cd-s', pad(s, 2));
       if(elSr) elSr.textContent = d + ' ' + srLabels.days + ', ' + h + ' ' + srLabels.hours + ', ' + m + ' ' + srLabels.minutes + ', ' + s + ' ' + srLabels.seconds;
     }
-    tick();
-    setInterval(tick, 1000);
+
+    /* Jeden naechsten Tick auf die naechste volle Sekunde der ECHTEN Uhr
+       legen, statt stur alle 1000 ms zu zaehlen. setInterval(…, 1000)
+       startet beim Laden der Seite und driftet danach: die Anzeige lag
+       gemessen rund 250 ms neben der echten Sekunde, und unter Last wurde
+       ein Tick verschluckt - dann stand eine Zahl zwei Sekunden lang oder
+       eine wurde uebersprungen. */
+    var timer;
+    function planen(){
+      clearTimeout(timer);
+      tick();
+      timer = setTimeout(planen, 1000 - (Date.now() % 1000));
+    }
+    planen();
+
+    /* Beim Zurueckwechseln in den Tab: erst alle Kacheln auf ihren wahren
+       Stand zuruecksetzen (im Hintergrund kann eine halb gelaufene
+       Animation Reste hinterlassen haben), dann sofort neu ausrichten. */
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden) return;
+      var tiles = document.querySelectorAll('.flip-digit');
+      for(var i = 0; i < tiles.length; i++){
+        var tile = tiles[i];
+        var v = tile.getAttribute('data-value');
+        if(v === null) continue;
+        var reste = tile.querySelectorAll('.flip-flap');
+        for(var k = 0; k < reste.length; k++) reste[k].remove();
+        tile.querySelector('.top .glyph').textContent = v;
+        tile.querySelector('.bottom .glyph').textContent = v;
+      }
+      planen();
+    });
   })();
 
   {{/* ---- Teil 2: Cookie-Banner ein-/ausblenden, Wahl merken, Google
