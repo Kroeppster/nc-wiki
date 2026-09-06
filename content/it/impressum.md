@@ -7,7 +7,7 @@ menu:
 ---
 
 NCWiki  
-4000 Basilea
+8000 Zurigo
 
 E-mail: info@nc-wiki.ch
 

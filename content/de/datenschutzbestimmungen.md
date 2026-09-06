@@ -9,7 +9,7 @@ menu:
 Verantwortliche Stelle im Sinne der Datenschutzgesetze, insbesondere der EU-Datenschutzgrundverordnung (DSGVO), ist:
 
 NCWiki
-4000 Basel
+8000 Zürich
 
 E-Mail: info@nc-wiki.ch
 Website: https://nc-wiki.ch/

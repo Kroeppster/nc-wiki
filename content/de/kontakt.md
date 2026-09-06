@@ -16,4 +16,4 @@ Antworten auf häufig gestellte Fragen findest du schneller in unserem [Q&A]({{<
 
 Wir versuchen mit grosser Sorgfalt zu arbeiten, aber wenn dir etwas Fehlerhaftes auffällt, sind wir sehr froh über deine Rückmeldung!
 
-NCWiki · 4000 Basel · info@nc-wiki.ch
+NCWiki · 8000 Zürich · info@nc-wiki.ch

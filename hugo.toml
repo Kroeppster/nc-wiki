@@ -38,7 +38,7 @@ enableRobotsTXT = true
 [params]
   # Vereinsname/-adresse/-E-Mail, erscheinen in der Fusszeile jeder Seite.
   org_name = 'NCWiki'
-  org_address = '4000 Basel'
+  org_address = '8000 Zürich'
   org_email = 'info@nc-wiki.ch'
 
   # Social-Media-Links für die Fusszeile. WICHTIG: bleibt eine dieser drei

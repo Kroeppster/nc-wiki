@@ -7,7 +7,7 @@ menu:
 ---
 
 NCWiki  
-4000 Bâle
+8000 Zurich
 
 E-mail : info@nc-wiki.ch
 

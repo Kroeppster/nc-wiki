@@ -9,7 +9,7 @@ menu:
 Le responsable du traitement au sens du droit de la protection des données, notamment du Règlement général sur la protection des données de l'UE (RGPD), est :
 
 NCWiki
-4000 Bâle
+8000 Zurich
 
 E-mail : info@nc-wiki.ch
 Site web : https://nc-wiki.ch/

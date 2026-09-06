@@ -49,14 +49,19 @@
   color-scheme:light;
 
   /* ---- Schrift ---- */
-  --font-display:'Space Grotesk','Arial Narrow',sans-serif;   /* Titel, Überschriften */
-  --font-body:'Source Sans 3',system-ui,-apple-system,sans-serif; /* Fliesstext, UI */
-  --font-mono:'Space Mono',ui-monospace,'Roboto Mono',Menlo,Consolas,monospace; /* Zahlen, Labels, Daten */
+  --font-display:'Poppins','Trebuchet MS',system-ui,sans-serif; /* Titel, Überschriften */
+  --font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif; /* Fliesstext, UI */
+  /* Frueher gab es hier zusaetzlich eine Monospace-Schrift (Space Mono) fuer
+     Labels, Eyebrows und die Countdown-Ziffern. Sie ist bewusst entfallen:
+     zusammen mit Space Grotesk liess sie die Seite technisch/"cyber" wirken,
+     was fuer eine Lernplattform fuer Maturand:innen der falsche Ton ist.
+     Labels tragen ihren Label-Charakter jetzt ueber Versalien und Sperrung
+     (text-transform + letter-spacing), nicht mehr ueber die Schriftart. */
 
   --text-xs:.75rem;
   --text-sm:.875rem;
-  --text-base:1rem;
-  --text-md:1.125rem;
+  --text-base:1.125rem;
+  --text-md:1.25rem;
   --text-lg:1.25rem;
   --text-xl:1.5rem;
   --text-2xl:1.875rem;
@@ -167,20 +172,16 @@
    Fonts (self-hosted – kein externer Aufruf an Google Fonts zur Laufzeit)
    ========================================================================== */
 @font-face{
-  font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url('../fonts/space-grotesk-variable.woff2') format('woff2');
+  font-family:'Inter';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('../fonts/inter-variable.woff2') format('woff2');
 }
 @font-face{
-  font-family:'Source Sans 3';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url('../fonts/source-sans-3-variable.woff2') format('woff2');
+  font-family:'Poppins';font-style:normal;font-weight:600;font-display:swap;
+  src:url('../fonts/poppins-600.woff2') format('woff2');
 }
 @font-face{
-  font-family:'Space Mono';font-style:normal;font-weight:400;font-display:swap;
-  src:url('../fonts/space-mono-400.woff2') format('woff2');
-}
-@font-face{
-  font-family:'Space Mono';font-style:normal;font-weight:700;font-display:swap;
-  src:url('../fonts/space-mono-700.woff2') format('woff2');
+  font-family:'Poppins';font-style:normal;font-weight:700;font-display:swap;
+  src:url('../fonts/poppins-700.woff2') format('woff2');
 }
 
 /* ==========================================================================
@@ -216,9 +217,9 @@ p{margin:0 0 var(--space-4);}
 .skip-link{position:absolute;left:-999px;top:0;background:var(--color-signal);color:var(--color-on-signal);padding:var(--space-3) var(--space-4);z-index:1000;border-radius:0 0 var(--radius-md) 0;font-family:var(--font-body);font-weight:600;}
 .skip-link:focus{left:0;}
 
-.eyebrow{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-3);}
+.eyebrow{font-family:var(--font-body);font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-3);}
 
-.back-link{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--text-xs);font-weight:600;color:var(--color-ink-faint);margin:0 0 var(--space-4);}
+.back-link{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;color:var(--color-ink-faint);margin:0 0 var(--space-4);}
 .back-link:hover{color:var(--color-signal);}
 
 /* ==========================================================================
@@ -227,7 +228,7 @@ p{margin:0 0 var(--space-4);}
 header.site{border-bottom:1px solid var(--color-line);background:var(--header-bg);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding-block:var(--space-3);gap:var(--space-4);flex-wrap:wrap;}
 .brand{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-weight:700;font-size:var(--text-md);letter-spacing:var(--tracking-tight);}
-.brand-mark{display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;background:var(--color-surface);color:var(--color-signal);border:1px solid var(--color-line);font-family:var(--font-mono);font-size:.68rem;font-weight:700;border-radius:var(--radius-sm);}
+.brand-mark{display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;background:var(--color-surface);color:var(--color-signal);border:1px solid var(--color-line);font-family:var(--font-body);font-size:.68rem;font-weight:700;border-radius:var(--radius-sm);}
 img.brand-mark{object-fit:contain;padding:2px;}
 nav.main-nav{order:2;flex:1 1 auto;}
 nav.main-nav>ul{display:flex;gap:var(--space-4);list-style:none;margin:0;padding:0;align-items:center;flex-wrap:wrap;}
@@ -278,7 +279,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2){opacity:0;}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
-.lang-switch{position:relative;display:flex;align-items:center;gap:.15rem;font-family:var(--font-mono);font-size:var(--text-xs);order:3;}
+.lang-switch{position:relative;display:flex;align-items:center;gap:.15rem;font-family:var(--font-body);font-size:var(--text-xs);order:3;}
 .lang-switch-current{padding:.25rem .3rem .25rem .5rem;color:var(--color-ink-faint);}
 .lang-switch>.submenu{left:auto;right:0;min-width:0;}
 .lang-switch>.submenu li a{white-space:nowrap;}
@@ -343,9 +344,9 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    als Signature-Element, perforierte Trennlinie wie bei einem echten
    Ticket-Abriss (siehe layouts/index.html für den HTML-Aufbau und die
    Begründung, wieso das die vorherigen dekorativen Kreise ersetzt). */
-.ticket-label{font-family:var(--font-mono);font-size:var(--text-xs);font-weight:700;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-8);}
+.ticket-label{font-family:var(--font-body);font-size:var(--text-xs);font-weight:700;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-8);}
 
-.countdown-label{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-ink-faint);margin:0 0 var(--space-3);}
+.countdown-label{font-family:var(--font-body);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-ink-faint);margin:0 0 var(--space-3);}
 
 /* Perforierte Trennlinie wie beim Abriss eines echten Tickets: gestrichelte
    Linie plus zwei runde "Ausstanzungen" an den Panel-Rändern, eingefärbt in
@@ -367,7 +368,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .flip-countdown{display:flex;gap:var(--space-4);flex-wrap:wrap;}
 .flip-group{display:flex;flex-direction:column;align-items:center;gap:.4rem;}
 .flip-group-digits{display:flex;gap:3px;}
-.flip-group-label{font-family:var(--font-mono);font-size:.68rem;color:var(--color-ink-faint);letter-spacing:.03em;}
+.flip-group-label{font-family:var(--font-body);font-size:.68rem;color:var(--color-ink-faint);letter-spacing:.03em;}
 
 /* Eine einzelne Ziffern-Kachel: zwei "Hälften" (oben/unten, leicht
    unterschiedlich eingefärbt) mit einer Trennlinie dazwischen - jede Hälfte
@@ -383,27 +384,42 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Ziffer, nur oben top:0 (zeigt ihre obere Hälfte) bzw. unten top:-100%
    (verschiebt dieselbe Ziffer um eine Kachelhöhe nach oben, wodurch die
    untere Hälfte im sichtbaren Fenster landet). */
-.flip-digit .glyph{position:absolute;left:0;top:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;color:#fff;font-size:clamp(17px,3.4vw,25px);}
+.flip-digit .glyph{position:absolute;left:0;top:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums;color:#fff;font-size:clamp(17px,3.4vw,25px);}
 .flip-digit .half.bottom .glyph{top:-100%;}
 .flip-digit::after{content:"";position:absolute;left:0;right:0;top:calc(50% - .5px);height:1px;background:rgba(0,0,0,.45);z-index:2;pointer-events:none;}
 
-/* Die eigentliche "Flap" beim Ziffernwechsel: eine dritte, temporäre Kachel-
-   Hälfte mit der ALTEN Ziffer, die per JavaScript eingefügt wird (siehe
-   footer.html) und dann nach hinten wegklappt - darunter liegt bereits die
-   NEUE Ziffer (in .half.top oben schon aktualisiert), die so sichtbar wird.
+/* Der Ziffernwechsel läuft in ZWEI Phasen, wie bei einer echten
+   Fallblattanzeige (die beiden temporären Hälften fügt das JavaScript in
+   footer.html ein):
+
+     Phase 1 - vorne fällt eine Kopie der ALTEN Ziffer über die obere
+               Hälfte nach unten weg (0° auf -90°).
+     Phase 2 - hinten klappt eine Kopie der NEUEN Ziffer über die untere
+               Hälfte von 90° auf 0° hoch.
+
+   Erst danach übernimmt die statische untere Hälfte die neue Ziffer.
+
+   Vorher lief das einphasig: BEIDE Hälften wechselten sofort auf die neue
+   Ziffer, während oben noch die alte wegklappte. Dadurch sah man während
+   der halben Animation unten schon die neue und oben noch die alte Ziffer -
+   genau das wirkte "nicht ganz sauber".
+
    perspective auf der Kachel selbst sorgt für den 3D-Effekt der Drehung. */
 .flip-digit{perspective:120px;}
-.flip-flap{position:absolute;left:0;top:0;width:100%;height:50%;overflow:hidden;background:#2a3145;border-radius:4px 4px 0 0;transform-origin:bottom center;backface-visibility:hidden;z-index:3;}
-.flip-flap .glyph{position:absolute;left:0;top:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;color:#fff;font-size:clamp(17px,3.4vw,25px);}
-.flip-flap-anim{animation:flipDown .38s cubic-bezier(.4,0,.2,1) forwards;}
-@keyframes flipDown{ from{transform:rotateX(0deg);} to{transform:rotateX(-100deg);} }
+.flip-flap{position:absolute;left:0;width:100%;height:50%;overflow:hidden;backface-visibility:hidden;z-index:3;}
+.flip-flap .glyph{position:absolute;left:0;top:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums;color:#fff;font-size:clamp(17px,3.4vw,25px);}
+.flip-flap.front{top:0;background:#2a3145;border-radius:4px 4px 0 0;transform-origin:bottom center;animation:flipDown .26s cubic-bezier(.5,0,.9,.6) forwards;}
+.flip-flap.back{bottom:0;background:#1b2030;border-radius:0 0 4px 4px;transform-origin:top center;transform:rotateX(90deg);animation:flipUp .26s .26s cubic-bezier(.1,.5,.5,1) forwards;}
+.flip-flap.back .glyph{top:-100%;}
+@keyframes flipDown{ to{transform:rotateX(-90deg);} }
+@keyframes flipUp{ from{transform:rotateX(90deg);} to{transform:rotateX(0deg);} }
 
 /* ==========================================================================
    Generische Sektionen
    ========================================================================== */
 section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);}
 .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-8);flex-wrap:wrap;gap:var(--space-2);}
-.more{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-signal);white-space:nowrap;}
+.more{font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-signal);white-space:nowrap;}
 
 /* News-Karten */
 /* margin-top statt vorher 0: sorgt für einen verlässlichen Mindestabstand,
@@ -426,13 +442,13 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 /* Erfahrungsberichte */
 .report-toolbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-8);}
 .report-filters{display:flex;gap:var(--space-2);flex-wrap:wrap;}
-.filter-pill{font-family:var(--font-mono);font-size:var(--text-sm);padding:.45rem .9rem;border:1px solid var(--color-line);border-radius:var(--radius-full);background:var(--color-surface);color:var(--color-ink-soft);cursor:pointer;}
+.filter-pill{font-family:var(--font-body);font-size:var(--text-sm);padding:.45rem .9rem;border:1px solid var(--color-line);border-radius:var(--radius-full);background:var(--color-surface);color:var(--color-ink-soft);cursor:pointer;}
 .filter-pill.is-active{background:var(--color-ink);color:var(--color-paper);border-color:var(--color-ink);}
 .report-grid{grid-template-columns:repeat(2,1fr);}
 .report-head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);}
-.avatar{flex-shrink:0;width:2.7rem;height:2.7rem;border-radius:50%;display:grid;place-items:center;color:var(--color-on-signal);font-family:var(--font-mono);font-size:var(--text-sm);font-weight:700;}
+.avatar{flex-shrink:0;width:2.7rem;height:2.7rem;border-radius:50%;display:grid;place-items:center;color:var(--color-on-signal);font-family:var(--font-body);font-size:var(--text-sm);font-weight:700;}
 .report-head h3{margin:0;font-size:var(--text-base);}
-.report-meta{margin:.15rem 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);font-family:var(--font-mono);}
+.report-meta{margin:.15rem 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);font-family:var(--font-body);}
 .avatar-0{background:var(--color-avatar-0);}
 .avatar-1{background:var(--color-avatar-1);}
 .avatar-2{background:var(--color-avatar-2);}
@@ -456,7 +472,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .team-photo{width:5rem;height:5rem;border-radius:50%;overflow:hidden;flex-shrink:0;}
 .team-photo img{width:100%;height:100%;object-fit:cover;display:block;}
 .tag-pills{list-style:none;display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-4);padding:0;}
-.tag-pills li{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-signal);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-full);padding:.2rem .65rem;}
+.tag-pills li{font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-signal);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-full);padding:.2rem .65rem;}
 
 /* Uniguide */
 .uniguide-disclaimer{background:var(--color-note-bg);border:1px solid var(--color-note-line);color:var(--color-note-text);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);font-size:var(--text-sm);margin:var(--space-6) 0 var(--space-8);line-height:var(--leading-normal);}
@@ -465,12 +481,12 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--color-line);border-radius:var(--radius-md);}
 .uniguide-table{width:100%;min-width:640px;border-collapse:collapse;font-size:var(--text-sm);}
 .uniguide-table th,.uniguide-table td{text-align:left;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--color-line);white-space:nowrap;}
-.uniguide-table thead th{font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);background:var(--color-surface-sunken);}
+.uniguide-table thead th{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);background:var(--color-surface-sunken);}
 .uniguide-table tbody tr:last-child td{border-bottom:none;}
 .uniguide-table tbody tr:hover{background:var(--color-surface-sunken);}
 .uniguide-table td:first-child a{font-weight:600;color:var(--color-ink);}
 .uniguide-table td:first-child a:hover{color:var(--color-signal);}
-.badge{display:inline-block;font-family:var(--font-mono);font-size:var(--text-xs);font-weight:700;padding:.2rem .65rem;border-radius:var(--radius-full);}
+.badge{display:inline-block;font-family:var(--font-body);font-size:var(--text-xs);font-weight:700;padding:.2rem .65rem;border-radius:var(--radius-full);}
 .badge-ja{background:var(--color-success-bg);color:var(--color-success-text);}
 .badge-nein{background:var(--color-surface-sunken);color:var(--color-ink-faint);border:1px solid var(--color-line);}
 .badge-teilweise{background:var(--color-warn-bg);color:var(--color-warn-text);}
@@ -478,7 +494,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 /* Uni-Detailseite */
 .uni-detail{display:grid;gap:var(--space-5);max-width:38rem;margin:var(--space-6) 0;}
 .uni-detail>div{border-bottom:1px solid var(--color-line);padding-bottom:var(--space-5);}
-.uni-detail dt{font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);margin:0 0 .35rem;}
+.uni-detail dt{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);margin:0 0 .35rem;}
 .uni-detail dd{margin:0;}
 .uni-report{margin:0 0 var(--space-4);}
 .uni-stand{font-size:var(--text-xs);color:var(--color-ink-faint);}
@@ -488,11 +504,11 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .faq{margin-top:var(--space-6);max-width:44rem;}
 .faq-category{margin-bottom:var(--space-10);}
 .faq-category:last-child{margin-bottom:0;}
-.faq-category h3{font-family:var(--font-mono);font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);margin:0 0 var(--space-4);}
+.faq-category h3{font-family:var(--font-body);font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);margin:0 0 var(--space-4);}
 .faq-item{border:1px solid var(--color-line);border-radius:var(--radius-md);background:var(--color-surface);margin-bottom:var(--space-3);}
 .faq-item summary{cursor:pointer;list-style:none;padding:var(--space-4) var(--space-5);font-weight:600;position:relative;padding-right:2.6rem;}
 .faq-item summary::-webkit-details-marker{display:none;}
-.faq-item summary::after{content:"+";position:absolute;right:1.2rem;top:1rem;font-family:var(--font-mono);color:var(--color-signal);font-weight:700;}
+.faq-item summary::after{content:"+";position:absolute;right:1.2rem;top:1rem;font-family:var(--font-body);color:var(--color-signal);font-weight:700;}
 .faq-item[open] summary::after{content:"–";}
 .faq-item summary:hover{color:var(--color-signal);}
 .faq-answer{padding:0 var(--space-5) var(--space-5);color:var(--color-ink-soft);font-size:var(--text-base);}
@@ -516,7 +532,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .uebungsaufgaben-downloads .download-list{margin-top:var(--space-5);}
 /* Copyright-/Hinweis-Badges direkt bei den Downloads (siehe single.html) */
 .uebungsaufgaben-badges{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5);}
-.badge-license,.badge-notice{display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:var(--text-xs);padding:.3rem .75rem;border-radius:var(--radius-full);border:1px solid var(--color-line);}
+.badge-license,.badge-notice{display:inline-flex;align-items:center;font-family:var(--font-body);font-size:var(--text-xs);padding:.3rem .75rem;border-radius:var(--radius-full);border:1px solid var(--color-line);}
 .badge-license{color:var(--color-ink-faint);background:var(--color-surface);}
 .badge-license:hover{color:var(--color-signal);}
 .badge-notice{color:var(--color-warn-text);background:var(--color-warn-bg);border-color:transparent;}
@@ -594,13 +610,13 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    stattdessen über die Rahmenfarbe der Kachel (siehe .sponsor-tile:hover
    oben), nicht mehr über die Logofarbe selbst. */
 .sponsor-logo{max-width:100%;max-height:56px;width:auto;height:auto;}
-.sponsor-name{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-logo-chip-text);text-align:center;padding:var(--space-5);display:block;}
+.sponsor-name{font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-logo-chip-text);text-align:center;padding:var(--space-5);display:block;}
 
 /* Untertests (echte Reihenfolge 1–10 → Nummerierung bleibt) */
 .subtest-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-3);list-style:none;margin:var(--space-6) 0 0;padding:0;}
 .subtest-card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-4) var(--space-3);transition:border-color .15s;}
 .subtest-card:hover{border-color:var(--color-signal);}
-.subtest-num{display:block;font-family:var(--font-mono);color:var(--color-signal);font-size:var(--text-base);font-weight:700;margin-bottom:.5rem;}
+.subtest-num{display:block;font-family:var(--font-body);color:var(--color-signal);font-size:var(--text-base);font-weight:700;margin-bottom:.5rem;}
 .subtest-name{font-size:var(--text-sm);line-height:var(--leading-snug);display:block;}
 .subtest-card a{display:block;}
 
@@ -618,7 +634,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .brand-band{background:var(--color-band);border-bottom:none;padding-block:var(--space-16);overflow:hidden;}
 .brand-band-inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:var(--space-4);text-align:center;min-height:9rem;justify-content:center;}
 .brand-band-logo{width:clamp(64px,9vw,110px);height:auto;object-fit:contain;position:relative;z-index:1;}
-.brand-band-tagline{position:relative;z-index:1;margin:0;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-band-text-soft);}
+.brand-band-tagline{position:relative;z-index:1;margin:0;font-family:var(--font-body);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-band-text-soft);}
 /* Die Symbole sind rein dekorativ (siehe aria-hidden im Partial) und um das
    Logo herum verteilt - Positionen/Drehungen/Grössen bewusst uneinheitlich,
    damit es nicht wie ein steifes Raster wirkt. Auf schmalen Bildschirmen
@@ -695,7 +711,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    ========================================================================== */
 footer.site{background:var(--color-band);color:var(--color-band-text);padding-block:var(--space-12) var(--space-6);}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:var(--space-8);margin-bottom:var(--space-10);}
-.footer-grid h4{font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-band-text-soft);margin:0 0 var(--space-4);}
+.footer-grid h4{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-band-text-soft);margin:0 0 var(--space-4);}
 .footer-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:.6rem;font-size:var(--text-base);}
 .footer-grid a:hover{color:var(--color-signal-strong);}
 .footer-lead{color:var(--color-band-text-soft);font-size:var(--text-sm);max-width:22rem;}
@@ -746,7 +762,7 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 .download-list{list-style:none;margin:var(--space-8) 0 0;padding:0;display:grid;gap:var(--space-3);max-width:32rem;}
 .download-link{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);flex:1 1 auto;}
 .download-link:hover{border-color:var(--color-signal);color:var(--color-signal);}
-.download-link .download-size{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-ink-faint);white-space:nowrap;}
+.download-link .download-size{font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-ink-faint);white-space:nowrap;}
 .download-item{display:flex;flex-direction:column;gap:.3rem;}
 /* Aufgabe + Lösung nebeneinander (siehe download-list.html) - der
    Lösungs-Knopf ist bewusst schmaler und optisch zurückhaltender als der
