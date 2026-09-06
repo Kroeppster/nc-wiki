@@ -146,3 +146,21 @@ uniguide_table_empty: "Noch keine Universitäten hinterlegt."
 
 faq_contact_prompt: "Deine Frage ist nicht dabei?"
 faq_contact_cta: "Schreib uns →"
+
+# ---------------------------------------------------------------------------
+# MITGLIEDERBEREICH (passwortgeschützte Seiten)
+# ---------------------------------------------------------------------------
+# Diese fünf "schutz"-Texte erscheinen NICHT auf der Website selbst, sondern
+# auf der Passwort-Abfrage, die beim Bauen der Seite davorgeschaltet wird
+# (siehe scripts/encrypt-protected-pages.mjs). Sie werden dorthin
+# durchgereicht, indem head.html sie in unsichtbare <meta>-Angaben schreibt -
+# deshalb reicht es, sie hier zu ändern, wie bei jedem anderen Text auch.
+mitglieder_schutz_titel: "Mitgliederbereich"
+mitglieder_schutz_hinweis: "Diese Seite ist nur für NCWiki-Mitglieder. Das Passwort erhältst du vom Vorstand."
+mitglieder_schutz_button: "Entsperren"
+mitglieder_schutz_platzhalter: "Passwort"
+mitglieder_schutz_fehler: "Falsches Passwort."
+
+# Sichtbarer Hinweisstreifen oben auf jeder Seite des Mitgliederbereichs
+# (siehe layouts/_default/single.html und list.html).
+mitglieder_interner_hinweis: "Interne Seite – bitte nicht öffentlich weiterleiten."

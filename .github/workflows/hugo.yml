@@ -194,6 +194,42 @@ jobs:
           fail: false
           jobSummary: true
 
+      # Legt eine Passwort-Abfrage vor alle Seiten des Mitgliederbereichs
+      # (alles mit "geschuetzt: true" im Frontmatter, siehe
+      # content/<sprache>/mitglieder/ und docs/WARTUNG.md, Abschnitt 11).
+      #
+      # Die Reihenfolge ist hier WICHTIG - dieser Schritt steht bewusst ganz
+      # am Ende, hinter allen Prüfungen:
+      #
+      #  - NACH dem Suchindex: Pagefind darf den Klartext dieser Seiten gar
+      #    nicht erst zu Gesicht bekommen (sie sind zusätzlich schon über das
+      #    fehlende "data-pagefind-body" ausgenommen, siehe
+      #    layouts/_default/baseof.html - doppelt hält besser).
+      #  - NACH der Link-Prüfung: So kann lychee die Links AUF diesen Seiten
+      #    noch ganz normal im Klartext prüfen. Würde verschlüsselt, bevor
+      #    lychee läuft, wären diese Links für die Prüfung unsichtbar -
+      #    kaputte Links im Mitgliederbereich würden unbemerkt durchrutschen.
+      #  - VOR dem Hochladen: veröffentlicht wird ausschliesslich die
+      #    verschlüsselte Fassung.
+      #
+      # Das Passwort kommt aus dem GitHub-Secret MITGLIEDER_PASSWORT (auf
+      # GitHub unter Settings -> Secrets and variables -> Actions). Fehlt es
+      # bei einem Push auf main, bricht dieser Schritt ABSICHTLICH ab, statt
+      # den Mitgliederbereich unverschlüsselt zu veröffentlichen. Bei einem
+      # Pull Request wird stattdessen nur gewarnt und unverschlüsselt
+      # weitergebaut: dort steht das Secret nicht immer zur Verfügung (z.B.
+      # bei einem PR aus einem fremden Fork), und veröffentlicht wird bei
+      # einem Pull Request ohnehin nie (siehe "deploy"-Job unten).
+      - name: Protect members-only pages with a password
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.MITGLIEDER_PASSWORT }}
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            npm run schuetzen
+          else
+            npm run schuetzen -- --ohne-passwort-erlauben
+          fi
+
       # Verpackt den fertigen "public/"-Ordner zur Übergabe an den
       # Veröffentlichungs-Schritt (den zweiten "job" unten). Nur bei einem
       # echten Push auf main nötig - bei einem Pull Request läuft der

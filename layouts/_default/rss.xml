@@ -1,0 +1,62 @@
+{{- /*
+  ============================================================================
+  RSS-FEED ("Nachrichten-Abo" der Website)
+  ============================================================================
+  Hugo erzeugt von sich aus zu jeder Übersichtsseite eine index.xml - eine
+  maschinenlesbare Kurzfassung der jeweils enthaltenen Beiträge, die
+  Nachrichten-Apps und Newsreader abonnieren können. Diese Datei ersetzt
+  Hugos eingebaute Version aus genau einem Grund:
+
+  Seiten mit "geschuetzt: true" im Frontmatter (der Mitgliederbereich unter
+  content/<sprache>/mitglieder/) dürfen dort NICHT auftauchen. Sonst wäre
+  der komplette Text dieser Seiten über die Feed-Adresse frei abrufbar -
+  völlig ohne Passwort, weil die Passwort-Abfrage nur vor die HTML-Seiten
+  gelegt wird, nicht vor die XML-Dateien daneben. Das war beim Anlegen des
+  Mitgliederbereichs tatsächlich der Fall und ist genau deshalb hier
+  abgestellt.
+
+  Zusätzlich haben die _index.md-Dateien des Mitgliederbereichs
+  "outputs: ['html']" gesetzt - dadurch entsteht für diesen Bereich gar
+  keine eigene index.xml mehr. Beides zusammen (kein eigener Feed + Filter
+  in allen anderen Feeds) sorgt dafür, dass geschützte Inhalte nirgends in
+  einem Feed landen.
+
+  ACHTUNG beim Bearbeiten: Das ist eine XML-Datei, kein HTML. Wer hier etwas
+  ändert, sollte danach lokal "hugo --minify" laufen lassen und einmal in
+  public/index.xml hineinschauen.
+  ============================================================================
+*/ -}}
+{{- $pctx := . -}}
+{{- if .IsHome -}}{{ $pctx = .Site }}{{- end -}}
+{{- $pages := slice -}}
+{{- if or $.IsHome $.IsSection -}}
+{{- $pages = $pctx.RegularPages -}}
+{{- else -}}
+{{- $pages = $pctx.Pages -}}
+{{- end -}}
+{{- /* Der eigentliche Zweck dieser Datei: geschützte Seiten rauswerfen. */ -}}
+{{- $pages = where $pages "Params.geschuetzt" "!=" true -}}
+{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 -}}
+{{- $pages = $pages | first $limit -}}
+{{- end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>Recent content {{ if ne  .Title  .Site.Title }}{{ with .Title }}in {{ . }} {{ end }}{{ end }}on {{ .Site.Title }}</description>
+    <generator>Hugo</generator>
+    <language>{{ site.Language.LanguageCode }}</language>
+    <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml" />
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      <description>{{ .Summary | plainify | transform.XMLEscape | safeHTML }}</description>
+    </item>
+    {{- end }}
+  </channel>
+</rss>
