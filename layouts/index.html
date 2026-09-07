@@ -92,7 +92,7 @@
           {{ end }}
           <p class="eyebrow">{{ .Params.eyebrow }}</p>
           <h3>{{ .Title }}</h3>
-          {{ .Summary }}
+          {{ partial "card-excerpt.html" . }}
           <a class="more" href="{{ .RelPermalink }}">{{ i18n "read_more" }}</a>
         </li>
         {{ end }}

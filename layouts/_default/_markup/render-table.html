@@ -1,0 +1,46 @@
+{{- /*
+  ============================================================================
+  TABELLEN AUS DEM SEITENTEXT (automatischer Umbau beim Bauen)
+  ============================================================================
+  Wer in einer .md-Datei unter content/ eine Tabelle schreibt (mit den
+  senkrechten Strichen | ... | ...), bekommt normalerweise eine nackte
+  HTML-Tabelle. Auf einem Handy ist die dann breiter als der Bildschirm und
+  die GANZE Seite lässt sich seitwärts schieben - der Text steht dann links
+  ausserhalb des sichtbaren Bereichs.
+
+  Diese Datei hängt deshalb automatisch einen Rahmen um jede solche Tabelle,
+  in dem NUR die Tabelle für sich seitwärts gescrollt werden kann
+  (.table-scroll, siehe assets/css/style.css). Die Seite selbst bleibt ruhig
+  stehen. Genau dasselbe macht die Uniguide-Vergleichstabelle schon lange
+  von Hand (layouts/partials/uniguide-table.html) - hier gilt es jetzt für
+  jede Tabelle im Fliesstext, ohne dass jemand daran denken muss.
+
+  Betroffen war konkret die Lernplan-Tabelle auf der EMS-Übersichtsseite
+  (content/<sprache>/ems/_index.md).
+
+  Wer diese Datei löscht, bekommt wieder nackte Tabellen - und damit das
+  Seitwärts-Scrollen auf schmalen Bildschirmen zurück.
+  ============================================================================
+*/ -}}
+<div class="table-scroll">
+  <table>
+    <thead>
+      {{- range .THead }}
+      <tr>
+        {{- range . }}
+        <th{{ with .Alignment }} style="text-align:{{ . }}"{{ end }}>{{ .Text }}</th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    <tbody>
+      {{- range .TBody }}
+      <tr>
+        {{- range . }}
+        <td{{ with .Alignment }} style="text-align:{{ . }}"{{ end }}>{{ .Text }}</td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>

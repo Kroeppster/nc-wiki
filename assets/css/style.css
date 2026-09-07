@@ -65,9 +65,18 @@
   --text-lg:1.25rem;
   --text-xl:1.5rem;
   --text-2xl:1.875rem;
-  --text-3xl:2.25rem;
+  /* h2 skaliert mit der Fensterbreite. Feste 2.25rem waren auf dem Handy zu
+     gross fuer lange deutsche Woerter ("Datenschutzerklaerung fuer
+     SSL-/TLS-Verschluesselung" brauchte 395px in einer 335px breiten Spalte). */
+  --text-3xl:clamp(1.65rem, 1rem + 2.6vw, 2.25rem);
   --text-4xl:clamp(2.25rem, 1rem + 4vw, 3.25rem);
-  --text-5xl:clamp(2.75rem, 1rem + 5.5vw, 4.5rem);
+  /* Untergrenze bewusst niedrig: Bei 2.75rem passte "Datenschutzbestimmungen"
+     auf einem 375px-Bildschirm nicht in eine Zeile und wurde hart mitten im
+     Wort umgebrochen. hyphens:auto (siehe h1-Regel weiter unten) trennt das
+     in Browsern MIT deutscher Trenndatenbank sauber ab - verlassen kann man
+     sich darauf aber nicht, also muss die Schriftgroesse allein schon
+     ausreichen. */
+  --text-5xl:clamp(2rem, 1rem + 5.5vw, 4.5rem);
 
   --leading-tight:1.1;
   --leading-snug:1.3;
@@ -202,9 +211,23 @@ body{
 a{color:inherit;text-decoration:none;}
 :focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;border-radius:2px;}
 #search :focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
-h1,h2,h3{
+h1,h2,h3,h4{
   font-family:var(--font-display);font-weight:600;line-height:var(--leading-tight);
   letter-spacing:var(--tracking-tight);margin:0;
+  /* Deutsche Komposita sind lang ("Datenschutzbestimmungen",
+     "Medizinisch-naturwissenschaftliches Grundverstaendnis"). Ohne die
+     folgenden zwei Zeilen passt so ein Wort auf einem Handy nicht in die
+     Zeile, wird NICHT umgebrochen und schiebt die ganze Seite seitwaerts -
+     der Fliesstext steht dann links ausserhalb des Bildschirms.
+     "hyphens:auto" trennt sauber nach den Silbenregeln der jeweiligen
+     Sprache (das dafuer noetige lang-Attribut sitzt am <html>-Tag, siehe
+     baseof.html); "overflow-wrap:break-word" ist die Notbremse fuer Woerter,
+     fuer die es keine Trennstelle gibt.
+     Das fiel erst mit dem Wechsel auf Poppins auf: Die vorherige Schrift war
+     bewusst schmal ('Space Grotesk','Arial Narrow'), Poppins braucht bei
+     gleicher Groesse deutlich mehr Platz. */
+  overflow-wrap:break-word;
+  hyphens:auto;
 }
 h1{font-size:var(--text-5xl);}
 h2{font-size:var(--text-3xl);}
@@ -408,7 +431,11 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    ========================================================================== */
 section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);}
 .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-8);flex-wrap:wrap;gap:var(--space-2);}
-.more{font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-signal);white-space:nowrap;}
+/* Kein "white-space:nowrap" mehr: Auf der Q&A-Seite tragen diese Links die
+   vollen Untertest-Namen ("Medizinisch-naturwissenschaftliches
+   Grundverstaendnis"), die damit auf schmalen Bildschirmen aus der Seite
+   ragten. Umbrechen ist dort das kleinere Uebel als Ueberstehen. */
+.more{font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-signal);overflow-wrap:break-word;}
 
 /* News-Karten */
 /* margin-top statt vorher 0: sorgt für einen verlässlichen Mindestabstand,
@@ -622,7 +649,11 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 #mission{background:var(--color-signal-soft);border-bottom:1px solid var(--color-signal-soft-line);}
 .mission-lede{font-size:var(--text-2xl);max-width:42rem;margin:0 0 var(--space-10);font-weight:600;}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-8);}
-.feature .num{display:block;width:9px;height:9px;border:1.5px solid var(--color-signal);margin-bottom:var(--space-3);}
+/* Kurzer Akzentstrich über jeder Mission-Kachel. Vorher war das ein
+   9x9px grosses, leeres Kästchen mit Rahmen - das sah nicht nach Absicht
+   aus, sondern nach einem Element, dessen Inhalt fehlt (die Klasse heisst
+   "num", weil dort urspünglich einmal eine Nummer stand). */
+.feature .num{display:block;width:2.25rem;height:0;border:0;border-top:2px solid var(--color-signal);margin-bottom:var(--space-3);}
 .feature h3{font-size:var(--text-base);margin:0 0 .4rem;}
 .feature p{color:var(--color-ink-soft);font-size:var(--text-sm);margin:0;}
 

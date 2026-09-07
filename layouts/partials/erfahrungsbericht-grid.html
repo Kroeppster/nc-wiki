@@ -77,7 +77,7 @@
         <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
       </div>
     </div>
-    {{ .Summary }}
+    {{ partial "card-excerpt.html" . }}
     {{ with .Params.tags }}
     <ul class="tag-pills">
       {{ range . }}<li>{{ . }}</li>{{ end }}
