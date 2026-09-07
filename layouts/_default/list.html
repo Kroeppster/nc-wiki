@@ -131,9 +131,9 @@
                eine Meldung ist - sprachabhängig formatiert (":date_long"
                übersetzt Monatsnamen automatisch je nach Sprache der Seite). */}}
           {{ if eq .Section "news" }}<p class="report-meta">{{ .Date | time.Format ":date_long" }}</p>{{ end }}
-          {{/* .Summary = automatisch die ersten Sätze des Seiteninhalts als Vorschau,
-               oder der Text bis zu einer manuellen "<!--more-->"-Markierung */}}
-          {{ .Summary }}
+          {{/* Kurzer Anriss als reiner Fliesstext - siehe card-excerpt.html,
+               dort steht auch, warum hier NICHT direkt ".Summary" steht. */}}
+          {{ partial "card-excerpt.html" . }}
           <a class="more" href="{{ .RelPermalink }}">{{ i18n "read_more" }}</a>
         </li>
         {{ end }}

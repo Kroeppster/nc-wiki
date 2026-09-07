@@ -1,0 +1,28 @@
+{{- /*
+  ============================================================================
+  VORSCHAUTEXT FÜR EINE KARTE (News, Erfahrungsberichte, Übersichtslisten)
+  ============================================================================
+  Erwartet die jeweilige Seite als Kontext und gibt einen kurzen, reinen
+  Fliesstext-Anriss aus.
+
+  WARUM ES DIESE DATEI GIBT: Vorher stand an den drei Stellen, die Karten
+  bauen, einfach "{{ .Summary }}". Hugos ".Summary" liefert aber FERTIGES
+  HTML der ersten Absätze - inklusive Zwischenüberschriften, Aufzählungen
+  und Fettungen. Auf der Startseite führte das dazu, dass die News-Karte den
+  halben Artikel samt der Überschrift "Was ist neu?" und einer Stichpunkt-
+  liste anzeigte, wobei diese Überschrift grösser dargestellt wurde als der
+  Titel der Karte selbst. Eine Vorschau soll aber nur anreissen.
+
+  "plainify" wirft deshalb alle HTML-Auszeichnungen weg, danach werden
+  Zeilenumbrüche zu Leerzeichen zusammengezogen und der Text auf eine
+  einheitliche Länge gekürzt.
+
+  Ist im Frontmatter der Seite ein "description:" gesetzt, hat das Vorrang -
+  das ist der von Hand geschriebene Anriss und fast immer besser als ein
+  automatisch abgeschnittener Textanfang.
+  ============================================================================
+*/ -}}
+{{- $text := .Description -}}
+{{- if not $text }}{{ $text = .Summary | plainify }}{{ end -}}
+{{- $text = $text | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+{{- with $text }}<p>{{ . | truncate 190 }}</p>{{ end -}}
