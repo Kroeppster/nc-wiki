@@ -461,19 +461,36 @@ Adresse steht direkt im jeweiligen Partial:
 | --- | --- |
 | Kontaktformular | `layouts/partials/contact-form.html` |
 | Erfahrungsbericht-Einreichung | `layouts/partials/experience-form.html` |
-| "Fehler melden" bei einem einzelnen PDF-Download | `layouts/partials/download-list.html` |
-| Allgemeines Fehlerformular auf der Übungsaufgaben-Übersicht | `layouts/partials/report-error-general.html` |
+| Fehlermeldungen zu den Übungsaufgaben | `layouts/partials/report-error-general.html` |
 
 Um ein Formular an ein anderes Formspree-Konto/-Formular umzuhängen: die Adresse in der
 jeweiligen Datei ersetzen. Der Zugang zum Formspree-Konto selbst (Login) gehört in den
 gemeinsamen Passwort-Manager des Teams, nicht ins Repo (siehe Kurzguide, Abschnitt 6).
 
-**Bekannte Lücke:** sowohl `download-list.html` (Fehler melden pro PDF) als auch das neue
-`report-error-general.html` (ein Formular für die ganze Übungsaufgaben-Sammlung, verlinkt
-von `/ems/uebungsaufgaben/`) haben noch die Platzhalter-Adresse `REPLACE_ME` eingetragen –
-beide Formulare funktionieren erst, sobald hier je eine echte Formspree-Adresse
-eingetragen wird. Bis dahin zeigt der "Senden"-Knopf zwar Rückmeldungen an (Absenden
-läuft technisch), die Meldung kommt aber bei niemandem an.
+**Zwei Adressen, drei Formulare.** Das Fehlermelde-Formular auf der
+Übungsaufgaben-Übersicht sendet vorläufig an **dieselbe** Adresse wie das
+Kontaktformular. Vorher stand dort ein Platzhalter: Jede Fehlermeldung ging ins Leere,
+während die meldende Person eine Bestätigung sah – schlimmer als gar kein Formular.
+
+Damit die Meldungen im gemeinsamen Postfach nicht untergehen, setzt das Formular über ein
+verstecktes Feld `_subject` den festen Betreff **"Fehlermeldung Uebungsaufgaben
+(Website)"**. Danach lässt sich filtern oder eine Regel anlegen. Der Betreff ist immer
+deutsch, unabhängig von der Sprache der Besucherin – er ist eine interne Sortierhilfe, und
+ein Filter funktioniert nur bei immer gleichem Wortlaut.
+
+Sobald ein eigenes Formspree-Formular für Fehlermeldungen besteht, genügt es, dessen
+Adresse in `report-error-general.html` einzutragen. Das versteckte `_subject`-Feld kann
+dann bleiben oder weg – es stört nicht.
+
+**Die Erfahrungsbericht-Adresse bitte nicht mit umhängen.** An ihr hängt mehr als ein
+Postfach: Eine Einsendung löst über `repository_dispatch` den Workflow
+`.github/workflows/erfahrungsbericht-intake.yml` aus, der daraus automatisch eine neue
+Datei und einen Pull Request baut. Wird diese Adresse geändert, ohne die Weiterleitung
+mit anzupassen, bricht diese Automatisierung.
+
+Der frühere "Fehler melden"-Knopf bei **jedem einzelnen** PDF-Download existiert nicht
+mehr – er wurde durch dieses eine zentrale Formular ersetzt. In `download-list.html` gibt
+es deshalb kein Formular mehr.
 
 Beide neuen Formulare nutzen dieselbe generische Klasse `report-error` wie die
 bestehenden PDF-Fehlermeldungen – das dazugehörige JavaScript (Senden per Fetch im
