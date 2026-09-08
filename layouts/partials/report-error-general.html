@@ -15,13 +15,28 @@
   Formular mit dieser Klasse automatisch gleich (Senden per Fetch im
   Hintergrund, Status-Text direkt im Knopf statt Seitenwechsel).
 
-  WICHTIG - gleiche bekannte Lücke wie bei download-list.html: die
-  Formspree-Adresse ist noch ein Platzhalter ("REPLACE_ME") und muss vor
-  dem produktiven Einsatz durch eine echte ersetzt werden (siehe
-  docs/WARTUNG-DETAILLIERT.md, Abschnitt "Formulare").
+  ZUR FORMSPREE-ADRESSE: Dieses Formular sendet bewusst an DIESELBE Adresse
+  wie das Kontaktformular (contact-form.html). Vorher stand hier nur ein
+  Platzhalter - jede Meldung ging damit ins Leere, waehrend die meldende
+  Person eine Bestaetigung sah. Das ist schlimmer als gar kein Formular,
+  deshalb die Zwischenloesung: Fehlermeldungen landen jetzt im
+  Kontakt-Postfach, zusammen mit den normalen Anfragen.
+
+  Damit sie dort trotzdem sofort erkennbar sind, setzt das versteckte Feld
+  "_subject" weiter unten einen festen Betreff - danach laesst sich im
+  Postfach filtern. Der Betreff ist absichtlich immer deutsch, egal in
+  welcher Sprache jemand die Seite benutzt: Er ist eine interne Sortierhilfe
+  fuers Team, kein Text, den die meldende Person je zu sehen bekommt, und ein
+  Filter funktioniert nur, wenn der Betreff immer gleich lautet.
+
+  Sobald ein eigenes Formspree-Formular fuer Fehlermeldungen eingerichtet
+  ist, hier einfach dessen Adresse eintragen - sonst aendert sich nichts.
   ============================================================================
 */ -}}
-<form class="contact-form report-error report-error-general" action="https://formspree.io/f/REPLACE_ME" method="POST">
+<form class="contact-form report-error report-error-general" action="https://formspree.io/f/mvkpgrpl" method="POST">
+  {{/* Fester Betreff, damit die Meldung im gemeinsamen Kontakt-Postfach
+       sofort auffaellt und sich filtern laesst - siehe Kommentar oben. */}}
+  <input type="hidden" name="_subject" value="Fehlermeldung Uebungsaufgaben (Website)">
   <div>
     <label for="ef-item">{{ i18n "uebungsaufgaben_error_item_label" }}</label>
     <input type="text" name="uebung" id="ef-item" required>
