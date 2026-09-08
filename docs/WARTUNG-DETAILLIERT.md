@@ -37,6 +37,7 @@ wiederholt, gilt aber überall.
 14. [Farben, Schrift und generelles Design](#14-farben-schrift-und-generelles-design)
 15. [Eine ganze Seite/einen ganzen Bereich löschen](#15-eine-ganze-seiteinen-ganzen-bereich-löschen)
 16. [Wo hört "nur Copy-Paste" auf?](#16-wo-hört-nur-copy-paste-auf)
+17. [Startseite: die Kacheln "Was du hier findest"](#17-startseite-die-kacheln-was-du-hier-findest)
 
 ---
 
@@ -166,6 +167,22 @@ entweder als reines Liniensymbol ohne Hintergrundfläche gestaltet sein, oder es
 zusätzlich eine eigene Behandlung für den Dunkelmodus – im Zweifel jemanden mit
 CSS-Kenntnissen dazuholen, damit das Logo im Dunkelmodus nicht z. B. schwarz auf
 dunkelblau unsichtbar wird.
+
+**Im dunklen Banner unten wird das Logo automatisch weiss dargestellt.** Genau dieses
+Problem trat dort nämlich auf: Das aktuelle Logo ist eine Rastergrafik (sechs eingebettete
+PNG-Bilder in einer SVG-Datei), seine Farben lassen sich also nicht per CSS umfärben – und
+sein "WIKI"-Schriftzug ist schwarz und war auf dem dunkelblauen Band praktisch unsichtbar.
+Seit dem 8. September 2026 liegt deshalb in `assets/css/style.css` auf
+`.brand-band-logo` ein Filter (`brightness(0) invert(1)`), der das Logo dort vollständig
+weiss einfärbt. Die Logodatei selbst bleibt davon unberührt – in der Kopfzeile auf hellem
+Grund erscheint sie weiterhin in Originalfarben.
+
+Für ein neues Logo heisst das:
+
+- Ist es ebenfalls dunkel gezeichnet, passt alles – der Filter macht es im Banner weiss.
+- Ist es **mehrfarbig und sollen die Farben auch im Banner erhalten bleiben**, muss dieser
+  Filter entfernt und stattdessen eine helle Fassung des Logos hinterlegt werden. Das ist
+  ein CSS-Schritt, siehe Abschnitt 16.
 
 **Das Favicon** (Browser-Tab-Icon, drei Dateien: `static/favicon.ico`,
 `static/favicon-32.png`, `static/apple-touch-icon.png`) wird **nicht automatisch** beim
@@ -302,10 +319,56 @@ Besonderheiten:
   `content/<sprache>/ems/uniguide/<slug>.md` (nur `title` und `uni_slug` im
   Frontmatter). Fehlt die Seite, führt der Link aus der Tabelle ins Leere.
 - **Nichts erfinden/schätzen:** Ist eine Angabe (z. B. Studienplatz-Zahl) nicht sicher
-  bekannt, steht dort bewusst `"TODO: prüfen"` statt einer geratenen Zahl – das sollte so
+  bekannt, bleibt das Feld leer (`null`) statt eine Zahl zu raten – das sollte so
   bleiben, bis der echte Wert auf der offiziellen Uni-Website nachgeprüft wurde. Bei
-  jeder inhaltlichen Änderung auch das Feld `stand:` (Datum der letzten Prüfung)
-  aktualisieren.
+  jeder inhaltlichen Änderung auch das Feld `stand:` (Datum der letzten Prüfung) **und**
+  `quelle:` (Link zur verwendeten Seite) aktualisieren.
+
+### Die noch leeren Felder
+
+Am 8. September 2026 sind pro Universität vier weitere Felder dazugekommen. Sie stehen
+**alle auf `null`**, weil sie noch nicht an offizieller Stelle nachgeprüft sind:
+
+| Feld | Was hinein gehört | Beispiel |
+| --- | --- | --- |
+| `website_medizin` | Direktlink zur medizinischen Fakultät, nicht zur Uni-Startseite | `"https://medizin.unibas.ch"` |
+| `anmeldefrist` | Frist als Text | `"15. Februar"` |
+| `studienbeginn` | Wann das Studium startet | `"Mitte September"` |
+| `semestergebuehr` | Betrag inkl. Währung, als Text | `"CHF 850 pro Semester"` |
+
+**Was passiert, solange ein Feld leer ist:** Es erscheint auf der Website gar nicht – es
+gibt also keine leeren Zeilen und keine Platzhalter mitten in den Angaben. Stattdessen
+steht auf der Uni-Seite ein gelber Kasten "Diese Angaben fehlen noch", der genau die
+fehlenden Felder aufzählt und zum Melden einlädt. Sobald ein Feld gefüllt ist,
+verschwindet es aus diesem Kasten und taucht bei den Angaben auf. Es ist also **kein
+Fehler**, wenn dieser Kasten erscheint – er ist der ehrliche Zwischenstand.
+
+### Erfahrungsberichte automatisch bei der Universität anzeigen
+
+Das Feld `berichte_ort` verknüpft eine Universität mit den Erfahrungsberichten. Sein Wert
+muss **genau** dem entsprechen, was in den Berichten im Frontmatter unter `ort:` steht
+(z. B. `"Zürich"`). Passt es, erscheinen auf der Uni-Seite automatisch die drei neuesten
+Berichte von diesem Ort. Gibt es zu diesem Ort keine, bleibt der Abschnitt weg – dann
+einfach `""` eintragen.
+
+Dieses Feld wird **nie angezeigt**, es ist reine Technik. Deshalb wird es auch nicht
+übersetzt: Es steht in `data/unis.yaml` genau einmal und gilt für alle drei Sprachen.
+
+### Der Vergleich ("mehrere Unis nebeneinander")
+
+In der Tabelle lassen sich in der ersten Spalte bis zu **vier** Universitäten ankreuzen.
+Unten erscheint dann eine Leiste; ein Klick auf "Vergleichen" stellt sie nebeneinander –
+eine Spalte pro Universität, eine Zeile pro Angabe.
+
+**Daran gibt es nichts zu pflegen.** Der Vergleich zieht dieselben Felder aus
+`data/unis.yaml`; ein neu gefülltes Feld erscheint automatisch auch dort. Zwei Dinge sind
+Entwickler-Schritte (Abschnitt 16):
+
+- eine **weitere Zeile** in den Vergleich aufnehmen → `layouts/partials/uniguide-table.html`,
+  Abschnitt "VERGLEICHSANSICHT"
+- die **Obergrenze von vier** ändern → dieselbe Datei, ganz unten im Skript `var MAX = 4;`.
+  Die Grenze ist bewusst gesetzt: Mehr Spalten passen auf einem Handy nicht mehr
+  nebeneinander.
 
 ---
 
@@ -398,19 +461,36 @@ Adresse steht direkt im jeweiligen Partial:
 | --- | --- |
 | Kontaktformular | `layouts/partials/contact-form.html` |
 | Erfahrungsbericht-Einreichung | `layouts/partials/experience-form.html` |
-| "Fehler melden" bei einem einzelnen PDF-Download | `layouts/partials/download-list.html` |
-| Allgemeines Fehlerformular auf der Übungsaufgaben-Übersicht | `layouts/partials/report-error-general.html` |
+| Fehlermeldungen zu den Übungsaufgaben | `layouts/partials/report-error-general.html` |
 
 Um ein Formular an ein anderes Formspree-Konto/-Formular umzuhängen: die Adresse in der
 jeweiligen Datei ersetzen. Der Zugang zum Formspree-Konto selbst (Login) gehört in den
 gemeinsamen Passwort-Manager des Teams, nicht ins Repo (siehe Kurzguide, Abschnitt 6).
 
-**Bekannte Lücke:** sowohl `download-list.html` (Fehler melden pro PDF) als auch das neue
-`report-error-general.html` (ein Formular für die ganze Übungsaufgaben-Sammlung, verlinkt
-von `/ems/uebungsaufgaben/`) haben noch die Platzhalter-Adresse `REPLACE_ME` eingetragen –
-beide Formulare funktionieren erst, sobald hier je eine echte Formspree-Adresse
-eingetragen wird. Bis dahin zeigt der "Senden"-Knopf zwar Rückmeldungen an (Absenden
-läuft technisch), die Meldung kommt aber bei niemandem an.
+**Zwei Adressen, drei Formulare.** Das Fehlermelde-Formular auf der
+Übungsaufgaben-Übersicht sendet vorläufig an **dieselbe** Adresse wie das
+Kontaktformular. Vorher stand dort ein Platzhalter: Jede Fehlermeldung ging ins Leere,
+während die meldende Person eine Bestätigung sah – schlimmer als gar kein Formular.
+
+Damit die Meldungen im gemeinsamen Postfach nicht untergehen, setzt das Formular über ein
+verstecktes Feld `_subject` den festen Betreff **"Fehlermeldung Uebungsaufgaben
+(Website)"**. Danach lässt sich filtern oder eine Regel anlegen. Der Betreff ist immer
+deutsch, unabhängig von der Sprache der Besucherin – er ist eine interne Sortierhilfe, und
+ein Filter funktioniert nur bei immer gleichem Wortlaut.
+
+Sobald ein eigenes Formspree-Formular für Fehlermeldungen besteht, genügt es, dessen
+Adresse in `report-error-general.html` einzutragen. Das versteckte `_subject`-Feld kann
+dann bleiben oder weg – es stört nicht.
+
+**Die Erfahrungsbericht-Adresse bitte nicht mit umhängen.** An ihr hängt mehr als ein
+Postfach: Eine Einsendung löst über `repository_dispatch` den Workflow
+`.github/workflows/erfahrungsbericht-intake.yml` aus, der daraus automatisch eine neue
+Datei und einen Pull Request baut. Wird diese Adresse geändert, ohne die Weiterleitung
+mit anzupassen, bricht diese Automatisierung.
+
+Der frühere "Fehler melden"-Knopf bei **jedem einzelnen** PDF-Download existiert nicht
+mehr – er wurde durch dieses eine zentrale Formular ersetzt. In `download-list.html` gibt
+es deshalb kein Formular mehr.
 
 Beide neuen Formulare nutzen dieselbe generische Klasse `report-error` wie die
 bestehenden PDF-Fehlermeldungen – das dazugehörige JavaScript (Senden per Fetch im
@@ -470,7 +550,7 @@ Schriftarten als benannte Variablen:
 ```css
 :root{
   --color-signal:#223FCB;         /* Primärfarbe */
-  --color-accent:#E2792E;
+  --color-accent:#F5813C;
   --font-display:'Poppins','Trebuchet MS',system-ui,sans-serif;
   --font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   ...
@@ -502,8 +582,52 @@ den Dunkelmodus. **Beide Blöcke müssen bei einer Farbänderung zusammen angepa
 werden**, sonst stimmt z. B. die Primärfarbe im Hellmodus, aber im Dunkelmodus steht dort
 noch die alte Farbe (oder ein schlecht lesbarer Kontrast).
 
-**Schriftarten austauschen:** In `--font-display`/`--font-body`/`--font-mono` die erste
-Schriftart in der Liste ersetzen (die folgenden Namen sind reine Rückfall-Schriften,
+### Tiefe: Schatten und Verläufe
+
+Bis zum 8. September 2026 hatte die Website **keinen einzigen Schatten**. Jede Karte war
+ein umrandetes Rechteck, in dieselbe Fläche gemalt wie alles andere – die Rückmeldung
+lautete entsprechend "sehr viele einfarbige Flächen". Seither gibt es dafür eigene
+Variablen im selben `:root`-Block:
+
+| Variable | Wofür |
+| --- | --- |
+| `--shadow-sm` | Ruhezustand von Karten, Kacheln, Download-Knöpfen, Tabellen |
+| `--shadow-md` | Zeigen mit der Maus ("hebt sich an") |
+| `--shadow-lg` | Die wenigen Elemente, die wirklich schweben sollen: Countdown-Karte, Spenden-Aufruf |
+| `--glow-signal`, `--glow-accent` | Zwei sehr blasse Farbwolken hinter der ganzen Seite |
+| `--band-top`, `--band-glow`, `--band-texture` | Verlauf, Lichtschein und Punktraster im dunklen Band unten |
+| `--color-section-alt` | Fläche der abwechselnd getönten Sektionen auf der Startseite |
+
+**Schatten müssen im Dunkelmodus kräftiger sein.** Ein Schatten ist dunkel – auf dunklem
+Grund ist ein zarter Schatten schlicht unsichtbar, und die Karten wären wieder flach.
+Deshalb stehen im `:root[data-theme="dark"]`-Block deutlich höhere Deckkraft-Werte.
+
+**`--color-section-alt` ist im Dunkelmodus absichtlich nicht dieselbe Farbe wie
+`--color-surface`.** Die Karten in diesen Sektionen haben genau die Kartenfarbe und wären
+sonst kaum vom Untergrund zu unterscheiden.
+
+### Warum es einen eigenen Knopf-Hintergrund gibt
+
+`--color-btn-bg` sieht im Hellmodus genauso aus wie `--color-signal` – im Dunkelmodus
+aber nicht, und das ist Absicht. Der Dunkelmodus macht `--color-signal` bewusst **heller**,
+damit Link-**Text** auf dunklem Grund lesbar bleibt. Als Hintergrund für weisse
+Knopfbeschriftung ist genau das falsch: Dort kam die weisse Schrift nur auf 3.1 : 1,
+gefordert sind 4.5 : 1. Wer die Markenfarbe ändert, muss deshalb **beide** Variablen
+anpassen – `--color-signal` für Links und `--color-btn-bg` für gefüllte Knöpfe, jeweils in
+beiden Paletten.
+
+Dasselbe gilt für `--cta-from`/`--cta-to` (die blaue Spenden-Karte) und
+`--color-avatar-0` bis `-5`: Diese Werte stehen bewusst **nur** im hellen Block und werden
+im Dunkelmodus *nicht* überschrieben, weil auf ihnen weisser Text steht. Sie dürfen
+deshalb nie so hell werden, dass Weiss darauf nicht mehr lesbar ist.
+
+**Kontrast prüfen, bevor eine Farbe geändert wird.** Ein Online-Kontrastrechner
+(Suchbegriff "WCAG contrast checker") reicht: Normaler Text braucht 4.5 : 1, grosse
+Überschriften 3 : 1 – und zwar in **beiden** Modi.
+
+**Schriftarten austauschen:** In `--font-display`/`--font-body` die erste
+Schriftart in der Liste ersetzen (eine `--font-mono` gibt es seit dem Schriftwechsel
+nicht mehr, siehe oben; die folgenden Namen sind reine Rückfall-Schriften,
 falls die erste beim Besuch nicht verfügbar wäre). Eine komplett neue Schriftart
 einzubinden (die nicht schon als Google Font o. Ä. im Projekt vorbereitet ist) braucht
 zusätzliche technische Schritte (Schriftdatei einbinden/laden) – das ist keine reine
@@ -568,3 +692,68 @@ werden:
 beschreiben lässt und Y eine der in diesem Dokument genannten Dateien ist – selbst
 machen. Wenn dafür neuer HTML/CSS/Template-Code geschrieben werden müsste, der so noch
 nirgends im Projekt existiert – Hilfe holen.
+
+---
+
+## 17. Startseite: die Kacheln "Was du hier findest"
+
+Direkt unter dem Hero steht seit dem 8. September 2026 ein Raster mit sechs Kacheln:
+Übungsaufgaben, Testsimulationen, Vorbereitungskurse, Uniguide, Erfahrungsberichte,
+Fragen & Antworten. Jede nennt eine grosse Zahl, den Bereich und einen Satz dazu.
+
+Der Grund: Die Startseite zeigte vorher nur Hero, News, die acht Untertest-Kacheln, drei
+Mission-Sätze und den Spendenaufruf. Der gesamte tatsächliche Bestand – über 150
+Übungs-PDFs, die Testsimulationen, die Kursskripte, der Uniguide, die Erfahrungsberichte –
+tauchte auf der Startseite nirgends auf. Die Seite wirkte dadurch leerer, als sie ist.
+
+### Die Zahlen niemals von Hand eintragen
+
+Sie werden bei **jedem Bauen der Website neu gezählt**: die PDFs direkt in den Ordnern
+unter `assets/downloads/`, die Erfahrungsberichte aus den Seiten im jeweiligen
+Sprachordner, die Universitäten und Fragen aus `data/unis.yaml` bzw. `data/faq.yaml`.
+Werden zehn neue Übungsserien hochgeladen, steht dort beim nächsten Build automatisch die
+neue Zahl.
+
+Deshalb gehört in die Texte der Kacheln **keine Zahl** – sie wäre beim nächsten Upload
+sofort falsch, während die grosse Zahl daneben stimmt.
+
+Weil die Erfahrungsberichte nicht in allen Sprachen gleich weit übersetzt sind, zählt
+jede Sprachfassung ihre eigenen (aktuell 66 auf Deutsch, 13 auf Französisch, 4 auf
+Italienisch). Es steht also nie eine Zahl da, die es in dieser Sprache gar nicht gibt.
+
+### Texte ändern
+
+Überschrift und Kacheltexte stehen im Frontmatter der Startseite unter `angebot:` – und
+zwar in **allen drei** Sprachdateien `content/de/_index.md`, `content/fr/_index.md`,
+`content/it/_index.md`:
+
+```yaml
+angebot:
+  eyebrow: "Was du hier findest"
+  heading: "Alles kostenlos, alles von Studierenden gemacht"
+  items:
+    - key: uebungsaufgaben       # legt fest, was gezählt und wohin verlinkt wird
+      title: "Übungsaufgaben"    # Überschrift der Kachel
+      unit: "PDFs"               # steht klein neben der Zahl
+      text: "Übungsserien zu allen acht Themenbereichen ..."
+      link: "Zu den Übungsaufgaben →"
+```
+
+`key` ist der einzige Wert, der **nicht** übersetzt wird – er ist der interne Name und
+muss in allen drei Sprachen gleich bleiben. Erlaubt sind: `uebungsaufgaben`,
+`testsimulationen`, `vorbereitungskurse`, `uniguide`, `erfahrungsberichte`, `qa`.
+
+Beim Übersetzen der Einheit (`unit`) darauf achten, dass sie zu einer **Mehrzahl** passt –
+sie steht immer direkt hinter einer Zahl.
+
+### Eine Kachel entfernen oder umsortieren
+
+Den Eintrag in allen drei Dateien löschen bzw. verschieben. Das Raster richtet sich
+automatisch nach der Anzahl; es müssen keine Spalten angepasst werden.
+
+### Eine ganz neue Kachel
+
+Dafür braucht es zusätzlich eine Ergänzung im Template
+(`layouts/partials/angebot-grid.html`, Block `$quellen`): Dort steht pro `key`, welche
+Zieladresse verlinkt und was gezählt wird. Das ist ein Entwickler-Schritt (Abschnitt 16) –
+die Datei erklärt oben im Kommentar, was einzutragen ist.
