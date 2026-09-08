@@ -491,3 +491,60 @@ Dafür braucht es zusätzlich eine kleine Ergänzung im Template
 (`layouts/partials/angebot-grid.html`, Block `$quellen`): dort steht pro `key`,
 welche Zieladresse verlinkt und was gezählt wird. Das ist ein Entwickler-Schritt
 – die Datei erklärt oben im Kommentar, was einzutragen ist.
+
+---
+
+## 13. Uniguide: Angaben ergänzen und der Vergleich
+
+### Wo die Angaben stehen
+
+Alles zu den Universitäten steht in **einer** Datei: `data/unis.yaml`. Sie speist
+beides – die Tabelle auf `/ems/uniguide/` und die Detailseite jeder einzelnen
+Universität. Die Seiten unter `content/*/ems/uniguide/*.md` enthalten nur den
+Titel und den technischen Namen (`uni_slug`), keine Angaben.
+
+### Die noch leeren Felder füllen
+
+Seit dem 8. September 2026 gibt es pro Universität diese zusätzlichen Felder.
+Sie stehen absichtlich alle auf `null`, weil sie noch nicht an offizieller
+Stelle nachgeprüft sind:
+
+| Feld | Was hinein gehört | Beispiel |
+| --- | --- | --- |
+| `website_medizin` | Direktlink zur medizinischen Fakultät (nicht zur Uni-Startseite) | `"https://medizin.unibas.ch"` |
+| `anmeldefrist` | Frist als Text | `"15. Februar"` |
+| `studienbeginn` | Wann das Studium startet | `"Mitte September"` |
+| `semestergebuehr` | Betrag inkl. Währung, als Text | `"CHF 850 pro Semester"` |
+| `studienplaetze` | Zahl der Plätze (gab es vorher schon) | `180` |
+
+**Bitte nur eintragen, was auf einer offiziellen Seite steht** – und im selben
+Zug `stand` auf das heutige Datum und `quelle` auf die verwendete Seite setzen.
+Solange ein Feld `null` ist, erscheint es auf der Website gar nicht; stattdessen
+steht auf der Uni-Seite ein Kasten „Diese Angaben fehlen noch". Das ist Absicht:
+Eine Lücke ist besser als eine Zahl, auf die sich jemand bei der Studienwahl
+verlässt und die nicht stimmt.
+
+### Erfahrungsberichte automatisch bei der Uni anzeigen
+
+Das Feld `berichte_ort` verknüpft eine Universität mit den Erfahrungsberichten.
+Sein Wert muss genau dem entsprechen, was in den Berichten im Frontmatter unter
+`ort:` steht (z. B. `"Zürich"`). Passt es, erscheinen auf der Uni-Seite
+automatisch die drei neuesten Berichte von diesem Ort. Gibt es keine, bleibt der
+Abschnitt einfach weg – nichts weiter zu tun.
+
+### Der Vergleich
+
+In der Tabelle lassen sich in der ersten Spalte bis zu **vier** Universitäten
+ankreuzen. Unten erscheint dann eine Leiste; „Vergleichen" stellt sie
+untereinander in einer Tabelle nebeneinander – eine Spalte pro Universität, eine
+Zeile pro Angabe.
+
+Zu pflegen gibt es daran nichts: Der Vergleich zieht dieselben Felder aus
+`data/unis.yaml`. Ein neu gefülltes Feld erscheint automatisch auch dort. Wer
+eine **weitere Zeile** in den Vergleich aufnehmen will, ergänzt sie in
+`layouts/partials/uniguide-table.html` (Abschnitt „VERGLEICHSANSICHT") – das ist
+ein Entwickler-Schritt.
+
+Die Obergrenze von vier ist bewusst gesetzt: Mehr Spalten passen auf einem Handy
+nicht mehr sinnvoll nebeneinander. Sie steht in derselben Datei ganz unten im
+Skript als `var MAX = 4;`.

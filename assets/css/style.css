@@ -582,6 +582,10 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .team-photo{width:5rem;height:5rem;border-radius:50%;overflow:hidden;flex-shrink:0;}
 .team-photo img{width:100%;height:100%;object-fit:cover;display:block;}
 .tag-pills{list-style:none;display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-4);padding:0;}
+/* Schlichte Aufzaehlung fuer Angaben, die aus ganzen Saetzen bestehen
+   (z.B. "Besonderheiten" im Uniguide) - im Gegensatz zu .tag-pills darunter,
+   das fuer kurze Schlagworte gedacht ist. */
+.detail-list{margin:0;padding-left:1.1rem;display:grid;gap:.35rem;color:var(--color-ink-soft);font-size:var(--text-sm);}
 .tag-pills li{font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-signal);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-full);padding:.2rem .65rem;}
 
 /* Uniguide */
@@ -601,13 +605,80 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .badge-nein{background:var(--color-surface-sunken);color:var(--color-ink-faint);border:1px solid var(--color-line);}
 .badge-teilweise{background:var(--color-warn-bg);color:var(--color-warn-text);}
 
-/* Uni-Detailseite */
+/* Uniguide: Universitaeten vergleichen (siehe uniguide-table.html)
+   ---------------------------------------------------------------------------
+   Ankreuz-Spalte, Hinweistext, Auswahl-Leiste und Vergleichstabelle sind
+   standardmaessig ausgeblendet und werden erst sichtbar, wenn das Skript die
+   Klasse "js-compare" setzt: Ohne JavaScript koennte man zwar ankreuzen, aber
+   nichts wuerde passieren - dann lieber gar nicht erst anbieten. */
+.compare-col,.uniguide-compare-hint{display:none;}
+.js-compare .uniguide-compare-hint{display:block;color:var(--color-ink-faint);font-size:var(--text-sm);margin:0 0 var(--space-4);}
+.js-compare th.compare-col,.js-compare td.compare-col{display:table-cell;}
+/* Ueberschrift der Ankreuz-Spalte: schmal halten, der Text darf umbrechen. */
+.uniguide-table th.compare-col{white-space:normal;width:1%;}
+.compare-check{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:.2rem;}
+.compare-check input{width:1.05rem;height:1.05rem;accent-color:var(--color-signal);cursor:pointer;}
+.compare-check input:disabled{cursor:not-allowed;opacity:.45;}
+
+/* Leiste am unteren Bildschirmrand mit der aktuellen Auswahl. position:fixed,
+   damit sie beim Scrollen durch die Tabelle sichtbar bleibt - sonst muesste
+   man zum Vergleichen erst wieder ans Seitenende scrollen. */
+.compare-bar{position:fixed;left:var(--space-4);right:var(--space-4);bottom:var(--space-4);max-width:var(--max-width);margin-inline:auto;z-index:150;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:var(--space-3) var(--space-5);}
+/* Ohne diese Zeile wuerde das "display:flex" oben das hidden-Attribut
+   ueberstimmen und die Leiste immer sichtbar bleiben. */
+.compare-bar[hidden]{display:none;}
+.compare-bar-count{margin:0;font-size:var(--text-sm);color:var(--color-ink-soft);}
+.compare-bar-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;}
+.compare-bar .btn{padding:.6rem 1.2rem;}
+.compare-bar .btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.uniguide-compare{margin-top:var(--space-10);scroll-margin-top:var(--space-8);}
+.uniguide-compare[hidden]{display:none;}
+.uniguide-compare .section-head{margin-bottom:var(--space-5);}
+/* Erste Spalte (die Bezeichnung der Angabe) bleibt beim seitlichen Scrollen
+   stehen - sonst weiss man bei vier Spalten nicht mehr, welche Zeile welche
+   Angabe ist. */
+.compare-table th[scope="row"]{position:sticky;left:0;background:var(--color-surface-sunken);font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);white-space:normal;vertical-align:top;min-width:9rem;}
+.compare-table thead th{vertical-align:bottom;}
+.compare-table td{vertical-align:top;}
+/* Laufender Text (Auswahlverfahren, Besonderheiten) darf umbrechen - die
+   uebrigen Tabellenzellen stehen bewusst auf white-space:nowrap. */
+.compare-table .compare-cell-text{white-space:normal;min-width:13rem;max-width:19rem;}
+.compare-table .detail-list{margin:0;}
+
+/* Uni-Detailseite
+   ---------------------------------------------------------------------------
+   Die Seite ist seit 2026-09-08 in Abschnitte gegliedert (Zulassung / Studium
+   & Standort / Quellen) statt einer einzigen langen Liste, siehe
+   layouts/partials/uni-detail.html. */
+/* Zwei Angaben-Bloecke nebeneinander, sobald der Platz reicht. minmax mit
+   min(100%,...) heisst: nebeneinander ab genug Breite, sonst automatisch
+   untereinander - ohne eigene @media-Regel. */
+.uni-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--space-4) var(--space-10);align-items:start;}
+.uni-columns .uni-detail{max-width:none;}
+.uni-section-title{font-size:var(--text-xl);margin:var(--space-10) 0 0;}
+.uni-section-title:first-of-type{margin-top:var(--space-8);}
 .uni-detail{display:grid;gap:var(--space-5);max-width:38rem;margin:var(--space-6) 0;}
 .uni-detail>div{border-bottom:1px solid var(--color-line);padding-bottom:var(--space-5);}
 .uni-detail dt{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);margin:0 0 .35rem;}
 .uni-detail dd{margin:0;}
 .uni-report{margin:0 0 var(--space-4);}
 .uni-stand{font-size:var(--text-xs);color:var(--color-ink-faint);}
+
+/* Kasten "Diese Angaben fehlen noch". Bewusst im Hinweis-Gelb und nicht in
+   Rot: Es ist kein Fehler, sondern eine offene Recherche - und zugleich eine
+   Einladung mitzuhelfen. Erscheint nur, wenn wirklich Felder leer sind. */
+.uni-missing{max-width:38rem;margin:var(--space-8) 0;padding:var(--space-5) var(--space-6);background:var(--color-note-bg);border:1px solid var(--color-note-line);border-radius:var(--radius-md);color:var(--color-note-text);box-shadow:var(--shadow-sm);}
+.uni-missing h3{font-size:var(--text-base);margin:0 0 var(--space-3);color:inherit;}
+.uni-missing p{margin:var(--space-3) 0 0;font-size:var(--text-sm);}
+.uni-missing a{color:inherit;text-decoration:underline;}
+.uni-missing .tag-pills li{color:var(--color-note-text);background:transparent;border-color:var(--color-note-line);}
+
+/* Erfahrungsberichte auf der Uni-Seite: dieselben Karten wie auf der
+   Berichts-Uebersicht, aber hoechstens drei und ohne Filterleiste. */
+.uni-reports{margin:var(--space-10) 0;}
+.uni-reports-intro{color:var(--color-ink-soft);font-size:var(--text-sm);max-width:38rem;margin:var(--space-3) 0 0;}
+.uni-reports-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));}
 .uni-stand a{text-decoration:underline;}
 
 /* Q&A */
