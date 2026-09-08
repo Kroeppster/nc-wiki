@@ -1,0 +1,97 @@
+{{- /*
+  ============================================================================
+  ANGEBOTS-KACHELN AUF DER STARTSEITE ("Was du hier findest")
+  ============================================================================
+  Zeigt in einem Raster, was der Verein tatsächlich anbietet - jede Kachel mit
+  einer grossen Zahl (wie viele Übungs-PDFs, wie viele Erfahrungsberichte, wie
+  viele Universitäten ...), dem Bereichsnamen und einem Satz dazu.
+
+  WARUM ES DIESE SEKTION GIBT: Die Startseite zeigte vorher nur Hero, News, die
+  8 Untertest-Kacheln, drei Mission-Sätze und den Spendenaufruf. Der ganze
+  eigentliche Bestand der Website - über 150 Übungs-PDFs, die Testsimulationen,
+  die Kursskripte, der Uniguide, die Erfahrungsberichte - tauchte auf der
+  Startseite nirgends auf. Die Seite wirkte dadurch leerer, als sie ist
+  (Rückmeldung 2026-09-08).
+
+  DIE ZAHLEN WERDEN NICHT VON HAND GEPFLEGT. Sie werden bei jedem Bauen der
+  Website neu gezählt: die PDFs direkt in den Ordnern unter assets/downloads/,
+  die Berichte aus den Seiten im jeweiligen Sprachordner, die Universitäten und
+  Fragen aus data/unis.yaml bzw. data/faq.yaml. Lädt also jemand zehn neue
+  Übungsserien hoch, steht beim nächsten Bauen automatisch die neue Zahl da.
+  Genau deshalb dürfen hier KEINE Zahlen im Text stehen - sie wären sofort
+  veraltet.
+
+  Weil die Berichte pro Sprache unterschiedlich weit übersetzt sind, zählt
+  jede Sprachversion ihre eigenen Seiten (Deutsch 66, Französisch 13,
+  Italienisch 4) - es steht also nirgends eine Zahl, die es in dieser Sprache
+  gar nicht gibt.
+
+  WAS AUF DER KACHEL STEHT, kommt dagegen aus dem Frontmatter der Startseite
+  (content/de|fr|it/_index.md, Block "angebot:") - dort werden Überschrift,
+  Text und Link-Beschriftung pro Sprache gepflegt, nicht hier.
+
+  EINE KACHEL ÄNDERN/HINZUFÜGEN:
+    1. In content/de|fr|it/_index.md unter "angebot: items:" einen Eintrag mit
+       "key", "title", "unit", "text" und "link" ergänzen (in ALLEN drei
+       Sprachdateien).
+    2. Unten in $quellen denselben "key" mit Zieladresse und Zählweise
+       eintragen.
+  Ein Eintrag mit unbekanntem "key" erscheint weiterhin - dann einfach ohne
+  Zahl statt mit einer falschen.
+  ============================================================================
+*/ -}}
+
+{{- /* Alle PDF-Dateien in den drei Download-Ordnern zählen. "**" heisst "auch
+       in Unterordnern" - die Übungsserien liegen je Themenbereich in einem
+       eigenen Unterordner (assets/downloads/uebungsaufgaben/textverstaendnis/
+       usw.). Die Testsimulationen und Kursskripte liegen dagegen flach in
+       ihrem Ordner. */ -}}
+{{- $anzahlUebungen := len (resources.Match "downloads/uebungsaufgaben/**/*.pdf") }}
+{{- $anzahlSimulationen := len (resources.Match "downloads/testsimulationen/*.pdf") }}
+{{- $anzahlSkripte := len (resources.Match "downloads/kursskripte/*.pdf") }}
+
+{{- /* Erfahrungsberichte der AKTUELLEN Sprache zählen. Gezählt wird - wie in
+       erfahrungsbericht-grid.html - nur, was ein "jahr" im Frontmatter hat:
+       die Seite "Bericht einreichen" liegt im selben Ordner, ist aber kein
+       Bericht. */ -}}
+{{- $anzahlBerichte := 0 }}
+{{- with .Site.GetPage "ems/erfahrungsberichte" }}
+  {{- range .Pages }}{{ if .Params.jahr }}{{ $anzahlBerichte = add $anzahlBerichte 1 }}{{ end }}{{- end }}
+{{- end }}
+
+{{- $anzahlUnis := len hugo.Data.unis }}
+{{- $anzahlFragen := len hugo.Data.faq }}
+
+{{- /* Zuordnung "key" aus dem Frontmatter -> Zieladresse + gezählte Zahl. */ -}}
+{{- $quellen := dict
+  "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "anzahl" $anzahlUebungen)
+  "testsimulationen"   (dict "url" "ems/testsimulationen/"   "anzahl" $anzahlSimulationen)
+  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "anzahl" $anzahlSkripte)
+  "uniguide"           (dict "url" "ems/uniguide/"           "anzahl" $anzahlUnis)
+  "erfahrungsberichte" (dict "url" "ems/erfahrungsberichte/" "anzahl" $anzahlBerichte)
+  "qa"                 (dict "url" "ems/qa/"                 "anzahl" $anzahlFragen)
+}}
+
+<ul class="angebot-grid">
+  {{- range .Params.angebot.items }}
+  {{- /* Innerhalb dieser Schleife ist "." der Eintrag aus dem Frontmatter
+         (key/title/unit/text/link). Deshalb werden die Werte hier zuerst in
+         eigene Variablen geholt - so bleiben sie auch dort verfügbar, wo "."
+         gleich etwas anderes bedeutet. */ -}}
+  {{- $eintrag := . }}
+  {{- $quelle := index $quellen .key }}
+  <li class="angebot-card">
+    {{- with $quelle }}
+    <p class="angebot-count">
+      <span class="angebot-number">{{ .anzahl }}</span>
+      <span class="angebot-unit">{{ $eintrag.unit }}</span>
+    </p>
+    {{- end }}
+    <h3>{{ $eintrag.title }}</h3>
+    <p>{{ $eintrag.text }}</p>
+    {{- with $quelle }}
+    <a class="more" href="{{ relLangURL .url }}">{{ $eintrag.link }}</a>
+    {{- end }}
+  </li>
+  {{- end }}
+</ul>

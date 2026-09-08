@@ -72,6 +72,25 @@
     </div>
   </section>
 
+  {{/* ================= WAS ES HIER GIBT (Angebot in Zahlen) =================
+       Bewusst die erste Sektion nach dem Hero: Wer neu auf der Seite landet,
+       sieht damit sofort, was der Verein anzubieten hat, statt zuerst an News
+       und Untertest-Kacheln vorbeizuscrollen. Die Zahlen auf den Kacheln
+       werden beim Bauen gezählt (siehe partials/angebot-grid.html), die Texte
+       stehen im Frontmatter der Startseite unter "angebot:".
+
+       "section-surface" stellt die Sektion auf die helle Kartenfläche statt
+       auf den Seitenhintergrund - die Startseite wechselt ab hier zwischen
+       beiden Flächen, damit nicht mehrere gleich getönte Blöcke direkt
+       aufeinanderfolgen. */}}
+  <section id="angebot" class="section-surface">
+    <div class="wrap">
+      <p class="eyebrow">{{ .Params.angebot.eyebrow }}</p>
+      <h2>{{ .Params.angebot.heading }}</h2>
+      {{ partial "angebot-grid.html" . }}
+    </div>
+  </section>
+
   {{/* ================= NEWS-VORSCHAU (2 neueste Beiträge) ================= */}}
   <section id="news">
     <div class="wrap">
@@ -79,7 +98,11 @@
         <div><p class="eyebrow">{{ .Params.news.eyebrow }}</p><h2>{{ .Params.news.heading }}</h2></div>
         <a class="more" href="{{ relLangURL "news/" }}">{{ .Params.news.cta }}</a>
       </div>
-      <ul class="card-grid">
+      {{/* "news-grid" zusaetzlich zu "card-grid": Solange es erst EINEN
+           News-Beitrag gibt, blieb bei einem starren 2-Spalten-Raster die
+           halbe Zeile leer. Mit dieser Klasse richtet sich die Spaltenzahl
+           nach der Anzahl Beitraege (siehe .news-grid in style.css). */}}
+      <ul class="card-grid news-grid">
         {{/* "first 2" = nur die ersten 2 Treffer nehmen. .Site.RegularPages mit
              Section "news" = alle echten Unterseiten (keine Übersichtsseiten)
              im news-Ordner, automatisch neuestes Datum zuerst sortiert. */}}
@@ -101,7 +124,7 @@
   </section>
 
   {{/* ================= DIE 10 UNTERTESTS ================= */}}
-  <section id="subtests">
+  <section id="subtests" class="section-surface">
     <div class="wrap">
       <p class="eyebrow">{{ .Params.subtests.eyebrow }}</p>
       <h2>{{ .Params.subtests.heading }}</h2>
@@ -140,7 +163,10 @@
         <h2>{{ .Params.support.heading }}</h2>
         <p>{{ .Params.support.text }}</p>
       </div>
-      <a class="btn btn-primary" href="{{ relLangURL "unterstuetzer-innen/jetzt-unterstuetzen/" }}">{{ .Params.support.cta }}</a>
+      {{/* btn-invert statt btn-primary: Der Aufruf sitzt jetzt auf einer
+           blauen Karte (siehe .support-inner in style.css), ein blauer Knopf
+           darauf wäre unsichtbar. */}}
+      <a class="btn btn-invert" href="{{ relLangURL "unterstuetzer-innen/jetzt-unterstuetzen/" }}">{{ .Params.support.cta }}</a>
     </div>
   </section>
 

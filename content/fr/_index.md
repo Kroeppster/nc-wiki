@@ -17,6 +17,40 @@ news:
   eyebrow: "Actualité"
   heading: "Actualités"
   cta: "Toutes les actualités →"
+angebot:
+  eyebrow: "Ce que tu trouves ici"
+  heading: "Tout est gratuit, tout est fait par des étudiant·e·s"
+  items:
+    - key: uebungsaufgaben
+      title: "Exercices"
+      unit: "PDF"
+      text: "Des séries d'exercices sur les huit domaines de l'EMS – avec les corrigés pour te contrôler toi-même."
+      link: "Voir les exercices →"
+    - key: testsimulationen
+      title: "Simulations de test"
+      unit: "cahiers de test"
+      text: "Des cahiers de test complets pour vivre une fois le jour de l'examen dans des conditions réalistes."
+      link: "Voir les simulations →"
+    - key: vorbereitungskurse
+      title: "Cours de préparation"
+      unit: "supports de cours"
+      text: "Les supports de nos cours à relire – même si tu n'as pas pu y participer."
+      link: "Voir les cours →"
+    - key: uniguide
+      title: "Guide des universités"
+      unit: "universités"
+      text: "Où étudier la médecine en Suisse, avec quelle procédure d'admission et dans quelle langue."
+      link: "Voir le guide →"
+    - key: erfahrungsberichte
+      title: "Témoignages"
+      unit: "témoignages"
+      text: "D'ancien·ne·s candidat·e·s racontent comment ils et elles ont révisé et ce qu'ils feraient autrement."
+      link: "Lire les témoignages →"
+    - key: qa
+      title: "Questions & réponses"
+      unit: "questions"
+      text: "Inscription, déroulement, frais, répétition – les questions les plus fréquentes sur l'EMS."
+      link: "Voir les réponses →"
 subtests:
   eyebrow: "Exercices"
   heading: "8 sous-tests, un objectif"

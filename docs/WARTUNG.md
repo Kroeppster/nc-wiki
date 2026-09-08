@@ -428,3 +428,66 @@ STATICRYPT_PASSWORD='test-passwort' npm run schuetzen
 
 Danach liegt in `public/mitglieder/` die geschützte Fassung. Wichtig: `public/` ist
 nur ein lokaler Bau-Ordner und landet nie in git.
+
+---
+
+## 12. Startseite: die Kacheln „Was du hier findest" ändern
+
+Direkt unter dem Hero steht auf der Startseite ein Raster mit sechs Kacheln
+(Übungsaufgaben, Testsimulationen, Vorbereitungskurse, Uniguide,
+Erfahrungsberichte, Fragen & Antworten). Jede Kachel nennt eine grosse Zahl,
+den Bereich und einen Satz dazu.
+
+### Die Zahlen musst du nicht pflegen
+
+Sie werden bei **jedem Bauen der Website neu gezählt**: die PDFs direkt in den
+Ordnern unter `assets/downloads/`, die Erfahrungsberichte aus den Seiten im
+jeweiligen Sprachordner, die Universitäten und Fragen aus `data/unis.yaml` bzw.
+`data/faq.yaml`. Lädst du zehn neue Übungsserien hoch, steht dort beim nächsten
+Build automatisch die neue Zahl.
+
+**Deshalb bitte keine Zahlen in die Texte schreiben** – sie wären beim nächsten
+Upload sofort falsch.
+
+Weil die Erfahrungsberichte nicht in allen Sprachen gleich weit übersetzt sind,
+zählt jede Sprachfassung ihre eigenen Berichte (aktuell 66 auf Deutsch, 13 auf
+Französisch, 4 auf Italienisch). Es steht also nie eine Zahl da, die es in
+dieser Sprache gar nicht gibt.
+
+### Texte ändern
+
+Überschrift und die Texte der Kacheln stehen im Frontmatter der Startseite,
+unter `angebot:` – und zwar **in allen drei Sprachdateien**:
+
+- `content/de/_index.md`
+- `content/fr/_index.md`
+- `content/it/_index.md`
+
+```yaml
+angebot:
+  eyebrow: "Was du hier findest"
+  heading: "Alles kostenlos, alles von Studierenden gemacht"
+  items:
+    - key: uebungsaufgaben       # legt fest, was gezählt und wohin verlinkt wird
+      title: "Übungsaufgaben"    # Überschrift der Kachel
+      unit: "PDFs"               # steht klein neben der Zahl
+      text: "Übungsserien zu allen acht Themenbereichen ..."
+      link: "Zu den Übungsaufgaben →"
+```
+
+`key` ist der einzige Wert, der **nicht** übersetzt wird – er ist der interne
+Name und muss in allen drei Sprachen gleich bleiben. Erlaubt sind:
+`uebungsaufgaben`, `testsimulationen`, `vorbereitungskurse`, `uniguide`,
+`erfahrungsberichte`, `qa`.
+
+### Eine Kachel entfernen oder umsortieren
+
+Einfach den Eintrag in allen drei Dateien löschen bzw. verschieben. Das Raster
+richtet sich automatisch nach der Anzahl.
+
+### Eine ganz neue Kachel
+
+Dafür braucht es zusätzlich eine kleine Ergänzung im Template
+(`layouts/partials/angebot-grid.html`, Block `$quellen`): dort steht pro `key`,
+welche Zieladresse verlinkt und was gezählt wird. Das ist ein Entwickler-Schritt
+– die Datei erklärt oben im Kommentar, was einzutragen ist.
