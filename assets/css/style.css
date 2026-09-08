@@ -31,6 +31,13 @@
   /* ---- Farben: Marke (Blau) ---- */
   --color-signal:#223FCB;         /* Primärfarbe */
   --color-signal-strong:#16299C;  /* Hover/Aktiv-Zustand */
+  /* Hintergrund gefüllter Knöpfe. Im Hellmodus identisch mit --color-signal,
+     im Dunkelmodus aber bewusst NICHT: dort wird --color-signal absichtlich
+     heller (damit Link-TEXT auf dunklem Grund lesbar bleibt), und weisse
+     Knopfbeschriftung auf diesem hellen Blau kam nur auf 3.1:1 - deutlich
+     unter den geforderten 4.5:1. Siehe Dunkelmodus-Block weiter unten. */
+  --color-btn-bg:#223FCB;
+  --color-btn-bg-hover:#16299C;
   --color-signal-soft:#EEF1FD;    /* getönte Fläche (z. B. Mission-Sektion) */
   --color-signal-soft-line:#D7DDF8;
 
@@ -121,7 +128,7 @@
   --color-avatar-2:#7A3FA0;
   --color-avatar-3:#B5562F;
   --color-avatar-4:#3F6B3A;
-  --color-avatar-5:#A6741E;
+  --color-avatar-5:#8F6414;  /* dunkler als früher (#A6741E): weisse Initialen kamen dort nur auf 4.1:1 */
 
   /* ---- Spenden-Aufruf: feste Blautöne ----
      Absichtlich NICHT im Dunkelmodus-Block überschrieben - wie
@@ -196,11 +203,19 @@
   --color-section-alt:#0E1426;
   --color-ink:#EEF1FB;
   --color-ink-soft:#A7B0CB;
-  --color-ink-faint:#7B84A0;      /* 5.1:1 auf --color-paper (dark) */
+  /* 5.7:1 auf --color-paper und 4.7:1 auf --color-surface-sunken. Vorher
+     #7B84A0: das reichte zwar auf dem Seitenhintergrund, kam auf der
+     abgesetzten Fläche (Tabellenköpfe, Badge "Nein", Lizenzhinweis bei den
+     Übungsaufgaben) aber nur auf 4.2:1. */
+  --color-ink-faint:#838CA8;
   --color-line:#242E4E;
   --color-line-strong:#37437A;
   --color-signal:#7089FF;
   --color-signal-strong:#93A5FF;
+  /* Weiss auf diesen beiden: 6.4:1 bzw. 4.9:1 - anders als auf --color-signal
+     (3.1:1). Siehe Erklärung beim Token im Hellmodus-Block oben. */
+  --color-btn-bg:#3350D8;
+  --color-btn-bg-hover:#4A65E4;
   --color-signal-soft:#161E3C;
   --color-signal-soft-line:#2A3560;
   --color-accent:#FF9A57;
@@ -306,7 +321,7 @@ h3{font-size:var(--text-md);}
 p{margin:0 0 var(--space-4);}
 .wrap{max-width:var(--max-width);margin-inline:auto;padding-inline:var(--space-5);}
 
-.skip-link{position:absolute;left:-999px;top:0;background:var(--color-signal);color:var(--color-on-signal);padding:var(--space-3) var(--space-4);z-index:1000;border-radius:0 0 var(--radius-md) 0;font-family:var(--font-body);font-weight:600;}
+.skip-link{position:absolute;left:-999px;top:0;background:var(--color-btn-bg);color:var(--color-on-signal);padding:var(--space-3) var(--space-4);z-index:1000;border-radius:0 0 var(--radius-md) 0;font-family:var(--font-body);font-weight:600;}
 .skip-link:focus{left:0;}
 
 .eyebrow{font-family:var(--font-body);font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-3);}
@@ -379,7 +394,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Menü ab (wie ein Call-to-Action), statt wie die anderen Punkte ein reiner
    Textlink zu sein. */
 .nav-cta{border:1px solid var(--color-signal);border-radius:var(--radius-md);padding:.3rem .8rem !important;color:var(--color-signal) !important;}
-.nav-cta:hover{background:var(--color-signal);color:#fff !important;}
+.nav-cta:hover{background:var(--color-btn-bg);color:#fff !important;}
 /* Such-Knopf (Lupe): gleiche Optik wie der Hell/Dunkel-Knopf daneben. Klick
    klappt das eigentliche Suchfeld auf (Klasse "is-open" auf #search, siehe
    Klick-Logik in footer.html) statt es dauerhaft ~200px Platz in der
@@ -410,8 +425,8 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Buttons
    ========================================================================== */
 .btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:.85rem 1.6rem;font-size:var(--text-sm);font-weight:600;font-family:var(--font-body);border-radius:var(--radius-full);border:1px solid transparent;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s;}
-.btn-primary{background:var(--color-signal);color:var(--color-on-signal);}
-.btn-primary:hover{background:var(--color-signal-strong);}
+.btn-primary{background:var(--color-btn-bg);color:var(--color-on-signal);}
+.btn-primary:hover{background:var(--color-btn-bg-hover);}
 .btn-ghost{border-color:var(--color-ink);color:var(--color-ink);background:transparent;}
 .btn-ghost:hover{background:var(--color-ink);color:var(--color-paper);}
 .btn-block{width:100%;justify-content:center;}
@@ -1006,8 +1021,8 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
    einzelnen PDF-Downloads oben - deshalb hier gezielt wieder das
    .btn/.btn-primary-Aussehen herstellen (überschreibt ".report-error
    button" oben, weil hier spezifischer benannt UND weiter unten im Code). */
-.report-error-general button{background:var(--color-signal);color:var(--color-on-signal);border:1px solid transparent;padding:.85rem 1.4rem;border-radius:var(--radius-sm);font:inherit;font-size:var(--text-sm);font-weight:600;text-decoration:none;cursor:pointer;}
-.report-error-general button:hover{background:var(--color-signal-strong);color:var(--color-on-signal);}
+.report-error-general button{background:var(--color-btn-bg);color:var(--color-on-signal);border:1px solid transparent;padding:.85rem 1.4rem;border-radius:var(--radius-sm);font:inherit;font-size:var(--text-sm);font-weight:600;text-decoration:none;cursor:pointer;}
+.report-error-general button:hover{background:var(--color-btn-bg-hover);color:var(--color-on-signal);}
 
 /* ==========================================================================
    Formulare
