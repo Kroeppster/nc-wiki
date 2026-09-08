@@ -93,20 +93,7 @@ Alles, was in den Testsaal mitgenommen wird – auch die Getränke – muss in e
 
 Zwischen den Untertests gibt es keine Pausen – es heisst immer gleich weiterblättern.
 
-| Aufgabengruppe | Aufgaben | Max. Punktzahl | Bearbeitungszeit |
-| --- | --- | --- | --- |
-| Muster zuordnen | 18 | 18 | 16 min |
-| Medizinisch-naturwissenschaftliches Grundverständnis | 18 | 18 | 45 min |
-| Objekte im Raum | 18 | 18 | 10 min |
-| Quantitative und formale Probleme | 18 | 18 | 45 min |
-| Figuren einprägen (Einprägephase) | – | – | 4 min |
-| Fakten einprägen (Einprägephase) | – | – | 6 min |
-| Textverständnis | 18 | 18 | 45 min |
-| Figuren einprägen (Reproduktion) | 18 | 18 | 5 min |
-| Fakten einprägen (Reproduktion) | 18 | 18 | 6 min |
-| Diagramme und Tabellen | 18 | 18 | 45 min |
-| Konzentriertes und sorgfältiges Arbeiten | 1600 Zeichen | 18 | 8 min |
-| **Gesamt** | **144 + 1600 Zeichen** | **162** | **ca. 3 Std. 55 Min (netto)** |
+{{< testablauf >}}
 
 Guides zu allen Untertests findest du unter [Übungsaufgaben]({{< ref "/ems/uebungsaufgaben" >}}).
 

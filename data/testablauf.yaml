@@ -1,0 +1,167 @@
+# ============================================================================
+# ABLAUF DES ECHTEN EMS-TESTTAGS (Reihenfolge und Bearbeitungszeiten)
+# ============================================================================
+# Diese Datei ist die EINZIGE Stelle, an der die Untertest-Zeiten gepflegt
+# werden. Sie speist zwei Dinge:
+#
+#   1. Die Tabelle "Tagesablauf" auf /ems/ (in allen drei Sprachen) - erzeugt
+#      über den Shortcode {{< testablauf >}}, siehe
+#      layouts/shortcodes/testablauf.html. Vorher stand dieselbe Tabelle von
+#      Hand in content/de|fr|it/ems/_index.md - also dreimal, mit dreimal der
+#      Gefahr, dass eine geänderte Zeit irgendwo vergessen wird.
+#   2. Den Prüfungsmodus auf /ems/pruefungsmodus/ (Uhr + Ansagen), siehe
+#      layouts/partials/pruefungsmodus.html.
+#
+# WICHTIG: Ändert sich am echten EMS eine Bearbeitungszeit, wird sie HIER
+# geändert - Tabelle und Prüfungsmodus ziehen automatisch mit. Eine Zeit, die
+# hier falsch steht, ist ein echter Schaden: Jemand übt dann monatelang mit
+# der falschen Dauer.
+#
+# Felder je Block:
+#   key       - technischer Name, muss eindeutig sein (wird nirgends angezeigt)
+#   slug      - Ordner unter content/<sprache>/ems/uebungsaufgaben/, damit der
+#               Block auf die passende Übungsseite verlinken kann. Leer lassen,
+#               wenn es keine passende Seite gibt.
+#   minuten   - Bearbeitungszeit in Minuten (Zahl, keine Anführungszeichen)
+#   aufgaben  - Anzahl Aufgaben als Text, oder "" wenn es keine gibt
+#               (Einprägephasen werden nicht bewertet)
+#   punkte    - Maximalpunktzahl als Text, oder ""
+#   de/fr/it  - angezeigter Name in den drei Sprachen
+#   hinweis_de/fr/it - optionaler Zusatzsatz, der im Prüfungsmodus nach der
+#               allgemeinen Anweisung erscheint und mit vorgelesen wird.
+#               Weglassen, wenn es nichts Besonderes zu sagen gibt.
+#
+# REIHENFOLGE = die echte Reihenfolge am Testtag. Der Prüfungsmodus spielt die
+# Blöcke bei der kompletten Simulation genau so nacheinander ab.
+#
+# Quelle der Zeiten: der bisherige Tagesablauf auf /ems/ (Stand 2026-08).
+# Zwischen den Untertests gibt es am echten EMS keine Pausen.
+# ============================================================================
+
+# Sekunden zwischen zwei Blöcken bei der kompletten Simulation: Zeit zum
+# Umblättern und für die Anweisung zum nächsten Untertest. Am echten EMS gibt
+# es dafür keine feste Dauer - der Wert ist eine bewusste Setzung, damit die
+# Simulation ohne Klick durchläuft.
+umblaettern_sekunden: 25
+
+bloecke:
+  - key: muster-zuordnen
+    slug: muster-zuordnen
+    minuten: 16
+    aufgaben: "18"
+    punkte: "18"
+    de: "Muster zuordnen"
+    fr: "Association de motifs"
+    it: "Abbinamento di schemi"
+
+  - key: med-nat-grundverstaendnis
+    slug: med-nat-grundverstaendnis
+    minuten: 45
+    aufgaben: "18"
+    punkte: "18"
+    de: "Medizinisch-naturwissenschaftliches Grundverständnis"
+    fr: "Compréhension médico-scientifique"
+    it: "Comprensione medico-scientifica"
+
+  - key: objekte-im-raum
+    slug: objekte-im-raum
+    minuten: 10
+    aufgaben: "18"
+    punkte: "18"
+    de: "Objekte im Raum"
+    fr: "Objets dans l'espace"
+    it: "Oggetti nello spazio"
+
+  - key: quantitative-probleme
+    slug: quantitative-probleme
+    minuten: 45
+    aufgaben: "18"
+    punkte: "18"
+    de: "Quantitative und formale Probleme"
+    fr: "Problèmes quantitatifs et formels"
+    it: "Problemi quantitativi e formali"
+
+  - key: figuren-einpraegen
+    slug: figuren-fakten-lernen
+    hinweis_de: "Nach dieser Phase folgt zuerst ein anderer Untertest. Erst danach wird abgefragt, was du dir gemerkt hast."
+    hinweis_fr: "Après cette phase vient d'abord un autre sous-test. Ce n'est qu'ensuite que l'on te demandera ce que tu as retenu."
+    hinweis_it: "Dopo questa fase segue prima un altro sottotest. Solo in seguito ti verrà chiesto che cosa hai memorizzato."
+    minuten: 4
+    aufgaben: ""
+    punkte: ""
+    de: "Figuren einprägen (Einprägephase)"
+    fr: "Mémorisation de figures (phase d'apprentissage)"
+    it: "Memorizzazione di figure (fase di apprendimento)"
+
+  - key: fakten-einpraegen
+    slug: figuren-fakten-lernen
+    hinweis_de: "Auch hier folgt zuerst ein anderer Untertest, bevor abgefragt wird."
+    hinweis_fr: "Ici aussi, un autre sous-test suit avant que l'on ne te pose des questions."
+    hinweis_it: "Anche qui segue prima un altro sottotest, prima delle domande."
+    minuten: 6
+    aufgaben: ""
+    punkte: ""
+    de: "Fakten einprägen (Einprägephase)"
+    fr: "Mémorisation de faits (phase d'apprentissage)"
+    it: "Memorizzazione di fatti (fase di apprendimento)"
+
+  - key: textverstaendnis
+    slug: textverstaendnis
+    minuten: 45
+    aufgaben: "18"
+    punkte: "18"
+    de: "Textverständnis"
+    fr: "Compréhension de textes"
+    it: "Comprensione del testo"
+
+  - key: figuren-reproduktion
+    slug: figuren-fakten-lernen
+    minuten: 5
+    aufgaben: "18"
+    punkte: "18"
+    de: "Figuren einprägen (Reproduktion)"
+    fr: "Mémorisation de figures (reproduction)"
+    it: "Memorizzazione di figure (riproduzione)"
+
+  - key: fakten-reproduktion
+    slug: figuren-fakten-lernen
+    minuten: 6
+    aufgaben: "18"
+    punkte: "18"
+    de: "Fakten einprägen (Reproduktion)"
+    fr: "Mémorisation de faits (reproduction)"
+    it: "Memorizzazione di fatti (riproduzione)"
+
+  - key: diagramme-tabellen
+    slug: diagramme-tabellen
+    minuten: 45
+    aufgaben: "18"
+    punkte: "18"
+    de: "Diagramme und Tabellen"
+    fr: "Diagrammes et tableaux"
+    it: "Diagrammi e tabelle"
+
+  - key: konzentriertes-arbeiten
+    slug: konzentriertes-arbeiten
+    hinweis_de: "Die Streichbedingung steht auf deinem Blatt. Präge sie dir jetzt genau ein. Während der acht Minuten solltest du nicht mehr nachschlagen müssen."
+    hinweis_fr: "La condition de biffage figure sur ta feuille. Mémorise-la maintenant avec précision. Pendant les huit minutes, tu ne devrais plus avoir à la relire."
+    hinweis_it: "La condizione di cancellatura è sul tuo foglio. Memorizzala ora con precisione. Durante gli otto minuti non dovresti più doverla rileggere."
+    minuten: 8
+    aufgaben_de: "1600 Zeichen"
+    aufgaben_fr: "1600 symboles"
+    aufgaben_it: "1600 simboli"
+    aufgaben: "1600"
+    punkte: "18"
+    de: "Konzentriertes und sorgfältiges Arbeiten"
+    fr: "Travail avec soin et concentration"
+    it: "Lavoro concentrato e accurato"
+
+# Text der Gesamt-Zeile in der Tabelle. Die Gesamtzeit wird NICHT hier
+# eingetragen, sondern aus den Minuten oben zusammengezählt - so kann sie gar
+# nicht auseinanderlaufen. Nur die Aufgaben-/Punkte-Summe steht als Text hier,
+# weil "144 + 1600 Zeichen" keine reine Zahl ist.
+summe:
+  aufgaben_de: "144 + 1600 Zeichen"
+  aufgaben_fr: "144 + 1600 symboles"
+  aufgaben_it: "144 + 1600 simboli"
+  punkte: "162"

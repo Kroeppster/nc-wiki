@@ -97,20 +97,7 @@ Tout ce qui est apporté dans la salle d'examen – y compris les boissons – d
 
 Il n'y a pas de pause entre les sous-tests, il faut donc toujours tourner la page directement.
 
-| Groupe d'exercices | Questions | Points max. | Temps imparti |
-| --- | --- | --- | --- |
-| Association de motifs | 18 | 18 | 16 min |
-| Compréhension médico-scientifique | 18 | 18 | 45 min |
-| Objets dans l'espace | 18 | 18 | 10 min |
-| Problèmes quantitatifs et formels | 18 | 18 | 45 min |
-| Mémorisation de figures (phase d'apprentissage) | – | – | 4 min |
-| Mémorisation de faits (phase d'apprentissage) | – | – | 6 min |
-| Compréhension de textes | 18 | 18 | 45 min |
-| Mémorisation de figures (reproduction) | 18 | 18 | 5 min |
-| Mémorisation de faits (reproduction) | 18 | 18 | 6 min |
-| Diagrammes et tableaux | 18 | 18 | 45 min |
-| Travail avec soin et concentration | 1600 symboles | 18 | 8 min |
-| **Total** | **144 + 1600 symboles** | **162** | **env. 3 h 55 (net)** |
+{{< testablauf >}}
 
 Retrouve nos guides pour tous les sous-tests sous [Exercices]({{< ref "/ems/uebungsaufgaben" >}}).
 

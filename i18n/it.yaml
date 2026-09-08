@@ -192,3 +192,47 @@ mitglieder_schutz_fehler: "Password errata."
 # Banda informativa visibile in alto su ogni pagina dell'area soci
 # (vedi layouts/_default/single.html e list.html).
 mitglieder_interner_hinweis: "Pagina interna – da non diffondere pubblicamente."
+
+# ---------------------------------------------------------------------------
+# TABELLA DELLA GIORNATA su /ems/ (shortcode {{< testablauf >}})
+# ---------------------------------------------------------------------------
+testablauf_th_gruppe: "Gruppo di esercizi"
+testablauf_th_aufgaben: "Compiti"
+testablauf_th_punkte: "Punteggio max."
+testablauf_th_zeit: "Tempo concesso"
+testablauf_gesamt: "Totale"
+testablauf_gesamtzeit: "ca. {{ .std }} ore e {{ .min }} min (netto)"
+
+# ---------------------------------------------------------------------------
+# MODALITÀ ESAME (/ems/pruefungsmodus/) - cronometro e istruzioni
+# Tutto ciò che segue può essere LETTO AD ALTA VOCE se la sintesi vocale è
+# attiva: frasi brevi, senza parentesi né abbreviazioni.
+# ---------------------------------------------------------------------------
+pm_einzeln_heading: "Singoli sottotest"
+pm_einzeln_text: "Ogni blocco con il suo tempo reale. Prepara la serie di esercizi corrispondente prima di iniziare."
+pm_komplett_heading: "Simulazione completa"
+pm_komplett_text: "Gli undici blocchi uno dopo l'altro, nell'ordine del giorno d'esame e senza pause – esattamente come al vero EMS."
+pm_komplett_start: "Avvia la simulazione"
+pm_komplett_dauer: "{{ .std }} ore e {{ .min }} min di fila"
+pm_start: "Avvia"
+pm_minuten: "{{ .min }} min"
+pm_vorlesen: "Leggi le istruzioni ad alta voce"
+pm_vorlesen_hinweis: "Usa la sintesi vocale del tuo dispositivo. Aiuta a farsi un'idea del tempo prima che parta il cronometro."
+pm_uebungsseite: "Vai alla pagina di esercizi"
+
+pm_anweisung: "Hai {{ .min }} minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti."
+pm_beginne: "Inizia adesso."
+pm_stopp: "Stop. Posa la penna."
+pm_fertig_einzeln: "Fatto."
+pm_fertig_komplett: "Simulazione conclusa. Tutti e undici i blocchi sono fatti."
+pm_umblaettern: "Girare pagina"
+pm_block_zaehler: "Blocco {n} di {total}"
+pm_ende_um: "Fine alle {zeit}"
+
+pm_abbrechen: "Interrompi"
+pm_pause: "Pausa"
+pm_weiter: "Continua"
+pm_pausiert: "In pausa"
+pm_pause_hinweis: "Al vero EMS non c'è alcuna pausa – questa esiste solo per allenarsi."
+pm_abbrechen_frage: "Vuoi davvero interrompere l'esercizio?"
+pm_esc_hinweis: "Esc termina l'esercizio."

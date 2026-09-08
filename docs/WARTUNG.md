@@ -548,3 +548,58 @@ ein Entwickler-Schritt.
 Die Obergrenze von vier ist bewusst gesetzt: Mehr Spalten passen auf einem Handy
 nicht mehr sinnvoll nebeneinander. Sie steht in derselben Datei ganz unten im
 Skript als `var MAX = 4;`.
+
+---
+
+## 14. Prüfungsmodus (Uhr und Ansagen)
+
+Unter `/ems/pruefungsmodus/` können Leute unter echten Bedingungen üben: Die
+Seite liest die Anweisung vor, nimmt die Zeit auf einer Vollbild-Uhr und sagt
+am Ende „Stopp". Entweder für einen einzelnen Untertest oder für den ganzen
+Testtag am Stück, ohne Pausen dazwischen – wie am echten EMS.
+
+Es ist **kein Aufgaben-Generator**: Die Aufgaben kommen weiterhin aus den PDFs,
+die man sich vorher bereitlegt.
+
+### Eine Bearbeitungszeit ändern
+
+Alle Zeiten stehen in **einer** Datei: `data/testablauf.yaml`. Dort den Wert bei
+`minuten:` anpassen – fertig. Damit ändert sich automatisch **beides**:
+
+- die Tabelle „Tagesablauf" auf `/ems/` (in allen drei Sprachen)
+- der Prüfungsmodus
+
+Vorher stand diese Tabelle von Hand in den drei Sprachdateien; eine geänderte
+Zeit musste also an drei Stellen nachgeführt werden, und der Prüfungsmodus
+hätte eine vierte gebraucht.
+
+**Bitte sehr sorgfältig:** Eine falsche Zahl hier ist kein Schönheitsfehler.
+Jemand übt dann monatelang mit der falschen Dauer.
+
+### Die Reihenfolge ändern
+
+Die Reihenfolge der Einträge in `data/testablauf.yaml` **ist** die Reihenfolge
+am Testtag. Die komplette Simulation spielt die Blöcke genau so nacheinander ab,
+und die Tabelle zeigt sie in derselben Folge. Einträge verschieben genügt.
+
+### Einen Zusatzhinweis zu einem Untertest
+
+Optional lässt sich pro Block ein Satz hinterlegen, der nach der allgemeinen
+Anweisung erscheint und mit vorgelesen wird – dafür gibt es die Felder
+`hinweis_de`, `hinweis_fr` und `hinweis_it`. Aktuell genutzt bei den beiden
+Einprägephasen und beim Konzentrationstest („Die Streichbedingung steht auf
+deinem Blatt …"). Feld weglassen, wenn es nichts Besonderes zu sagen gibt.
+
+### Die vorgelesenen Sätze ändern
+
+Alles Gesprochene ausser den Zusatzhinweisen steht in `i18n/de|fr|it.yaml` bei
+den Einträgen, die mit `pm_` beginnen – zum Beispiel `pm_beginne` („Beginne
+jetzt.") oder `pm_stopp` („Stopp. Leg den Stift weg."). Beim Ändern darauf
+achten, dass die Sätze **gesprochen** natürlich klingen: kurz, keine Klammern,
+keine Abkürzungen.
+
+Vorgelesen wird über die Sprachausgabe, die im Browser schon eingebaut ist – es
+gibt also keine Audiodateien zu pflegen, und kein externer Dienst erfährt, wer
+hier übt. Dafür klingt die Stimme maschinell. Wer sie später durch echte
+Aufnahmen ersetzen will, braucht dafür Entwicklungshilfe (siehe
+`docs/WARTUNG-DETAILLIERT.md`).

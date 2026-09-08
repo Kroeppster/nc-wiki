@@ -1,0 +1,64 @@
+{{- /*
+  ============================================================================
+  TABELLE "TAGESABLAUF" - Reihenfolge und Zeiten der Untertests
+  ============================================================================
+  Wird im Text der EMS-Seite eingefügt, indem dort in einer eigenen Zeile der
+  Shortcode-Aufruf "testablauf" steht - siehe content/de|fr|it/ems/_index.md,
+  Abschnitt "Tagesablauf". (Der Aufruf selbst kann hier nicht ausgeschrieben
+  werden: Die Zeichenfolge würde diesen Kommentar vorzeitig beenden.)
+
+  Die Angaben kommen aus data/testablauf.yaml - dort ändern, nicht hier.
+  Vorher stand diese Tabelle von Hand in allen drei Sprachdateien; eine
+  geänderte Bearbeitungszeit musste also an drei Stellen nachgeführt werden,
+  und dieselben Zeiten braucht zusätzlich der Prüfungsmodus. Jetzt gibt es
+  genau eine Quelle.
+
+  Die Gesamtzeit unten wird aus den einzelnen Minuten ZUSAMMENGEZÄHLT, nicht
+  eingetragen - sie kann dadurch gar nicht von den Einzelwerten abweichen.
+  ============================================================================
+*/ -}}
+{{- $lang := .Page.Language.Lang }}
+{{- $daten := hugo.Data.testablauf }}
+{{- $bloecke := $daten.bloecke }}
+
+{{- /* Minuten aller Blöcke aufsummieren und in Stunden/Minuten umrechnen. */ -}}
+{{- $total := 0 }}
+{{- range $bloecke }}{{ $total = add $total .minuten }}{{ end }}
+{{- $std := div $total 60 }}
+{{- $min := mod $total 60 }}
+
+<div class="table-scroll">
+  <table class="uniguide-table testablauf-table">
+    <thead>
+      <tr>
+        <th>{{ i18n "testablauf_th_gruppe" }}</th>
+        <th>{{ i18n "testablauf_th_aufgaben" }}</th>
+        <th>{{ i18n "testablauf_th_punkte" }}</th>
+        <th>{{ i18n "testablauf_th_zeit" }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{- range $bloecke }}
+      {{- /* Name in der Seitensprache; fehlt die Übersetzung, wird Deutsch
+             genommen, damit die Zeile nicht leer bleibt. */ -}}
+      {{- $name := or (index . $lang) .de }}
+      {{- /* Die Aufgaben-Spalte ist beim Konzentrationstest keine Zahl,
+             sondern "1600 Zeichen" - dafür gibt es optionale, sprachabhängige
+             Felder aufgaben_de/fr/it. */ -}}
+      {{- $aufgaben := or (index . (printf "aufgaben_%s" $lang)) .aufgaben }}
+      <tr>
+        <td>{{ $name }}</td>
+        <td>{{ if $aufgaben }}{{ $aufgaben }}{{ else }}–{{ end }}</td>
+        <td>{{ if .punkte }}{{ .punkte }}{{ else }}–{{ end }}</td>
+        <td>{{ .minuten }} min</td>
+      </tr>
+      {{- end }}
+      <tr>
+        <td><strong>{{ i18n "testablauf_gesamt" }}</strong></td>
+        <td><strong>{{ or (index $daten.summe (printf "aufgaben_%s" $lang)) $daten.summe.aufgaben_de }}</strong></td>
+        <td><strong>{{ $daten.summe.punkte }}</strong></td>
+        <td><strong>{{ i18n "testablauf_gesamtzeit" (dict "std" $std "min" $min) }}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

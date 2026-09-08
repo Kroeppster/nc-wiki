@@ -3,7 +3,7 @@ title: "Uniguide"
 menu:
   main:
     parent: ems
-    weight: 6
+    weight: 7
     name: "Universitäten-Guide"
 ---
 

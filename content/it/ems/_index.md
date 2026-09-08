@@ -93,20 +93,7 @@ Tutto ciò che porti nella sala d'esame – comprese le bevande – deve essere 
 
 Non ci sono pause tra i sottotest, si passa sempre subito al successivo.
 
-| Gruppo di esercizi | Compiti | Punteggio max. | Tempo concesso |
-| --- | --- | --- | --- |
-| Abbinamento di schemi | 18 | 18 | 16 min |
-| Comprensione medico-scientifica | 18 | 18 | 45 min |
-| Oggetti nello spazio | 18 | 18 | 10 min |
-| Problemi quantitativi e formali | 18 | 18 | 45 min |
-| Memorizzazione di figure (fase di apprendimento) | – | – | 4 min |
-| Memorizzazione di fatti (fase di apprendimento) | – | – | 6 min |
-| Comprensione del testo | 18 | 18 | 45 min |
-| Memorizzazione di figure (riproduzione) | 18 | 18 | 5 min |
-| Memorizzazione di fatti (riproduzione) | 18 | 18 | 6 min |
-| Diagrammi e tabelle | 18 | 18 | 45 min |
-| Lavoro concentrato e accurato | 1600 simboli | 18 | 8 min |
-| **Totale** | **144 + 1600 simboli** | **162** | **ca. 3 ore e 55 min (netto)** |
+{{< testablauf >}}
 
 Trovi le nostre guide per tutti i sottotest sotto [Esercizi]({{< ref "/ems/uebungsaufgaben" >}}).
 

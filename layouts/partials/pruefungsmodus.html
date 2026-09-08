@@ -1,0 +1,490 @@
+{{- /*
+  ============================================================================
+  PRÜFUNGSMODUS: UHR UND ANSAGEN (/ems/pruefungsmodus/)
+  ============================================================================
+  Erscheint auf einer Seite, die im Frontmatter "pruefungsmodus: true" hat
+  (siehe layouts/_default/single.html).
+
+  WAS DAS IST: Kein Aufgaben-Generator. Die Aufgaben liegen als PDF vor - was
+  beim Üben zu Hause fehlt, sind die PRÜFUNGSBEDINGUNGEN: jemand, der die
+  Anweisung vorliest, die Zeit nimmt und "Stopp" sagt. Genau das macht diese
+  Seite, entweder für einen einzelnen Untertest oder für den ganzen Testtag am
+  Stück.
+
+  WOHER DIE ZEITEN KOMMEN: ausschliesslich aus data/testablauf.yaml - dieselbe
+  Datei, aus der auch die Tagesablauf-Tabelle auf /ems/ erzeugt wird. Eine Zeit
+  wird also an genau einer Stelle gepflegt.
+
+  VORLESEN: über die Sprachausgabe, die im Browser bereits eingebaut ist
+  (SpeechSynthesis). Bewusst kein externer Dienst und keine hochgeladenen
+  Audiodateien: kein fremder Server bekommt mit, wer hier übt, es sind keine
+  Dateien zu pflegen, und es funktioniert automatisch in allen drei Sprachen.
+  Die Stimme klingt dafür maschinell. Wer das später durch echte Aufnahmen
+  ersetzen will, tauscht die Funktion "sprich" unten aus - der übrige Ablauf
+  bleibt gleich.
+
+  KEIN COUNTDOWN, SONDERN EINE UHR: Angezeigt wird die normale Uhrzeit in
+  Stunden, Minuten und Sekunden - genau das, was im Testsaal an der Wand hängt.
+  Eine herunterlaufende Restzeit gibt es am echten EMS NICHT, und sie wäre auch
+  kein gutes Training: Die eigene Zeit einzuteilen, ohne dass jemand mitzählt,
+  ist ein Teil der Prüfung. Wann ein Block endet, weiss die Seite intern
+  (Endzeitpunkt in echter Uhrzeit) und sagt es an - angezeigt wird es nicht.
+
+  Damit man den Block trotzdem planen kann, steht die geplante ENDZEIT auf dem
+  Anweisungs-Bildschirm, bevor es losgeht - so wie eine Aufsichtsperson sie an
+  die Tafel schreiben würde. Sobald die Uhr läuft, ist sie weg.
+  ============================================================================
+*/ -}}
+{{- $lang := .Site.Language.Lang }}
+{{- $daten := hugo.Data.testablauf }}
+
+{{- /* Die Blöcke für das JavaScript aufbereiten: fertige, übersetzte Texte,
+       damit im Skript selbst kein übersetzbarer Satz steht. */ -}}
+{{- $bloecke := slice }}
+{{- range $daten.bloecke }}
+  {{- $name := or (index . $lang) .de }}
+  {{- $hinweis := index . (printf "hinweis_%s" $lang) }}
+  {{- $bloecke = $bloecke | append (dict
+        "key" .key
+        "name" $name
+        "minuten" .minuten
+        "hinweis" (or $hinweis "")
+        "anweisung" (i18n "pm_anweisung" (dict "min" .minuten))
+      ) }}
+{{- end }}
+
+{{- $total := 0 }}
+{{- range $daten.bloecke }}{{ $total = add $total .minuten }}{{ end }}
+
+{{- /* ECHTE AUFNAHMEN STATT ROBOTERSTIMME
+       Liegt unter assets/audio/pruefungsmodus/<sprache>/ eine Datei mit dem
+       passenden Namen, wird sie abgespielt - sonst liest die Sprachausgabe des
+       Browsers vor. Es muss also nichts umgestellt werden: Datei hochladen
+       genügt, genau wie bei den PDF-Downloads.
+
+       Erwartete Dateinamen (.mp3), je Sprachordner:
+         <key>.mp3        - die Anweisung zu diesem Block, key wie in
+                            data/testablauf.yaml (z.B. muster-zuordnen.mp3)
+         beginne.mp3      - "Beginne jetzt."
+         stopp.mp3        - "Stopp. Leg den Stift weg."
+         fertig-einzeln.mp3  - Schlusssatz nach einem einzelnen Untertest
+         fertig-komplett.mp3 - Schlusssatz nach der ganzen Simulation
+       Fehlt eine einzelne Datei, wird genau für diesen Satz vorgelesen - die
+       Sammlung muss also nicht auf einmal vollständig sein. */ -}}
+{{- $audio := dict }}
+{{- range resources.Match (printf "audio/pruefungsmodus/%s/*.mp3" $lang) }}
+  {{- $audio = merge $audio (dict (strings.TrimSuffix ".mp3" (path.Base .Name)) .RelPermalink) }}
+{{- end }}
+
+<div class="pm" id="pruefungsmodus">
+
+  {{/* Sprachausgabe an/aus. Standardmässig an - der Nutzen der Seite steckt
+       zu einem grossen Teil genau darin. */}}
+  <div class="pm-optionen">
+    <label class="pm-schalter">
+      <input type="checkbox" id="pm-tts" checked>
+      <span>{{ i18n "pm_vorlesen" }}</span>
+    </label>
+    <p class="pm-hinweis">{{ i18n "pm_vorlesen_hinweis" }}</p>
+  </div>
+
+  <section class="pm-komplett">
+    <h2>{{ i18n "pm_komplett_heading" }}</h2>
+    <p>{{ i18n "pm_komplett_text" }}</p>
+    <button type="button" class="btn btn-primary" data-pm-start="alle">
+      {{ i18n "pm_komplett_start" }}
+    </button>
+    <p class="pm-dauer">{{ i18n "pm_komplett_dauer" (dict "std" (div $total 60) "min" (mod $total 60)) }}</p>
+  </section>
+
+  <section class="pm-einzeln">
+    <h2>{{ i18n "pm_einzeln_heading" }}</h2>
+    <p>{{ i18n "pm_einzeln_text" }}</p>
+    <ul class="pm-liste">
+      {{- range $i, $b := $daten.bloecke }}
+      {{- $name := or (index $b $lang) $b.de }}
+      <li class="pm-block">
+        <div class="pm-block-text">
+          <h3>{{ $name }}</h3>
+          <p class="pm-block-meta">
+            <span class="pm-block-zeit">{{ i18n "pm_minuten" (dict "min" $b.minuten) }}</span>
+            {{- with $b.slug }}
+            <a href="{{ printf "ems/uebungsaufgaben/%s/" . | relLangURL }}">{{ i18n "pm_uebungsseite" }} →</a>
+            {{- end }}
+          </p>
+        </div>
+        <button type="button" class="btn btn-ghost" data-pm-start="{{ $i }}">{{ i18n "pm_start" }}</button>
+      </li>
+      {{- end }}
+    </ul>
+  </section>
+</div>
+
+{{/* ===================== VOLLBILD-ANSICHT =====================
+     Liegt über der ganzen Seite und ist ausgeblendet, bis jemand startet.
+     Drei Zustände, umgeschaltet über die Klasse an .pm-buehne:
+       is-anweisung - Anweisung lesen/hören, Uhr steht noch
+       is-uhr       - nur die Uhr, sonst so wenig wie möglich
+       is-stopp     - "Stopp", danach entweder Ende oder nächster Block  */}}
+<div class="pm-buehne" id="pm-buehne" hidden role="dialog" aria-modal="true" aria-live="polite">
+  <div class="pm-buehne-inner">
+    <p class="pm-zaehler" id="pm-zaehler"></p>
+    <h2 class="pm-titel" id="pm-titel"></h2>
+    <p class="pm-anweisung" id="pm-anweisung"></p>
+    <p class="pm-blockhinweis" id="pm-blockhinweis"></p>
+
+    <p class="pm-uhr" id="pm-uhr" aria-hidden="true">--:--:--</p>
+    <p class="pm-uhr-label" id="pm-uhr-label"></p>
+
+    <div class="pm-aktionen" id="pm-aktionen">
+      <button type="button" class="btn btn-primary" id="pm-los"></button>
+      <button type="button" class="btn btn-ghost" id="pm-pause"></button>
+      <button type="button" class="btn btn-ghost" id="pm-stop"></button>
+    </div>
+    <p class="pm-fusszeile" id="pm-fusszeile"></p>
+  </div>
+</div>
+
+{{/* Alle Texte und Zeiten als Daten - im Skript unten steht dadurch kein
+     einziger übersetzbarer Satz, der sonst dreifach gepflegt werden müsste.
+
+     "safeJS" am Ende ist nötig und darf nicht weg: Ohne diesen Zusatz behandelt
+     Hugo den bereits fertigen JSON-Text ein zweites Mal als Zeichenkette und
+     verpackt ihn nochmals - im Browser käme dann Text statt Daten an, und die
+     ganze Seite bliebe stumm. */}}
+<script type="application/json" id="pm-daten">
+{{ dict
+   "audio" $audio
+   "bloecke" $bloecke
+   "umblaettern" $daten.umblaettern_sekunden
+   "texte" (dict
+      "beginne" (i18n "pm_beginne")
+      "stopp" (i18n "pm_stopp")
+      "fertigEinzeln" (i18n "pm_fertig_einzeln")
+      "fertigKomplett" (i18n "pm_fertig_komplett")
+      "umblaettern" (i18n "pm_umblaettern")
+      "endeUm" (i18n "pm_ende_um")
+      "start" (i18n "pm_start")
+      "weiter" (i18n "pm_weiter")
+      "pause" (i18n "pm_pause")
+      "pausiert" (i18n "pm_pausiert")
+      "pauseHinweis" (i18n "pm_pause_hinweis")
+      "abbrechen" (i18n "pm_abbrechen")
+      "abbrechenFrage" (i18n "pm_abbrechen_frage")
+      "escHinweis" (i18n "pm_esc_hinweis")
+      "blockZaehler" (i18n "pm_block_zaehler")
+   )
+   | jsonify | safeJS }}
+</script>
+
+<script>
+(function(){
+  var wurzel = document.getElementById('pruefungsmodus');
+  var buehne = document.getElementById('pm-buehne');
+  var datenTag = document.getElementById('pm-daten');
+  if(!wurzel || !buehne || !datenTag) return;
+
+  var daten = JSON.parse(datenTag.textContent);
+  var BLOECKE = daten.bloecke;
+  var T = daten.texte;
+  var UMBLAETTERN = daten.umblaettern || 25;
+  var AUDIO = daten.audio || {};
+  var SPRACHE = document.documentElement.lang || 'de';
+
+  var el = {
+    zaehler:  document.getElementById('pm-zaehler'),
+    titel:    document.getElementById('pm-titel'),
+    anweisung:document.getElementById('pm-anweisung'),
+    hinweis:  document.getElementById('pm-blockhinweis'),
+    uhr:      document.getElementById('pm-uhr'),
+    uhrLabel: document.getElementById('pm-uhr-label'),
+    los:      document.getElementById('pm-los'),
+    pause:    document.getElementById('pm-pause'),
+    stop:     document.getElementById('pm-stop'),
+    fuss:     document.getElementById('pm-fusszeile'),
+    tts:      document.getElementById('pm-tts')
+  };
+
+  /* Laufender Zustand einer Übung. "folge" ist die Liste der Blöcke, die
+     abgearbeitet wird - bei einem einzelnen Untertest genau einer, bei der
+     kompletten Simulation alle. */
+  var lauf = null;
+  var ticker = null;
+  var wakeLock = null;
+
+  /* ---------------------------------------------------------------- Ton */
+  /* Kurzer Piepton zu Beginn und am Ende, erzeugt im Browser - keine
+     Audiodatei nötig. Ein Ton allein reicht nicht (wer wegschaut, hört ihn
+     vielleicht nicht als Signal), zusammen mit der Ansage ist er aber ein
+     klarer Startpunkt, so wie das Klopfen im Testsaal. */
+  var audioCtx = null;
+  function piep(hoehe, dauer){
+    try{
+      if(!audioCtx){ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      var osz = audioCtx.createOscillator(), lautst = audioCtx.createGain();
+      osz.frequency.value = hoehe; osz.type = 'sine';
+      lautst.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      lautst.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 0.02);
+      lautst.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dauer);
+      osz.connect(lautst); lautst.connect(audioCtx.destination);
+      osz.start(); osz.stop(audioCtx.currentTime + dauer + 0.02);
+    }catch(e){}
+  }
+
+  /* ------------------------------------------------------------ Vorlesen */
+  /* Ruft "fertig" auf, wenn der Satz zu Ende gesprochen ist - oder sofort,
+     wenn die Sprachausgabe abgeschaltet oder nicht verfügbar ist. Der
+     Rückfall-Zeitgeber ist nötig, weil manche Browser das Ende-Ereignis bei
+     langen Sätzen verschlucken; ohne ihn bliebe die Übung hängen. */
+  /* "ansage" ist der Name der Aufnahme, die diesen Satz ersetzen würde. Gibt es
+     sie, wird sie abgespielt - das ist immer besser als die Maschinenstimme.
+     Fehlt sie, wird derselbe Text vorgelesen. Beides ruft am Ende dieselbe
+     Funktion auf, der übrige Ablauf merkt keinen Unterschied. */
+  function sprich(text, fertig, ansage){
+    var weiter = fertig || function(){};
+    if(!el.tts.checked){ setTimeout(weiter, 200); return; }
+
+    var datei = ansage && AUDIO[ansage];
+    if(datei){
+      try{
+        var ton = new Audio(datei);
+        var schonWeiter = false;
+        var einmal = function(){ if(!schonWeiter){ schonWeiter = true; weiter(); } };
+        ton.onended = einmal;
+        /* Lässt sich die Aufnahme nicht abspielen (Datei kaputt, Format vom
+           Gerät nicht unterstützt), wird nicht stumm weitergemacht, sondern
+           auf die Sprachausgabe zurückgefallen. */
+        ton.onerror = function(){ if(!schonWeiter){ schonWeiter = true; vorlesen(text, weiter); } };
+        var versuch = ton.play();
+        if(versuch && versuch.catch){ versuch.catch(function(){ ton.onerror(); }); }
+        return;
+      }catch(e){ /* weiter unten vorlesen */ }
+    }
+    vorlesen(text, weiter);
+  }
+
+  function vorlesen(text, weiter){
+    if(!('speechSynthesis' in window) || !text){
+      setTimeout(weiter, 200); return;
+    }
+    try{
+      window.speechSynthesis.cancel();
+      var satz = new SpeechSynthesisUtterance(text);
+      satz.lang = SPRACHE;
+      satz.rate = 0.95;
+      var schonWeiter = false;
+      function einmal(){ if(!schonWeiter){ schonWeiter = true; weiter(); } }
+      satz.onend = einmal;
+      satz.onerror = einmal;
+      /* grosszügig gerechnet: etwa 14 Zeichen pro Sekunde plus Puffer */
+      setTimeout(einmal, Math.max(3000, text.length * 90));
+      window.speechSynthesis.speak(satz);
+    }catch(e){ setTimeout(weiter, 200); }
+  }
+
+  /* --------------------------------------------------- Bildschirm wachhalten */
+  /* Ohne das geht der Bildschirm mitten in einem 45-Minuten-Block aus - und
+     die Uhr ist genau dann nicht mehr zu sehen, wenn man sie braucht. */
+  function wachHalten(){
+    try{
+      if('wakeLock' in navigator){
+        navigator.wakeLock.request('screen').then(function(w){ wakeLock = w; }).catch(function(){});
+      }
+    }catch(e){}
+  }
+  function wachEnde(){ try{ if(wakeLock){ wakeLock.release(); wakeLock = null; } }catch(e){} }
+
+  /* ------------------------------------------------------------- Anzeige */
+  /* Die Uhrzeit, wie sie an der Wand im Testsaal steht: hh:mm:ss.
+     Bewusst KEINE Restzeit - siehe Erklärung im Kopf dieser Datei. */
+  function zweistellig(n){ return (n < 10 ? '0' : '') + n; }
+  function uhrzeit(d){
+    return zweistellig(d.getHours()) + ':' + zweistellig(d.getMinutes()) + ':' + zweistellig(d.getSeconds());
+  }
+  function uhrzeitKurz(d){
+    return zweistellig(d.getHours()) + ':' + zweistellig(d.getMinutes());
+  }
+
+  function zustand(name){
+    buehne.className = 'pm-buehne is-' + name;
+  }
+
+  function zeigeZaehler(){
+    el.zaehler.textContent = lauf.folge.length > 1
+      ? T.blockZaehler.replace('{n}', lauf.index + 1).replace('{total}', lauf.folge.length)
+      : '';
+  }
+
+  /* -------------------------------------------------------------- Ablauf */
+  function starteFolge(indizes){
+    lauf = { folge: indizes, index: 0, endeMs: 0, pausiertRest: null };
+    buehne.hidden = false;
+    document.body.classList.add('pm-aktiv');
+    vollbildAn();
+    wachHalten();
+    zeigeAnweisung();
+  }
+
+  function aktuellerBlock(){ return BLOECKE[lauf.folge[lauf.index]]; }
+
+  function zeigeAnweisung(){
+    var b = aktuellerBlock();
+    zustand('anweisung');
+    zeigeZaehler();
+    el.titel.textContent = b.name;
+    el.anweisung.textContent = b.anweisung;
+    el.hinweis.textContent = b.hinweis || '';
+    /* Geplante Endzeit anzeigen, solange die Uhr noch nicht läuft - wie eine
+       Aufsichtsperson, die sie an die Tafel schreibt. Sobald der Block läuft,
+       verschwindet sie: Ab dann teilt man sich die Zeit selbst ein. */
+    el.uhrLabel.textContent = T.endeUm.replace('{zeit}', uhrzeitKurz(new Date(Date.now() + b.minuten * 60 * 1000)));
+    el.los.textContent = T.start;
+    el.fuss.textContent = T.escHinweis;
+
+    /* Bei der kompletten Simulation läuft es ohne Klick weiter: vorlesen,
+       dann automatisch starten - so wie im Testsaal, wo auch niemand fragt,
+       ob man bereit ist. Bei einem einzelnen Untertest wartet die Uhr
+       dagegen auf den Startknopf. */
+    var automatisch = lauf.folge.length > 1;
+    el.los.hidden = automatisch;
+    /* Gesprochen beginnt die Anweisung mit dem Namen des Untertests - so wie
+       im Testsaal angesagt wird, was als Nächstes kommt. Auf dem Bildschirm
+       steht der Name schon als Überschrift darüber und wäre im Satz doppelt. */
+    var text = b.name + '. ' + b.anweisung + (b.hinweis ? ' ' + b.hinweis : '');
+    sprich(text, function(){
+      if(automatisch && lauf) starteUhr();
+    }, b.key);
+  }
+
+  function starteUhr(){
+    var b = aktuellerBlock();
+    zustand('uhr');
+    lauf.endeMs = Date.now() + b.minuten * 60 * 1000;
+    el.titel.textContent = b.name;
+    el.uhrLabel.textContent = '';
+    el.pause.textContent = T.pause;
+    el.stop.textContent = T.abbrechen;
+    piep(880, 0.18);
+    sprich(T.beginne, null, 'beginne');
+    tick();
+    if(ticker) clearInterval(ticker);
+    ticker = setInterval(tick, 250);
+  }
+
+  function tick(){
+    if(!lauf) return;
+    var jetzt = Date.now();
+    el.uhr.textContent = uhrzeit(new Date(jetzt));
+    /* Das Ende wird nur intern geprüft und dann angesagt - auf dem Bildschirm
+       ist bis dahin nichts als die Uhrzeit zu sehen. */
+    if(jetzt >= lauf.endeMs) blockEnde();
+  }
+
+  function blockEnde(){
+    clearInterval(ticker); ticker = null;
+    zustand('stopp');
+    piep(440, 0.5);
+    var istLetzter = lauf.index >= lauf.folge.length - 1;
+    el.titel.textContent = T.stopp;
+    el.anweisung.textContent = istLetzter
+      ? (lauf.folge.length > 1 ? T.fertigKomplett : T.fertigEinzeln)
+      : '';
+    el.hinweis.textContent = '';
+    el.uhrLabel.textContent = '';
+
+    if(istLetzter){
+      sprich(T.stopp + ' ' + el.anweisung.textContent, null,
+             lauf.folge.length > 1 ? 'fertig-komplett' : 'fertig-einzeln');
+      el.los.hidden = false;
+      el.los.textContent = T.abbrechen;
+      return;
+    }
+
+    /* Weiter zum nächsten Block: kurze Umblätter-Zeit, danach läuft es von
+       selbst weiter. Am echten EMS gibt es zwischen den Untertests keine
+       Pause, deshalb hier auch keine Rückfrage. */
+    sprich(T.stopp, null, 'stopp');
+    var bis = Date.now() + UMBLAETTERN * 1000;
+    el.uhrLabel.textContent = T.umblaettern;
+    ticker = setInterval(function(){
+      el.uhr.textContent = uhrzeit(new Date());
+      if(Date.now() >= bis){
+        clearInterval(ticker); ticker = null;
+        lauf.index++;
+        zeigeAnweisung();
+      }
+    }, 250);
+  }
+
+  /* --------------------------------------------------------------- Pause */
+  function pauseUmschalten(){
+    if(!lauf) return;
+    if(lauf.pausiertRest === null){
+      lauf.pausiertRest = lauf.endeMs - Date.now();
+      clearInterval(ticker); ticker = null;
+      buehne.classList.add('is-pausiert');
+      el.pause.textContent = T.weiter;
+      el.uhrLabel.textContent = T.pausiert + ' · ' + T.pauseHinweis;
+      el.uhr.textContent = uhrzeit(new Date());
+    } else {
+      lauf.endeMs = Date.now() + lauf.pausiertRest;
+      lauf.pausiertRest = null;
+      buehne.classList.remove('is-pausiert');
+      el.pause.textContent = T.pause;
+      el.uhrLabel.textContent = '';
+      ticker = setInterval(tick, 250);
+    }
+  }
+
+  /* ------------------------------------------------------------- Beenden */
+  function beenden(){
+    if(ticker){ clearInterval(ticker); ticker = null; }
+    try{ window.speechSynthesis.cancel(); }catch(e){}
+    lauf = null;
+    buehne.hidden = true;
+    buehne.className = 'pm-buehne';
+    document.body.classList.remove('pm-aktiv');
+    wachEnde();
+    vollbildAus();
+  }
+
+  function vollbildAn(){
+    try{ if(buehne.requestFullscreen) buehne.requestFullscreen().catch(function(){}); }catch(e){}
+  }
+  function vollbildAus(){
+    try{ if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function(){}); }catch(e){}
+  }
+
+  /* ------------------------------------------------------------ Bedienung */
+  wurzel.querySelectorAll('[data-pm-start]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var wert = btn.getAttribute('data-pm-start');
+      if(wert === 'alle'){
+        starteFolge(BLOECKE.map(function(_, i){ return i; }));
+      } else {
+        starteFolge([parseInt(wert, 10)]);
+      }
+    });
+  });
+
+  el.los.addEventListener('click', function(){
+    if(!lauf) return;
+    /* Im Zustand "stopp" am Ende ist derselbe Knopf der Schliessen-Knopf. */
+    if(buehne.classList.contains('is-stopp')) beenden(); else starteUhr();
+  });
+  el.pause.addEventListener('click', pauseUmschalten);
+  el.stop.addEventListener('click', function(){
+    if(window.confirm(T.abbrechenFrage)) beenden();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(!lauf) return;
+    if(e.key === 'Escape'){ if(window.confirm(T.abbrechenFrage)) beenden(); }
+    if(e.key === ' ' && buehne.classList.contains('is-uhr')){ e.preventDefault(); pauseUmschalten(); }
+  });
+
+  /* Kein Sonderfall nötig, wenn jemand das Vollbild verlässt: Die Bühne liegt
+     ohnehin als fest positionierte Fläche über der Seite (siehe .pm-buehne in
+     style.css) und bleibt damit sichtbar - die Übung läuft normal weiter. */
+})();
+</script>

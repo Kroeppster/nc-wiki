@@ -38,6 +38,7 @@ wiederholt, gilt aber überall.
 15. [Eine ganze Seite/einen ganzen Bereich löschen](#15-eine-ganze-seiteinen-ganzen-bereich-löschen)
 16. [Wo hört "nur Copy-Paste" auf?](#16-wo-hört-nur-copy-paste-auf)
 17. [Startseite: die Kacheln "Was du hier findest"](#17-startseite-die-kacheln-was-du-hier-findest)
+18. [Prüfungsmodus: Uhr, Ansagen und der Testablauf](#18-prüfungsmodus-uhr-ansagen-und-der-testablauf)
 
 ---
 
@@ -757,3 +758,74 @@ Dafür braucht es zusätzlich eine Ergänzung im Template
 (`layouts/partials/angebot-grid.html`, Block `$quellen`): Dort steht pro `key`, welche
 Zieladresse verlinkt und was gezählt wird. Das ist ein Entwickler-Schritt (Abschnitt 16) –
 die Datei erklärt oben im Kommentar, was einzutragen ist.
+
+---
+
+## 18. Prüfungsmodus: Uhr, Ansagen und der Testablauf
+
+Die Seite `/ems/pruefungsmodus/` stellt die Prüfungsbedingungen her: Anweisung
+vorlesen, Zeit nehmen, "Stopp" sagen – einzeln oder für den ganzen Testtag.
+Der Kurzguide (Abschnitt 14) erklärt, wie man Zeiten und Sätze ändert. Hier
+steht, wie es aufgebaut ist.
+
+### Eine Quelle für den Testablauf
+
+`data/testablauf.yaml` enthält die elf Blöcke in der Reihenfolge des Testtags,
+mit Dauer, Aufgabenzahl, Punktzahl und den Namen in allen drei Sprachen. Diese
+Datei speist zwei Dinge:
+
+| Wo | Wie |
+| --- | --- |
+| Tabelle „Tagesablauf" auf `/ems/` | Shortcode `testablauf`, siehe `layouts/shortcodes/testablauf.html` |
+| Prüfungsmodus | `layouts/partials/pruefungsmodus.html` |
+
+Die **Gesamtzeit** in der Tabelle wird aus den Einzelminuten zusammengezählt und
+nicht eingetragen – sie kann dadurch gar nicht von den Einzelwerten abweichen.
+Wer eine Dauer ändert, sieht die neue Gesamtzeit automatisch.
+
+### Warum die Uhr nicht Sekunden zählt
+
+Browser verlangsamen Zeitgeber in Hintergrund-Tabs. Eine Uhr, die einfach
+Sekunden herunterzählt, ginge nach einer 45-Minuten-Runde deutlich falsch. Der
+Prüfungsmodus merkt sich deshalb einen festen **Endzeitpunkt** und rechnet bei
+jedem Bildaufbau die Differenz zur echten Uhrzeit aus. Wer daran etwas ändert,
+sollte diesen Punkt kennen – es ist der Unterschied zwischen einer Übungsuhr und
+einer, der man nicht trauen kann.
+
+### Vorlesen
+
+Über `SpeechSynthesis`, die Sprachausgabe des Browsers. Bewusst kein externer
+Dienst und keine hochgeladenen Audiodateien:
+
+- kein fremder Server erfährt, wer hier übt
+- es sind keine Dateien zu pflegen
+- es funktioniert automatisch in allen drei Sprachen, weil die Stimme der
+  Seitensprache folgt (`lang`-Attribut am `html`-Tag)
+
+Der Preis ist die maschinelle Stimme. **Sollen es echte Aufnahmen werden**, ist
+im Skript nur die Funktion `sprich` auszutauschen: Sie bekommt einen Text und
+eine Funktion, die aufgerufen wird, wenn fertig gesprochen ist – der ganze
+übrige Ablauf hängt nur an dieser Zusage. Für Aufnahmen bräuchte es dann pro
+Untertest und Sprache je eine Datei, also rund 35 Aufnahmen.
+
+Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werden
+**gesprochen**. Klammern, Abkürzungen und Halbsätze klingen vorgelesen falsch.
+
+### Weitere Details, die leicht übersehen werden
+
+- **Bildschirm bleibt an:** Über die Wake-Lock-Funktion des Browsers – sonst
+  geht der Bildschirm mitten in einem 45-Minuten-Block aus, also genau dann,
+  wenn man die Uhr braucht. Unterstützt das Gerät sie nicht, läuft alles normal
+  weiter, der Bildschirm kann dann aber abschalten.
+- **Vollbild ist nur eine Zugabe:** Die Bühne liegt ohnehin als fest
+  positionierte Fläche über der Seite. Verlässt jemand das Vollbild mit Esc,
+  bleibt die Übung sichtbar und läuft weiter.
+- **Die Pause gibt es am echten EMS nicht.** Sie ist absichtlich eingebaut und
+  ebenso absichtlich beschriftet („Am echten EMS gibt es keine Pause – diese
+  hier gibt es nur zum Üben"). Zwischen zwei Blöcken der Simulation gibt es
+  dagegen keine Rückfrage, nur die kurze Umblätter-Zeit aus
+  `umblaettern_sekunden` in `data/testablauf.yaml`.
+- **`safeJS` im Partial nicht entfernen.** Die Blöcke und Texte werden als JSON
+  an das Skript übergeben. Ohne diesen Zusatz verpackt Hugo den fertigen
+  JSON-Text ein zweites Mal, im Browser käme Text statt Daten an – und die
+  Seite bliebe stumm, ohne sichtbare Fehlermeldung.

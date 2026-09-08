@@ -163,6 +163,7 @@
       {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
       {{ if .Params.experience_form }}{{ partial "experience-form.html" . }}{{ end }}
       {{ if .Params.uni_slug }}{{ partial "uni-detail.html" . }}{{ end }}
+      {{ if .Params.pruefungsmodus }}{{ partial "pruefungsmodus.html" . }}{{ end }}
     </div>
   </section>
 {{ end }}

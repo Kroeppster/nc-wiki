@@ -193,3 +193,48 @@ mitglieder_schutz_fehler: "Falsches Passwort."
 # Sichtbarer Hinweisstreifen oben auf jeder Seite des Mitgliederbereichs
 # (siehe layouts/_default/single.html und list.html).
 mitglieder_interner_hinweis: "Interne Seite – bitte nicht öffentlich weiterleiten."
+
+# ---------------------------------------------------------------------------
+# TAGESABLAUF-TABELLE auf /ems/ (Shortcode {{< testablauf >}})
+# ---------------------------------------------------------------------------
+testablauf_th_gruppe: "Aufgabengruppe"
+testablauf_th_aufgaben: "Aufgaben"
+testablauf_th_punkte: "Max. Punktzahl"
+testablauf_th_zeit: "Bearbeitungszeit"
+testablauf_gesamt: "Gesamt"
+testablauf_gesamtzeit: "ca. {{ .std }} Std. {{ .min }} Min (netto)"
+
+# ---------------------------------------------------------------------------
+# PRÜFUNGSMODUS (/ems/pruefungsmodus/) - Uhr und Ansagen
+# Alles, was hier steht, wird auch VORGELESEN, wenn die Sprachausgabe an ist.
+# Beim Übersetzen also darauf achten, dass die Sätze gesprochen natürlich
+# klingen (kurze Sätze, keine Klammern, keine Abkürzungen).
+# ---------------------------------------------------------------------------
+pm_einzeln_heading: "Einzelne Untertests"
+pm_einzeln_text: "Jeder Block mit seiner echten Bearbeitungszeit. Leg dir die passende Übungsserie bereit, bevor du startest."
+pm_komplett_heading: "Komplette Testsimulation"
+pm_komplett_text: "Alle elf Blöcke nacheinander, in der Reihenfolge des Testtags und ohne Pause dazwischen – genau wie am echten EMS."
+pm_komplett_start: "Simulation starten"
+pm_komplett_dauer: "{{ .std }} Std. {{ .min }} Min am Stück"
+pm_start: "Starten"
+pm_minuten: "{{ .min }} Min"
+pm_vorlesen: "Anweisungen vorlesen"
+pm_vorlesen_hinweis: "Nutzt die Sprachausgabe deines Geräts. Hilft, ein Gefühl für die Zeit zu bekommen, bevor die Uhr läuft."
+pm_uebungsseite: "Zur Übungsseite"
+
+pm_anweisung: "Du hast dafür {{ .min }} Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt."
+pm_beginne: "Beginne jetzt."
+pm_stopp: "Stopp. Leg den Stift weg."
+pm_fertig_einzeln: "Geschafft."
+pm_fertig_komplett: "Simulation beendet. Alle elf Blöcke geschafft."
+pm_umblaettern: "Umblättern"
+pm_block_zaehler: "Block {n} von {total}"
+pm_ende_um: "Ende um {zeit}"
+
+pm_abbrechen: "Abbrechen"
+pm_pause: "Pause"
+pm_weiter: "Weiter"
+pm_pausiert: "Pausiert"
+pm_pause_hinweis: "Am echten EMS gibt es keine Pause – diese hier gibt es nur zum Üben."
+pm_abbrechen_frage: "Übung wirklich abbrechen?"
+pm_esc_hinweis: "Esc beendet die Übung."

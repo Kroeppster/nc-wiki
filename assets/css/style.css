@@ -1025,6 +1025,94 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .report-error-general button:hover{background:var(--color-btn-bg-hover);color:var(--color-on-signal);}
 
 /* ==========================================================================
+   Prüfungsmodus (siehe layouts/partials/pruefungsmodus.html)
+   ========================================================================== */
+.pm{margin-top:var(--space-8);display:grid;gap:var(--space-10);}
+.pm h2{font-size:var(--text-xl);margin:0 0 var(--space-2);}
+.pm section>p{color:var(--color-ink-soft);max-width:38rem;margin:0 0 var(--space-5);}
+
+.pm-optionen{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);box-shadow:var(--shadow-sm);}
+.pm-schalter{display:flex;align-items:center;gap:var(--space-3);font-weight:600;cursor:pointer;}
+.pm-schalter input{width:1.05rem;height:1.05rem;accent-color:var(--color-signal);cursor:pointer;}
+.pm-hinweis{margin:var(--space-2) 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);}
+.pm-dauer{margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);}
+
+.pm-liste{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-3);}
+.pm-block{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s;}
+.pm-block:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);}
+.pm-block h3{margin:0;font-size:var(--text-base);}
+.pm-block-meta{margin:.25rem 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);display:flex;gap:var(--space-3);flex-wrap:wrap;}
+.pm-block-zeit{font-variant-numeric:tabular-nums;}
+.pm-block .btn{flex:0 0 auto;}
+
+/* ---- Die Vollbild-Bühne ---------------------------------------------------
+   Sie nutzt bewusst IMMER die dunklen Band-Farben, unabhängig davon, ob die
+   Seite gerade hell oder dunkel dargestellt wird: Wer 45 Minuten am Stück auf
+   diese Fläche schaut, soll nicht in eine weisse Leuchtfläche starren. Das ist
+   dieselbe Überlegung wie beim Kinosaal - und die Uhr hat auf Dunkelblau in
+   jedem Fall vollen Kontrast.
+   position:fixed statt echtem Vollbild als Grundlage: Verlässt jemand das
+   Vollbild mit Esc, bleibt die Übung trotzdem sichtbar und läuft weiter. */
+.pm-buehne{position:fixed;inset:0;z-index:400;background:linear-gradient(180deg,var(--band-top),var(--color-band));color:var(--color-band-text);display:flex;align-items:center;justify-content:center;padding:var(--space-6);overflow-y:auto;}
+.pm-buehne[hidden]{display:none;}
+body.pm-aktiv{overflow:hidden;}
+.pm-buehne-inner{max-width:44rem;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-4);}
+
+.pm-zaehler{margin:0;font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-band-text-soft);min-height:1rem;}
+.pm-titel{margin:0;font-size:var(--text-2xl);color:var(--color-band-text);}
+.pm-anweisung{margin:0;font-size:var(--text-md);color:var(--color-band-text);max-width:34rem;line-height:var(--leading-normal);}
+.pm-blockhinweis{margin:0;font-size:var(--text-base);color:var(--color-band-text-soft);max-width:34rem;}
+
+/* Die Uhr ist das einzige Element, das während der Bearbeitungszeit zählt -
+   entsprechend gross. tabular-nums verhindert, dass die Ziffern beim Zählen
+   in der Breite springen. */
+.pm-uhr{margin:0;font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1;font-size:clamp(4.5rem,20vw,15rem);color:#fff;}
+.pm-uhr-label{margin:0;font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-band-text-soft);}
+
+.pm-aktionen{display:flex;gap:var(--space-3);flex-wrap:wrap;justify-content:center;}
+.pm-fusszeile{margin:0;font-size:var(--text-xs);color:var(--color-band-text-soft);}
+.pm-buehne .btn-ghost{border-color:var(--color-band-text-soft);color:var(--color-band-text);}
+.pm-buehne .btn-ghost:hover{background:var(--color-band-text);color:var(--color-band);}
+
+/* ---- Was in welchem Zustand sichtbar ist ---------------------------------
+   Anweisung lesen -> Text gross, Uhr weg.
+   Uhr läuft       -> NUR die Uhr. Titel und Knöpfe bleiben vorhanden (man
+                      muss abbrechen können), treten aber stark zurück und
+                      werden erst beim Zeigen wieder deutlich - "still", wie
+                      im Testsaal.
+   Stopp           -> Uhr steht auf 00:00, Ansage darüber. */
+.pm-buehne.is-anweisung .pm-uhr,
+.pm-buehne.is-anweisung .pm-uhr-label,
+.pm-buehne.is-anweisung #pm-pause,
+.pm-buehne.is-anweisung #pm-stop{display:none;}
+
+.pm-buehne.is-uhr .pm-anweisung,
+.pm-buehne.is-uhr .pm-blockhinweis,
+.pm-buehne.is-uhr #pm-los{display:none;}
+.pm-buehne.is-uhr .pm-titel,
+.pm-buehne.is-uhr .pm-zaehler,
+.pm-buehne.is-uhr .pm-aktionen,
+.pm-buehne.is-uhr .pm-fusszeile{opacity:.35;transition:opacity .2s;}
+.pm-buehne.is-uhr:hover .pm-titel,
+.pm-buehne.is-uhr:hover .pm-zaehler,
+.pm-buehne.is-uhr:hover .pm-aktionen,
+.pm-buehne.is-uhr:hover .pm-fusszeile,
+.pm-buehne.is-uhr:focus-within .pm-aktionen{opacity:1;}
+
+.pm-buehne.is-stopp .pm-blockhinweis,
+.pm-buehne.is-stopp #pm-pause,
+.pm-buehne.is-stopp #pm-stop{display:none;}
+.pm-buehne.is-stopp .pm-titel{color:var(--color-accent);}
+
+/* Pausiert: die Uhr tritt zurück, damit sofort klar ist, dass sie steht. */
+.pm-buehne.is-pausiert .pm-uhr{opacity:.4;}
+
+@media (max-width:520px){
+  .pm-block{align-items:flex-start;}
+  .pm-block .btn{width:100%;justify-content:center;}
+}
+
+/* ==========================================================================
    Formulare
    ========================================================================== */
 .contact-form{display:grid;gap:var(--space-5);max-width:32rem;margin-top:var(--space-6);}

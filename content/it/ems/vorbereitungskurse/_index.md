@@ -3,7 +3,7 @@ title: "Corsi di preparazione"
 menu:
   main:
     parent: ems
-    weight: 3
+    weight: 4
 featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Dispensa NCWiki stampata per il corso di preparazione all'EMS di marzo 2024, su un tavolo d'aula magna"
 ---
