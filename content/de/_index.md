@@ -17,6 +17,40 @@ news:
   eyebrow: "Aktuell"
   heading: "News"
   cta: "Alle News →"
+angebot:
+  eyebrow: "Was du hier findest"
+  heading: "Alles kostenlos, alles von Studierenden gemacht"
+  items:
+    - key: uebungsaufgaben
+      title: "Übungsaufgaben"
+      unit: "PDFs"
+      text: "Übungsserien zu allen acht Themenbereichen des EMS – mit Lösungen zum Selbstkontrollieren."
+      link: "Zu den Übungsaufgaben →"
+    - key: testsimulationen
+      title: "Testsimulationen"
+      unit: "Testhefte"
+      text: "Vollständige Testhefte, um den Prüfungstag einmal unter realistischen Bedingungen durchzuspielen."
+      link: "Zu den Testsimulationen →"
+    - key: vorbereitungskurse
+      title: "Vorbereitungskurse"
+      unit: "Kursskripte"
+      text: "Die Skripte unserer Kurse zum Nachlesen – auch wenn du nicht dabei warst."
+      link: "Zu den Kursen →"
+    - key: uniguide
+      title: "Uniguide"
+      unit: "Universitäten"
+      text: "Wo du in der Schweiz Medizin studieren kannst, mit welchem Zulassungsverfahren und in welcher Sprache."
+      link: "Zum Uniguide →"
+    - key: erfahrungsberichte
+      title: "Erfahrungsberichte"
+      unit: "Berichte"
+      text: "Ehemalige Teilnehmende erzählen, wie sie gelernt haben und was sie heute anders machen würden."
+      link: "Zu den Berichten →"
+    - key: qa
+      title: "Fragen & Antworten"
+      unit: "Fragen"
+      text: "Anmeldung, Ablauf, Kosten, Wiederholung – die häufigsten Fragen zum EMS kurz beantwortet."
+      link: "Zu den Antworten →"
 subtests:
   eyebrow: "Übungsaufgaben"
   heading: "8 Untertests, ein Ziel"

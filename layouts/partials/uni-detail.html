@@ -11,6 +11,17 @@
 
   Um Angaben zu einer Universität zu ändern: data/unis.yaml bearbeiten,
   NICHT diese Datei.
+
+  DREI TEILE (2026-09-08 so gegliedert, vorher war alles eine einzige Liste):
+    1. "Zulassung"  - alles, was für die Bewerbung zählt
+    2. "Studium & Standort" - Sprache, Studiengänge, Ort, Kosten
+    3. "Quellen"    - Links, Stand der Angaben, Herkunft
+  Dazu unten zwei Blöcke, die je nach Datenlage erscheinen:
+    - die Erfahrungsberichte von Leuten, die den EMS an diesem Ort geschrieben
+      haben (Verknüpfung über das Feld "berichte_ort" in data/unis.yaml)
+    - ein ehrlicher Hinweis, WELCHE Angaben noch fehlen. Leere Felder werden
+      bewusst NICHT mit erfundenen Werten gefüllt und auch nicht als leere
+      Zeilen angezeigt - sie tauchen nur in diesem Hinweis auf.
   ============================================================================
 */}}
 {{- /* "Ja"/"Nein"/"Teilweise" in der richtigen Sprache, für die EMS-Pflicht-Angabe unten */ -}}
@@ -20,7 +31,7 @@
        "slug" im Frontmatter dieser Seite (z.B. "basel"). */ -}}
 {{- $slug := .Params.uni_slug }}
 {{- $uni := "" }}
-{{- range .Site.Data.unis }}{{ if eq .slug $slug }}{{ $uni = . }}{{ end }}{{ end }}
+{{- range hugo.Data.unis }}{{ if eq .slug $slug }}{{ $uni = . }}{{ end }}{{ end }}
 
 {{ if not $uni }}
 {{/* Sollte eigentlich nie passieren (jeder .md-Seite mit uni_slug sollte ein
@@ -28,24 +39,124 @@
      eine freundliche Meldung als eine leere/kaputte Seite. */}}
 <p class="download-empty">{{ i18n "uni_detail_not_found" }}</p>
 {{ else }}
+
+{{- /* Die beiden Angaben-Blöcke stehen auf breiten Bildschirmen
+       nebeneinander (siehe .uni-columns in style.css). Vorher lief die Seite
+       als eine schmale Spalte über die ganze Länge, die rechte Hälfte des
+       Bildschirms blieb dabei leer. */ -}}
+<div class="uni-columns">
+<div>
+<h2 class="uni-section-title">{{ i18n "uni_detail_section_zulassung" }}</h2>
 <dl class="uni-detail">
-  <div><dt>{{ i18n "uni_detail_kanton" }}</dt><dd>{{ $uni.kanton }}</dd></div>
-  <div><dt>{{ i18n "label_sprache" }}</dt><dd>{{ delimit $uni.sprache ", " }}</dd></div>
   <div><dt>{{ i18n "uni_detail_ems" }}</dt><dd><span class="badge badge-{{ $uni.ems_erforderlich }}">{{ index $emsLabels $uni.ems_erforderlich }}</span></dd></div>
-  <div><dt>{{ i18n "label_studiengaenge" }}</dt><dd>{{ delimit $uni.studiengaenge ", " }}</dd></div>
+  <div><dt>{{ i18n "uni_detail_auswahlverfahren" }}</dt><dd>{{ $uni.auswahlverfahren }}</dd></div>
   {{/* "Studienplätze" ist im Datensatz absichtlich (fast) immer leer/null,
        siehe data/unis.yaml - Fallback-Text "wird geprüft" statt einer
        nicht-recherchierten Zahl. */}}
   <div><dt>{{ i18n "label_studienplaetze" }}</dt><dd>{{ if $uni.studienplaetze }}{{ $uni.studienplaetze }}{{ else }}{{ i18n "uni_detail_places_unknown" }}{{ end }}</dd></div>
-  <div><dt>{{ i18n "uni_detail_auswahlverfahren" }}</dt><dd>{{ $uni.auswahlverfahren }}</dd></div>
+  {{/* Die folgenden Felder erscheinen nur, wenn sie in data/unis.yaml auch
+       wirklich gefüllt sind - sonst gäbe es hier lauter leere Zeilen. */}}
+  {{ with $uni.anmeldefrist }}<div><dt>{{ i18n "uni_detail_anmeldefrist" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+</dl>
+</div>
+
+<div>
+<h2 class="uni-section-title">{{ i18n "uni_detail_section_studium" }}</h2>
+<dl class="uni-detail">
+  <div><dt>{{ i18n "uni_detail_kanton" }}</dt><dd>{{ $uni.kanton }}</dd></div>
+  <div><dt>{{ i18n "label_sprache" }}</dt><dd>{{ delimit $uni.sprache ", " }}</dd></div>
+  <div><dt>{{ i18n "label_studiengaenge" }}</dt><dd>{{ delimit $uni.studiengaenge ", " }}</dd></div>
+  {{ with $uni.studienbeginn }}<div><dt>{{ i18n "uni_detail_studienbeginn" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+  {{ with $uni.semestergebuehr }}<div><dt>{{ i18n "uni_detail_semestergebuehr" }}</dt><dd>{{ . }}</dd></div>{{ end }}
   {{/* Besonderheiten-Feld ist optional (Liste kann auch leer sein) - dann
        wird dieser ganze Abschnitt einfach übersprungen. */}}
   {{ with $uni.besonderheiten }}
+  {{/* Aufzaehlung statt "tag-pills": Besonderheiten sind teilweise ganze
+       Saetze, und ein mehrzeiliges Element mit rundem Rahmen sieht aus wie
+       ein verrutschter Fleck statt wie ein Schlagwort. */}}
   <div><dt>{{ i18n "uni_detail_besonderheiten" }}</dt><dd>
-    <ul class="tag-pills">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+    <ul class="detail-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
   </dd></div>
   {{ end }}
+</dl>
+</div>
+</div>
+
+{{- /* ---------------------------------------------------------------------
+       Fehlende Angaben ehrlich benennen statt sie zu erfinden.
+       Gesammelt wird hier eine Liste der Beschriftungen jener Felder, die in
+       data/unis.yaml noch null sind. Ist die Liste leer, erscheint der ganze
+       Kasten nicht.
+       --------------------------------------------------------------------- */ -}}
+{{- $fehlend := slice }}
+{{- if not $uni.studienplaetze }}{{ $fehlend = $fehlend | append (i18n "label_studienplaetze") }}{{ end }}
+{{- if not $uni.anmeldefrist }}{{ $fehlend = $fehlend | append (i18n "uni_detail_anmeldefrist") }}{{ end }}
+{{- if not $uni.studienbeginn }}{{ $fehlend = $fehlend | append (i18n "uni_detail_studienbeginn") }}{{ end }}
+{{- if not $uni.semestergebuehr }}{{ $fehlend = $fehlend | append (i18n "uni_detail_semestergebuehr") }}{{ end }}
+{{- if not $uni.website_medizin }}{{ $fehlend = $fehlend | append (i18n "uni_detail_website_medizin") }}{{ end }}
+{{ with $fehlend }}
+<div class="uni-missing">
+  <h3>{{ i18n "uni_detail_missing_heading" }}</h3>
+  <ul class="tag-pills">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+  <p>{{ i18n "uni_detail_missing_text" }} <a href="{{ relLangURL "kontakt/" }}">{{ i18n "uni_detail_missing_cta" }} →</a></p>
+</div>
+{{ end }}
+
+{{- /* ---------------------------------------------------------------------
+       Erfahrungsberichte, die zu diesem Ort gehören.
+       Verknüpft wird über data/unis.yaml -> "berichte_ort" und das Feld "ort"
+       im Frontmatter der Berichte. Gibt es zu diesem Ort keine Berichte (oder
+       ist berichte_ort leer), erscheint der ganze Abschnitt nicht.
+       Angezeigt werden höchstens drei, neuester Jahrgang zuerst - der Link
+       darunter führt auf die vollständige Übersicht.
+       --------------------------------------------------------------------- */ -}}
+{{- $berichte := slice }}
+{{- with $uni.berichte_ort }}
+  {{- $ort := . }}
+  {{- with $.Site.GetPage "ems/erfahrungsberichte" }}
+    {{- range .Pages }}
+      {{- if and .Params.jahr (eq .Params.ort $ort) }}{{ $berichte = $berichte | append . }}{{ end }}
+    {{- end }}
+  {{- end }}
+  {{- $berichte = sort $berichte "Params.jahr" "desc" }}
+{{- end }}
+
+{{ with $berichte }}
+<section class="uni-reports">
+  <h2 class="uni-section-title">{{ i18n "uni_detail_reports_heading" }}</h2>
+  <p class="uni-reports-intro">{{ i18n "uni_detail_reports_intro" }}</p>
+  <ul class="card-grid uni-reports-grid">
+    {{ range first 3 . }}
+    {{- $name := .Params.name }}
+    {{- $nameParts := split (strings.TrimSpace $name) " " }}
+    {{- $initials := "" }}
+    {{- if ge (len $nameParts) 1 }}{{ $initials = substr (index $nameParts 0) 0 1 }}{{ end }}
+    {{- if ge (len $nameParts) 2 }}{{ $initials = printf "%s%s" $initials (substr (index $nameParts 1) 0 1) }}{{ end }}
+    {{- $initials = upper $initials }}
+    {{- /* Gleiche Farbberechnung wie in erfahrungsbericht-grid.html, damit
+           dieselbe Person hier und dort denselben farbigen Kreis bekommt. */ -}}
+    {{- $colorIdx := mod (hash.FNV32a $name) 6 }}
+    <li class="card report-card">
+      <div class="report-head">
+        <span class="avatar avatar-{{ $colorIdx }}" aria-hidden="true">{{ $initials }}</span>
+        <div>
+          <h3>{{ $name }}</h3>
+          <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
+        </div>
+      </div>
+      {{ partial "card-excerpt.html" . }}
+      <a class="more" href="{{ .RelPermalink }}">{{ i18n "experience_reports_read_more" }}</a>
+    </li>
+    {{ end }}
+  </ul>
+  <p><a class="more" href="{{ relLangURL "ems/erfahrungsberichte/" }}">{{ i18n "uni_detail_reports_all" }} →</a></p>
+</section>
+{{ end }}
+
+<h2 class="uni-section-title">{{ i18n "uni_detail_section_quellen" }}</h2>
+<dl class="uni-detail">
   <div><dt>{{ i18n "uni_detail_website" }}</dt><dd><a href="{{ $uni.website }}" target="_blank" rel="noopener">{{ $uni.website }}</a></dd></div>
+  {{ with $uni.website_medizin }}<div><dt>{{ i18n "uni_detail_website_medizin" }}</dt><dd><a href="{{ . }}" target="_blank" rel="noopener">{{ . }}</a></dd></div>{{ end }}
 </dl>
 
 <p class="uni-report"><a href="{{ relLangURL "kontakt/" }}">{{ i18n "uni_detail_report" }} →</a></p>

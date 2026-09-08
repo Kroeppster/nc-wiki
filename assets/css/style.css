@@ -13,6 +13,11 @@
   --color-paper:#F5F7FB;          /* Seitenhintergrund */
   --color-surface:#FFFFFF;        /* Kopfzeile, Karten, Panels */
   --color-surface-sunken:#EEF1F8; /* leicht abgesetzte Flächen (Tabellenkopf, Hover) */
+  /* Fläche der abwechselnd getönten Sektionen (siehe .section-surface). Im
+     Hellmodus schlicht Weiss. Im Dunkelmodus bewusst NICHT dieselbe Farbe wie
+     --color-surface: die Karten IN diesen Sektionen haben genau diese Farbe
+     und wären sonst kaum vom Untergrund zu unterscheiden. */
+  --color-section-alt:#FFFFFF;
 
   /* ---- Farben: Text ---- */
   --color-ink:#101A33;            /* Haupttext */
@@ -26,6 +31,13 @@
   /* ---- Farben: Marke (Blau) ---- */
   --color-signal:#223FCB;         /* Primärfarbe */
   --color-signal-strong:#16299C;  /* Hover/Aktiv-Zustand */
+  /* Hintergrund gefüllter Knöpfe. Im Hellmodus identisch mit --color-signal,
+     im Dunkelmodus aber bewusst NICHT: dort wird --color-signal absichtlich
+     heller (damit Link-TEXT auf dunklem Grund lesbar bleibt), und weisse
+     Knopfbeschriftung auf diesem hellen Blau kam nur auf 3.1:1 - deutlich
+     unter den geforderten 4.5:1. Siehe Dunkelmodus-Block weiter unten. */
+  --color-btn-bg:#223FCB;
+  --color-btn-bg-hover:#16299C;
   --color-signal-soft:#EEF1FD;    /* getönte Fläche (z. B. Mission-Sektion) */
   --color-signal-soft-line:#D7DDF8;
 
@@ -116,7 +128,17 @@
   --color-avatar-2:#7A3FA0;
   --color-avatar-3:#B5562F;
   --color-avatar-4:#3F6B3A;
-  --color-avatar-5:#A6741E;
+  --color-avatar-5:#8F6414;  /* dunkler als früher (#A6741E): weisse Initialen kamen dort nur auf 4.1:1 */
+
+  /* ---- Spenden-Aufruf: feste Blautöne ----
+     Absichtlich NICHT im Dunkelmodus-Block überschrieben - wie
+     --color-on-signal weiter oben. Grund: Auf dieser Fläche steht weisser
+     Text. Im Dunkelmodus wird --color-signal absichtlich HELLER (#7089FF,
+     damit Links auf dunklem Grund lesbar bleiben) - als Hintergrund für
+     weissen Text wäre genau das aber zu hell. Diese beiden Werte bleiben
+     deshalb in beiden Modi gleich (Kontrast zu Weiss: 6.6:1 bzw. 10.5:1). */
+  --cta-from:#2C4BE0;
+  --cta-to:#16299C;
 
   /* ---- Logo-Kachel (Sponsoren) ---- */
   /* Absichtlich NICHT im Dark-Mode-Block weiter unten überschrieben: Logos
@@ -135,6 +157,37 @@
   --max-width:1160px;
   --header-bg:rgba(245,247,251,.88);
 
+  /* ---- Tiefe (Schatten) ----
+     Vorher hatte die Seite gar keine Schatten: Karten, Formularkästen und
+     Tabellen waren flache Rechtecke mit einer 1px-Linie drumherum, direkt auf
+     einer einfarbigen Fläche. Dadurch wirkte alles wie auf dieselbe Ebene
+     gemalt (Rückmeldung 2026-09-08: "sehr viele einfarbige Flächen").
+     Mit diesen drei Stufen bekommen Elemente eine Ebene: -sm liegt leicht
+     auf, -md ist der Hover-Zustand ("hebt sich an"), -lg tragen die wenigen
+     Elemente, die wirklich über allem schweben sollen (Countdown-Karte,
+     Spenden-Aufruf). Bewusst weiche, grossflächige Schatten mit sehr wenig
+     Deckkraft - harte Schatten wirken schnell wie ein Fremdkörper. */
+  --shadow-sm:0 1px 2px rgba(16,26,51,.05), 0 3px 10px rgba(16,26,51,.045);
+  --shadow-md:0 2px 4px rgba(16,26,51,.05), 0 14px 30px rgba(16,26,51,.09);
+  --shadow-lg:0 28px 64px rgba(16,26,51,.14);
+
+  /* ---- Farbschleier hinter der ganzen Seite (siehe body::before) ----
+     Zwei sehr blasse, grosse Farbwolken (Markenblau oben links, Akzent-Orange
+     oben rechts) liegen hinter dem Inhalt. Sie sind einzeln kaum als Farbe zu
+     erkennen - sie sorgen nur dafür, dass der Seitenhintergrund nicht ein
+     einziger, überall exakt gleicher Grauton ist. */
+  --glow-signal:rgba(34,63,203,.09);
+  --glow-accent:rgba(245,129,60,.07);
+
+  /* ---- dunkles Band am Seitenende (Logo-Band, Spenden, Fusszeile) ----
+     --band-top ist der etwas hellere obere Rand des Verlaufs, --band-glow ein
+     blauer Lichtschein, --band-texture die Deckkraft des feinen Punktrasters.
+     Auch hier gilt: einzeln kaum sichtbar, zusammen ist das Band aber keine
+     tote, einfarbige Fläche mehr. */
+  --band-top:#101A3E;
+  --band-glow:rgba(34,63,203,.45);
+  --band-texture:rgba(255,255,255,.055);
+
   /* Pagefind-Suchbox */
   --pagefind-ui-primary:var(--color-signal);
   --pagefind-ui-text:var(--color-ink);
@@ -147,13 +200,22 @@
   --color-paper:#0A0F1F;
   --color-surface:#131A30;
   --color-surface-sunken:#182140;
+  --color-section-alt:#0E1426;
   --color-ink:#EEF1FB;
   --color-ink-soft:#A7B0CB;
-  --color-ink-faint:#7B84A0;      /* 5.1:1 auf --color-paper (dark) */
+  /* 5.7:1 auf --color-paper und 4.7:1 auf --color-surface-sunken. Vorher
+     #7B84A0: das reichte zwar auf dem Seitenhintergrund, kam auf der
+     abgesetzten Fläche (Tabellenköpfe, Badge "Nein", Lizenzhinweis bei den
+     Übungsaufgaben) aber nur auf 4.2:1. */
+  --color-ink-faint:#838CA8;
   --color-line:#242E4E;
   --color-line-strong:#37437A;
   --color-signal:#7089FF;
   --color-signal-strong:#93A5FF;
+  /* Weiss auf diesen beiden: 6.4:1 bzw. 4.9:1 - anders als auf --color-signal
+     (3.1:1). Siehe Erklärung beim Token im Hellmodus-Block oben. */
+  --color-btn-bg:#3350D8;
+  --color-btn-bg-hover:#4A65E4;
   --color-signal-soft:#161E3C;
   --color-signal-soft-line:#2A3560;
   --color-accent:#FF9A57;
@@ -169,6 +231,18 @@
   --color-warn-bg:#2E2013;    --color-warn-text:#F0975A;
   color-scheme:dark;
   --header-bg:rgba(10,15,31,.88);
+
+  /* Schatten im Dunkelmodus: deutlich kräftiger als im Hellmodus. Ein
+     Schatten ist dunkel - auf dunklem Grund ist er sonst schlicht unsichtbar
+     und die Karten wären wieder flach. */
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4), 0 3px 10px rgba(0,0,0,.35);
+  --shadow-md:0 2px 4px rgba(0,0,0,.45), 0 14px 30px rgba(0,0,0,.5);
+  --shadow-lg:0 28px 64px rgba(0,0,0,.6);
+  --glow-signal:rgba(112,137,255,.12);
+  --glow-accent:rgba(255,154,87,.07);
+  --band-top:#0A1026;
+  --band-glow:rgba(112,137,255,.26);
+  --band-texture:rgba(255,255,255,.04);
 
   --pagefind-ui-primary:var(--color-signal);
   --pagefind-ui-text:var(--color-ink);
@@ -208,6 +282,18 @@ body{
   line-height:var(--leading-normal);-webkit-font-smoothing:antialiased;
   position:relative;
 }
+/* Zwei sehr blasse Farbwolken hinter dem gesamten Seiteninhalt. "fixed" heisst:
+   sie scrollen NICHT mit, sondern bleiben im Fenster stehen - so hat auch auf
+   sehr langen Seiten (z.B. die 66 Erfahrungsberichte) jeder Bildschirmausschnitt
+   einen leichten Farbverlauf statt eines einzigen, exakt gleichen Grautons.
+   z-index:-1 legt die Wolken hinter allen Inhalt, aber vor die Hintergrundfarbe
+   des Fensters; pointer-events:none, damit sie Klicks nicht abfangen. */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(60rem 34rem at 10% -8rem, var(--glow-signal), transparent 68%),
+    radial-gradient(52rem 30rem at 92% 4rem, var(--glow-accent), transparent 66%);
+}
 a{color:inherit;text-decoration:none;}
 :focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;border-radius:2px;}
 #search :focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
@@ -235,7 +321,7 @@ h3{font-size:var(--text-md);}
 p{margin:0 0 var(--space-4);}
 .wrap{max-width:var(--max-width);margin-inline:auto;padding-inline:var(--space-5);}
 
-.skip-link{position:absolute;left:-999px;top:0;background:var(--color-signal);color:var(--color-on-signal);padding:var(--space-3) var(--space-4);z-index:1000;border-radius:0 0 var(--radius-md) 0;font-family:var(--font-body);font-weight:600;}
+.skip-link{position:absolute;left:-999px;top:0;background:var(--color-btn-bg);color:var(--color-on-signal);padding:var(--space-3) var(--space-4);z-index:1000;border-radius:0 0 var(--radius-md) 0;font-family:var(--font-body);font-weight:600;}
 .skip-link:focus{left:0;}
 
 .eyebrow{font-family:var(--font-body);font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-signal);margin:0 0 var(--space-3);}
@@ -308,7 +394,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Menü ab (wie ein Call-to-Action), statt wie die anderen Punkte ein reiner
    Textlink zu sein. */
 .nav-cta{border:1px solid var(--color-signal);border-radius:var(--radius-md);padding:.3rem .8rem !important;color:var(--color-signal) !important;}
-.nav-cta:hover{background:var(--color-signal);color:#fff !important;}
+.nav-cta:hover{background:var(--color-btn-bg);color:#fff !important;}
 /* Such-Knopf (Lupe): gleiche Optik wie der Hell/Dunkel-Knopf daneben. Klick
    klappt das eigentliche Suchfeld auf (Klasse "is-open" auf #search, siehe
    Klick-Logik in footer.html) statt es dauerhaft ~200px Platz in der
@@ -339,8 +425,8 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Buttons
    ========================================================================== */
 .btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:.85rem 1.6rem;font-size:var(--text-sm);font-weight:600;font-family:var(--font-body);border-radius:var(--radius-full);border:1px solid transparent;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s;}
-.btn-primary{background:var(--color-signal);color:var(--color-on-signal);}
-.btn-primary:hover{background:var(--color-signal-strong);}
+.btn-primary{background:var(--color-btn-bg);color:var(--color-on-signal);}
+.btn-primary:hover{background:var(--color-btn-bg-hover);}
 .btn-ghost{border-color:var(--color-ink);color:var(--color-ink);background:transparent;}
 .btn-ghost:hover{background:var(--color-ink);color:var(--color-paper);}
 .btn-block{width:100%;justify-content:center;}
@@ -354,7 +440,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .hero .lede{font-size:var(--text-md);color:var(--color-ink-soft);max-width:34rem;margin:0 0 var(--space-8);}
 .hero-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;}
 
-.hero-panel{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-lg);padding:var(--space-6);position:relative;}
+.hero-panel{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-lg);padding:var(--space-6);position:relative;box-shadow:var(--shadow-lg);}
 
 /* "Zulassungskarte" im Hero-Panel: Ticket-Etikett, grosse Live-Countdown-Zahl
    als Signature-Element, perforierte Trennlinie wie bei einem echten
@@ -430,6 +516,13 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Generische Sektionen
    ========================================================================== */
 section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);}
+/* Abwechselnde Sektionsflächen: Sektionen mit dieser Klasse stehen auf der
+   hellen Kartenfarbe statt auf dem Seitenhintergrund. Auf der Startseite
+   wechseln sich beide ab (Hero - Angebot - News - Untertests - Mission), damit
+   nicht fünf gleich getönte Blöcke aufeinanderfolgen und die Seite dadurch wie
+   eine einzige lange Fläche wirkt. Welche Sektion welche Fläche bekommt, steht
+   in layouts/index.html. */
+.section-surface{background:var(--color-section-alt);}
 .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-8);flex-wrap:wrap;gap:var(--space-2);}
 /* Kein "white-space:nowrap" mehr: Auf der Q&A-Seite tragen diese Links die
    vollen Untertest-Namen ("Medizinisch-naturwissenschaftliches
@@ -448,12 +541,28 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    CSS lässt bei direkt aufeinanderfolgenden Blockelementen ohne Rahmen/Polster
    dazwischen nur den GRÖSSEREN der beiden Abstände wirken (kein Aufaddieren). */
 .card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-5);list-style:none;margin:var(--space-8) 0 0;padding:0;}
-.card{background:var(--color-surface);border:1px solid var(--color-line);padding:var(--space-6);border-radius:var(--radius-lg);transition:border-color .15s;}
-.card:hover{border-color:var(--color-line-strong);}
+/* Schatten + leichtes Anheben beim Zeigen: dadurch liegen Karten sichtbar AUF
+   der Seite, statt als umrandete Rechtecke in dieselbe Fläche gemalt zu sein.
+   Die Bewegung ist bewusst klein (2px) und wird bei "Bewegung reduzieren" in
+   den Systemeinstellungen automatisch abgeschaltet (siehe prefers-reduced-motion
+   ganz oben). */
+.card{background:var(--color-surface);border:1px solid var(--color-line);padding:var(--space-6);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s,transform .2s;}
+.card:hover{border-color:var(--color-line-strong);box-shadow:var(--shadow-md);transform:translateY(-2px);}
 .card h3{margin:.3rem 0 var(--space-2);font-size:var(--text-lg);}
 .card p{color:var(--color-ink-soft);font-size:var(--text-sm);margin:0 0 var(--space-4);}
 .card-thumb{margin:calc(var(--space-6) * -1) calc(var(--space-6) * -1) var(--space-4);overflow:hidden;border-radius:var(--radius-md) var(--radius-md) 0 0;}
 .card-thumb img{width:100%;height:180px;object-fit:cover;display:block;}
+
+/* News-Raster auf der Startseite: passt sich der Anzahl Beitraege an.
+   auto-fit + minmax heisst "so viele gleich breite Spalten wie hineinpassen,
+   jede mindestens 22rem breit" - bei zwei Beitraegen sind das zwei Spalten wie
+   bisher, bei nur einem Beitrag genau eine Spalte ueber die volle Breite statt
+   einer halb leeren Zeile. min(100%,22rem) verhindert, dass die Mindestbreite
+   auf sehr schmalen Handys breiter wird als der Bildschirm selbst.
+   Bewusst NUR fuer die Startseite und nicht fuer .card-grid allgemein: die
+   Uebersichtsseiten (list.html) haben viele Eintraege, dort wuerden daraus
+   ungewollt drei Spalten. */
+.news-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));}
 
 /* Erfahrungsberichte */
 .report-toolbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-8);}
@@ -488,13 +597,17 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .team-photo{width:5rem;height:5rem;border-radius:50%;overflow:hidden;flex-shrink:0;}
 .team-photo img{width:100%;height:100%;object-fit:cover;display:block;}
 .tag-pills{list-style:none;display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-4);padding:0;}
+/* Schlichte Aufzaehlung fuer Angaben, die aus ganzen Saetzen bestehen
+   (z.B. "Besonderheiten" im Uniguide) - im Gegensatz zu .tag-pills darunter,
+   das fuer kurze Schlagworte gedacht ist. */
+.detail-list{margin:0;padding-left:1.1rem;display:grid;gap:.35rem;color:var(--color-ink-soft);font-size:var(--text-sm);}
 .tag-pills li{font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-signal);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-full);padding:.2rem .65rem;}
 
 /* Uniguide */
 .uniguide-disclaimer{background:var(--color-note-bg);border:1px solid var(--color-note-line);color:var(--color-note-text);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);font-size:var(--text-sm);margin:var(--space-6) 0 var(--space-8);line-height:var(--leading-normal);}
 .uniguide-disclaimer a{color:inherit;text-decoration:underline;}
 .uniguide-filters{display:flex;flex-wrap:wrap;gap:var(--space-6);margin-bottom:var(--space-6);}
-.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--color-line);border-radius:var(--radius-md);}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--color-line);border-radius:var(--radius-md);background:var(--color-surface);box-shadow:var(--shadow-sm);}
 .uniguide-table{width:100%;min-width:640px;border-collapse:collapse;font-size:var(--text-sm);}
 .uniguide-table th,.uniguide-table td{text-align:left;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--color-line);white-space:nowrap;}
 .uniguide-table thead th{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);background:var(--color-surface-sunken);}
@@ -507,13 +620,80 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .badge-nein{background:var(--color-surface-sunken);color:var(--color-ink-faint);border:1px solid var(--color-line);}
 .badge-teilweise{background:var(--color-warn-bg);color:var(--color-warn-text);}
 
-/* Uni-Detailseite */
+/* Uniguide: Universitaeten vergleichen (siehe uniguide-table.html)
+   ---------------------------------------------------------------------------
+   Ankreuz-Spalte, Hinweistext, Auswahl-Leiste und Vergleichstabelle sind
+   standardmaessig ausgeblendet und werden erst sichtbar, wenn das Skript die
+   Klasse "js-compare" setzt: Ohne JavaScript koennte man zwar ankreuzen, aber
+   nichts wuerde passieren - dann lieber gar nicht erst anbieten. */
+.compare-col,.uniguide-compare-hint{display:none;}
+.js-compare .uniguide-compare-hint{display:block;color:var(--color-ink-faint);font-size:var(--text-sm);margin:0 0 var(--space-4);}
+.js-compare th.compare-col,.js-compare td.compare-col{display:table-cell;}
+/* Ueberschrift der Ankreuz-Spalte: schmal halten, der Text darf umbrechen. */
+.uniguide-table th.compare-col{white-space:normal;width:1%;}
+.compare-check{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:.2rem;}
+.compare-check input{width:1.05rem;height:1.05rem;accent-color:var(--color-signal);cursor:pointer;}
+.compare-check input:disabled{cursor:not-allowed;opacity:.45;}
+
+/* Leiste am unteren Bildschirmrand mit der aktuellen Auswahl. position:fixed,
+   damit sie beim Scrollen durch die Tabelle sichtbar bleibt - sonst muesste
+   man zum Vergleichen erst wieder ans Seitenende scrollen. */
+.compare-bar{position:fixed;left:var(--space-4);right:var(--space-4);bottom:var(--space-4);max-width:var(--max-width);margin-inline:auto;z-index:150;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:var(--space-3) var(--space-5);}
+/* Ohne diese Zeile wuerde das "display:flex" oben das hidden-Attribut
+   ueberstimmen und die Leiste immer sichtbar bleiben. */
+.compare-bar[hidden]{display:none;}
+.compare-bar-count{margin:0;font-size:var(--text-sm);color:var(--color-ink-soft);}
+.compare-bar-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;}
+.compare-bar .btn{padding:.6rem 1.2rem;}
+.compare-bar .btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.uniguide-compare{margin-top:var(--space-10);scroll-margin-top:var(--space-8);}
+.uniguide-compare[hidden]{display:none;}
+.uniguide-compare .section-head{margin-bottom:var(--space-5);}
+/* Erste Spalte (die Bezeichnung der Angabe) bleibt beim seitlichen Scrollen
+   stehen - sonst weiss man bei vier Spalten nicht mehr, welche Zeile welche
+   Angabe ist. */
+.compare-table th[scope="row"]{position:sticky;left:0;background:var(--color-surface-sunken);font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);white-space:normal;vertical-align:top;min-width:9rem;}
+.compare-table thead th{vertical-align:bottom;}
+.compare-table td{vertical-align:top;}
+/* Laufender Text (Auswahlverfahren, Besonderheiten) darf umbrechen - die
+   uebrigen Tabellenzellen stehen bewusst auf white-space:nowrap. */
+.compare-table .compare-cell-text{white-space:normal;min-width:13rem;max-width:19rem;}
+.compare-table .detail-list{margin:0;}
+
+/* Uni-Detailseite
+   ---------------------------------------------------------------------------
+   Die Seite ist seit 2026-09-08 in Abschnitte gegliedert (Zulassung / Studium
+   & Standort / Quellen) statt einer einzigen langen Liste, siehe
+   layouts/partials/uni-detail.html. */
+/* Zwei Angaben-Bloecke nebeneinander, sobald der Platz reicht. minmax mit
+   min(100%,...) heisst: nebeneinander ab genug Breite, sonst automatisch
+   untereinander - ohne eigene @media-Regel. */
+.uni-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--space-4) var(--space-10);align-items:start;}
+.uni-columns .uni-detail{max-width:none;}
+.uni-section-title{font-size:var(--text-xl);margin:var(--space-10) 0 0;}
+.uni-section-title:first-of-type{margin-top:var(--space-8);}
 .uni-detail{display:grid;gap:var(--space-5);max-width:38rem;margin:var(--space-6) 0;}
 .uni-detail>div{border-bottom:1px solid var(--color-line);padding-bottom:var(--space-5);}
 .uni-detail dt{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);margin:0 0 .35rem;}
 .uni-detail dd{margin:0;}
 .uni-report{margin:0 0 var(--space-4);}
 .uni-stand{font-size:var(--text-xs);color:var(--color-ink-faint);}
+
+/* Kasten "Diese Angaben fehlen noch". Bewusst im Hinweis-Gelb und nicht in
+   Rot: Es ist kein Fehler, sondern eine offene Recherche - und zugleich eine
+   Einladung mitzuhelfen. Erscheint nur, wenn wirklich Felder leer sind. */
+.uni-missing{max-width:38rem;margin:var(--space-8) 0;padding:var(--space-5) var(--space-6);background:var(--color-note-bg);border:1px solid var(--color-note-line);border-radius:var(--radius-md);color:var(--color-note-text);box-shadow:var(--shadow-sm);}
+.uni-missing h3{font-size:var(--text-base);margin:0 0 var(--space-3);color:inherit;}
+.uni-missing p{margin:var(--space-3) 0 0;font-size:var(--text-sm);}
+.uni-missing a{color:inherit;text-decoration:underline;}
+.uni-missing .tag-pills li{color:var(--color-note-text);background:transparent;border-color:var(--color-note-line);}
+
+/* Erfahrungsberichte auf der Uni-Seite: dieselben Karten wie auf der
+   Berichts-Uebersicht, aber hoechstens drei und ohne Filterleiste. */
+.uni-reports{margin:var(--space-10) 0;}
+.uni-reports-intro{color:var(--color-ink-soft);font-size:var(--text-sm);max-width:38rem;margin:var(--space-3) 0 0;}
+.uni-reports-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));}
 .uni-stand a{text-decoration:underline;}
 
 /* Q&A */
@@ -521,7 +701,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .faq-category{margin-bottom:var(--space-10);}
 .faq-category:last-child{margin-bottom:0;}
 .faq-category h3{font-family:var(--font-body);font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);margin:0 0 var(--space-4);}
-.faq-item{border:1px solid var(--color-line);border-radius:var(--radius-md);background:var(--color-surface);margin-bottom:var(--space-3);}
+.faq-item{border:1px solid var(--color-line);border-radius:var(--radius-md);background:var(--color-surface);margin-bottom:var(--space-3);box-shadow:var(--shadow-sm);}
 .faq-item summary{cursor:pointer;list-style:none;padding:var(--space-4) var(--space-5);font-weight:600;position:relative;padding-right:2.6rem;}
 .faq-item summary::-webkit-details-marker{display:none;}
 .faq-item summary::after{content:"+";position:absolute;right:1.2rem;top:1rem;font-family:var(--font-body);color:var(--color-signal);font-weight:700;}
@@ -543,7 +723,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 /* Eigene, optisch abgesetzte Box um die Download-Liste (siehe single.html) -
    trennt sichtbar die Tipps/Erklärungen (normaler Seitenhintergrund) von den
    tatsächlichen Downloads (leicht getönte Fläche mit Rahmen). */
-.uebungsaufgaben-downloads{margin-top:var(--space-8);padding:var(--space-6);background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-md);}
+.uebungsaufgaben-downloads{margin-top:var(--space-8);padding:var(--space-6);background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);}
 .uebungsaufgaben-downloads h2{margin-top:0;}
 .uebungsaufgaben-downloads .download-list{margin-top:var(--space-5);}
 /* Copyright-/Hinweis-Badges direkt bei den Downloads (siehe single.html) */
@@ -556,7 +736,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 /* Auffällige Sponsoring-Box auf "Jetzt unterstützen" (siehe
    sponsoring-cta.html) - deutlich sichtbarer als der vorherige kleine
    Textabsatz: farblich abgesetzte Fläche + echter Knopf statt Text-Link. */
-.sponsoring-cta{margin-top:var(--space-8);padding:var(--space-6);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-md);}
+.sponsoring-cta{margin-top:var(--space-8);padding:var(--space-6);background:linear-gradient(150deg,var(--color-signal-soft),var(--color-surface));border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);}
 .sponsoring-cta h2{margin-top:0;}
 .sponsoring-cta p{margin-bottom:var(--space-4);}
 
@@ -616,8 +796,8 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    mit, der als Fremdkörper wirkte. Eine einheitliche helle Fläche für ALLE
    Logos löst beide Probleme gleichzeitig und sieht wie eine bewusste
    Gestaltung aus statt wie zwei Einzel-Flicken. */
-.sponsor-tile{background:var(--color-logo-chip);border:1px solid var(--color-line);border-radius:var(--radius-md);min-height:96px;transition:border-color .15s;}
-.sponsor-tile:hover,.sponsor-tile:focus-within{border-color:var(--color-signal);}
+.sponsor-tile{background:var(--color-logo-chip);border:1px solid var(--color-line);border-radius:var(--radius-md);min-height:96px;box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s,transform .2s;}
+.sponsor-tile:hover,.sponsor-tile:focus-within{border-color:var(--color-signal);box-shadow:var(--shadow-md);transform:translateY(-2px);}
 .sponsor-tile a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:96px;padding:var(--space-5);}
 /* Logos werden bewusst IMMER in voller Farbe gezeigt (kein Graustufen-/
    Transparenz-Filter mehr) - manche Logos (z.B. zweifarbige Wort-Bild-
@@ -630,8 +810,8 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 
 /* Untertests (echte Reihenfolge 1–10 → Nummerierung bleibt) */
 .subtest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);list-style:none;margin:var(--space-6) 0 0;padding:0;}
-.subtest-card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-lg);padding:var(--space-5) var(--space-4);transition:border-color .15s;}
-.subtest-card:hover{border-color:var(--color-signal);}
+.subtest-card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-lg);padding:var(--space-5) var(--space-4);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s,transform .2s;}
+.subtest-card:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);transform:translateY(-2px);}
 /* Statt einer laufenden Nummer traegt jede Kachel ein Zeichen, das aus der
    AUFGABE des jeweiligen Untertests abgeleitet ist (ueberlappende Formen
    fuers Musterzuordnen, ein Wuerfel fuer Objekte im Raum, Balken fuer
@@ -645,8 +825,32 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .subtest-name{font-size:var(--text-sm);line-height:var(--leading-snug);display:block;}
 .subtest-card a{display:block;}
 
+/* Angebots-Kacheln auf der Startseite (siehe layouts/partials/angebot-grid.html)
+   ---------------------------------------------------------------------------
+   Jede Kachel nennt eine grosse Zahl (wie viele PDFs, Berichte, Unis ...), den
+   Bereich und einen Satz dazu. Die Zahlen werden beim Bauen der Website
+   gezaehlt, nicht von Hand gepflegt - siehe die Partial-Datei. */
+.angebot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);list-style:none;margin:var(--space-10) 0 0;padding:0;}
+.angebot-card{position:relative;display:flex;flex-direction:column;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s,transform .2s;}
+.angebot-card:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+/* Die Zahl bewusst gross und in Markenfarbe: sie ist die eigentliche Aussage
+   der Kachel ("153 PDFs" sagt mehr als "Uebungsaufgaben"). */
+.angebot-count{display:flex;align-items:baseline;gap:var(--space-2);margin-bottom:var(--space-3);}
+.angebot-number{font-family:var(--font-display);font-weight:700;font-size:var(--text-4xl);line-height:1;color:var(--color-signal);letter-spacing:var(--tracking-tight);}
+.angebot-unit{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);}
+.angebot-card h3{margin:0 0 var(--space-2);font-size:var(--text-lg);}
+.angebot-card p{color:var(--color-ink-soft);font-size:var(--text-sm);margin:0 0 var(--space-5);}
+/* margin-top:auto schiebt den Link bei unterschiedlich langen Texten immer an
+   den unteren Kartenrand, damit die Links aller Kacheln auf einer Linie sitzen. */
+.angebot-card .more{margin-top:auto;font-weight:600;}
+/* Macht die GANZE Kachel anklickbar, ohne den Link-Text selbst zu vergroessern
+   (der bleibt fuer Screenreader die eigentliche Beschriftung). */
+.angebot-card .more::after{content:"";position:absolute;inset:0;}
+
 /* Mission + Feature-Grid (kein Sequenz-Bezug → dezente Markierung statt Nummern) */
-#mission{background:var(--color-signal-soft);border-bottom:1px solid var(--color-signal-soft-line);}
+/* Verlauf statt einer einzigen Tönung - die Fläche ist gross (volle Breite,
+   mehrere hundert Pixel hoch) und wirkte einfarbig wie ein Farbkasten. */
+#mission{background:linear-gradient(160deg,var(--color-signal-soft) 0%,var(--color-surface) 100%);border-bottom:1px solid var(--color-signal-soft-line);}
 .mission-lede{font-size:var(--text-2xl);max-width:42rem;margin:0 0 var(--space-10);font-weight:600;}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-8);}
 /* Kurzer Akzentstrich über jeder Mission-Kachel. Vorher war das ein
@@ -660,9 +864,40 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 /* Marken-Band (Logo + dekorative Symbole, siehe layouts/partials/brand-band.html) -
    dieselben --color-band-Tokens wie der Spenden-Banner direkt darunter,
    damit beide wie ein zusammenhängendes dunkles Band wirken. */
-.brand-band{background:var(--color-band);border-bottom:none;padding-block:var(--space-16);overflow:hidden;}
+/* Statt einer einzigen dunkelblauen Flaeche: ein senkrechter Verlauf von einem
+   etwas helleren Blau nach unten ins Bandblau, dazu ein weicher blauer
+   Lichtschein von unten. */
+.brand-band{
+  background:
+    radial-gradient(38rem 16rem at 50% 116%, var(--band-glow), transparent 70%),
+    linear-gradient(180deg, var(--band-top), var(--color-band));
+  border-bottom:none;padding-block:var(--space-16);overflow:hidden;position:relative;
+}
+/* Sehr feines Punktraster ueber dem Band. Die Deckkraft ist so niedrig, dass man
+   die Punkte einzeln kaum sieht - sie nehmen der Flaeche nur das voellig Tote.
+   Die Maske blendet das Raster an den Kanten aus, damit es nirgends hart
+   abbricht. Bewusst ein geometrisches Raster und KEINE Bildchen: die frueheren
+   Medizin-Cliparts an dieser Stelle wurden im August 2026 entfernt, weil sie
+   nichts aussagten (siehe brand-band.html). */
+.brand-band::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--band-texture) 1px, transparent 1.6px);
+  background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(70% 70% at 50% 50%, #000, transparent);
+  mask-image:radial-gradient(70% 70% at 50% 50%, #000, transparent);
+}
 .brand-band-inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:var(--space-4);text-align:center;min-height:9rem;justify-content:center;}
-.brand-band-logo{width:clamp(64px,9vw,110px);height:auto;object-fit:contain;position:relative;z-index:1;}
+/* Das Logo ist eine Rastergrafik (sechs eingebettete PNG-Bilder in einer
+   SVG-Datei), seine Farben lassen sich also nicht per CSS umfaerben. Der
+   "WIKI"-Schriftzug darin ist schwarz und war auf dem dunkelblauen Band
+   praktisch unsichtbar (gemeldet 2026-09-08). brightness(0) faerbt zuerst
+   ALLES rein schwarz, invert(1) macht daraus rein weiss - das Logo erscheint
+   dadurch vollstaendig in Weiss, inklusive Stethoskop-Linien. Das Markenblau
+   des "NC" geht dabei verloren; auf einem dunklen Band ist eine einfarbig
+   weisse Wortmarke aber die uebliche und ruhigere Loesung. Die Logodatei
+   selbst bleibt unveraendert - im Kopfbereich auf hellem Grund erscheint sie
+   weiterhin in Originalfarben. */
+.brand-band-logo{width:clamp(84px,11vw,140px);height:auto;object-fit:contain;position:relative;z-index:1;filter:brightness(0) invert(1);opacity:.94;}
 .brand-band-tagline{position:relative;z-index:1;margin:0;font-family:var(--font-body);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-band-text-soft);}
 /* Frueher standen hier die verstreuten medizinischen Symbole rund um das
    Logo (Stethoskop, Reflexhammer, Puls, Tablette, Kreuz, Kolben) sowie eine
@@ -674,16 +909,46 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    wo es etwas erklaert: bei den acht Untertest-Kacheln (siehe .subtest-glyph
    weiter unten), deren Zeichen aus der jeweiligen AUFGABE abgeleitet sind. */
 
-/* Spenden-Band */
-.support{background:var(--color-band);color:var(--color-band-text);border-bottom:none;}
-.support-inner{display:flex;justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap;}
-.support h2{margin:0 0 .3rem;font-size:var(--text-xl);}
-.support p{margin:0;color:var(--color-band-text-soft);max-width:32rem;}
+/* Spenden-Aufruf
+   ---------------------------------------------------------------------------
+   Vorher hatte dieser Abschnitt exakt dieselbe Hintergrundfarbe wie das
+   Logo-Band darueber UND die Fusszeile darunter. Drei Abschnitte verschmolzen
+   dadurch zu einem einzigen, ueber 1000px hohen dunklen Block, und der
+   Spendenaufruf las sich wie ein Teil der Fusszeile (gemeldet 2026-09-08:
+   "der Spendenaufruf ist ein bisschen unauffaellig").
+   Jetzt bleibt die Sektion selbst dunkel (das durchgehende Band am Seitenende
+   bleibt also erhalten), der Aufruf darin sitzt aber als eigene, hell
+   leuchtende Karte in Markenblau mit Schatten darauf - er ist damit das
+   hellste Element im ganzen unteren Seitendrittel. */
+.support{background:var(--color-band);color:var(--color-band-text);border-bottom:none;padding-block:var(--space-12);}
+.support-inner{
+  position:relative;overflow:hidden;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:var(--space-8);flex-wrap:wrap;
+  background:linear-gradient(135deg, var(--cta-from), var(--cta-to));
+  border-radius:var(--radius-lg);
+  padding:var(--space-10);
+  box-shadow:var(--shadow-lg);
+  color:#fff;
+}
+/* Heller Schimmer in der oberen rechten Ecke der Karte, damit auch sie keine
+   glatte, einfarbige Flaeche ist. */
+.support-inner::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(24rem 14rem at 88% -20%, rgba(255,255,255,.22), transparent 70%);
+}
+.support-inner>*{position:relative;z-index:1;}
+.support h2{margin:0 0 var(--space-2);font-size:var(--text-2xl);color:#fff;}
+.support p{margin:0;color:rgba(255,255,255,.88);max-width:32rem;}
+/* Weisser Knopf auf der blauen Karte - der normale .btn-primary waere blau auf
+   blau und damit unsichtbar. */
+.btn-invert{background:#fff;color:var(--cta-to);}
+.btn-invert:hover{background:var(--color-paper);color:var(--cta-to);}
 
 /* ==========================================================================
    Fusszeile
    ========================================================================== */
-footer.site{background:var(--color-band);color:var(--color-band-text);padding-block:var(--space-12) var(--space-6);}
+footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top));color:var(--color-band-text);padding-block:var(--space-12) var(--space-6);border-top:1px solid rgba(255,255,255,.06);}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:var(--space-8);margin-bottom:var(--space-10);}
 .footer-grid h4{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-band-text-soft);margin:0 0 var(--space-4);}
 .footer-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:.6rem;font-size:var(--text-base);}
@@ -734,8 +999,8 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
 /* margin-top wie .sponsor-grid/.card-grid: einheitlicher Abstand zu einer
    evtl. direkt folgenden weiteren Box (siehe Erklärung bei .card-grid oben). */
 .download-list{list-style:none;margin:var(--space-8) 0 0;padding:0;display:grid;gap:var(--space-3);max-width:32rem;}
-.download-link{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);flex:1 1 auto;}
-.download-link:hover{border-color:var(--color-signal);color:var(--color-signal);}
+.download-link{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);flex:1 1 auto;box-shadow:var(--shadow-sm);transition:border-color .15s,color .15s,box-shadow .2s;}
+.download-link:hover{border-color:var(--color-signal);color:var(--color-signal);box-shadow:var(--shadow-md);}
 .download-link .download-size{font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-ink-faint);white-space:nowrap;}
 .download-item{display:flex;flex-direction:column;gap:.3rem;}
 /* Aufgabe + Lösung nebeneinander (siehe download-list.html) - der
@@ -756,8 +1021,8 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
    einzelnen PDF-Downloads oben - deshalb hier gezielt wieder das
    .btn/.btn-primary-Aussehen herstellen (überschreibt ".report-error
    button" oben, weil hier spezifischer benannt UND weiter unten im Code). */
-.report-error-general button{background:var(--color-signal);color:var(--color-on-signal);border:1px solid transparent;padding:.85rem 1.4rem;border-radius:var(--radius-sm);font:inherit;font-size:var(--text-sm);font-weight:600;text-decoration:none;cursor:pointer;}
-.report-error-general button:hover{background:var(--color-signal-strong);color:var(--color-on-signal);}
+.report-error-general button{background:var(--color-btn-bg);color:var(--color-on-signal);border:1px solid transparent;padding:.85rem 1.4rem;border-radius:var(--radius-sm);font:inherit;font-size:var(--text-sm);font-weight:600;text-decoration:none;cursor:pointer;}
+.report-error-general button:hover{background:var(--color-btn-bg-hover);color:var(--color-on-signal);}
 
 /* ==========================================================================
    Formulare
@@ -824,12 +1089,18 @@ footer.site{background:var(--color-band);color:var(--color-band-text);padding-bl
   .team-grid{grid-template-columns:repeat(auto-fill,minmax(7rem,1fr));}
   .uebungsaufgaben-layout{grid-template-columns:1fr;}
   .subtest-grid{grid-template-columns:repeat(2,1fr);}
+  /* Angebots-Kacheln: 3 -> 2 Spalten. Auf ganz schmalen Schirmen (siehe
+     naechster Block) wird daraus eine Spalte. */
+  .angebot-grid{grid-template-columns:repeat(2,1fr);}
+  /* Die Spenden-Karte braucht auf schmalen Schirmen weniger Innenabstand,
+     sonst bleibt fuer den Text kaum Platz. */
+  .support-inner{text-align:left;padding:var(--space-6);}
   .feature-grid{grid-template-columns:1fr;gap:var(--space-6);}
   .sponsor-grid{grid-template-columns:repeat(2,1fr);}
   .footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-6);}
-  .support-inner{text-align:left;}
 }
 @media (max-width:520px){
+  .angebot-grid{grid-template-columns:1fr;}
   .countdown{grid-template-columns:repeat(4,1fr);}
   .countdown-hero .num{font-size:3rem;}
   .footer-grid{grid-template-columns:1fr;}

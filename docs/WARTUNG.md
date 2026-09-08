@@ -428,3 +428,123 @@ STATICRYPT_PASSWORD='test-passwort' npm run schuetzen
 
 Danach liegt in `public/mitglieder/` die geschützte Fassung. Wichtig: `public/` ist
 nur ein lokaler Bau-Ordner und landet nie in git.
+
+---
+
+## 12. Startseite: die Kacheln „Was du hier findest" ändern
+
+Direkt unter dem Hero steht auf der Startseite ein Raster mit sechs Kacheln
+(Übungsaufgaben, Testsimulationen, Vorbereitungskurse, Uniguide,
+Erfahrungsberichte, Fragen & Antworten). Jede Kachel nennt eine grosse Zahl,
+den Bereich und einen Satz dazu.
+
+### Die Zahlen musst du nicht pflegen
+
+Sie werden bei **jedem Bauen der Website neu gezählt**: die PDFs direkt in den
+Ordnern unter `assets/downloads/`, die Erfahrungsberichte aus den Seiten im
+jeweiligen Sprachordner, die Universitäten und Fragen aus `data/unis.yaml` bzw.
+`data/faq.yaml`. Lädst du zehn neue Übungsserien hoch, steht dort beim nächsten
+Build automatisch die neue Zahl.
+
+**Deshalb bitte keine Zahlen in die Texte schreiben** – sie wären beim nächsten
+Upload sofort falsch.
+
+Weil die Erfahrungsberichte nicht in allen Sprachen gleich weit übersetzt sind,
+zählt jede Sprachfassung ihre eigenen Berichte (aktuell 66 auf Deutsch, 13 auf
+Französisch, 4 auf Italienisch). Es steht also nie eine Zahl da, die es in
+dieser Sprache gar nicht gibt.
+
+### Texte ändern
+
+Überschrift und die Texte der Kacheln stehen im Frontmatter der Startseite,
+unter `angebot:` – und zwar **in allen drei Sprachdateien**:
+
+- `content/de/_index.md`
+- `content/fr/_index.md`
+- `content/it/_index.md`
+
+```yaml
+angebot:
+  eyebrow: "Was du hier findest"
+  heading: "Alles kostenlos, alles von Studierenden gemacht"
+  items:
+    - key: uebungsaufgaben       # legt fest, was gezählt und wohin verlinkt wird
+      title: "Übungsaufgaben"    # Überschrift der Kachel
+      unit: "PDFs"               # steht klein neben der Zahl
+      text: "Übungsserien zu allen acht Themenbereichen ..."
+      link: "Zu den Übungsaufgaben →"
+```
+
+`key` ist der einzige Wert, der **nicht** übersetzt wird – er ist der interne
+Name und muss in allen drei Sprachen gleich bleiben. Erlaubt sind:
+`uebungsaufgaben`, `testsimulationen`, `vorbereitungskurse`, `uniguide`,
+`erfahrungsberichte`, `qa`.
+
+### Eine Kachel entfernen oder umsortieren
+
+Einfach den Eintrag in allen drei Dateien löschen bzw. verschieben. Das Raster
+richtet sich automatisch nach der Anzahl.
+
+### Eine ganz neue Kachel
+
+Dafür braucht es zusätzlich eine kleine Ergänzung im Template
+(`layouts/partials/angebot-grid.html`, Block `$quellen`): dort steht pro `key`,
+welche Zieladresse verlinkt und was gezählt wird. Das ist ein Entwickler-Schritt
+– die Datei erklärt oben im Kommentar, was einzutragen ist.
+
+---
+
+## 13. Uniguide: Angaben ergänzen und der Vergleich
+
+### Wo die Angaben stehen
+
+Alles zu den Universitäten steht in **einer** Datei: `data/unis.yaml`. Sie speist
+beides – die Tabelle auf `/ems/uniguide/` und die Detailseite jeder einzelnen
+Universität. Die Seiten unter `content/*/ems/uniguide/*.md` enthalten nur den
+Titel und den technischen Namen (`uni_slug`), keine Angaben.
+
+### Die noch leeren Felder füllen
+
+Seit dem 8. September 2026 gibt es pro Universität diese zusätzlichen Felder.
+Sie stehen absichtlich alle auf `null`, weil sie noch nicht an offizieller
+Stelle nachgeprüft sind:
+
+| Feld | Was hinein gehört | Beispiel |
+| --- | --- | --- |
+| `website_medizin` | Direktlink zur medizinischen Fakultät (nicht zur Uni-Startseite) | `"https://medizin.unibas.ch"` |
+| `anmeldefrist` | Frist als Text | `"15. Februar"` |
+| `studienbeginn` | Wann das Studium startet | `"Mitte September"` |
+| `semestergebuehr` | Betrag inkl. Währung, als Text | `"CHF 850 pro Semester"` |
+| `studienplaetze` | Zahl der Plätze (gab es vorher schon) | `180` |
+
+**Bitte nur eintragen, was auf einer offiziellen Seite steht** – und im selben
+Zug `stand` auf das heutige Datum und `quelle` auf die verwendete Seite setzen.
+Solange ein Feld `null` ist, erscheint es auf der Website gar nicht; stattdessen
+steht auf der Uni-Seite ein Kasten „Diese Angaben fehlen noch". Das ist Absicht:
+Eine Lücke ist besser als eine Zahl, auf die sich jemand bei der Studienwahl
+verlässt und die nicht stimmt.
+
+### Erfahrungsberichte automatisch bei der Uni anzeigen
+
+Das Feld `berichte_ort` verknüpft eine Universität mit den Erfahrungsberichten.
+Sein Wert muss genau dem entsprechen, was in den Berichten im Frontmatter unter
+`ort:` steht (z. B. `"Zürich"`). Passt es, erscheinen auf der Uni-Seite
+automatisch die drei neuesten Berichte von diesem Ort. Gibt es keine, bleibt der
+Abschnitt einfach weg – nichts weiter zu tun.
+
+### Der Vergleich
+
+In der Tabelle lassen sich in der ersten Spalte bis zu **vier** Universitäten
+ankreuzen. Unten erscheint dann eine Leiste; „Vergleichen" stellt sie
+untereinander in einer Tabelle nebeneinander – eine Spalte pro Universität, eine
+Zeile pro Angabe.
+
+Zu pflegen gibt es daran nichts: Der Vergleich zieht dieselben Felder aus
+`data/unis.yaml`. Ein neu gefülltes Feld erscheint automatisch auch dort. Wer
+eine **weitere Zeile** in den Vergleich aufnehmen will, ergänzt sie in
+`layouts/partials/uniguide-table.html` (Abschnitt „VERGLEICHSANSICHT") – das ist
+ein Entwickler-Schritt.
+
+Die Obergrenze von vier ist bewusst gesetzt: Mehr Spalten passen auf einem Handy
+nicht mehr sinnvoll nebeneinander. Sie steht in derselben Datei ganz unten im
+Skript als `var MAX = 4;`.

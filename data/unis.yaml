@@ -29,6 +29,22 @@
 #   website          - offizielle Website der Universität
 #   stand            - Datum, an dem diese Angaben zuletzt geprüft wurden
 #   quelle           - Link zur Quelle dieser Angaben (Nachvollziehbarkeit)
+#   website_medizin  - direkter Link zur medizinischen Fakultät (nicht zur
+#                       allgemeinen Uni-Startseite) oder null
+#   anmeldefrist     - Frist für die Anmeldung, als Text ("15. Februar") oder null
+#   studienbeginn    - wann das Studium startet, als Text, oder null
+#   semestergebuehr  - Semestergebühr als Text inkl. Währung ("CHF 850") oder null
+#   berichte_ort     - technische Verknüpfung, KEINE Anzeige: der Wert, der in
+#                       den Erfahrungsberichten im Feld "ort" steht (z.B.
+#                       "Zürich"). Damit erscheinen auf der Uni-Seite automatisch
+#                       die passenden Erfahrungsberichte. Leer lassen ("") wenn
+#                       es zu diesem Ort keine Berichte gibt.
+#
+# WICHTIG - KEINE ERFUNDENEN ANGABEN: Ein Feld, das nicht sicher recherchiert
+# ist, bleibt null. Es erscheint dann auf der Website gar nicht, und auf der
+# Uni-Seite steht stattdessen ein Hinweis, dass die Angabe noch fehlt. Das ist
+# deutlich besser als eine Zahl, auf die sich jemand bei der Studienwahl
+# verlässt und die nicht stimmt.
 
 - slug: "basel"
   name: "Universität Basel"
@@ -42,6 +58,17 @@
   website: "https://www.unibas.ch"
   stand: "2026-08-07"
   quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: "Basel"
 
 - slug: "bern"
   name: "Universität Bern"
@@ -55,6 +82,17 @@
   website: "https://www.unibe.ch"
   stand: "2026-08-07"
   quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: "Bern"
 
 - slug: "zuerich"
   name: "Universität Zürich"
@@ -68,6 +106,17 @@
   website: "https://www.uzh.ch"
   stand: "2026-08-07"
   quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: "Zürich"
 
 - slug: "eth-zuerich"
   name: "ETH Zürich"
@@ -81,6 +130,17 @@
   website: "https://www.ethz.ch"
   stand: "2026-08-08"
   quelle: "https://ethz.ch/en/studies/bachelor/application/bachelor-human-medicine.html"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: "Zürich"
 
 - slug: "freiburg"
   name: "Universität Freiburg"
@@ -94,6 +154,17 @@
   website: "https://www.unifr.ch"
   stand: "2026-08-07"
   quelle: "https://www.unifr.ch/med/fr/studies/bsc/med/admission.html"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: "Freiburg"
 
 - slug: "genf"
   name: "Université de Genève"
@@ -107,6 +178,17 @@
   website: "https://www.unige.ch"
   stand: "2026-08-07"
   quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: ""
 
 - slug: "lausanne"
   name: "Université de Lausanne"
@@ -120,6 +202,17 @@
   website: "https://www.unil.ch"
   stand: "2026-08-07"
   quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: ""
 
 - slug: "lugano"
   name: "Università della Svizzera italiana (USI)"
@@ -133,6 +226,17 @@
   website: "https://www.usi.ch"
   stand: "2026-08-07"
   quelle: "https://www.biomed.usi.ch/it/studiare/studiare-medicina/master-in-medicina/ammissione"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: ""
 
 - slug: "neuenburg"
   name: "Université de Neuchâtel"
@@ -146,6 +250,17 @@
   website: "https://www.unine.ch"
   stand: "2026-08-09"
   quelle: "https://www.unine.ch/formation/bachelor-of-science-en-medecine-humaine"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: ""
 
 - slug: "luzern"
   name: "Universität Luzern"
@@ -159,6 +274,17 @@
   website: "https://www.unilu.ch"
   stand: "2026-08-08"
   quelle: "https://www.unilu.ch/studium/studienangebot/master/gmf/medizin/"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: "Luzern"
 
 - slug: "st-gallen"
   name: "Universität St.Gallen"
@@ -172,3 +298,14 @@
   website: "https://www.unisg.ch"
   stand: "2026-08-08"
   quelle: "https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium/zulassungsverfahren-mit-numerus-clausus"
+  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
+  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
+  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
+  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
+  website_medizin: null
+  anmeldefrist: null
+  studienbeginn: null
+  semestergebuehr: null
+  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
+  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  berichte_ort: ""

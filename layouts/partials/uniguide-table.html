@@ -3,19 +3,34 @@
   UNIGUIDE-VERGLEICHSTABELLE (Übersicht aller Universitäten)
   ============================================================================
   Gespeist aus data/unis.yaml - dort ändern, nicht hier, um Angaben zu einer
-  Universität zu ändern oder eine neue hinzuzufügen. Erwartet je Eintrag:
-  slug, name, kanton, sprache (Liste), studiengaenge (Liste),
-  ems_erforderlich (ja/nein/teilweise), auswahlverfahren,
-  studienplaetze (Zahl/null), besonderheiten (Liste), website, stand, quelle.
+  Universität zu ändern oder eine neue hinzuzufügen.
 
-  Diese Tabelle ist per Sprache und EMS-Pflicht filterbar - siehe das
-  <script> ganz unten, das die Filter-Logik im Browser übernimmt (kein
-  erneutes Laden der Seite nötig).
+  Die Seite kann dreierlei:
+    1. FILTERN nach Sprache und EMS-Pflicht (Knöpfe über der Tabelle).
+    2. VERGLEICHEN: In der ersten Spalte lassen sich bis zu vier Universitäten
+       ankreuzen. Unten erscheint dann eine Leiste mit der Anzahl, und ein
+       Klick auf "Vergleichen" zeigt die Ausgewählten nebeneinander - eine
+       Spalte pro Universität, eine Zeile pro Angabe (wie bei den
+       Vergleichsfunktionen von Elektronik-Shops).
+    3. Von jeder Zeile zur ausführlichen Detailseite der Universität springen.
+
+  WIE DER VERGLEICH TECHNISCH FUNKTIONIERT: Die Vergleichstabelle unten wird
+  beim Bauen der Website bereits mit ALLEN Universitäten erzeugt, jede Zelle
+  aber zunächst versteckt ("hidden"). Das JavaScript blendet dann nur die
+  Spalten der angekreuzten Universitäten ein. Vorteil: Sämtliche Texte und
+  Übersetzungen kommen aus Hugo bzw. i18n/*.yaml - im JavaScript steht kein
+  einziger übersetzbarer Satz, der sonst dreimal gepflegt werden müsste.
+
+  OHNE JAVASCRIPT bleibt die Seite benutzbar: Die Ankreuz-Spalte, die Leiste
+  und die Vergleichstabelle sind per CSS ausgeblendet und werden erst
+  sichtbar, wenn das Skript die Klasse "js-compare" setzt. Filter-Knöpfe und
+  Tabelle funktionieren wie bisher.
   ============================================================================
 */}}
 {{- $emsLabels := dict "ja" (i18n "ems_status_ja") "nein" (i18n "ems_status_nein") "teilweise" (i18n "ems_status_teilweise") }}
+{{- $leer := i18n "uniguide_compare_empty" }}
 
-{{- $unis := .Site.Data.unis }}
+{{- $unis := hugo.Data.unis }}
 {{- $unis = sort $unis "name" }}
 
 <div class="uniguide-disclaimer" role="note">
@@ -26,6 +41,8 @@
 {{ if eq (len $unis) 0 }}
 <p class="download-empty">{{ i18n "uniguide_table_empty" }}</p>
 {{ else }}
+
+<div id="uniguide">
 
 {{- /* Liste aller vorkommenden Sprachen (ohne Duplikate) einsammeln - daraus
        werden unten automatisch die Sprach-Filter-Knöpfe gebaut. Neue Sprache
@@ -48,10 +65,15 @@
   </div>
 </div>
 
+{{/* Hinweis auf die Vergleichsfunktion - nur sichtbar, wenn JavaScript läuft
+     (die Klasse "js-compare" setzt das Skript unten). */}}
+<p class="uniguide-compare-hint">{{ i18n "uniguide_compare_hint" }}</p>
+
 <div class="table-scroll">
   <table class="uniguide-table" id="uniguide-table">
     <thead>
       <tr>
+        <th class="compare-col">{{ i18n "uniguide_compare_th" }}</th>
         <th>{{ i18n "uniguide_table_th_uni" }}</th>
         <th>{{ i18n "label_sprache" }}</th>
         <th>{{ i18n "uniguide_table_th_ems" }}</th>
@@ -69,6 +91,17 @@
              das JavaScript weiter unten liest sie aus, um beim Filtern zu
              wissen, welche Zeile es ein-/ausblenden muss. */ -}}
       <tr data-sprachen="{{ delimit .sprache "|" }}" data-ems="{{ $emsBucket }}">
+        <td class="compare-col">
+          {{/* Das <label> umschliesst das Ankreuzfeld, damit auch die Fläche
+               drumherum antippbar ist. Der Text darin ist optisch versteckt,
+               aber für Screenreader vorhanden - sonst hiessen alle elf
+               Ankreuzfelder gleich und niemand wüsste, welches zu welcher
+               Universität gehört. */}}
+          <label class="compare-check">
+            <input type="checkbox" class="compare-box" value="{{ .slug }}">
+            <span class="visually-hidden-field">{{ i18n "uniguide_compare_add" }} {{ .name }}</span>
+          </label>
+        </td>
         <td><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></td>
         <td>{{ delimit .sprache ", " }}</td>
         <td><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>
@@ -80,14 +113,106 @@
   </table>
 </div>
 
-{{/* Filter-Logik: läuft komplett im Browser, ohne die Seite neu zu laden.
-     Merkt sich in "active", welcher Sprach- und EMS-Filter gerade gewählt
-     ist, und blendet dann alle Tabellenzeilen aus/ein, die (nicht) dazu
-     passen - anhand der data-sprachen/data-ems-Attribute von oben. */}}
+{{/* ===================== VERGLEICHSANSICHT =====================
+     Enthält ALLE Universitäten als Spalten; jede Zelle trägt "hidden" und ein
+     data-uni-Attribut mit dem slug. Das Skript unten nimmt genau bei den
+     angekreuzten Universitäten das "hidden" weg. Die erste Spalte (die
+     Bezeichnung der Angabe) bleibt beim seitlichen Scrollen stehen, siehe
+     .compare-table th[scope=row] in style.css. */}}
+<section class="uniguide-compare" id="uniguide-compare" hidden aria-live="polite">
+  <div class="section-head">
+    <h2>{{ i18n "uniguide_compare_heading" }}</h2>
+    <button type="button" class="filter-pill" id="compare-close">{{ i18n "uniguide_compare_close" }}</button>
+  </div>
+  <div class="table-scroll">
+    <table class="uniguide-table compare-table">
+      <thead>
+        <tr>
+          <th>{{ i18n "uniguide_compare_field" }}</th>
+          {{ range $unis }}<th data-uni="{{ .slug }}" hidden><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></th>{{ end }}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{ i18n "uniguide_table_th_ems" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "uni_detail_kanton" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ .kanton }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "label_sprache" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ delimit .sprache ", " }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "label_studiengaenge" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ delimit .studiengaenge ", " }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "label_studienplaetze" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ if .studienplaetze }}{{ .studienplaetze }}{{ else }}<span class="report-meta">{{ i18n "uniguide_table_places_unknown" }}</span>{{ end }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "uni_detail_anmeldefrist" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with .anmeldefrist }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "uni_detail_studienbeginn" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with .studienbeginn }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "uni_detail_semestergebuehr" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with .semestergebuehr }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "uni_detail_auswahlverfahren" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ .auswahlverfahren }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "uni_detail_besonderheiten" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ with .besonderheiten }}<ul class="detail-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+        </tr>
+        <tr>
+          <th scope="row">{{ i18n "uni_detail_website" }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden><a href="{{ .website }}" target="_blank" rel="noopener">{{ .website }}</a></td>{{ end }}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{{/* Leiste am unteren Bildschirmrand, sobald mindestens eine Universität
+     angekreuzt ist. Die beiden data-selected-*-Attribute enthalten die
+     übersetzten Sätze mit dem Platzhalter {count} - das Skript setzt dort nur
+     die Zahl ein, damit auch Einzahl/Mehrzahl in jeder Sprache stimmt. */}}
+<div class="compare-bar" id="compare-bar" hidden
+     data-selected-one="{{ i18n "uniguide_compare_selected_one" }}"
+     data-selected-other="{{ i18n "uniguide_compare_selected_other" }}"
+     data-max-message="{{ i18n "uniguide_compare_max" }}">
+  <p class="compare-bar-count" id="compare-count"></p>
+  <div class="compare-bar-actions">
+    <button type="button" class="btn btn-primary" id="compare-open">{{ i18n "uniguide_compare_open" }}</button>
+    <button type="button" class="btn btn-ghost" id="compare-reset">{{ i18n "uniguide_compare_reset" }}</button>
+  </div>
+</div>
+
+</div>
+
+{{/* Filter-Logik und Vergleich: läuft komplett im Browser, ohne die Seite neu
+     zu laden. */}}
 <script>
 (function(){
+  var wurzel = document.getElementById('uniguide');
   var table = document.getElementById('uniguide-table');
-  if(!table) return;
+  if(!wurzel || !table) return;
+
+  /* Erst ab hier sind Ankreuz-Spalte, Leiste und Vergleich überhaupt
+     sichtbar - ohne JavaScript bleiben sie per CSS ausgeblendet, weil sie
+     dann nichts tun würden. */
+  wurzel.classList.add('js-compare');
+
+  /* ---------------------------------------------------------------- Filter */
   var rows = table.querySelectorAll('tbody tr');
   var active = { sprache: 'all', ems: 'all' };
 
@@ -112,6 +237,67 @@
       apply();
     });
   });
+
+  /* --------------------------------------------------------------- Vergleich */
+  var MAX = 4; /* mehr als vier Spalten nebeneinander wird unlesbar */
+  var boxen = Array.prototype.slice.call(table.querySelectorAll('.compare-box'));
+  var bar = document.getElementById('compare-bar');
+  var zaehler = document.getElementById('compare-count');
+  var panel = document.getElementById('uniguide-compare');
+
+  function gewaehlt(){
+    return boxen.filter(function(b){ return b.checked; }).map(function(b){ return b.value; });
+  }
+
+  function zeichnen(){
+    var slugs = gewaehlt();
+
+    /* Spalten der Vergleichstabelle ein-/ausblenden */
+    panel.querySelectorAll('[data-uni]').forEach(function(zelle){
+      zelle.hidden = slugs.indexOf(zelle.getAttribute('data-uni')) === -1;
+    });
+
+    /* Sind schon vier angekreuzt, lassen sich die übrigen nicht mehr
+       anklicken - mit einer Erklärung in der Leiste, damit das nicht wie ein
+       Fehler wirkt. */
+    var amLimit = slugs.length >= MAX;
+    boxen.forEach(function(b){ b.disabled = amLimit && !b.checked; });
+
+    if(slugs.length === 0){
+      bar.hidden = true;
+      panel.hidden = true;
+      return;
+    }
+
+    bar.hidden = false;
+    var vorlage = slugs.length === 1 ? bar.getAttribute('data-selected-one') : bar.getAttribute('data-selected-other');
+    zaehler.textContent = vorlage.replace('{count}', slugs.length) + (amLimit ? ' · ' + bar.getAttribute('data-max-message') : '');
+
+    /* Weniger als zwei Universitäten sind kein Vergleich - der Knopf bleibt
+       dann noch aus, die Leiste zeigt aber schon die Auswahl an. */
+    document.getElementById('compare-open').disabled = slugs.length < 2;
+
+    /* Ist der Vergleich bereits offen, aktualisiert er sich sofort mit. */
+    if(!panel.hidden && slugs.length < 2){ panel.hidden = true; }
+  }
+
+  boxen.forEach(function(b){ b.addEventListener('change', zeichnen); });
+
+  document.getElementById('compare-open').addEventListener('click', function(){
+    panel.hidden = false;
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('compare-close').addEventListener('click', function(){
+    panel.hidden = true;
+  });
+
+  document.getElementById('compare-reset').addEventListener('click', function(){
+    boxen.forEach(function(b){ b.checked = false; });
+    zeichnen();
+  });
+
+  zeichnen();
 })();
 </script>
 {{ end }}
