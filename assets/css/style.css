@@ -1037,6 +1037,44 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .pm-hinweis{margin:var(--space-2) 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);}
 .pm-dauer{margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);}
 
+/* Trainer links, Untertest-Liste rechts. Der Trainer bleibt beim Scrollen
+   stehen (sticky), damit er auch beim untersten Untertest noch sichtbar ist -
+   sonst würde er genau dann verschwinden, wenn man seinen Hinweis liest. */
+.pm-einzeln-layout{display:grid;grid-template-columns:15rem 1fr;gap:var(--space-8);align-items:start;}
+.trainer{position:sticky;top:5.5rem;display:flex;flex-direction:column;align-items:center;gap:var(--space-3);text-align:center;}
+.trainer-figur{width:100%;max-width:10rem;}
+.trainer-svg{width:100%;height:auto;display:block;}
+
+/* Farben aus den Design-Tokens: Die Figur geht dadurch im Hell- und
+   Dunkelmodus automatisch mit, ohne zweite Zeichnung. */
+.tr-kopf{fill:var(--color-signal-soft);stroke:var(--color-signal);stroke-width:3;}
+.tr-auge{fill:var(--color-signal);}
+.tr-mund{stroke:var(--color-signal);}
+.tr-schlauch{stroke:var(--color-ink-faint);}
+.tr-platte{fill:var(--color-surface);stroke:var(--color-ink-faint);stroke-width:3;}
+.tr-platte-innen{fill:var(--color-ink-faint);}
+
+/* Ruhiges Atmen und gelegentliches Blinzeln - gerade genug, damit die Figur
+   lebendig wirkt, und wenig genug, dass sie beim Lesen nicht stört. */
+@keyframes tr-atmen{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+@keyframes tr-blinzeln{0%,92%,100%{transform:scaleY(1);}96%{transform:scaleY(.1);}}
+@keyframes tr-nicken{0%{transform:rotate(0);}30%{transform:rotate(-5deg);}60%{transform:rotate(3deg);}100%{transform:rotate(0);}}
+.trainer-figur{animation:tr-atmen 5s ease-in-out infinite;}
+.tr-augen{transform-origin:60px 52px;animation:tr-blinzeln 6s infinite;}
+.trainer.nickt .trainer-figur{animation:tr-atmen 5s ease-in-out infinite, tr-nicken .5s ease-out;}
+/* Blickrichtung: Schaut der Trainer auf einen Untertest, wandern die Augen
+   leicht in dessen Richtung - die Liste liegt rechts unter ihm. */
+.trainer[data-blick="unten"] .tr-augen{transform:translate(6px,4px);}
+.tr-augen{transition:transform .25s;}
+
+@media (prefers-reduced-motion:reduce){
+  .trainer-figur,.tr-augen,.trainer.nickt .trainer-figur{animation:none;}
+}
+
+/* Sprechblase mit dem Zipfel nach oben zur Figur. */
+.trainer-blase{position:relative;margin:0;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:var(--space-4);font-size:var(--text-sm);color:var(--color-ink-soft);line-height:var(--leading-normal);}
+.trainer-blase::before{content:"";position:absolute;top:-7px;left:50%;margin-left:-7px;width:12px;height:12px;background:var(--color-surface);border-left:1px solid var(--color-line);border-top:1px solid var(--color-line);transform:rotate(45deg);}
+
 .pm-liste{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-3);}
 .pm-block{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s;}
 .pm-block:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);}
@@ -1107,6 +1145,14 @@ body.pm-aktiv{overflow:hidden;}
 /* Pausiert: die Uhr tritt zurück, damit sofort klar ist, dass sie steht. */
 .pm-buehne.is-pausiert .pm-uhr{opacity:.4;}
 
+@media (max-width:860px){
+  /* Trainer über die Liste, nicht mehr festgeklebt: Auf einem Handy nähme er
+     sonst dauerhaft einen Teil des Bildschirms weg. */
+  .pm-einzeln-layout{grid-template-columns:1fr;gap:var(--space-5);}
+  .trainer{position:static;flex-direction:row;align-items:center;gap:var(--space-4);text-align:left;}
+  .trainer-figur{flex:0 0 5.5rem;max-width:5.5rem;}
+  .trainer-blase::before{top:50%;left:-7px;margin:-6px 0 0 0;border-left:1px solid var(--color-line);border-top:none;border-bottom:1px solid var(--color-line);}
+}
 @media (max-width:520px){
   .pm-block{align-items:flex-start;}
   .pm-block .btn{width:100%;justify-content:center;}

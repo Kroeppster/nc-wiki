@@ -590,6 +590,27 @@ Anweisung erscheint und mit vorgelesen wird – dafür gibt es die Felder
 Einprägephasen und beim Konzentrationstest („Die Streichbedingung steht auf
 deinem Blatt …"). Feld weglassen, wenn es nichts Besonderes zu sagen gibt.
 
+### Der NCWiki-Trainer und seine Tipps
+
+Neben der Untertest-Liste steht eine gezeichnete Figur, die zu jedem Untertest
+sagt, worauf es ankommt – sobald man mit der Maus über eine Zeile fährt (auf dem
+Handy: die Zeile antippen).
+
+Was sie sagt, steht in `data/testablauf.yaml` bei jedem Block unter
+`trainer_de`, `trainer_fr` und `trainer_it`. Diese Sätze sind aus den
+Übungsaufgaben-Seiten abgeleitet – **ändert sich dort eine Aussage, sollte der
+Tipp mitgeändert werden**, sonst sagt der Trainer etwas anderes als die
+Übungsseite. Lässt man die drei Felder weg, nennt er für diesen Block nur die
+Dauer.
+
+Der Begrüssungssatz ("Fahr über einen Untertest …") steht in
+`i18n/de|fr|it.yaml` unter `trainer_willkommen`.
+
+Die Figur selbst ist gezeichneter Code (kein Bild) und steckt in
+`layouts/partials/trainer.html`. Sie nimmt ihre Farben aus dem Design-System
+und geht damit im Hell- und Dunkelmodus automatisch mit; ein Austausch der
+Zeichnung ist ein Entwickler-Schritt.
+
 ### Die vorgelesenen Sätze ändern
 
 Alles Gesprochene ausser den Zusatzhinweisen steht in `i18n/de|fr|it.yaml` bei

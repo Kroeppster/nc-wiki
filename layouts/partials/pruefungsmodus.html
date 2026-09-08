@@ -100,10 +100,16 @@
   <section class="pm-einzeln">
     <h2>{{ i18n "pm_einzeln_heading" }}</h2>
     <p>{{ i18n "pm_einzeln_text" }}</p>
-    <ul class="pm-liste">
+    {{/* Trainer und Liste nebeneinander: Der Trainer bleibt beim Scrollen
+         stehen und kommentiert den Untertest, über dem man gerade ist.
+         Auf schmalen Bildschirmen steht er über der Liste. */}}
+    <div class="pm-einzeln-layout">
+      {{ partial "trainer.html" . }}
+      <ul class="pm-liste">
       {{- range $i, $b := $daten.bloecke }}
       {{- $name := or (index $b $lang) $b.de }}
-      <li class="pm-block">
+      {{- $tipp := index $b (printf "trainer_%s" $lang) }}
+      <li class="pm-block"{{ with $tipp }} data-trainer="{{ . }}"{{ end }}>
         <div class="pm-block-text">
           <h3>{{ $name }}</h3>
           <p class="pm-block-meta">
@@ -116,7 +122,8 @@
         <button type="button" class="btn btn-ghost" data-pm-start="{{ $i }}">{{ i18n "pm_start" }}</button>
       </li>
       {{- end }}
-    </ul>
+      </ul>
+    </div>
   </section>
 </div>
 
