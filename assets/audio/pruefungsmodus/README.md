@@ -1,36 +1,59 @@
-# Aufnahmen für den Prüfungsmodus
+# Ansagen für den Prüfungsmodus
 
-Der Prüfungsmodus (`/ems/pruefungsmodus/`) liest die Anweisungen standardmässig
-mit der Sprachausgabe des Geräts vor. Das funktioniert überall und sofort,
-klingt aber maschinell.
+Die Seite `/ems/pruefungsmodus/` sagt an, was als Nächstes kommt, sagt „Start"
+und am Ende „Stopp". **Liegt hier eine passende Datei, wird sie abgespielt** –
+sonst liest die Sprachausgabe des Geräts vor, die je nach Handy oder Computer
+sehr unterschiedlich klingt.
 
-**Wird hier eine Datei abgelegt, wird stattdessen sie abgespielt.** Es muss
-nichts umgestellt oder eingetragen werden – Datei mit dem richtigen Namen in den
-richtigen Sprachordner legen, fertig. Genau wie bei den PDF-Downloads.
+Es muss nichts eingetragen oder umgestellt werden: Datei mit dem richtigen Namen
+in den richtigen Sprachordner legen, fertig. Genau wie bei den PDF-Downloads.
+Fehlt eine einzelne Datei, wird nur dieser eine Satz vorgelesen.
 
-Die Sammlung muss nicht auf einmal vollständig sein: Für jeden Satz, zu dem eine
-Aufnahme fehlt, wird weiterhin vorgelesen. Man kann also mit den vier kurzen
-Ansagen anfangen (`beginne`, `stopp`, `fertig-einzeln`, `fertig-komplett`) – die
-hört man bei jeder einzelnen Übung, sie lohnen sich zuerst.
+## Was gerade da ist
+
+| Sprache | Aufnahmen | Stimme | Lizenz des Datensatzes |
+| --- | --- | --- | --- |
+| Deutsch | 15 | Thorsten (Piper, low) | CC0 – keine Auflagen |
+| Französisch | 15 | SIWIS (Piper, medium) | CC-BY 4.0 – Namensnennung nötig |
+| Italienisch | – | – | offen, siehe unten |
+
+Die vorhandenen Dateien sind **maschinell erzeugt** (siehe
+`scripts/ansagen-erzeugen.py`). Sie klingen deutlich ruhiger und gleichmässiger
+als die Browserstimmen, aber es bleibt eine Maschine.
+
+**Am besten wären echte Aufnahmen aus dem Verein.** Wer eine Datei einspricht,
+überschreibt einfach die erzeugte – die Seite merkt keinen Unterschied. Es sind
+15 kurze Sätze pro Sprache, in einer ruhigen halben Stunde machbar.
+
+## Italienisch fehlt bewusst
+
+Für Italienisch gab es zwar eine Stimme, aber die Lizenz des zugrunde liegenden
+Datensatzes (M-AILABS) liess sich nicht eindeutig klären. Statt etwas zu
+veröffentlichen, dessen Rechtslage unklar ist, liest auf Italienisch weiterhin
+die Sprachausgabe des Geräts vor. Das funktioniert – es klingt nur weniger gut.
+Wer die Lizenzfrage klärt oder die Sätze selbst einspricht, schliesst die Lücke.
+
+## Namensnennung (Französisch)
+
+Die französische Stimme beruht auf dem SIWIS-Datensatz der University of
+Edinburgh, veröffentlicht unter CC-BY 4.0:
+<https://datashare.is.ed.ac.uk/handle/10283/2353>. Wird die französische
+Sprachfassung öffentlich genutzt, gehört dieser Hinweis dazu – deshalb steht er
+hier und im Erzeugungsskript.
 
 ## Format
 
-- **MP3**, Dateiendung `.mp3` (andere Endungen werden nicht gefunden)
-- Mono reicht, 128 kbit/s reicht
-- Vorne und hinten je etwa eine halbe Sekunde Stille – sonst klingt der Einsatz
+- **MP3**, Endung `.mp3` (andere Endungen werden nicht gefunden)
+- Mono genügt, 96 kbit/s genügt
+- Vorne und hinten je etwa eine halbe Sekunde Stille, sonst klingt der Einsatz
   abgehackt
-- Ruhig und eher langsam sprechen. Das hier ersetzt eine Aufsichtsperson im
+- Ruhig und eher langsam sprechen. Das vertritt eine Aufsichtsperson im
   Testsaal, keine Werbung.
 
 ## Dateiname = was gesprochen wird
 
-Unten steht pro Sprache, welche Datei welchen Satz enthalten soll. Die Texte
-sind exakt die, die sonst vorgelesen würden – wer möchte, darf beim Einsprechen
-natürlicher formulieren, solange die Aussage dieselbe bleibt.
-
-Ändert sich später ein Text in `i18n/*.yaml` oder in `data/testablauf.yaml`,
-passt die zugehörige Aufnahme nicht mehr dazu. Dann entweder neu aufnehmen oder
-die Datei löschen – ohne Datei wird wieder der aktuelle Text vorgelesen.
+Wichtig bei den zusammengesetzten Sätzen (`stopp-weiter`, `fertig-*`): Sie
+werden als **ein** Stück abgespielt, also auch in einem Stück aufnehmen.
 
 
 ---
@@ -39,21 +62,21 @@ die Datei löschen – ohne Datei wird wieder der aktuelle Text vorgelesen.
 
 | Datei | Gesprochener Text |
 | --- | --- |
-| `beginne.mp3` | Beginne jetzt. |
-| `stopp.mp3` | Stopp. Leg den Stift weg. |
-| `fertig-einzeln.mp3` | Geschafft. |
-| `fertig-komplett.mp3` | Simulation beendet. Alle elf Blöcke geschafft. |
-| `muster-zuordnen.mp3` | Muster zuordnen. Du hast dafür 16 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `med-nat-grundverstaendnis.mp3` | Medizinisch-naturwissenschaftliches Grundverständnis. Du hast dafür 45 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `objekte-im-raum.mp3` | Objekte im Raum. Du hast dafür 10 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `quantitative-probleme.mp3` | Quantitative und formale Probleme. Du hast dafür 45 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `figuren-einpraegen.mp3` | Figuren einprägen (Einprägephase). Du hast dafür 4 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. Nach dieser Phase folgt zuerst ein anderer Untertest. Erst danach wird abgefragt, was du dir gemerkt hast. |
-| `fakten-einpraegen.mp3` | Fakten einprägen (Einprägephase). Du hast dafür 6 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. Auch hier folgt zuerst ein anderer Untertest, bevor abgefragt wird. |
-| `textverstaendnis.mp3` | Textverständnis. Du hast dafür 45 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `figuren-reproduktion.mp3` | Figuren einprägen (Reproduktion). Du hast dafür 5 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `fakten-reproduktion.mp3` | Fakten einprägen (Reproduktion). Du hast dafür 6 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `diagramme-tabellen.mp3` | Diagramme und Tabellen. Du hast dafür 45 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. |
-| `konzentriertes-arbeiten.mp3` | Konzentriertes und sorgfältiges Arbeiten. Du hast dafür 8 Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt. Die Streichbedingung steht auf deinem Blatt. Präge sie dir jetzt genau ein. Während der acht Minuten solltest du nicht mehr nachschlagen müssen. |
+| `muster-zuordnen.mp3` | Muster zuordnen, dieser Untertest umfasst 18 Aufgaben, Sie haben 16 Minuten Zeit. |
+| `med-nat-grundverstaendnis.mp3` | Medizinisch-naturwissenschaftliches Grundverständnis, dieser Untertest umfasst 18 Aufgaben, Sie haben 45 Minuten Zeit. |
+| `objekte-im-raum.mp3` | Objekte im Raum, dieser Untertest umfasst 18 Aufgaben, Sie haben 10 Minuten Zeit. |
+| `quantitative-probleme.mp3` | Quantitative und formale Probleme, dieser Untertest umfasst 18 Aufgaben, Sie haben 45 Minuten Zeit. |
+| `figuren-einpraegen.mp3` | Figuren einprägen (Einprägephase), Sie haben 4 Minuten Zeit. |
+| `fakten-einpraegen.mp3` | Fakten einprägen (Einprägephase), Sie haben 6 Minuten Zeit. |
+| `textverstaendnis.mp3` | Textverständnis, dieser Untertest umfasst 18 Aufgaben, Sie haben 45 Minuten Zeit. |
+| `figuren-reproduktion.mp3` | Figuren einprägen (Reproduktion), dieser Untertest umfasst 18 Aufgaben, Sie haben 5 Minuten Zeit. |
+| `fakten-reproduktion.mp3` | Fakten einprägen (Reproduktion), dieser Untertest umfasst 18 Aufgaben, Sie haben 6 Minuten Zeit. |
+| `diagramme-tabellen.mp3` | Diagramme und Tabellen, dieser Untertest umfasst 18 Aufgaben, Sie haben 45 Minuten Zeit. |
+| `konzentriertes-arbeiten.mp3` | Konzentriertes und sorgfältiges Arbeiten, Sie haben 8 Minuten Zeit. |
+| `beginne.mp3` | Start. |
+| `stopp-weiter.mp3` | Stopp. Blättern Sie jetzt zum nächsten Untertest. |
+| `fertig-einzeln.mp3` | Stopp. Die Übung ist beendet. |
+| `fertig-komplett.mp3` | Stopp. Die Simulation ist beendet. |
 
 ---
 
@@ -61,46 +84,42 @@ die Datei löschen – ohne Datei wird wieder der aktuelle Text vorgelesen.
 
 | Datei | Gesprochener Text |
 | --- | --- |
-| `beginne.mp3` | Commence maintenant. |
-| `stopp.mp3` | Stop. Pose ton stylo. |
-| `fertig-einzeln.mp3` | Terminé. |
-| `fertig-komplett.mp3` | Simulation terminée. Les onze blocs sont faits. |
-| `muster-zuordnen.mp3` | Association de motifs. Tu disposes de 16 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `med-nat-grundverstaendnis.mp3` | Compréhension médico-scientifique. Tu disposes de 45 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `objekte-im-raum.mp3` | Objets dans l'espace. Tu disposes de 10 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `quantitative-probleme.mp3` | Problèmes quantitatifs et formels. Tu disposes de 45 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `figuren-einpraegen.mp3` | Mémorisation de figures (phase d'apprentissage). Tu disposes de 4 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. Après cette phase vient d'abord un autre sous-test. Ce n'est qu'ensuite que l'on te demandera ce que tu as retenu. |
-| `fakten-einpraegen.mp3` | Mémorisation de faits (phase d'apprentissage). Tu disposes de 6 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. Ici aussi, un autre sous-test suit avant que l'on ne te pose des questions. |
-| `textverstaendnis.mp3` | Compréhension de textes. Tu disposes de 45 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `figuren-reproduktion.mp3` | Mémorisation de figures (reproduction). Tu disposes de 5 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `fakten-reproduktion.mp3` | Mémorisation de faits (reproduction). Tu disposes de 6 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `diagramme-tabellen.mp3` | Diagrammes et tableaux. Tu disposes de 45 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. |
-| `konzentriertes-arbeiten.mp3` | Travail avec soin et concentration. Tu disposes de 8 minutes. Prépare la feuille d'exercices et la feuille de réponses. Il est interdit de revenir aux sous-tests précédents. La condition de biffage figure sur ta feuille. Mémorise-la maintenant avec précision. Pendant les huit minutes, tu ne devrais plus avoir à la relire. |
+| `muster-zuordnen.mp3` | Association de motifs, ce sous-test comprend 18 exercices, vous disposez de 16 minutes. |
+| `med-nat-grundverstaendnis.mp3` | Compréhension médico-scientifique, ce sous-test comprend 18 exercices, vous disposez de 45 minutes. |
+| `objekte-im-raum.mp3` | Objets dans l'espace, ce sous-test comprend 18 exercices, vous disposez de 10 minutes. |
+| `quantitative-probleme.mp3` | Problèmes quantitatifs et formels, ce sous-test comprend 18 exercices, vous disposez de 45 minutes. |
+| `figuren-einpraegen.mp3` | Mémorisation de figures (phase d'apprentissage), vous disposez de 4 minutes. |
+| `fakten-einpraegen.mp3` | Mémorisation de faits (phase d'apprentissage), vous disposez de 6 minutes. |
+| `textverstaendnis.mp3` | Compréhension de textes, ce sous-test comprend 18 exercices, vous disposez de 45 minutes. |
+| `figuren-reproduktion.mp3` | Mémorisation de figures (reproduction), ce sous-test comprend 18 exercices, vous disposez de 5 minutes. |
+| `fakten-reproduktion.mp3` | Mémorisation de faits (reproduction), ce sous-test comprend 18 exercices, vous disposez de 6 minutes. |
+| `diagramme-tabellen.mp3` | Diagrammes et tableaux, ce sous-test comprend 18 exercices, vous disposez de 45 minutes. |
+| `konzentriertes-arbeiten.mp3` | Travail avec soin et concentration, vous disposez de 8 minutes. |
+| `beginne.mp3` | Départ. |
+| `stopp-weiter.mp3` | Stop. Passez maintenant au sous-test suivant. |
+| `fertig-einzeln.mp3` | Stop. L'exercice est terminé. |
+| `fertig-komplett.mp3` | Stop. La simulation est terminée. |
 
 ---
 
 ## Italiano  (`it/`)
 
+_Aktuell keine Aufnahmen – die Sprachausgabe des Geräts liest vor._
+
 | Datei | Gesprochener Text |
 | --- | --- |
-| `beginne.mp3` | Inizia adesso. |
-| `stopp.mp3` | Stop. Posa la penna. |
-| `fertig-einzeln.mp3` | Fatto. |
-| `fertig-komplett.mp3` | Simulazione conclusa. Tutti e undici i blocchi sono fatti. |
-| `muster-zuordnen.mp3` | Abbinamento di schemi. Hai 16 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `med-nat-grundverstaendnis.mp3` | Comprensione medico-scientifica. Hai 45 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `objekte-im-raum.mp3` | Oggetti nello spazio. Hai 10 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `quantitative-probleme.mp3` | Problemi quantitativi e formali. Hai 45 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `figuren-einpraegen.mp3` | Memorizzazione di figure (fase di apprendimento). Hai 4 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. Dopo questa fase segue prima un altro sottotest. Solo in seguito ti verrà chiesto che cosa hai memorizzato. |
-| `fakten-einpraegen.mp3` | Memorizzazione di fatti (fase di apprendimento). Hai 6 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. Anche qui segue prima un altro sottotest, prima delle domande. |
-| `textverstaendnis.mp3` | Comprensione del testo. Hai 45 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `figuren-reproduktion.mp3` | Memorizzazione di figure (riproduzione). Hai 5 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `fakten-reproduktion.mp3` | Memorizzazione di fatti (riproduzione). Hai 6 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `diagramme-tabellen.mp3` | Diagrammi e tabelle. Hai 45 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. |
-| `konzentriertes-arbeiten.mp3` | Lavoro concentrato e accurato. Hai 8 minuti. Prepara il foglio degli esercizi e quello delle risposte. Non è permesso tornare ai sottotest precedenti. La condizione di cancellatura è sul tuo foglio. Memorizzala ora con precisione. Durante gli otto minuti non dovresti più doverla rileggere. |
-
----
-
-Insgesamt sind das **15 Aufnahmen pro Sprache**. Am meisten bringt die deutsche
-Fassung: Die vier kurzen Ansagen hört man bei jeder Übung, die elf Anweisungen
-je einmal pro Block.
+| `muster-zuordnen.mp3` | Abbinamento di schemi, questo sottotest comprende 18 esercizi, avete 16 minuti di tempo. |
+| `med-nat-grundverstaendnis.mp3` | Comprensione medico-scientifica, questo sottotest comprende 18 esercizi, avete 45 minuti di tempo. |
+| `objekte-im-raum.mp3` | Oggetti nello spazio, questo sottotest comprende 18 esercizi, avete 10 minuti di tempo. |
+| `quantitative-probleme.mp3` | Problemi quantitativi e formali, questo sottotest comprende 18 esercizi, avete 45 minuti di tempo. |
+| `figuren-einpraegen.mp3` | Memorizzazione di figure (fase di apprendimento), avete 4 minuti di tempo. |
+| `fakten-einpraegen.mp3` | Memorizzazione di fatti (fase di apprendimento), avete 6 minuti di tempo. |
+| `textverstaendnis.mp3` | Comprensione del testo, questo sottotest comprende 18 esercizi, avete 45 minuti di tempo. |
+| `figuren-reproduktion.mp3` | Memorizzazione di figure (riproduzione), questo sottotest comprende 18 esercizi, avete 5 minuti di tempo. |
+| `fakten-reproduktion.mp3` | Memorizzazione di fatti (riproduzione), questo sottotest comprende 18 esercizi, avete 6 minuti di tempo. |
+| `diagramme-tabellen.mp3` | Diagrammi e tabelle, questo sottotest comprende 18 esercizi, avete 45 minuti di tempo. |
+| `konzentriertes-arbeiten.mp3` | Lavoro concentrato e accurato, avete 8 minuti di tempo. |
+| `beginne.mp3` | Via. |
+| `stopp-weiter.mp3` | Stop. Passate ora al sottotest successivo. |
+| `fertig-einzeln.mp3` | Stop. L'esercizio è terminato. |
+| `fertig-komplett.mp3` | Stop. La simulazione è terminata. |

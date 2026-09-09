@@ -802,11 +802,21 @@ Dienst und keine hochgeladenen Audiodateien:
 - es funktioniert automatisch in allen drei Sprachen, weil die Stimme der
   Seitensprache folgt (`lang`-Attribut am `html`-Tag)
 
-Der Preis ist die maschinelle Stimme. **Sollen es echte Aufnahmen werden**, ist
-im Skript nur die Funktion `sprich` auszutauschen: Sie bekommt einen Text und
-eine Funktion, die aufgerufen wird, wenn fertig gesprochen ist – der ganze
-übrige Ablauf hängt nur an dieser Zusage. Für Aufnahmen bräuchte es dann pro
-Untertest und Sprache je eine Datei, also rund 35 Aufnahmen.
+Der Preis ist die maschinelle Stimme – und dass sie auf jedem Gerät anders
+klingt. Deshalb hat eine **Aufnahme immer Vorrang**: Findet sich unter
+`assets/audio/pruefungsmodus/<sprache>/` eine Datei mit dem passenden Namen,
+wird sie abgespielt; nur wenn keine da ist (oder sie sich nicht abspielen
+lässt), wird vorgelesen. Umzustellen ist dafür nichts.
+
+Für Deutsch und Französisch liegen die 15 Dateien bereits im Repo, erzeugt mit
+`scripts/ansagen-erzeugen.py`. Das Skript liest die Sätze aus der **gebauten**
+Seite statt aus einer eigenen Liste – so kann eine Aufnahme gar nicht etwas
+anderes sagen als der Bildschirm. Ändert sich ein `pm_`-Text, muss es erneut
+laufen (oder die betroffene Datei wird gelöscht).
+
+Italienisch fehlt bewusst: Die Lizenz des verfügbaren italienischen Datensatzes
+liess sich nicht eindeutig klären. Die französische Stimme steht unter CC-BY 4.0
+und braucht deshalb eine Namensnennung – sie steht im README des Audio-Ordners.
 
 Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werden
 **gesprochen**. Klammern, Abkürzungen und Halbsätze klingen vorgelesen falsch.
@@ -820,11 +830,16 @@ Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werd
 - **Vollbild ist nur eine Zugabe:** Die Bühne liegt ohnehin als fest
   positionierte Fläche über der Seite. Verlässt jemand das Vollbild mit Esc,
   bleibt die Übung sichtbar und läuft weiter.
+- **Zwischen zwei Blöcken wird nicht gewartet.** Am echten EMS heisst es
+  "Stopp, blättern Sie jetzt zum nächsten Untertest" und praktisch unmittelbar
+  danach die nächste Ansage und "Start". Der Wechsel hängt deshalb nur daran,
+  dass der Stopp-Satz zu Ende gesprochen ist - es gibt keine eingebaute
+  Umblätter-Dauer und auch keine Rückfrage.
+- **Eine Endzeit wird nirgends angezeigt**, auch nicht vor dem Start. Im
+  Testsaal steht sie nirgends geschrieben; es gibt wirklich nur die Uhr.
 - **Die Pause gibt es am echten EMS nicht.** Sie ist absichtlich eingebaut und
   ebenso absichtlich beschriftet („Am echten EMS gibt es keine Pause – diese
-  hier gibt es nur zum Üben"). Zwischen zwei Blöcken der Simulation gibt es
-  dagegen keine Rückfrage, nur die kurze Umblätter-Zeit aus
-  `umblaettern_sekunden` in `data/testablauf.yaml`.
+  hier gibt es nur zum Üben").
 - **`safeJS` im Partial nicht entfernen.** Die Blöcke und Texte werden als JSON
   an das Skript übergeben. Ohne diesen Zusatz verpackt Hugo den fertigen
   JSON-Text ein zweites Mal, im Browser käme Text statt Daten an – und die

@@ -578,6 +578,10 @@ Jemand übt dann monatelang mit der falschen Dauer.
 
 ### Die Reihenfolge ändern
 
+Zwischen zwei Blöcken gibt es **keine Wartezeit**: Wie am echten EMS heisst es
+„Stopp, blättern Sie jetzt zum nächsten Untertest" – und praktisch unmittelbar
+danach kommt die nächste Ansage und „Start".
+
 Die Reihenfolge der Einträge in `data/testablauf.yaml` **ist** die Reihenfolge
 am Testtag. Die komplette Simulation spielt die Blöcke genau so nacheinander ab,
 und die Tabelle zeigt sie in derselben Folge. Einträge verschieben genügt.
@@ -619,8 +623,25 @@ jetzt.") oder `pm_stopp` („Stopp. Leg den Stift weg."). Beim Ändern darauf
 achten, dass die Sätze **gesprochen** natürlich klingen: kurz, keine Klammern,
 keine Abkürzungen.
 
-Vorgelesen wird über die Sprachausgabe, die im Browser schon eingebaut ist – es
-gibt also keine Audiodateien zu pflegen, und kein externer Dienst erfährt, wer
-hier übt. Dafür klingt die Stimme maschinell. Wer sie später durch echte
-Aufnahmen ersetzen will, braucht dafür Entwicklungshilfe (siehe
-`docs/WARTUNG-DETAILLIERT.md`).
+**Achtung, wenn du einen `pm_`-Text änderst:** Für Deutsch und Französisch
+liegen fertige Aufnahmen unter `assets/audio/pruefungsmodus/`. Die sagen dann
+noch den alten Satz. Entweder die betroffene Datei löschen – dann wird der neue
+Text vorgelesen – oder sie neu einsprechen bzw. neu erzeugen lassen (siehe
+`scripts/ansagen-erzeugen.py`).
+
+### Die Ansagen als Aufnahme statt Roboterstimme
+
+Für Deutsch und Französisch liegen je 15 fertige MP3-Dateien im Repo; sie werden
+automatisch statt der Sprachausgabe abgespielt. Auf Italienisch liest weiterhin
+das Gerät vor – dort war die Lizenz der verfügbaren Stimme nicht eindeutig zu
+klären.
+
+Diese Dateien sind maschinell erzeugt. **Echte Aufnahmen aus dem Verein wären
+besser**, und der Austausch ist denkbar einfach: die vorhandene Datei mit der
+eigenen überschreiben, gleicher Name, fertig. Es sind 15 kurze Sätze pro
+Sprache. Welche Datei welchen Satz enthält, steht in
+`assets/audio/pruefungsmodus/README.md`.
+
+Die Anredeform in den Ansagen ist bewusst das **Sie** ("Sie haben 16 Minuten
+Zeit"), obwohl die Website sonst durchgehend duzt: Die Ansage gibt eine
+Aufsichtsperson im Testsaal wieder.

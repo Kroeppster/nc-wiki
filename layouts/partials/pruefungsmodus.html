@@ -30,9 +30,8 @@
   ist ein Teil der Prüfung. Wann ein Block endet, weiss die Seite intern
   (Endzeitpunkt in echter Uhrzeit) und sagt es an - angezeigt wird es nicht.
 
-  Damit man den Block trotzdem planen kann, steht die geplante ENDZEIT auf dem
-  Anweisungs-Bildschirm, bevor es losgeht - so wie eine Aufsichtsperson sie an
-  die Tafel schreiben würde. Sobald die Uhr läuft, ist sie weg.
+  Eine Endzeit wird NIRGENDS angezeigt, auch nicht vor dem Start: Im Testsaal
+  steht sie nirgends geschrieben, es gibt wirklich nur die Uhr.
   ============================================================================
 */ -}}
 {{- $lang := .Site.Language.Lang }}
@@ -40,16 +39,30 @@
 
 {{- /* Die Blöcke für das JavaScript aufbereiten: fertige, übersetzte Texte,
        damit im Skript selbst kein übersetzbarer Satz steht. */ -}}
+{{- /* Die Ansage ist genau der Satz, den eine Aufsichtsperson sagt:
+       "<Untertest>, dieser Untertest umfasst <N> Aufgaben, Sie haben <M>
+       Minuten Zeit." Mehr nicht - keine Erklärungen, keine Tipps.
+
+       Zwei Blöcke bekommen die kurze Fassung ohne Aufgabenzahl:
+       die beiden Einprägephasen (dort gibt es keine bewerteten Aufgaben) und
+       das konzentrierte Arbeiten (dort sind es 1600 Zeichen, keine Aufgaben -
+       erkennbar daran, dass der Block ein sprachabhängiges Feld
+       "aufgaben_de/fr/it" mitbringt). */ -}}
 {{- $bloecke := slice }}
 {{- range $daten.bloecke }}
   {{- $name := or (index . $lang) .de }}
-  {{- $hinweis := index . (printf "hinweis_%s" $lang) }}
+  {{- $eigeneEinheit := index . (printf "aufgaben_%s" $lang) }}
+  {{- $ansage := "" }}
+  {{- if or (not .aufgaben) $eigeneEinheit }}
+    {{- $ansage = i18n "pm_ansage_ohne" (dict "name" $name "min" .minuten) }}
+  {{- else }}
+    {{- $ansage = i18n "pm_ansage" (dict "name" $name "aufgaben" .aufgaben "min" .minuten) }}
+  {{- end }}
   {{- $bloecke = $bloecke | append (dict
         "key" .key
         "name" $name
         "minuten" .minuten
-        "hinweis" (or $hinweis "")
-        "anweisung" (i18n "pm_anweisung" (dict "min" .minuten))
+        "ansage" $ansage
       ) }}
 {{- end }}
 
@@ -138,7 +151,6 @@
     <p class="pm-zaehler" id="pm-zaehler"></p>
     <h2 class="pm-titel" id="pm-titel"></h2>
     <p class="pm-anweisung" id="pm-anweisung"></p>
-    <p class="pm-blockhinweis" id="pm-blockhinweis"></p>
 
     <p class="pm-uhr" id="pm-uhr" aria-hidden="true">--:--:--</p>
     <p class="pm-uhr-label" id="pm-uhr-label"></p>
@@ -163,14 +175,12 @@
 {{ dict
    "audio" $audio
    "bloecke" $bloecke
-   "umblaettern" $daten.umblaettern_sekunden
    "texte" (dict
       "beginne" (i18n "pm_beginne")
       "stopp" (i18n "pm_stopp")
       "fertigEinzeln" (i18n "pm_fertig_einzeln")
       "fertigKomplett" (i18n "pm_fertig_komplett")
-      "umblaettern" (i18n "pm_umblaettern")
-      "endeUm" (i18n "pm_ende_um")
+      "stoppWeiter" (i18n "pm_stopp_weiter")
       "start" (i18n "pm_start")
       "weiter" (i18n "pm_weiter")
       "pause" (i18n "pm_pause")
@@ -194,7 +204,6 @@
   var daten = JSON.parse(datenTag.textContent);
   var BLOECKE = daten.bloecke;
   var T = daten.texte;
-  var UMBLAETTERN = daten.umblaettern || 25;
   var AUDIO = daten.audio || {};
   var SPRACHE = document.documentElement.lang || 'de';
 
@@ -202,7 +211,6 @@
     zaehler:  document.getElementById('pm-zaehler'),
     titel:    document.getElementById('pm-titel'),
     anweisung:document.getElementById('pm-anweisung'),
-    hinweis:  document.getElementById('pm-blockhinweis'),
     uhr:      document.getElementById('pm-uhr'),
     uhrLabel: document.getElementById('pm-uhr-label'),
     los:      document.getElementById('pm-los'),
@@ -308,9 +316,6 @@
   function uhrzeit(d){
     return zweistellig(d.getHours()) + ':' + zweistellig(d.getMinutes()) + ':' + zweistellig(d.getSeconds());
   }
-  function uhrzeitKurz(d){
-    return zweistellig(d.getHours()) + ':' + zweistellig(d.getMinutes());
-  }
 
   function zustand(name){
     buehne.className = 'pm-buehne is-' + name;
@@ -339,12 +344,8 @@
     zustand('anweisung');
     zeigeZaehler();
     el.titel.textContent = b.name;
-    el.anweisung.textContent = b.anweisung;
-    el.hinweis.textContent = b.hinweis || '';
-    /* Geplante Endzeit anzeigen, solange die Uhr noch nicht läuft - wie eine
-       Aufsichtsperson, die sie an die Tafel schreibt. Sobald der Block läuft,
-       verschwindet sie: Ab dann teilt man sich die Zeit selbst ein. */
-    el.uhrLabel.textContent = T.endeUm.replace('{zeit}', uhrzeitKurz(new Date(Date.now() + b.minuten * 60 * 1000)));
+    el.anweisung.textContent = b.ansage;
+    el.uhrLabel.textContent = '';
     el.los.textContent = T.start;
     el.fuss.textContent = T.escHinweis;
 
@@ -354,11 +355,9 @@
        dagegen auf den Startknopf. */
     var automatisch = lauf.folge.length > 1;
     el.los.hidden = automatisch;
-    /* Gesprochen beginnt die Anweisung mit dem Namen des Untertests - so wie
-       im Testsaal angesagt wird, was als Nächstes kommt. Auf dem Bildschirm
-       steht der Name schon als Überschrift darüber und wäre im Satz doppelt. */
-    var text = b.name + '. ' + b.anweisung + (b.hinweis ? ' ' + b.hinweis : '');
-    sprich(text, function(){
+    /* Die Ansage enthält den Namen bereits ("Muster zuordnen, dieser
+       Untertest umfasst ..."), sie wird genau so gesprochen wie sie dasteht. */
+    sprich(b.ansage, function(){
       if(automatisch && lauf) starteUhr();
     }, b.key);
   }
@@ -395,9 +394,11 @@
     el.titel.textContent = T.stopp;
     el.anweisung.textContent = istLetzter
       ? (lauf.folge.length > 1 ? T.fertigKomplett : T.fertigEinzeln)
-      : '';
-    el.hinweis.textContent = '';
+      : T.stoppWeiter;
     el.uhrLabel.textContent = '';
+
+    /* Die Uhr läuft weiter - sie hängt im Testsaal ja auch weiter an der Wand. */
+    ticker = setInterval(function(){ el.uhr.textContent = uhrzeit(new Date()); }, 250);
 
     if(istLetzter){
       sprich(T.stopp + ' ' + el.anweisung.textContent, null,
@@ -407,20 +408,16 @@
       return;
     }
 
-    /* Weiter zum nächsten Block: kurze Umblätter-Zeit, danach läuft es von
-       selbst weiter. Am echten EMS gibt es zwischen den Untertests keine
-       Pause, deshalb hier auch keine Rückfrage. */
-    sprich(T.stopp, null, 'stopp');
-    var bis = Date.now() + UMBLAETTERN * 1000;
-    el.uhrLabel.textContent = T.umblaettern;
-    ticker = setInterval(function(){
-      el.uhr.textContent = uhrzeit(new Date());
-      if(Date.now() >= bis){
-        clearInterval(ticker); ticker = null;
-        lauf.index++;
-        zeigeAnweisung();
-      }
-    }, 250);
+    /* KEINE Umblätter-Zeit: Am echten EMS heisst es "Stopp, blättern Sie jetzt
+       zum nächsten Untertest" - und praktisch unmittelbar danach die nächste
+       Ansage und "Start". Genau so läuft es hier: Sobald der Stopp-Satz zu Ende
+       gesprochen ist, kommt der nächste Block. */
+    sprich(T.stopp + ' ' + T.stoppWeiter, function(){
+      if(!lauf) return;
+      clearInterval(ticker); ticker = null;
+      lauf.index++;
+      zeigeAnweisung();
+    }, 'stopp-weiter');
   }
 
   /* --------------------------------------------------------------- Pause */

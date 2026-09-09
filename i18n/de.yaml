@@ -205,6 +205,11 @@ testablauf_gesamt: "Gesamt"
 testablauf_gesamtzeit: "ca. {{ .std }} Std. {{ .min }} Min (netto)"
 
 # ---------------------------------------------------------------------------
+# ANREDE: Die Ansagen im Prüfungsmodus siezen ("Sie haben 16 Minuten Zeit"),
+# obwohl die Website sonst durchgehend duzt. Das ist Absicht: Sie geben eine
+# Aufsichtsperson im Testsaal wieder, und genau so wird dort angesagt. Der
+# übrige Text der Seite bleibt beim Du.
+# ---------------------------------------------------------------------------
 # PRÜFUNGSMODUS (/ems/pruefungsmodus/) - Uhr und Ansagen
 # Alles, was hier steht, wird auch VORGELESEN, wenn die Sprachausgabe an ist.
 # Beim Übersetzen also darauf achten, dass die Sätze gesprochen natürlich
@@ -222,14 +227,14 @@ pm_vorlesen: "Anweisungen vorlesen"
 pm_vorlesen_hinweis: "Nutzt die Sprachausgabe deines Geräts. Hilft, ein Gefühl für die Zeit zu bekommen, bevor die Uhr läuft."
 pm_uebungsseite: "Zur Übungsseite"
 
-pm_anweisung: "Du hast dafür {{ .min }} Minuten. Leg dir Aufgabenblatt und Antwortbogen bereit. Zurückblättern zu früheren Untertests ist nicht erlaubt."
-pm_beginne: "Beginne jetzt."
-pm_stopp: "Stopp. Leg den Stift weg."
-pm_fertig_einzeln: "Geschafft."
-pm_fertig_komplett: "Simulation beendet. Alle elf Blöcke geschafft."
-pm_umblaettern: "Umblättern"
+pm_beginne: "Start."
+pm_stopp_weiter: "Blättern Sie jetzt zum nächsten Untertest."
+pm_ansage_ohne: "{{ .name }}, Sie haben {{ .min }} Minuten Zeit."
+pm_ansage: "{{ .name }}, dieser Untertest umfasst {{ .aufgaben }} Aufgaben, Sie haben {{ .min }} Minuten Zeit."
+pm_stopp: "Stopp."
+pm_fertig_einzeln: "Die Übung ist beendet."
+pm_fertig_komplett: "Die Simulation ist beendet."
 pm_block_zaehler: "Block {n} von {total}"
-pm_ende_um: "Ende um {zeit}"
 
 pm_abbrechen: "Abbrechen"
 pm_pause: "Pause"

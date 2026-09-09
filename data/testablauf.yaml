@@ -32,9 +32,6 @@
 #               Inhaltlich aus den Übungsaufgaben-Seiten abgeleitet - was hier
 #               steht, sollte dort auch so stehen. Weglassen ist erlaubt: dann
 #               sagt der Trainer für diesen Block nur die Dauer.
-#   hinweis_de/fr/it - optionaler Zusatzsatz, der im Prüfungsmodus nach der
-#               allgemeinen Anweisung erscheint und mit vorgelesen wird.
-#               Weglassen, wenn es nichts Besonderes zu sagen gibt.
 #
 # REIHENFOLGE = die echte Reihenfolge am Testtag. Der Prüfungsmodus spielt die
 # Blöcke bei der kompletten Simulation genau so nacheinander ab.
@@ -42,12 +39,6 @@
 # Quelle der Zeiten: der bisherige Tagesablauf auf /ems/ (Stand 2026-08).
 # Zwischen den Untertests gibt es am echten EMS keine Pausen.
 # ============================================================================
-
-# Sekunden zwischen zwei Blöcken bei der kompletten Simulation: Zeit zum
-# Umblättern und für die Anweisung zum nächsten Untertest. Am echten EMS gibt
-# es dafür keine feste Dauer - der Wert ist eine bewusste Setzung, damit die
-# Simulation ohne Klick durchläuft.
-umblaettern_sekunden: 25
 
 bloecke:
   - key: muster-zuordnen
@@ -103,9 +94,6 @@ bloecke:
     trainer_de: "4 Minuten. Lieber 12 bis 15 Figuren richtig gut einprägen als alle nur halb."
     trainer_fr: "4 minutes. Mieux vaut bien mémoriser 12 à 15 figures que toutes à moitié."
     trainer_it: "4 minuti. Meglio memorizzare bene 12-15 figure che tutte a metà."
-    hinweis_de: "Nach dieser Phase folgt zuerst ein anderer Untertest. Erst danach wird abgefragt, was du dir gemerkt hast."
-    hinweis_fr: "Après cette phase vient d'abord un autre sous-test. Ce n'est qu'ensuite que l'on te demandera ce que tu as retenu."
-    hinweis_it: "Dopo questa fase segue prima un altro sottotest. Solo in seguito ti verrà chiesto che cosa hai memorizzato."
     minuten: 4
     aufgaben: ""
     punkte: ""
@@ -118,9 +106,6 @@ bloecke:
     trainer_de: "6 Minuten für 15 Personen. Danach kommt erst ein anderer Untertest dazwischen."
     trainer_fr: "6 minutes pour 15 personnes. Ensuite, un autre sous-test s'intercale d'abord."
     trainer_it: "6 minuti per 15 persone. Dopo si inserisce prima un altro sottotest."
-    hinweis_de: "Auch hier folgt zuerst ein anderer Untertest, bevor abgefragt wird."
-    hinweis_fr: "Ici aussi, un autre sous-test suit avant que l'on ne te pose des questions."
-    hinweis_it: "Anche qui segue prima un altro sottotest, prima delle domande."
     minuten: 6
     aufgaben: ""
     punkte: ""
@@ -181,9 +166,6 @@ bloecke:
     trainer_de: "8 Minuten. Fertig wird hier praktisch niemand – das ist normal und kostet dich keine Punkte."
     trainer_fr: "8 minutes. Presque personne ne termine : c'est normal et cela ne te coûte aucun point."
     trainer_it: "8 minuti. Non finisce quasi nessuno: è normale e non ti costa punti."
-    hinweis_de: "Die Streichbedingung steht auf deinem Blatt. Präge sie dir jetzt genau ein. Während der acht Minuten solltest du nicht mehr nachschlagen müssen."
-    hinweis_fr: "La condition de biffage figure sur ta feuille. Mémorise-la maintenant avec précision. Pendant les huit minutes, tu ne devrais plus avoir à la relire."
-    hinweis_it: "La condizione di cancellatura è sul tuo foglio. Memorizzala ora con precisione. Durante gli otto minuti non dovresti più doverla rileggere."
     minuten: 8
     aufgaben_de: "1600 Zeichen"
     aufgaben_fr: "1600 symboles"
