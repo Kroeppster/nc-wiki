@@ -21,7 +21,13 @@
   {{/* ================= HERO (grosser Bereich ganz oben) ================= */}}
   <section class="hero">
     <div class="wrap hero-grid">
-      <div>
+      <div class="hero-text">
+        {{/* Das Logo gross im Hero: Wer neu auf der Seite landet, soll als
+             Erstes sehen, WER hier spricht. In der Kopfzeile ist es dafür zu
+             klein. Der Filter kommt aus --logo-filter (siehe style.css) -
+             im Dunkelmodus wird das Logo weiss, sonst wäre sein schwarzer
+             "WIKI"-Schriftzug auf dunklem Grund unsichtbar. */}}
+        <img class="hero-logo" src="{{ "images/logo.svg" | relURL }}" alt="{{ .Site.Title }}" width="180" height="133">
         <p class="eyebrow">{{ .Params.hero.eyebrow }}</p>
         <h1>{{ .Params.hero.title }}</h1>
         <p class="lede">{{ .Params.hero.lede }}</p>
@@ -45,6 +51,19 @@
            und wird per JavaScript in footer.html hochgezählt - die IDs
            (cd-d/cd-h/cd-m/cd-s) sind unverändert, das bestehende Skript
            funktioniert ohne Anpassung weiter. */}}
+      {{/* Rechte Spalte: erst das Foto, darunter die Countdown-Karte, die
+           leicht darüberragt. Das Foto zeigt einen vollen Hörsaal bei einer
+           NCWiki-Testsimulation, im Vordergrund der dreisprachige Antwortbogen
+           mit Logo - es beantwortet in einer Sekunde, was hier passiert und
+           dass es echt ist. Vorher stand auf der ganzen Startseite kein
+           einziges Foto. */}}
+      <div class="hero-medien">
+        {{ with .Params.hero.bild }}
+        <figure class="hero-bild">
+          {{ partial "image.html" (dict "src" . "alt" $.Params.hero.bild_alt "sizes" "(max-width:860px) 100vw, 520px") }}
+        </figure>
+        {{ end }}
+
       <div class="hero-panel">
         <p class="ticket-label" aria-hidden="true">{{ .Params.hero.ticket_label }}</p>
 
@@ -68,6 +87,7 @@
              eine von vielen Möglichkeiten, dieselbe Information wie oben in
              .countdown-label darzustellen). */}}
         <p class="visually-hidden-field" id="cd-sr" data-days="{{ i18n "countdown_days" }}" data-hours="{{ i18n "countdown_hours" }}" data-minutes="{{ i18n "countdown_minutes" }}" data-seconds="{{ i18n "countdown_seconds" }}"></p>
+      </div>
       </div>
     </div>
   </section>

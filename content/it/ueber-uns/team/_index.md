@@ -45,7 +45,7 @@ ressorts:
         rolle: "Protocollo & Dati"
 ---
 
-Nel team di NCWiki fanno parte più di 70 studentesse e studenti delle facoltà mediche di tutta la Svizzera.
+Nel team di NCWiki fanno parte più di 110 studentesse e studenti delle facoltà mediche di tutta la Svizzera.
 
 ## Team dirigente attuale
 

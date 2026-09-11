@@ -8,10 +8,12 @@ menu:
 hero:
   eyebrow: "EMS 2027 · Preparazione gratuita"
   ticket_label: "Ammissione EMS"
-  title: "Sosteniamo i medici di domani!"
-  lede: "Materiale di esercitazione gratuito, simulazioni del test e corsi di preparazione per il test attitudinale per gli studi di medicina (EMS) – da studenti per studenti, in tutta la Svizzera."
+  title: "Rendiamo gratuita la preparazione all'EMS."
+  lede: "NCWiki è un'associazione di oltre 110 studenti di medicina. Dal 2021 creiamo serie di esercizi, simulazioni del test e dispense per il test attitudinale – realizzati da chi l'ha sostenuto in prima persona. In tre lingue, senza costi."
   cta_primary: "Vedi gli esercizi"
   cta_secondary: "Iscriviti alla newsletter"
+  bild: "testsimulationen/testsimulation-2023.jpg"
+  bild_alt: "Aula magna piena durante una simulazione del test NCWiki, in primo piano un foglio delle risposte trilingue con il logo NCWiki"
   countdown_label: "Ancora fino all'EMS 2027 (09.07.)"
 news:
   eyebrow: "Attualità"
@@ -58,12 +60,12 @@ mission:
   eyebrow: "Perché esistiamo"
   heading: "Ci impegniamo affinché la preparazione all'EMS non dipenda dal portafoglio."
   features:
-    - title: "In tutta la Svizzera"
-      text: "Un'associazione studentesca plurilingue, attiva nelle sedi universitarie di tutta la Svizzera."
-    - title: "Comunità"
-      text: "Eventi regolari riuniscono i futuri medici e alleggeriscono la routine di studio."
-    - title: "Con un senso"
-      text: "I volontari sostengono le prossime generazioni di studenti nel loro percorso verso gli studi di medicina."
+    - title: "Dal 2021"
+      text: "Nata come iniziativa studentesca e portata avanti da volontari fino a oggi: nessuna azienda dietro, nessuna tassa."
+    - title: "Oltre 110 volontari"
+      text: "Studenti di medicina di tutta la Svizzera scrivono esercizi, traducono, tengono corsi e seguono le simulazioni del test."
+    - title: "Tre lingue"
+      text: "Team propri nella Svizzera tedesca, in Romandia e in Ticino: il materiale è disponibile in tedesco, francese e italiano."
 support:
   heading: "Siete voi a renderlo possibile."
   text: "Il nostro materiale resta gratuito – grazie a donazioni e sponsorizzazioni."

@@ -431,7 +431,41 @@ nur ein lokaler Bau-Ordner und landet nie in git.
 
 ---
 
-## 12. Startseite: die Kacheln „Was du hier findest" ändern
+## 12. Startseite: Hero-Bild, Logo und die Kacheln
+
+### Das Bild im Hero austauschen
+
+Oben rechts auf der Startseite steht ein Foto. Welches, steht im Frontmatter
+der Startseite unter `hero:`:
+
+```yaml
+hero:
+  bild: "testsimulationen/testsimulation-2023.jpg"
+  bild_alt: "Voller Hörsaal während einer NCWiki-Testsimulation, im Vordergrund ..."
+```
+
+Der Pfad ist **relativ zu `assets/images/`**. Ein neues Bild dort ablegen, den
+Pfad eintragen – Hugo erzeugt die verkleinerten Fassungen automatisch. Der
+`bild_alt`-Text ist **Pflicht** (Screenreader); fehlt er bei vorhandenem Bild,
+bricht der Build ab. Beides in allen drei Sprachdateien eintragen, der
+`bild_alt`-Text natürlich übersetzt.
+
+Lässt man `bild` weg, erscheint einfach kein Foto – die Seite bleibt heil.
+
+**Worauf es bei der Bildwahl ankommt:** Das aktuelle Foto zeigt einen vollen
+Hörsaal und im Vordergrund den dreisprachigen Antwortbogen mit dem NCWiki-Logo.
+Es beantwortet ohne ein Wort, was hier passiert und dass es echt ist. Ein
+beliebiges Symbolbild würde genau diese Wirkung verlieren.
+
+### Das Logo
+
+Im Hero steht das Logo gross. Es ist dieselbe Datei wie überall
+(`static/images/logo.svg`); im Dunkelmodus wird es automatisch weiss
+dargestellt, weil sein „WIKI"-Schriftzug schwarz ist und sonst verschwinden
+würde. Das steuert die Variable `--logo-filter` in `assets/css/style.css` und
+gilt ebenso für das kleine Logo in der Kopfzeile.
+
+### Die Kacheln „Was du hier findest" ändern
 
 Direkt unter dem Hero steht auf der Startseite ein Raster mit sechs Kacheln
 (Übungsaufgaben, Testsimulationen, Vorbereitungskurse, Uniguide,

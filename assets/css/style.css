@@ -118,6 +118,11 @@
      beiden Modi gleich, weil es sich um Text AUF einer eigenen Akzentfläche
      handelt, nicht um normalen Seitentext. */
   --color-on-signal:#fff;
+  /* Das Logo ist eine Rastergrafik, seine Farben lassen sich nicht per CSS
+     ändern - und sein "WIKI"-Schriftzug ist schwarz. Auf hellem Grund ist das
+     richtig, im Dunkelmodus verschwindet er. Dieser Filter färbt das Logo
+     dort vollständig weiss; die Datei selbst bleibt unverändert. */
+  --logo-filter:none;
   /* Feste Hintergrundfarben für die 6 Avatar-Kreise bei Erfahrungsberichten
      (Reihum zugewiesen, keine feste Bedeutung pro Person) - jede Nummer ein
      eigener Token, absichtlich NICHT mit --color-signal zusammengelegt (auch
@@ -244,6 +249,8 @@
   --band-glow:rgba(112,137,255,.26);
   --band-texture:rgba(255,255,255,.04);
 
+  --logo-filter:brightness(0) invert(1);
+
   --pagefind-ui-primary:var(--color-signal);
   --pagefind-ui-text:var(--color-ink);
   --pagefind-ui-background:var(--color-surface);
@@ -335,7 +342,7 @@ p{margin:0 0 var(--space-4);}
 header.site{border-bottom:1px solid var(--color-line);background:var(--header-bg);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding-block:var(--space-3);gap:var(--space-4);flex-wrap:wrap;}
 .brand{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-weight:700;font-size:var(--text-md);letter-spacing:var(--tracking-tight);}
-.brand-mark{display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;background:var(--color-surface);color:var(--color-signal);border:1px solid var(--color-line);font-family:var(--font-body);font-size:.68rem;font-weight:700;border-radius:var(--radius-sm);}
+.brand-mark{filter:var(--logo-filter);display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;background:var(--color-surface);color:var(--color-signal);border:1px solid var(--color-line);font-family:var(--font-body);font-size:.68rem;font-weight:700;border-radius:var(--radius-sm);}
 img.brand-mark{object-fit:contain;padding:2px;}
 nav.main-nav{order:2;flex:1 1 auto;}
 nav.main-nav>ul{display:flex;gap:var(--space-4);list-style:none;margin:0;padding:0;align-items:center;flex-wrap:wrap;}
@@ -435,8 +442,21 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
    Hero + Signatur-Panel ("Antwortbogen")
    ========================================================================== */
 .hero{padding-block:var(--space-24) var(--space-20);border-bottom:1px solid var(--color-line);}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--space-12);align-items:center;}
-.hero h1{font-size:var(--text-5xl);margin:.3rem 0 var(--space-5);}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:var(--space-12);align-items:center;}
+.hero-logo{display:block;width:clamp(120px,15vw,180px);height:auto;margin:0 0 var(--space-5);filter:var(--logo-filter);}
+.hero-medien{display:flex;flex-direction:column;}
+.hero-bild{margin:0;}
+.hero-bild img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);display:block;}
+/* Die Countdown-Karte steht UNTER dem Bild, nicht darüber. Überlappend deckte
+   sie genau die untere rechte Ecke ab - und dort liegt auf dem Foto der
+   Antwortbogen mit dem NCWiki-Logo, also der Teil, der das Bild überhaupt
+   aussagekräftig macht. */
+.hero-medien .hero-panel{margin:var(--space-5) 0 0;}
+/* Kleiner als --text-5xl: Die Hero-Überschrift teilt sich die Zeile jetzt mit
+   dem Foto daneben, die Spalte ist also nur noch halb so breit. Bei voller
+   Grösse brach "Wir machen die EMS-Vorbereitung gratis." auf vier Zeilen um,
+   mit einem einzelnen "EMS-" am Zeilenende. */
+.hero h1{font-size:clamp(2.1rem, 1rem + 4.2vw, 3.5rem);margin:.3rem 0 var(--space-5);}
 .hero .lede{font-size:var(--text-md);color:var(--color-ink-soft);max-width:34rem;margin:0 0 var(--space-8);}
 .hero-actions{display:flex;gap:var(--space-3);flex-wrap:wrap;}
 
@@ -1194,7 +1214,10 @@ body.pm-aktiv{overflow:hidden;}
 
   .hero{padding-block:var(--space-12) var(--space-10);}
   section{padding-block:var(--space-12);}
-  .hero-grid{grid-template-columns:1fr;}
+  .hero-grid{grid-template-columns:minmax(0,1fr);gap:var(--space-8);}
+  /* Auf schmalen Bildschirmen sitzt die Countdown-Karte unter dem Bild statt
+     darüber - überlappend bliebe für das Bild zu wenig übrig. */
+  .hero-bild img{aspect-ratio:16/10;}
   .card-grid{grid-template-columns:1fr;}
   /* .team-grid bleibt bewusst mehrspaltig statt wie .card-grid oben auf
      1 Spalte zu kollabieren - die Karten sind klein genug (nur Avatar +

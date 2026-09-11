@@ -14,7 +14,7 @@ Plus précisément, notre section Romandie se réunit pour améliorer l'égalit�
 
 Il est important pour nous que ta réussite le jour décisif et ta possibilité de commencer tes études de rêve en septembre ne dépendent pas de tes ressources financières. C'est pourquoi nous voulons fournir toutes les informations dont tu as besoin pour bien te préparer au numerus clausus, sans frais supplémentaires.
 
-Plus de 70 étudiant·e·s en médecine de toute la Suisse sont impliqué·e·s dans l'équipe de NCWiki – en savoir plus dans notre [équipe]({{< ref "/ueber-uns/team" >}}).
+Plus de 110 étudiant·e·s en médecine de toute la Suisse sont impliqué·e·s dans l'équipe de NCWiki – en savoir plus dans notre [équipe]({{< ref "/ueber-uns/team" >}}).
 
 ## S'engager
 

@@ -8,10 +8,12 @@ menu:
 hero:
   eyebrow: "EMS 2027 · Préparation gratuite"
   ticket_label: "Admission EMS"
-  title: "Nous soutenons les médecins de demain !"
-  lede: "Matériel d'exercices gratuit, simulations de test et cours de préparation pour le test d'aptitudes aux études de médecine (EMS) – par des étudiant·e·s pour des étudiant·e·s, dans toute la Suisse."
+  title: "Nous rendons la préparation à l'EMS gratuite."
+  lede: "NCWiki est une association de plus de 110 étudiant·e·s en médecine. Depuis 2021, nous créons des séries d'exercices, des simulations de test et des supports de cours pour le test d'aptitudes – réalisés par des personnes qui l'ont passé elles-mêmes. En trois langues, sans frais."
   cta_primary: "Voir les exercices"
   cta_secondary: "S'abonner à la newsletter"
+  bild: "testsimulationen/testsimulation-2023.jpg"
+  bild_alt: "Auditoire plein lors d'une simulation de test NCWiki, au premier plan une feuille de réponses trilingue avec le logo NCWiki"
   countdown_label: "Encore jusqu'à l'EMS 2027 (09.07.)"
 news:
   eyebrow: "Actualité"
@@ -58,12 +60,12 @@ mission:
   eyebrow: "Pourquoi nous existons"
   heading: "Nous nous engageons pour que la préparation à l'EMS ne dépende pas du porte-monnaie."
   features:
-    - title: "Dans toute la Suisse"
-      text: "Une association étudiante plurilingue, active dans les hautes écoles de toute la Suisse."
-    - title: "Communauté"
-      text: "Des événements réguliers réunissent les futur·e·s médecins et apportent une pause bienvenue dans le quotidien d'étude."
-    - title: "Avec un sens"
-      text: "Des bénévoles soutiennent les prochaines générations d'étudiant·e·s sur leur chemin vers les études de médecine."
+    - title: "Depuis 2021"
+      text: "Née d'une initiative étudiante et portée depuis lors par des bénévoles – sans entreprise derrière, sans frais."
+    - title: "Plus de 110 bénévoles"
+      text: "Des étudiant·e·s en médecine de toute la Suisse rédigent des exercices, traduisent, donnent des cours et encadrent les simulations."
+    - title: "Trois langues"
+      text: "Des équipes propres en Suisse alémanique, en Romandie et au Tessin – le matériel existe en allemand, en français et en italien."
 support:
   heading: "C'est grâce à vous."
   text: "Notre matériel reste gratuit – grâce aux dons et au sponsoring."

@@ -8,10 +8,12 @@ menu:
 hero:
   eyebrow: "EMS 2027 · Kostenlose Vorbereitung"
   ticket_label: "EMS-Zulassung"
-  title: "Wir unterstützen die Mediziner:innen von Morgen!"
-  lede: "Kostenloses Übungsmaterial, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium (EMS) – von Studierenden für Studierende, schweizweit."
+  title: "Wir machen die EMS-Vorbereitung gratis."
+  lede: "NCWiki ist ein Verein von über 110 Medizinstudierenden. Seit 2021 erstellen wir Übungsserien, Testsimulationen und Kursskripte für den Eignungstest – gemacht von Leuten, die ihn selbst geschrieben haben. In drei Sprachen, ohne Kosten."
   cta_primary: "Übungsaufgaben ansehen"
   cta_secondary: "Newsletter abonnieren"
+  bild: "testsimulationen/testsimulation-2023.jpg"
+  bild_alt: "Voller Hörsaal während einer NCWiki-Testsimulation, im Vordergrund ein dreisprachiger Antwortbogen mit NCWiki-Logo"
   countdown_label: "Noch bis zum EMS 2027 (09.07.)"
 news:
   eyebrow: "Aktuell"
@@ -58,12 +60,12 @@ mission:
   eyebrow: "Wieso es uns gibt"
   heading: "Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt."
   features:
-    - title: "Schweizweit"
-      text: "Ein mehrsprachiger Studentenverein, aktiv an Hochschulstandorten in der ganzen Schweiz."
-    - title: "Community"
-      text: "Regelmässige Anlässe bringen zukünftige Mediziner:innen zusammen und lockern den Lernalltag auf."
-    - title: "Mit Sinn"
-      text: "Freiwillige unterstützen kommende Generationen von Studierenden auf ihrem Weg ins Medizinstudium."
+    - title: "Seit 2021"
+      text: "Entstanden als studentische Initiative und bis heute ehrenamtlich getragen – ohne Firma dahinter, ohne Gebühren."
+    - title: "Über 110 Freiwillige"
+      text: "Medizinstudierende aus der ganzen Schweiz schreiben Aufgaben, übersetzen, halten Kurse und betreuen die Testsimulationen."
+    - title: "Drei Sprachen"
+      text: "Eigene Teams in der Deutschschweiz, der Romandie und im Tessin – das Material gibt es auf Deutsch, Französisch und Italienisch."
 support:
   heading: "Ihr macht das möglich."
   text: "Unser Material bleibt kostenlos – dank Spenden und Sponsoring."

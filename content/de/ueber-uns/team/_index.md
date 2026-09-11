@@ -45,7 +45,7 @@ ressorts:
         rolle: "Protokoll & Daten"
 ---
 
-Im NCWiki-Team engagieren sich über 70 Medizinstudierende aus der ganzen Schweiz.
+Im NCWiki-Team engagieren sich über 110 Medizinstudierende aus der ganzen Schweiz.
 
 ## Aktuelles Leitungsteam
 

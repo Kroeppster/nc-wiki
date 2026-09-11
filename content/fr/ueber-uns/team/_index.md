@@ -45,7 +45,7 @@ ressorts:
         rolle: "Protocole & Dates"
 ---
 
-Plus de 70 étudiant·e·s en médecine de toute la Suisse sont impliqué·e·s dans l'équipe de NCWiki.
+Plus de 110 étudiant·e·s en médecine de toute la Suisse sont impliqué·e·s dans l'équipe de NCWiki.
 
 ## Équipe dirigeante actuelle
 
