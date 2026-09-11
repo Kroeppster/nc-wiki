@@ -238,7 +238,32 @@ Logo-Datei selbst zu bearbeiten.
 Die Team-Seite (`content/de/ueber-uns/team/_index.md`, plus `content/fr/...` und
 `content/it/...`) hat zwei verschiedene Bereiche, die unterschiedlich gepflegt werden:
 
-### Aktuelles Leitungsteam (Foto-Karten-Raster)
+### Aktuelles Leitungsteam (nach Ressorts gegliedert)
+
+Seit September 2026 steht das Leitungsteam im Frontmatter unter **`ressorts:`**
+statt in einer flachen Liste. Jeder Block hat einen `titel` (übersetzt, also in
+allen drei Sprachdateien eigens) und darunter `mitglieder` mit `name` und
+`rolle`:
+
+```yaml
+ressorts:
+  - titel: "Präsidium"
+    mitglieder:
+      - name: "Alessio Iseli"
+        rolle: "Koordinator"
+  - titel: "Koordination Romandie & Ticino"
+    mitglieder:
+      - name: "Selina Buchser"
+        rolle: "Koordinatorin Romandie"
+```
+
+**Die Reihenfolge der Blöcke ist die Reihenfolge auf der Seite** – im Template
+ist nichts fest verdrahtet. Ein Ressort umbenennen, verschieben, hinzufügen
+oder auflösen heisst: die Blöcke im Frontmatter umstellen, in allen drei
+Sprachdateien. Wechselt jemand das Ressort, wandert der Eintrag in einen
+anderen Block.
+
+
 
 Dieser Bereich wird NICHT als Fliesstext gepflegt, sondern als strukturierte Liste im
 Frontmatter jeder der drei Dateien, Feld `leitungsteam:`:
@@ -310,6 +335,10 @@ Datei. Frage entfernen: kompletten Eintrag löschen.
 ---
 
 ## 7. Uniguide (Universitäts-Liste) verwalten
+
+_Zur Team-Seite siehe Abschnitt 5: Das Leitungsteam ist seit September 2026 nach
+Ressorts gegliedert (`ressorts:` im Frontmatter statt der früheren flachen
+Liste `leitungsteam:`)._
 
 Die Uniguide-Vergleichstabelle und die Detailseiten kommen aus `data/unis.yaml` – auch
 diese Datei ist im Repo bereits ausführlich Feld für Feld kommentiert. Zwei wichtige

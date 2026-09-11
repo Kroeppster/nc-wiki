@@ -37,32 +37,27 @@
 {{- $lang := .Site.Language.Lang }}
 {{- $daten := hugo.Data.testablauf }}
 
-{{- /* Die Blöcke für das JavaScript aufbereiten: fertige, übersetzte Texte,
-       damit im Skript selbst kein übersetzbarer Satz steht. */ -}}
-{{- /* Die Ansage ist genau der Satz, den eine Aufsichtsperson sagt:
-       "<Untertest>, dieser Untertest umfasst <N> Aufgaben, Sie haben <M>
-       Minuten Zeit." Mehr nicht - keine Erklärungen, keine Tipps.
+{{- /* Die Blöcke gehen als ROHDATEN ans Skript (Name, Minuten, Aufgabenzahl),
+       nicht als fertige Sätze. Grund ist der eigene Ablauf: Dort ändert man
+       Aufgabenzahl und Minuten selbst, der Ansagesatz steht also erst im
+       Browser fest. Die Vorlagen dafür stehen in i18n/*.yaml (pm_ansage und
+       pm_ansage_ohne, mit Platzhaltern in geschweiften Klammern).
 
-       Zwei Blöcke bekommen die kurze Fassung ohne Aufgabenzahl:
-       die beiden Einprägephasen (dort gibt es keine bewerteten Aufgaben) und
-       das konzentrierte Arbeiten (dort sind es 1600 Zeichen, keine Aufgaben -
-       erkennbar daran, dass der Block ein sprachabhängiges Feld
-       "aufgaben_de/fr/it" mitbringt). */ -}}
+       "aufgaben" ist die Zahl, die in der Ansage genannt wird. Sie ist leer
+       bei den Einprägephasen (dort gibt es keine bewerteten Aufgaben) und beim
+       konzentrierten Arbeiten (dort sind es 1600 Zeichen, keine Aufgaben -
+       erkennbar am sprachabhängigen Feld "aufgaben_de/fr/it"). Solche Blöcke
+       bekommen die kurze Ansage ohne Aufgabenzahl. */ -}}
 {{- $bloecke := slice }}
 {{- range $daten.bloecke }}
-  {{- $name := or (index . $lang) .de }}
   {{- $eigeneEinheit := index . (printf "aufgaben_%s" $lang) }}
-  {{- $ansage := "" }}
-  {{- if or (not .aufgaben) $eigeneEinheit }}
-    {{- $ansage = i18n "pm_ansage_ohne" (dict "name" $name "min" .minuten) }}
-  {{- else }}
-    {{- $ansage = i18n "pm_ansage" (dict "name" $name "aufgaben" .aufgaben "min" .minuten) }}
-  {{- end }}
+  {{- $anzahl := "" }}
+  {{- if and .aufgaben (not $eigeneEinheit) }}{{ $anzahl = .aufgaben }}{{ end }}
   {{- $bloecke = $bloecke | append (dict
         "key" .key
-        "name" $name
+        "name" (or (index . $lang) .de)
         "minuten" .minuten
-        "ansage" $ansage
+        "aufgaben" $anzahl
       ) }}
 {{- end }}
 
@@ -113,16 +108,10 @@
   <section class="pm-einzeln">
     <h2>{{ i18n "pm_einzeln_heading" }}</h2>
     <p>{{ i18n "pm_einzeln_text" }}</p>
-    {{/* Trainer und Liste nebeneinander: Der Trainer bleibt beim Scrollen
-         stehen und kommentiert den Untertest, über dem man gerade ist.
-         Auf schmalen Bildschirmen steht er über der Liste. */}}
-    <div class="pm-einzeln-layout">
-      {{ partial "trainer.html" . }}
-      <ul class="pm-liste">
+    <ul class="pm-liste">
       {{- range $i, $b := $daten.bloecke }}
       {{- $name := or (index $b $lang) $b.de }}
-      {{- $tipp := index $b (printf "trainer_%s" $lang) }}
-      <li class="pm-block"{{ with $tipp }} data-trainer="{{ . }}"{{ end }}>
+      <li class="pm-block">
         <div class="pm-block-text">
           <h3>{{ $name }}</h3>
           <p class="pm-block-meta">
@@ -135,8 +124,66 @@
         <button type="button" class="btn btn-ghost" data-pm-start="{{ $i }}">{{ i18n "pm_start" }}</button>
       </li>
       {{- end }}
-      </ul>
+    </ul>
+  </section>
+
+  {{/* ================= EIGENER ABLAUF =================
+       Auswahl der Blöcke, eigene Aufgabenzahl und Zeit, Pausen wahlweise
+       überall gleich oder einzeln. Vorbelegt ist immer der echte EMS-Wert,
+       damit man nur ändern muss, was man ändern will. Die Zusammenstellung
+       merkt sich der Browser und lässt sich als Link weitergeben. */}}
+  <section class="pm-custom" id="pm-custom">
+    <h2>{{ i18n "pm_custom_heading" }}</h2>
+    <p>{{ i18n "pm_custom_text" }}</p>
+
+    <div class="table-scroll">
+      <table class="uniguide-table pm-custom-table">
+        <thead>
+          <tr>
+            <th><span class="visually-hidden-field">{{ i18n "pm_custom_th_block" }}</span></th>
+            <th>{{ i18n "pm_custom_th_block" }}</th>
+            <th>{{ i18n "pm_custom_th_aufgaben" }}</th>
+            <th>{{ i18n "pm_custom_th_zeit" }}</th>
+            <th class="pm-custom-pausenspalte">{{ i18n "pm_pause_label" }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{- range $i, $b := $bloecke }}
+          <tr data-key="{{ $b.key }}">
+            <td><label class="compare-check">
+              <input type="checkbox" class="pm-c-an" checked>
+              <span class="visually-hidden-field">{{ $b.name }}</span>
+            </label></td>
+            <td>{{ $b.name }}</td>
+            <td>{{ if $b.aufgaben }}<input type="number" class="pm-c-aufgaben" min="1" max="999" value="{{ $b.aufgaben }}" aria-label="{{ i18n "pm_custom_th_aufgaben" }}: {{ $b.name }}">{{ else }}<span class="report-meta">–</span>{{ end }}</td>
+            <td><input type="number" class="pm-c-min" min="1" max="180" value="{{ $b.minuten }}" aria-label="{{ i18n "pm_custom_th_zeit" }}: {{ $b.name }}"></td>
+            <td class="pm-custom-pausenspalte"><input type="number" class="pm-c-pause" min="0" max="120" value="0" aria-label="{{ i18n "pm_custom_pause_nach" }}"></td>
+          </tr>
+          {{- end }}
+        </tbody>
+      </table>
     </div>
+
+    <div class="pm-custom-steuerung">
+      <label class="pm-custom-feld">
+        <span id="pm-c-pause-label">{{ i18n "pm_custom_pause_gleich" }}</span>
+        <input type="number" id="pm-c-pause-alle" min="0" max="120" value="0">
+      </label>
+      <label class="pm-schalter">
+        <input type="checkbox" id="pm-c-einzeln">
+        <span>{{ i18n "pm_custom_pause_einzeln" }}</span>
+      </label>
+    </div>
+
+    <p class="pm-custom-summe" id="pm-c-summe"></p>
+    <p class="pm-hinweis" id="pm-c-stimme">{{ i18n "pm_custom_stimme_hinweis" }}</p>
+
+    <div class="pm-custom-aktionen">
+      <button type="button" class="btn btn-primary" id="pm-c-start">{{ i18n "pm_custom_start" }}</button>
+      <button type="button" class="btn btn-ghost" id="pm-c-link">{{ i18n "pm_custom_link" }}</button>
+      <button type="button" class="btn btn-ghost" id="pm-c-reset">{{ i18n "pm_custom_zuruecksetzen" }}</button>
+    </div>
+    <p class="pm-custom-meldung" id="pm-c-meldung" role="status"></p>
   </section>
 </div>
 
@@ -190,6 +237,17 @@
       "abbrechenFrage" (i18n "pm_abbrechen_frage")
       "escHinweis" (i18n "pm_esc_hinweis")
       "blockZaehler" (i18n "pm_block_zaehler")
+      "ansage" (i18n "pm_ansage")
+      "ansageOhne" (i18n "pm_ansage_ohne")
+      "pauseAnsage" (i18n "pm_pause_ansage")
+      "pauseVorbei" (i18n "pm_pause_vorbei")
+      "pauseLabel" (i18n "pm_pause_label")
+      "customLeer" (i18n "pm_custom_leer")
+      "customDauer" (i18n "pm_custom_dauer")
+      "customDauerKurz" (i18n "pm_custom_dauer_kurz")
+      "customLink" (i18n "pm_custom_link")
+      "customLinkKopiert" (i18n "pm_custom_link_kopiert")
+      "customPauseNach" (i18n "pm_custom_pause_nach")
    )
    | jsonify | safeJS }}
 </script>
@@ -317,61 +375,94 @@
     return zweistellig(d.getHours()) + ':' + zweistellig(d.getMinutes()) + ':' + zweistellig(d.getSeconds());
   }
 
-  function zustand(name){
-    buehne.className = 'pm-buehne is-' + name;
+  /* Setzt {name}, {aufgaben}, {min} usw. in eine Vorlage aus i18n/*.yaml ein. */
+  function vorlage(text, werte){
+    return String(text).replace(/\{(\w+)\}/g, function(_, k){
+      return werte[k] !== undefined && werte[k] !== null ? werte[k] : '';
+    });
   }
 
+  function zustand(name){ buehne.className = 'pm-buehne is-' + name; }
+
+  /* --------------------------------------------------------------- Schritte
+     Ein Ablauf ist eine Liste von Schritten. Ein Schritt ist entweder ein
+     Untertest oder eine Pause - dadurch passen Pausen in denselben Ablauf,
+     ohne dass es zwei verschiedene Abläufe braucht. */
+  function blockSchritt(b, minuten, aufgaben){
+    minuten = minuten || b.minuten;
+    if(aufgaben === undefined) aufgaben = b.aufgaben;
+    var ansage = aufgaben
+      ? vorlage(T.ansage, { name: b.name, aufgaben: aufgaben, min: minuten })
+      : vorlage(T.ansageOhne, { name: b.name, min: minuten });
+    /* Die Aufnahme nennt die ECHTEN EMS-Werte. Wurde an Zeit oder Aufgabenzahl
+       etwas geändert, würde sie also eine falsche Zahl ansagen - dann wird
+       stattdessen vorgelesen. */
+    var unveraendert = (minuten === b.minuten) &&
+                       (String(aufgaben || '') === String(b.aufgaben || ''));
+    return { art: 'block', key: b.key, name: b.name, minuten: minuten,
+             aufgaben: aufgaben, ansage: ansage,
+             audio: unveraendert ? b.key : null };
+  }
+
+  function pauseSchritt(minuten){
+    return { art: 'pause', name: T.pauseLabel, minuten: minuten,
+             ansage: vorlage(T.pauseAnsage, { min: minuten }), audio: null };
+  }
+
+  function aktuellerSchritt(){ return lauf.schritte[lauf.index]; }
+
   function zeigeZaehler(){
-    el.zaehler.textContent = lauf.folge.length > 1
-      ? T.blockZaehler.replace('{n}', lauf.index + 1).replace('{total}', lauf.folge.length)
-      : '';
+    var bloecke = lauf.schritte.filter(function(x){ return x.art === 'block'; });
+    if(bloecke.length < 2){ el.zaehler.textContent = ''; return; }
+    var nummer = lauf.schritte.slice(0, lauf.index + 1)
+                   .filter(function(x){ return x.art === 'block'; }).length;
+    el.zaehler.textContent = aktuellerSchritt().art === 'pause'
+      ? T.pauseLabel
+      : T.blockZaehler.replace('{n}', nummer).replace('{total}', bloecke.length);
   }
 
   /* -------------------------------------------------------------- Ablauf */
-  function starteFolge(indizes){
-    lauf = { folge: indizes, index: 0, endeMs: 0, pausiertRest: null };
+  function starteFolge(schritte){
+    if(!schritte.length) return;
+    lauf = { schritte: schritte, index: 0, endeMs: 0, pausiertRest: null };
     buehne.hidden = false;
     document.body.classList.add('pm-aktiv');
     vollbildAn();
     wachHalten();
-    zeigeAnweisung();
+    zeigeAnsage();
   }
 
-  function aktuellerBlock(){ return BLOECKE[lauf.folge[lauf.index]]; }
-
-  function zeigeAnweisung(){
-    var b = aktuellerBlock();
+  function zeigeAnsage(){
+    var sch = aktuellerSchritt();
     zustand('anweisung');
     zeigeZaehler();
-    el.titel.textContent = b.name;
-    el.anweisung.textContent = b.ansage;
+    el.titel.textContent = sch.name;
+    el.anweisung.textContent = sch.ansage;
     el.uhrLabel.textContent = '';
     el.los.textContent = T.start;
     el.fuss.textContent = T.escHinweis;
 
-    /* Bei der kompletten Simulation läuft es ohne Klick weiter: vorlesen,
-       dann automatisch starten - so wie im Testsaal, wo auch niemand fragt,
-       ob man bereit ist. Bei einem einzelnen Untertest wartet die Uhr
-       dagegen auf den Startknopf. */
-    var automatisch = lauf.folge.length > 1;
+    /* Ohne Klick weiter, sobald mehr als ein Schritt folgt - so wie im
+       Testsaal, wo auch niemand fragt, ob man bereit ist. Ein einzelner
+       Untertest wartet dagegen auf den Startknopf. */
+    var automatisch = lauf.schritte.length > 1;
     el.los.hidden = automatisch;
-    /* Die Ansage enthält den Namen bereits ("Muster zuordnen, dieser
-       Untertest umfasst ..."), sie wird genau so gesprochen wie sie dasteht. */
-    sprich(b.ansage, function(){
+    sprich(sch.ansage, function(){
       if(automatisch && lauf) starteUhr();
-    }, b.key);
+    }, sch.audio);
   }
 
   function starteUhr(){
-    var b = aktuellerBlock();
+    var sch = aktuellerSchritt();
     zustand('uhr');
-    lauf.endeMs = Date.now() + b.minuten * 60 * 1000;
-    el.titel.textContent = b.name;
-    el.uhrLabel.textContent = '';
+    lauf.endeMs = Date.now() + sch.minuten * 60 * 1000;
+    el.titel.textContent = sch.name;
+    el.uhrLabel.textContent = sch.art === 'pause' ? T.pauseLabel : '';
     el.pause.textContent = T.pause;
     el.stop.textContent = T.abbrechen;
     piep(880, 0.18);
-    sprich(T.beginne, null, 'beginne');
+    /* Nur ein Untertest bekommt das "Start." - eine Pause beginnt einfach. */
+    if(sch.art === 'block') sprich(T.beginne, null, 'beginne');
     tick();
     if(ticker) clearInterval(ticker);
     ticker = setInterval(tick, 250);
@@ -383,26 +474,44 @@
     el.uhr.textContent = uhrzeit(new Date(jetzt));
     /* Das Ende wird nur intern geprüft und dann angesagt - auf dem Bildschirm
        ist bis dahin nichts als die Uhrzeit zu sehen. */
-    if(jetzt >= lauf.endeMs) blockEnde();
+    if(jetzt >= lauf.endeMs) schrittEnde();
   }
 
-  function blockEnde(){
+  function weiterZumNaechsten(){
+    if(!lauf) return;
+    if(ticker){ clearInterval(ticker); ticker = null; }
+    lauf.index++;
+    zeigeAnsage();
+  }
+
+  function schrittEnde(){
     clearInterval(ticker); ticker = null;
+    var sch = aktuellerSchritt();
+    var istLetzter = lauf.index >= lauf.schritte.length - 1;
     zustand('stopp');
     piep(440, 0.5);
-    var istLetzter = lauf.index >= lauf.folge.length - 1;
-    el.titel.textContent = T.stopp;
-    el.anweisung.textContent = istLetzter
-      ? (lauf.folge.length > 1 ? T.fertigKomplett : T.fertigEinzeln)
-      : T.stoppWeiter;
     el.uhrLabel.textContent = '';
 
     /* Die Uhr läuft weiter - sie hängt im Testsaal ja auch weiter an der Wand. */
     ticker = setInterval(function(){ el.uhr.textContent = uhrzeit(new Date()); }, 250);
 
+    /* Eine Pause endet nicht mit "Stopp", sondern damit, dass sie vorbei ist. */
+    if(sch.art === 'pause'){
+      el.titel.textContent = T.pauseVorbei;
+      el.anweisung.textContent = '';
+      sprich(T.pauseVorbei, weiterZumNaechsten, null);
+      return;
+    }
+
+    el.titel.textContent = T.stopp;
+    var mehrereBloecke = lauf.schritte.filter(function(x){ return x.art === 'block'; }).length > 1;
+    el.anweisung.textContent = istLetzter
+      ? (mehrereBloecke ? T.fertigKomplett : T.fertigEinzeln)
+      : T.stoppWeiter;
+
     if(istLetzter){
       sprich(T.stopp + ' ' + el.anweisung.textContent, null,
-             lauf.folge.length > 1 ? 'fertig-komplett' : 'fertig-einzeln');
+             mehrereBloecke ? 'fertig-komplett' : 'fertig-einzeln');
       el.los.hidden = false;
       el.los.textContent = T.abbrechen;
       return;
@@ -410,14 +519,8 @@
 
     /* KEINE Umblätter-Zeit: Am echten EMS heisst es "Stopp, blättern Sie jetzt
        zum nächsten Untertest" - und praktisch unmittelbar danach die nächste
-       Ansage und "Start". Genau so läuft es hier: Sobald der Stopp-Satz zu Ende
-       gesprochen ist, kommt der nächste Block. */
-    sprich(T.stopp + ' ' + T.stoppWeiter, function(){
-      if(!lauf) return;
-      clearInterval(ticker); ticker = null;
-      lauf.index++;
-      zeigeAnweisung();
-    }, 'stopp-weiter');
+       Ansage und "Start". Genau so läuft es hier. */
+    sprich(T.stopp + ' ' + T.stoppWeiter, weiterZumNaechsten, 'stopp-weiter');
   }
 
   /* --------------------------------------------------------------- Pause */
@@ -464,9 +567,9 @@
     btn.addEventListener('click', function(){
       var wert = btn.getAttribute('data-pm-start');
       if(wert === 'alle'){
-        starteFolge(BLOECKE.map(function(_, i){ return i; }));
+        starteFolge(BLOECKE.map(function(b){ return blockSchritt(b); }));
       } else {
-        starteFolge([parseInt(wert, 10)]);
+        starteFolge([blockSchritt(BLOECKE[parseInt(wert, 10)])]);
       }
     });
   });
@@ -486,6 +589,184 @@
     if(e.key === 'Escape'){ if(window.confirm(T.abbrechenFrage)) beenden(); }
     if(e.key === ' ' && buehne.classList.contains('is-uhr')){ e.preventDefault(); pauseUmschalten(); }
   });
+
+  /* ==================================================================
+     EIGENER ABLAUF
+     ------------------------------------------------------------------
+     Die Zusammenstellung lebt an drei Orten, in dieser Reihenfolge:
+       1. in der Web-Adresse (#ablauf=...) - damit man sie weitergeben kann
+       2. im Browser-Speicher - damit sie beim nächsten Besuch noch da ist
+       3. sonst: die echten EMS-Werte als Vorgabe
+     Gespeichert wird die FERTIGE Schrittfolge (Blöcke und Pausen in ihrer
+     Reihenfolge), nicht der Zustand der Eingabefelder - so bleibt ein
+     geteilter Link auch dann gültig, wenn sich die Bedienung einmal ändert.
+     ================================================================== */
+  var custom = document.getElementById('pm-custom');
+  if(custom){
+    var SPEICHER = 'pruefungsmodus-ablauf';
+    var zeilen = Array.prototype.slice.call(custom.querySelectorAll('tbody tr'));
+    var pauseAlle = document.getElementById('pm-c-pause-alle');
+    var einzeln = document.getElementById('pm-c-einzeln');
+    var summe = document.getElementById('pm-c-summe');
+    var meldung = document.getElementById('pm-c-meldung');
+
+    function zeileZuBlock(tr){
+      var key = tr.getAttribute('data-key');
+      for(var i = 0; i < BLOECKE.length; i++){ if(BLOECKE[i].key === key) return BLOECKE[i]; }
+      return null;
+    }
+    function zahl(feld, standard){
+      if(!feld) return standard;
+      var n = parseInt(feld.value, 10);
+      return isNaN(n) ? standard : n;
+    }
+
+    /* Aus den Eingabefeldern die Schrittfolge bauen. */
+    function baueSchritte(){
+      var schritte = [];
+      var gewaehlt = zeilen.filter(function(tr){ return tr.querySelector('.pm-c-an').checked; });
+      gewaehlt.forEach(function(tr, i){
+        var b = zeileZuBlock(tr);
+        var min = zahl(tr.querySelector('.pm-c-min'), b.minuten);
+        var auf = tr.querySelector('.pm-c-aufgaben')
+          ? zahl(tr.querySelector('.pm-c-aufgaben'), b.aufgaben) : '';
+        schritte.push(blockSchritt(b, min, auf));
+        /* Die Pause steht NACH einem Block und nur zwischen zwei Blöcken -
+           eine Pause am Ende wäre sinnlos. */
+        if(i < gewaehlt.length - 1){
+          var p = einzeln.checked
+            ? zahl(tr.querySelector('.pm-c-pause'), 0)
+            : zahl(pauseAlle, 0);
+          if(p > 0) schritte.push(pauseSchritt(p));
+        }
+      });
+      return schritte;
+    }
+
+    function zeigeSumme(){
+      var schritte = baueSchritte();
+      if(!schritte.length){ summe.textContent = T.customLeer; return schritte; }
+      var min = schritte.reduce(function(a, x){ return a + x.minuten; }, 0);
+      summe.textContent = min >= 60
+        ? vorlage(T.customDauer, { std: Math.floor(min / 60), min: min % 60 })
+        : vorlage(T.customDauerKurz, { min: min });
+      return schritte;
+    }
+
+    /* Schrittfolge <-> Text für Adresse und Speicher.
+       Format: b:<key>:<aufgaben>:<minuten> bzw. p:<minuten>, getrennt mit ";" */
+    function alsText(schritte){
+      return schritte.map(function(x){
+        if(x.art === 'pause') return 'p:' + x.minuten;
+        return 'b:' + x.key + ':' + (x.aufgaben || '') + ':' + x.minuten;
+      }).join(';');
+    }
+
+    /* Felder aus einer gespeicherten/geteilten Folge setzen. */
+    function ausText(text){
+      var teile = String(text).split(';').filter(Boolean);
+      if(!teile.length) return false;
+      var gewaehlteKeys = [], pausen = [];
+      teile.forEach(function(t){
+        var f = t.split(':');
+        if(f[0] === 'b') gewaehlteKeys.push({ key: f[1], aufgaben: f[2], min: parseInt(f[3], 10) });
+        if(f[0] === 'p') pausen.push(parseInt(f[1], 10));
+      });
+      if(!gewaehlteKeys.length) return false;
+      zeilen.forEach(function(tr){
+        var key = tr.getAttribute('data-key');
+        var treffer = null;
+        gewaehlteKeys.forEach(function(g){ if(g.key === key) treffer = g; });
+        tr.querySelector('.pm-c-an').checked = !!treffer;
+        if(treffer){
+          if(!isNaN(treffer.min)) tr.querySelector('.pm-c-min').value = treffer.min;
+          var af = tr.querySelector('.pm-c-aufgaben');
+          if(af && treffer.aufgaben) af.value = treffer.aufgaben;
+        }
+      });
+      /* Sind alle Pausen gleich, ist es der einfache Fall - sonst einzeln. */
+      var alleGleich = pausen.length === 0 || pausen.every(function(x){ return x === pausen[0]; });
+      einzeln.checked = !alleGleich;
+      if(alleGleich){
+        pauseAlle.value = pausen.length ? pausen[0] : 0;
+      } else {
+        var n = 0;
+        zeilen.forEach(function(tr){
+          if(tr.querySelector('.pm-c-an').checked && n < pausen.length){
+            tr.querySelector('.pm-c-pause').value = pausen[n]; n++;
+          }
+        });
+      }
+      return true;
+    }
+
+    function merken(){
+      try{ localStorage.setItem(SPEICHER, alsText(baueSchritte())); }catch(e){}
+    }
+
+    function einzelnUmschalten(){
+      custom.classList.toggle('zeigt-pausen', einzeln.checked);
+    }
+
+    function aktualisieren(){
+      einzelnUmschalten();
+      zeigeSumme();
+      merken();
+      meldung.textContent = '';
+    }
+
+    custom.addEventListener('change', aktualisieren);
+    custom.addEventListener('input', aktualisieren);
+
+    document.getElementById('pm-c-start').addEventListener('click', function(){
+      var schritte = baueSchritte();
+      if(!schritte.length){ meldung.textContent = T.customLeer; return; }
+      starteFolge(schritte);
+    });
+
+    document.getElementById('pm-c-link').addEventListener('click', function(){
+      var adresse = location.origin + location.pathname + '#ablauf=' +
+                    encodeURIComponent(alsText(baueSchritte()));
+      history.replaceState(null, '', adresse);
+      function fertig(){ meldung.textContent = T.customLinkKopiert; }
+      /* Kopieren geht nicht überall (alte Browser, unsichere Verbindung) -
+         dann steht die Adresse wenigstens in der Adresszeile und lässt sich
+         von Hand kopieren. */
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(adresse).then(fertig, fertig);
+      } else { fertig(); }
+    });
+
+    document.getElementById('pm-c-reset').addEventListener('click', function(){
+      zeilen.forEach(function(tr){
+        var b = zeileZuBlock(tr);
+        tr.querySelector('.pm-c-an').checked = true;
+        tr.querySelector('.pm-c-min').value = b.minuten;
+        var af = tr.querySelector('.pm-c-aufgaben');
+        if(af) af.value = b.aufgaben;
+        tr.querySelector('.pm-c-pause').value = 0;
+      });
+      pauseAlle.value = 0;
+      einzeln.checked = false;
+      try{ localStorage.removeItem(SPEICHER); }catch(e){}
+      history.replaceState(null, '', location.pathname);
+      aktualisieren();
+    });
+
+    /* Beim Laden: erst Adresse, dann Speicher, sonst Vorgabe. */
+    var ausAdresse = (location.hash.match(/ablauf=([^&]+)/) || [])[1];
+    var geladen = false;
+    if(ausAdresse){ geladen = ausText(decodeURIComponent(ausAdresse)); }
+    if(!geladen){
+      try{ var gemerkt = localStorage.getItem(SPEICHER); if(gemerkt) ausText(gemerkt); }catch(e){}
+    }
+    einzelnUmschalten();
+    zeigeSumme();
+    /* Auch das Geladene merken - sonst wäre eine über einen Link geteilte
+       Zusammenstellung beim nächsten Besuch wieder weg, und wer nie etwas
+       ändert, hätte gar nichts gespeichert. */
+    merken();
+  }
 
   /* Kein Sonderfall nötig, wenn jemand das Vollbild verlässt: Die Bühne liegt
      ohnehin als fest positionierte Fläche über der Seite (siehe .pm-buehne in

@@ -27,11 +27,6 @@
 #               (Einprägephasen werden nicht bewertet)
 #   punkte    - Maximalpunktzahl als Text, oder ""
 #   de/fr/it  - angezeigter Name in den drei Sprachen
-#   trainer_de/fr/it - kurzer Tipp, den der NCWiki-Trainer auf der
-#               Prüfungsmodus-Seite sagt, wenn man diesen Block auswählt.
-#               Inhaltlich aus den Übungsaufgaben-Seiten abgeleitet - was hier
-#               steht, sollte dort auch so stehen. Weglassen ist erlaubt: dann
-#               sagt der Trainer für diesen Block nur die Dauer.
 #
 # REIHENFOLGE = die echte Reihenfolge am Testtag. Der Prüfungsmodus spielt die
 # Blöcke bei der kompletten Simulation genau so nacheinander ab.
@@ -43,9 +38,6 @@
 bloecke:
   - key: muster-zuordnen
     slug: muster-zuordnen
-    trainer_de: "18 Aufgaben in 16 Minuten, also knapp 53 Sekunden pro Aufgabe. Hier entscheidet das Tempo."
-    trainer_fr: "18 exercices en 16 minutes, soit à peine 53 secondes par exercice. Ici, tout se joue sur le rythme."
-    trainer_it: "18 esercizi in 16 minuti, cioè poco meno di 53 secondi ciascuno. Qui conta il ritmo."
     minuten: 16
     aufgaben: "18"
     punkte: "18"
@@ -55,9 +47,6 @@ bloecke:
 
   - key: med-nat-grundverstaendnis
     slug: med-nat-grundverstaendnis
-    trainer_de: "45 Minuten für 18 Aufgaben. Du musst nicht alle schaffen – zügig und genau zugleich ist gefragt."
-    trainer_fr: "45 minutes pour 18 exercices. Tu n'as pas besoin de tous les faire : il s'agit d'être à la fois rapide et précis."
-    trainer_it: "45 minuti per 18 esercizi. Non devi farli tutti: serve essere insieme rapidi e precisi."
     minuten: 45
     aufgaben: "18"
     punkte: "18"
@@ -67,9 +56,6 @@ bloecke:
 
   - key: objekte-im-raum
     slug: objekte-im-raum
-    trainer_de: "Nur rund 33 Sekunden pro Aufgabe. Kurz, aber der intensivste Block des Tages."
-    trainer_fr: "Environ 33 secondes par exercice seulement. Court, mais le bloc le plus intense de la journée."
-    trainer_it: "Solo circa 33 secondi per esercizio. Breve, ma il blocco più intenso della giornata."
     minuten: 10
     aufgaben: "18"
     punkte: "18"
@@ -79,9 +65,6 @@ bloecke:
 
   - key: quantitative-probleme
     slug: quantitative-probleme
-    trainer_de: "45 Minuten sind hier vergleichsweise viel. Häng nicht an einer Aufgabe fest, markier sie und geh weiter."
-    trainer_fr: "Ici, 45 minutes, c'est relativement confortable. Ne reste pas bloqué·e : marque l'exercice et passe au suivant."
-    trainer_it: "Qui 45 minuti sono relativamente tanti. Non incastrarti su un esercizio: segnalo e vai avanti."
     minuten: 45
     aufgaben: "18"
     punkte: "18"
@@ -91,9 +74,6 @@ bloecke:
 
   - key: figuren-einpraegen
     slug: figuren-fakten-lernen
-    trainer_de: "4 Minuten. Lieber 12 bis 15 Figuren richtig gut einprägen als alle nur halb."
-    trainer_fr: "4 minutes. Mieux vaut bien mémoriser 12 à 15 figures que toutes à moitié."
-    trainer_it: "4 minuti. Meglio memorizzare bene 12-15 figure che tutte a metà."
     minuten: 4
     aufgaben: ""
     punkte: ""
@@ -103,9 +83,6 @@ bloecke:
 
   - key: fakten-einpraegen
     slug: figuren-fakten-lernen
-    trainer_de: "6 Minuten für 15 Personen. Danach kommt erst ein anderer Untertest dazwischen."
-    trainer_fr: "6 minutes pour 15 personnes. Ensuite, un autre sous-test s'intercale d'abord."
-    trainer_it: "6 minuti per 15 persone. Dopo si inserisce prima un altro sottotest."
     minuten: 6
     aufgaben: ""
     punkte: ""
@@ -115,9 +92,6 @@ bloecke:
 
   - key: textverstaendnis
     slug: textverstaendnis
-    trainer_de: "Drei Texte in 45 Minuten – im Schnitt 15 Minuten pro Text. Behalte die Aufteilung im Blick."
-    trainer_fr: "Trois textes en 45 minutes, soit 15 minutes par texte en moyenne. Garde cette répartition en tête."
-    trainer_it: "Tre testi in 45 minuti, in media 15 minuti a testo. Tieni d'occhio questa suddivisione."
     minuten: 45
     aufgaben: "18"
     punkte: "18"
@@ -127,9 +101,6 @@ bloecke:
 
   - key: figuren-reproduktion
     slug: figuren-fakten-lernen
-    trainer_de: "5 Minuten. Die Figuren kommen in einer anderen Reihenfolge als beim Einprägen."
-    trainer_fr: "5 minutes. Les figures reviennent dans un ordre différent de celui de la mémorisation."
-    trainer_it: "5 minuti. Le figure tornano in un ordine diverso da quello dell'apprendimento."
     minuten: 5
     aufgaben: "18"
     punkte: "18"
@@ -139,9 +110,6 @@ bloecke:
 
   - key: fakten-reproduktion
     slug: figuren-fakten-lernen
-    trainer_de: "6 Minuten. Jetzt zählt nur, was wirklich hängengeblieben ist."
-    trainer_fr: "6 minutes. Seul compte maintenant ce qui est vraiment resté."
-    trainer_it: "6 minuti. Ora conta solo ciò che è davvero rimasto."
     minuten: 6
     aufgaben: "18"
     punkte: "18"
@@ -151,9 +119,6 @@ bloecke:
 
   - key: diagramme-tabellen
     slug: diagramme-tabellen
-    trainer_de: "Alles Nötige steht im Diagramm – Fachwissen brauchst du hier keines."
-    trainer_fr: "Tout ce qu'il faut se trouve dans le graphique : aucune connaissance spécialisée n'est requise."
-    trainer_it: "Tutto il necessario è nel grafico: qui non serve alcuna conoscenza specialistica."
     minuten: 45
     aufgaben: "18"
     punkte: "18"
@@ -163,9 +128,6 @@ bloecke:
 
   - key: konzentriertes-arbeiten
     slug: konzentriertes-arbeiten
-    trainer_de: "8 Minuten. Fertig wird hier praktisch niemand – das ist normal und kostet dich keine Punkte."
-    trainer_fr: "8 minutes. Presque personne ne termine : c'est normal et cela ne te coûte aucun point."
-    trainer_it: "8 minuti. Non finisce quasi nessuno: è normale e non ti costa punti."
     minuten: 8
     aufgaben_de: "1600 Zeichen"
     aufgaben_fr: "1600 symboles"

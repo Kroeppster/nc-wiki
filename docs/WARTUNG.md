@@ -594,26 +594,25 @@ Anweisung erscheint und mit vorgelesen wird – dafür gibt es die Felder
 Einprägephasen und beim Konzentrationstest („Die Streichbedingung steht auf
 deinem Blatt …"). Feld weglassen, wenn es nichts Besonderes zu sagen gibt.
 
-### Der NCWiki-Trainer und seine Tipps
+### Eigener Ablauf
 
-Neben der Untertest-Liste steht eine gezeichnete Figur, die zu jedem Untertest
-sagt, worauf es ankommt – sobald man mit der Maus über eine Zeile fährt (auf dem
-Handy: die Zeile antippen).
+Unter den beiden fertigen Modi können Leute sich selbst zusammenstellen, was
+sie üben wollen: welche Untertests, wie viele Aufgaben, wie viele Minuten – und
+ob dazwischen Pausen liegen, wahlweise überall gleich lang oder einzeln
+festgelegt.
 
-Was sie sagt, steht in `data/testablauf.yaml` bei jedem Block unter
-`trainer_de`, `trainer_fr` und `trainer_it`. Diese Sätze sind aus den
-Übungsaufgaben-Seiten abgeleitet – **ändert sich dort eine Aussage, sollte der
-Tipp mitgeändert werden**, sonst sagt der Trainer etwas anderes als die
-Übungsseite. Lässt man die drei Felder weg, nennt er für diesen Block nur die
-Dauer.
+Daran ist **nichts zu pflegen**: Die Auswahlliste kommt aus derselben
+`data/testablauf.yaml`, vorbelegt sind immer die echten EMS-Werte. Wer etwas
+ändert, sieht sofort die neue Gesamtdauer.
 
-Der Begrüssungssatz ("Fahr über einen Untertest …") steht in
-`i18n/de|fr|it.yaml` unter `trainer_willkommen`.
+Die Zusammenstellung merkt sich der Browser und lässt sich über „Als Link
+kopieren" weitergeben – praktisch für Lerngruppen („so üben wir am Samstag").
+Der Link enthält die ganze Abfolge, es wird nichts auf einem Server gespeichert.
 
-Die Figur selbst ist gezeichneter Code (kein Bild) und steckt in
-`layouts/partials/trainer.html`. Sie nimmt ihre Farben aus dem Design-System
-und geht damit im Hell- und Dunkelmodus automatisch mit; ein Austausch der
-Zeichnung ist ein Entwickler-Schritt.
+**Ein Detail, das wichtig ist:** Sobald jemand die Aufgabenzahl oder die Zeit
+eines Untertests ändert, wird dieser Satz **vorgelesen** statt die Aufnahme
+abgespielt. Die Aufnahmen nennen die echten EMS-Werte – bei „12 Aufgaben in 30
+Minuten" würden sie sonst die falsche Zahl ansagen.
 
 ### Die vorgelesenen Sätze ändern
 

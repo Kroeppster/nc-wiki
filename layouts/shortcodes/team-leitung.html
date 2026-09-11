@@ -4,9 +4,16 @@
   ============================================================================
   Verwendung im Markdown-Text: der Shortcode "team-leitung" ohne Parameter
   (siehe content/de/ueber-uns/team/_index.md fuer ein Beispiel). Liest die
-  Liste aus dem Frontmatter
-  der Seite (Feld "leitungsteam:", siehe docs/WARTUNG-DETAILLIERT.md,
-  Abschnitt "Team-Seite pflegen").
+  Liste aus dem Frontmatter der Seite (Feld "ressorts:", siehe
+  docs/WARTUNG-DETAILLIERT.md, Abschnitt "Team-Seite pflegen").
+
+  NACH RESSORTS GEGLIEDERT: Frueher war das eine einzige flache Liste aus 14
+  Karten - man sah, WER dabei ist, aber nicht, wer wofuer zustaendig ist. Jetzt
+  steht pro Gruppe eine Zwischenueberschrift darueber, in der Reihenfolge, in
+  der sie im Frontmatter stehen: Praesidium zuerst, dann die Koordination der
+  Sprachregionen, dann die uebrigen Ressorts. Die Reihenfolge aendert man,
+  indem man die Bloecke im Frontmatter verschiebt - hier ist nichts fest
+  verdrahtet.
 
   Hat eine Person ein Foto hinterlegt (Feld "foto:" pro Eintrag, Pfad
   relativ zu assets/images/, z. B. "team/alessio-iseli.jpg"), wird das Foto
@@ -18,9 +25,10 @@
   irgendwo ein generisches "Bild fehlt"-Symbol zu zeigen.
   ============================================================================
 */ -}}
-{{- $items := .Page.Params.leitungsteam -}}
+{{- range .Page.Params.ressorts }}
+<h3 class="team-ressort">{{ .titel }}</h3>
 <ul class="card-grid team-grid">
-  {{- range $items }}
+  {{- range .mitglieder }}
   {{- $name := .name }}
   {{- $nameParts := split (strings.TrimSpace $name) " " }}
   {{- $initials := "" }}
@@ -41,3 +49,4 @@
   </li>
   {{- end }}
 </ul>
+{{- end }}
