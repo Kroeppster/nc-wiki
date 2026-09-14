@@ -622,22 +622,30 @@ und die Tabelle zeigt sie in derselben Folge. Einträge verschieben genügt.
 
 ### Einen Zusatzhinweis zu einem Untertest
 
-Optional lässt sich pro Block ein Satz hinterlegen, der nach der allgemeinen
-Anweisung erscheint und mit vorgelesen wird – dafür gibt es die Felder
-`hinweis_de`, `hinweis_fr` und `hinweis_it`. Aktuell genutzt bei den beiden
-Einprägephasen und beim Konzentrationstest („Die Streichbedingung steht auf
-deinem Blatt …"). Feld weglassen, wenn es nichts Besonderes zu sagen gibt.
-
 ### Eigener Ablauf
 
 Unter den beiden fertigen Modi können Leute sich selbst zusammenstellen, was
-sie üben wollen: welche Untertests, wie viele Aufgaben, wie viele Minuten – und
-ob dazwischen Pausen liegen, wahlweise überall gleich lang oder einzeln
-festgelegt.
+sie üben wollen. Das gibt es in **zwei Stufen**:
 
-Daran ist **nichts zu pflegen**: Die Auswahlliste kommt aus derselben
-`data/testablauf.yaml`, vorbelegt sind immer die echten EMS-Werte. Wer etwas
-ändert, sieht sofort die neue Gesamtdauer.
+**Normal (so ist es voreingestellt):** Man wählt nur aus, *welche* Untertests
+und *wie viele* Aufgaben. **Die Zeit rechnet sich daraus automatisch aus** –
+im selben Tempo wie am echten EMS. Beispiel „Muster zuordnen": 18 Aufgaben in
+16 Minuten, also ergeben 9 Aufgaben 8 Minuten. Unter der Zeit steht zusätzlich,
+wie viele Sekunden das pro Aufgabe sind. Das ist fast immer das, was jemand
+will: eine halbe Serie üben, aber unter dem richtigen Zeitdruck.
+
+**Expertenmodus (Schalter über der Tabelle):** Erst hier lassen sich die
+Minuten pro Block und die Pausen einzeln von Hand eintragen. Gedacht für Leute,
+die bewusst etwas anderes trainieren wollen – etwa mit absichtlich zu wenig
+Zeit, oder mit einer langen Pause zwischen Einprägen und Reproduktion.
+
+Der Grund für die Zweiteilung: Eine Zeit von Hand einzutippen, die nicht zum
+Tempo des Tests passt, macht das Üben wertlos. Wer das trotzdem will, soll es
+können – aber bewusst, nicht aus Versehen.
+
+Daran ist **nichts zu pflegen**: Die Auswahlliste und das Tempo kommen aus
+derselben `data/testablauf.yaml`, vorbelegt sind immer die echten EMS-Werte.
+Wer etwas ändert, sieht sofort die neue Gesamtdauer.
 
 Die Zusammenstellung merkt sich der Browser und lässt sich über „Als Link
 kopieren" weitergeben – praktisch für Lerngruppen („so üben wir am Samstag").
@@ -678,3 +686,33 @@ Sprache. Welche Datei welchen Satz enthält, steht in
 Die Anredeform in den Ansagen ist bewusst das **Sie** ("Sie haben 16 Minuten
 Zeit"), obwohl die Website sonst durchgehend duzt: Die Ansage gibt eine
 Aufsichtsperson im Testsaal wieder.
+
+---
+
+## 15. „Auf dieser Seite" (die Sprungliste über den Abschnitten)
+
+Auf jeder Unterseite und jeder Übersichtsseite steht zuoberst eine kleine
+Liste mit den Abschnitten, die weiter unten kommen. Ein Klick springt direkt
+dorthin.
+
+**Daran ist nichts einzustellen und nichts zu pflegen.** Die Liste entsteht
+automatisch aus den Zwischenüberschriften der Seite – also aus allem, was in
+einer `.md`-Datei mit `##` beginnt. Wer eine Überschrift umbenennt,
+verschiebt oder ergänzt, ändert damit automatisch auch die Liste.
+
+Drei Dinge, die manchmal Fragen aufwerfen:
+
+- **Auf kurzen Seiten erscheint sie nicht.** Gibt es weniger als zwei
+  Abschnitte, bleibt die Liste weg – eine Sprungliste mit einem einzigen
+  Eintrag ist kein Gewinn.
+- **Nur die oberste Ebene zählt.** `##` kommt in die Liste, `###` nicht.
+  Sonst würde die Übersicht länger als der Text darunter.
+- **Sie funktioniert auch auf Seiten ohne Fliesstext**, zum Beispiel beim
+  Prüfungsmodus oder beim Uniguide. Dort sammelt die Seite ihre Abschnitte
+  selbst ein, nachdem sie geladen ist.
+
+Die Beschriftung („Auf dieser Seite" / „Sur cette page" / „In questa
+pagina") steht wie alle festen Texte in `i18n/de|fr|it.yaml`, beim Eintrag
+`auf_dieser_seite`. Technisch steckt alles in einer einzigen Datei:
+`layouts/partials/seiten-uebersicht.html`.
+

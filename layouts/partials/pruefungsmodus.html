@@ -128,13 +128,35 @@
   </section>
 
   {{/* ================= EIGENER ABLAUF =================
-       Auswahl der Blöcke, eigene Aufgabenzahl und Zeit, Pausen wahlweise
-       überall gleich oder einzeln. Vorbelegt ist immer der echte EMS-Wert,
-       damit man nur ändern muss, was man ändern will. Die Zusammenstellung
-       merkt sich der Browser und lässt sich als Link weitergeben. */}}
+       ZWEI STUFEN, und das ist der wichtigste Teil der Bedienung:
+
+       NORMAL (Vorgabe): Man stellt nur ein, WELCHE Untertests und WIE VIELE
+       Aufgaben. Die Zeit rechnet sich daraus automatisch aus - im selben
+       Tempo wie am echten EMS (z.B. "Muster zuordnen": 18 Aufgaben in 16
+       Minuten, also 9 Aufgaben in 8 Minuten). Das ist fast immer das, was
+       jemand will: eine halbe Serie üben, aber unter dem richtigen
+       Zeitdruck. Eine Zeit von Hand einzutippen, die nicht zum Tempo des
+       Tests passt, macht das Üben wertlos - deshalb ist das hier gar nicht
+       erst möglich.
+
+       EXPERTE: Zeit pro Block und Pausen einzeln von Hand. Für Leute, die
+       bewusst etwas anderes trainieren wollen (bewusst zu wenig Zeit, oder
+       eine lange Pause zwischen Einprägen und Reproduktion).
+
+       Vorbelegt ist immer der echte EMS-Wert, damit man nur ändern muss, was
+       man ändern will. Die Zusammenstellung merkt sich der Browser und lässt
+       sich als Link weitergeben. */}}
   <section class="pm-custom" id="pm-custom">
     <h2>{{ i18n "pm_custom_heading" }}</h2>
     <p>{{ i18n "pm_custom_text" }}</p>
+
+    <div class="pm-custom-modus">
+      <label class="pm-schalter">
+        <input type="checkbox" id="pm-c-experte">
+        <span>{{ i18n "pm_custom_experte" }}</span>
+      </label>
+      <p class="pm-hinweis">{{ i18n "pm_custom_experte_hinweis" }}</p>
+    </div>
 
     <div class="table-scroll">
       <table class="uniguide-table pm-custom-table">
@@ -156,7 +178,17 @@
             </label></td>
             <td>{{ $b.name }}</td>
             <td>{{ if $b.aufgaben }}<input type="number" class="pm-c-aufgaben" min="1" max="999" value="{{ $b.aufgaben }}" aria-label="{{ i18n "pm_custom_th_aufgaben" }}: {{ $b.name }}">{{ else }}<span class="report-meta">–</span>{{ end }}</td>
-            <td><input type="number" class="pm-c-min" min="1" max="180" value="{{ $b.minuten }}" aria-label="{{ i18n "pm_custom_th_zeit" }}: {{ $b.name }}"></td>
+            {{/* Beide Darstellungen stehen im Quelltext, sichtbar ist immer
+                 nur eine (siehe .pm-custom.ist-experte in style.css): im
+                 Normalfall die berechnete Zeit als Text, im Expertenmodus das
+                 Eingabefeld. Der vorbelegte Text ist der echte EMS-Wert -
+                 dadurch stimmt die Anzeige auch dann, wenn kein JavaScript
+                 läuft und nichts nachgerechnet wird. */}}
+            <td class="pm-c-zeit">
+              <input type="number" class="pm-c-min" min="1" max="180" value="{{ $b.minuten }}" aria-label="{{ i18n "pm_custom_th_zeit" }}: {{ $b.name }}">
+              <span class="pm-c-min-auto">{{ i18n "pm_minuten" (dict "min" $b.minuten) }}</span>
+              {{- if $b.aufgaben }}<span class="pm-c-pro-aufgabe"></span>{{ end }}
+            </td>
             <td class="pm-custom-pausenspalte"><input type="number" class="pm-c-pause" min="0" max="120" value="0" aria-label="{{ i18n "pm_custom_pause_nach" }}"></td>
           </tr>
           {{- end }}
@@ -168,10 +200,6 @@
       <label class="pm-custom-feld">
         <span id="pm-c-pause-label">{{ i18n "pm_custom_pause_gleich" }}</span>
         <input type="number" id="pm-c-pause-alle" min="0" max="120" value="0">
-      </label>
-      <label class="pm-schalter">
-        <input type="checkbox" id="pm-c-einzeln">
-        <span>{{ i18n "pm_custom_pause_einzeln" }}</span>
       </label>
     </div>
 
@@ -248,6 +276,8 @@
       "customLink" (i18n "pm_custom_link")
       "customLinkKopiert" (i18n "pm_custom_link_kopiert")
       "customPauseNach" (i18n "pm_custom_pause_nach")
+      "customZeitAuto" (i18n "pm_custom_zeit_auto")
+      "customProAufgabe" (i18n "pm_custom_pro_aufgabe")
    )
    | jsonify | safeJS }}
 </script>
@@ -606,7 +636,7 @@
     var SPEICHER = 'pruefungsmodus-ablauf';
     var zeilen = Array.prototype.slice.call(custom.querySelectorAll('tbody tr'));
     var pauseAlle = document.getElementById('pm-c-pause-alle');
-    var einzeln = document.getElementById('pm-c-einzeln');
+    var experte = document.getElementById('pm-c-experte');
     var summe = document.getElementById('pm-c-summe');
     var meldung = document.getElementById('pm-c-meldung');
 
@@ -620,6 +650,25 @@
       var n = parseInt(feld.value, 10);
       return isNaN(n) ? standard : n;
     }
+    function aufgabenZahl(tr, b){
+      var feld = tr.querySelector('.pm-c-aufgaben');
+      return feld ? zahl(feld, b.aufgaben) : '';
+    }
+
+    /* Zeit aus der Aufgabenzahl, im Tempo des echten EMS: Wer die Hälfte der
+       Aufgaben übt, bekommt die Hälfte der Zeit. Aufgerundet auf ganze
+       Minuten und nie unter einer Minute. Blöcke ohne Aufgabenzahl (die
+       Einprägephasen und das konzentrierte Arbeiten) behalten ihre echte
+       Zeit - dort gibt es nichts, woraus sich etwas rechnen liesse. */
+    function autoMinuten(b, aufgaben){
+      if(!b.aufgaben || !aufgaben) return b.minuten;
+      return Math.max(1, Math.round(aufgaben * b.minuten / b.aufgaben));
+    }
+    function minutenFuer(tr, b){
+      return experte.checked
+        ? zahl(tr.querySelector('.pm-c-min'), b.minuten)
+        : autoMinuten(b, aufgabenZahl(tr, b));
+    }
 
     /* Aus den Eingabefeldern die Schrittfolge bauen. */
     function baueSchritte(){
@@ -627,14 +676,12 @@
       var gewaehlt = zeilen.filter(function(tr){ return tr.querySelector('.pm-c-an').checked; });
       gewaehlt.forEach(function(tr, i){
         var b = zeileZuBlock(tr);
-        var min = zahl(tr.querySelector('.pm-c-min'), b.minuten);
-        var auf = tr.querySelector('.pm-c-aufgaben')
-          ? zahl(tr.querySelector('.pm-c-aufgaben'), b.aufgaben) : '';
-        schritte.push(blockSchritt(b, min, auf));
+        schritte.push(blockSchritt(b, minutenFuer(tr, b), aufgabenZahl(tr, b)));
         /* Die Pause steht NACH einem Block und nur zwischen zwei Blöcken -
-           eine Pause am Ende wäre sinnlos. */
+           eine Pause am Ende wäre sinnlos. Einzelne Pausen pro Block gibt es
+           nur im Expertenmodus, sonst gilt überall dieselbe. */
         if(i < gewaehlt.length - 1){
-          var p = einzeln.checked
+          var p = experte.checked
             ? zahl(tr.querySelector('.pm-c-pause'), 0)
             : zahl(pauseAlle, 0);
           if(p > 0) schritte.push(pauseSchritt(p));
@@ -684,9 +731,21 @@
           if(af && treffer.aufgaben) af.value = treffer.aufgaben;
         }
       });
-      /* Sind alle Pausen gleich, ist es der einfache Fall - sonst einzeln. */
+      /* Ein geteilter Link enthält feste Minutenwerte. Weichen die von dem
+         ab, was sich aus der Aufgabenzahl ergäbe, oder sind die Pausen nicht
+         überall gleich, dann lässt sich die Zusammenstellung ohne
+         Expertenmodus gar nicht darstellen - also wird er eingeschaltet.
+         Sonst würde ein geteilter Ablauf beim Öffnen still verändert. */
       var alleGleich = pausen.length === 0 || pausen.every(function(x){ return x === pausen[0]; });
-      einzeln.checked = !alleGleich;
+      var eigeneZeit = false;
+      zeilen.forEach(function(tr){
+        if(!tr.querySelector('.pm-c-an').checked) return;
+        var b = zeileZuBlock(tr);
+        if(!b) return;
+        var gesetzt = zahl(tr.querySelector('.pm-c-min'), b.minuten);
+        if(gesetzt !== autoMinuten(b, aufgabenZahl(tr, b))) eigeneZeit = true;
+      });
+      experte.checked = eigeneZeit || !alleGleich;
       if(alleGleich){
         pauseAlle.value = pausen.length ? pausen[0] : 0;
       } else {
@@ -704,12 +763,35 @@
       try{ localStorage.setItem(SPEICHER, alsText(baueSchritte())); }catch(e){}
     }
 
-    function einzelnUmschalten(){
-      custom.classList.toggle('zeigt-pausen', einzeln.checked);
+    function modusUmschalten(){
+      custom.classList.toggle('ist-experte', experte.checked);
+    }
+
+    /* Schreibt die berechnete Zeit in die Zeile und hält das (im
+       Normalfall unsichtbare) Eingabefeld auf demselben Wert. Dadurch
+       startet der Expertenmodus beim Einschalten genau mit den Zeiten, die
+       vorher angezeigt wurden, statt zu springen. */
+    function zeigeZeiten(){
+      zeilen.forEach(function(tr){
+        var b = zeileZuBlock(tr);
+        if(!b) return;
+        var auf = aufgabenZahl(tr, b);
+        var min = minutenFuer(tr, b);
+        if(!experte.checked) tr.querySelector('.pm-c-min').value = min;
+        var anzeige = tr.querySelector('.pm-c-min-auto');
+        if(anzeige) anzeige.textContent = vorlage(T.customZeitAuto, { min: min });
+        var pro = tr.querySelector('.pm-c-pro-aufgabe');
+        if(pro){
+          pro.textContent = auf > 0
+            ? vorlage(T.customProAufgabe, { sek: Math.round(min * 60 / auf) })
+            : '';
+        }
+      });
     }
 
     function aktualisieren(){
-      einzelnUmschalten();
+      modusUmschalten();
+      zeigeZeiten();
       zeigeSumme();
       merken();
       meldung.textContent = '';
@@ -747,7 +829,7 @@
         tr.querySelector('.pm-c-pause').value = 0;
       });
       pauseAlle.value = 0;
-      einzeln.checked = false;
+      experte.checked = false;
       try{ localStorage.removeItem(SPEICHER); }catch(e){}
       history.replaceState(null, '', location.pathname);
       aktualisieren();
@@ -760,7 +842,8 @@
     if(!geladen){
       try{ var gemerkt = localStorage.getItem(SPEICHER); if(gemerkt) ausText(gemerkt); }catch(e){}
     }
-    einzelnUmschalten();
+    modusUmschalten();
+    zeigeZeiten();
     zeigeSumme();
     /* Auch das Geladene merken - sonst wäre eine über einen Link geteilte
        Zusammenstellung beim nächsten Besuch wieder weg, und wer nie etwas

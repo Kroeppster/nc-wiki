@@ -1074,8 +1074,42 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
    solange alle Pausen gleich lang sind, wäre sie elfmal dieselbe Zahl. */
 .pm-custom-table input[type="number"]{width:5rem;padding:.35rem .5rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-ink);font-family:var(--font-body);font-size:var(--text-sm);font-variant-numeric:tabular-nums;}
 .pm-custom-table td{white-space:nowrap;}
+/* Normal- und Expertenmodus des eigenen Ablaufs: Die Pausenspalte und die
+   Minuten-Eingabefelder gibt es NUR im Expertenmodus. Sichtbar ist immer
+   genau eine der beiden Zeit-Darstellungen - "display:none" (statt z.B.
+   Sichtbarkeit) ist hier wichtig, damit ein ausgeblendetes Eingabefeld auch
+   per Tabulator nicht erreichbar ist. */
+/* ---------------------------------------------------------------------------
+   ÜBERSICHT ÜBER DIE ABSCHNITTE EINER SEITE ("Auf dieser Seite")
+   --------------------------------------------------------------------------- */
+/* Bewusst KEINE Karte mit Rahmen und Schatten: Die Liste steht direkt unter
+   dem Titel und soll dem eigentlichen Text nicht die Aufmerksamkeit wegnehmen.
+   Eine farbige Linie links reicht, um sie als Navigation vom Fliesstext
+   abzusetzen. */
+.seiten-uebersicht{margin:var(--space-6) 0 var(--space-8);padding:var(--space-4) 0 var(--space-4) var(--space-5);border-left:2px solid var(--color-signal);}
+.seiten-uebersicht-titel{margin:0 0 var(--space-3);font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);}
+.seiten-uebersicht-liste{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);}
+.seiten-uebersicht-liste li{margin:0;}
+.seiten-uebersicht-liste a{font-size:var(--text-sm);color:var(--color-ink-soft);text-decoration:none;border-bottom:1px solid transparent;}
+.seiten-uebersicht-liste a:hover,.seiten-uebersicht-liste a:focus-visible{color:var(--color-signal);border-bottom-color:currentColor;}
+/* Ohne das verschwindet die angesprungene Überschrift unter der Kopfzeile,
+   die beim Scrollen oben stehen bleibt (siehe header.site weiter oben). */
+main h2[id],main h3[id]{scroll-margin-top:5.5rem;}
+@media (max-width:640px){
+  .seiten-uebersicht-liste{flex-direction:column;gap:var(--space-2);}
+}
+
 .pm-custom .pm-custom-pausenspalte{display:none;}
-.pm-custom.zeigt-pausen .pm-custom-pausenspalte{display:table-cell;}
+.pm-custom.ist-experte .pm-custom-pausenspalte{display:table-cell;}
+.pm-custom-modus{margin-top:var(--space-5);}
+.pm-custom-modus .pm-hinweis{margin-top:var(--space-2);}
+.pm-custom .pm-c-min{display:none;}
+.pm-custom.ist-experte .pm-c-min{display:inline-block;}
+.pm-custom.ist-experte .pm-c-min-auto{display:none;}
+.pm-custom.ist-experte .pm-custom-feld{display:none;}
+.pm-custom-table .pm-c-zeit{font-variant-numeric:tabular-nums;}
+.pm-c-pro-aufgabe{display:block;font-size:var(--text-xs);color:var(--color-ink-faint);}
+.pm-c-pro-aufgabe:empty{display:none;}
 .pm-custom-steuerung{display:flex;align-items:center;gap:var(--space-6);flex-wrap:wrap;margin-top:var(--space-5);}
 .pm-custom-feld{display:flex;align-items:center;gap:var(--space-3);font-size:var(--text-sm);color:var(--color-ink-soft);}
 .pm-custom-feld input{width:5rem;padding:.35rem .5rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-ink);font-family:var(--font-body);font-variant-numeric:tabular-nums;}

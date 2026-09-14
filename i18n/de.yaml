@@ -24,6 +24,7 @@
 # nicht ändern, sonst funktioniert die Verknüpfung nicht mehr).
 
 skip_to_content: "Zum Inhalt springen"
+auf_dieser_seite: "Auf dieser Seite"
 nav_aria_label: "Hauptnavigation"
 nav_toggle_aria_label: "Menü öffnen/schliessen"
 submenu_toggle_aria_label: "Untermenü öffnen"
@@ -246,13 +247,16 @@ pm_esc_hinweis: "Esc beendet die Übung."
 
 # --- Eigener Ablauf (Custom-Modus) -----------------------------------------
 pm_custom_heading: "Eigener Ablauf"
-pm_custom_text: "Stell dir selbst zusammen, was du üben willst: welche Untertests, wie viele Aufgaben, wie viel Zeit – und ob dazwischen Pausen liegen."
+pm_custom_text: "Stell dir selbst zusammen, was du üben willst: welche Untertests und wie viele Aufgaben. Die Zeit rechnet sich automatisch aus der Aufgabenzahl – im Tempo des echten EMS."
 pm_custom_start: "Eigenen Ablauf starten"
 pm_custom_th_block: "Untertest"
 pm_custom_th_aufgaben: "Aufgaben"
 pm_custom_th_zeit: "Minuten"
+pm_custom_zeit_auto: "{min} Min"
+pm_custom_pro_aufgabe: "≈ {sek} s pro Aufgabe"
+pm_custom_experte: "Expertenmodus: Zeit und Pausen selbst festlegen"
+pm_custom_experte_hinweis: "Normalerweise ergibt sich die Zeit aus der Aufgabenzahl. Im Expertenmodus trägst du für jeden Block Minuten und Pause von Hand ein."
 pm_custom_pause_gleich: "Pause zwischen allen Blöcken (Minuten)"
-pm_custom_pause_einzeln: "Pausen einzeln festlegen"
 pm_custom_pause_nach: "Pause nach {name}"
 pm_custom_link: "Als Link kopieren"
 pm_custom_link_kopiert: "Link kopiert – teilbar mit deiner Lerngruppe."

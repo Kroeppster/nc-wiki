@@ -39,6 +39,7 @@ wiederholt, gilt aber überall.
 16. [Wo hört "nur Copy-Paste" auf?](#16-wo-hört-nur-copy-paste-auf)
 17. [Startseite: die Kacheln "Was du hier findest"](#17-startseite-die-kacheln-was-du-hier-findest)
 18. [Prüfungsmodus: Uhr, Ansagen und der Testablauf](#18-prüfungsmodus-uhr-ansagen-und-der-testablauf)
+19. [„Auf dieser Seite": die Sprungliste über den Abschnitten](#19-auf-dieser-seite-die-sprungliste-über-den-abschnitten)
 
 ---
 
@@ -866,6 +867,19 @@ Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werd
   Umblätter-Dauer und auch keine Rückfrage.
 - **Eine Endzeit wird nirgends angezeigt**, auch nicht vor dem Start. Im
   Testsaal steht sie nirgends geschrieben; es gibt wirklich nur die Uhr.
+- **Die Zeit im eigenen Ablauf wird gerechnet, nicht getippt.** Ohne
+  Expertenmodus ergibt sich die Minutenzahl aus der Aufgabenzahl, im
+  Verhältnis des echten Blocks (`aufgaben` zu `minuten` aus
+  `data/testablauf.yaml`), aufgerundet auf ganze Minuten und nie unter einer.
+  Blöcke ohne Aufgabenzahl – die beiden Einprägephasen und das konzentrierte
+  Arbeiten – behalten ihre echte Zeit, dort gibt es nichts zu rechnen. Das
+  Eingabefeld für die Minuten steht trotzdem im Quelltext, ist aber per
+  `display:none` ausgeblendet (nicht nur unsichtbar, sondern auch nicht per
+  Tabulator erreichbar) und erscheint erst im Expertenmodus.
+- **Ein geteilter Link schaltet den Expertenmodus selbst ein**, wenn er Zeiten
+  oder Pausen enthält, die sich im Normalmodus gar nicht darstellen liessen.
+  Ohne das würde ein weitergegebener Ablauf beim Öffnen stillschweigend
+  verändert.
 - **Die Pause gibt es am echten EMS nicht.** Sie ist absichtlich eingebaut und
   ebenso absichtlich beschriftet („Am echten EMS gibt es keine Pause – diese
   hier gibt es nur zum Üben").
@@ -873,3 +887,48 @@ Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werd
   an das Skript übergeben. Ohne diesen Zusatz verpackt Hugo den fertigen
   JSON-Text ein zweites Mal, im Browser käme Text statt Daten an – und die
   Seite bliebe stumm, ohne sichtbare Fehlermeldung.
+
+---
+
+## 19. „Auf dieser Seite": die Sprungliste über den Abschnitten
+
+| Was | Wo |
+| --- | --- |
+| Die ganze Funktion | `layouts/partials/seiten-uebersicht.html` |
+| Eingebunden in | `layouts/_default/single.html`, `layouts/_default/list.html` |
+| Beschriftung | `i18n/de\|fr\|it.yaml`, Eintrag `auf_dieser_seite` |
+| Aussehen | `assets/css/style.css`, Regeln ab `.seiten-uebersicht` |
+
+Die Liste entsteht auf **zwei Wegen**, und das ist der einzige Teil, der
+Erklärung braucht:
+
+1. **Beim Bauen.** Hugo kennt über `.Fragments.Headings` alle Überschriften,
+   die im Fliesstext einer `.md`-Datei stehen. Die stehen fertig im Quelltext
+   der Seite und funktionieren auch ohne JavaScript.
+2. **Nach dem Laden.** Manche Seiten bekommen ihre Abschnitte nicht aus dem
+   Fliesstext, sondern aus einer Vorlage – der Prüfungsmodus, die
+   Uniguide-Tabelle, die Übungsaufgaben-Übersicht. Davon weiss Hugo beim Bauen
+   nichts. Deshalb schaut ein kleines Skript nach dem Laden noch einmal selbst
+   nach, welche `h2` wirklich auf der Seite stehen, vergibt fehlende
+   Sprungmarken und baut die Liste daraus neu.
+
+Wer daran etwas ändert, sollte drei Dinge kennen:
+
+- **Das Skript wartet auf `DOMContentLoaded`.** Die Vorlage steht ganz oben auf
+  der Seite – zum Zeitpunkt, an dem das Skript im Quelltext auftaucht, ist der
+  Rest des Textes noch gar nicht da. Ohne das Warten bliebe die Liste leer, und
+  zwar ohne Fehlermeldung.
+- **Drei Dinge sind ausgenommen:** die Übersicht selbst, der Seitentitel (den
+  gibt `list.html` als `h2` aus, er ist aber kein Abschnitt) und alles, was
+  gerade ausgeblendet ist – vor allem die Vollbild-Ansicht des Prüfungsmodus,
+  deren Titel sonst als Abschnitt erscheinen würde.
+- **`scroll-margin-top` muss bleiben.** Die Kopfzeile bleibt beim Scrollen oben
+  stehen (`header.site` ist `position:sticky`). Ohne diesen Abstand landet die
+  angesprungene Überschrift genau darunter und ist unsichtbar.
+
+Überschriften tiefer als `h2` kommen bewusst nicht in die Liste. Wer das ändern
+will, erweitert im Partial sowohl die Hugo-Schleife als auch den
+`querySelectorAll`-Aufruf – und sollte vorher auf einer langen Seite wie
+`/ems/uebungsaufgaben/figuren-fakten-lernen/` nachsehen, ob das Ergebnis noch
+eine Übersicht ist oder schon ein Inhaltsverzeichnis.
+

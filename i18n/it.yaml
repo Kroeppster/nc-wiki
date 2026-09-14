@@ -23,6 +23,7 @@
 # funziona più).
 
 skip_to_content: "Vai al contenuto"
+auf_dieser_seite: "In questa pagina"
 nav_aria_label: "Navigazione principale"
 nav_toggle_aria_label: "Apri/chiudi il menu"
 submenu_toggle_aria_label: "Apri il sottomenu"
@@ -239,13 +240,16 @@ pm_esc_hinweis: "Esc termina l'esercizio."
 
 # --- Svolgimento personalizzato --------------------------------------------
 pm_custom_heading: "Svolgimento personalizzato"
-pm_custom_text: "Componi tu stesso l'esercitazione: quali sottotest, quanti esercizi, quanto tempo – e se tra i blocchi ci sono pause."
+pm_custom_text: "Componi tu stesso l'esercitazione: quali sottotest e quanti esercizi. Il tempo si calcola automaticamente in base al numero di esercizi, al ritmo dell'EMS reale."
 pm_custom_start: "Avvia il mio svolgimento"
 pm_custom_th_block: "Sottotest"
 pm_custom_th_aufgaben: "Esercizi"
 pm_custom_th_zeit: "Minuti"
+pm_custom_zeit_auto: "{min} min"
+pm_custom_pro_aufgabe: "≈ {sek} s per esercizio"
+pm_custom_experte: "Modalità esperto: definire tempo e pause manualmente"
+pm_custom_experte_hinweis: "Di norma il tempo deriva dal numero di esercizi. In modalità esperto inserisci a mano i minuti e la pausa di ogni blocco."
 pm_custom_pause_gleich: "Pausa tra tutti i blocchi (minuti)"
-pm_custom_pause_einzeln: "Definire le pause una per una"
 pm_custom_pause_nach: "Pausa dopo {name}"
 pm_custom_link: "Copia il link"
 pm_custom_link_kopiert: "Link copiato – condividilo con il tuo gruppo di studio."

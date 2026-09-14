@@ -87,6 +87,11 @@
       </figure>
       {{ end }}
 
+      {{/* Sprungliste über die Abschnitte dieser Seite. Erscheint nur, wenn es
+           mindestens zwei Abschnitte zu verlinken gibt - siehe
+           layouts/partials/seiten-uebersicht.html. */}}
+      {{ partial "seiten-uebersicht.html" . }}
+
       {{/* Der eigentliche Fliesstext der Seite (alles nach dem Frontmatter-Block) */}}
       {{ .Content }}
 

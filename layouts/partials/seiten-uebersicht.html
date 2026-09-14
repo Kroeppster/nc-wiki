@@ -1,0 +1,116 @@
+{{- /*
+  ============================================================================
+  ÜBERSICHT ÜBER DIE ABSCHNITTE EINER SEITE ("Auf dieser Seite")
+  ============================================================================
+  Kleine Sprungliste ganz oben auf langen Seiten: Sie zeigt, welche
+  Abschnitte weiter unten kommen, und springt mit einem Klick dorthin.
+  Gedacht für Seiten wie den EMS-Guide oder eine Untertest-Seite, bei denen
+  man sonst erst minutenlang scrollen muss, um zu sehen, was überhaupt drin
+  steht.
+
+  Eingebunden ist sie in layouts/_default/single.html und list.html, gilt
+  also automatisch für JEDE Unterseite und jede Übersichtsseite - man muss
+  pro Seite nichts eintragen.
+
+  ZWEI WEGE, EINE LISTE - und das hat einen Grund:
+
+  1. Hugo kennt beim Bauen die Überschriften, die im Fliesstext einer
+     .md-Datei stehen (".Fragments.Headings"). Die stehen unten fertig im
+     Quelltext und funktionieren auch ohne JavaScript.
+
+  2. Manche Seiten bekommen ihre Abschnitte aber nicht aus dem Fliesstext,
+     sondern aus einer Vorlage - der Prüfungsmodus zum Beispiel, oder die
+     Uniguide-Tabelle. Davon weiss Hugo an dieser Stelle nichts. Deshalb
+     schaut das kleine Skript unten nach dem Laden noch einmal selbst nach,
+     welche Abschnitts-Überschriften wirklich auf der Seite stehen, und baut
+     die Liste daraus neu.
+
+  Ist am Ende weniger als ein Abschnitt zu verlinken, verschwindet die
+  Übersicht ganz - eine Sprungliste mit einem einzigen Eintrag ist kein
+  Gewinn, sondern nur zusätzliches Rauschen über dem Text.
+
+  Gezählt werden ausschliesslich Überschriften der zweiten Ebene (in einer
+  .md-Datei also "## Titel"). Tiefer verschachtelte Überschriften ("### ...")
+  bleiben bewusst draussen, sonst wird aus der Übersicht ein
+  Inhaltsverzeichnis, das länger ist als der Text darunter.
+  ============================================================================
+*/ -}}
+{{- $eintraege := slice }}
+{{- range .Fragments.Headings }}
+  {{- if and .Title .ID }}
+    {{- $eintraege = $eintraege | append (dict "id" .ID "titel" .Title) }}
+  {{- end }}
+{{- end }}
+<nav class="seiten-uebersicht" id="seiten-uebersicht"
+     aria-labelledby="seiten-uebersicht-titel"{{ if lt (len $eintraege) 2 }} hidden{{ end }}>
+  <p class="seiten-uebersicht-titel" id="seiten-uebersicht-titel">{{ i18n "auf_dieser_seite" }}</p>
+  <ul class="seiten-uebersicht-liste">
+    {{- range $eintraege }}
+    <li><a href="#{{ .id }}">{{ .titel }}</a></li>
+    {{- end }}
+  </ul>
+</nav>
+<script>
+/* WICHTIG: erst nachdem die Seite fertig geladen ist. Diese Vorlage steht
+   ganz OBEN auf der Seite - der Rest des Textes ist also noch gar nicht da,
+   wenn das Skript an dieser Stelle läuft. Ohne das Warten bliebe die Liste
+   leer, und zwar ohne Fehlermeldung. */
+(function(){
+  function baueUebersicht(){
+  var nav = document.getElementById('seiten-uebersicht');
+  if(!nav) return;
+  var liste = nav.querySelector('.seiten-uebersicht-liste');
+  var bereich = document.getElementById('main');
+  if(!liste || !bereich) return;
+
+  /* Aus einer Überschrift einen Namen für die Sprungmarke machen, falls sie
+     noch keine hat (Hugo vergibt die nur für Überschriften aus dem
+     Fliesstext, nicht für die aus einer Vorlage). */
+  function marke(text){
+    return text.toLowerCase()
+      .replace(/[äàâ]/g,'a').replace(/[öô]/g,'o').replace(/[üû]/g,'u')
+      .replace(/[éèêë]/g,'e').replace(/[ìî]/g,'i').replace(/ç/g,'c').replace(/ß/g,'ss')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'abschnitt';
+  }
+
+  var eintraege = [];
+  var vergeben = {};
+  Array.prototype.forEach.call(bereich.querySelectorAll('h2'), function(h){
+    /* Die Übersicht selbst, der Seitentitel (der auf Übersichtsseiten als
+       h2 ausgegeben wird) und alles, was gerade ausgeblendet ist - etwa die
+       Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Liste. */
+    if(nav.contains(h)) return;
+    if(h.closest && h.closest('.section-head, .pm-buehne, [hidden]')) return;
+    var titel = (h.textContent || '').trim();
+    if(!titel) return;
+    if(!h.id){
+      var name = marke(titel), n = 2;
+      while(document.getElementById(name)){ name = marke(titel) + '-' + n; n++; }
+      h.id = name;
+    }
+    if(vergeben[h.id]) return;
+    vergeben[h.id] = true;
+    eintraege.push({ id: h.id, titel: titel });
+  });
+
+  if(eintraege.length < 2){ nav.hidden = true; return; }
+
+  liste.textContent = '';
+  eintraege.forEach(function(e){
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + e.id;
+    a.textContent = e.titel;
+    li.appendChild(a);
+    liste.appendChild(li);
+  });
+  nav.hidden = false;
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', baueUebersicht);
+  } else {
+    baueUebersicht();
+  }
+})();
+</script>

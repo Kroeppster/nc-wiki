@@ -24,6 +24,7 @@
 # le lien ne fonctionne plus).
 
 skip_to_content: "Aller au contenu"
+auf_dieser_seite: "Sur cette page"
 nav_aria_label: "Navigation principale"
 nav_toggle_aria_label: "Ouvrir/fermer le menu"
 submenu_toggle_aria_label: "Ouvrir le sous-menu"
@@ -240,13 +241,16 @@ pm_esc_hinweis: "Échap met fin à l'entraînement."
 
 # --- Déroulement personnalisé ----------------------------------------------
 pm_custom_heading: "Déroulement personnalisé"
-pm_custom_text: "Compose toi-même ton entraînement : quels sous-tests, combien d'exercices, combien de temps – et si des pauses les séparent."
+pm_custom_text: "Compose toi-même ton entraînement : quels sous-tests et combien d'exercices. Le temps se calcule automatiquement à partir du nombre d'exercices, au rythme de l'EMS réel."
 pm_custom_start: "Démarrer mon déroulement"
 pm_custom_th_block: "Sous-test"
 pm_custom_th_aufgaben: "Exercices"
 pm_custom_th_zeit: "Minutes"
+pm_custom_zeit_auto: "{min} min"
+pm_custom_pro_aufgabe: "≈ {sek} s par exercice"
+pm_custom_experte: "Mode expert : définir soi-même le temps et les pauses"
+pm_custom_experte_hinweis: "Normalement, le temps découle du nombre d'exercices. En mode expert, tu saisis toi-même les minutes et la pause de chaque bloc."
 pm_custom_pause_gleich: "Pause entre tous les blocs (minutes)"
-pm_custom_pause_einzeln: "Définir les pauses une par une"
 pm_custom_pause_nach: "Pause après {name}"
 pm_custom_link: "Copier le lien"
 pm_custom_link_kopiert: "Lien copié – à partager avec ton groupe de révision."

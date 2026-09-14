@@ -51,6 +51,10 @@
            (Themen-Navigation | dieser Text | Fehlerformular) und rendert
            ".Content" deshalb selbst an der richtigen Stelle in der Mitte,
            statt ihn hier schon vollbreit über allem anzuzeigen. */}}
+      {{/* Sprungliste über die Abschnitte dieser Seite - siehe
+           layouts/partials/seiten-uebersicht.html. */}}
+      {{ partial "seiten-uebersicht.html" . }}
+
       {{ if ne .Path "/ems/uebungsaufgaben" }}
       {{ with .Content }}{{ . }}{{ end }}
       {{ end }}
