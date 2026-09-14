@@ -58,6 +58,7 @@
         "name" (or (index . $lang) .de)
         "minuten" .minuten
         "aufgaben" $anzahl
+        "aufgabenFest" (eq .aufgaben_fest true)
       ) }}
 {{- end }}
 
@@ -139,6 +140,17 @@
        Tests passt, macht das Üben wertlos - deshalb ist das hier gar nicht
        erst möglich.
 
+       Deshalb steht die Zeit auch in MINUTEN UND SEKUNDEN, nicht in ganzen
+       Minuten: 7 Aufgaben "Muster zuordnen" sind 6:13, nicht 6 Minuten. Auf
+       ganze Minuten gerundet wäre der Schnitt pro Aufgabe ein anderer als am
+       echten Test - und genau der ist der Sinn der Sache.
+
+       UMGEKEHRT bei Figuren und Fakten einprägen (Feld "aufgaben_fest" in
+       data/testablauf.yaml): Dort gibt das Übungsblatt vor, wie viele Figuren
+       darauf stehen - einstellen lässt sich die ZEIT. Das ist genau das, was
+       die Übungsseite empfiehlt: am Anfang bewusst mehr Zeit nehmen und sie
+       nach und nach verkürzen.
+
        EXPERTE: Zeit pro Block und Pausen einzeln von Hand. Für Leute, die
        bewusst etwas anderes trainieren wollen (bewusst zu wenig Zeit, oder
        eine lange Pause zwischen Einprägen und Reproduktion).
@@ -171,23 +183,39 @@
         </thead>
         <tbody>
           {{- range $i, $b := $bloecke }}
-          <tr data-key="{{ $b.key }}">
+          <tr data-key="{{ $b.key }}"{{ if $b.aufgabenFest }} class="zeit-frei"{{ end }}>
             <td><label class="compare-check">
               <input type="checkbox" class="pm-c-an" checked>
               <span class="visually-hidden-field">{{ $b.name }}</span>
             </label></td>
             <td>{{ $b.name }}</td>
-            <td>{{ if $b.aufgaben }}<input type="number" class="pm-c-aufgaben" min="1" max="999" value="{{ $b.aufgaben }}" aria-label="{{ i18n "pm_custom_th_aufgaben" }}: {{ $b.name }}">{{ else }}<span class="report-meta">–</span>{{ end }}</td>
+            {{/* Eingabefeld nur, wo die Aufgabenzahl auch frei wählbar ist.
+                 Bei Figuren/Fakten steht die feste Zahl als Text da, bei den
+                 Einprägephasen gibt es gar keine bewerteten Aufgaben. */}}
+            <td>
+              {{- if and $b.aufgaben (not $b.aufgabenFest) -}}
+                <input type="number" class="pm-c-aufgaben" min="1" max="999" value="{{ $b.aufgaben }}" aria-label="{{ i18n "pm_custom_th_aufgaben" }}: {{ $b.name }}">
+              {{- else if $b.aufgaben -}}
+                <span class="report-meta">{{ $b.aufgaben }}</span>
+              {{- else -}}
+                <span class="report-meta">–</span>
+              {{- end -}}
+            </td>
             {{/* Beide Darstellungen stehen im Quelltext, sichtbar ist immer
-                 nur eine (siehe .pm-custom.ist-experte in style.css): im
-                 Normalfall die berechnete Zeit als Text, im Expertenmodus das
-                 Eingabefeld. Der vorbelegte Text ist der echte EMS-Wert -
+                 nur eine (siehe .pm-custom in style.css): die berechnete Zeit
+                 als Text, oder die beiden Eingabefelder - letztere im
+                 Expertenmodus und in den Zeilen mit fester Aufgabenzahl
+                 (Figuren/Fakten). Der vorbelegte Text ist der echte EMS-Wert -
                  dadurch stimmt die Anzeige auch dann, wenn kein JavaScript
                  läuft und nichts nachgerechnet wird. */}}
             <td class="pm-c-zeit">
-              <input type="number" class="pm-c-min" min="1" max="180" value="{{ $b.minuten }}" aria-label="{{ i18n "pm_custom_th_zeit" }}: {{ $b.name }}">
-              <span class="pm-c-min-auto">{{ i18n "pm_minuten" (dict "min" $b.minuten) }}</span>
-              {{- if $b.aufgaben }}<span class="pm-c-pro-aufgabe"></span>{{ end }}
+              <span class="pm-c-zeit-eingabe">
+                <input type="number" class="pm-c-min" min="0" max="180" value="{{ $b.minuten }}" aria-label="{{ i18n "pm_custom_th_zeit" }}: {{ $b.name }}">
+                <span class="pm-c-doppelpunkt" aria-hidden="true">:</span>
+                <input type="number" class="pm-c-sek" min="0" max="59" step="5" value="0" aria-label="{{ i18n "pm_custom_sekunden" }}: {{ $b.name }}">
+              </span>
+              <span class="pm-c-min-auto">{{ printf "%d:00" $b.minuten }}</span>
+              {{- if and $b.aufgaben (not $b.aufgabenFest) }}<span class="pm-c-pro-aufgabe"></span>{{ end }}
             </td>
             <td class="pm-custom-pausenspalte"><input type="number" class="pm-c-pause" min="0" max="120" value="0" aria-label="{{ i18n "pm_custom_pause_nach" }}"></td>
           </tr>
@@ -204,6 +232,7 @@
     </div>
 
     <p class="pm-custom-summe" id="pm-c-summe"></p>
+    <p class="pm-hinweis">{{ i18n "pm_custom_zeit_fest" }}</p>
     <p class="pm-hinweis" id="pm-c-stimme">{{ i18n "pm_custom_stimme_hinweis" }}</p>
 
     <div class="pm-custom-aktionen">
@@ -276,8 +305,10 @@
       "customLink" (i18n "pm_custom_link")
       "customLinkKopiert" (i18n "pm_custom_link_kopiert")
       "customPauseNach" (i18n "pm_custom_pause_nach")
-      "customZeitAuto" (i18n "pm_custom_zeit_auto")
       "customProAufgabe" (i18n "pm_custom_pro_aufgabe")
+      "customDauerSek" (i18n "pm_custom_dauer_sek")
+      "dauerMin" (i18n "pm_dauer_min")
+      "dauerMinSek" (i18n "pm_dauer_min_sek")
    )
    | jsonify | safeJS }}
 </script>
@@ -418,25 +449,45 @@
      Ein Ablauf ist eine Liste von Schritten. Ein Schritt ist entweder ein
      Untertest oder eine Pause - dadurch passen Pausen in denselben Ablauf,
      ohne dass es zwei verschiedene Abläufe braucht. */
-  function blockSchritt(b, minuten, aufgaben){
-    minuten = minuten || b.minuten;
+  /* Zeiten werden durchgehend in SEKUNDEN gerechnet, nicht in Minuten: Wer
+     die halbe Anzahl Aufgaben übt, soll exakt die halbe Zeit bekommen. Auf
+     ganze Minuten gerundet wäre der Schnitt pro Aufgabe ein anderer als am
+     echten Test - und genau darum geht es beim Üben. */
+  function mmss(sekunden){
+    var m = Math.floor(sekunden / 60);
+    return m + ':' + zweistellig(sekunden % 60);
+  }
+
+  /* Gesprochene Dauer: "16 Minuten" bzw. "6 Minuten 13 Sekunden". Getrennte
+     Vorlagen, weil "0 Sekunden" mitzusprechen unnatürlich klingt - und weil
+     bei unveränderten Blöcken genau derselbe Satz herauskommen muss wie in
+     den fertigen Aufnahmen. */
+  function dauerText(sekunden){
+    var m = Math.floor(sekunden / 60), s = sekunden % 60;
+    return s === 0 ? vorlage(T.dauerMin, { min: m })
+                   : vorlage(T.dauerMinSek, { min: m, sek: s });
+  }
+
+  function blockSchritt(b, sekunden, aufgaben){
+    sekunden = sekunden || b.minuten * 60;
     if(aufgaben === undefined) aufgaben = b.aufgaben;
+    var dauer = dauerText(sekunden);
     var ansage = aufgaben
-      ? vorlage(T.ansage, { name: b.name, aufgaben: aufgaben, min: minuten })
-      : vorlage(T.ansageOhne, { name: b.name, min: minuten });
+      ? vorlage(T.ansage, { name: b.name, aufgaben: aufgaben, dauer: dauer })
+      : vorlage(T.ansageOhne, { name: b.name, dauer: dauer });
     /* Die Aufnahme nennt die ECHTEN EMS-Werte. Wurde an Zeit oder Aufgabenzahl
        etwas geändert, würde sie also eine falsche Zahl ansagen - dann wird
        stattdessen vorgelesen. */
-    var unveraendert = (minuten === b.minuten) &&
+    var unveraendert = (sekunden === b.minuten * 60) &&
                        (String(aufgaben || '') === String(b.aufgaben || ''));
-    return { art: 'block', key: b.key, name: b.name, minuten: minuten,
+    return { art: 'block', key: b.key, name: b.name, sekunden: sekunden,
              aufgaben: aufgaben, ansage: ansage,
              audio: unveraendert ? b.key : null };
   }
 
-  function pauseSchritt(minuten){
-    return { art: 'pause', name: T.pauseLabel, minuten: minuten,
-             ansage: vorlage(T.pauseAnsage, { min: minuten }), audio: null };
+  function pauseSchritt(sekunden){
+    return { art: 'pause', name: T.pauseLabel, sekunden: sekunden,
+             ansage: vorlage(T.pauseAnsage, { dauer: dauerText(sekunden) }), audio: null };
   }
 
   function aktuellerSchritt(){ return lauf.schritte[lauf.index]; }
@@ -485,7 +536,7 @@
   function starteUhr(){
     var sch = aktuellerSchritt();
     zustand('uhr');
-    lauf.endeMs = Date.now() + sch.minuten * 60 * 1000;
+    lauf.endeMs = Date.now() + sch.sekunden * 1000;
     el.titel.textContent = sch.name;
     el.uhrLabel.textContent = sch.art === 'pause' ? T.pauseLabel : '';
     el.pause.textContent = T.pause;
@@ -656,18 +707,25 @@
     }
 
     /* Zeit aus der Aufgabenzahl, im Tempo des echten EMS: Wer die Hälfte der
-       Aufgaben übt, bekommt die Hälfte der Zeit. Aufgerundet auf ganze
-       Minuten und nie unter einer Minute. Blöcke ohne Aufgabenzahl (die
-       Einprägephasen und das konzentrierte Arbeiten) behalten ihre echte
-       Zeit - dort gibt es nichts, woraus sich etwas rechnen liesse. */
-    function autoMinuten(b, aufgaben){
-      if(!b.aufgaben || !aufgaben) return b.minuten;
-      return Math.max(1, Math.round(aufgaben * b.minuten / b.aufgaben));
+       Aufgaben übt, bekommt exakt die Hälfte der Zeit. Gerechnet wird in
+       Sekunden, damit der Schnitt pro Aufgabe wirklich gleich bleibt.
+       Blöcke ohne frei wählbare Aufgabenzahl - die Einprägephasen, das
+       konzentrierte Arbeiten und alles mit "aufgaben_fest" - behalten ihre
+       echte Zeit; dort gibt es nichts, woraus sich etwas rechnen liesse. */
+    function autoSekunden(b, aufgaben){
+      if(!b.aufgaben || b.aufgabenFest || !aufgaben) return b.minuten * 60;
+      return Math.max(5, Math.round(aufgaben * b.minuten * 60 / b.aufgaben));
     }
-    function minutenFuer(tr, b){
-      return experte.checked
-        ? zahl(tr.querySelector('.pm-c-min'), b.minuten)
-        : autoMinuten(b, aufgabenZahl(tr, b));
+
+    /* In diesen Zeilen wird die ZEIT eingestellt statt der Aufgabenzahl:
+       im Expertenmodus überall, sonst nur bei Figuren und Fakten. */
+    function zeitFrei(tr, b){
+      return experte.checked || (b && b.aufgabenFest);
+    }
+    function sekundenFuer(tr, b){
+      if(!zeitFrei(tr, b)) return autoSekunden(b, aufgabenZahl(tr, b));
+      return Math.max(5, zahl(tr.querySelector('.pm-c-min'), b.minuten) * 60
+                       + zahl(tr.querySelector('.pm-c-sek'), 0));
     }
 
     /* Aus den Eingabefeldern die Schrittfolge bauen. */
@@ -676,7 +734,7 @@
       var gewaehlt = zeilen.filter(function(tr){ return tr.querySelector('.pm-c-an').checked; });
       gewaehlt.forEach(function(tr, i){
         var b = zeileZuBlock(tr);
-        schritte.push(blockSchritt(b, minutenFuer(tr, b), aufgabenZahl(tr, b)));
+        schritte.push(blockSchritt(b, sekundenFuer(tr, b), aufgabenZahl(tr, b)));
         /* Die Pause steht NACH einem Block und nur zwischen zwei Blöcken -
            eine Pause am Ende wäre sinnlos. Einzelne Pausen pro Block gibt es
            nur im Expertenmodus, sonst gilt überall dieselbe. */
@@ -684,7 +742,7 @@
           var p = experte.checked
             ? zahl(tr.querySelector('.pm-c-pause'), 0)
             : zahl(pauseAlle, 0);
-          if(p > 0) schritte.push(pauseSchritt(p));
+          if(p > 0) schritte.push(pauseSchritt(p * 60));
         }
       });
       return schritte;
@@ -693,19 +751,36 @@
     function zeigeSumme(){
       var schritte = baueSchritte();
       if(!schritte.length){ summe.textContent = T.customLeer; return schritte; }
-      var min = schritte.reduce(function(a, x){ return a + x.minuten; }, 0);
+      var sek = schritte.reduce(function(a, x){ return a + x.sekunden; }, 0);
+      var min = Math.floor(sek / 60), rest = sek % 60;
+      /* Über einer Stunde sind die Sekunden Rauschen und bleiben weg. */
       summe.textContent = min >= 60
         ? vorlage(T.customDauer, { std: Math.floor(min / 60), min: min % 60 })
-        : vorlage(T.customDauerKurz, { min: min });
+        : (rest ? vorlage(T.customDauerSek, { min: min, sek: rest })
+                : vorlage(T.customDauerKurz, { min: min }));
       return schritte;
     }
 
     /* Schrittfolge <-> Text für Adresse und Speicher.
-       Format: b:<key>:<aufgaben>:<minuten> bzw. p:<minuten>, getrennt mit ";" */
+       Format: b:<key>:<aufgaben>:<min>m<sek> bzw. p:<min>m<sek>, mit ";"
+       getrennt. Das "m" ist wichtig: Vor der Umstellung auf Sekunden stand an
+       dieser Stelle eine reine Minutenzahl. Ein alter, weitergegebener Link
+       bleibt dadurch gültig und wird unten weiter als Minuten gelesen, statt
+       still als Sekunden missverstanden zu werden. */
+    function alsZeit(sek){
+      return Math.floor(sek / 60) + 'm' + zweistellig(sek % 60);
+    }
+    function ausZeit(text, standardSek){
+      var t = String(text || '');
+      var m = t.match(/^(\d+)m(\d+)$/);
+      if(m) return parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+      var alt = parseInt(t, 10);              /* altes Format: ganze Minuten */
+      return isNaN(alt) ? standardSek : alt * 60;
+    }
     function alsText(schritte){
       return schritte.map(function(x){
-        if(x.art === 'pause') return 'p:' + x.minuten;
-        return 'b:' + x.key + ':' + (x.aufgaben || '') + ':' + x.minuten;
+        if(x.art === 'pause') return 'p:' + alsZeit(x.sekunden);
+        return 'b:' + x.key + ':' + (x.aufgaben || '') + ':' + alsZeit(x.sekunden);
       }).join(';');
     }
 
@@ -716,8 +791,8 @@
       var gewaehlteKeys = [], pausen = [];
       teile.forEach(function(t){
         var f = t.split(':');
-        if(f[0] === 'b') gewaehlteKeys.push({ key: f[1], aufgaben: f[2], min: parseInt(f[3], 10) });
-        if(f[0] === 'p') pausen.push(parseInt(f[1], 10));
+        if(f[0] === 'b') gewaehlteKeys.push({ key: f[1], aufgaben: f[2], sek: ausZeit(f[3], 0) });
+        if(f[0] === 'p') pausen.push(Math.round(ausZeit(f[1], 0) / 60));
       });
       if(!gewaehlteKeys.length) return false;
       zeilen.forEach(function(tr){
@@ -726,7 +801,10 @@
         gewaehlteKeys.forEach(function(g){ if(g.key === key) treffer = g; });
         tr.querySelector('.pm-c-an').checked = !!treffer;
         if(treffer){
-          if(!isNaN(treffer.min)) tr.querySelector('.pm-c-min').value = treffer.min;
+          if(treffer.sek > 0){
+            tr.querySelector('.pm-c-min').value = Math.floor(treffer.sek / 60);
+            tr.querySelector('.pm-c-sek').value = treffer.sek % 60;
+          }
           var af = tr.querySelector('.pm-c-aufgaben');
           if(af && treffer.aufgaben) af.value = treffer.aufgaben;
         }
@@ -741,9 +819,13 @@
       zeilen.forEach(function(tr){
         if(!tr.querySelector('.pm-c-an').checked) return;
         var b = zeileZuBlock(tr);
-        if(!b) return;
-        var gesetzt = zahl(tr.querySelector('.pm-c-min'), b.minuten);
-        if(gesetzt !== autoMinuten(b, aufgabenZahl(tr, b))) eigeneZeit = true;
+        /* Zeilen, in denen die Zeit ohnehin frei ist (Figuren/Fakten),
+           erzwingen keinen Expertenmodus - dort ist eine eigene Zeit der
+           Normalfall. */
+        if(!b || b.aufgabenFest) return;
+        var gesetzt = zahl(tr.querySelector('.pm-c-min'), b.minuten) * 60
+                    + zahl(tr.querySelector('.pm-c-sek'), 0);
+        if(gesetzt !== autoSekunden(b, aufgabenZahl(tr, b))) eigeneZeit = true;
       });
       experte.checked = eigeneZeit || !alleGleich;
       if(alleGleich){
@@ -776,14 +858,20 @@
         var b = zeileZuBlock(tr);
         if(!b) return;
         var auf = aufgabenZahl(tr, b);
-        var min = minutenFuer(tr, b);
-        if(!experte.checked) tr.querySelector('.pm-c-min').value = min;
+        var sek = sekundenFuer(tr, b);
+        /* Die (im Normalfall unsichtbaren) Eingabefelder auf demselben Wert
+           halten: Der Expertenmodus startet dadurch beim Einschalten genau
+           mit den Zeiten, die vorher angezeigt wurden, statt zu springen. */
+        if(!zeitFrei(tr, b)){
+          tr.querySelector('.pm-c-min').value = Math.floor(sek / 60);
+          tr.querySelector('.pm-c-sek').value = sek % 60;
+        }
         var anzeige = tr.querySelector('.pm-c-min-auto');
-        if(anzeige) anzeige.textContent = vorlage(T.customZeitAuto, { min: min });
+        if(anzeige) anzeige.textContent = mmss(sek);
         var pro = tr.querySelector('.pm-c-pro-aufgabe');
         if(pro){
           pro.textContent = auf > 0
-            ? vorlage(T.customProAufgabe, { sek: Math.round(min * 60 / auf) })
+            ? vorlage(T.customProAufgabe, { sek: Math.round(sek / auf) })
             : '';
         }
       });
@@ -824,6 +912,7 @@
         var b = zeileZuBlock(tr);
         tr.querySelector('.pm-c-an').checked = true;
         tr.querySelector('.pm-c-min').value = b.minuten;
+        tr.querySelector('.pm-c-sek').value = 0;
         var af = tr.querySelector('.pm-c-aufgaben');
         if(af) af.value = b.aufgaben;
         tr.querySelector('.pm-c-pause').value = 0;

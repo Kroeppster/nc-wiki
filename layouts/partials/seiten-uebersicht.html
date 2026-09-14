@@ -1,26 +1,33 @@
 {{- /*
   ============================================================================
-  ABSCHNITTSLEISTE ("Auf dieser Seite")
+  ABSCHNITTSLISTE ("Auf dieser Seite")
   ============================================================================
-  Einzeilige Reihe mit den Abschnitten der Seite, direkt unter dem Titel. Ein
-  Klick springt zum Abschnitt, der Abschnitt, in dem man gerade liest, ist
-  markiert - und beim Scrollen bleibt die Reihe unter der Kopfzeile kleben,
-  statt nach oben wegzurutschen.
+  Senkrechte Liste mit den Abschnitten der Seite. Ein Klick springt zum
+  Abschnitt, der Abschnitt, in dem man gerade liest, ist markiert.
 
-  WAS AN DEN ERSTEN ZWEI VERSUCHEN FALSCH WAR - bitte nicht zurückbauen:
+  ZWEI FORMEN, je nach Platz:
 
-  1. Ein Block mit Rahmen und Überschrift zwischen Titel und erstem Satz.
-     Der stand genau da im Weg, wo man anfangen will zu lesen, und brach auf
+    ab 1100px Breite  steht sie als schmale Spalte RECHTS neben dem Text und
+                      läuft beim Scrollen mit (siehe .seite-raster in
+                      style.css). Sie kostet dort keine einzige Zeile Höhe,
+                      und weil sie senkrecht ist, dürfen die Abschnittsnamen
+                      so lang sein, wie sie eben sind.
+    darunter          steht sie zugeklappt über dem Text: eine Zeile, die
+                      sich auftippen lässt. Auch da ist sie von Anfang an
+                      sichtbar, nimmt aber nur eine Zeile weg.
+
+  WAS AN DEN FRÜHEREN VERSUCHEN FALSCH WAR - bitte nicht zurückbauen:
+
+  1. Ein Block mit Rahmen und Überschrift zwischen Titel und erstem Satz. Der
+     stand genau da im Weg, wo man anfangen will zu lesen, und brach auf
      Seiten mit vielen Abschnitten auf zwei Zeilen um.
-  2. Eine Leiste, die erst beim Scrollen auftaucht. Damit war am Seitenanfang
+  2. Eine Leiste, die erst beim Scrollen auftauchte. Damit war am Seitenanfang
      - also genau dann, wenn man sich orientieren will - gar nichts da.
-
-  Die jetzige Lösung hat beides nicht: Sie ist von Anfang an sichtbar (Punkt
-  2), und sie ist IMMER einzeilig, weil sie seitwärts scrollt statt
-  umzubrechen (Punkt 1). "position:sticky" heisst: Sie steht an ihrem
-  normalen Platz im Text, bleibt beim Weiterscrollen aber oben hängen. Erst
-  wenn sie klebt, bekommt sie eine deckende Fläche - vorher wäre die nur ein
-  Kasten mehr auf der Seite.
+  3. Eine WAAGRECHTE Reihe, die seitwärts scrollt. Die Abschnittsnamen hier
+     sind ganze Fragen ("Wieso sind diese Untertests fürs spätere Studium
+     relevant?"). Nebeneinander gelegt sieht das zusammengestückelt aus, und
+     das meiste davon ist abgeschnitten. Senkrecht ist für diese Texte die
+     richtige Richtung.
 
   Eingebunden ist sie in layouts/_default/single.html und list.html, gilt also
   automatisch für jede Unterseite und jede Übersichtsseite. Pro Seite ist
@@ -34,33 +41,32 @@
   Überschriften aus einer Vorlage an dieser Stelle nichts.
 
   Tiefere Überschriften ("###") bleiben bewusst draussen - sonst wird aus der
-  Reihe ein Inhaltsverzeichnis, und in eine Zeile passt es ohnehin nicht.
+  Übersicht ein Inhaltsverzeichnis, das länger ist als der Text daneben.
 
-  OHNE JAVASCRIPT gibt es die Leiste nicht. Das ist Absicht: Sie ist reine
-  Bequemlichkeit, alle Abschnitte stehen ja untereinander auf der Seite. Der
-  Streifen bleibt deshalb ausgeblendet, bis das Skript ihn gefüllt hat - eine
-  leere Leiste wäre schlimmer als keine.
+  OHNE JAVASCRIPT gibt es die Liste nicht. Das ist Absicht: Sie ist reine
+  Bequemlichkeit, alle Abschnitte stehen ja untereinander auf der Seite. Sie
+  bleibt deshalb ausgeblendet, bis das Skript sie gefüllt hat - eine leere
+  Liste wäre schlimmer als keine.
   ============================================================================
 */ -}}
-<nav class="abschnittsleiste" id="abschnittsleiste" hidden
-     data-pagefind-ignore aria-label="{{ i18n "auf_dieser_seite" }}">
-  <div class="abschnittsleiste-inner" id="abschnittsleiste-inner">
-    <ul class="abschnittsleiste-liste" id="abschnittsleiste-liste"></ul>
-  </div>
-</nav>
+<details class="abschnittsliste" id="abschnittsliste" hidden data-pagefind-ignore>
+  <summary class="abschnittsliste-titel">{{ i18n "auf_dieser_seite" }}</summary>
+  <nav aria-label="{{ i18n "auf_dieser_seite" }}">
+    <ul class="abschnittsliste-liste" id="abschnittsliste-liste"></ul>
+  </nav>
+</details>
 <script>
 /* WICHTIG: erst wenn die Seite fertig geladen ist. Diese Vorlage steht weit
    oben - zu dem Zeitpunkt, an dem das Skript hier im Quelltext auftaucht, ist
-   der Rest der Seite noch gar nicht da. Ohne das Warten bliebe die Leiste
+   der Rest der Seite noch gar nicht da. Ohne das Warten bliebe die Liste
    leer, und zwar ohne Fehlermeldung. */
 (function(){
   function start(){
-    var leiste = document.getElementById('abschnittsleiste');
-    var innen  = document.getElementById('abschnittsleiste-inner');
-    var liste  = document.getElementById('abschnittsleiste-liste');
+    var kasten = document.getElementById('abschnittsliste');
+    var liste  = document.getElementById('abschnittsliste-liste');
     var kopf   = document.querySelector('header.site');
     var bereich = document.getElementById('main');
-    if(!leiste || !liste || !bereich) return;
+    if(!kasten || !liste || !bereich) return;
 
     /* --------------------------------------------------- Abschnitte finden */
     /* Aus einer Überschrift einen Namen für die Sprungmarke machen, falls sie
@@ -77,7 +83,7 @@
     Array.prototype.forEach.call(bereich.querySelectorAll('h2'), function(h){
       /* Der Seitentitel (den gibt list.html als h2 aus, er ist aber kein
          Abschnitt) und alles gerade Ausgeblendete - vor allem die
-         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Reihe. */
+         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Liste. */
       if(h.closest && h.closest('.section-head, .pm-buehne, [hidden]')) return;
       var titel = (h.textContent || '').trim();
       if(!titel) return;
@@ -101,69 +107,71 @@
       liste.appendChild(li);
       a.link = link;
     });
-    leiste.hidden = false;
+    kasten.hidden = false;
+
+    /* ------------------------------------------------ Aufgeklappt oder nicht */
+    /* Als Spalte neben dem Text ist die Liste immer offen - dort gibt es
+       nichts aufzuklappen. Auf schmalen Bildschirmen steht sie über dem Text
+       und bleibt zu, damit sie nur eine Zeile braucht. Wer sie dort selbst
+       aufklappt, soll sie auch offen behalten: darum das Merken. */
+    var breit = window.matchMedia('(min-width: 1100px)');
+    var selbstGeoeffnet = false;
+    kasten.addEventListener('toggle', function(){
+      if(!breit.matches) selbstGeoeffnet = kasten.open;
+    });
+    function klappen(){
+      kasten.open = breit.matches ? true : selbstGeoeffnet;
+    }
+    klappen();
+    if(breit.addEventListener) breit.addEventListener('change', klappen);
+    else if(breit.addListener) breit.addListener(klappen);
 
     /* ------------------------------------------------------------ Abstände */
-    /* Wo die Leiste hängen bleibt, hängt an der Kopfzeile - und die verhält
-       sich nicht überall gleich:
-
-         ab 861px Breite  bleibt sie beim Scrollen oben stehen (sticky),
-         darunter        scrollt sie mit nach oben weg (siehe header.site in
-                         style.css, Abschnitt "Responsiv").
-
-       Deshalb wird gemessen statt geraten. Auf dem Handy klebt die Leiste
-       dadurch ganz oben am Bildschirmrand statt mit einer leeren Lücke
-       darüber; zusätzlich bricht die Kopfzeile auf schmalen Bildschirmen um
-       und ist dann höher, was sich damit ebenfalls erledigt. */
-    var klebeOben = 0, leisteHoehe = 0;
+    /* Wo eine angesprungene Überschrift stehen bleibt, hängt an der
+       Kopfzeile - und die verhält sich nicht überall gleich: ab 861px Breite
+       bleibt sie beim Scrollen oben stehen (sticky), darunter scrollt sie mit
+       weg (siehe header.site in style.css, Abschnitt "Responsiv"). Deshalb
+       wird gemessen statt geraten; nur eine stehenbleibende Kopfzeile kann
+       etwas verdecken. */
     function messen(){
       var kopfKlebt = kopf && window.getComputedStyle(kopf).position === 'sticky';
-      klebeOben = kopfKlebt ? kopf.getBoundingClientRect().height : 0;
-      leiste.style.top = klebeOben + 'px';
-      leisteHoehe = leiste.getBoundingClientRect().height;
-      /* Abstand, den eine angesprungene Überschrift nach oben hält - sonst
-         landet sie unter der Leiste und ist unsichtbar. */
-      document.documentElement.style.setProperty(
-        '--sprung-abstand', (klebeOben + leisteHoehe + 16) + 'px');
+      var hoehe = kopfKlebt ? kopf.getBoundingClientRect().height : 0;
+      document.documentElement.style.setProperty('--sprung-abstand', (hoehe + 16) + 'px');
+      document.documentElement.style.setProperty('--kopf-hoehe', hoehe + 'px');
     }
     messen();
 
-    /* -------------------------------------------------- Kleben und Mitlaufen */
+    /* ------------------------------------------------------------ Mitlaufen */
     var laeuft = false;
     var aktiv = null;
     function zeichnen(){
       laeuft = false;
-
-      /* Klebt sie gerade? Dann bekommt sie eine deckende Fläche, damit der
-         Text sauber darunter durchläuft. An ihrem Platz im Text braucht sie
-         die nicht - dort wäre sie nur ein Kasten mehr. */
-      var obenAmRand = leiste.getBoundingClientRect().top <= klebeOben + 1;
-      leiste.classList.toggle('klebt', obenAmRand);
-
-      /* Der aktuelle Abschnitt ist der letzte, dessen Überschrift schon unter
-         die Leiste gerutscht ist. */
-      var grenze = klebeOben + leisteHoehe + 8;
+      /* Der aktuelle Abschnitt ist der letzte, dessen Überschrift schon über
+         der Lesemarke steht - ein Stück unterhalb des oberen Rands, so wie
+         man beim Lesen tatsächlich hinschaut. */
+      var marke = Math.max(80, window.innerHeight * 0.25);
       var treffer = null;
       abschnitte.forEach(function(a){
-        if(a.ueberschrift.getBoundingClientRect().top <= grenze) treffer = a;
+        if(a.ueberschrift.getBoundingClientRect().top <= marke) treffer = a;
       });
-      if(treffer !== aktiv){
-        if(aktiv){ aktiv.link.classList.remove('ist-aktiv'); aktiv.link.removeAttribute('aria-current'); }
-        if(treffer){
-          treffer.link.classList.add('ist-aktiv');
-          treffer.link.setAttribute('aria-current', 'true');
-          /* Auf schmalen Bildschirmen passen nicht alle Abschnitte
-             nebeneinander - dann wird der aktuelle in den sichtbaren Bereich
-             geschoben. Bewusst von Hand statt mit scrollIntoView: das würde
-             die ganze Seite mitverschieben. */
+      if(treffer === aktiv) return;
+      if(aktiv){ aktiv.link.classList.remove('ist-aktiv'); aktiv.link.removeAttribute('aria-current'); }
+      if(treffer){
+        treffer.link.classList.add('ist-aktiv');
+        treffer.link.setAttribute('aria-current', 'true');
+        /* Ist die Liste länger als die Spalte, wird der aktuelle Eintrag in
+           den sichtbaren Bereich geschoben. Bewusst von Hand statt mit
+           scrollIntoView: das würde die ganze Seite mitverschieben. */
+        var kasten2 = liste.parentNode;
+        if(kasten2.scrollHeight > kasten2.clientHeight + 4){
           var l = treffer.link;
-          if(l.offsetLeft < innen.scrollLeft ||
-             l.offsetLeft + l.offsetWidth > innen.scrollLeft + innen.clientWidth){
-            innen.scrollLeft = Math.max(0, l.offsetLeft - 24);
+          if(l.offsetTop < kasten2.scrollTop ||
+             l.offsetTop + l.offsetHeight > kasten2.scrollTop + kasten2.clientHeight){
+            kasten2.scrollTop = Math.max(0, l.offsetTop - 16);
           }
         }
-        aktiv = treffer;
       }
+      aktiv = treffer;
     }
     function beiScroll(){
       if(!laeuft){ laeuft = true; window.requestAnimationFrame(zeichnen); }

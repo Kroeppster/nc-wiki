@@ -51,9 +51,17 @@
            (Themen-Navigation | dieser Text | Fehlerformular) und rendert
            ".Content" deshalb selbst an der richtigen Stelle in der Mitte,
            statt ihn hier schon vollbreit über allem anzuzeigen. */}}
-      {{/* Sprungliste über die Abschnitte dieser Seite - siehe
-           layouts/partials/seiten-uebersicht.html. */}}
-      {{ partial "seiten-uebersicht.html" . }}
+      {{/* ===================== ZWEI SPALTEN =====================
+           Ab 1100px Breite steht der Text links und die Abschnittsliste
+           rechts daneben (siehe .seite-raster in style.css). Darunter -
+           auf Tablet und Handy - ist das ein ganz normaler Block
+           untereinander, die Liste steht dann zusammengeklappt über dem
+           Text. Der Titelblock oben bleibt in beiden Fällen über die
+           ganze Breite, damit die Textspalte an derselben Kante beginnt
+           wie die Überschrift. */}}
+      <div class="seite-raster">
+        {{ partial "seiten-uebersicht.html" . }}
+        <div class="seite-inhalt">
 
       {{ if ne .Path "/ems/uebungsaufgaben" }}
       {{ with .Content }}{{ . }}{{ end }}
@@ -146,6 +154,8 @@
            mehr Unterseiten gibt, als auf eine Seite passen */}}
       {{ template "_internal/pagination.html" . }}
       {{ end }}
+        </div>
+      </div>
     </div>
   </section>
 {{ end }}

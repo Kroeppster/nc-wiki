@@ -630,9 +630,21 @@ sie üben wollen. Das gibt es in **zwei Stufen**:
 **Normal (so ist es voreingestellt):** Man wählt nur aus, *welche* Untertests
 und *wie viele* Aufgaben. **Die Zeit rechnet sich daraus automatisch aus** –
 im selben Tempo wie am echten EMS. Beispiel „Muster zuordnen": 18 Aufgaben in
-16 Minuten, also ergeben 9 Aufgaben 8 Minuten. Unter der Zeit steht zusätzlich,
+16 Minuten, also ergeben 7 Aufgaben **6:13**. Unter der Zeit steht zusätzlich,
 wie viele Sekunden das pro Aufgabe sind. Das ist fast immer das, was jemand
 will: eine halbe Serie üben, aber unter dem richtigen Zeitdruck.
+
+Die Zeit steht dabei in **Minuten und Sekunden**, nicht in ganzen Minuten. Auf
+volle Minuten gerundet wäre der Schnitt pro Aufgabe ein anderer als am echten
+Test – und genau der ist ja der Sinn der Sache.
+
+**Eine Ausnahme: Figuren und Fakten einprägen.** Dort gibt das Übungsblatt vor,
+wie viele Figuren darauf stehen – einstellen lässt sich deshalb die **Zeit**
+statt der Anzahl. Das ist genau das, was die Übungsseite empfiehlt: am Anfang
+bewusst mehr Zeit nehmen (10 statt 6 Minuten) und sie nach und nach verkürzen.
+Gesteuert wird das über das Feld `aufgaben_fest: true` in
+`data/testablauf.yaml` – wer es bei einem weiteren Block braucht, setzt es
+dort, sonst ist nichts zu tun.
 
 **Expertenmodus (Schalter über der Tabelle):** Erst hier lassen sich die
 Minuten pro Block und die Pausen einzeln von Hand eintragen. Gedacht für Leute,
@@ -689,36 +701,38 @@ Aufsichtsperson im Testsaal wieder.
 
 ---
 
-## 15. Die Abschnittsleiste („Auf dieser Seite")
+## 15. Die Abschnittsliste („Auf dieser Seite")
 
-Auf langen Seiten steht direkt unter dem Titel eine einzeilige Reihe mit den
-Abschnitten der Seite. Ein Klick springt dorthin, der Abschnitt, in dem man
-gerade liest, ist markiert – und beim Scrollen bleibt die Reihe unter der
-Kopfzeile hängen.
+Auf langen Seiten steht eine Liste der Abschnitte. Ein Klick springt dorthin,
+der Abschnitt, in dem man gerade liest, ist markiert.
 
-**Daran ist nichts einzustellen und nichts zu pflegen.** Die Leiste entsteht
+Sie sieht je nach Platz anders aus:
+
+- **Auf breiten Bildschirmen** (ab 1100 Pixel) steht sie als schmale Spalte
+  **rechts neben dem Text** und läuft beim Scrollen mit. Sie kostet dort keine
+  Zeile Höhe, und weil sie senkrecht ist, dürfen die Abschnittsnamen so lang
+  sein, wie sie eben sind.
+- **Auf Tablet und Handy** steht sie zugeklappt über dem Text: eine Zeile zum
+  Auftippen. Auch da ist sie von Anfang an sichtbar, braucht aber nur eine
+  Zeile.
+
+**Daran ist nichts einzustellen und nichts zu pflegen.** Die Liste entsteht
 automatisch aus den Zwischenüberschriften der Seite – also aus allem, was in
 einer `.md`-Datei mit `##` beginnt. Wer eine Überschrift umbenennt,
-verschiebt oder ergänzt, ändert damit automatisch auch die Leiste.
+verschiebt oder ergänzt, ändert damit automatisch auch die Liste.
 
-Vier Dinge, die manchmal Fragen aufwerfen:
+Zwei Dinge, die manchmal Fragen aufwerfen:
 
-- **Sie ist von Anfang an da**, gleich unter dem Titel – und bleibt beim
-  Weiterscrollen unter der Kopfzeile hängen, statt nach oben zu
-  verschwinden. Erst im geklebten Zustand bekommt sie eine deckende Fläche,
-  damit der Text sauber darunter durchläuft.
-- **Sie ist immer einzeilig.** Passen die Abschnitte nicht nebeneinander,
-  schiebt man sie seitwärts, statt dass die Leiste in die Höhe wächst.
 - **Auf kurzen Seiten erscheint sie nicht.** Gibt es weniger als zwei
   Abschnitte, bleibt sie ganz weg.
-- **Nur die oberste Ebene zählt.** `##` kommt in die Leiste, `###` nicht.
-  Sonst passt es erst recht nicht in eine Zeile.
+- **Nur die oberste Ebene zählt.** `##` kommt in die Liste, `###` nicht. Sonst
+  wird die Übersicht länger als der Text daneben.
 
 Sie funktioniert auch auf Seiten ohne Fliesstext, zum Beispiel beim
-Prüfungsmodus oder beim Uniguide: Dort sammelt die Seite ihre Abschnitte
-selbst ein, nachdem sie geladen ist.
+Prüfungsmodus oder beim Uniguide: Dort sammelt die Seite ihre Abschnitte selbst
+ein, nachdem sie geladen ist.
 
-Die Beschriftung für Vorlese-Programme („Auf dieser Seite" / „Sur cette
-page" / „In questa pagina") steht wie alle festen Texte in
-`i18n/de|fr|it.yaml`, beim Eintrag `auf_dieser_seite`. Technisch steckt alles
-in einer einzigen Datei: `layouts/partials/seiten-uebersicht.html`.
+Die Beschriftung („Auf dieser Seite" / „Sur cette page" / „In questa pagina")
+steht wie alle festen Texte in `i18n/de|fr|it.yaml`, beim Eintrag
+`auf_dieser_seite`. Technisch steckt alles in einer einzigen Datei:
+`layouts/partials/seiten-uebersicht.html`.

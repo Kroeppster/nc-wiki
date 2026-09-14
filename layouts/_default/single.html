@@ -87,10 +87,17 @@
       </figure>
       {{ end }}
 
-      {{/* Sprungliste über die Abschnitte dieser Seite. Erscheint nur, wenn es
-           mindestens zwei Abschnitte zu verlinken gibt - siehe
-           layouts/partials/seiten-uebersicht.html. */}}
-      {{ partial "seiten-uebersicht.html" . }}
+      {{/* ===================== ZWEI SPALTEN =====================
+           Ab 1100px Breite steht der Text links und die Abschnittsliste
+           rechts daneben (siehe .seite-raster in style.css). Darunter -
+           auf Tablet und Handy - ist das ein ganz normaler Block
+           untereinander, die Liste steht dann zusammengeklappt über dem
+           Text. Der Titelblock oben bleibt in beiden Fällen über die
+           ganze Breite, damit die Textspalte an derselben Kante beginnt
+           wie die Überschrift. */}}
+      <div class="seite-raster">
+        {{ partial "seiten-uebersicht.html" . }}
+        <div class="seite-inhalt">
 
       {{/* Der eigentliche Fliesstext der Seite (alles nach dem Frontmatter-Block) */}}
       {{ .Content }}
@@ -169,6 +176,8 @@
       {{ if .Params.experience_form }}{{ partial "experience-form.html" . }}{{ end }}
       {{ if .Params.uni_slug }}{{ partial "uni-detail.html" . }}{{ end }}
       {{ if .Params.pruefungsmodus }}{{ partial "pruefungsmodus.html" . }}{{ end }}
+        </div>
+      </div>
     </div>
   </section>
 {{ end }}

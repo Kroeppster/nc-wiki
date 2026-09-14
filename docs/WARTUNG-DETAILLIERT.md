@@ -39,7 +39,7 @@ wiederholt, gilt aber überall.
 16. [Wo hört "nur Copy-Paste" auf?](#16-wo-hört-nur-copy-paste-auf)
 17. [Startseite: die Kacheln "Was du hier findest"](#17-startseite-die-kacheln-was-du-hier-findest)
 18. [Prüfungsmodus: Uhr, Ansagen und der Testablauf](#18-prüfungsmodus-uhr-ansagen-und-der-testablauf)
-19. [Die Abschnittsleiste („Auf dieser Seite")](#19-die-abschnittsleiste-auf-dieser-seite)
+19. [Die Abschnittsliste („Auf dieser Seite")](#19-die-abschnittsliste-auf-dieser-seite)
 
 ---
 
@@ -867,19 +867,34 @@ Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werd
   Umblätter-Dauer und auch keine Rückfrage.
 - **Eine Endzeit wird nirgends angezeigt**, auch nicht vor dem Start. Im
   Testsaal steht sie nirgends geschrieben; es gibt wirklich nur die Uhr.
-- **Die Zeit im eigenen Ablauf wird gerechnet, nicht getippt.** Ohne
-  Expertenmodus ergibt sich die Minutenzahl aus der Aufgabenzahl, im
-  Verhältnis des echten Blocks (`aufgaben` zu `minuten` aus
-  `data/testablauf.yaml`), aufgerundet auf ganze Minuten und nie unter einer.
-  Blöcke ohne Aufgabenzahl – die beiden Einprägephasen und das konzentrierte
-  Arbeiten – behalten ihre echte Zeit, dort gibt es nichts zu rechnen. Das
-  Eingabefeld für die Minuten steht trotzdem im Quelltext, ist aber per
+- **Intern wird in SEKUNDEN gerechnet, nicht in Minuten.** Ohne Expertenmodus
+  ergibt sich die Zeit aus der Aufgabenzahl, im Verhältnis des echten Blocks
+  (`aufgaben` zu `minuten` aus `data/testablauf.yaml`). Auf ganze Minuten
+  gerundet wäre der Schnitt pro Aufgabe ein anderer als am echten Test – 7
+  Aufgaben „Muster zuordnen" sind 6:13, nicht 6 Minuten. Wer hier wieder auf
+  Minuten umstellt, macht genau den Fehler, den diese Umstellung behoben hat.
+- **`aufgaben_fest: true` dreht die Bedienung um.** Bei Figuren und Fakten
+  einprägen gibt das Übungsblatt die Anzahl vor; einstellbar ist dort die Zeit,
+  auch ohne Expertenmodus (Zeilenklasse `zeit-frei`). Blöcke ohne Aufgabenzahl
+  – die Einprägephasen und das konzentrierte Arbeiten – behalten sonst ihre
+  echte Zeit, dort gibt es nichts zu rechnen.
+- **Die Eingabefelder für die Zeit stehen immer im Quelltext**, sind aber per
   `display:none` ausgeblendet (nicht nur unsichtbar, sondern auch nicht per
-  Tabulator erreichbar) und erscheint erst im Expertenmodus.
+  Tabulator erreichbar) und erscheinen im Expertenmodus bzw. in den
+  `zeit-frei`-Zeilen.
+- **Die Ansage nennt die Dauer über `{dauer}`, nicht über `{min}`.** Dahinter
+  stehen zwei Vorlagen (`pm_dauer_min`, `pm_dauer_min_sek`), damit „0 Sekunden"
+  nicht mitgesprochen wird. Bei unveränderten Werten kommt exakt derselbe Satz
+  heraus wie vorher – deshalb passen die fertigen Aufnahmen weiterhin.
+- **Das Zeitformat im Link ist `<min>m<sek>`** (z. B. `6m13`). Das „m" ist nicht
+  Zierde: Vor der Umstellung stand dort eine reine Minutenzahl. Ein alter,
+  weitergegebener Link bleibt dadurch gültig und wird weiter als Minuten
+  gelesen, statt still als Sekunden missverstanden zu werden.
 - **Ein geteilter Link schaltet den Expertenmodus selbst ein**, wenn er Zeiten
   oder Pausen enthält, die sich im Normalmodus gar nicht darstellen liessen.
   Ohne das würde ein weitergegebener Ablauf beim Öffnen stillschweigend
-  verändert.
+  verändert. Zeilen mit `aufgaben_fest` zählen dabei nicht mit – dort ist eine
+  eigene Zeit ja der Normalfall.
 - **Die Pause gibt es am echten EMS nicht.** Sie ist absichtlich eingebaut und
   ebenso absichtlich beschriftet („Am echten EMS gibt es keine Pause – diese
   hier gibt es nur zum Üben").
@@ -890,29 +905,35 @@ Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werd
 
 ---
 
-## 19. Die Abschnittsleiste („Auf dieser Seite")
+## 19. Die Abschnittsliste („Auf dieser Seite")
 
 | Was | Wo |
 | --- | --- |
 | Die ganze Funktion | `layouts/partials/seiten-uebersicht.html` |
-| Eingebunden in | `layouts/_default/single.html`, `layouts/_default/list.html` |
+| Zweispalten-Raster | `layouts/_default/single.html`, `layouts/_default/list.html` (`.seite-raster` / `.seite-inhalt`) |
 | Beschriftung | `i18n/de\|fr\|it.yaml`, Eintrag `auf_dieser_seite` |
-| Aussehen | `assets/css/style.css`, Regeln ab `.abschnittsleiste` |
+| Aussehen | `assets/css/style.css`, Regeln ab `.seite-raster` |
 
-**Zwei frühere Versuche waren falsch – bitte nicht zurückbauen:**
+**Drei frühere Versuche waren falsch – bitte nicht zurückbauen:**
 
 1. *Ein Block mit Rahmen und Überschrift zwischen Titel und erstem Satz.* Der
    stand genau da im Weg, wo man anfangen will zu lesen, und brach auf Seiten
    mit vielen Abschnitten auf zwei Zeilen um.
 2. *Eine Leiste, die erst beim Scrollen auftauchte.* Damit war am Seitenanfang
    – also genau dann, wenn man sich orientieren will – gar nichts da.
+3. *Eine waagrechte Reihe, die seitwärts scrollt.* Die Abschnittsnamen sind
+   hier ganze Fragen („Wieso sind diese Untertests fürs spätere Studium
+   relevant?"). Nebeneinandergelegt sieht das zusammengestückelt aus, und das
+   meiste davon ist abgeschnitten.
 
-Die jetzige Lösung hat beides nicht: `position:sticky` heisst, sie steht an
-ihrem normalen Platz im Text und ist damit von Anfang an sichtbar, bleibt beim
-Weiterscrollen aber oben hängen. Und sie ist immer einzeilig, weil sie
-seitwärts scrollt (`white-space:nowrap` plus `overflow-x:auto`) statt
-umzubrechen. Eine deckende Fläche bekommt sie nur im geklebten Zustand (Klasse
-`klebt`) – an ihrem Platz im Text wäre sie sonst nur ein Kasten mehr.
+Die jetzige Form ist **senkrecht**, und das ist der Punkt: Eine Spalte darf so
+lange Namen tragen, wie sie eben sind. Ab 1100px steht sie rechts neben dem
+Text (`.seite-raster` wird zum Raster), darunter zugeklappt darüber. Beides ist
+von Anfang an sichtbar.
+
+Die Spalte steht **rechts**, nicht links: Dadurch beginnt die Textspalte an
+derselben Kante wie die Überschrift darüber. Links hätte sie den ganzen
+Fliesstext gegenüber dem Titel eingerückt.
 
 Die Abschnitte werden **nach dem Laden im Browser** eingesammelt, nicht beim
 Bauen. Grund: Manche Seiten bekommen ihre Abschnitte nicht aus dem Fliesstext,
@@ -920,37 +941,35 @@ sondern aus einer Vorlage – der Prüfungsmodus, die Uniguide-Tabelle, die
 Übungsaufgaben-Übersicht. Davon weiss Hugo an dieser Stelle nichts. Fehlende
 Sprungmarken (`id`) vergibt das Skript dabei selbst.
 
-Wer daran etwas ändert, sollte vier Dinge kennen:
+Wer daran etwas ändert, sollte fünf Dinge kennen:
 
 - **Das Skript wartet auf `DOMContentLoaded`.** Die Vorlage steht weit oben –
   zu dem Zeitpunkt, an dem das Skript im Quelltext auftaucht, ist der Rest der
-  Seite noch gar nicht da. Ohne das Warten bliebe die Leiste leer, und zwar
-  ohne Fehlermeldung.
-- **Der Klebe-Abstand wird gemessen, nicht ausgerechnet.** Die Kopfzeile
-  verhält sich nicht überall gleich: ab 861px Breite bleibt sie beim Scrollen
-  oben stehen, darunter scrollt sie weg (siehe `header.site` im Abschnitt
-  „Responsiv" in `style.css`). Das Skript setzt `top` deshalb auf die gemessene
-  Kopfzeilenhöhe – oder auf 0, wenn die Kopfzeile gar nicht stehen bleibt.
-  Auf dem Handy klebt die Leiste dadurch am Bildschirmrand statt mit einer
-  leeren Lücke darüber.
-- **Die negativen Seitenränder in `style.css` sind kein Versehen.** Die
-  deckende Fläche im geklebten Zustand muss bis an den Rand der Textspalte
-  reichen, sonst schaut links und rechts durchlaufender Text an ihr vorbei.
-- **`--sprung-abstand` muss bleiben.** Diese Variable setzt das Skript aus der
-  gemessenen Höhe von Kopfzeile und Leiste; `scroll-margin-top` benutzt sie.
-  Ohne sie landet ein angesprungener Abschnitt unter der Leiste und ist
-  unsichtbar.
+  Seite noch gar nicht da. Ohne das Warten bliebe die Liste leer, und zwar ohne
+  Fehlermeldung.
+- **Die Liste steht im Quelltext VOR dem Text** (damit sie auf schmalen
+  Bildschirmen oben landet) und wird auf breiten Bildschirmen per `order` nach
+  rechts sortiert.
+- **Es ist ein `<details>`.** Auf breiten Bildschirmen setzt das Skript es auf
+  „offen", und die Beschriftung wird zur reinen Überschrift
+  (`pointer-events:none`); darunter bleibt es zu, bis jemand tippt. Wer es dort
+  selbst aufklappt, behält es offen – auch das merkt sich das Skript.
+- **`--sprung-abstand` und `--kopf-hoehe` müssen bleiben.** Beide setzt das
+  Skript aus der gemessenen Kopfzeilenhöhe. Die Kopfzeile bleibt nur ab 861px
+  Breite beim Scrollen stehen (siehe `header.site` im Abschnitt „Responsiv");
+  darunter scrollt sie weg und zählt deshalb nicht mit. Ohne den Abstand landet
+  ein angesprungener Abschnitt unter der Kopfzeile und ist unsichtbar.
 - **Zwei Dinge sind ausgenommen:** der Seitentitel (den gibt `list.html` als
   `h2` aus, er ist aber kein Abschnitt) und alles gerade Ausgeblendete – vor
-  allem die Vollbild-Ansicht des Prüfungsmodus, deren Titel sonst als
-  Abschnitt erschiene.
+  allem die Vollbild-Ansicht des Prüfungsmodus, deren Titel sonst als Abschnitt
+  erschiene.
 
-Ohne JavaScript gibt es die Leiste nicht, und das ist Absicht: Sie ist reine
+Ohne JavaScript gibt es die Liste nicht, und das ist Absicht: Sie ist reine
 Bequemlichkeit, alle Abschnitte stehen ja ohnehin untereinander auf der Seite.
-Der Streifen bleibt deshalb ausgeblendet, bis das Skript ihn gefüllt hat – eine
-leere Leiste wäre schlimmer als keine. Aus demselben Grund trägt sie
+Sie bleibt deshalb ausgeblendet, bis das Skript sie gefüllt hat – eine leere
+Liste wäre schlimmer als keine. Aus demselben Grund trägt sie
 `data-pagefind-ignore`: Ihr Text ist Navigation und hat in den Suchergebnissen
 nichts verloren.
 
-Überschriften tiefer als `h2` kommen bewusst nicht hinein – in eine Zeile
-passen sie ohnehin nicht.
+Überschriften tiefer als `h2` kommen bewusst nicht hinein – sonst wird die
+Spalte länger als der Text daneben.

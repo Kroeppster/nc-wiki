@@ -25,6 +25,14 @@
 #   minuten   - Bearbeitungszeit in Minuten (Zahl, keine Anführungszeichen)
 #   aufgaben  - Anzahl Aufgaben als Text, oder "" wenn es keine gibt
 #               (Einprägephasen werden nicht bewertet)
+#   aufgaben_fest - nur für den "eigenen Ablauf" im Prüfungsmodus: Bei diesem
+#               Block laesst sich die Anzahl Aufgaben NICHT frei waehlen,
+#               dafuer die Zeit. Gesetzt bei Figuren und Fakten einpraegen:
+#               Wie viele Figuren auf dem Blatt stehen, gibt das Uebungsblatt
+#               vor - was man beim Ueben variiert, ist die Einpraegezeit
+#               (siehe auch die Uebungsseite: "Lass dir am Anfang bewusst mehr
+#               Zeit als vorgesehen"). Bei allen anderen Bloecken ist es
+#               umgekehrt: Aufgabenzahl waehlen, Zeit ergibt sich daraus.
 #   punkte    - Maximalpunktzahl als Text, oder ""
 #   de/fr/it  - angezeigter Name in den drei Sprachen
 #
@@ -77,6 +85,7 @@ bloecke:
     minuten: 4
     aufgaben: ""
     punkte: ""
+    aufgaben_fest: true
     de: "Figuren einprägen (Einprägephase)"
     fr: "Mémorisation de figures (phase d'apprentissage)"
     it: "Memorizzazione di figure (fase di apprendimento)"
@@ -86,6 +95,7 @@ bloecke:
     minuten: 6
     aufgaben: ""
     punkte: ""
+    aufgaben_fest: true
     de: "Fakten einprägen (Einprägephase)"
     fr: "Mémorisation de faits (phase d'apprentissage)"
     it: "Memorizzazione di fatti (fase di apprendimento)"
@@ -104,6 +114,7 @@ bloecke:
     minuten: 5
     aufgaben: "18"
     punkte: "18"
+    aufgaben_fest: true
     de: "Figuren einprägen (Reproduktion)"
     fr: "Mémorisation de figures (reproduction)"
     it: "Memorizzazione di figure (riproduzione)"
@@ -113,6 +124,7 @@ bloecke:
     minuten: 6
     aufgaben: "18"
     punkte: "18"
+    aufgaben_fest: true
     de: "Fakten einprägen (Reproduktion)"
     fr: "Mémorisation de faits (reproduction)"
     it: "Memorizzazione di fatti (riproduzione)"

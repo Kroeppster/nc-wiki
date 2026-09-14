@@ -755,7 +755,11 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 /* Steht jetzt direkt unter dem Titel (siehe single.html) statt wie früher
    ganz unten nach den Downloads - deshalb als kleines, gut sichtbares
    Badge gestaltet statt als unauffällige Fussnotenzeile. */
-.uebungsaufgaben-license{display:inline-flex;align-items:center;gap:.4rem;margin:var(--space-3) 0 var(--space-6);padding:.35rem .8rem;font-size:var(--text-xs);color:var(--color-ink-faint);background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-full);}
+/* "inline-block", nicht "inline-flex": Als Flex-Behälter wurden die drei
+   Textstücke (Vortext, Link, Nachtext) zu eigenen Spalten, die auf dem Handy
+   jedes für sich umbrachen - der Link "CC BY-NC 4.0" stand dann untereinander
+   Buchstabe für Buchstabe. Es ist ein Satz und soll wie ein Satz umbrechen. */
+.uebungsaufgaben-license{display:inline-block;margin:var(--space-3) 0 var(--space-6);padding:.35rem .8rem;font-size:var(--text-xs);line-height:1.6;color:var(--color-ink-faint);background:var(--color-surface-sunken);border:1px solid var(--color-line);border-radius:var(--radius-full);}
 .uebungsaufgaben-license a{color:var(--color-signal);text-decoration:underline;}
 
 /* Eigene, optisch abgesetzte Box um die Download-Liste (siehe single.html) -
@@ -1098,57 +1102,62 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
    Sichtbarkeit) ist hier wichtig, damit ein ausgeblendetes Eingabefeld auch
    per Tabulator nicht erreichbar ist. */
 /* ---------------------------------------------------------------------------
-   ABSCHNITTSLEISTE ("Auf dieser Seite")
+   ABSCHNITTSLISTE ("Auf dieser Seite") UND DAS ZWEISPALTEN-RASTER
    ---------------------------------------------------------------------------
-   Einzeilige Reihe mit den Abschnitten, direkt unter dem Seitentitel (siehe
-   layouts/partials/seiten-uebersicht.html). Drei Dinge daran sind wichtig:
+   Ab 1100px steht der Text links und die Abschnittsliste als schmale Spalte
+   rechts daneben - sie kostet dort keine Zeile Höhe und darf so lang werden,
+   wie die Abschnittsnamen eben sind. Darunter ist .seite-raster ein ganz
+   normaler Block, und die Liste steht zugeklappt über dem Text.
 
-   1. "position:sticky" - sie steht an ihrem normalen Platz im Text und ist
-      damit von Anfang an sichtbar, bleibt beim Weiterscrollen aber oben
-      hängen. Den Abstand nach oben ("top") setzt das Skript, weil die
-      Kopfzeile auf schmalen Bildschirmen weder gleich hoch ist noch stehen
-      bleibt.
-   2. Sie bricht nie um, sondern scrollt seitwärts ("white-space:nowrap" plus
-      "overflow-x:auto"). Eine zweizeilige Leiste war genau das Problem, das
-      diese Lösung vermeiden soll.
-   3. Eine deckende Fläche bekommt sie NUR im geklebten Zustand (Klasse
-      "klebt"), damit der Text sauber darunter durchläuft. An ihrem Platz im
-      Text wäre sie sonst nur ein weiterer Kasten auf der Seite.
-
-   Die negativen Seitenränder sind kein Versehen: Die Fläche im geklebten
-   Zustand muss bis an den Rand der Textspalte reichen, sonst schaut links und
-   rechts durchlaufender Text an ihr vorbei.
+   Die Spalte steht RECHTS, nicht links: Dadurch beginnt die Textspalte an
+   derselben Kante wie die Überschrift darüber. Links hätte sie den ganzen
+   Fliesstext gegenüber dem Titel eingerückt.
    --------------------------------------------------------------------------- */
-.abschnittsleiste{position:sticky;top:0;z-index:90;margin:var(--space-5) calc(var(--space-5) * -1) var(--space-7);padding-inline:var(--space-5);border-bottom:1px solid var(--color-line);transition:background-color .15s,box-shadow .15s;}
-.abschnittsleiste.klebt{background:var(--color-surface);box-shadow:var(--shadow-sm);}
-/* Die weichen Kanten links und rechts sind nicht Zierde: Sie zeigen, dass
-   seitwärts noch Abschnitte kommen - sonst sieht ein am Rand abgeschnittenes
-   Wort einfach kaputt aus. */
-.abschnittsleiste-inner{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-mask-image:linear-gradient(to right,#000 0,#000 calc(100% - var(--space-6)),transparent 100%);mask-image:linear-gradient(to right,#000 0,#000 calc(100% - var(--space-6)),transparent 100%);}
-.abschnittsleiste-inner::-webkit-scrollbar{display:none;}
-.abschnittsleiste-liste{display:flex;gap:var(--space-5);list-style:none;margin:0;padding:0;white-space:nowrap;}
-.abschnittsleiste-liste li{margin:0;}
-.abschnittsleiste a{display:block;padding:.6rem 0;font-size:var(--text-sm);line-height:1.3;color:var(--color-ink-faint);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;}
-.abschnittsleiste a:hover{color:var(--color-ink);}
-.abschnittsleiste a.ist-aktiv{color:var(--color-signal);border-bottom-color:var(--color-signal);}
-.abschnittsleiste a:focus-visible{outline:2px solid var(--color-signal);outline-offset:2px;border-radius:var(--radius-sm);}
-@media (prefers-reduced-motion:reduce){
-  .abschnittsleiste{transition:none;}
+.seite-raster{min-width:0;}
+.seite-inhalt{min-width:0;}
+
+/* Zugeklappte Form (Handy, Tablet): eine Zeile, die sich auftippen lässt. */
+.abschnittsliste{margin:var(--space-6) 0 var(--space-7);border-top:1px solid var(--color-line);border-bottom:1px solid var(--color-line);}
+.abschnittsliste-titel{cursor:pointer;padding:var(--space-3) 0;font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);}
+.abschnittsliste-titel:hover{color:var(--color-ink);}
+.abschnittsliste-titel:focus-visible{outline:2px solid var(--color-signal);outline-offset:2px;border-radius:var(--radius-sm);}
+.abschnittsliste-liste{list-style:none;margin:0 0 var(--space-3);padding:0;display:flex;flex-direction:column;gap:1px;}
+.abschnittsliste-liste li{margin:0;}
+.abschnittsliste-liste a{display:block;padding:.4rem 0 .4rem var(--space-3);border-left:2px solid var(--color-line);font-size:var(--text-sm);line-height:1.35;color:var(--color-ink-soft);text-decoration:none;}
+.abschnittsliste-liste a:hover{color:var(--color-ink);border-left-color:var(--color-ink-faint);}
+.abschnittsliste-liste a.ist-aktiv{color:var(--color-signal);border-left-color:var(--color-signal);font-weight:600;}
+.abschnittsliste-liste a:focus-visible{outline:2px solid var(--color-signal);outline-offset:-2px;border-radius:var(--radius-sm);}
+
+@media (min-width:1100px){
+  .seite-raster{display:grid;grid-template-columns:minmax(0,1fr) 15rem;gap:var(--space-8);align-items:start;}
+  /* Die Liste steht im Quelltext VOR dem Text (damit sie auf schmalen
+     Bildschirmen oben landet) und wird hier nach rechts sortiert. */
+  .abschnittsliste{order:2;position:sticky;top:calc(var(--kopf-hoehe,4rem) + var(--space-5));margin:0;border:none;border-left:1px solid var(--color-line);padding-left:var(--space-5);max-height:calc(100vh - var(--kopf-hoehe,4rem) - var(--space-8));overflow-y:auto;}
+  .seite-inhalt{order:1;}
+  /* Als Spalte ist nichts aufzuklappen - die Überschrift bleibt als
+     Beschriftung stehen, ist aber kein Knopf mehr. */
+  .abschnittsliste-titel{cursor:default;pointer-events:none;padding-top:0;}
+  .abschnittsliste-titel::marker,.abschnittsliste-titel::-webkit-details-marker{content:"";display:none;}
+  .abschnittsliste-liste{margin-bottom:0;}
 }
-/* Ohne das landet eine angesprungene Überschrift unter Kopfzeile und Leiste
-   und ist unsichtbar. Den genauen Wert setzt das Skript, sobald es beide
-   gemessen hat - der Wert hier gilt, solange das noch nicht passiert ist
-   (und wenn gar kein JavaScript läuft). */
+
+/* Ohne das landet eine angesprungene Überschrift unter der Kopfzeile, die
+   beim Scrollen oben stehen bleibt. Den genauen Wert setzt das Skript,
+   sobald es sie gemessen hat - der Wert hier gilt, solange das noch nicht
+   passiert ist (und wenn gar kein JavaScript läuft). */
 main h2[id],main h3[id]{scroll-margin-top:var(--sprung-abstand,5.5rem);}
 
-.pm-custom .pm-custom-pausenspalte{display:none;}
-.pm-custom.ist-experte .pm-custom-pausenspalte{display:table-cell;}
-.pm-custom-modus{margin-top:var(--space-5);}
-.pm-custom-modus .pm-hinweis{margin-top:var(--space-2);}
-.pm-custom .pm-c-min{display:none;}
-.pm-custom.ist-experte .pm-c-min{display:inline-block;}
+/* Die Zeit wird eingetippt statt gerechnet: im Expertenmodus überall, sonst
+   nur in den Zeilen mit fester Aufgabenzahl (Figuren/Fakten, Klasse
+   "zeit-frei"). Sichtbar ist immer genau eine der beiden Darstellungen. */
+.pm-custom .pm-c-zeit-eingabe{display:none;align-items:center;gap:.2rem;}
+.pm-custom tr.zeit-frei .pm-c-zeit-eingabe,
+.pm-custom.ist-experte .pm-c-zeit-eingabe{display:inline-flex;}
+.pm-custom tr.zeit-frei .pm-c-min-auto,
 .pm-custom.ist-experte .pm-c-min-auto{display:none;}
 .pm-custom.ist-experte .pm-custom-feld{display:none;}
+.pm-custom-table .pm-c-min,.pm-custom-table .pm-c-sek{width:3.4rem;}
+.pm-c-doppelpunkt{color:var(--color-ink-faint);}
 .pm-custom-table .pm-c-zeit{font-variant-numeric:tabular-nums;}
 .pm-c-pro-aufgabe{display:block;font-size:var(--text-xs);color:var(--color-ink-faint);}
 .pm-c-pro-aufgabe:empty{display:none;}
