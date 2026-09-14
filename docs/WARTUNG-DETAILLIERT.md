@@ -899,14 +899,20 @@ Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werd
 | Beschriftung | `i18n/de\|fr\|it.yaml`, Eintrag `auf_dieser_seite` |
 | Aussehen | `assets/css/style.css`, Regeln ab `.abschnittsleiste` |
 
-**Der erste Versuch war ein Block oben auf der Seite, und der war falsch.**
-Eine Liste zwischen Titel und erstem Satz steht genau da im Weg, wo man
-anfangen will zu lesen – und auf Seiten mit vielen Abschnitten brach sie auf
-zwei Zeilen um. Beide Probleme verschwinden dadurch, dass die Leiste gar nicht
-im Textfluss steht: Sie liegt fest über der Seite (`position:fixed`), nimmt
-keine Zeile Platz weg, erscheint erst beim Scrollen und scrollt seitwärts,
-statt umzubrechen. Wer sie wieder in den Textfluss holen will, holt sich beide
-Probleme zurück.
+**Zwei frühere Versuche waren falsch – bitte nicht zurückbauen:**
+
+1. *Ein Block mit Rahmen und Überschrift zwischen Titel und erstem Satz.* Der
+   stand genau da im Weg, wo man anfangen will zu lesen, und brach auf Seiten
+   mit vielen Abschnitten auf zwei Zeilen um.
+2. *Eine Leiste, die erst beim Scrollen auftauchte.* Damit war am Seitenanfang
+   – also genau dann, wenn man sich orientieren will – gar nichts da.
+
+Die jetzige Lösung hat beides nicht: `position:sticky` heisst, sie steht an
+ihrem normalen Platz im Text und ist damit von Anfang an sichtbar, bleibt beim
+Weiterscrollen aber oben hängen. Und sie ist immer einzeilig, weil sie
+seitwärts scrollt (`white-space:nowrap` plus `overflow-x:auto`) statt
+umzubrechen. Eine deckende Fläche bekommt sie nur im geklebten Zustand (Klasse
+`klebt`) – an ihrem Platz im Text wäre sie sonst nur ein Kasten mehr.
 
 Die Abschnitte werden **nach dem Laden im Browser** eingesammelt, nicht beim
 Bauen. Grund: Manche Seiten bekommen ihre Abschnitte nicht aus dem Fliesstext,
@@ -920,13 +926,16 @@ Wer daran etwas ändert, sollte vier Dinge kennen:
   zu dem Zeitpunkt, an dem das Skript im Quelltext auftaucht, ist der Rest der
   Seite noch gar nicht da. Ohne das Warten bliebe die Leiste leer, und zwar
   ohne Fehlermeldung.
-- **Die Position wird bei jedem Bild neu gemessen, nicht einmal ausgerechnet.**
-  Die Kopfzeile verhält sich nicht überall gleich: ab 861px Breite bleibt sie
-  beim Scrollen oben stehen, darunter scrollt sie weg (siehe `header.site` im
-  Abschnitt „Responsiv" in `style.css`). Die Leiste hängt sich an die jeweils
-  aktuelle Unterkante der Kopfzeile und rutscht auf dem Handy dadurch von
-  selbst ganz nach oben, statt mit einer leeren Lücke darüber stehen zu
-  bleiben.
+- **Der Klebe-Abstand wird gemessen, nicht ausgerechnet.** Die Kopfzeile
+  verhält sich nicht überall gleich: ab 861px Breite bleibt sie beim Scrollen
+  oben stehen, darunter scrollt sie weg (siehe `header.site` im Abschnitt
+  „Responsiv" in `style.css`). Das Skript setzt `top` deshalb auf die gemessene
+  Kopfzeilenhöhe – oder auf 0, wenn die Kopfzeile gar nicht stehen bleibt.
+  Auf dem Handy klebt die Leiste dadurch am Bildschirmrand statt mit einer
+  leeren Lücke darüber.
+- **Die negativen Seitenränder in `style.css` sind kein Versehen.** Die
+  deckende Fläche im geklebten Zustand muss bis an den Rand der Textspalte
+  reichen, sonst schaut links und rechts durchlaufender Text an ihr vorbei.
 - **`--sprung-abstand` muss bleiben.** Diese Variable setzt das Skript aus der
   gemessenen Höhe von Kopfzeile und Leiste; `scroll-margin-top` benutzt sie.
   Ohne sie landet ein angesprungener Abschnitt unter der Leiste und ist

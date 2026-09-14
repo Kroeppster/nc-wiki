@@ -2,24 +2,25 @@
   ============================================================================
   ABSCHNITTSLEISTE ("Auf dieser Seite")
   ============================================================================
-  Schmaler Streifen mit den Abschnitten der Seite, der beim Scrollen unter der
-  Kopfzeile mitfährt. Ein Klick springt zum Abschnitt, und der Abschnitt, in
-  dem man gerade liest, ist markiert.
+  Einzeilige Reihe mit den Abschnitten der Seite, direkt unter dem Titel. Ein
+  Klick springt zum Abschnitt, der Abschnitt, in dem man gerade liest, ist
+  markiert - und beim Scrollen bleibt die Reihe unter der Kopfzeile kleben,
+  statt nach oben wegzurutschen.
 
-  WARUM NICHT ALS BLOCK OBEN AUF DER SEITE (erster Versuch, verworfen):
-  Eine Liste zwischen Titel und erstem Satz steht genau da im Weg, wo man
-  anfangen will zu lesen - und auf Seiten mit vielen Abschnitten brach sie auf
-  zwei Zeilen um. Beide Probleme verschwinden, wenn die Leiste gar nicht erst
-  im Textfluss steht:
+  WAS AN DEN ERSTEN ZWEI VERSUCHEN FALSCH WAR - bitte nicht zurückbauen:
 
-  - Sie liegt fest über der Seite (position:fixed), nimmt also keine einzige
-    Zeile Platz weg. Der Seitenanfang sieht wieder aus wie vorher.
-  - Sie erscheint erst, wenn der erste Abschnitt nach oben aus dem Bild
-    gescrollt ist - also genau dann, wenn Titel und Einstieg nicht mehr zu
-    sehen sind und eine Sprungliste überhaupt etwas nützt. Ganz oben, wo man
-    ohnehin alles sieht, ist sie weg.
-  - Sie ist IMMER einzeilig. Passen die Abschnitte nicht nebeneinander,
-    schiebt man sie seitwärts - statt dass die Leiste in die Höhe wächst.
+  1. Ein Block mit Rahmen und Überschrift zwischen Titel und erstem Satz.
+     Der stand genau da im Weg, wo man anfangen will zu lesen, und brach auf
+     Seiten mit vielen Abschnitten auf zwei Zeilen um.
+  2. Eine Leiste, die erst beim Scrollen auftaucht. Damit war am Seitenanfang
+     - also genau dann, wenn man sich orientieren will - gar nichts da.
+
+  Die jetzige Lösung hat beides nicht: Sie ist von Anfang an sichtbar (Punkt
+  2), und sie ist IMMER einzeilig, weil sie seitwärts scrollt statt
+  umzubrechen (Punkt 1). "position:sticky" heisst: Sie steht an ihrem
+  normalen Platz im Text, bleibt beim Weiterscrollen aber oben hängen. Erst
+  wenn sie klebt, bekommt sie eine deckende Fläche - vorher wäre die nur ein
+  Kasten mehr auf der Seite.
 
   Eingebunden ist sie in layouts/_default/single.html und list.html, gilt also
   automatisch für jede Unterseite und jede Übersichtsseite. Pro Seite ist
@@ -33,12 +34,12 @@
   Überschriften aus einer Vorlage an dieser Stelle nichts.
 
   Tiefere Überschriften ("###") bleiben bewusst draussen - sonst wird aus der
-  Leiste ein Inhaltsverzeichnis, und in eine Zeile passt es ohnehin nicht.
+  Reihe ein Inhaltsverzeichnis, und in eine Zeile passt es ohnehin nicht.
 
   OHNE JAVASCRIPT gibt es die Leiste nicht. Das ist Absicht: Sie ist reine
   Bequemlichkeit, alle Abschnitte stehen ja untereinander auf der Seite. Der
-  Streifen bleibt deshalb ausgeblendet, bis das Skript ihn gefüllt hat -
-  eine leere Leiste wäre schlimmer als keine.
+  Streifen bleibt deshalb ausgeblendet, bis das Skript ihn gefüllt hat - eine
+  leere Leiste wäre schlimmer als keine.
   ============================================================================
 */ -}}
 <nav class="abschnittsleiste" id="abschnittsleiste" hidden
@@ -76,7 +77,7 @@
     Array.prototype.forEach.call(bereich.querySelectorAll('h2'), function(h){
       /* Der Seitentitel (den gibt list.html als h2 aus, er ist aber kein
          Abschnitt) und alles gerade Ausgeblendete - vor allem die
-         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Leiste. */
+         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Reihe. */
       if(h.closest && h.closest('.section-head, .pm-buehne, [hidden]')) return;
       var titel = (h.textContent || '').trim();
       if(!titel) return;
@@ -103,67 +104,65 @@
     leiste.hidden = false;
 
     /* ------------------------------------------------------------ Abstände */
-    /* Die Leiste hängt sich unter die Kopfzeile. Wo die endet, wird bei jedem
-       Bild neu gemessen statt einmal ausgerechnet - denn die Kopfzeile
-       verhält sich nicht überall gleich:
+    /* Wo die Leiste hängen bleibt, hängt an der Kopfzeile - und die verhält
+       sich nicht überall gleich:
 
          ab 861px Breite  bleibt sie beim Scrollen oben stehen (sticky),
          darunter        scrollt sie mit nach oben weg (siehe header.site in
                          style.css, Abschnitt "Responsiv").
 
-       Auf dem Handy rutscht die Leiste dadurch von selbst ganz nach oben,
-       sobald die Kopfzeile weg ist - statt mit einer leeren Lücke darüber
-       stehen zu bleiben. Zusätzlich bricht die Kopfzeile auf schmalen
-       Bildschirmen um und ist dann höher; auch das erledigt sich durch
-       Messen. */
-    var leisteHoehe = 0;
+       Deshalb wird gemessen statt geraten. Auf dem Handy klebt die Leiste
+       dadurch ganz oben am Bildschirmrand statt mit einer leeren Lücke
+       darüber; zusätzlich bricht die Kopfzeile auf schmalen Bildschirmen um
+       und ist dann höher, was sich damit ebenfalls erledigt. */
+    var klebeOben = 0, leisteHoehe = 0;
     function messen(){
-      leisteHoehe = leiste.getBoundingClientRect().height;
-      /* Abstand, den eine angesprungene Überschrift nach oben hält. Die
-         Kopfzeile zählt nur mit, wenn sie beim Scrollen stehen bleibt. */
       var kopfKlebt = kopf && window.getComputedStyle(kopf).position === 'sticky';
-      var kopfHoehe = kopfKlebt ? kopf.getBoundingClientRect().height : 0;
+      klebeOben = kopfKlebt ? kopf.getBoundingClientRect().height : 0;
+      leiste.style.top = klebeOben + 'px';
+      leisteHoehe = leiste.getBoundingClientRect().height;
+      /* Abstand, den eine angesprungene Überschrift nach oben hält - sonst
+         landet sie unter der Leiste und ist unsichtbar. */
       document.documentElement.style.setProperty(
-        '--sprung-abstand', (kopfHoehe + leisteHoehe + 16) + 'px');
+        '--sprung-abstand', (klebeOben + leisteHoehe + 16) + 'px');
     }
     messen();
 
-    /* ------------------------------------------------- Anzeigen und Mitlaufen */
+    /* -------------------------------------------------- Kleben und Mitlaufen */
     var laeuft = false;
     var aktiv = null;
     function zeichnen(){
       laeuft = false;
-      var leisteOben = kopf ? Math.max(0, kopf.getBoundingClientRect().bottom) : 0;
-      leiste.style.top = leisteOben + 'px';
-      var grenze = leisteOben + leisteHoehe + 8;
 
-      /* Sichtbar wird die Leiste genau dann, wenn der erste Abschnitt oben aus
-         dem Bild gerutscht ist. Ganz oben, wo man Titel und Einstieg ohnehin
-         sieht, bleibt sie weg. */
-      leiste.classList.toggle('ist-sichtbar',
-        abschnitte[0].ueberschrift.getBoundingClientRect().top < grenze);
+      /* Klebt sie gerade? Dann bekommt sie eine deckende Fläche, damit der
+         Text sauber darunter durchläuft. An ihrem Platz im Text braucht sie
+         die nicht - dort wäre sie nur ein Kasten mehr. */
+      var obenAmRand = leiste.getBoundingClientRect().top <= klebeOben + 1;
+      leiste.classList.toggle('klebt', obenAmRand);
 
       /* Der aktuelle Abschnitt ist der letzte, dessen Überschrift schon unter
          die Leiste gerutscht ist. */
-      var treffer = abschnitte[0];
+      var grenze = klebeOben + leisteHoehe + 8;
+      var treffer = null;
       abschnitte.forEach(function(a){
         if(a.ueberschrift.getBoundingClientRect().top <= grenze) treffer = a;
       });
       if(treffer !== aktiv){
-        if(aktiv) aktiv.link.classList.remove('ist-aktiv');
-        treffer.link.classList.add('ist-aktiv');
-        treffer.link.setAttribute('aria-current', 'true');
-        if(aktiv) aktiv.link.removeAttribute('aria-current');
-        aktiv = treffer;
-        /* Auf schmalen Bildschirmen passen nicht alle Abschnitte nebeneinander -
-           dann wird der aktuelle in den sichtbaren Bereich geschoben. Bewusst
-           von Hand statt mit scrollIntoView: das würde die ganze Seite
-           mitverschieben. */
-        var l = treffer.link;
-        if(l.offsetLeft < innen.scrollLeft ||
-           l.offsetLeft + l.offsetWidth > innen.scrollLeft + innen.clientWidth){
-          innen.scrollLeft = Math.max(0, l.offsetLeft - 24);
+        if(aktiv){ aktiv.link.classList.remove('ist-aktiv'); aktiv.link.removeAttribute('aria-current'); }
+        if(treffer){
+          treffer.link.classList.add('ist-aktiv');
+          treffer.link.setAttribute('aria-current', 'true');
+          /* Auf schmalen Bildschirmen passen nicht alle Abschnitte
+             nebeneinander - dann wird der aktuelle in den sichtbaren Bereich
+             geschoben. Bewusst von Hand statt mit scrollIntoView: das würde
+             die ganze Seite mitverschieben. */
+          var l = treffer.link;
+          if(l.offsetLeft < innen.scrollLeft ||
+             l.offsetLeft + l.offsetWidth > innen.scrollLeft + innen.clientWidth){
+            innen.scrollLeft = Math.max(0, l.offsetLeft - 24);
+          }
         }
+        aktiv = treffer;
       }
     }
     function beiScroll(){

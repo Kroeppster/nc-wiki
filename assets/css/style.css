@@ -249,7 +249,13 @@
   --band-glow:rgba(112,137,255,.26);
   --band-texture:rgba(255,255,255,.04);
 
-  --logo-filter:brightness(0) invert(1);
+  /* Das Logo ist ein Bild mit durchsichtigem Hintergrund: "NC" blau,
+     "WIKI" und das Stethoskop schwarz. Auf dunklem Grund wäre der schwarze
+     Teil unsichtbar, deshalb wird umgekehrt. "hue-rotate(180deg)" dreht die
+     Farbe danach wieder zurück - sonst würde aus dem Blau ein Orange, und
+     mit "brightness(0) invert(1)" (dem ersten Versuch) wäre das ganze Logo
+     einfach weiss und die Vereinsfarbe weg. */
+  --logo-filter:invert(1) hue-rotate(180deg);
 
   --pagefind-ui-primary:var(--color-signal);
   --pagefind-ui-text:var(--color-ink);
@@ -342,8 +348,14 @@ p{margin:0 0 var(--space-4);}
 header.site{border-bottom:1px solid var(--color-line);background:var(--header-bg);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding-block:var(--space-3);gap:var(--space-4);flex-wrap:wrap;}
 .brand{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-weight:700;font-size:var(--text-md);letter-spacing:var(--tracking-tight);}
-.brand-mark{filter:var(--logo-filter);display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;background:var(--color-surface);color:var(--color-signal);border:1px solid var(--color-line);font-family:var(--font-body);font-size:.68rem;font-weight:700;border-radius:var(--radius-sm);}
-img.brand-mark{object-fit:contain;padding:2px;}
+/* KEINE eigene Hintergrundfläche und kein Rahmen an dieser Stelle. Beides
+   stand hier noch aus der Zeit, als das Markenzeichen ein getippter Text in
+   einem Kästchen war - seit es ein Bild ist, richtet es Schaden an: Ein
+   CSS-Filter wirkt auf das ganze Element, Hintergrund und Rahmen
+   eingeschlossen. Im Dunkelmodus wurde daraus eine einfarbig weisse Fläche,
+   und das Logo darin war nicht mehr zu sehen. Das Logo selbst ist
+   durchsichtig und braucht hier gar keinen Untergrund. */
+.brand-mark{display:block;width:2.1rem;height:2.1rem;object-fit:contain;filter:var(--logo-filter);}
 nav.main-nav{order:2;flex:1 1 auto;}
 nav.main-nav>ul{display:flex;gap:var(--space-4);list-style:none;margin:0;padding:0;align-items:center;flex-wrap:wrap;}
 nav.main-nav li{position:relative;}
@@ -1088,45 +1100,45 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 /* ---------------------------------------------------------------------------
    ABSCHNITTSLEISTE ("Auf dieser Seite")
    ---------------------------------------------------------------------------
-   Schmaler Streifen, der beim Scrollen unter der Kopfzeile mitfährt (siehe
-   layouts/partials/seiten-uebersicht.html). Zwei Dinge daran sind wichtig:
+   Einzeilige Reihe mit den Abschnitten, direkt unter dem Seitentitel (siehe
+   layouts/partials/seiten-uebersicht.html). Drei Dinge daran sind wichtig:
 
-   1. "position:fixed" - die Leiste steht NICHT im Textfluss und nimmt deshalb
-      keine Zeile Platz weg. Der Abstand nach oben ("top") wird vom Skript
-      gesetzt, weil die Kopfzeile auf schmalen Bildschirmen umbricht und dann
-      höher ist.
-   2. Die Liste bricht nie um, sondern scrollt seitwärts ("white-space:nowrap"
-      plus "overflow-x:auto"). Eine zweizeilige Leiste wäre genau das Problem,
-      das diese Lösung vermeiden soll.
+   1. "position:sticky" - sie steht an ihrem normalen Platz im Text und ist
+      damit von Anfang an sichtbar, bleibt beim Weiterscrollen aber oben
+      hängen. Den Abstand nach oben ("top") setzt das Skript, weil die
+      Kopfzeile auf schmalen Bildschirmen weder gleich hoch ist noch stehen
+      bleibt.
+   2. Sie bricht nie um, sondern scrollt seitwärts ("white-space:nowrap" plus
+      "overflow-x:auto"). Eine zweizeilige Leiste war genau das Problem, das
+      diese Lösung vermeiden soll.
+   3. Eine deckende Fläche bekommt sie NUR im geklebten Zustand (Klasse
+      "klebt"), damit der Text sauber darunter durchläuft. An ihrem Platz im
+      Text wäre sie sonst nur ein weiterer Kasten auf der Seite.
 
-   Solange die Leiste nicht sichtbar ist, steht sie auf "visibility:hidden" -
-   nicht nur auf durchsichtig. Nur so ist sie auch per Tabulator nicht
-   erreichbar, solange sie niemand sehen kann.
+   Die negativen Seitenränder sind kein Versehen: Die Fläche im geklebten
+   Zustand muss bis an den Rand der Textspalte reichen, sonst schaut links und
+   rechts durchlaufender Text an ihr vorbei.
    --------------------------------------------------------------------------- */
-/* Deckende Fläche, nicht die halbdurchsichtige der Kopfzeile: Die Leiste
-   fährt über Fliesstext hinweg, und durchscheinende Buchstaben unter den
-   Abschnittsnamen sehen nach Fehler aus. Die Kopfzeile darf durchscheinend
-   bleiben, unter ihr liegt meist der Seitenrand. */
-.abschnittsleiste{position:fixed;left:0;right:0;top:0;z-index:90;background:var(--color-surface);border-bottom:1px solid var(--color-line);box-shadow:var(--shadow-sm);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s ease,transform .18s ease,visibility .18s;}
-.abschnittsleiste.ist-sichtbar{opacity:1;visibility:visible;transform:none;}
+.abschnittsleiste{position:sticky;top:0;z-index:90;margin:var(--space-5) calc(var(--space-5) * -1) var(--space-7);padding-inline:var(--space-5);border-bottom:1px solid var(--color-line);transition:background-color .15s,box-shadow .15s;}
+.abschnittsleiste.klebt{background:var(--color-surface);box-shadow:var(--shadow-sm);}
 /* Die weichen Kanten links und rechts sind nicht Zierde: Sie zeigen, dass
    seitwärts noch Abschnitte kommen - sonst sieht ein am Rand abgeschnittenes
    Wort einfach kaputt aus. */
-.abschnittsleiste-inner{max-width:var(--max-width);margin-inline:auto;padding-inline:var(--space-5);overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 var(--space-5),#000 calc(100% - var(--space-6)),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 var(--space-5),#000 calc(100% - var(--space-6)),transparent 100%);}
+.abschnittsleiste-inner{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-mask-image:linear-gradient(to right,#000 0,#000 calc(100% - var(--space-6)),transparent 100%);mask-image:linear-gradient(to right,#000 0,#000 calc(100% - var(--space-6)),transparent 100%);}
 .abschnittsleiste-inner::-webkit-scrollbar{display:none;}
 .abschnittsleiste-liste{display:flex;gap:var(--space-5);list-style:none;margin:0;padding:0;white-space:nowrap;}
 .abschnittsleiste-liste li{margin:0;}
-.abschnittsleiste a{display:block;padding:.65rem 0;font-size:var(--text-sm);line-height:1.3;color:var(--color-ink-faint);text-decoration:none;border-bottom:2px solid transparent;}
+.abschnittsleiste a{display:block;padding:.6rem 0;font-size:var(--text-sm);line-height:1.3;color:var(--color-ink-faint);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;}
 .abschnittsleiste a:hover{color:var(--color-ink);}
 .abschnittsleiste a.ist-aktiv{color:var(--color-signal);border-bottom-color:var(--color-signal);}
 .abschnittsleiste a:focus-visible{outline:2px solid var(--color-signal);outline-offset:2px;border-radius:var(--radius-sm);}
 @media (prefers-reduced-motion:reduce){
   .abschnittsleiste{transition:none;}
 }
-/* Ohne das landet eine angesprungene Überschrift unter der Kopfzeile und der
-   Leiste und ist unsichtbar. Den genauen Wert setzt das Skript, sobald es
-   beide gemessen hat - der Wert hier gilt, solange das noch nicht passiert
-   ist (und wenn gar kein JavaScript läuft). */
+/* Ohne das landet eine angesprungene Überschrift unter Kopfzeile und Leiste
+   und ist unsichtbar. Den genauen Wert setzt das Skript, sobald es beide
+   gemessen hat - der Wert hier gilt, solange das noch nicht passiert ist
+   (und wenn gar kein JavaScript läuft). */
 main h2[id],main h3[id]{scroll-margin-top:var(--sprung-abstand,5.5rem);}
 
 .pm-custom .pm-custom-pausenspalte{display:none;}

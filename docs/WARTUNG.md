@@ -691,9 +691,10 @@ Aufsichtsperson im Testsaal wieder.
 
 ## 15. Die Abschnittsleiste („Auf dieser Seite")
 
-Auf langen Seiten fährt beim Scrollen ein schmaler Streifen unter der
-Kopfzeile mit, in dem die Abschnitte der Seite stehen. Ein Klick springt
-dorthin, und der Abschnitt, in dem man gerade liest, ist markiert.
+Auf langen Seiten steht direkt unter dem Titel eine einzeilige Reihe mit den
+Abschnitten der Seite. Ein Klick springt dorthin, der Abschnitt, in dem man
+gerade liest, ist markiert – und beim Scrollen bleibt die Reihe unter der
+Kopfzeile hängen.
 
 **Daran ist nichts einzustellen und nichts zu pflegen.** Die Leiste entsteht
 automatisch aus den Zwischenüberschriften der Seite – also aus allem, was in
@@ -702,10 +703,10 @@ verschiebt oder ergänzt, ändert damit automatisch auch die Leiste.
 
 Vier Dinge, die manchmal Fragen aufwerfen:
 
-- **Ganz oben ist sie nicht da.** Sie erscheint erst, wenn der erste
-  Abschnitt nach oben aus dem Bild gescrollt ist – also genau dann, wenn man
-  Titel und Einstieg nicht mehr sieht. Sie steht auch nie im Textfluss und
-  schiebt deshalb nichts nach unten.
+- **Sie ist von Anfang an da**, gleich unter dem Titel – und bleibt beim
+  Weiterscrollen unter der Kopfzeile hängen, statt nach oben zu
+  verschwinden. Erst im geklebten Zustand bekommt sie eine deckende Fläche,
+  damit der Text sauber darunter durchläuft.
 - **Sie ist immer einzeilig.** Passen die Abschnitte nicht nebeneinander,
   schiebt man sie seitwärts, statt dass die Leiste in die Höhe wächst.
 - **Auf kurzen Seiten erscheint sie nicht.** Gibt es weniger als zwei
