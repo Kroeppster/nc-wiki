@@ -1,116 +1,187 @@
 {{- /*
   ============================================================================
-  ÜBERSICHT ÜBER DIE ABSCHNITTE EINER SEITE ("Auf dieser Seite")
+  ABSCHNITTSLEISTE ("Auf dieser Seite")
   ============================================================================
-  Kleine Sprungliste ganz oben auf langen Seiten: Sie zeigt, welche
-  Abschnitte weiter unten kommen, und springt mit einem Klick dorthin.
-  Gedacht für Seiten wie den EMS-Guide oder eine Untertest-Seite, bei denen
-  man sonst erst minutenlang scrollen muss, um zu sehen, was überhaupt drin
-  steht.
+  Schmaler Streifen mit den Abschnitten der Seite, der beim Scrollen unter der
+  Kopfzeile mitfährt. Ein Klick springt zum Abschnitt, und der Abschnitt, in
+  dem man gerade liest, ist markiert.
 
-  Eingebunden ist sie in layouts/_default/single.html und list.html, gilt
-  also automatisch für JEDE Unterseite und jede Übersichtsseite - man muss
-  pro Seite nichts eintragen.
+  WARUM NICHT ALS BLOCK OBEN AUF DER SEITE (erster Versuch, verworfen):
+  Eine Liste zwischen Titel und erstem Satz steht genau da im Weg, wo man
+  anfangen will zu lesen - und auf Seiten mit vielen Abschnitten brach sie auf
+  zwei Zeilen um. Beide Probleme verschwinden, wenn die Leiste gar nicht erst
+  im Textfluss steht:
 
-  ZWEI WEGE, EINE LISTE - und das hat einen Grund:
+  - Sie liegt fest über der Seite (position:fixed), nimmt also keine einzige
+    Zeile Platz weg. Der Seitenanfang sieht wieder aus wie vorher.
+  - Sie erscheint erst, wenn der erste Abschnitt nach oben aus dem Bild
+    gescrollt ist - also genau dann, wenn Titel und Einstieg nicht mehr zu
+    sehen sind und eine Sprungliste überhaupt etwas nützt. Ganz oben, wo man
+    ohnehin alles sieht, ist sie weg.
+  - Sie ist IMMER einzeilig. Passen die Abschnitte nicht nebeneinander,
+    schiebt man sie seitwärts - statt dass die Leiste in die Höhe wächst.
 
-  1. Hugo kennt beim Bauen die Überschriften, die im Fliesstext einer
-     .md-Datei stehen (".Fragments.Headings"). Die stehen unten fertig im
-     Quelltext und funktionieren auch ohne JavaScript.
+  Eingebunden ist sie in layouts/_default/single.html und list.html, gilt also
+  automatisch für jede Unterseite und jede Übersichtsseite. Pro Seite ist
+  nichts einzutragen.
 
-  2. Manche Seiten bekommen ihre Abschnitte aber nicht aus dem Fliesstext,
-     sondern aus einer Vorlage - der Prüfungsmodus zum Beispiel, oder die
-     Uniguide-Tabelle. Davon weiss Hugo an dieser Stelle nichts. Deshalb
-     schaut das kleine Skript unten nach dem Laden noch einmal selbst nach,
-     welche Abschnitts-Überschriften wirklich auf der Seite stehen, und baut
-     die Liste daraus neu.
+  WOHER DIE ABSCHNITTE KOMMEN: aus den Überschriften der zweiten Ebene, die
+  wirklich auf der fertigen Seite stehen - egal ob sie aus dem Fliesstext einer
+  .md-Datei stammen (dort "## Titel") oder aus einer Vorlage wie dem
+  Prüfungsmodus oder dem Uniguide. Deshalb sammelt das Skript sie nach dem
+  Laden selbst ein, statt sie beim Bauen zu übernehmen: Hugo weiss von den
+  Überschriften aus einer Vorlage an dieser Stelle nichts.
 
-  Ist am Ende weniger als ein Abschnitt zu verlinken, verschwindet die
-  Übersicht ganz - eine Sprungliste mit einem einzigen Eintrag ist kein
-  Gewinn, sondern nur zusätzliches Rauschen über dem Text.
+  Tiefere Überschriften ("###") bleiben bewusst draussen - sonst wird aus der
+  Leiste ein Inhaltsverzeichnis, und in eine Zeile passt es ohnehin nicht.
 
-  Gezählt werden ausschliesslich Überschriften der zweiten Ebene (in einer
-  .md-Datei also "## Titel"). Tiefer verschachtelte Überschriften ("### ...")
-  bleiben bewusst draussen, sonst wird aus der Übersicht ein
-  Inhaltsverzeichnis, das länger ist als der Text darunter.
+  OHNE JAVASCRIPT gibt es die Leiste nicht. Das ist Absicht: Sie ist reine
+  Bequemlichkeit, alle Abschnitte stehen ja untereinander auf der Seite. Der
+  Streifen bleibt deshalb ausgeblendet, bis das Skript ihn gefüllt hat -
+  eine leere Leiste wäre schlimmer als keine.
   ============================================================================
 */ -}}
-{{- $eintraege := slice }}
-{{- range .Fragments.Headings }}
-  {{- if and .Title .ID }}
-    {{- $eintraege = $eintraege | append (dict "id" .ID "titel" .Title) }}
-  {{- end }}
-{{- end }}
-<nav class="seiten-uebersicht" id="seiten-uebersicht"
-     aria-labelledby="seiten-uebersicht-titel"{{ if lt (len $eintraege) 2 }} hidden{{ end }}>
-  <p class="seiten-uebersicht-titel" id="seiten-uebersicht-titel">{{ i18n "auf_dieser_seite" }}</p>
-  <ul class="seiten-uebersicht-liste">
-    {{- range $eintraege }}
-    <li><a href="#{{ .id }}">{{ .titel }}</a></li>
-    {{- end }}
-  </ul>
+<nav class="abschnittsleiste" id="abschnittsleiste" hidden
+     data-pagefind-ignore aria-label="{{ i18n "auf_dieser_seite" }}">
+  <div class="abschnittsleiste-inner" id="abschnittsleiste-inner">
+    <ul class="abschnittsleiste-liste" id="abschnittsleiste-liste"></ul>
+  </div>
 </nav>
 <script>
-/* WICHTIG: erst nachdem die Seite fertig geladen ist. Diese Vorlage steht
-   ganz OBEN auf der Seite - der Rest des Textes ist also noch gar nicht da,
-   wenn das Skript an dieser Stelle läuft. Ohne das Warten bliebe die Liste
+/* WICHTIG: erst wenn die Seite fertig geladen ist. Diese Vorlage steht weit
+   oben - zu dem Zeitpunkt, an dem das Skript hier im Quelltext auftaucht, ist
+   der Rest der Seite noch gar nicht da. Ohne das Warten bliebe die Leiste
    leer, und zwar ohne Fehlermeldung. */
 (function(){
-  function baueUebersicht(){
-  var nav = document.getElementById('seiten-uebersicht');
-  if(!nav) return;
-  var liste = nav.querySelector('.seiten-uebersicht-liste');
-  var bereich = document.getElementById('main');
-  if(!liste || !bereich) return;
+  function start(){
+    var leiste = document.getElementById('abschnittsleiste');
+    var innen  = document.getElementById('abschnittsleiste-inner');
+    var liste  = document.getElementById('abschnittsleiste-liste');
+    var kopf   = document.querySelector('header.site');
+    var bereich = document.getElementById('main');
+    if(!leiste || !liste || !bereich) return;
 
-  /* Aus einer Überschrift einen Namen für die Sprungmarke machen, falls sie
-     noch keine hat (Hugo vergibt die nur für Überschriften aus dem
-     Fliesstext, nicht für die aus einer Vorlage). */
-  function marke(text){
-    return text.toLowerCase()
-      .replace(/[äàâ]/g,'a').replace(/[öô]/g,'o').replace(/[üû]/g,'u')
-      .replace(/[éèêë]/g,'e').replace(/[ìî]/g,'i').replace(/ç/g,'c').replace(/ß/g,'ss')
-      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'abschnitt';
-  }
-
-  var eintraege = [];
-  var vergeben = {};
-  Array.prototype.forEach.call(bereich.querySelectorAll('h2'), function(h){
-    /* Die Übersicht selbst, der Seitentitel (der auf Übersichtsseiten als
-       h2 ausgegeben wird) und alles, was gerade ausgeblendet ist - etwa die
-       Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Liste. */
-    if(nav.contains(h)) return;
-    if(h.closest && h.closest('.section-head, .pm-buehne, [hidden]')) return;
-    var titel = (h.textContent || '').trim();
-    if(!titel) return;
-    if(!h.id){
-      var name = marke(titel), n = 2;
-      while(document.getElementById(name)){ name = marke(titel) + '-' + n; n++; }
-      h.id = name;
+    /* --------------------------------------------------- Abschnitte finden */
+    /* Aus einer Überschrift einen Namen für die Sprungmarke machen, falls sie
+       noch keine hat. Hugo vergibt die nur für Überschriften aus dem
+       Fliesstext, nicht für die aus einer Vorlage. */
+    function marke(text){
+      return text.toLowerCase()
+        .replace(/[äàâ]/g,'a').replace(/[öô]/g,'o').replace(/[üû]/g,'u')
+        .replace(/[éèêë]/g,'e').replace(/[ìî]/g,'i').replace(/ç/g,'c').replace(/ß/g,'ss')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'abschnitt';
     }
-    if(vergeben[h.id]) return;
-    vergeben[h.id] = true;
-    eintraege.push({ id: h.id, titel: titel });
-  });
 
-  if(eintraege.length < 2){ nav.hidden = true; return; }
+    var abschnitte = [];
+    Array.prototype.forEach.call(bereich.querySelectorAll('h2'), function(h){
+      /* Der Seitentitel (den gibt list.html als h2 aus, er ist aber kein
+         Abschnitt) und alles gerade Ausgeblendete - vor allem die
+         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Leiste. */
+      if(h.closest && h.closest('.section-head, .pm-buehne, [hidden]')) return;
+      var titel = (h.textContent || '').trim();
+      if(!titel) return;
+      if(!h.id){
+        var name = marke(titel), n = 2;
+        while(document.getElementById(name)){ name = marke(titel) + '-' + n; n++; }
+        h.id = name;
+      }
+      abschnitte.push({ ueberschrift: h, titel: titel });
+    });
 
-  liste.textContent = '';
-  eintraege.forEach(function(e){
-    var li = document.createElement('li');
-    var a = document.createElement('a');
-    a.href = '#' + e.id;
-    a.textContent = e.titel;
-    li.appendChild(a);
-    liste.appendChild(li);
-  });
-  nav.hidden = false;
+    /* Bei einem einzigen Abschnitt gibt es nichts zu springen. */
+    if(abschnitte.length < 2) return;
+
+    abschnitte.forEach(function(a){
+      var li = document.createElement('li');
+      var link = document.createElement('a');
+      link.href = '#' + a.ueberschrift.id;
+      link.textContent = a.titel;
+      li.appendChild(link);
+      liste.appendChild(li);
+      a.link = link;
+    });
+    leiste.hidden = false;
+
+    /* ------------------------------------------------------------ Abstände */
+    /* Die Leiste hängt sich unter die Kopfzeile. Wo die endet, wird bei jedem
+       Bild neu gemessen statt einmal ausgerechnet - denn die Kopfzeile
+       verhält sich nicht überall gleich:
+
+         ab 861px Breite  bleibt sie beim Scrollen oben stehen (sticky),
+         darunter        scrollt sie mit nach oben weg (siehe header.site in
+                         style.css, Abschnitt "Responsiv").
+
+       Auf dem Handy rutscht die Leiste dadurch von selbst ganz nach oben,
+       sobald die Kopfzeile weg ist - statt mit einer leeren Lücke darüber
+       stehen zu bleiben. Zusätzlich bricht die Kopfzeile auf schmalen
+       Bildschirmen um und ist dann höher; auch das erledigt sich durch
+       Messen. */
+    var leisteHoehe = 0;
+    function messen(){
+      leisteHoehe = leiste.getBoundingClientRect().height;
+      /* Abstand, den eine angesprungene Überschrift nach oben hält. Die
+         Kopfzeile zählt nur mit, wenn sie beim Scrollen stehen bleibt. */
+      var kopfKlebt = kopf && window.getComputedStyle(kopf).position === 'sticky';
+      var kopfHoehe = kopfKlebt ? kopf.getBoundingClientRect().height : 0;
+      document.documentElement.style.setProperty(
+        '--sprung-abstand', (kopfHoehe + leisteHoehe + 16) + 'px');
+    }
+    messen();
+
+    /* ------------------------------------------------- Anzeigen und Mitlaufen */
+    var laeuft = false;
+    var aktiv = null;
+    function zeichnen(){
+      laeuft = false;
+      var leisteOben = kopf ? Math.max(0, kopf.getBoundingClientRect().bottom) : 0;
+      leiste.style.top = leisteOben + 'px';
+      var grenze = leisteOben + leisteHoehe + 8;
+
+      /* Sichtbar wird die Leiste genau dann, wenn der erste Abschnitt oben aus
+         dem Bild gerutscht ist. Ganz oben, wo man Titel und Einstieg ohnehin
+         sieht, bleibt sie weg. */
+      leiste.classList.toggle('ist-sichtbar',
+        abschnitte[0].ueberschrift.getBoundingClientRect().top < grenze);
+
+      /* Der aktuelle Abschnitt ist der letzte, dessen Überschrift schon unter
+         die Leiste gerutscht ist. */
+      var treffer = abschnitte[0];
+      abschnitte.forEach(function(a){
+        if(a.ueberschrift.getBoundingClientRect().top <= grenze) treffer = a;
+      });
+      if(treffer !== aktiv){
+        if(aktiv) aktiv.link.classList.remove('ist-aktiv');
+        treffer.link.classList.add('ist-aktiv');
+        treffer.link.setAttribute('aria-current', 'true');
+        if(aktiv) aktiv.link.removeAttribute('aria-current');
+        aktiv = treffer;
+        /* Auf schmalen Bildschirmen passen nicht alle Abschnitte nebeneinander -
+           dann wird der aktuelle in den sichtbaren Bereich geschoben. Bewusst
+           von Hand statt mit scrollIntoView: das würde die ganze Seite
+           mitverschieben. */
+        var l = treffer.link;
+        if(l.offsetLeft < innen.scrollLeft ||
+           l.offsetLeft + l.offsetWidth > innen.scrollLeft + innen.clientWidth){
+          innen.scrollLeft = Math.max(0, l.offsetLeft - 24);
+        }
+      }
+    }
+    function beiScroll(){
+      if(!laeuft){ laeuft = true; window.requestAnimationFrame(zeichnen); }
+    }
+
+    window.addEventListener('scroll', beiScroll, { passive: true });
+    window.addEventListener('resize', function(){ messen(); beiScroll(); });
+    /* Bilder ohne feste Höhe verschieben die Überschriften beim Nachladen -
+       danach stimmen die gemessenen Positionen sonst nicht mehr. */
+    window.addEventListener('load', function(){ messen(); beiScroll(); });
+    zeichnen();
   }
 
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', baueUebersicht);
+    document.addEventListener('DOMContentLoaded', start);
   } else {
-    baueUebersicht();
+    start();
   }
 })();
 </script>

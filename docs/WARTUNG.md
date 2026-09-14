@@ -689,30 +689,35 @@ Aufsichtsperson im Testsaal wieder.
 
 ---
 
-## 15. „Auf dieser Seite" (die Sprungliste über den Abschnitten)
+## 15. Die Abschnittsleiste („Auf dieser Seite")
 
-Auf jeder Unterseite und jeder Übersichtsseite steht zuoberst eine kleine
-Liste mit den Abschnitten, die weiter unten kommen. Ein Klick springt direkt
-dorthin.
+Auf langen Seiten fährt beim Scrollen ein schmaler Streifen unter der
+Kopfzeile mit, in dem die Abschnitte der Seite stehen. Ein Klick springt
+dorthin, und der Abschnitt, in dem man gerade liest, ist markiert.
 
-**Daran ist nichts einzustellen und nichts zu pflegen.** Die Liste entsteht
+**Daran ist nichts einzustellen und nichts zu pflegen.** Die Leiste entsteht
 automatisch aus den Zwischenüberschriften der Seite – also aus allem, was in
 einer `.md`-Datei mit `##` beginnt. Wer eine Überschrift umbenennt,
-verschiebt oder ergänzt, ändert damit automatisch auch die Liste.
+verschiebt oder ergänzt, ändert damit automatisch auch die Leiste.
 
-Drei Dinge, die manchmal Fragen aufwerfen:
+Vier Dinge, die manchmal Fragen aufwerfen:
 
+- **Ganz oben ist sie nicht da.** Sie erscheint erst, wenn der erste
+  Abschnitt nach oben aus dem Bild gescrollt ist – also genau dann, wenn man
+  Titel und Einstieg nicht mehr sieht. Sie steht auch nie im Textfluss und
+  schiebt deshalb nichts nach unten.
+- **Sie ist immer einzeilig.** Passen die Abschnitte nicht nebeneinander,
+  schiebt man sie seitwärts, statt dass die Leiste in die Höhe wächst.
 - **Auf kurzen Seiten erscheint sie nicht.** Gibt es weniger als zwei
-  Abschnitte, bleibt die Liste weg – eine Sprungliste mit einem einzigen
-  Eintrag ist kein Gewinn.
-- **Nur die oberste Ebene zählt.** `##` kommt in die Liste, `###` nicht.
-  Sonst würde die Übersicht länger als der Text darunter.
-- **Sie funktioniert auch auf Seiten ohne Fliesstext**, zum Beispiel beim
-  Prüfungsmodus oder beim Uniguide. Dort sammelt die Seite ihre Abschnitte
-  selbst ein, nachdem sie geladen ist.
+  Abschnitte, bleibt sie ganz weg.
+- **Nur die oberste Ebene zählt.** `##` kommt in die Leiste, `###` nicht.
+  Sonst passt es erst recht nicht in eine Zeile.
 
-Die Beschriftung („Auf dieser Seite" / „Sur cette page" / „In questa
-pagina") steht wie alle festen Texte in `i18n/de|fr|it.yaml`, beim Eintrag
-`auf_dieser_seite`. Technisch steckt alles in einer einzigen Datei:
-`layouts/partials/seiten-uebersicht.html`.
+Sie funktioniert auch auf Seiten ohne Fliesstext, zum Beispiel beim
+Prüfungsmodus oder beim Uniguide: Dort sammelt die Seite ihre Abschnitte
+selbst ein, nachdem sie geladen ist.
 
+Die Beschriftung für Vorlese-Programme („Auf dieser Seite" / „Sur cette
+page" / „In questa pagina") steht wie alle festen Texte in
+`i18n/de|fr|it.yaml`, beim Eintrag `auf_dieser_seite`. Technisch steckt alles
+in einer einzigen Datei: `layouts/partials/seiten-uebersicht.html`.
