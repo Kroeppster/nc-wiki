@@ -95,8 +95,20 @@
       abschnitte.push({ ueberschrift: h, titel: titel });
     });
 
+    /* Das Raster wird nur dann zweispaltig, wenn es hier auch etwas
+       anzuzeigen gibt - sonst bliebe rechts eine leere Spalte stehen und der
+       Text daneben wäre grundlos schmaler (das ist auf dem Uniguide
+       passiert, der nur eine Überschrift hat). */
+    var raster = kasten.parentNode;
+    while(raster && !(raster.classList && raster.classList.contains('seite-raster'))){
+      raster = raster.parentNode;
+    }
+
     /* Bei einem einzigen Abschnitt gibt es nichts zu springen. */
-    if(abschnitte.length < 2) return;
+    if(abschnitte.length < 2){
+      if(raster) raster.classList.remove('mit-liste');
+      return;
+    }
 
     abschnitte.forEach(function(a){
       var li = document.createElement('li');
@@ -108,6 +120,7 @@
       a.link = link;
     });
     kasten.hidden = false;
+    if(raster) raster.classList.add('mit-liste');
 
     /* ------------------------------------------------ Aufgeklappt oder nicht */
     /* Als Spalte neben dem Text ist die Liste immer offen - dort gibt es

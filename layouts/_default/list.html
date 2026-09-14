@@ -59,7 +59,19 @@
            Text. Der Titelblock oben bleibt in beiden Fällen über die
            ganze Breite, damit die Textspalte an derselben Kante beginnt
            wie die Überschrift. */}}
-      <div class="seite-raster">
+      {{/* "mit-liste" entscheidet, ob daraus überhaupt zwei Spalten werden.
+           Ohne diese Klasse bleibt es ein normaler Block über die volle
+           Breite - sonst stünde auf Seiten ohne Abschnittsliste (z.B. dem
+           Uniguide, der nur eine Überschrift hat) rechts eine leere Spalte,
+           und die Tabelle daneben wäre grundlos abgeschnitten.
+
+           Hugo kann die Überschriften aus dem Fliesstext hier schon zählen
+           und setzt die Klasse deshalb gleich beim Bauen - dadurch steht das
+           Raster auf den allermeisten Seiten sofort richtig. Auf Seiten, die
+           ihre Überschriften erst aus einer Vorlage bekommen (Prüfungsmodus,
+           Uniguide, Q&A), weiss Hugo davon nichts; dort ergänzt bzw. entfernt
+           das Skript in seiten-uebersicht.html die Klasse nach dem Laden. */}}
+      <div class="seite-raster{{ if ge (len .Fragments.Headings) 2 }} mit-liste{{ end }}">
         {{ partial "seiten-uebersicht.html" . }}
         <div class="seite-inhalt">
 

@@ -2,12 +2,25 @@
   ============================================================================
   ALLGEMEINES FEHLER-MELDE-FORMULAR (Übungsaufgaben-Übersicht)
   ============================================================================
-  Ein einziges, zentrales Formular für Fehlermeldungen zu den
-  Übungsaufgaben-PDFs, als Ergänzung zu den automatischen "Fehler
-  melden"-Knöpfen bei jedem einzelnen Download weiter unten auf den
-  Unterseiten (siehe download-list.html) - hier trägt man selbst ein,
-  welche Übung betroffen ist, statt dafür extra zur passenden Unterseite
-  navigieren zu müssen.
+  Ein einziges Formular für Fehlermeldungen zu den Übungsaufgaben-PDFs.
+  Früher hatte jeder einzelne Download seinen eigenen kleinen "Fehler
+  melden"-Knopf; das war viel Formular für wenig Nutzen, deshalb gibt es
+  jetzt dieses eine (siehe download-list.html).
+
+  Es erscheint an ZWEI Stellen:
+    1. auf der Übungsaufgaben-Übersicht, offen und mit leerem Feld
+       (uebungsaufgaben-overview.html),
+    2. am Ende der Download-Liste JEDER Untertest-Seite, zugeklappt und mit
+       schon eingetragenem Untertest (single.html). Dort wird ein Fehler ja
+       gefunden - wer dafür erst auf die Übersicht zurücknavigieren muss,
+       meldet ihn meistens gar nicht.
+
+  PARAMETER (als dict übergeben):
+    page    - die aktuelle Seite (für die Adresse im versteckten Feld)
+    uebung  - Vorbelegung des Feldes "Betroffene Übung", oder "" für leer
+    praefix - Vorsilbe für die Feld-Namen (id). Muss sich zwischen zwei
+              Formularen auf DERSELBEN Seite unterscheiden, sonst zeigen
+              zwei Beschriftungen auf dasselbe Feld.
 
   Nutzt dieselbe generische Klasse "report-error" wie die Download-
   Fehlermeldungen, darum braucht es KEIN eigenes JavaScript: der bereits
@@ -33,25 +46,32 @@
   ist, hier einfach dessen Adresse eintragen - sonst aendert sich nichts.
   ============================================================================
 */ -}}
+{{- $page := .page }}
+{{- $uebung := default "" .uebung }}
+{{- $p := default "ef" .praefix }}
 <form class="contact-form report-error report-error-general" action="https://formspree.io/f/mvkpgrpl" method="POST">
   {{/* Fester Betreff, damit die Meldung im gemeinsamen Kontakt-Postfach
        sofort auffaellt und sich filtern laesst - siehe Kommentar oben. */}}
   <input type="hidden" name="_subject" value="Fehlermeldung Uebungsaufgaben (Website)">
+  {{/* Woher die Meldung kam - der Betreff bleibt bewusst immer gleich, damit
+       sich danach filtern lässt (siehe oben), deshalb steht die Seite in
+       einem eigenen Feld. */}}
+  <input type="hidden" name="seite" value="{{ $page.Permalink }}">
   <div>
-    <label for="ef-item">{{ i18n "uebungsaufgaben_error_item_label" }}</label>
-    <input type="text" name="uebung" id="ef-item" required>
+    <label for="{{ $p }}-item">{{ i18n "uebungsaufgaben_error_item_label" }}</label>
+    <input type="text" name="uebung" id="{{ $p }}-item" value="{{ $uebung }}" required>
   </div>
   <div>
-    <label for="ef-desc">{{ i18n "uebungsaufgaben_error_desc_label" }}</label>
-    <textarea name="beschreibung" id="ef-desc" required></textarea>
+    <label for="{{ $p }}-desc">{{ i18n "uebungsaufgaben_error_desc_label" }}</label>
+    <textarea name="beschreibung" id="{{ $p }}-desc" required></textarea>
   </div>
   <div>
-    <label for="ef-name">{{ i18n "form_name" }}</label>
-    <input type="text" name="name" id="ef-name">
+    <label for="{{ $p }}-name">{{ i18n "form_name" }}</label>
+    <input type="text" name="name" id="{{ $p }}-name">
   </div>
   <div>
-    <label for="ef-email">{{ i18n "form_email" }}</label>
-    <input type="email" name="email" id="ef-email">
+    <label for="{{ $p }}-email">{{ i18n "form_email" }}</label>
+    <input type="email" name="email" id="{{ $p }}-email">
   </div>
 
   {{/* Für Menschen unsichtbares Extra-Feld, das nur Spam-Roboter ausfüllen

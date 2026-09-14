@@ -724,7 +724,12 @@ verschiebt oder ergänzt, ändert damit automatisch auch die Liste.
 Zwei Dinge, die manchmal Fragen aufwerfen:
 
 - **Auf kurzen Seiten erscheint sie nicht.** Gibt es weniger als zwei
-  Abschnitte, bleibt sie ganz weg.
+  Abschnitte, bleibt sie ganz weg – und dann bleibt auch die Spalte weg, der
+  Text nutzt die volle Breite (das war beim Uniguide eine Zeitlang anders und
+  hat die Tabelle grundlos abgeschnitten).
+- **Sie nimmt dem Text keinen Platz weg**, solange der Bildschirm breit genug
+  ist: Die Spalte steht im leeren Seitenrand rechts. Erst wenn der Rand
+  schmaler ist als die Spalte, rückt der Text etwas zusammen.
 - **Nur die oberste Ebene zählt.** `##` kommt in die Liste, `###` nicht. Sonst
   wird die Übersicht länger als der Text daneben.
 

@@ -950,6 +950,21 @@ Wer daran etwas ändert, sollte fünf Dinge kennen:
 - **Die Liste steht im Quelltext VOR dem Text** (damit sie auf schmalen
   Bildschirmen oben landet) und wird auf breiten Bildschirmen per `order` nach
   rechts sortiert.
+- **Zwei Spalten gibt es nur mit der Klasse `mit-liste`.** Ohne sie bleibt
+  `.seite-raster` ein normaler Block über die volle Breite. Hugo setzt die
+  Klasse beim Bauen, wenn der Fliesstext mindestens zwei `##`-Überschriften
+  hat; bei Seiten, deren Überschriften aus einer Vorlage kommen (Prüfungsmodus,
+  Uniguide, Q&A), ergänzt oder entfernt das Skript sie nach dem Laden. Fehlt
+  diese Bedingung, reserviert das Raster die rechte Spalte auch auf Seiten ganz
+  ohne Liste – auf dem Uniguide war die grosse Tabelle deshalb eine Zeitlang
+  grundlos abgeschnitten.
+- **Die Spalte holt sich ihren Platz aus dem leeren Seitenrand**, nicht vom
+  Text: `--rand-ausbruch` rechnet aus, wie viel Rand neben `--max-width`
+  überhaupt da ist, und zieht die Spalte per negativem `margin-right` so weit
+  hinaus. Ab etwa 1900px steht sie ganz im Rand und der Text behält seine volle
+  Breite; darunter geht nur die Differenz vom Text ab. Der Abzug von `2rem` in
+  der Rechnung ist Sicherheitsabstand, weil `100vw` je nach Browser die
+  Bildlaufleiste mitzählt.
 - **Es ist ein `<details>`.** Auf breiten Bildschirmen setzt das Skript es auf
   „offen", und die Beschriftung wird zur reinen Überschrift
   (`pointer-events:none`); darunter bleibt es zu, bis jemand tippt. Wer es dort

@@ -669,6 +669,13 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .js-compare th.compare-col,.js-compare td.compare-col{display:table-cell;}
 /* Ueberschrift der Ankreuz-Spalte: schmal halten, der Text darf umbrechen. */
 .uniguide-table th.compare-col{white-space:normal;width:1%;}
+/* Die Namensspalte darf umbrechen. "Medizinisch-naturwissenschaftliches
+   Grundverständnis" in einer Zeile zwingt die Tabelle sonst breiter, als die
+   Textspalte ist - und dann muss man eine Tabelle seitwärts schieben, die
+   eigentlich locker hineinpasst. Nur die Namensspalte: Zahlen und
+   Eingabefelder sollen weiterhin nicht umbrechen. */
+.testablauf-table th:first-child,.testablauf-table td:first-child,
+.pm-custom-table th:nth-child(2),.pm-custom-table td:nth-child(2){white-space:normal;min-width:12rem;}
 .compare-check{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:.2rem;}
 .compare-check input{width:1.05rem;height:1.05rem;accent-color:var(--color-signal);cursor:pointer;}
 .compare-check input:disabled{cursor:not-allowed;opacity:.45;}
@@ -769,6 +776,15 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .uebungsaufgaben-downloads h2{margin-top:0;}
 .uebungsaufgaben-downloads .download-list{margin-top:var(--space-5);}
 /* Copyright-/Hinweis-Badges direkt bei den Downloads (siehe single.html) */
+/* "Fehler gefunden?" am Ende der Download-Liste: zugeklappt eine Zeile,
+   damit die Seite nicht mit einem Formular endet - aber da, wo der Fehler
+   auffällt. Das Formular darin ist dasselbe wie auf der Übersicht (siehe
+   report-error-general.html), nur mit schon eingetragenem Untertest. */
+.uebungsaufgaben-fehler{margin-top:var(--space-6);border-top:1px solid var(--color-line);padding-top:var(--space-4);}
+.uebungsaufgaben-fehler>summary{cursor:pointer;font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-ink-soft);}
+.uebungsaufgaben-fehler>summary:hover{color:var(--color-signal);}
+.uebungsaufgaben-fehler>summary:focus-visible{outline:2px solid var(--color-signal);outline-offset:2px;border-radius:var(--radius-sm);}
+.uebungsaufgaben-fehler .contact-form{margin-top:var(--space-4);}
 .uebungsaufgaben-badges{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5);}
 .badge-license,.badge-notice{display:inline-flex;align-items:center;font-family:var(--font-body);font-size:var(--text-xs);padding:.3rem .75rem;border-radius:var(--radius-full);border:1px solid var(--color-line);}
 .badge-license{color:var(--color-ink-faint);background:var(--color-surface);}
@@ -1128,12 +1144,28 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .abschnittsliste-liste a.ist-aktiv{color:var(--color-signal);border-left-color:var(--color-signal);font-weight:600;}
 .abschnittsliste-liste a:focus-visible{outline:2px solid var(--color-signal);outline-offset:-2px;border-radius:var(--radius-sm);}
 
+/* Zwei Spalten NUR, wenn es auch eine Liste gibt (Klasse "mit-liste", gesetzt
+   beim Bauen bzw. vom Skript - siehe seiten-uebersicht.html). Ohne diese
+   Bedingung reserviert das Raster die rechte Spalte auch auf Seiten ganz ohne
+   Abschnittsliste, und der Inhalt daneben ist grundlos schmaler. */
 @media (min-width:1100px){
-  .seite-raster{display:grid;grid-template-columns:minmax(0,1fr) 15rem;gap:var(--space-8);align-items:start;}
+  /* Die Spalte holt sich ihren Platz aus dem LEEREN SEITENRAND rechts, statt
+     ihn dem Text wegzunehmen. Wie viel davon da ist, hängt vom Bildschirm ab:
+     Ist der Rand breiter als die Spalte, steht sie ganz darin und der Text
+     behält seine volle Breite; ist er schmaler, rutscht sie so weit hinaus,
+     wie Platz ist, und nur der Rest geht vom Text ab. Ist gar kein Rand da,
+     passiert nichts - dafür das "max(0px, ...)".
+
+     Die 2rem im Zähler sind Sicherheitsabstand: "100vw" zählt bei manchen
+     Browsern die Bildlaufleiste mit, ohne den Puffer könnte die Seite dadurch
+     ein paar Pixel seitlich überstehen. */
+  .seite-raster.mit-liste{display:grid;grid-template-columns:minmax(0,1fr) 15rem;gap:var(--space-8);align-items:start;
+    --rand-ausbruch:min(17rem, max(0px, calc((100vw - var(--max-width) - 2rem) / 2)));
+    margin-right:calc(-1 * var(--rand-ausbruch));}
   /* Die Liste steht im Quelltext VOR dem Text (damit sie auf schmalen
      Bildschirmen oben landet) und wird hier nach rechts sortiert. */
-  .abschnittsliste{order:2;position:sticky;top:calc(var(--kopf-hoehe,4rem) + var(--space-5));margin:0;border:none;border-left:1px solid var(--color-line);padding-left:var(--space-5);max-height:calc(100vh - var(--kopf-hoehe,4rem) - var(--space-8));overflow-y:auto;}
-  .seite-inhalt{order:1;}
+  .mit-liste .abschnittsliste{order:2;position:sticky;top:calc(var(--kopf-hoehe,4rem) + var(--space-5));margin:0;border:none;border-left:1px solid var(--color-line);padding-left:var(--space-5);max-height:calc(100vh - var(--kopf-hoehe,4rem) - var(--space-8));overflow-y:auto;}
+  .mit-liste .seite-inhalt{order:1;}
   /* Als Spalte ist nichts aufzuklappen - die Überschrift bleibt als
      Beschriftung stehen, ist aber kein Knopf mehr. */
   .abschnittsliste-titel{cursor:default;pointer-events:none;padding-top:0;}

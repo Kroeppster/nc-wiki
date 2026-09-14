@@ -29,6 +29,6 @@
   </div>
   <div class="uebungsaufgaben-report">
     <h2>{{ i18n "uebungsaufgaben_error_form_heading" }}</h2>
-    {{ partial "report-error-general.html" . }}
+    {{ partial "report-error-general.html" (dict "page" . "praefix" "ef") }}
   </div>
 </div>
