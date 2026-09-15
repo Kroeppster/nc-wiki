@@ -763,10 +763,25 @@ Gezählt wird, was jemanden interessiert – nicht, was im Ordner liegt:
   (Testheft, Lösungen, Auswertung des Konzentrationstests, Prozentrang-
   Tabelle) – das sind trotzdem zusammen **eine** Simulation. Gezählt werden
   die Jahreszahlen in den Dateinamen, jede nur einmal.
-- **Vorbereitungskurse:** gar keine Zahl. Es gibt genau ein aktuelles
-  Kursskript, und „1 Kursskript" sagt über das Angebot nichts aus – das
-  Angebot sind die Kurse, nicht die Dateien. Die Kachel zeigt deshalb nur
-  Text und Link.
+- **Vorbereitungskurse:** keine gezählte Zahl, sondern die feste Angabe
+  „2 Tage / kostenloser Kurs". Es gibt genau ein aktuelles Kursskript, und
+  „1 Kursskript" sagt über das Angebot nichts aus – das Angebot sind die
+  Kurse, nicht die Dateien.
+
+Eine Kachel darf statt einer gezählten Zahl auch eine **feste Angabe**
+mitbringen – dafür gibt es im Frontmatter die Felder `wert` und `zusatz`:
+
+```yaml
+    - key: vorbereitungskurse
+      title: "Vorbereitungskurse"
+      wert: "2 Tage"
+      zusatz: "kostenloser Kurs"
+```
+
+Das ist die Ausnahme von „keine Zahlen von Hand": Gezählt werden kann nur,
+was als Datei oder Eintrag vorliegt, und die Kursdauer ist beides nicht. Wo
+`unit` und eine gezählte Zahl vorhanden sind, hat die gezählte Zahl Vorrang.
+
 
 Die ersten beiden Regeln sind keine Kosmetik: Ungefiltert gezählt stünden dort
 153 „Übungsaufgaben" und 21 „Testsimulationen" – beide Zahlen klingen grösser,

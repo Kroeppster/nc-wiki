@@ -893,10 +893,16 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .angebot-card:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);transform:translateY(-2px);}
 /* Die Zahl bewusst gross und in Markenfarbe: sie ist die eigentliche Aussage
    der Kachel ("153 PDFs" sagt mehr als "Uebungsaufgaben"). */
-.angebot-count{display:flex;align-items:baseline;gap:var(--space-2);margin-bottom:var(--space-3);}
-.angebot-number{font-family:var(--font-display);font-weight:700;font-size:var(--text-4xl);line-height:1;color:var(--color-signal);letter-spacing:var(--tracking-tight);}
-.angebot-unit{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);}
-.angebot-card h3{margin:0 0 var(--space-2);font-size:var(--text-lg);}
+/* Die Mengenangabe steht als ruhige Zeile UNTER der Überschrift. Vorher war
+   es eine riesige Zahl in Signalblau mit einem gesperrten Grossbuchstaben-
+   Kürzel daneben - die Kennzahlen-Kachel, die man von jedem Dashboard kennt.
+   Sie hat den Blick auf sich gezogen, ohne etwas zu erzählen: Zuerst will
+   jemand wissen, WAS es gibt, und erst dann, wie viel davon.
+   "tabular-nums" hält die Ziffern in allen Kacheln auf derselben Breite. */
+.angebot-fakten{display:flex;flex-direction:column;gap:1px;margin:0 0 var(--space-3);font-family:var(--font-body);font-size:var(--text-sm);font-variant-numeric:tabular-nums;}
+.angebot-wert{color:var(--color-ink);font-weight:600;}
+.angebot-zusatz{color:var(--color-ink-faint);}
+.angebot-card h3{margin:0 0 var(--space-1);font-size:var(--text-lg);}
 .angebot-card p{color:var(--color-ink-soft);font-size:var(--text-sm);margin:0 0 var(--space-5);}
 /* margin-top:auto schiebt den Link bei unterschiedlich langen Texten immer an
    den unteren Kartenrand, damit die Links aller Kacheln auf einer Linie sitzen. */

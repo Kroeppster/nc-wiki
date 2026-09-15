@@ -90,12 +90,13 @@
 {{- $anzahlFragen := len hugo.Data.faq }}
 
 {{- /* Zuordnung "key" aus dem Frontmatter -> Zieladresse + gezählte Zahl. */ -}}
-{{- /* "anzahl" ist freiwillig. Fehlt sie, erscheint die Kachel ohne Zahl,
-       aber mit Text und Link - für die Vorbereitungskurse ist das richtig so:
-       Dort gibt es genau EIN aktuelles Kursskript (die früheren waren nur
-       überarbeitete Fassungen desselben), und "1 Kursskript" auf der
-       Startseite sagt über das Angebot nichts aus. Das Angebot sind die
-       Kurse, nicht die Dateien. */ -}}
+{{- /* "anzahl" ist freiwillig. Fehlt sie, kann die Kachel im Frontmatter
+       stattdessen ein festes "wert" mitbringen (siehe unten) - für die
+       Vorbereitungskurse zum Beispiel "2 Tage". Das ist die Ausnahme von der
+       Regel "keine Zahlen von Hand": Gezählt werden kann nur, was als Datei
+       oder Eintrag vorliegt, und die Kursdauer ist beides nicht. Die Anzahl
+       Kursskripte wäre zählbar, sagt über das Angebot aber nichts aus - das
+       Angebot sind die Kurse, nicht die Dateien. */ -}}
 {{- $quellen := dict
   "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "anzahl" $anzahlUebungen)
   "testsimulationen"   (dict "url" "ems/testsimulationen/"   "anzahl" $anzahlSimulationen)
@@ -113,14 +114,23 @@
          gleich etwas anderes bedeutet. */ -}}
   {{- $eintrag := . }}
   {{- $quelle := index $quellen .key }}
+  {{- /* Die Angabe steht UNTER der Überschrift, nicht als grosse Zahl
+         darüber. Vorher war es eine 2.5rem grosse Zahl in Signalblau mit
+         einem gesperrten Grossbuchstaben-Kürzel daneben - das ist die
+         Kennzahlen-Kachel, die man von jedem beliebigen Dashboard kennt, und
+         sie sagt über NCWiki nichts aus. Jetzt ist es eine ruhige Zeile im
+         Fliesstext-Schnitt: erst was es ist, dann wie viel davon. */ -}}
+  {{- $wert := "" }}
+  {{- with $quelle.anzahl }}{{ $wert = printf "%v %s" . $eintrag.unit }}{{ end }}
+  {{- if not $wert }}{{ $wert = default "" $eintrag.wert }}{{ end }}
   <li class="angebot-card">
-    {{- with $quelle.anzahl }}
-    <p class="angebot-count">
-      <span class="angebot-number">{{ . }}</span>
-      <span class="angebot-unit">{{ $eintrag.unit }}</span>
+    <h3>{{ $eintrag.title }}</h3>
+    {{- if or $wert $eintrag.zusatz }}
+    <p class="angebot-fakten">
+      {{- with $wert }}<span class="angebot-wert">{{ . }}</span>{{ end }}
+      {{- with $eintrag.zusatz }}<span class="angebot-zusatz">{{ . }}</span>{{ end }}
     </p>
     {{- end }}
-    <h3>{{ $eintrag.title }}</h3>
     <p>{{ $eintrag.text }}</p>
     {{- with $quelle }}
     <a class="more" href="{{ relLangURL .url }}">{{ $eintrag.link }}</a>

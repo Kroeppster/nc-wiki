@@ -35,7 +35,9 @@ angebot:
       link: "Vai alle simulazioni →"
     - key: vorbereitungskurse
       title: "Corsi di preparazione"
-      text: "Due giorni di strategie per tutti i sottotest, in piccoli gruppi e in diverse sedi universitarie – dispensa inclusa."
+      wert: "2 giorni"
+      zusatz: "corso gratuito"
+      text: "Strategie per tutti i sottotest, in piccoli gruppi e in diverse sedi universitarie – dispensa inclusa."
       link: "Vai ai corsi →"
     - key: uniguide
       title: "Guida alle università"

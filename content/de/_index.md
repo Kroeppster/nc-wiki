@@ -35,7 +35,9 @@ angebot:
       link: "Zu den Testsimulationen →"
     - key: vorbereitungskurse
       title: "Vorbereitungskurse"
-      text: "Zwei Tage Strategien zu allen Untertests, in Kleingruppen und an mehreren Hochschulstandorten – mit Skript zum Mitnehmen."
+      wert: "2 Tage"
+      zusatz: "kostenloser Kurs"
+      text: "Strategien zu allen Untertests, in Kleingruppen und an mehreren Hochschulstandorten – mit Skript zum Mitnehmen."
       link: "Zu den Kursen →"
     - key: uniguide
       title: "Uniguide"
