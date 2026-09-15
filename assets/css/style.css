@@ -963,15 +963,25 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .material{list-style:none;margin:var(--space-8) 0 0;padding:0;
   display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);}
 .material-stueck a{display:block;text-decoration:none;color:inherit;}
-.material-flaeche{display:grid;aspect-ratio:1/1.3;overflow:hidden;gap:2px;
+/* 1:1.35 liegt zwischen den beiden Papierformaten, die in den PDFs vorkommen
+   (US Letter 1:1.294, A4 1:1.415). Alle vier Flächen haben dasselbe
+   Verhältnis - sonst stünden die Titel darunter auf verschiedenen Höhen. */
+.material-flaeche{display:grid;aspect-ratio:1/1.35;overflow:hidden;gap:2px;
   background:var(--color-line);border:1px solid var(--color-line);
   border-radius:var(--radius-sm);box-shadow:var(--shadow-md);
   transition:transform .2s,box-shadow .2s;}
 .material-flaeche img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;background:var(--color-surface);}
 .material-1{grid-template-columns:1fr;gap:0;}
 .material-1 img{object-position:top center;}
-/* Neun Ausschnitte im Hochformat, drei je Reihe - dasselbe Verhältnis wie
-   die Fläche selbst, deshalb wird nichts beschnitten. */
+/* PAPIER: ganze Seiten aus den PDFs. "contain" statt "cover", weil eine Seite
+   vollständig zu sehen sein muss - ein angeschnittener Rand ist genau das,
+   was die früheren Ausschnitte willkürlich aussehen liess. Die Quellen sind
+   teils US Letter, teils A4; contain zeigt beide ganz, der weisse Grund macht
+   den kleinen Unterschied unsichtbar. Weiss ist hier fest und nicht
+   "--color-surface", denn die Seiten sind selbst weiss: im Dunkelmodus
+   bekämen sie sonst einen dunklen Rahmen um das Papier. */
+.material-papier img{object-fit:contain;object-position:center;background:#fff;}
+/* Neun ganze Seiten, drei je Reihe. */
 .material-9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);}
 /* Drei Teile: drei Querstreifen übereinander. Nebeneinander wären die Felder
    hochkant, und die drei Bilder (Uniguide-Tabelle, Berichte-Karten, Discord-

@@ -38,17 +38,23 @@
 {{- /* Zu jedem "key": wohin verlinkt wird und welche Bilder die Fläche füllt.
        Mehr als ein Bild = Collage.
 
-       Bei den Übungsaufgaben sind es neun Hochformat-Ausschnitte, drei je
-       Reihe: zuerst der Antwortbogen, dann die acht Untertests in der
-       Reihenfolge des echten Testtags (wie in data/testablauf.yaml). Der
-       Antwortbogen steht vorn, weil er das Erste ist, was am Testtag auf dem
-       Pult liegt - und weil ihn jede Person wiedererkennt, die den EMS schon
-       einmal gesehen hat. */ -}}
+       Bei den Übungsaufgaben sind es neun GANZE SEITEN, drei je Reihe:
+       zuerst der Antwortbogen, dann die acht Untertests in der Reihenfolge
+       des echten Testtags (wie in data/testablauf.yaml). Der Antwortbogen
+       steht vorn, weil er das Erste ist, was am Testtag auf dem Pult liegt -
+       und weil ihn jede Person wiedererkennt, die den EMS schon einmal
+       gesehen hat.
+
+       "papier" sagt, ob die Bilder Seiten aus PDFs sind. Dann werden sie
+       vollständig gezeigt (contain, weisser Grund) statt formatfüllend
+       beschnitten - eine halbe Seite sieht willkürlich aus. Fotos und
+       Bildschirmfotos bleiben auf "false": bei ihnen ist ein Anschnitt
+       richtig, sie haben keinen Rand, der etwas bedeutet. */ -}}
 {{- $quellen := dict
-  "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "bilder" (slice "k1-antwortblatt" "k2-muster" "k3-mednat" "k4-objekte" "k5-quantitativ" "k6-figuren" "k7-text" "k8-diagramme" "k9-konztest"))
-  "testsimulationen"   (dict "url" "ems/testsimulationen/"   "bilder" (slice "testheft"))
-  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "bilder" (slice "vorbereitungskurse/vorbereitungskurs-2024.jpg"))
-  "community"          (dict "url" "ems/uniguide/"           "bilder" (slice "uniguide" "berichte" "discord"))
+  "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "papier" true  "bilder" (slice "k1-antwortblatt" "k2-muster" "k3-mednat" "k4-objekte" "k5-quantitativ" "k6-figuren" "k7-text" "k8-diagramme" "k9-konztest"))
+  "testsimulationen"   (dict "url" "ems/testsimulationen/"   "papier" true  "bilder" (slice "testheft"))
+  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "papier" false "bilder" (slice "vorbereitungskurse/vorbereitungskurs-2024.jpg"))
+  "community"          (dict "url" "ems/uniguide/"           "papier" false "bilder" (slice "uniguide" "berichte" "discord"))
 }}
 
 <ul class="material">
@@ -66,7 +72,7 @@
 
   <li class="material-stueck">
     <a href="{{ relLangURL $quelle.url }}">
-      <span class="material-flaeche material-{{ len $quelle.bilder }}">
+      <span class="material-flaeche material-{{ len $quelle.bilder }}{{ if $quelle.papier }} material-papier{{ end }}">
         {{- range $quelle.bilder }}
         {{- /* Ein Name ohne Endung liegt in images/angebot/ und stammt aus
                scripts/angebot-bilder-erzeugen.py. Ein Name MIT Endung ist ein
