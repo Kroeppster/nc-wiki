@@ -472,67 +472,43 @@ Direkt unter dem Hero steht auf der Startseite ein Raster mit sechs Kacheln
 Erfahrungsberichte, Fragen & Antworten). Jede Kachel nennt eine grosse Zahl,
 den Bereich und einen Satz dazu.
 
+### Zwei Abschnitte statt Kacheln
+
+Die Startseite zeigt das Angebot seit September 2026 auf zwei Arten
+untereinander, und beide ersetzen die früheren Kacheln:
+
+1. **„Was du wann brauchst"** ordnet das Angebot nach dem Zeitpunkt, an dem
+   man es braucht – von der Anmeldung im Februar bis zum Resultat im August.
+   Gepflegt im Frontmatter der Startseite unter `weg:`.
+2. **„Das Material selbst"** zeigt echte Seiten aus den PDFs statt
+   Symbolbildern. Gepflegt unter `material:`; die Bilder erzeugt
+   `scripts/angebot-bilder-erzeugen.py`.
+
 ### Die Zahlen musst du nicht pflegen
 
-Sie werden bei **jedem Bauen der Website neu gezählt**: die PDFs direkt in den
-Ordnern unter `assets/downloads/`, die Erfahrungsberichte aus den Seiten im
-jeweiligen Sprachordner, die Universitäten und Fragen aus `data/unis.yaml` bzw.
-`data/faq.yaml`. Lädst du zehn neue Übungsserien hoch, steht dort beim nächsten
-Build automatisch die neue Zahl.
+Sie werden bei **jedem Bauen der Website neu gezählt** – an einer einzigen
+Stelle, `layouts/partials/angebot-zahlen.html`, die beide Abschnitte benutzen.
+Lädst du zehn neue Übungsserien hoch, steht dort beim nächsten Build
+automatisch die neue Zahl.
 
-**Deshalb bitte keine Zahlen in die Texte schreiben** – sie wären beim nächsten
-Upload sofort falsch.
-
-Weil die Erfahrungsberichte nicht in allen Sprachen gleich weit übersetzt sind,
-zählt jede Sprachfassung ihre eigenen Berichte (aktuell 66 auf Deutsch, 13 auf
-Französisch, 4 auf Italienisch). Es steht also nie eine Zahl da, die es in
-dieser Sprache gar nicht gibt.
-
-### Was genau gezählt wird
-
-Gezählt wird, was jemanden interessiert – nicht, was im Ordner liegt:
-
-- **Übungsaufgaben:** die Übungsserien, ohne die Lösungs-PDFs. Eine Serie mit
-  Lösung ist eine Übung, nicht zwei (auf der Seite erscheint sie ja auch als
-  ein Eintrag mit zwei Knöpfen).
-- **Testsimulationen:** die Jahrgänge. Zu einem Jahrgang gehören mehrere PDFs
-  (Testheft, Lösungen, Auswertung des Konzentrationstests, Prozentrang-
-  Tabelle) – das sind trotzdem zusammen **eine** Simulation. Gezählt werden
-  die Jahreszahlen in den Dateinamen, jede nur einmal.
-- **Vorbereitungskurse:** keine gezählte Zahl, sondern die feste Angabe
-  „2 Tage / kostenloser Kurs". Es gibt genau ein aktuelles Kursskript, und
-  „1 Kursskript" sagt über das Angebot nichts aus – das Angebot sind die
-  Kurse, nicht die Dateien.
-
-**Die Angabe ist der Anfang des Beschreibungssatzes**, kein eigenes Element
-daneben. Auf der Kachel steht also „**120 Übungsserien** zu allen acht
-Themenbereichen des EMS" – und `text` im Frontmatter ist entsprechend die
-**Fortsetzung** dieses Satzes und beginnt klein:
+**Deshalb bitte keine Zahlen in die Texte schreiben** – sie wären beim
+nächsten Upload sofort falsch. Wo eine Zahl im Satz stehen soll, schreibst du
+einen Platzhalter:
 
 ```yaml
     - key: uebungsaufgaben
-      title: "Übungsaufgaben"
-      unit: "Übungsserien"          # wird der gezählten Zahl angehängt
-      text: "zu allen acht Themenbereichen des EMS – mit Lösungen …"
+      zahlen: ["uebungen"]
+      text: "{1} Serien zu allen acht Untertests, mit Lösungen."
 ```
 
-Wer einen Text ändert, schreibt ihn deshalb so, dass er hinter der Zahl
-weitergeht – nicht als eigenen ganzen Satz.
+Im Ablauf („Was du wann brauchst") funktioniert es ähnlich: `zahl: "uebungen"`
+plus `einheit: "Serien"` ergibt „120 Serien". Für Angaben, die sich nicht
+zählen lassen, gibt es `notiz: "2 Tage, kostenlos"`.
 
-Eine Kachel darf statt einer gezählten Zahl auch eine **feste Angabe**
-mitbringen, über das Feld `wert`:
-
-```yaml
-    - key: vorbereitungskurse
-      title: "Vorbereitungskurse"
-      wert: "2 Tage"
-      text: "Strategien zu allen Untertests, in Kleingruppen …"
-```
-
-Das ist die Ausnahme von „keine Zahlen von Hand": Gezählt werden kann nur,
-was als Datei oder Eintrag vorliegt, und die Kursdauer ist beides nicht. Wo
-`unit` und eine gezählte Zahl vorhanden sind, hat die gezählte Zahl Vorrang.
-
+**Was genau gezählt wird:** Übungsserien ohne die Lösungs-PDFs (eine Serie mit
+Lösung ist eine Übung, nicht zwei), bei den Testsimulationen die Jahrgänge
+(zu einem Jahrgang gehören mehrere Dateien), und die Erfahrungsberichte nur
+in der jeweiligen Sprache.
 
 ### Texte ändern
 

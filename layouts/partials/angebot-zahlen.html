@@ -1,0 +1,53 @@
+{{- /*
+  ============================================================================
+  DIE GEZÄHLTEN ZAHLEN DES ANGEBOTS (gemeinsame Quelle)
+  ============================================================================
+  Gibt ein Verzeichnis mit allen Mengenangaben zurück, die auf der Startseite
+  vorkommen. Zwei Bausteine benutzen es - "Was du wann brauchst"
+  (weg-grid.html) und "Das Material selbst" (material-grid.html) -, und beide
+  sollen dieselbe Zahl zeigen. Deshalb steht die Zählweise hier an EINER
+  Stelle statt zweimal.
+
+  Aufruf:  {{ $zahlen := partial "angebot-zahlen.html" . }}
+           {{ index $zahlen "uebungen" }}
+
+  GEZÄHLT WIRD, WAS JEMANDEN INTERESSIERT, NICHT WAS IM ORDNER LIEGT:
+
+  - uebungen:     Übungsserien OHNE die Lösungs-PDFs. Eine Serie mit Lösung
+                  ist eine Übung, nicht zwei - auf der Seite erscheint sie ja
+                  auch als ein Eintrag mit zwei Knöpfen (download-list.html).
+  - simulationen: die JAHRGÄNGE. Zu einem Jahrgang gehören mehrere PDFs
+                  (Testheft, Lösungen, Konztest-Auswertung, Prozentrang-
+                  Tabelle); alle zu zählen ergäbe 21 "Testsimulationen",
+                  obwohl es fünf sind. Gezählt werden die Jahreszahlen in den
+                  Dateinamen, jede nur einmal - das bleibt auch dann richtig,
+                  wenn zu einem Jahrgang eine Datei mehr oder weniger kommt.
+  - berichte:     nur die der AKTUELLEN Sprache, und nur Seiten mit "jahr" im
+                  Frontmatter (die Seite "Bericht einreichen" liegt im selben
+                  Ordner, ist aber kein Bericht).
+  ============================================================================
+*/ -}}
+{{- $uebungen := 0 }}
+{{- range resources.Match "downloads/uebungsaufgaben/**/*.pdf" }}
+  {{- if not (strings.HasSuffix (strings.TrimSuffix ".pdf" (path.Base .Name)) "_Loesung") }}
+    {{- $uebungen = add $uebungen 1 }}
+  {{- end }}
+{{- end }}
+
+{{- $jahre := slice }}
+{{- range resources.Match "downloads/testsimulationen/*.pdf" }}
+  {{- with findRE "20[0-9]{2}" (path.Base .Name) 1 }}{{ $jahre = $jahre | append (index . 0) }}{{ end }}
+{{- end }}
+
+{{- $berichte := 0 }}
+{{- with .Site.GetPage "ems/erfahrungsberichte" }}
+  {{- range .Pages }}{{ if .Params.jahr }}{{ $berichte = add $berichte 1 }}{{ end }}{{- end }}
+{{- end }}
+
+{{- return dict
+      "uebungen"     $uebungen
+      "simulationen" (len (uniq $jahre))
+      "unis"         (len hugo.Data.unis)
+      "berichte"     $berichte
+      "fragen"       (len hugo.Data.faq)
+}}

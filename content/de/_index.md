@@ -19,40 +19,75 @@ news:
   eyebrow: "Aktuell"
   heading: "News"
   cta: "Alle News →"
-angebot:
+weg:
+  eyebrow: "Von der Anmeldung bis zum Resultat"
+  heading: "Was du wann brauchst"
+  etappen:
+    - wann: "Bis 15. Februar"
+      titel: "Entscheiden und anmelden"
+      text: "Welche Universität, welche Priorität, welche Fristen – und was der Test überhaupt von dir will."
+      mittel:
+        - titel: "Uniguide"
+          url: "ems/uniguide/"
+          zahl: "unis"
+          einheit: "Universitäten"
+        - titel: "Fragen & Antworten"
+          url: "ems/qa/"
+          zahl: "fragen"
+          einheit: "Fragen"
+    - wann: "3–6 Monate vorher"
+      titel: "Technik aufbauen"
+      text: "Pro Untertest ein Guide mit Strategie und typischen Fallen, dazu Serien zum Üben – erst ohne Zeitdruck, dann mit."
+      mittel:
+        - titel: "Übungsaufgaben"
+          url: "ems/uebungsaufgaben/"
+          zahl: "uebungen"
+          einheit: "Serien"
+        - titel: "Vorbereitungskurs"
+          url: "ems/vorbereitungskurse/"
+          notiz: "2 Tage, kostenlos"
+    - wann: "Letzte 4 Wochen"
+      titel: "Generalprobe"
+      text: "Einmal den ganzen Testtag am Stück: 235 Minuten, elf Blöcke, keine Pause. Zu Hause mit Uhr und Ansagen, oder bei uns im Hörsaal."
+      mittel:
+        - titel: "Testsimulationen"
+          url: "ems/testsimulationen/"
+          zahl: "simulationen"
+          einheit: "Jahrgänge"
+        - titel: "Prüfungsmodus"
+          url: "ems/pruefungsmodus/"
+          notiz: "im Browser"
+    - wann: "Am Testtag und danach"
+      titel: "Durchkommen"
+      text: "Was mitnehmen, wie einteilen, wie raten – und wie es anderen damit ergangen ist."
+      mittel:
+        - titel: "EMS-Guide"
+          url: "ems/"
+        - titel: "Erfahrungsberichte"
+          url: "ems/erfahrungsberichte/"
+          zahl: "berichte"
+          einheit: "Berichte"
+
+material:
   eyebrow: "Was du hier findest"
   heading: "Alles kostenlos, alles von Studierenden gemacht"
   items:
     - key: uebungsaufgaben
-      title: "Übungsaufgaben"
-      unit: "Übungsserien"
-      text: "zu allen acht Themenbereichen des EMS – mit Lösungen zum Selbstkontrollieren."
-      link: "Zu den Übungsaufgaben →"
+      titel: "Übungsserien"
+      zahlen: ["uebungen"]
+      text: "{1} Serien zu allen acht Untertests, mit Lösungen."
     - key: testsimulationen
-      title: "Testsimulationen"
-      unit: "Testhefte"
-      text: "aus den letzten Jahrgängen, um den Prüfungstag einmal unter realistischen Bedingungen durchzuspielen."
-      link: "Zu den Testsimulationen →"
+      titel: "Testhefte"
+      zahlen: ["simulationen"]
+      text: "{1} komplette Testhefte früherer Jahrgänge."
     - key: vorbereitungskurse
-      title: "Vorbereitungskurse"
-      wert: "2 Tage"
-      text: "Strategien zu allen Untertests, in Kleingruppen und an mehreren Hochschulstandorten – kostenlos, mit Skript zum Mitnehmen."
-      link: "Zu den Kursen →"
-    - key: uniguide
-      title: "Uniguide"
-      unit: "Universitäten"
-      text: "mit Medizinstudium – welches Zulassungsverfahren, welche Sprache, welcher Kanton."
-      link: "Zum Uniguide →"
-    - key: erfahrungsberichte
-      title: "Erfahrungsberichte"
-      unit: "Berichte"
-      text: "von ehemaligen Teilnehmenden: wie sie gelernt haben und was sie heute anders machen würden."
-      link: "Zu den Berichten →"
-    - key: qa
-      title: "Fragen & Antworten"
-      unit: "Fragen"
-      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
-      link: "Zu den Antworten →"
+      titel: "Kursskript"
+      text: "Das Skript unseres zweitägigen Kurses, 119 Seiten."
+    - key: community
+      titel: "Orientierung und Austausch"
+      zahlen: ["unis", "berichte"]
+      text: "{1} Universitäten im Vergleich, {2} Erfahrungsberichte und unser Discord."
+
 subtests:
   eyebrow: "Übungsaufgaben"
   heading: "8 Untertests, ein Ziel"

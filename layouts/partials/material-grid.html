@@ -1,0 +1,74 @@
+{{- /*
+  ============================================================================
+  "DAS MATERIAL SELBST" - das Angebot als Bilder (Startseite)
+  ============================================================================
+  Statt über das Material zu reden, zeigt dieser Baustein es: echte Seiten aus
+  den PDFs, die hier zum Download stehen. Der Konzentrationstest-Bogen ist für
+  jede Person, die den EMS kennt, sofort erkennbar; das Kursskript zeigt seine
+  Titelseite, das Testheft sein Deckblatt. Das ist der Beweis, dass es hier um
+  echtes Material geht - und das Einzige, was ein kommerzieller Anbieter so
+  nicht zeigen kann.
+
+  WOHER DIE BILDER KOMMEN: aus assets/images/angebot/. Sie sind mit
+  scripts/angebot-bilder-erzeugen.py aus den PDFs und aus der eigenen Website
+  erzeugt, NICHT von Hand geschnitten. Ändert sich das Layout der PDFs, lässt
+  man das Skript neu laufen. Details stehen dort im Kopf.
+
+  DIE DISCORD-KARTE IST KEIN SCREENSHOT, sondern eine selbst gestaltete
+  Grafik in unseren Farben - es gibt bewusst kein Bild aus dem echten Server,
+  weil dort Namen und Nachrichten von Leuten stehen.
+
+  GEPFLEGT WIRD IM FRONTMATTER der Startseite (Block "material:") - hier steht
+  kein übersetzbarer Satz. Ein Eintrag sieht so aus:
+
+    - key: uebungsaufgaben     # legt Bild(er) und Zieladresse fest, s. unten
+      titel: "Übungsserien"
+      zahlen: ["uebungen"]     # welche gezählten Mengen eingesetzt werden
+      text: "{1} Serien zu allen acht Untertests, mit Lösungen."
+
+  Die Platzhalter {1}, {2} ... werden der Reihe nach durch die unter "zahlen"
+  genannten Mengen ersetzt (siehe angebot-zahlen.html). So steht die Zahl an
+  der Stelle im Satz, an der sie in der jeweiligen Sprache hingehört - und
+  niemand muss sie von Hand nachführen.
+  ============================================================================
+*/ -}}
+{{- $zahlen := partial "angebot-zahlen.html" . }}
+
+{{- /* Zu jedem "key": wohin verlinkt wird und welche Bilder die Fläche füllt.
+       Mehr als ein Bild = Collage. */ -}}
+{{- $quellen := dict
+  "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "bilder" (slice "ut1-muster" "ut2-mednat" "ut3-objekte" "ut4-quantitativ" "ut5-figuren" "ut6-text" "ut7-diagramme" "ut8-konztest"))
+  "testsimulationen"   (dict "url" "ems/testsimulationen/"   "bilder" (slice "testheft"))
+  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "bilder" (slice "kursskript"))
+  "community"          (dict "url" "ems/uniguide/"           "bilder" (slice "uniguide" "berichte" "discord"))
+}}
+
+<ul class="material">
+  {{- range .Params.material.items }}
+  {{- $eintrag := . }}
+  {{- $quelle := index $quellen .key }}
+
+  {{- /* Platzhalter {1}, {2} ... durch die gezählten Mengen ersetzen. */ -}}
+  {{- $text := $eintrag.text }}
+  {{- range $i, $name := $eintrag.zahlen }}
+    {{- with index $zahlen $name }}
+      {{- $text = replace $text (printf "{%d}" (add $i 1)) (printf "%v" .) }}
+    {{- end }}
+  {{- end }}
+
+  <li class="material-stueck">
+    <a href="{{ relLangURL $quelle.url }}">
+      <span class="material-flaeche material-{{ len $quelle.bilder }}">
+        {{- range $quelle.bilder }}
+        {{- with resources.Get (printf "images/angebot/%s.png" .) }}
+        {{- $klein := .Resize "320x webp q72" }}
+        <img src="{{ $klein.RelPermalink }}" width="{{ $klein.Width }}" height="{{ $klein.Height }}" alt="" loading="lazy" decoding="async">
+        {{- end }}
+        {{- end }}
+      </span>
+      <h3>{{ $eintrag.titel }}</h3>
+      <p>{{ $text }}</p>
+    </a>
+  </li>
+  {{- end }}
+</ul>

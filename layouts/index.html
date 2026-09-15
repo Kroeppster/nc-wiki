@@ -92,22 +92,38 @@
     </div>
   </section>
 
-  {{/* ================= WAS ES HIER GIBT (Angebot in Zahlen) =================
-       Bewusst die erste Sektion nach dem Hero: Wer neu auf der Seite landet,
-       sieht damit sofort, was der Verein anzubieten hat, statt zuerst an News
-       und Untertest-Kacheln vorbeizuscrollen. Die Zahlen auf den Kacheln
-       werden beim Bauen gezählt (siehe partials/angebot-grid.html), die Texte
-       stehen im Frontmatter der Startseite unter "angebot:".
+  {{/* ================= WAS DU WANN BRAUCHST =================
+       Bewusst die erste Sektion nach dem Hero. Sie zählt NICHT auf, was der
+       Verein hat, sondern ordnet es nach dem, was jemand gerade tun muss -
+       von der Anmeldung im Februar bis zum Resultat im August. Wer neu auf
+       der Seite landet, fragt sich nicht "was habt ihr?", sondern "was muss
+       ich jetzt tun?".
+
+       Texte und Etappen stehen im Frontmatter der Startseite unter "weg:",
+       die Mengenangaben werden beim Bauen gezählt (siehe
+       partials/angebot-zahlen.html).
 
        "section-surface" stellt die Sektion auf die helle Kartenfläche statt
        auf den Seitenhintergrund - die Startseite wechselt ab hier zwischen
        beiden Flächen, damit nicht mehrere gleich getönte Blöcke direkt
        aufeinanderfolgen. */}}
-  <section id="angebot" class="section-surface">
+  <section id="weg">
     <div class="wrap">
-      <p class="eyebrow">{{ .Params.angebot.eyebrow }}</p>
-      <h2>{{ .Params.angebot.heading }}</h2>
-      {{ partial "angebot-grid.html" . }}
+      <p class="eyebrow">{{ .Params.weg.eyebrow }}</p>
+      <h2>{{ .Params.weg.heading }}</h2>
+      {{ partial "weg-grid.html" . }}
+    </div>
+  </section>
+
+  {{/* ================= DAS MATERIAL SELBST =================
+       Direkt unter dem Ablauf: dort steht, WANN man was braucht - hier sieht
+       man, WIE es aussieht. Echte Seiten aus den PDFs, keine Symbolbilder.
+       Siehe partials/material-grid.html. */}}
+  <section id="material" class="section-surface">
+    <div class="wrap">
+      <p class="eyebrow">{{ .Params.material.eyebrow }}</p>
+      <h2>{{ .Params.material.heading }}</h2>
+      {{ partial "material-grid.html" . }}
     </div>
   </section>
 

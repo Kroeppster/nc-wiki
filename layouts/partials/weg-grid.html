@@ -1,0 +1,59 @@
+{{- /*
+  ============================================================================
+  "WAS DU WANN BRAUCHST" - das Angebot als Ablauf (Startseite)
+  ============================================================================
+  Statt aufzuzählen, WAS es gibt, ordnet dieser Baustein das Angebot danach,
+  WANN man es braucht: von der Anmeldung im Februar bis zum Resultat im
+  August. Jede Etappe nennt den Zeitpunkt, was dann ansteht, und die Mittel,
+  die wir dafür haben - mit ihrer Menge daneben.
+
+  Der Grund für diese Form: Wer neu auf der Seite landet, fragt sich nicht
+  "was habt ihr?", sondern "was muss ich jetzt tun?". Eine Kachelwand
+  beantwortet die erste Frage, dieser Ablauf die zweite - und nebenbei
+  erklärt er, wofür das Material überhaupt gut ist.
+
+  GEPFLEGT WIRD ALLES IM FRONTMATTER der Startseite (content/de|fr|it/
+  _index.md, Block "weg:") - hier steht kein einziger übersetzbarer Satz.
+  Eine Etappe sieht so aus:
+
+    - wann: "Bis 15. Februar"
+      titel: "Entscheiden und anmelden"
+      text: "..."
+      mittel:
+        - titel: "Uniguide"
+          url: "ems/uniguide/"
+          zahl: "unis"            # Name aus angebot-zahlen.html, optional
+          einheit: "Universitäten"
+        - titel: "Prüfungsmodus"
+          url: "ems/pruefungsmodus/"
+          notiz: "im Browser"     # fester Text statt gezählter Zahl, optional
+
+  "zahl" verweist auf eine der gezählten Mengen (siehe angebot-zahlen.html) -
+  so steht dort nie eine Zahl, die beim nächsten Upload falsch wäre. "notiz"
+  ist für Angaben, die sich nicht zählen lassen.
+  ============================================================================
+*/ -}}
+{{- $zahlen := partial "angebot-zahlen.html" . }}
+<ol class="weg">
+  {{- range .Params.weg.etappen }}
+  <li class="weg-etappe">
+    <p class="weg-wann">{{ .wann }}</p>
+    <div class="weg-inhalt">
+      <h3>{{ .titel }}</h3>
+      <p>{{ .text }}</p>
+      {{- with .mittel }}
+      <ul class="weg-mittel">
+        {{- range . }}
+        {{- $m := . }}
+        <li>
+          <a href="{{ relLangURL $m.url }}">{{ $m.titel }}</a>
+          {{- with $m.zahl }}{{ with index $zahlen . }} <span>{{ . }}&nbsp;{{ $m.einheit }}</span>{{ end }}{{ end }}
+          {{- with $m.notiz }} <span>{{ . }}</span>{{ end }}
+        </li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+  </li>
+  {{- end }}
+</ol>

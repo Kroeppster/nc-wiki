@@ -19,40 +19,75 @@ news:
   eyebrow: "Actualité"
   heading: "Actualités"
   cta: "Toutes les actualités →"
-angebot:
+weg:
+  eyebrow: "De l'inscription au résultat"
+  heading: "Ce dont tu as besoin, et quand"
+  etappen:
+    - wann: "Jusqu'au 15 février"
+      titel: "Décider et s'inscrire"
+      text: "Quelle université, quelle priorité, quels délais – et ce que le test attend de toi."
+      mittel:
+        - titel: "Guide des universités"
+          url: "ems/uniguide/"
+          zahl: "unis"
+          einheit: "universités"
+        - titel: "Questions & réponses"
+          url: "ems/qa/"
+          zahl: "fragen"
+          einheit: "questions"
+    - wann: "3 à 6 mois avant"
+      titel: "Construire la technique"
+      text: "Pour chaque sous-test un guide avec la stratégie et les pièges classiques, et des séries pour t'entraîner – d'abord sans chrono, puis avec."
+      mittel:
+        - titel: "Exercices"
+          url: "ems/uebungsaufgaben/"
+          zahl: "uebungen"
+          einheit: "séries"
+        - titel: "Cours de préparation"
+          url: "ems/vorbereitungskurse/"
+          notiz: "2 jours, gratuit"
+    - wann: "Les 4 dernières semaines"
+      titel: "Répétition générale"
+      text: "Une fois la journée entière d'affilée : 235 minutes, onze blocs, sans pause. Chez toi avec l'horloge et les annonces, ou chez nous en auditoire."
+      mittel:
+        - titel: "Simulations de test"
+          url: "ems/testsimulationen/"
+          zahl: "simulationen"
+          einheit: "années"
+        - titel: "Mode examen"
+          url: "ems/pruefungsmodus/"
+          notiz: "dans le navigateur"
+    - wann: "Le jour J et après"
+      titel: "Passer le cap"
+      text: "Quoi emporter, comment gérer le temps, comment deviner – et comment cela s'est passé pour d'autres."
+      mittel:
+        - titel: "Guide EMS"
+          url: "ems/"
+        - titel: "Témoignages"
+          url: "ems/erfahrungsberichte/"
+          zahl: "berichte"
+          einheit: "témoignages"
+
+material:
   eyebrow: "Ce que tu trouves ici"
-  heading: "Tout est gratuit, tout est fait par des étudiant·e·s"
+  heading: "Tout gratuit, tout fait par des étudiant·e·s"
   items:
     - key: uebungsaufgaben
-      title: "Exercices"
-      unit: "séries d'exercices"
-      text: "sur les huit domaines de l'EMS – avec les corrigés pour te contrôler toi-même."
-      link: "Voir les exercices →"
+      titel: "Séries d'exercices"
+      zahlen: ["uebungen"]
+      text: "{1} séries sur les huit sous-tests, avec les corrigés."
     - key: testsimulationen
-      title: "Simulations de test"
-      unit: "cahiers de test"
-      text: "des dernières années, pour vivre une fois le jour de l'examen dans des conditions réalistes."
-      link: "Voir les simulations →"
+      titel: "Cahiers de test"
+      zahlen: ["simulationen"]
+      text: "{1} cahiers de test complets des années précédentes."
     - key: vorbereitungskurse
-      title: "Cours de préparation"
-      wert: "2 jours"
-      text: "de stratégies pour tous les sous-tests, en petits groupes et dans plusieurs villes universitaires – gratuit, support de cours inclus."
-      link: "Voir les cours →"
-    - key: uniguide
-      title: "Guide des universités"
-      unit: "universités"
-      text: "où étudier la médecine en Suisse : quelle procédure d'admission, quelle langue, quel canton."
-      link: "Voir le guide →"
-    - key: erfahrungsberichte
-      title: "Témoignages"
-      unit: "témoignages"
-      text: "d'ancien·ne·s participant·e·s : comment elles et ils ont travaillé, et ce qu'ils feraient autrement aujourd'hui."
-      link: "Lire les témoignages →"
-    - key: qa
-      title: "Questions & réponses"
-      unit: "questions"
-      text: "sur l'inscription, le déroulement, les coûts et la répétition – brièvement répondues."
-      link: "Voir les réponses →"
+      titel: "Support de cours"
+      text: "Le support de notre cours de deux jours, 119 pages."
+    - key: community
+      titel: "Repères et échanges"
+      zahlen: ["unis", "berichte"]
+      text: "{1} universités comparées, {2} témoignages et notre Discord."
+
 subtests:
   eyebrow: "Exercices"
   heading: "8 sous-tests, un objectif"

@@ -883,29 +883,66 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .subtest-name{font-size:var(--text-sm);line-height:var(--leading-snug);display:block;}
 .subtest-card a{display:block;}
 
-/* Angebots-Kacheln auf der Startseite (siehe layouts/partials/angebot-grid.html)
+/* ---------------------------------------------------------------------------
+   "WAS DU WANN BRAUCHST" - das Angebot als Ablauf
+   (siehe layouts/partials/weg-grid.html)
    ---------------------------------------------------------------------------
-   Jede Kachel nennt eine grosse Zahl (wie viele PDFs, Berichte, Unis ...), den
-   Bereich und einen Satz dazu. Die Zahlen werden beim Bauen der Website
-   gezaehlt, nicht von Hand gepflegt - siehe die Partial-Datei. */
-.angebot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);list-style:none;margin:var(--space-10) 0 0;padding:0;}
-.angebot-card{position:relative;display:flex;flex-direction:column;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s,transform .2s;}
-.angebot-card:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);transform:translateY(-2px);}
-/* Die Zahl bewusst gross und in Markenfarbe: sie ist die eigentliche Aussage
-   der Kachel ("153 PDFs" sagt mehr als "Uebungsaufgaben"). */
-/* Die Mengenangabe ist der ANFANG des Beschreibungssatzes, kein eigenes
-   Element daneben (siehe angebot-grid.html). Hervorgehoben wird sie nur
-   durch Schnitt und Farbe - "tabular-nums" hält die Ziffern über alle
-   Kacheln hinweg auf derselben Breite. */
-.angebot-wert{color:var(--color-ink);font-weight:600;font-variant-numeric:tabular-nums;}
-.angebot-card h3{margin:0 0 var(--space-2);font-size:var(--text-lg);}
-.angebot-card p{color:var(--color-ink-soft);font-size:var(--text-sm);margin:0 0 var(--space-5);}
-/* margin-top:auto schiebt den Link bei unterschiedlich langen Texten immer an
-   den unteren Kartenrand, damit die Links aller Kacheln auf einer Linie sitzen. */
-.angebot-card .more{margin-top:auto;font-weight:600;}
-/* Macht die GANZE Kachel anklickbar, ohne den Link-Text selbst zu vergroessern
-   (der bleibt fuer Screenreader die eigentliche Beschriftung). */
-.angebot-card .more::after{content:"";position:absolute;inset:0;}
+   Eine Liste von Etappen, kein Kachelraster: Der Zeitpunkt steht links, was
+   dann ansteht rechts daneben. Die Trennlinien machen die Abfolge sichtbar,
+   ohne dass es Kästen braucht.
+   --------------------------------------------------------------------------- */
+.weg{list-style:none;margin:var(--space-8) 0 0;padding:0;}
+.weg-etappe{display:grid;grid-template-columns:10rem minmax(0,1fr);gap:var(--space-6);
+  padding-block:var(--space-6);border-top:1px solid var(--color-line);}
+.weg-etappe:last-child{border-bottom:1px solid var(--color-line);}
+.weg-wann{margin:.2rem 0 0;font-family:var(--font-body);font-size:var(--text-xs);
+  text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);}
+.weg-inhalt h3{margin:0 0 var(--space-2);font-size:var(--text-lg);}
+.weg-inhalt>p{margin:0 0 var(--space-4);color:var(--color-ink-soft);font-size:var(--text-sm);max-width:58ch;}
+.weg-mittel{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-6);}
+.weg-mittel li{margin:0;font-size:var(--text-sm);}
+.weg-mittel a{font-weight:600;color:var(--color-signal);text-decoration:none;border-bottom:1px solid transparent;}
+.weg-mittel a:hover{border-bottom-color:currentColor;}
+.weg-mittel span{color:var(--color-ink-faint);font-variant-numeric:tabular-nums;}
+
+/* ---------------------------------------------------------------------------
+   "DAS MATERIAL SELBST" - echte Seiten statt Symbolbilder
+   (siehe layouts/partials/material-grid.html)
+   ---------------------------------------------------------------------------
+   Jede Fläche hat dasselbe Seitenverhältnis wie ein Blatt Papier und wirft
+   einen Schatten - sie soll wie ein liegendes Dokument aussehen, nicht wie
+   eine Kachel. Liegen mehrere Bilder darin, werden sie zur Collage: acht
+   Ausschnitte (ein Untertest je Feld) oder drei Teile. Die Rasterklassen
+   heissen nach der Anzahl Bilder, damit im Frontmatter nichts über Layout
+   stehen muss.
+   --------------------------------------------------------------------------- */
+.material{list-style:none;margin:var(--space-8) 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);}
+.material-stueck a{display:block;text-decoration:none;color:inherit;}
+.material-flaeche{display:grid;aspect-ratio:1/1.3;overflow:hidden;gap:2px;
+  background:var(--color-line);border:1px solid var(--color-line);
+  border-radius:var(--radius-sm);box-shadow:var(--shadow-md);
+  transition:transform .2s,box-shadow .2s;}
+.material-flaeche img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;background:var(--color-surface);}
+.material-1{grid-template-columns:1fr;gap:0;}
+.material-1 img{object-position:top center;}
+.material-8{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,1fr);}
+/* Drei Teile: drei Querstreifen übereinander. Nebeneinander wären die Felder
+   hochkant, und die drei Bilder (Uniguide-Tabelle, Berichte-Karten, Discord-
+   Karte) sind alle im Querformat - sie würden an den Seiten abgeschnitten. */
+.material-3{grid-template-columns:1fr;grid-template-rows:repeat(3,1fr);}
+.material-stueck a:hover .material-flaeche{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.material-stueck h3{margin:var(--space-4) 0 var(--space-1);font-size:var(--text-md);}
+.material-stueck p{margin:0;font-size:var(--text-sm);color:var(--color-ink-soft);}
+.material-stueck a:hover h3{color:var(--color-signal);}
+
+@media (max-width:900px){
+  .material{grid-template-columns:repeat(2,1fr);}
+  .weg-etappe{grid-template-columns:minmax(0,1fr);gap:var(--space-2);}
+}
+@media (max-width:460px){
+  .material{grid-template-columns:1fr;gap:var(--space-8);}
+}
 
 /* Mission + Feature-Grid (kein Sequenz-Bezug → dezente Markierung statt Nummern) */
 /* Verlauf statt einer einzigen Tönung - die Fläche ist gross (volle Breite,
@@ -1347,7 +1384,6 @@ body.pm-aktiv{overflow:hidden;}
   .subtest-grid{grid-template-columns:repeat(2,1fr);}
   /* Angebots-Kacheln: 3 -> 2 Spalten. Auf ganz schmalen Schirmen (siehe
      naechster Block) wird daraus eine Spalte. */
-  .angebot-grid{grid-template-columns:repeat(2,1fr);}
   /* Die Spenden-Karte braucht auf schmalen Schirmen weniger Innenabstand,
      sonst bleibt fuer den Text kaum Platz. */
   .support-inner{text-align:left;padding:var(--space-6);}
@@ -1356,7 +1392,6 @@ body.pm-aktiv{overflow:hidden;}
   .footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-6);}
 }
 @media (max-width:520px){
-  .angebot-grid{grid-template-columns:1fr;}
   .countdown{grid-template-columns:repeat(4,1fr);}
   .countdown-hero .num{font-size:3rem;}
   .footer-grid{grid-template-columns:1fr;}
