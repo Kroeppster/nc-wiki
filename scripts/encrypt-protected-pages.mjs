@@ -169,6 +169,12 @@ if (passwort.length < 16) {
 // StatiCrypt direkt über Node aufrufen (statt über npx), damit es auf Windows
 // und auf dem Linux-Server von GitHub gleich funktioniert.
 const staticryptCli = require.resolve("staticrypt/cli/index.js");
+
+// Siehe den Kommentar bei "-s" weiter unten: gemeinsames, nicht geheimes Salz.
+const SALZ = "abb547c372325298500782c5ac1b3cd9";
+
+// Eigene Vorlage für die Passwort-Abfrage (liegt neben diesem Skript).
+const vorlage = new URL("passwort-vorlage.html", import.meta.url).pathname;
 const arbeitsordner = mkdtempSync(join(tmpdir(), "ncwiki-schutz-"));
 let fehler = 0;
 
@@ -198,10 +204,31 @@ try {
         datei,
         // "-c false": keine .staticrypt.json-Konfigurationsdatei anlegen.
         "-c", "false",
-        // "--remember false": kein "Angemeldet bleiben"-Häkchen. Das würde das
-        // Passwort im Browser speichern - auf gemeinsam genutzten Geräten
-        // (Uni-Rechner!) unerwünscht.
-        "--remember", "false",
+        // FESTES SALZ FÜR ALLE NEUN SEITEN. Ohne das würfelt StatiCrypt bei
+        // jedem Aufruf ein neues aus - und weil der gemerkte Schlüssel aus
+        // Passwort UND Salz gerechnet wird, passte er dann auf keine zweite
+        // Seite: Man wäre auf der Übersicht entsperrt und würde beim Klick
+        // auf "Events" trotzdem wieder gefragt. Genau das war der Fehler.
+        //
+        // Das Salz ist KEIN Geheimnis - es steht ohnehin sichtbar in jeder
+        // geschützten Seite. Es sorgt nur dafür, dass vorberechnete Tabellen
+        // aus anderen StatiCrypt-Seiten hier nicht helfen. Es muss aber STABIL
+        // bleiben: Wer es ändert, sperrt alle Angemeldeten sofort aus (halb so
+        // wild, sie geben das Passwort neu ein) - deshalb nicht ohne Grund
+        // anfassen. Beim Ändern des PASSWORTS kann es unverändert bleiben.
+        "-s", SALZ,
+        // "--remember 1": StatiCrypt darf sich das Entsperren merken, sonst
+        // müsste man das Passwort auf JEDER der neun geschützten Seiten neu
+        // eingeben - schon der Klick von der Übersicht zu "Events" fragte
+        // wieder. Die "1" ist nur ein Platzhalter für "Ablauf ist aktiv";
+        // die tatsächliche Dauer setzt die eigene Vorlage (unten), und zwar
+        // auf zwei Stunden ab dem letzten Seitenaufruf statt auf einen Tag.
+        // So bleibt der alte Einwand berücksichtigt: Auf einem Uni-Rechner
+        // kommt nach dieser Zeit niemand mehr hinein.
+        "--remember", "1",
+        // Eigene Vorlage: kein "Angemeldet bleiben"-Häkchen, dafür der kurze
+        // mitlaufende Ablauf. Warum, steht ausführlich in der Datei selbst.
+        "-t", vorlage,
         "-d", ausgabeOrdner,
         "--template-color-primary", FARBE_PRIMAER,
         "--template-color-secondary", FARBE_HINTERGRUND,

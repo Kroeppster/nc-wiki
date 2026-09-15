@@ -787,10 +787,36 @@ Kurses:
 
 | Kachel | Bild |
 | --- | --- |
-| Übungsserien | neun Hochformat-Ausschnitte, drei pro Reihe: zuerst das Antwortblatt, dann die acht Untertests in der Reihenfolge des Testtags |
-| Testhefte | Titelseite einer Testsimulation |
+| Übungsserien | neun **ganze Seiten**, drei pro Reihe: zuerst das Antwortblatt, dann die acht Untertests in der Reihenfolge des Testtags |
+| Testhefte | Titelseite einer Testsimulation, ebenfalls ganz |
 | Vorbereitungskurs | das vorhandene Kursfoto |
 | Orientierung und Austausch | Uniguide-Tabelle, ein Erfahrungsbericht und die Discord-Karte übereinander |
+
+### Ganze Seiten statt Ausschnitte
+
+Die Übungs-Kachel zeigte zuerst neun geschnittene Stücke. Die sahen willkürlich
+aus, und zwar aus einem konkreten Grund: Was ein Blatt als Blatt lesbar macht,
+steht am Rand – Titel des Untertests, Anzahl Aufgaben, Bearbeitungszeit, Logo,
+Lizenzhinweis. Schneidet man in die Fläche hinein, bleibt eine Textur übrig.
+
+Jetzt ist jedes Feld eine vollständige Seite. Damit das aufgeht, mussten zwei
+Dinge zusammenkommen:
+
+1. **Das Papierformat ist nicht einheitlich.** Sechs der neun Quell-PDFs sind US
+   Letter (612×792 pt, 1:1.294), drei sind A4 (595×842 pt, 1:1.415). Auf ein
+   gemeinsames Verhältnis geschnitten würde bei der einen Hälfte der Rand
+   abgeschnitten – genau der Rand, um den es geht.
+2. **Deshalb `object-fit: contain` statt `cover`.** Jede Seite wird vollständig
+   in ihr Feld gelegt, der Rest ist weiss. Der weisse Grund ist im Stylesheet
+   fest verdrahtet und nicht `--color-surface`: Die Seiten sind selbst weiss,
+   im Dunkelmodus bekämen sie sonst einen dunklen Rahmen ums Papier.
+
+Gesteuert wird das über `papier: true` im Block `$quellen` des Templates. Fotos
+und Bildschirmfotos stehen auf `false` – bei ihnen ist ein Anschnitt richtig.
+
+Alle vier Flächen haben dasselbe Verhältnis (1:1.35, zwischen Letter und A4).
+Das ist kein Schönheitswert: Wären sie verschieden hoch, stünden die Titel
+darunter auf verschiedenen Höhen.
 
 Die Reihenfolge der neun Ausschnitte ist nicht beliebig: Sie folgt `data/testablauf.yaml`,
 also dem echten Testtag. Wer die Untertests umsortiert, sortiert auch hier um.
@@ -818,10 +844,13 @@ PDFs im Repo (braucht `pip install pymupdf`):
 python3 scripts/angebot-bilder-erzeugen.py
 ```
 
-Oben in der Datei stehen die Quellen: pro Ausschnitt das PDF, die Seite und der Bereich
-als Anteil der Seite, dazu das Seitenverhältnis `VERHAELTNIS = 1.30` (Höhe = Breite ×
-1.30, also Hochformat – die Breite ergibt sich aus `Höhe / VERHAELTNIS`). Das Kursskript
-fehlt dort absichtlich: Seine Kachel zeigt das Kursfoto, nicht die Titelseite.
+Oben in der Datei stehen die Quellen: pro Bild das PDF und die Seite daraus. Mehr
+braucht es nicht mehr – seit ganze Seiten gezeigt werden, gibt es keine
+Ausschnitts-Koordinaten und kein Seitenverhältnis zu pflegen. Gewählt ist jeweils
+eine Seite mit **Aufgaben** darauf, nicht das Deckblatt und nicht die Anleitung.
+
+Das Kursskript fehlt dort absichtlich: Seine Kachel zeigt das Kursfoto, nicht die
+Titelseite.
 
 ### Die Zahlen niemals von Hand eintragen
 

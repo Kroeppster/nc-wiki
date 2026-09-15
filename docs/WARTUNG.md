@@ -356,6 +356,28 @@ Merkblätter – also Dinge, die schlicht niemanden ausserhalb des Vereins inter
 Bewerbungsunterlagen oder sonst irgendetwas, dessen Veröffentlichung echten Schaden
 anrichten würde.
 
+### Wie lange gilt das Passwort?
+
+**Zwei Stunden ab dem letzten Aufruf einer Mitglieder-Seite.** Man gibt es einmal
+ein und kann danach frei zwischen Übersicht, Events und Spesenformular wechseln –
+auch über die Sprachen hinweg. Jeder weitere Aufruf schiebt die zwei Stunden neu
+nach vorn; wer den Rechner liegen lässt, ist danach wieder draussen.
+
+Vorher war das anders: Jede der neun geschützten Seiten fragte einzeln, der Klick
+von der Übersicht zu „Events" also gleich wieder. Das war nicht beabsichtigt.
+
+Was dabei im Browser gespeichert wird, ist **nicht das Passwort**, sondern ein
+daraus gerechneter, gesalzener Prüfwert. Wer ihn aus einem fremden Browser
+ausliest, kann damit die Seiten entsperren, aber das Passwort nicht zurückrechnen.
+
+Die Dauer steht in `scripts/passwort-vorlage.html` ganz oben als
+`MERKDAUER_MINUTEN`. Kürzer ist sicherer, länger bequemer – zwei Stunden sind der
+Kompromiss für einen Uni-Rechner, an dem nach dir jemand anderes sitzt.
+
+**Sofort abmelden** geht, indem man `?staticrypt_logout` an die Adresse hängt,
+zum Beispiel `…/mitglieder/?staticrypt_logout`. Den Browser ganz zu schliessen
+reicht nicht – dafür ist die Zeit da.
+
 ### Wie füge ich eine neue geschützte Seite hinzu?
 
 Genau wie jede andere Seite (siehe Abschnitt 2), mit **einer** Ergänzung im
@@ -398,6 +420,10 @@ Abschnitt 6), sondern in einem GitHub-Secret:
    `main` starten.
 5. Das neue Passwort im gemeinsamen Passwort-Manager hinterlegen (Abschnitt 6) und
    den Mitgliedern mitteilen.
+
+Das Salz in `scripts/encrypt-protected-pages.mjs` (`SALZ`) bleibt dabei
+unverändert – es ist kein Geheimnis und muss nur für alle neun Seiten dasselbe
+sein, damit eine Eingabe für den ganzen Bereich gilt.
 
 **Wo ist das Passwort dokumentiert?** Im gemeinsamen Passwort-Manager des Vereins,
 zusammen mit den übrigen Zugängen – siehe Abschnitt 6. Nicht in git, nicht in einer
@@ -530,10 +556,21 @@ Frontmatter, weil es ein Gestaltungs- und kein Redaktionsentscheid ist:
 
 | Kachel | Bild |
 | --- | --- |
-| Übungsserien | Collage aus neun Hochformat-Ausschnitten, drei pro Reihe: zuerst das Antwortblatt, dann die acht Untertests in der Reihenfolge des Testtags |
-| Testhefte | Titelseite einer Testsimulation |
+| Übungsserien | neun **ganze Seiten**, drei pro Reihe: zuerst das Antwortblatt, dann die acht Untertests in der Reihenfolge des Testtags |
+| Testhefte | Titelseite einer Testsimulation, ebenfalls ganz |
 | Vorbereitungskurs | das vorhandene Kursfoto (`vorbereitungskurse/vorbereitungskurs-2024.jpg`) |
 | Orientierung und Austausch | Uniguide-Tabelle, ein Erfahrungsbericht und die Discord-Karte übereinander |
+
+Seiten aus PDFs werden **vollständig** gezeigt, nie angeschnitten: Kopfzeile,
+Aufgabenzahl, Bearbeitungszeit, Logo und Lizenzhinweis gehören dazu, sonst sieht
+ein Blatt aus wie ein willkürlicher Fetzen. Dafür ist im Template `papier: true`
+gesetzt; das Stylesheet legt solche Bilder dann mit `object-fit: contain` auf
+weissen Grund. Fotos und Bildschirmfotos stehen auf `papier: false` und dürfen
+formatfüllend angeschnitten werden – sie haben keinen Rand, der etwas bedeutet.
+
+Das ist auch nötig, weil die Quell-PDFs **nicht dasselbe Papierformat** haben:
+sechs sind US Letter, drei sind A4. Auf ein gemeinsames Verhältnis geschnitten
+würde bei der einen Hälfte der Rand fehlen.
 
 Ein Name **mit** Punkt und Endung wird unter `assets/images/` gesucht, ein
 Name **ohne** unter `assets/images/angebot/`. So kann eine Kachel entweder ein
