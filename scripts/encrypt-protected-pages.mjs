@@ -197,7 +197,9 @@ try {
     uebernehmen("ncwiki-schutz-platzhalter", "--template-placeholder");
     uebernehmen("ncwiki-schutz-fehler", "--template-error");
 
-    execFileSync(
+    let ausgabe;
+    try {
+      ausgabe = execFileSync(
       process.execPath,
       [
         staticryptCli,
@@ -229,6 +231,16 @@ try {
         // Eigene Vorlage: kein "Angemeldet bleiben"-Häkchen, dafür der kurze
         // mitlaufende Ablauf. Warum, steht ausführlich in der Datei selbst.
         "-t", vorlage,
+        // "--short": StatiCrypts eigene Warnung vor kurzen Passwörtern
+        // abschalten - NICHT weil sie unwichtig wäre, sondern weil sie mit
+        // einer RÜCKFRAGE endet ("Do you want to still want to use the
+        // shorter password? [y/N]"). Hier ist kein Mensch, der antworten
+        // könnte: stdin ist geschlossen, StatiCrypt liest EOF, versteht das
+        // als "nein" und erzeugt keine Ausgabe - für alle neun Seiten. Der
+        // Build brach dann mit "keine Ausgabe erzeugt" ab, ohne den Grund zu
+        // nennen. Gewarnt wird weiter, nur eben von uns selbst (siehe oben,
+        // "WARNUNG: Das Passwort ist ... kurz") und ohne Rückfrage.
+        "--short",
         "-d", ausgabeOrdner,
         "--template-color-primary", FARBE_PRIMAER,
         "--template-color-secondary", FARBE_HINTERGRUND,
@@ -241,7 +253,18 @@ try {
         env: process.env,
         stdio: ["ignore", "pipe", "pipe"],
       }
-    );
+      );
+    } catch (e) {
+      // Ohne diesen Block blieb StatiCrypts eigene Meldung unsichtbar, und im
+      // Log stand nur "keine Ausgabe erzeugt" - man sah also, DASS es schief
+      // ging, aber nie warum. Jetzt wird beides ausgegeben.
+      console.error(`FEHLER: StatiCrypt brach für ${datei} ab.`);
+      const text = [e.stdout, e.stderr].map((b) => (b ? b.toString().trim() : "")).filter(Boolean).join("\n");
+      if (text) console.error(text.split("\n").map((z) => "  " + z).join("\n"));
+      fehler++;
+      continue;
+    }
+    void ausgabe;
 
     // StatiCrypt legt die fertige Datei unter ihrem blossen Dateinamen ab
     // (bei Hugo heissen praktisch alle Seiten "index.html", deshalb bekommt
@@ -249,6 +272,8 @@ try {
     const erzeugt = join(ausgabeOrdner, basename(datei));
     if (!existsSync(erzeugt)) {
       console.error(`FEHLER: StatiCrypt hat für ${datei} keine Ausgabe erzeugt.`);
+      const text = ausgabe ? ausgabe.toString().trim() : "";
+      if (text) console.error(text.split("\n").map((z) => "  " + z).join("\n"));
       fehler++;
       continue;
     }
