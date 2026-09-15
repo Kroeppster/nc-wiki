@@ -26,33 +26,32 @@ angebot:
     - key: uebungsaufgaben
       title: "Exercices"
       unit: "séries d'exercices"
-      text: "Des séries d'exercices sur les huit domaines de l'EMS – avec les corrigés pour te contrôler toi-même."
+      text: "sur les huit domaines de l'EMS – avec les corrigés pour te contrôler toi-même."
       link: "Voir les exercices →"
     - key: testsimulationen
       title: "Simulations de test"
       unit: "cahiers de test"
-      text: "Des cahiers de test complets pour vivre une fois le jour de l'examen dans des conditions réalistes."
+      text: "des dernières années, pour vivre une fois le jour de l'examen dans des conditions réalistes."
       link: "Voir les simulations →"
     - key: vorbereitungskurse
       title: "Cours de préparation"
       wert: "2 jours"
-      zusatz: "cours gratuit"
-      text: "Des stratégies pour tous les sous-tests, en petits groupes et dans plusieurs villes universitaires – support de cours inclus."
+      text: "de stratégies pour tous les sous-tests, en petits groupes et dans plusieurs villes universitaires – gratuit, support de cours inclus."
       link: "Voir les cours →"
     - key: uniguide
       title: "Guide des universités"
       unit: "universités"
-      text: "Où étudier la médecine en Suisse, avec quelle procédure d'admission et dans quelle langue."
+      text: "où étudier la médecine en Suisse : quelle procédure d'admission, quelle langue, quel canton."
       link: "Voir le guide →"
     - key: erfahrungsberichte
       title: "Témoignages"
       unit: "témoignages"
-      text: "D'ancien·ne·s candidat·e·s racontent comment ils et elles ont révisé et ce qu'ils feraient autrement."
+      text: "d'ancien·ne·s participant·e·s : comment elles et ils ont travaillé, et ce qu'ils feraient autrement aujourd'hui."
       link: "Lire les témoignages →"
     - key: qa
       title: "Questions & réponses"
       unit: "questions"
-      text: "Inscription, déroulement, frais, répétition – les questions les plus fréquentes sur l'EMS."
+      text: "sur l'inscription, le déroulement, les coûts et la répétition – brièvement répondues."
       link: "Voir les réponses →"
 subtests:
   eyebrow: "Exercices"
@@ -62,11 +61,11 @@ mission:
   heading: "Nous nous engageons pour que la préparation à l'EMS ne dépende pas du porte-monnaie."
   features:
     - title: "Depuis 2021"
-      text: "Née d'une initiative étudiante et portée depuis lors par des bénévoles – sans entreprise derrière, sans frais."
+      text: "sur l'inscription, le déroulement, les coûts et la répétition – brièvement répondues."
     - title: "Plus de 110 bénévoles"
-      text: "Des étudiant·e·s en médecine de toute la Suisse rédigent des exercices, traduisent, donnent des cours et encadrent les simulations."
+      text: "sur l'inscription, le déroulement, les coûts et la répétition – brièvement répondues."
     - title: "Trois langues"
-      text: "Des équipes propres en Suisse alémanique, en Romandie et au Tessin – le matériel existe en allemand, en français et en italien."
+      text: "sur l'inscription, le déroulement, les coûts et la répétition – brièvement répondues."
 support:
   heading: "C'est grâce à vous."
   text: "Notre matériel reste gratuit – grâce aux dons et au sponsoring."

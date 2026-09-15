@@ -114,24 +114,28 @@
          gleich etwas anderes bedeutet. */ -}}
   {{- $eintrag := . }}
   {{- $quelle := index $quellen .key }}
-  {{- /* Die Angabe steht UNTER der Überschrift, nicht als grosse Zahl
-         darüber. Vorher war es eine 2.5rem grosse Zahl in Signalblau mit
-         einem gesperrten Grossbuchstaben-Kürzel daneben - das ist die
-         Kennzahlen-Kachel, die man von jedem beliebigen Dashboard kennt, und
-         sie sagt über NCWiki nichts aus. Jetzt ist es eine ruhige Zeile im
-         Fliesstext-Schnitt: erst was es ist, dann wie viel davon. */ -}}
-  {{- $wert := "" }}
-  {{- with $quelle.anzahl }}{{ $wert = printf "%v %s" . $eintrag.unit }}{{ end }}
-  {{- if not $wert }}{{ $wert = default "" $eintrag.wert }}{{ end }}
+  {{- /* DIE ANGABE STEHT IM SATZ, nicht daneben. Zwei Versuche davor waren
+         beide eine eigene Zeile für die Zahl: erst eine 2.5rem grosse Ziffer
+         in Signalblau (die Kennzahlen-Kachel von jedem Dashboard), dann eine
+         kleinere fette Zeile unter der Überschrift. Beide Male war es ein
+         Element mehr, das weder Überschrift noch Text ist - und bei den
+         Vorbereitungskursen, wo die Angabe aus zwei Teilen besteht, sah die
+         Kachel dadurch anders aus als alle übrigen.
+
+         Jetzt beginnt der Beschreibungssatz mit der Angabe: "120 Übungsserien
+         zu allen acht Themenbereichen des EMS". Die Zahl ist damit kein
+         Schmuck neben dem Text, sondern sein Anfang - hervorgehoben nur durch
+         den Schriftschnitt. Der Text im Frontmatter ist entsprechend die
+         FORTSETZUNG des Satzes und beginnt klein.
+
+         "wert" im Frontmatter ist der Vorspann für Kacheln, bei denen sich
+         nichts zählen lässt (Kursdauer). Gezähltes hat Vorrang. */ -}}
+  {{- $vorspann := "" }}
+  {{- with $quelle.anzahl }}{{ $vorspann = printf "%v %s" . $eintrag.unit }}{{ end }}
+  {{- if not $vorspann }}{{ $vorspann = default "" $eintrag.wert }}{{ end }}
   <li class="angebot-card">
     <h3>{{ $eintrag.title }}</h3>
-    {{- if or $wert $eintrag.zusatz }}
-    <p class="angebot-fakten">
-      {{- with $wert }}<span class="angebot-wert">{{ . }}</span>{{ end }}
-      {{- with $eintrag.zusatz }}<span class="angebot-zusatz">{{ . }}</span>{{ end }}
-    </p>
-    {{- end }}
-    <p>{{ $eintrag.text }}</p>
+    <p>{{ with $vorspann }}<strong class="angebot-wert">{{ . }}</strong> {{ end }}{{ $eintrag.text }}</p>
     {{- with $quelle }}
     <a class="more" href="{{ relLangURL .url }}">{{ $eintrag.link }}</a>
     {{- end }}

@@ -13,7 +13,7 @@ Qui impari le caratteristiche di 15 persone fittizie come nome, età, profession
 
 ## Struttura della parte "Fatti"
 
-Le 15 persone sono suddivise in 5 fasce d'età di 3 persone ciascuna. A ogni persona appartengono: cognome, età/fascia d'età, professione, una caratteristica aggiuntiva e una diagnosi/un disturbo. Nella fase di riproduzione ti vengono poste 20 domande a scelta multipla su queste persone (5 opzioni di risposta ciascuna).
+Le 15 persone sono suddivise in 5 fasce d'età di 3 persone ciascuna. A ogni persona appartengono: cognome, età/fascia d'età, professione, una caratteristica aggiuntiva e una diagnosi/un disturbo. Nella fase di riproduzione ti vengono poste 18 domande a scelta multipla su queste persone (5 opzioni di risposta ciascuna).
 
 Esempio (abbreviato): *Maier, 20 anni, fornaio, sposato, Covid-19* – *Keller, 30 anni, veterinaria, ansiosa, mal di testa*.
 

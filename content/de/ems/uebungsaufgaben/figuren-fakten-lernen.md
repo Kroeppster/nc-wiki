@@ -13,7 +13,7 @@ Hier lernst du von 15 fiktiven Personen Merkmale wie Name, Alter, Beruf, Diagnos
 
 ## Aufbau des Fakten-Teils
 
-Die 15 Personen sind in 5 Altersgruppen zu je 3 Personen eingeteilt. Zu jeder Person gehören: Nachname, Alter/Altersgruppe, Beruf, eine zusätzliche Eigenschaft und eine Diagnose/ein Leiden. In der Reproduktionsphase werden dir 20 Multiple-Choice-Fragen zu diesen Personen gestellt (je 5 Antwortmöglichkeiten).
+Die 15 Personen sind in 5 Altersgruppen zu je 3 Personen eingeteilt. Zu jeder Person gehören: Nachname, Alter/Altersgruppe, Beruf, eine zusätzliche Eigenschaft und eine Diagnose/ein Leiden. In der Reproduktionsphase werden dir 18 Multiple-Choice-Fragen zu diesen Personen gestellt (je 5 Antwortmöglichkeiten).
 
 Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Keller, 30 Jahre, Tierärztin, ängstlich, Kopfschmerzen*.
 

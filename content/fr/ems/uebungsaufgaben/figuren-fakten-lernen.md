@@ -13,7 +13,7 @@ Ici, tu apprends des caractéristiques de 15 personnes fictives : nom, âge, pro
 
 ## Structure de la partie « Faits »
 
-Les 15 personnes sont réparties en 5 groupes d'âge de 3 personnes chacun. Chaque personne est associée à : un nom de famille, un âge/groupe d'âge, une profession, une caractéristique supplémentaire et un diagnostic/une affection. Lors de la phase de reproduction, on te pose 20 questions à choix multiple sur ces personnes (5 réponses possibles chacune).
+Les 15 personnes sont réparties en 5 groupes d'âge de 3 personnes chacun. Chaque personne est associée à : un nom de famille, un âge/groupe d'âge, une profession, une caractéristique supplémentaire et un diagnostic/une affection. Lors de la phase de reproduction, on te pose 18 questions à choix multiple sur ces personnes (5 réponses possibles chacune).
 
 Exemple (raccourci) : *Meier, 20 ans, boulanger, marié, Covid-19* – *Keller, 30 ans, vétérinaire, anxieuse, maux de tête*.
 

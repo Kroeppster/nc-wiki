@@ -26,33 +26,32 @@ angebot:
     - key: uebungsaufgaben
       title: "Übungsaufgaben"
       unit: "Übungsserien"
-      text: "Übungsserien zu allen acht Themenbereichen des EMS – mit Lösungen zum Selbstkontrollieren."
+      text: "zu allen acht Themenbereichen des EMS – mit Lösungen zum Selbstkontrollieren."
       link: "Zu den Übungsaufgaben →"
     - key: testsimulationen
       title: "Testsimulationen"
       unit: "Testhefte"
-      text: "Vollständige Testhefte, um den Prüfungstag einmal unter realistischen Bedingungen durchzuspielen."
+      text: "aus den letzten Jahrgängen, um den Prüfungstag einmal unter realistischen Bedingungen durchzuspielen."
       link: "Zu den Testsimulationen →"
     - key: vorbereitungskurse
       title: "Vorbereitungskurse"
       wert: "2 Tage"
-      zusatz: "kostenloser Kurs"
-      text: "Strategien zu allen Untertests, in Kleingruppen und an mehreren Hochschulstandorten – mit Skript zum Mitnehmen."
+      text: "Strategien zu allen Untertests, in Kleingruppen und an mehreren Hochschulstandorten – kostenlos, mit Skript zum Mitnehmen."
       link: "Zu den Kursen →"
     - key: uniguide
       title: "Uniguide"
       unit: "Universitäten"
-      text: "Wo du in der Schweiz Medizin studieren kannst, mit welchem Zulassungsverfahren und in welcher Sprache."
+      text: "mit Medizinstudium – welches Zulassungsverfahren, welche Sprache, welcher Kanton."
       link: "Zum Uniguide →"
     - key: erfahrungsberichte
       title: "Erfahrungsberichte"
       unit: "Berichte"
-      text: "Ehemalige Teilnehmende erzählen, wie sie gelernt haben und was sie heute anders machen würden."
+      text: "von ehemaligen Teilnehmenden: wie sie gelernt haben und was sie heute anders machen würden."
       link: "Zu den Berichten →"
     - key: qa
       title: "Fragen & Antworten"
       unit: "Fragen"
-      text: "Anmeldung, Ablauf, Kosten, Wiederholung – die häufigsten Fragen zum EMS kurz beantwortet."
+      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
       link: "Zu den Antworten →"
 subtests:
   eyebrow: "Übungsaufgaben"
@@ -62,11 +61,11 @@ mission:
   heading: "Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt."
   features:
     - title: "Seit 2021"
-      text: "Entstanden als studentische Initiative und bis heute ehrenamtlich getragen – ohne Firma dahinter, ohne Gebühren."
+      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
     - title: "Über 110 Freiwillige"
-      text: "Medizinstudierende aus der ganzen Schweiz schreiben Aufgaben, übersetzen, halten Kurse und betreuen die Testsimulationen."
+      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
     - title: "Drei Sprachen"
-      text: "Eigene Teams in der Deutschschweiz, der Romandie und im Tessin – das Material gibt es auf Deutsch, Französisch und Italienisch."
+      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
 support:
   heading: "Ihr macht das möglich."
   text: "Unser Material bleibt kostenlos – dank Spenden und Sponsoring."

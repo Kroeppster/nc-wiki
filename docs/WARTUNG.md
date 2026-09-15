@@ -504,14 +504,29 @@ Gezählt wird, was jemanden interessiert – nicht, was im Ordner liegt:
   „1 Kursskript" sagt über das Angebot nichts aus – das Angebot sind die
   Kurse, nicht die Dateien.
 
+**Die Angabe ist der Anfang des Beschreibungssatzes**, kein eigenes Element
+daneben. Auf der Kachel steht also „**120 Übungsserien** zu allen acht
+Themenbereichen des EMS" – und `text` im Frontmatter ist entsprechend die
+**Fortsetzung** dieses Satzes und beginnt klein:
+
+```yaml
+    - key: uebungsaufgaben
+      title: "Übungsaufgaben"
+      unit: "Übungsserien"          # wird der gezählten Zahl angehängt
+      text: "zu allen acht Themenbereichen des EMS – mit Lösungen …"
+```
+
+Wer einen Text ändert, schreibt ihn deshalb so, dass er hinter der Zahl
+weitergeht – nicht als eigenen ganzen Satz.
+
 Eine Kachel darf statt einer gezählten Zahl auch eine **feste Angabe**
-mitbringen – dafür gibt es im Frontmatter die Felder `wert` und `zusatz`:
+mitbringen, über das Feld `wert`:
 
 ```yaml
     - key: vorbereitungskurse
       title: "Vorbereitungskurse"
       wert: "2 Tage"
-      zusatz: "kostenloser Kurs"
+      text: "Strategien zu allen Untertests, in Kleingruppen …"
 ```
 
 Das ist die Ausnahme von „keine Zahlen von Hand": Gezählt werden kann nur,
