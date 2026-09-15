@@ -752,6 +752,28 @@ Weil die Erfahrungsberichte nicht in allen Sprachen gleich weit übersetzt sind,
 jede Sprachfassung ihre eigenen (aktuell 66 auf Deutsch, 13 auf Französisch, 4 auf
 Italienisch). Es steht also nie eine Zahl da, die es in dieser Sprache gar nicht gibt.
 
+### Was genau gezählt wird
+
+Gezählt wird, was jemanden interessiert – nicht, was im Ordner liegt:
+
+- **Übungsaufgaben:** die Übungsserien, ohne die Lösungs-PDFs. Eine Serie mit
+  Lösung ist eine Übung, nicht zwei (auf der Seite erscheint sie ja auch als
+  ein Eintrag mit zwei Knöpfen).
+- **Testsimulationen:** die Jahrgänge. Zu einem Jahrgang gehören mehrere PDFs
+  (Testheft, Lösungen, Auswertung des Konzentrationstests, Prozentrang-
+  Tabelle) – das sind trotzdem zusammen **eine** Simulation. Gezählt werden
+  die Jahreszahlen in den Dateinamen, jede nur einmal.
+- **Vorbereitungskurse:** gar keine Zahl. Es gibt genau ein aktuelles
+  Kursskript, und „1 Kursskript" sagt über das Angebot nichts aus – das
+  Angebot sind die Kurse, nicht die Dateien. Die Kachel zeigt deshalb nur
+  Text und Link.
+
+Die ersten beiden Regeln sind keine Kosmetik: Ungefiltert gezählt stünden dort
+153 „Übungsaufgaben" und 21 „Testsimulationen" – beide Zahlen klingen grösser,
+als das Angebot ist, und die zweite ist schlicht falsch. Wer die Zählweise
+ändert, sollte vorher nachsehen, ob die neue Zahl das beschreibt, was auf der
+Kachel steht.
+
 ### Texte ändern
 
 Überschrift und Kacheltexte stehen im Frontmatter der Startseite unter `angebot:` – und

@@ -12,4 +12,4 @@ I nostri corsi di preparazione gratuiti si svolgono in diverse città universita
 
 L'iscrizione per la prossima edizione viene annunciata qui e sui nostri canali a tempo debito – i posti sono limitati e vengono assegnati in base alla data di iscrizione.
 
-Qui trovate le dispense dei corsi degli ultimi anni.
+Qui trovi la dispensa attuale del corso da scaricare.

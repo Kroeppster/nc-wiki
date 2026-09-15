@@ -25,7 +25,7 @@ angebot:
   items:
     - key: uebungsaufgaben
       title: "Übungsaufgaben"
-      unit: "PDFs"
+      unit: "Übungsserien"
       text: "Übungsserien zu allen acht Themenbereichen des EMS – mit Lösungen zum Selbstkontrollieren."
       link: "Zu den Übungsaufgaben →"
     - key: testsimulationen
@@ -35,8 +35,7 @@ angebot:
       link: "Zu den Testsimulationen →"
     - key: vorbereitungskurse
       title: "Vorbereitungskurse"
-      unit: "Kursskripte"
-      text: "Die Skripte unserer Kurse zum Nachlesen – auch wenn du nicht dabei warst."
+      text: "Zwei Tage Strategien zu allen Untertests, in Kleingruppen und an mehreren Hochschulstandorten – mit Skript zum Mitnehmen."
       link: "Zu den Kursen →"
     - key: uniguide
       title: "Uniguide"

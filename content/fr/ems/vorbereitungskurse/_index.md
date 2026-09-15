@@ -12,4 +12,4 @@ Nos cours de préparation gratuits ont lieu dans plusieurs villes universitaires
 
 L'inscription pour la prochaine session est annoncée ici et sur nos canaux en temps voulu – les places sont limitées et attribuées par ordre d'inscription.
 
-Tu trouveras ici les scripts de cours des dernières années.
+Tu trouveras ici le script de cours actuel à télécharger.

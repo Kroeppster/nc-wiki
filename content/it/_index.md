@@ -25,7 +25,7 @@ angebot:
   items:
     - key: uebungsaufgaben
       title: "Esercizi"
-      unit: "PDF"
+      unit: "serie di esercizi"
       text: "Serie di esercizi su tutti e otto gli ambiti dell'EMS – con le soluzioni per verificarti da solo."
       link: "Vai agli esercizi →"
     - key: testsimulationen
@@ -35,8 +35,7 @@ angebot:
       link: "Vai alle simulazioni →"
     - key: vorbereitungskurse
       title: "Corsi di preparazione"
-      unit: "dispense"
-      text: "Le dispense dei nostri corsi da rileggere – anche se non hai potuto partecipare."
+      text: "Due giorni di strategie per tutti i sottotest, in piccoli gruppi e in diverse sedi universitarie – dispensa inclusa."
       link: "Vai ai corsi →"
     - key: uniguide
       title: "Guida alle università"

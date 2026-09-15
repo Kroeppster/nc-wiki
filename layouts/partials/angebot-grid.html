@@ -22,9 +22,13 @@
   veraltet.
 
   Weil die Berichte pro Sprache unterschiedlich weit übersetzt sind, zählt
-  jede Sprachversion ihre eigenen Seiten (Deutsch 66, Französisch 13,
-  Italienisch 4) - es steht also nirgends eine Zahl, die es in dieser Sprache
-  gar nicht gibt.
+  jede Sprachversion ihre eigenen Seiten - es steht also nirgends eine Zahl,
+  die es in dieser Sprache gar nicht gibt.
+
+  WICHTIG BEIM ZÄHLEN: Gezählt wird, was jemanden interessiert, nicht was im
+  Ordner liegt. Lösungs-PDFs sind keine zusätzlichen Übungen, und die vier
+  Dateien eines Testsimulations-Jahrgangs sind keine vier Simulationen. Wie
+  das gemacht wird, steht bei den jeweiligen Zeilen weiter unten.
 
   WAS AUF DER KACHEL STEHT, kommt dagegen aus dem Frontmatter der Startseite
   (content/de|fr|it/_index.md, Block "angebot:") - dort werden Überschrift,
@@ -41,14 +45,37 @@
   ============================================================================
 */ -}}
 
-{{- /* Alle PDF-Dateien in den drei Download-Ordnern zählen. "**" heisst "auch
-       in Unterordnern" - die Übungsserien liegen je Themenbereich in einem
-       eigenen Unterordner (assets/downloads/uebungsaufgaben/textverstaendnis/
-       usw.). Die Testsimulationen und Kursskripte liegen dagegen flach in
-       ihrem Ordner. */ -}}
-{{- $anzahlUebungen := len (resources.Match "downloads/uebungsaufgaben/**/*.pdf") }}
-{{- $anzahlSimulationen := len (resources.Match "downloads/testsimulationen/*.pdf") }}
-{{- $anzahlSkripte := len (resources.Match "downloads/kursskripte/*.pdf") }}
+{{- /* ÜBUNGSSERIEN ZÄHLEN - und zwar die AUFGABEN, nicht die Dateien.
+       Zu vielen Serien liegt eine zweite PDF mit der Lösung im selben Ordner
+       ("..._Loesung.pdf"). Die einfach mitzuzählen, macht aus 120 Serien 153
+       - eine Zahl, die niemandem etwas sagt und die grösser klingt, als das
+       Angebot ist. Gezählt wird deshalb nur, was KEINE Lösung ist; auf der
+       Seite selbst erscheinen Aufgabe und Lösung ohnehin als EIN Eintrag mit
+       zwei Knöpfen (siehe download-list.html).
+       "**" heisst "auch in Unterordnern" - die Übungsserien liegen je
+       Themenbereich in einem eigenen Unterordner. */ -}}
+{{- $anzahlUebungen := 0 }}
+{{- range resources.Match "downloads/uebungsaufgaben/**/*.pdf" }}
+  {{- if not (strings.HasSuffix (strings.TrimSuffix ".pdf" (path.Base .Name)) "_Loesung") }}
+    {{- $anzahlUebungen = add $anzahlUebungen 1 }}
+  {{- end }}
+{{- end }}
+
+{{- /* TESTSIMULATIONEN ZÄHLEN - und zwar die Testhefte, nicht die Dateien.
+       Zu jedem Jahrgang gehören mehrere PDFs (Testheft, Lösungen, Auswertung
+       des Konzentrationstests, Prozentrang-Vergleichstabelle). Alle zu
+       zählen ergäbe 21 "Testsimulationen", obwohl es fünf sind. Gezählt
+       werden deshalb die JAHRESZAHLEN, die in den Dateinamen vorkommen, jede
+       nur einmal - das ist unabhängig davon, wie die einzelnen Dateien eines
+       Jahrgangs benannt sind, und bleibt auch dann richtig, wenn einmal eine
+       Datei mehr oder weniger dazukommt. */ -}}
+{{- $jahre := slice }}
+{{- range resources.Match "downloads/testsimulationen/*.pdf" }}
+  {{- with findRE "20[0-9]{2}" (path.Base .Name) 1 }}
+    {{- $jahre = $jahre | append (index . 0) }}
+  {{- end }}
+{{- end }}
+{{- $anzahlSimulationen := len (uniq $jahre) }}
 
 {{- /* Erfahrungsberichte der AKTUELLEN Sprache zählen. Gezählt wird - wie in
        erfahrungsbericht-grid.html - nur, was ein "jahr" im Frontmatter hat:
@@ -63,10 +90,16 @@
 {{- $anzahlFragen := len hugo.Data.faq }}
 
 {{- /* Zuordnung "key" aus dem Frontmatter -> Zieladresse + gezählte Zahl. */ -}}
+{{- /* "anzahl" ist freiwillig. Fehlt sie, erscheint die Kachel ohne Zahl,
+       aber mit Text und Link - für die Vorbereitungskurse ist das richtig so:
+       Dort gibt es genau EIN aktuelles Kursskript (die früheren waren nur
+       überarbeitete Fassungen desselben), und "1 Kursskript" auf der
+       Startseite sagt über das Angebot nichts aus. Das Angebot sind die
+       Kurse, nicht die Dateien. */ -}}
 {{- $quellen := dict
   "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "anzahl" $anzahlUebungen)
   "testsimulationen"   (dict "url" "ems/testsimulationen/"   "anzahl" $anzahlSimulationen)
-  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "anzahl" $anzahlSkripte)
+  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/")
   "uniguide"           (dict "url" "ems/uniguide/"           "anzahl" $anzahlUnis)
   "erfahrungsberichte" (dict "url" "ems/erfahrungsberichte/" "anzahl" $anzahlBerichte)
   "qa"                 (dict "url" "ems/qa/"                 "anzahl" $anzahlFragen)
@@ -81,9 +114,9 @@
   {{- $eintrag := . }}
   {{- $quelle := index $quellen .key }}
   <li class="angebot-card">
-    {{- with $quelle }}
+    {{- with $quelle.anzahl }}
     <p class="angebot-count">
-      <span class="angebot-number">{{ .anzahl }}</span>
+      <span class="angebot-number">{{ . }}</span>
       <span class="angebot-unit">{{ $eintrag.unit }}</span>
     </p>
     {{- end }}

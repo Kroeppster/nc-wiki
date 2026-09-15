@@ -12,4 +12,4 @@ Unsere kostenlosen Vorbereitungskurse finden jeweils an mehreren Schweizer Hochs
 
 Die Anmeldung für die nächste Runde wird jeweils rechtzeitig hier und über unsere Kanäle angekündigt – die Plätze sind limitiert und werden nach Anmeldedatum vergeben.
 
-Die Kursskripte der letzten Jahre findet ihr hier zum Nachlesen.
+Das aktuelle Kursskript findest du hier zum Herunterladen.

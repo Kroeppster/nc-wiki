@@ -488,6 +488,22 @@ zählt jede Sprachfassung ihre eigenen Berichte (aktuell 66 auf Deutsch, 13 auf
 Französisch, 4 auf Italienisch). Es steht also nie eine Zahl da, die es in
 dieser Sprache gar nicht gibt.
 
+### Was genau gezählt wird
+
+Gezählt wird, was jemanden interessiert – nicht, was im Ordner liegt:
+
+- **Übungsaufgaben:** die Übungsserien, ohne die Lösungs-PDFs. Eine Serie mit
+  Lösung ist eine Übung, nicht zwei (auf der Seite erscheint sie ja auch als
+  ein Eintrag mit zwei Knöpfen).
+- **Testsimulationen:** die Jahrgänge. Zu einem Jahrgang gehören mehrere PDFs
+  (Testheft, Lösungen, Auswertung des Konzentrationstests, Prozentrang-
+  Tabelle) – das sind trotzdem zusammen **eine** Simulation. Gezählt werden
+  die Jahreszahlen in den Dateinamen, jede nur einmal.
+- **Vorbereitungskurse:** gar keine Zahl. Es gibt genau ein aktuelles
+  Kursskript, und „1 Kursskript" sagt über das Angebot nichts aus – das
+  Angebot sind die Kurse, nicht die Dateien. Die Kachel zeigt deshalb nur
+  Text und Link.
+
 ### Texte ändern
 
 Überschrift und die Texte der Kacheln stehen im Frontmatter der Startseite,
