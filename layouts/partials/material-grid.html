@@ -36,9 +36,16 @@
 {{- $zahlen := partial "angebot-zahlen.html" . }}
 
 {{- /* Zu jedem "key": wohin verlinkt wird und welche Bilder die Fläche füllt.
-       Mehr als ein Bild = Collage. */ -}}
+       Mehr als ein Bild = Collage.
+
+       Bei den Übungsaufgaben sind es neun Hochformat-Ausschnitte, drei je
+       Reihe: zuerst der Antwortbogen, dann die acht Untertests in der
+       Reihenfolge des echten Testtags (wie in data/testablauf.yaml). Der
+       Antwortbogen steht vorn, weil er das Erste ist, was am Testtag auf dem
+       Pult liegt - und weil ihn jede Person wiedererkennt, die den EMS schon
+       einmal gesehen hat. */ -}}
 {{- $quellen := dict
-  "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "bilder" (slice "ut1-muster" "ut2-mednat" "ut3-objekte" "ut4-quantitativ" "ut5-figuren" "ut6-text" "ut7-diagramme" "ut8-konztest"))
+  "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "bilder" (slice "k1-antwortblatt" "k2-muster" "k3-mednat" "k4-objekte" "k5-quantitativ" "k6-figuren" "k7-text" "k8-diagramme" "k9-konztest"))
   "testsimulationen"   (dict "url" "ems/testsimulationen/"   "bilder" (slice "testheft"))
   "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "bilder" (slice "vorbereitungskurse/vorbereitungskurs-2024.jpg"))
   "community"          (dict "url" "ems/uniguide/"           "bilder" (slice "uniguide" "berichte" "discord"))

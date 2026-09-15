@@ -889,24 +889,35 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    ---------------------------------------------------------------------------
    Auf breiten Bildschirmen laufen die vier Etappen WAAGRECHT nebeneinander,
    auf einer durchgehenden Linie mit einem Punkt je Etappe - der Blick geht
-   also von links nach rechts durch das Jahr, wie bei einem Zeitstrahl.
-   Darunter wird daraus eine senkrechte Linie mit den Etappen rechts daneben;
-   vier Textspalten auf einem Handy wären unlesbar.
+   also von links nach rechts durch das Jahr. Darunter wird daraus eine
+   senkrechte Linie mit den Etappen rechts daneben; vier Textspalten auf einem
+   Handy wären unlesbar.
 
-   Die Linie ist KEIN Bild und kein Rahmen, sondern ein eigenes Element mit
+   DAS UNSICHTBARE RASTER: Ohne "subgrid" richtet sich jede Etappe nur nach
+   sich selbst - ein zweizeiliger Titel schiebt dann in dieser einen Spalte
+   alles nach unten, und Text und Links stehen über die vier Spalten hinweg
+   auf verschiedenen Höhen. Mit "grid-template-rows:subgrid" übernimmt jede
+   Etappe die Zeilen der Liste: Zeitpunkt, Titel, Text und Links liegen
+   dadurch in allen Spalten auf derselben Linie. Damit das funktioniert,
+   müssen die vier Teile DIREKTE Kinder von .weg-etappe sein - deshalb gibt es
+   dort keinen Zwischenbehälter mehr.
+
+   Die Linie ist kein Bild und kein Rahmen, sondern ein eigenes Element mit
    Verlauf (.weg::before) - dadurch bleibt sie in beiden Farbschemata richtig
    und lässt sich nicht versehentlich von einer Hintergrundfarbe übermalen.
    --------------------------------------------------------------------------- */
 .weg{list-style:none;margin:var(--space-10) 0 0;padding:0;position:relative;}
 
 @media (min-width:900px){
-  .weg{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);padding-top:var(--space-8);}
+  .weg{display:grid;grid-template-columns:repeat(4,1fr);
+    grid-template-rows:auto auto 1fr auto;gap:0 var(--space-6);padding-top:var(--space-8);}
   /* Die Linie liegt auf Höhe der Punkte und endet mittig unter der ersten
      bzw. letzten Etappe - sie soll nicht ins Leere laufen. */
   .weg::before{content:"";position:absolute;top:calc(var(--space-8) - 5px);
     left:12.5%;right:12.5%;height:2px;border-radius:2px;
     background:linear-gradient(90deg,var(--color-line),var(--color-signal));}
-  .weg-etappe{position:relative;padding-top:var(--space-6);}
+  .weg-etappe{display:grid;grid-row:span 4;grid-template-rows:subgrid;
+    position:relative;padding-top:var(--space-6);row-gap:0;}
   .weg-etappe::before{content:"";position:absolute;top:-5px;left:calc(50% - 6px);
     width:12px;height:12px;border-radius:50%;background:var(--color-surface);
     border:2px solid var(--color-signal);}
@@ -915,13 +926,14 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 
 .weg-wann{margin:0 0 var(--space-2);font-family:var(--font-body);font-size:var(--text-xs);
   text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);}
-.weg-inhalt h3{margin:0 0 var(--space-2);font-size:var(--text-md);}
-.weg-inhalt>p{margin:0 0 var(--space-4);color:var(--color-ink-soft);font-size:var(--text-sm);}
-.weg-mittel{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-2);}
+.weg-etappe h3{margin:0 0 var(--space-2);font-size:var(--text-md);}
+.weg-text{margin:0 0 var(--space-4);color:var(--color-ink-soft);font-size:var(--text-sm);}
+.weg-mittel{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
+  gap:var(--space-2);align-self:start;}
 .weg-mittel li{margin:0;font-size:var(--text-sm);}
-.weg-mittel a{font-weight:600;color:var(--color-signal);text-decoration:none;border-bottom:1px solid transparent;}
+.weg-mittel a{font-weight:600;color:var(--color-signal);text-decoration:none;
+  border-bottom:1px solid transparent;}
 .weg-mittel a:hover{border-bottom-color:currentColor;}
-.weg-mittel span{color:var(--color-ink-faint);font-variant-numeric:tabular-nums;}
 
 /* Schmale Bildschirme: senkrechte Linie, Etappen rechts daneben. */
 @media (max-width:899px){
@@ -930,10 +942,10 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
     border-radius:2px;background:linear-gradient(180deg,var(--color-line),var(--color-signal));}
   .weg-etappe{position:relative;padding-block:var(--space-5);}
   .weg-etappe::before{content:"";position:absolute;top:calc(var(--space-5) + .35rem);
-    left:calc(-1 * var(--space-6) + 0px);width:12px;height:12px;border-radius:50%;
+    left:calc(-1 * var(--space-6));width:12px;height:12px;border-radius:50%;
     background:var(--color-surface);border:2px solid var(--color-signal);}
   .weg-etappe:first-child::before,.weg-etappe:last-child::before{background:var(--color-signal);}
-  .weg-inhalt>p{max-width:58ch;}
+  .weg-text{max-width:58ch;}
   .weg-mittel{flex-direction:row;flex-wrap:wrap;gap:var(--space-2) var(--space-6);}
 }
 
@@ -958,7 +970,9 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .material-flaeche img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;background:var(--color-surface);}
 .material-1{grid-template-columns:1fr;gap:0;}
 .material-1 img{object-position:top center;}
-.material-8{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,1fr);}
+/* Neun Ausschnitte im Hochformat, drei je Reihe - dasselbe Verhältnis wie
+   die Fläche selbst, deshalb wird nichts beschnitten. */
+.material-9{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);}
 /* Drei Teile: drei Querstreifen übereinander. Nebeneinander wären die Felder
    hochkant, und die drei Bilder (Uniguide-Tabelle, Berichte-Karten, Discord-
    Karte) sind alle im Querformat - sie würden an den Seiten abgeschnitten. */

@@ -431,7 +431,7 @@ nur ein lokaler Bau-Ordner und landet nie in git.
 
 ---
 
-## 12. Startseite: Hero-Bild, Logo und die Kacheln
+## 12. Startseite: Hero-Bild, Logo, Zeitstrahl und Material
 
 ### Das Bild im Hero austauschen
 
@@ -465,13 +465,6 @@ dargestellt, weil sein „WIKI"-Schriftzug schwarz ist und sonst verschwinden
 würde. Das steuert die Variable `--logo-filter` in `assets/css/style.css` und
 gilt ebenso für das kleine Logo in der Kopfzeile.
 
-### Die Kacheln „Was du hier findest" ändern
-
-Direkt unter dem Hero steht auf der Startseite ein Raster mit sechs Kacheln
-(Übungsaufgaben, Testsimulationen, Vorbereitungskurse, Uniguide,
-Erfahrungsberichte, Fragen & Antworten). Jede Kachel nennt eine grosse Zahl,
-den Bereich und einen Satz dazu.
-
 ### Zwei Abschnitte statt Kacheln
 
 Die Startseite zeigt das Angebot seit September 2026 auf zwei Arten
@@ -485,30 +478,88 @@ untereinander, und beide ersetzen die früheren Kacheln:
    statt Symbolbildern. Gepflegt unter `material:`; die Ausschnitte aus den
    PDFs erzeugt `scripts/angebot-bilder-erzeugen.py`.
 
-Ein Bild in `material:` darf auch eines sein, das es schon gibt – dann steht
-im Partial statt eines Namens der Pfad mit Endung, zum Beispiel
-`vorbereitungskurse/vorbereitungskurs-2024.jpg` für das Kursfoto.
+### Der Zeitstrahl (`weg:`)
+
+Jede Etappe hat vier Angaben – und **keine Zahl**: im Zeitstrahl stehen nur
+die Namen der Angebote, damit die vier Etappen ruhig nebeneinander liegen.
+Die Zahlen stehen weiter unten, bei „Das Material selbst".
+
+```yaml
+weg:
+  eyebrow: "Von der Anmeldung bis zum Resultat"
+  heading: "Was du wann brauchst"
+  etappen:
+    - wann: "Bis 15. Februar"          # kleine Zeile über dem Titel
+      titel: "Entscheiden und anmelden"
+      text: "Welche Universität, welche Priorität ..."
+      mittel:                           # die Links unter dem Text
+        - titel: "Uniguide"
+          url: "ems/uniguide/"
+        - titel: "Fragen & Antworten"
+          url: "ems/qa/"
+```
+
+Die vier Etappen liegen in einem **unsichtbaren Raster** (CSS `subgrid`):
+Zeitangabe, Titel, Text und Links beginnen in allen vier Spalten auf
+derselben Höhe, auch wenn ein Titel zweizeilig wird. Dafür müssen die vier
+Teile im Template direkte Kinder von `.weg-etappe` bleiben – wer sie in ein
+zusätzliches `<div>` einpackt, zerstört die Ausrichtung.
+
+### Das Material (`material:`)
+
+```yaml
+material:
+  eyebrow: "Was du hier findest"
+  heading: "Alles kostenlos, alles von Studierenden gemacht"
+  items:
+    - key: uebungsaufgaben        # legt fest, was gezählt und wohin verlinkt wird
+      titel: "Übungsserien"
+      zahlen: ["uebungen"]        # füllt {1} im Text
+      text: "{1} Serien zu allen acht Untertests, mit Lösungen."
+```
+
+`key` ist der einzige Wert, der **nicht** übersetzt wird – er ist der interne
+Name und muss in allen drei Sprachen gleich bleiben. Erlaubt sind:
+`uebungsaufgaben`, `testsimulationen`, `vorbereitungskurse`, `community`.
+
+### Die Bilder der vier Kacheln
+
+Welche Bilder eine Kachel zeigt, steht im Template
+(`layouts/partials/material-grid.html`, Block `$quellen`) – nicht im
+Frontmatter, weil es ein Gestaltungs- und kein Redaktionsentscheid ist:
+
+| Kachel | Bild |
+| --- | --- |
+| Übungsserien | Collage aus neun Hochformat-Ausschnitten, drei pro Reihe: zuerst das Antwortblatt, dann die acht Untertests in der Reihenfolge des Testtags |
+| Testhefte | Titelseite einer Testsimulation |
+| Vorbereitungskurs | das vorhandene Kursfoto (`vorbereitungskurse/vorbereitungskurs-2024.jpg`) |
+| Orientierung und Austausch | Uniguide-Tabelle, ein Erfahrungsbericht und die Discord-Karte übereinander |
+
+Ein Name **mit** Punkt und Endung wird unter `assets/images/` gesucht, ein
+Name **ohne** unter `assets/images/angebot/`. So kann eine Kachel entweder ein
+eigens erzeugtes Bild oder ein schon vorhandenes Foto benutzen.
+
+Die neun Ausschnitte und die übrigen erzeugten Bilder legt
+`scripts/angebot-bilder-erzeugen.py` an (braucht `pip install pymupdf`):
+
+```bash
+python3 scripts/angebot-bilder-erzeugen.py
+```
+
+Oben in der Datei steht pro Ausschnitt, aus welchem PDF, welcher Seite und
+welchem Bereich er kommt, sowie das Seitenverhältnis 1 : 1.30 (Hochformat).
+Wer ein neues Übungs-PDF sauberer findet, ändert dort den Pfad und lässt das
+Skript neu laufen – die Bilder werden dabei überschrieben.
 
 ### Die Zahlen musst du nicht pflegen
 
 Sie werden bei **jedem Bauen der Website neu gezählt** – an einer einzigen
-Stelle, `layouts/partials/angebot-zahlen.html`, die beide Abschnitte benutzen.
-Lädst du zehn neue Übungsserien hoch, steht dort beim nächsten Build
-automatisch die neue Zahl.
+Stelle, `layouts/partials/angebot-zahlen.html`. Lädst du zehn neue
+Übungsserien hoch, steht dort beim nächsten Build automatisch die neue Zahl.
 
 **Deshalb bitte keine Zahlen in die Texte schreiben** – sie wären beim
-nächsten Upload sofort falsch. Wo eine Zahl im Satz stehen soll, schreibst du
-einen Platzhalter:
-
-```yaml
-    - key: uebungsaufgaben
-      zahlen: ["uebungen"]
-      text: "{1} Serien zu allen acht Untertests, mit Lösungen."
-```
-
-Im Ablauf („Was du wann brauchst") funktioniert es ähnlich: `zahl: "uebungen"`
-plus `einheit: "Serien"` ergibt „120 Serien". Für Angaben, die sich nicht
-zählen lassen, gibt es `notiz: "2 Tage, kostenlos"`.
+nächsten Upload sofort falsch. Wo eine Zahl im Satz stehen soll, kommt ein
+Platzhalter `{1}`, `{2}` … und der passende Eintrag in `zahlen:`.
 
 **Was genau gezählt wird:** Übungsserien ohne die Lösungs-PDFs (eine Serie mit
 Lösung ist eine Übung, nicht zwei), bei den Testsimulationen die Jahrgänge
@@ -517,41 +568,25 @@ in der jeweiligen Sprache.
 
 ### Texte ändern
 
-Überschrift und die Texte der Kacheln stehen im Frontmatter der Startseite,
-unter `angebot:` – und zwar **in allen drei Sprachdateien**:
+Beide Abschnitte stehen im Frontmatter der Startseite – und zwar **in allen
+drei Sprachdateien**:
 
 - `content/de/_index.md`
 - `content/fr/_index.md`
 - `content/it/_index.md`
 
-```yaml
-angebot:
-  eyebrow: "Was du hier findest"
-  heading: "Alles kostenlos, alles von Studierenden gemacht"
-  items:
-    - key: uebungsaufgaben       # legt fest, was gezählt und wohin verlinkt wird
-      title: "Übungsaufgaben"    # Überschrift der Kachel
-      unit: "PDFs"               # steht klein neben der Zahl
-      text: "Übungsserien zu allen acht Themenbereichen ..."
-      link: "Zu den Übungsaufgaben →"
-```
+### Eine Etappe oder Kachel entfernen oder umsortieren
 
-`key` ist der einzige Wert, der **nicht** übersetzt wird – er ist der interne
-Name und muss in allen drei Sprachen gleich bleiben. Erlaubt sind:
-`uebungsaufgaben`, `testsimulationen`, `vorbereitungskurse`, `uniguide`,
-`erfahrungsberichte`, `qa`.
-
-### Eine Kachel entfernen oder umsortieren
-
-Einfach den Eintrag in allen drei Dateien löschen bzw. verschieben. Das Raster
-richtet sich automatisch nach der Anzahl.
+Einfach den Eintrag in allen drei Dateien löschen bzw. verschieben. Beide
+Raster richten sich automatisch nach der Anzahl.
 
 ### Eine ganz neue Kachel
 
 Dafür braucht es zusätzlich eine kleine Ergänzung im Template
-(`layouts/partials/angebot-grid.html`, Block `$quellen`): dort steht pro `key`,
-welche Zieladresse verlinkt und was gezählt wird. Das ist ein Entwickler-Schritt
-– die Datei erklärt oben im Kommentar, was einzutragen ist.
+(`layouts/partials/material-grid.html`, Block `$quellen`): dort steht pro
+`key`, welche Zieladresse verlinkt und welche Bilder gezeigt werden. Das ist
+ein Entwickler-Schritt – die Datei erklärt oben im Kommentar, was einzutragen
+ist.
 
 ---
 

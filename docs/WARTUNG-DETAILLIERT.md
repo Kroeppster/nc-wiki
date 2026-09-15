@@ -37,7 +37,7 @@ wiederholt, gilt aber überall.
 14. [Farben, Schrift und generelles Design](#14-farben-schrift-und-generelles-design)
 15. [Eine ganze Seite/einen ganzen Bereich löschen](#15-eine-ganze-seiteinen-ganzen-bereich-löschen)
 16. [Wo hört "nur Copy-Paste" auf?](#16-wo-hört-nur-copy-paste-auf)
-17. [Startseite: die Kacheln "Was du hier findest"](#17-startseite-die-kacheln-was-du-hier-findest)
+17. [Startseite: der Zeitstrahl und das Material](#17-startseite-der-zeitstrahl-und-das-material)
 18. [Prüfungsmodus: Uhr, Ansagen und der Testablauf](#18-prüfungsmodus-uhr-ansagen-und-der-testablauf)
 19. [Die Abschnittsliste („Auf dieser Seite")](#19-die-abschnittsliste-auf-dieser-seite)
 
@@ -726,27 +726,121 @@ nirgends im Projekt existiert – Hilfe holen.
 
 ---
 
-## 17. Startseite: die Kacheln "Was du hier findest"
+## 17. Startseite: der Zeitstrahl und das Material
 
-Direkt unter dem Hero steht seit dem 8. September 2026 ein Raster mit sechs Kacheln:
-Übungsaufgaben, Testsimulationen, Vorbereitungskurse, Uniguide, Erfahrungsberichte,
-Fragen & Antworten. Jede nennt eine grosse Zahl, den Bereich und einen Satz dazu.
+Unter dem Hero stehen zwei Abschnitte, die zusammen das Angebot zeigen. Sie haben im
+September 2026 ein Raster aus sechs Kacheln mit grossen Zahlen abgelöst.
 
-Der Grund: Die Startseite zeigte vorher nur Hero, News, die acht Untertest-Kacheln, drei
-Mission-Sätze und den Spendenaufruf. Der gesamte tatsächliche Bestand – über 150
-Übungs-PDFs, die Testsimulationen, die Kursskripte, der Uniguide, die Erfahrungsberichte –
-tauchte auf der Startseite nirgends auf. Die Seite wirkte dadurch leerer, als sie ist.
+Der Grund für den ersten Anlauf: Die Startseite zeigte vorher nur Hero, News, die acht
+Untertest-Kacheln, drei Mission-Sätze und den Spendenaufruf. Der gesamte tatsächliche
+Bestand – über 150 Übungs-PDFs, die Testsimulationen, die Kursskripte, der Uniguide, die
+Erfahrungsberichte – tauchte auf der Startseite nirgends auf. Die Seite wirkte dadurch
+leerer, als sie ist.
+
+Der Grund für die Ablösung: Sechs Kacheln, die jede mit einer grossen Zahl aufmachen,
+lasen sich wie eine automatisch erzeugte Statistik – und beantworteten die eigentliche
+Frage nicht. Wer vor dem EMS steht, will wissen **wann** er was braucht und **wie** das
+Material aussieht. Genau das sind heute die zwei Abschnitte:
+
+1. **„Was du wann brauchst"** – ein Zeitstrahl über das Jahr.
+2. **„Alles kostenlos, alles von Studierenden gemacht"** – vier Kacheln, die echte
+   Seiten aus den PDFs und echte Fotos zeigen.
+
+### Der Zeitstrahl und sein unsichtbares Raster
+
+Vier Etappen liegen nebeneinander auf einer waagrechten Linie mit Punkten; auf schmalen
+Bildschirmen wird die Linie senkrecht. Jede Etappe besteht aus vier Teilen: Zeitangabe,
+Titel, Text, Links.
+
+Die vier Teile sind bewusst **direkte Kinder** von `.weg-etappe`. Das Listenelement
+setzt `grid-row: span 4` und `grid-template-rows: subgrid`, übernimmt also die vier
+Zeilen des äusseren Rasters. Dadurch beginnen Titel, Text und Links in allen vier
+Spalten auf **genau derselben Höhe**, auch wenn ein Titel zweizeilig wird
+(„Entscheiden und anmelden"). Vorher richtete sich jede Spalte nach ihrem eigenen
+Inhalt, und die Etappen standen sichtbar versetzt.
+
+Wer die vier Teile in ein zusätzliches `<div>` einpackt, zerstört diese Ausrichtung
+lautlos – `subgrid` wirkt nur auf direkte Kinder.
+
+Im Zeitstrahl stehen **keine Zahlen**, nur die Namen der Angebote. Vier Etappen, die
+jede eine Zahl herausstellen, lenkten vom Ablauf ab, um den es dort geht; die Zahlen
+stehen im Abschnitt darunter, wo sie das Material beschreiben.
+
+```yaml
+weg:
+  eyebrow: "Von der Anmeldung bis zum Resultat"
+  heading: "Was du wann brauchst"
+  etappen:
+    - wann: "Bis 15. Februar"
+      titel: "Entscheiden und anmelden"
+      text: "Welche Universität, welche Priorität ..."
+      mittel:
+        - titel: "Uniguide"
+          url: "ems/uniguide/"
+```
+
+### Die vier Material-Kacheln
+
+Jede Kachel zeigt ein Bild und darunter Titel und einen Satz. Die Bilder sind **echt** –
+gerenderte Seiten aus den PDFs, die auch zum Download stehen, und das Foto des letzten
+Kurses:
+
+| Kachel | Bild |
+| --- | --- |
+| Übungsserien | neun Hochformat-Ausschnitte, drei pro Reihe: zuerst das Antwortblatt, dann die acht Untertests in der Reihenfolge des Testtags |
+| Testhefte | Titelseite einer Testsimulation |
+| Vorbereitungskurs | das vorhandene Kursfoto |
+| Orientierung und Austausch | Uniguide-Tabelle, ein Erfahrungsbericht und die Discord-Karte übereinander |
+
+Die Reihenfolge der neun Ausschnitte ist nicht beliebig: Sie folgt `data/testablauf.yaml`,
+also dem echten Testtag. Wer die Untertests umsortiert, sortiert auch hier um.
+
+Die Discord-Karte ist das einzige selbst gestaltete Bild – es gibt keinen Screenshot, der
+sich zeigen liesse, ohne fremde Beiträge abzubilden. Sie stellt deshalb **keine
+Oberfläche nach**, sondern nennt in der Hausschrift, was die Community ausmacht. Nichts
+daran soll aussehen wie ein echter Screenshot.
+
+Welche Bilder zu welcher Kachel gehören, steht im Template
+(`layouts/partials/material-grid.html`, Block `$quellen`) und nicht im Frontmatter: Es
+ist ein Gestaltungsentscheid, keine Redaktionsangabe. Ein Name **mit** Punkt und Endung
+wird unter `assets/images/` gesucht, ein Name **ohne** unter `assets/images/angebot/`.
+
+**Achtung beim Bearbeiten des Templates:** Ein Hugo-Kommentar `{{- /* ... */ -}}` darf
+nicht innerhalb der Argumentliste eines `dict` stehen – der Build bricht dann mit
+`unexpected "{" in operand` ab. Kommentare gehören über die Zuweisung.
+
+### Die Bilder neu erzeugen
+
+`scripts/angebot-bilder-erzeugen.py` erzeugt alle Ausschnitte reproduzierbar aus den
+PDFs im Repo (braucht `pip install pymupdf`):
+
+```bash
+python3 scripts/angebot-bilder-erzeugen.py
+```
+
+Oben in der Datei stehen die Quellen: pro Ausschnitt das PDF, die Seite und der Bereich
+als Anteil der Seite, dazu das Seitenverhältnis `VERHAELTNIS = 1.30` (Höhe = Breite ×
+1.30, also Hochformat – die Breite ergibt sich aus `Höhe / VERHAELTNIS`). Das Kursskript
+fehlt dort absichtlich: Seine Kachel zeigt das Kursfoto, nicht die Titelseite.
 
 ### Die Zahlen niemals von Hand eintragen
 
-Sie werden bei **jedem Bauen der Website neu gezählt**: die PDFs direkt in den Ordnern
-unter `assets/downloads/`, die Erfahrungsberichte aus den Seiten im jeweiligen
-Sprachordner, die Universitäten und Fragen aus `data/unis.yaml` bzw. `data/faq.yaml`.
-Werden zehn neue Übungsserien hochgeladen, steht dort beim nächsten Build automatisch die
-neue Zahl.
+Sie werden bei **jedem Bauen der Website neu gezählt**, an einer einzigen Stelle
+(`layouts/partials/angebot-zahlen.html`): die PDFs direkt in den Ordnern unter
+`assets/downloads/`, die Erfahrungsberichte aus den Seiten im jeweiligen Sprachordner,
+die Universitäten und Fragen aus `data/unis.yaml` bzw. `data/faq.yaml`. Werden zehn neue
+Übungsserien hochgeladen, steht dort beim nächsten Build automatisch die neue Zahl.
 
-Deshalb gehört in die Texte der Kacheln **keine Zahl** – sie wäre beim nächsten Upload
-sofort falsch, während die grosse Zahl daneben stimmt.
+Deshalb gehört in die Texte **keine ausgeschriebene Zahl** – sie wäre beim nächsten
+Upload sofort falsch. Stattdessen setzt man Platzhalter und nennt daneben, was eingesetzt
+werden soll:
+
+```yaml
+    - key: community
+      titel: "Orientierung und Austausch"
+      zahlen: ["unis", "berichte"]
+      text: "{1} Universitäten im Vergleich, {2} Erfahrungsberichte und unser Discord."
+```
 
 Weil die Erfahrungsberichte nicht in allen Sprachen gleich weit übersetzt sind, zählt
 jede Sprachfassung ihre eigenen (aktuell 66 auf Deutsch, 13 auf Französisch, 4 auf
@@ -763,40 +857,10 @@ Gezählt wird, was jemanden interessiert – nicht, was im Ordner liegt:
   (Testheft, Lösungen, Auswertung des Konzentrationstests, Prozentrang-
   Tabelle) – das sind trotzdem zusammen **eine** Simulation. Gezählt werden
   die Jahreszahlen in den Dateinamen, jede nur einmal.
-- **Vorbereitungskurse:** keine gezählte Zahl, sondern die feste Angabe
-  „2 Tage / kostenloser Kurs". Es gibt genau ein aktuelles Kursskript, und
-  „1 Kursskript" sagt über das Angebot nichts aus – das Angebot sind die
-  Kurse, nicht die Dateien.
-
-**Die Angabe ist der Anfang des Beschreibungssatzes**, kein eigenes Element
-daneben. Auf der Kachel steht also „**120 Übungsserien** zu allen acht
-Themenbereichen des EMS" – und `text` im Frontmatter ist entsprechend die
-**Fortsetzung** dieses Satzes und beginnt klein:
-
-```yaml
-    - key: uebungsaufgaben
-      title: "Übungsaufgaben"
-      unit: "Übungsserien"          # wird der gezählten Zahl angehängt
-      text: "zu allen acht Themenbereichen des EMS – mit Lösungen …"
-```
-
-Wer einen Text ändert, schreibt ihn deshalb so, dass er hinter der Zahl
-weitergeht – nicht als eigenen ganzen Satz.
-
-Eine Kachel darf statt einer gezählten Zahl auch eine **feste Angabe**
-mitbringen, über das Feld `wert`:
-
-```yaml
-    - key: vorbereitungskurse
-      title: "Vorbereitungskurse"
-      wert: "2 Tage"
-      text: "Strategien zu allen Untertests, in Kleingruppen …"
-```
-
-Das ist die Ausnahme von „keine Zahlen von Hand": Gezählt werden kann nur,
-was als Datei oder Eintrag vorliegt, und die Kursdauer ist beides nicht. Wo
-`unit` und eine gezählte Zahl vorhanden sind, hat die gezählte Zahl Vorrang.
-
+- **Vorbereitungskurse:** gar keine gezählte Zahl. Es gibt genau ein aktuelles
+  Kursskript, und „1 Kursskript" sagt über das Angebot nichts aus – das Angebot
+  sind die Kurse, nicht die Dateien. Auf der Kachel steht deshalb ein Satz
+  („Zwei Tage im Hörsaal, in Kleingruppen …").
 
 Die ersten beiden Regeln sind keine Kosmetik: Ungefiltert gezählt stünden dort
 153 „Übungsaufgaben" und 21 „Testsimulationen" – beide Zahlen klingen grösser,
@@ -806,40 +870,25 @@ Kachel steht.
 
 ### Texte ändern
 
-Überschrift und Kacheltexte stehen im Frontmatter der Startseite unter `angebot:` – und
+Beide Abschnitte stehen im Frontmatter der Startseite unter `weg:` bzw. `material:` – und
 zwar in **allen drei** Sprachdateien `content/de/_index.md`, `content/fr/_index.md`,
-`content/it/_index.md`:
-
-```yaml
-angebot:
-  eyebrow: "Was du hier findest"
-  heading: "Alles kostenlos, alles von Studierenden gemacht"
-  items:
-    - key: uebungsaufgaben       # legt fest, was gezählt und wohin verlinkt wird
-      title: "Übungsaufgaben"    # Überschrift der Kachel
-      unit: "PDFs"               # steht klein neben der Zahl
-      text: "Übungsserien zu allen acht Themenbereichen ..."
-      link: "Zu den Übungsaufgaben →"
-```
+`content/it/_index.md`.
 
 `key` ist der einzige Wert, der **nicht** übersetzt wird – er ist der interne Name und
 muss in allen drei Sprachen gleich bleiben. Erlaubt sind: `uebungsaufgaben`,
-`testsimulationen`, `vorbereitungskurse`, `uniguide`, `erfahrungsberichte`, `qa`.
+`testsimulationen`, `vorbereitungskurse`, `community`.
 
-Beim Übersetzen der Einheit (`unit`) darauf achten, dass sie zu einer **Mehrzahl** passt –
-sie steht immer direkt hinter einer Zahl.
+### Eine Etappe oder Kachel entfernen oder umsortieren
 
-### Eine Kachel entfernen oder umsortieren
-
-Den Eintrag in allen drei Dateien löschen bzw. verschieben. Das Raster richtet sich
+Den Eintrag in allen drei Dateien löschen bzw. verschieben. Beide Raster richten sich
 automatisch nach der Anzahl; es müssen keine Spalten angepasst werden.
 
 ### Eine ganz neue Kachel
 
 Dafür braucht es zusätzlich eine Ergänzung im Template
-(`layouts/partials/angebot-grid.html`, Block `$quellen`): Dort steht pro `key`, welche
-Zieladresse verlinkt und was gezählt wird. Das ist ein Entwickler-Schritt (Abschnitt 16) –
-die Datei erklärt oben im Kommentar, was einzutragen ist.
+(`layouts/partials/material-grid.html`, Block `$quellen`): Dort steht pro `key`, welche
+Zieladresse verlinkt und welche Bilder gezeigt werden. Das ist ein Entwickler-Schritt
+(Abschnitt 16) – die Datei erklärt oben im Kommentar, was einzutragen ist.
 
 ---
 

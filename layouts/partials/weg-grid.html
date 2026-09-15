@@ -12,6 +12,12 @@
   beantwortet die erste Frage, dieser Ablauf die zweite - und nebenbei
   erklärt er, wofür das Material überhaupt gut ist.
 
+  HIER STEHEN KEINE MENGENANGABEN. "120 Serien", "11 Universitäten" und so
+  weiter standen eine Zeitlang neben den Links und haben den Blick auf sich
+  gezogen, obwohl es an dieser Stelle nur darum geht, WAS man dafür braucht.
+  Die Zahlen stehen weiterhin im Abschnitt darunter ("Das Material selbst"),
+  wo sie hingehören.
+
   GEPFLEGT WIRD ALLES IM FRONTMATTER der Startseite (content/de|fr|it/
   _index.md, Block "weg:") - hier steht kein einziger übersetzbarer Satz.
   Eine Etappe sieht so aus:
@@ -22,38 +28,29 @@
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
-          zahl: "unis"            # Name aus angebot-zahlen.html, optional
-          einheit: "Universitäten"
-        - titel: "Prüfungsmodus"
-          url: "ems/pruefungsmodus/"
-          notiz: "im Browser"     # fester Text statt gezählter Zahl, optional
-
-  "zahl" verweist auf eine der gezählten Mengen (siehe angebot-zahlen.html) -
-  so steht dort nie eine Zahl, die beim nächsten Upload falsch wäre. "notiz"
-  ist für Angaben, die sich nicht zählen lassen.
   ============================================================================
 */ -}}
 {{- $zahlen := partial "angebot-zahlen.html" . }}
 <ol class="weg">
   {{- range .Params.weg.etappen }}
+  {{- /* Die vier Teile einer Etappe stehen BEWUSST direkt nebeneinander und
+         nicht in einem Zwischenbehälter: Nur so kann jede Etappe im Raster
+         der Liste mitlaufen (grid-template-rows:subgrid, siehe style.css) -
+         Zeitpunkt, Titel, Text und Links stehen dadurch in allen vier Spalten
+         auf derselben Höhe, auch wenn ein Titel zweizeilig wird. */ -}}
   <li class="weg-etappe">
     <p class="weg-wann">{{ .wann }}</p>
-    <div class="weg-inhalt">
-      <h3>{{ .titel }}</h3>
-      <p>{{ .text }}</p>
-      {{- with .mittel }}
-      <ul class="weg-mittel">
-        {{- range . }}
-        {{- $m := . }}
-        <li>
-          <a href="{{ relLangURL $m.url }}">{{ $m.titel }}</a>
-          {{- with $m.zahl }}{{ with index $zahlen . }} <span>{{ . }}&nbsp;{{ $m.einheit }}</span>{{ end }}{{ end }}
-          {{- with $m.notiz }} <span>{{ . }}</span>{{ end }}
-        </li>
-        {{- end }}
-      </ul>
+    <h3>{{ .titel }}</h3>
+    <p class="weg-text">{{ .text }}</p>
+    {{- with .mittel }}
+    <ul class="weg-mittel">
+      {{- range . }}
+      <li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>
       {{- end }}
-    </div>
+    </ul>
+    {{- else }}
+    <span></span>
+    {{- end }}
   </li>
   {{- end }}
 </ol>
