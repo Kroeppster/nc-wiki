@@ -81,8 +81,8 @@ material:
       zahlen: ["simulationen"]
       text: "{1} komplette Testhefte früherer Jahrgänge."
     - key: vorbereitungskurse
-      titel: "Kursskript"
-      text: "Das Skript unseres zweitägigen Kurses, 119 Seiten."
+      titel: "Vorbereitungskurs"
+      text: "Zwei Tage im Hörsaal, in Kleingruppen – mit gedrucktem Skript zum Mitnehmen."
     - key: community
       titel: "Orientierung und Austausch"
       zahlen: ["unis", "berichte"]

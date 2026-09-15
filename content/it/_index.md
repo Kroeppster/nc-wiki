@@ -81,8 +81,8 @@ material:
       zahlen: ["simulationen"]
       text: "{1} fascicoli completi di annate precedenti."
     - key: vorbereitungskurse
-      titel: "Dispensa del corso"
-      text: "La dispensa del nostro corso di due giorni, 119 pagine."
+      titel: "Corso di preparazione"
+      text: "Due giorni in aula, in piccoli gruppi – con dispensa stampata da portare a casa."
     - key: community
       titel: "Orientamento e scambio"
       zahlen: ["unis", "berichte"]

@@ -884,26 +884,58 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .subtest-card a{display:block;}
 
 /* ---------------------------------------------------------------------------
-   "WAS DU WANN BRAUCHST" - das Angebot als Ablauf
+   "WAS DU WANN BRAUCHST" - ein echter Zeitstrahl
    (siehe layouts/partials/weg-grid.html)
    ---------------------------------------------------------------------------
-   Eine Liste von Etappen, kein Kachelraster: Der Zeitpunkt steht links, was
-   dann ansteht rechts daneben. Die Trennlinien machen die Abfolge sichtbar,
-   ohne dass es Kästen braucht.
+   Auf breiten Bildschirmen laufen die vier Etappen WAAGRECHT nebeneinander,
+   auf einer durchgehenden Linie mit einem Punkt je Etappe - der Blick geht
+   also von links nach rechts durch das Jahr, wie bei einem Zeitstrahl.
+   Darunter wird daraus eine senkrechte Linie mit den Etappen rechts daneben;
+   vier Textspalten auf einem Handy wären unlesbar.
+
+   Die Linie ist KEIN Bild und kein Rahmen, sondern ein eigenes Element mit
+   Verlauf (.weg::before) - dadurch bleibt sie in beiden Farbschemata richtig
+   und lässt sich nicht versehentlich von einer Hintergrundfarbe übermalen.
    --------------------------------------------------------------------------- */
-.weg{list-style:none;margin:var(--space-8) 0 0;padding:0;}
-.weg-etappe{display:grid;grid-template-columns:10rem minmax(0,1fr);gap:var(--space-6);
-  padding-block:var(--space-6);border-top:1px solid var(--color-line);}
-.weg-etappe:last-child{border-bottom:1px solid var(--color-line);}
-.weg-wann{margin:.2rem 0 0;font-family:var(--font-body);font-size:var(--text-xs);
+.weg{list-style:none;margin:var(--space-10) 0 0;padding:0;position:relative;}
+
+@media (min-width:900px){
+  .weg{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);padding-top:var(--space-8);}
+  /* Die Linie liegt auf Höhe der Punkte und endet mittig unter der ersten
+     bzw. letzten Etappe - sie soll nicht ins Leere laufen. */
+  .weg::before{content:"";position:absolute;top:calc(var(--space-8) - 5px);
+    left:12.5%;right:12.5%;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--color-line),var(--color-signal));}
+  .weg-etappe{position:relative;padding-top:var(--space-6);}
+  .weg-etappe::before{content:"";position:absolute;top:-5px;left:calc(50% - 6px);
+    width:12px;height:12px;border-radius:50%;background:var(--color-surface);
+    border:2px solid var(--color-signal);}
+  .weg-etappe:first-child::before,.weg-etappe:last-child::before{background:var(--color-signal);}
+}
+
+.weg-wann{margin:0 0 var(--space-2);font-family:var(--font-body);font-size:var(--text-xs);
   text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);}
-.weg-inhalt h3{margin:0 0 var(--space-2);font-size:var(--text-lg);}
-.weg-inhalt>p{margin:0 0 var(--space-4);color:var(--color-ink-soft);font-size:var(--text-sm);max-width:58ch;}
-.weg-mittel{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-6);}
+.weg-inhalt h3{margin:0 0 var(--space-2);font-size:var(--text-md);}
+.weg-inhalt>p{margin:0 0 var(--space-4);color:var(--color-ink-soft);font-size:var(--text-sm);}
+.weg-mittel{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-2);}
 .weg-mittel li{margin:0;font-size:var(--text-sm);}
 .weg-mittel a{font-weight:600;color:var(--color-signal);text-decoration:none;border-bottom:1px solid transparent;}
 .weg-mittel a:hover{border-bottom-color:currentColor;}
 .weg-mittel span{color:var(--color-ink-faint);font-variant-numeric:tabular-nums;}
+
+/* Schmale Bildschirme: senkrechte Linie, Etappen rechts daneben. */
+@media (max-width:899px){
+  .weg{padding-left:var(--space-6);}
+  .weg::before{content:"";position:absolute;top:.5rem;bottom:.5rem;left:5px;width:2px;
+    border-radius:2px;background:linear-gradient(180deg,var(--color-line),var(--color-signal));}
+  .weg-etappe{position:relative;padding-block:var(--space-5);}
+  .weg-etappe::before{content:"";position:absolute;top:calc(var(--space-5) + .35rem);
+    left:calc(-1 * var(--space-6) + 0px);width:12px;height:12px;border-radius:50%;
+    background:var(--color-surface);border:2px solid var(--color-signal);}
+  .weg-etappe:first-child::before,.weg-etappe:last-child::before{background:var(--color-signal);}
+  .weg-inhalt>p{max-width:58ch;}
+  .weg-mittel{flex-direction:row;flex-wrap:wrap;gap:var(--space-2) var(--space-6);}
+}
 
 /* ---------------------------------------------------------------------------
    "DAS MATERIAL SELBST" - echte Seiten statt Symbolbilder

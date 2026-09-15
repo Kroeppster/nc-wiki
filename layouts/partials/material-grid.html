@@ -14,9 +14,10 @@
   erzeugt, NICHT von Hand geschnitten. Ändert sich das Layout der PDFs, lässt
   man das Skript neu laufen. Details stehen dort im Kopf.
 
-  DIE DISCORD-KARTE IST KEIN SCREENSHOT, sondern eine selbst gestaltete
-  Grafik in unseren Farben - es gibt bewusst kein Bild aus dem echten Server,
-  weil dort Namen und Nachrichten von Leuten stehen.
+  DIE DISCORD-KARTE IST EINE GESETZTE EINLADUNG, kein nachgebautes
+  Discord-Fenster: hell wie die beiden Streifen darüber, in der Schrift der
+  Website, mit einem Satz statt eines Logos. Aus dem echten Server gibt es
+  bewusst kein Bild - dort stehen Namen und Nachrichten von Leuten.
 
   GEPFLEGT WIRD IM FRONTMATTER der Startseite (Block "material:") - hier steht
   kein übersetzbarer Satz. Ein Eintrag sieht so aus:
@@ -39,7 +40,7 @@
 {{- $quellen := dict
   "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "bilder" (slice "ut1-muster" "ut2-mednat" "ut3-objekte" "ut4-quantitativ" "ut5-figuren" "ut6-text" "ut7-diagramme" "ut8-konztest"))
   "testsimulationen"   (dict "url" "ems/testsimulationen/"   "bilder" (slice "testheft"))
-  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "bilder" (slice "kursskript"))
+  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "bilder" (slice "vorbereitungskurse/vorbereitungskurs-2024.jpg"))
   "community"          (dict "url" "ems/uniguide/"           "bilder" (slice "uniguide" "berichte" "discord"))
 }}
 
@@ -60,8 +61,16 @@
     <a href="{{ relLangURL $quelle.url }}">
       <span class="material-flaeche material-{{ len $quelle.bilder }}">
         {{- range $quelle.bilder }}
-        {{- with resources.Get (printf "images/angebot/%s.png" .) }}
-        {{- $klein := .Resize "320x webp q72" }}
+        {{- /* Ein Name ohne Endung liegt in images/angebot/ und stammt aus
+               scripts/angebot-bilder-erzeugen.py. Ein Name MIT Endung ist ein
+               Bild, das es schon gibt - das Kursfoto zum Beispiel lag lange
+               ungenutzt unter images/vorbereitungskurse/ und zeigt die
+               gedruckten Skripte im Hörsaal, also mehr als die Titelseite der
+               PDF-Datei je zeigen könnte. */ -}}
+        {{- $pfad := printf "images/angebot/%s.png" . }}
+        {{- if strings.Contains . "." }}{{ $pfad = printf "images/%s" . }}{{ end }}
+        {{- with resources.Get $pfad }}
+        {{- $klein := .Resize "420x webp q76" }}
         <img src="{{ $klein.RelPermalink }}" width="{{ $klein.Width }}" height="{{ $klein.Height }}" alt="" loading="lazy" decoding="async">
         {{- end }}
         {{- end }}

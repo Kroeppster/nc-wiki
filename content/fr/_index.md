@@ -81,8 +81,8 @@ material:
       zahlen: ["simulationen"]
       text: "{1} cahiers de test complets des années précédentes."
     - key: vorbereitungskurse
-      titel: "Support de cours"
-      text: "Le support de notre cours de deux jours, 119 pages."
+      titel: "Cours de préparation"
+      text: "Deux jours en auditoire, en petits groupes – support de cours imprimé inclus."
     - key: community
       titel: "Repères et échanges"
       zahlen: ["unis", "berichte"]

@@ -477,12 +477,17 @@ den Bereich und einen Satz dazu.
 Die Startseite zeigt das Angebot seit September 2026 auf zwei Arten
 untereinander, und beide ersetzen die früheren Kacheln:
 
-1. **„Was du wann brauchst"** ordnet das Angebot nach dem Zeitpunkt, an dem
-   man es braucht – von der Anmeldung im Februar bis zum Resultat im August.
-   Gepflegt im Frontmatter der Startseite unter `weg:`.
-2. **„Das Material selbst"** zeigt echte Seiten aus den PDFs statt
-   Symbolbildern. Gepflegt unter `material:`; die Bilder erzeugt
-   `scripts/angebot-bilder-erzeugen.py`.
+1. **„Was du wann brauchst"** ist ein Zeitstrahl: vier Etappen auf einer
+   Linie, von der Anmeldung im Februar bis zum Resultat im August. Auf
+   schmalen Bildschirmen wird die Linie senkrecht. Gepflegt im Frontmatter
+   der Startseite unter `weg:`.
+2. **„Das Material selbst"** zeigt echte Seiten aus den PDFs und echte Fotos
+   statt Symbolbildern. Gepflegt unter `material:`; die Ausschnitte aus den
+   PDFs erzeugt `scripts/angebot-bilder-erzeugen.py`.
+
+Ein Bild in `material:` darf auch eines sein, das es schon gibt – dann steht
+im Partial statt eines Namens der Pfad mit Endung, zum Beispiel
+`vorbereitungskurse/vorbereitungskurs-2024.jpg` für das Kursfoto.
 
 ### Die Zahlen musst du nicht pflegen
 
