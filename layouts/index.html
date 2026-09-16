@@ -92,41 +92,6 @@
     </div>
   </section>
 
-  {{/* ================= WAS DU WANN BRAUCHST =================
-       Bewusst die erste Sektion nach dem Hero. Sie zählt NICHT auf, was der
-       Verein hat, sondern ordnet es nach dem, was jemand gerade tun muss -
-       von der Anmeldung im Februar bis zum Resultat im August. Wer neu auf
-       der Seite landet, fragt sich nicht "was habt ihr?", sondern "was muss
-       ich jetzt tun?".
-
-       Texte und Etappen stehen im Frontmatter der Startseite unter "weg:",
-       die Mengenangaben werden beim Bauen gezählt (siehe
-       partials/angebot-zahlen.html).
-
-       "section-surface" stellt die Sektion auf die helle Kartenfläche statt
-       auf den Seitenhintergrund - die Startseite wechselt ab hier zwischen
-       beiden Flächen, damit nicht mehrere gleich getönte Blöcke direkt
-       aufeinanderfolgen. */}}
-  <section id="weg">
-    <div class="wrap">
-      <p class="eyebrow">{{ .Params.weg.eyebrow }}</p>
-      <h2>{{ .Params.weg.heading }}</h2>
-      {{ partial "weg-grid.html" . }}
-    </div>
-  </section>
-
-  {{/* ================= DAS MATERIAL SELBST =================
-       Direkt unter dem Ablauf: dort steht, WANN man was braucht - hier sieht
-       man, WIE es aussieht. Echte Seiten aus den PDFs, keine Symbolbilder.
-       Siehe partials/material-grid.html. */}}
-  <section id="material" class="section-surface">
-    <div class="wrap">
-      <p class="eyebrow">{{ .Params.material.eyebrow }}</p>
-      <h2>{{ .Params.material.heading }}</h2>
-      {{ partial "material-grid.html" . }}
-    </div>
-  </section>
-
   {{/* ================= NEWS-VORSCHAU (2 neueste Beiträge) ================= */}}
   <section id="news">
     <div class="wrap">
@@ -156,6 +121,49 @@
         </li>
         {{ end }}
       </ul>
+    </div>
+  </section>
+
+  {{/* ================= WAS DU WANN BRAUCHST =================
+       Steht nach den News, nicht davor: Die News sind das, was sich ändert,
+       und gehören deshalb dorthin, wo jemand sie beim Wiederkommen sofort
+       sieht. Diese Sektion hier ändert sich fast nie.
+
+       Sie zählt NICHT auf, was der Verein hat, sondern ordnet es nach dem,
+       was jemand gerade tun muss - von der Anmeldung im Februar bis zum
+       Resultat im August. Wer neu auf der Seite landet, fragt sich nicht
+       "was habt ihr?", sondern "was muss ich jetzt tun?".
+
+       Texte und Etappen stehen im Frontmatter der Startseite unter "weg:",
+       die Mengenangaben werden beim Bauen gezählt (siehe
+       partials/angebot-zahlen.html).
+
+       "section-surface" stellt die Sektion auf die helle Kartenfläche statt
+       auf den Seitenhintergrund - die Startseite wechselt ab hier zwischen
+       beiden Flächen, damit nicht mehrere gleich getönte Blöcke direkt
+       aufeinanderfolgen. */}}
+  <section id="weg" class="section-surface">
+    <div class="wrap">
+      <p class="eyebrow">{{ .Params.weg.eyebrow }}</p>
+      <h2>{{ .Params.weg.heading }}</h2>
+      {{ partial "weg-grid.html" . }}
+    </div>
+  </section>
+
+  {{/* ================= DAS MATERIAL SELBST =================
+       Direkt unter dem Ablauf: dort steht, WANN man was braucht - hier sieht
+       man, WIE es aussieht. Echte Seiten aus den PDFs, keine Symbolbilder.
+       Siehe partials/material-grid.html.
+
+       Ohne "section-surface", weil die Sektion darüber sie hat: Die
+       Startseite wechselt zwischen heller Kartenfläche und Seitenhintergrund,
+       damit nicht zwei gleich getönte Blöcke aufeinanderfolgen. Wer hier eine
+       Sektion einfügt oder verschiebt, muss die Klassen mitziehen. */}}
+  <section id="material">
+    <div class="wrap">
+      <p class="eyebrow">{{ .Params.material.eyebrow }}</p>
+      <h2>{{ .Params.material.heading }}</h2>
+      {{ partial "material-grid.html" . }}
     </div>
   </section>
 

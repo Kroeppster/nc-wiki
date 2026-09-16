@@ -459,6 +459,23 @@ nur ein lokaler Bau-Ordner und landet nie in git.
 
 ## 12. Startseite: Hero-Bild, Logo, Zeitstrahl und Material
 
+### Die Reihenfolge der Abschnitte
+
+Von oben nach unten: Hero → **News** → „Was du wann brauchst" (Zeitstrahl) →
+„Das Material selbst" → die acht Untertests → Mission → Unterstützer-Band →
+Spendenaufruf. Gepflegt wird sie direkt in `layouts/index.html`, indem man die
+`<section>`-Blöcke verschiebt.
+
+Die News stehen bewusst **weit oben, gleich nach dem Hero**: Sie sind das
+Einzige, was sich regelmässig ändert, und gehören deshalb dorthin, wo jemand
+sie beim Wiederkommen sofort sieht. Alles darunter ändert sich fast nie.
+
+**Beim Verschieben die Klasse `section-surface` mitziehen.** Die Startseite
+wechselt von Abschnitt zu Abschnitt zwischen heller Kartenfläche und
+Seitenhintergrund; ohne diesen Wechsel stehen zwei gleich getönte Blöcke
+direkt aufeinander und die Grenze verschwindet. Aktuell tragen „Was du wann
+brauchst" und die Untertests die Klasse, News, Material und Mission nicht.
+
 ### Das Bild im Hero austauschen
 
 Oben rechts auf der Startseite steht ein Foto. Welches, steht im Frontmatter

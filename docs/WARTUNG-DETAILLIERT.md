@@ -405,8 +405,19 @@ Entwickler-Schritte (Abschnitt 16):
 
 ## 8. Untertests verwalten
 
-Die nummerierte Kachel-Übersicht auf der Startseite wird aus `data/subtests.yaml`
-erzeugt. Jeder Eintrag hat eine Nummer, einen Slug (muss zum Ordnernamen unter
+Die Kachel-Übersicht auf der Startseite wird aus `data/subtests.yaml`
+erzeugt.
+
+**Die Reihenfolge in dieser Datei ist die des echten Testtags**, keine freie
+Sortierung – sie muss mit `data/testablauf.yaml` übereinstimmen, der Liste, nach der
+der Prüfungsmodus taktet und nach der der Tagesablauf auf `/ems/` steht. Wer nur an
+einer der beiden Stellen umsortiert, lässt die Website zwei verschiedene
+Reihenfolgen behaupten. Genau das war bis September 2026 der Fall: „Objekte im Raum"
+stand an zweiter Stelle, am Testtag kommt aber das medizinisch-naturwissenschaftliche
+Grundverständnis zuerst.
+
+Das Feld `number` wird übrigens **nirgends angezeigt** – es ist nur eine Lesehilfe in
+der Datei. Beim Umsortieren trotzdem durchnummerieren lassen. Jeder Eintrag hat eine Nummer, einen Slug (muss zum Ordnernamen unter
 `content/<sprache>/ems/uebungsaufgaben/` passen) und einen Namen pro Sprache. Auf der
 Q&A-Seite hängt die Antwort zur Frage "Welche Untertests gibt es?" (siehe
 `data/faq.yaml`, Feld `dynamic: subtests`) automatisch dieselbe Liste als Aufzählung an –
