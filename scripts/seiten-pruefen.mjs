@@ -53,7 +53,10 @@ const PFADE = readFileSync('/tmp/alle-seiten.txt','utf8').split('\n').filter(Boo
 const BASIS = 'http://127.0.0.1:8099';
 const BREITEN = process.env.BREITEN ? process.env.BREITEN.split(',').map(Number) : [1280, 390];
 const MODI   = process.env.MODI ? process.env.MODI.split(',') : ['light'];
-const PARALLEL = 6;
+// Wie viele Seiten gleichzeitig geladen werden. Zu hoch angesetzt wirft der
+// lokale Testserver Verbindungen ab, und der Prueflauf meldet dann Seiten als
+// "FEHLT", die es sehr wohl gibt - ein Fehlalarm, der echte Funde zudeckt.
+const PARALLEL = Number(process.env.PARALLEL || 3);
 
 const pruefung = () => {
   const funde = [];
@@ -232,11 +235,22 @@ const browser = await chromium.launch();
 let geprueft = 0, gesamt = 0;
 const berichte = [];
 const weitergeleitet = [];
+const jsFehler = [];
 
 async function arbeite(liste, breite, modus) {
   const ctx = await browser.newContext({ viewport:{width:breite,height:900}, colorScheme:modus });
   await ctx.addInitScript(() => { try{ localStorage.setItem('alpha-notice-seen','1'); localStorage.setItem('cookie-consent','accepted'); }catch(e){} });
   const p = await ctx.newPage();
+  // JavaScript-Fehler auf der Seite. Ohne das hier bleibt eine Seite, deren
+  // Skript beim Laden abstuerzt, voellig unauffaellig: Sie sieht richtig aus,
+  // nur funktioniert nichts mehr - Filter, Uhr, Sprachwahl, Suche.
+  // PagefindUI meldet beim lokalen Pruefen einen Fehler, weil der Suchindex
+  // erst beim echten Build entsteht; der wird deshalb uebergangen.
+  p.on('pageerror', e => {
+    const m = String(e.message);
+    if (/PagefindUI/.test(m)) return;
+    jsFehler.push(`${modus} ${breite}px ${p.url()}: ${m.slice(0,140)}`);
+  });
   for (const pfad of liste) {
     const res = await p.goto(BASIS + pfad, { waitUntil:'domcontentloaded' }).catch(()=>null);
     if (!res || res.status() >= 400) { berichte.push(`FEHLT  ${pfad} -> ${res?res.status():'—'}`); continue; }
@@ -278,5 +292,9 @@ for (const modus of MODI) {
 }
 console.log(berichte.join('\n'));
 console.log(`\n==== ${geprueft} Seitenaufrufe geprueft, ${gesamt} Funde ====`);
+if (jsFehler.length) {
+  console.log(`\n=== JAVASCRIPT-FEHLER: ${jsFehler.length} ===`);
+  [...new Set(jsFehler)].slice(0,20).forEach(z => console.log('   ' + z));
+}
 if (weitergeleitet.length) console.log(`(${weitergeleitet.length} Aufrufe uebersprungen, weil die Seite weiterleitet: ${[...new Set(weitergeleitet)].slice(0,6).join(', ')}${weitergeleitet.length>6?' ...':''})`);
 await browser.close();
