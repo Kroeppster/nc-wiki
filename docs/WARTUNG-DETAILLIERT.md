@@ -493,6 +493,12 @@ beginnen – siehe Abschnitt 12 unten zur allgemeinen Funktionsweise dieser Date
 
 ## 11. Formulare (Formspree) ändern oder ergänzen
 
+**Stand heute: drei Formulare, zwei Adressen.** Kontakt und Fehlermeldung
+teilen sich `mvkpgrpl`, die Erfahrungsberichte haben mit `xaewqwoj` eine
+eigene. Wer die Meldungen nach Zuständigkeit trennen will, braucht pro
+Empfängerkreis eine eigene Formspree-Adresse – die Übersicht, welches
+Formular heute wohin geht, steht im Kurzguide, Abschnitt 11c.
+
 Die Website hat keinen eigenen Server, darum laufen alle Formulare (Kontakt,
 Erfahrungsbericht-Einreichung, "Fehler melden" bei PDFs) über den externen Dienst
 Formspree. Jedes Formular ist über eine eigene Formspree-Adresse (Format

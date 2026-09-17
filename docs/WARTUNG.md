@@ -482,6 +482,18 @@ sie einmal gefunden hat.
 ansieht: doppelte Inhalte unter verschiedenen Adressen, von der Startseite aus
 unerreichbare Seiten, und Links ins Leere.
 
+**`verhalten-pruefen.mjs`** ist das Gegenstück zum ersten: Er lädt keine Seiten,
+sondern **bedient** sie. Dunkelmodus-Umschalter, Sprachwahl, Suche, Filter der
+Erfahrungsberichte, Uni-Vergleich, der ganze Prüfungsmodus (Uhr, Pause,
+Abbrechen, automatisch gerechnete Zeit, Expertenmodus) und die Formulare.
+
+```bash
+npx pagefind --site public          # der Suchtest braucht den Suchindex!
+node scripts/verhalten-pruefen.mjs
+```
+
+Formspree wird dabei abgefangen – es geht **nie** eine echte Nachricht raus.
+
 **Erwartetes Ergebnis:** Beim Struktur-Skript genau neun unerreichbare Seiten –
 der Mitgliederbereich, der absichtlich nirgends verlinkt ist. Alles andere ist
 ein Fund.
@@ -491,6 +503,26 @@ Fehler.** Eine Prüfung, die den Fehler nicht findet, für den sie gedacht ist,
 ist schlimmer als keine – sie macht ruhig. Genauso wichtig: Fehlalarme
 abschalten. Ein Prüfstand, der bei jedem Lauf hundert harmlose Stellen meldet,
 wird nach zwei Wochen nicht mehr gelesen.
+
+---
+
+## 11c. Welches Formular geht an wen
+
+| Formular | Wo | Adresse | Geht an |
+| --- | --- | --- | --- |
+| Kontakt | `/kontakt/` | `mvkpgrpl` | allgemeines Postfach |
+| Fehlermeldung Übungsaufgaben | Übungsaufgaben-Seiten | **ebenfalls `mvkpgrpl`** | allgemeines Postfach |
+| Erfahrungsbericht einreichen | `/ems/erfahrungsberichte/` | `xaewqwoj` | eigenes Postfach |
+
+**Die Fehlermeldungen teilen sich absichtlich das Kontakt-Postfach** – das ist
+eine Zwischenlösung, kein Versehen. Vorher stand dort ein Platzhalter, jede
+Meldung ging ins Leere, während die meldende Person eine Bestätigung sah. Damit
+sie trotzdem auffallen, setzt das Formular einen festen Betreff
+(„Fehlermeldung Uebungsaufgaben (Website)"), nach dem sich filtern lässt.
+
+Sobald eine eigene Formspree-Adresse für Fehlermeldungen besteht, genügt es,
+sie in `layouts/partials/report-error-general.html` einzutragen – sonst ändert
+sich nichts. Details in der Langfassung, Abschnitt 11.
 
 ---
 

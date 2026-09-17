@@ -70,7 +70,7 @@ ___Antwort hier___
 | `name` | ja | Angezeigter Name der berichtenden Person. Vorname + Initiale reicht, oder ein Pseudonym. |
 | `jahr` | ja | EMS-Jahrgang als Zahl, ohne Anführungszeichen. Bestimmt Sortierung und den Jahres-Filter auf der Übersichtsseite. Ohne dieses Feld erscheint der Bericht gar nicht in der Übersicht. |
 | `ort` | nein | Studienort/Hochschulstandort. Zeile ganz weglassen, wenn unbekannt. |
-| `tags` | nein | Liste von Schlagworten, z. B. `["Naturwissenschaften", "Testsimulation"]`. Leere Liste `[]` ist ok. |
+| `tags` | nein | Liste von Schlagworten, z. B. `["Naturwissenschaften", "Testsimulation"]`. Leere Liste `[]` ist ok. **Achtung: Jedes Schlagwort erzeugt eine eigene, öffentliche Seite** (`/tags/naturwissenschaften/`), auf der alle Berichte mit diesem Schlagwort stehen – und die Pillen unter dem Bericht verlinken dorthin. Deshalb lieber wenige, wiederverwendete Schlagworte als für jeden Bericht neue: Sonst entstehen Dutzende Seiten mit je einem Eintrag. Vorhandene Schlagworte stehen unter `/tags/`. Die Schreibweise wird genau so übernommen, wie sie hier steht. |
 | `draft` | ja | Solange `true`, erscheint der Bericht **nicht** auf der echten Website, auch nach dem Merge nicht. Erst auf `false` setzen, wenn er freigegeben ist. |
 
 Die drei Überschriften (`## Wie hast du dich vorbereitet?` usw.) genau so übernehmen –
