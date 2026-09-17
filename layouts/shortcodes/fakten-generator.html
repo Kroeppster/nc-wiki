@@ -38,6 +38,23 @@
 {{- $alle := index .Site.Data "fakten-generator" }}
 {{- $d := and $alle (index $alle .Site.Language.Lang) }}
 {{- $genug := and $d $d.namen (ge (len $d.namen) 15) }}
+{{- /* DIE VORGABEZEITEN KOMMEN AUS data/testablauf.yaml, nicht fest
+       eingetragen: Dort werden die Untertest-Zeiten ohnehin gepflegt, und so
+       stimmen sie hier automatisch mit, wenn der EMS sie einmal aendert.
+
+       Die Pause ist die ECHTE Luecke zwischen den beiden Fakten-Phasen -
+       also alles, was am Testtag dazwischen liegt. Das sind Textverstaendnis
+       UND die Figuren-Reproduktion, zusammen 50 Minuten. (45 waere nur das
+       Textverstaendnis; die Figuren-Reproduktion faellt leicht unter den
+       Tisch, sitzt aber mit dazwischen.) Genau diese Luecke ist der Grund,
+       warum der Untertest schwer ist: Nach 50 Minuten mit ganz anderen
+       Aufgaben muss man die 15 Personen noch wissen. */ -}}
+{{- $lern := 6 }}{{- $abfrage := 6 }}{{- $pause := 0 }}{{- $zaehle := false }}
+{{- range .Site.Data.testablauf.bloecke }}
+  {{- if eq .key "fakten-reproduktion" }}{{ $zaehle = false }}{{ $abfrage = .minuten }}{{ end }}
+  {{- if $zaehle }}{{ $pause = add $pause .minuten }}{{ end }}
+  {{- if eq .key "fakten-einpraegen" }}{{ $zaehle = true }}{{ $lern = .minuten }}{{ end }}
+{{- end }}
 {{- /* Die Kennung heisst BEWUSST "fg-wurzel" und nicht "fakten-generator":
        Hugo vergibt jeder Ueberschrift automatisch einen Anker aus ihrem Text,
        aus "## Fakten-Generator" wird also id="fakten-generator". Hiess der
@@ -63,13 +80,13 @@
     <p class="fg-intro">{{ i18n "fg_intro" }}</p>
     <div class="fg-regler">
       <label>{{ i18n "fg_zeit_einpraegen" }}
-        <input type="number" id="fg-min-lernen" min="1" max="20" value="6"> {{ i18n "fg_minuten" }}
+        <input type="number" id="fg-min-lernen" min="1" max="20" value="{{ $lern }}"> {{ i18n "fg_minuten" }}
       </label>
       <label>{{ i18n "fg_zeit_pause" }}
-        <input type="number" id="fg-min-pause" min="0" max="30" value="3"> {{ i18n "fg_minuten" }}
+        <input type="number" id="fg-min-pause" min="0" max="90" value="{{ $pause }}"> {{ i18n "fg_minuten" }}
       </label>
       <label>{{ i18n "fg_zeit_abfrage" }}
-        <input type="number" id="fg-min-abfrage" min="1" max="20" value="6"> {{ i18n "fg_minuten" }}
+        <input type="number" id="fg-min-abfrage" min="1" max="20" value="{{ $abfrage }}"> {{ i18n "fg_minuten" }}
       </label>
     </div>
     <div class="fg-knoepfe">
@@ -291,7 +308,7 @@
     fragen = baueFragen(leute);
     el('fg-tabelle').innerHTML = tabelle(leute);
     zeige('fg-lernen');
-    uhr(el('fg-uhr-lernen'), (+el('fg-min-lernen').value||6)*60, zurPause);
+    uhr(el('fg-uhr-lernen'), (+el('fg-min-lernen').value||{{ $lern }})*60, zurPause);
   });
   function zurPause(){
     clearInterval(laufend);
@@ -304,7 +321,7 @@
     clearInterval(laufend);
     zeichneFragen(fragen, el('fg-fragen'), false);
     zeige('fg-abfrage');
-    uhr(el('fg-uhr-abfrage'), (+el('fg-min-abfrage').value||6)*60, auswerten);
+    uhr(el('fg-uhr-abfrage'), (+el('fg-min-abfrage').value||{{ $abfrage }})*60, auswerten);
   }
   function auswerten(){
     clearInterval(laufend);

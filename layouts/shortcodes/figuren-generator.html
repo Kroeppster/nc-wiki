@@ -1,0 +1,337 @@
+{{- /*
+  ============================================================================
+  FIGUREN-GENERATOR  -  {{< figuren-generator >}}
+  ============================================================================
+  Wuerfelt 18 Figuren wie im Untertest "Figuren lernen": jede in fuenf
+  verschieden grosse Felder geteilt, genau eines schwarz. Nach einer Pause
+  werden dieselben Figuren in ANDERER Reihenfolge und mit Feldern A-E
+  beschriftet abgefragt.
+
+  Warum ein Generator: Material fuer diesen Untertest ist EINMALIG verwendbar.
+  Wer eine Serie einmal auswendig gelernt hat, kann sie nie wieder zum Ueben
+  brauchen - anders als bei allen anderen Untertests.
+
+  WIE DIE FIGUREN ENTSTEHEN, in Kuerze:
+    1. Aussenform = unregelmaessiges Vieleck, mit Bezierkurven geglaettet,
+       gelegentlich mit einer Einbuchtung (die echten sind auch mal spitz).
+    2. Vier WELLIGE Trennlinien quer darueber, jede mit eigener Neigung -
+       ohne die Neigung laufen sie parallel und die Figur sieht gestreift
+       aus statt aufgefaechert.
+    3. Beides wird per clipPath auf die Aussenform beschnitten.
+    4. PUNKTABTASTUNG bestimmt, welches Feld wie viel Flaeche in der Form
+       hat und wo sein Mittelpunkt liegt. Das ist nicht Zierde: Ohne sie
+       landen Buchstaben ausserhalb ihres Feldes, und es kann Felder geben,
+       die gar nicht in der Form liegen - dann waere eine Antwortmoeglichkeit
+       gar nicht sichtbar. Sie liefert ausserdem die Stelle, die am tiefsten
+       in einem Feld steckt - dort steht der Buchstabe (siehe Abstandskarte
+       weiter unten). Figuren mit einem Feld unter 6% Flaeche oder einem zu
+       schmalen Feld werden verworfen und neu gewuerfelt.
+
+  ACHTUNG, CLIP-IDs MUESSEN EINDEUTIG SEIN: Dieselbe Figur erscheint zweimal
+  auf der Seite (Einpraegen und Abfrage). Bei gleicher id greift der Clip der
+  einen auf die andere zu und die Trennlinien ragen aus der Form heraus -
+  genau das passierte im ersten Entwurf.
+
+  KEINE LEERZEILEN IN DER AUSGABE: Goldmark beendet den HTML-Block an der
+  ersten Leerzeile, die Schachtelung bricht auseinander. Siehe auch den
+  Fakten-Generator.
+  ============================================================================
+*/ -}}
+{{- /* Vorgabezeiten aus dem echten Testablauf. Die Pause ist die tatsaechliche
+       Luecke zwischen den beiden Figuren-Phasen - am Testtag liegen Fakten
+       einpraegen und Textverstaendnis dazwischen. */ -}}
+{{- $lern := 4 }}{{- $abfrage := 5 }}{{- $pause := 0 }}{{- $zaehle := false }}
+{{- range .Site.Data.testablauf.bloecke }}
+  {{- if eq .key "figuren-reproduktion" }}{{ $zaehle = false }}{{ $abfrage = .minuten }}{{ end }}
+  {{- if $zaehle }}{{ $pause = add $pause .minuten }}{{ end }}
+  {{- if eq .key "figuren-einpraegen" }}{{ $zaehle = true }}{{ $lern = .minuten }}{{ end }}
+{{- end }}
+<div class="fg" id="fig-wurzel" data-pagefind-ignore>
+<div class="fg-start" id="fig-start">
+<p class="fg-intro">{{ i18n "fig_intro" }}</p>
+<div class="fg-regler">
+<label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="fig-min-lernen" min="1" max="20" value="{{ $lern }}"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_pause" }} <input type="number" id="fig-min-pause" min="0" max="90" value="{{ $pause }}"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="fig-min-abfrage" min="1" max="20" value="{{ $abfrage }}"> {{ i18n "fg_minuten" }}</label>
+</div>
+<div class="fg-knoepfe">
+<button type="button" class="btn btn-primary" id="fig-los">{{ i18n "fg_starten" }}</button>
+<button type="button" class="btn btn-ghost" id="fig-drucken">{{ i18n "fg_drucken" }}</button>
+</div>
+<p class="fg-hinweis">{{ i18n "fig_drucken_hinweis" }}</p>
+</div>
+<div class="fg-phase" id="fig-lernen" hidden>
+<div class="fg-kopf"><h3>{{ i18n "fg_phase_einpraegen" }}</h3><p class="fg-uhr" id="fig-uhr-lernen">--:--</p></div>
+<p class="fg-intro">{{ i18n "fig_lernen_hinweis" }}</p>
+<div class="fig-raster" id="fig-tafel"></div>
+<button type="button" class="btn btn-ghost" id="fig-fertig-lernen">{{ i18n "fg_weiter" }}</button>
+</div>
+<div class="fg-phase" id="fig-pause" hidden>
+<div class="fg-kopf"><h3>{{ i18n "fg_phase_pause" }}</h3><p class="fg-uhr" id="fig-uhr-pause">--:--</p></div>
+<p class="fg-intro">{{ i18n "fg_pause_hinweis" }}</p>
+<button type="button" class="btn btn-ghost" id="fig-fertig-pause">{{ i18n "fg_weiter" }}</button>
+</div>
+<div class="fg-phase" id="fig-abfrage" hidden>
+<div class="fg-kopf"><h3>{{ i18n "fg_phase_abfrage" }}</h3><p class="fg-uhr" id="fig-uhr-abfrage">--:--</p></div>
+<p class="fg-intro">{{ i18n "fig_abfrage_hinweis" }}</p>
+<div class="fig-raster fig-raster-abfrage" id="fig-fragen"></div>
+<button type="button" class="btn btn-primary" id="fig-auswerten">{{ i18n "fg_auswerten" }}</button>
+</div>
+<div class="fg-phase" id="fig-ergebnis" hidden>
+<div class="fg-kopf"><h3>{{ i18n "fg_phase_ergebnis" }}</h3><p class="fg-punkte" id="fig-punkte"></p></div>
+<div class="fig-raster fig-raster-abfrage" id="fig-loesung"></div>
+<div class="fg-knoepfe">
+<button type="button" class="btn btn-primary" id="fig-nochmal">{{ i18n "fg_nochmal" }}</button>
+<button type="button" class="btn btn-ghost" id="fig-drucken-ende">{{ i18n "fg_drucken_dieses" }}</button>
+</div>
+</div>
+<div class="fg-druck" id="fig-druck" aria-hidden="true"></div>
+</div>
+<script>
+(function(){
+  var T = {
+    richtig: {{ i18n "fg_richtig" | jsonify | safeJS }},
+    punkte:  {{ i18n "fg_punkte_von" | jsonify | safeJS }},
+    blattEinpraegen:        {{ i18n "fig_blatt_einpraegen" | jsonify | safeJS }},
+    blattEinpraegenHinweis: {{ i18n "fig_blatt_einpraegen_hinweis" | jsonify | safeJS }},
+    blattAufgaben:          {{ i18n "fig_blatt_aufgaben" | jsonify | safeJS }},
+    blattAufgabenHinweis:   {{ i18n "fig_blatt_aufgaben_hinweis" | jsonify | safeJS }},
+    blattLoesung:           {{ i18n "fg_blatt_loesung" | jsonify | safeJS }}
+  };
+  var Z=function(a,b){return a+Math.random()*(b-a);};
+  function misch(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function ecken(cx,cy,r){
+    var n=Math.round(Z(8,12)), p=[];
+    for(var i=0;i<n;i++){
+      var w=(i/n)*Math.PI*2+Z(-0.15,0.15), rr=r*Z(0.78,1.10);
+      if(Math.random()<0.15) rr=r*Z(0.42,0.60);
+      p.push([cx+Math.cos(w)*rr, cy+Math.sin(w)*rr]);
+    }
+    return p;
+  }
+  function glatt(p){
+    var n=p.length, d='M'+p[0][0].toFixed(1)+','+p[0][1].toFixed(1);
+    for(var i=0;i<n;i++){
+      var a=p[(i-1+n)%n],b=p[i],c=p[(i+1)%n],e=p[(i+2)%n];
+      var c1=[b[0]+(c[0]-a[0])/6,b[1]+(c[1]-a[1])/6], c2=[c[0]-(e[0]-b[0])/6,c[1]-(e[1]-b[1])/6];
+      d+='C'+c1[0].toFixed(1)+','+c1[1].toFixed(1)+' '+c2[0].toFixed(1)+','+c2[1].toFixed(1)+' '+c[0].toFixed(1)+','+c[1].toFixed(1);
+    }
+    return d+'Z';
+  }
+  function drin(x,y,p){var d=false;for(var i=0,j=p.length-1;i<p.length;j=i++){
+    if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0])) d=!d;} return d;}
+  function welle(y0,x0,breite,neigung){
+    var n=4, dx=breite/n, punkte=[];
+    for(var i=0;i<=n;i++){ var t=i/n; punkte.push([x0+i*dx, y0+(t-0.5)*neigung+Z(-13,13)]); }
+    var bei=function(x){
+      if(x<=punkte[0][0]) return punkte[0][1];
+      for(var i=0;i<n;i++){ var a=punkte[i],b=punkte[i+1];
+        if(x<=b[0]){ var t=(x-a[0])/(b[0]-a[0]); return a[1]+(b[1]-a[1])*(t*t*(3-2*t)); } }
+      return punkte[n][1];
+    };
+    var d='M'+punkte[0][0].toFixed(1)+','+punkte[0][1].toFixed(1);
+    for(var i=0;i<n;i++){ var a=punkte[i],b=punkte[i+1];
+      d+='C'+(a[0]+dx/3).toFixed(1)+','+a[1].toFixed(1)+' '+(b[0]-dx/3).toFixed(1)+','+b[1].toFixed(1)+' '+b[0].toFixed(1)+','+b[1].toFixed(1); }
+    return {d:d,bei:bei,punkte:punkte};
+  }
+  var G=150;
+  function figur(){
+    var cx=G/2, cy=G/2, r=G*0.36;
+    for(var versuch=0; versuch<200; versuch++){
+      var e=ecken(cx,cy,r), form=glatt(e);
+      var winkel=Z(0,360), rad=winkel*Math.PI/180;
+      var x0=cx-r*2.2, breite=r*4.4;
+      var hoehen=[0.18,0.36,0.55,0.74].map(function(t){return cy-r*1.3+t*r*2.6+Z(-10,10);}).sort(function(a,b){return a-b;});
+      var wellen=hoehen.map(function(y){return welle(y,x0,breite,Z(-r*1.1,r*1.1));});
+      // Punktabtastung auf ein Raster: welche Rasterzelle gehoert zu welchem
+      // Feld? -1 heisst "ausserhalb der Aussenform".
+      var N=Math.ceil(G/2), lab=new Int8Array(N*N); lab.fill(-1);
+      var treffer=[0,0,0,0,0];
+      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){
+        var gx=ix*2, gy=iy*2;
+        if(!drin(gx,gy,e)) continue;
+        var dx=gx-cx, dy=gy-cy;
+        var ux=cx+dx*Math.cos(-rad)-dy*Math.sin(-rad);
+        var uy=cy+dx*Math.sin(-rad)+dy*Math.cos(-rad);
+        var feld=4;
+        for(var i=0;i<4;i++) if(uy<wellen[i].bei(ux)){ feld=i; break; }
+        lab[ix*N+iy]=feld; treffer[feld]++;
+      }
+      var gesamt=treffer.reduce(function(s,t){return s+t;},0);
+      if(!gesamt) continue;
+      // Jedes Feld muss sichtbar gross sein, sonst waere eine Antwort-
+      // moeglichkeit praktisch nicht zu erkennen.
+      var zuKlein=false;
+      treffer.forEach(function(t){ if(t < gesamt*0.06) zuKlein=true; });
+      if(zuKlein) continue;
+      // ABSTANDSKARTE. Der erste Entwurf setzte den Buchstaben in den
+      // SCHWERPUNKT seines Feldes - bei einem duennen, gebogenen Streifen
+      // liegt der aber dicht an der Kante, und die Buchstaben zweier
+      // Nachbarfelder landen uebereinander (gemessen: jede fuenfte Figur).
+      // Stattdessen bekommt jede Rasterzelle ihren Abstand zur naechsten
+      // fremden Zelle (anderes Feld oder ausserhalb), und der Buchstabe
+      // kommt an die Stelle mit dem groessten Abstand - der Punkt, der am
+      // tiefsten in seinem Feld steckt. Zwei-Pass-Chamfer, 1 / Wurzel 2.
+      var INF=1e9, ab=new Float32Array(N*N), W1=1, W2=1.4142;
+      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){
+        var k=ix*N+iy, L=lab[k];
+        if(L<0){ ab[k]=0; continue; }
+        var rand=false;
+        for(var a=-1;a<=1&&!rand;a++) for(var c=-1;c<=1;c++){
+          var jx=ix+a, jy=iy+c;
+          if(jx<0||jy<0||jx>=N||jy>=N){ rand=true; break; }
+          if(lab[jx*N+jy]!==L){ rand=true; break; }
+        }
+        ab[k]= rand?0:INF;
+      }
+      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){ var k=ix*N+iy; if(!ab[k]) continue;
+        var m=ab[k];
+        if(ix>0) m=Math.min(m,ab[(ix-1)*N+iy]+W1);
+        if(iy>0) m=Math.min(m,ab[ix*N+iy-1]+W1);
+        if(ix>0&&iy>0) m=Math.min(m,ab[(ix-1)*N+iy-1]+W2);
+        if(ix>0&&iy<N-1) m=Math.min(m,ab[(ix-1)*N+iy+1]+W2);
+        ab[k]=m; }
+      for(var ix=N-1;ix>=0;ix--) for(var iy=N-1;iy>=0;iy--){ var k=ix*N+iy; if(!ab[k]) continue;
+        var m=ab[k];
+        if(ix<N-1) m=Math.min(m,ab[(ix+1)*N+iy]+W1);
+        if(iy<N-1) m=Math.min(m,ab[ix*N+iy+1]+W1);
+        if(ix<N-1&&iy<N-1) m=Math.min(m,ab[(ix+1)*N+iy+1]+W2);
+        if(ix<N-1&&iy>0) m=Math.min(m,ab[(ix+1)*N+iy-1]+W2);
+        ab[k]=m; }
+      var beste=[-1,-1,-1,-1,-1], besterAbstand=[0,0,0,0,0];
+      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){ var k=ix*N+iy, L=lab[k];
+        if(L<0) continue; if(ab[k]>besterAbstand[L]){ besterAbstand[L]=ab[k]; beste[L]=k; } }
+      // 3.5 Rasterzellen sind 7 Einheiten. Ein Buchstabe ist rund 7 breit und
+      // 9 hoch, zwei Mittelpunkte liegen damit mindestens 14 auseinander -
+      // genug Luft. Passt ein Feld nicht, wird die ganze Figur neu gewuerfelt.
+      var zuEng=false; besterAbstand.forEach(function(v){ if(v<3.5) zuEng=true; });
+      if(zuEng) continue;
+      var mitten=beste.map(function(k){ return [Math.floor(k/N)*2, (k%N)*2]; });
+      return {form:form,winkel:winkel,wellen:wellen,mitten:mitten,cx:cx,cy:cy,x0:x0,breite:breite,r:r};
+    }
+    return null;
+  }
+  var lauf=0;
+  function svg(f,schwarz,mitBuchstaben,klasse){
+    var k='figclip'+(lauf++);
+    var x1=f.x0+f.breite, oben=f.cy-f.r*2.4, unten=f.cy+f.r*2.4;
+    function feldPfad(i){
+      var obenD = i===0 ? 'M'+f.x0+','+oben+'L'+x1+','+oben : f.wellen[i-1].d;
+      var untenD = i===4 ? 'M'+f.x0+','+unten+'L'+x1+','+unten : f.wellen[i].d;
+      return obenD + ' L'+x1+','+(i===4?unten:f.wellen[i].punkte[4][1]).toFixed(1) + ' '
+           + untenD.replace('M','L') + ' L'+f.x0+','+(i===0?oben:f.wellen[i-1].punkte[0][1]).toFixed(1) + ' Z';
+    }
+    var s='<svg class="fig-svg '+(klasse||'')+'" viewBox="0 0 '+G+' '+G+'" role="img">';
+    s+='<defs><clipPath id="'+k+'"><path d="'+f.form+'"/></clipPath></defs>';
+    s+='<g clip-path="url(#'+k+')"><g transform="rotate('+f.winkel.toFixed(1)+' '+f.cx+' '+f.cy+')">';
+    for(var i=0;i<5;i++) s+='<path d="'+feldPfad(i)+'" fill="'+(i===schwarz?'#000':'#fff')+'"/>';
+    f.wellen.forEach(function(w){ s+='<path d="'+w.d+'" fill="none" stroke="#000" stroke-width="1.5"/>'; });
+    s+='</g></g>';
+    if(mitBuchstaben) f.mitten.forEach(function(m,i){
+      s+='<text x="'+m[0].toFixed(1)+'" y="'+(m[1]+4).toFixed(1)+'" font-size="12" text-anchor="middle" fill="#000">'+'ABCDE'[i]+'</text>'; });
+    s+='<path d="'+f.form+'" fill="none" stroke="#000" stroke-width="1.9"/></svg>';
+    return s;
+  }
+  var el=function(id){ return document.getElementById(id); };
+  var figuren=[], schwarz=[], reihenfolge=[];
+  function baueSet(){
+    figuren=[]; while(figuren.length<18){ var f=figur(); if(f) figuren.push(f); }
+    schwarz=figuren.map(function(){ return Math.floor(Math.random()*5); });
+    // Abfrage in ANDERER Reihenfolge - so ist es im echten Test auch.
+    reihenfolge=misch(figuren.map(function(_,i){ return i; }));
+  }
+  function zeichneTafel(){
+    el('fig-tafel').innerHTML = figuren.map(function(f,i){
+      return '<div class="fig-feld">'+svg(f,schwarz[i],false)+'</div>'; }).join('');
+  }
+  function zeichneAbfrage(ziel,mitLoesung,antworten){
+    ziel.innerHTML = reihenfolge.map(function(idx,n){
+      var f=figuren[idx], h='<div class="fig-feld"><p class="fig-nr">'+(n+1)+'</p>'+svg(f,-1,true);
+      h+='<ul class="fig-wahl">';
+      for(var k=0;k<5;k++){
+        var b='ABCDE'[k];
+        if(mitLoesung){
+          var kl = k===schwarz[idx] ? 'fg-ist-richtig' : (antworten[n]===k ? 'fg-ist-falsch' : '');
+          h+='<li class="'+kl+'">'+b+'</li>';
+        } else {
+          h+='<li><label><input type="radio" name="fig-'+n+'" value="'+k+'"> '+b+'</label></li>';
+        }
+      }
+      return h+'</ul></div>';
+    }).join('');
+  }
+  var laufend=null;
+  function uhr(anzeige,sekunden,fertig){
+    clearInterval(laufend);
+    var rest=sekunden;
+    function zeig(){ var m=Math.floor(rest/60), s=rest%60; anzeige.textContent=m+':'+(s<10?'0':'')+s; }
+    zeig();
+    laufend=setInterval(function(){ rest--; zeig(); if(rest<=0){ clearInterval(laufend); fertig(); } },1000);
+  }
+  function zeige(welche){
+    ['fig-start','fig-lernen','fig-pause','fig-abfrage','fig-ergebnis'].forEach(function(id){
+      el(id).hidden = (id!==welche); });
+  }
+  el('fig-los').addEventListener('click', function(){
+    baueSet(); zeichneTafel(); zeige('fig-lernen');
+    uhr(el('fig-uhr-lernen'), (+el('fig-min-lernen').value||{{ $lern }})*60, zurPause);
+  });
+  function zurPause(){
+    clearInterval(laufend);
+    var p=(+el('fig-min-pause').value||0)*60;
+    if(p<=0) return zurAbfrage();
+    zeige('fig-pause'); uhr(el('fig-uhr-pause'), p, zurAbfrage);
+  }
+  function zurAbfrage(){
+    clearInterval(laufend);
+    zeichneAbfrage(el('fig-fragen'), false);
+    zeige('fig-abfrage');
+    uhr(el('fig-uhr-abfrage'), (+el('fig-min-abfrage').value||{{ $abfrage }})*60, auswerten);
+  }
+  function auswerten(){
+    clearInterval(laufend);
+    var antworten = reihenfolge.map(function(_,n){
+      var g=document.querySelector('input[name="fig-'+n+'"]:checked');
+      return g ? +g.value : null;
+    });
+    var richtig = reihenfolge.filter(function(idx,n){ return antworten[n]===schwarz[idx]; }).length;
+    el('fig-punkte').textContent = T.punkte.replace('{n}', richtig).replace('{von}', 18);
+    zeichneAbfrage(el('fig-loesung'), true, antworten);
+    zeige('fig-ergebnis');
+  }
+  el('fig-fertig-lernen').addEventListener('click', zurPause);
+  el('fig-fertig-pause').addEventListener('click', zurAbfrage);
+  el('fig-auswerten').addEventListener('click', auswerten);
+  el('fig-nochmal').addEventListener('click', function(){ clearInterval(laufend); zeige('fig-start'); });
+  function blatt(titel,inhalt,umbruch){
+    return '<section class="fg-blatt'+(umbruch?' fg-blatt-umbruch':'')+'"><h2>'+titel+'</h2>'+inhalt+'</section>';
+  }
+  function drucken(){
+    if(!figuren.length) baueSet();
+    var lern = '<div class="fig-raster fig-druck-raster">' + figuren.map(function(f,i){
+      return '<div class="fig-feld">'+svg(f,schwarz[i],false)+'</div>'; }).join('') + '</div>';
+    var auf = '<div class="fig-raster fig-druck-raster">' + reihenfolge.map(function(idx,n){
+      return '<div class="fig-feld"><p class="fig-nr">'+(n+1)+'</p>'+svg(figuren[idx],-1,true)+'</div>'; }).join('') + '</div>';
+    var los = '<ol class="fg-druck-fragen fig-loesungsliste">' + reihenfolge.map(function(idx){
+      return '<li>'+'ABCDE'[schwarz[idx]]+'</li>'; }).join('') + '</ol>';
+    el('fig-druck').innerHTML =
+        blatt(T.blattEinpraegen, '<p class="fg-druck-hinweis">'+T.blattEinpraegenHinweis+'</p>'+lern, false)
+      + blatt(T.blattAufgaben,  '<p class="fg-druck-hinweis">'+T.blattAufgabenHinweis+'</p>'+auf, true)
+      + blatt(T.blattLoesung, los, true);
+    var behaelter=el('fig-druck'), heimat=behaelter.parentNode, nachbar=behaelter.nextSibling;
+    document.body.appendChild(behaelter);
+    document.body.classList.add('fg-druckt');
+    var fertig=function(){
+      document.body.classList.remove('fg-druckt');
+      behaelter.innerHTML='';
+      heimat.insertBefore(behaelter, nachbar);
+      window.removeEventListener('afterprint', fertig);
+    };
+    window.addEventListener('afterprint', fertig);
+    window.print();
+    setTimeout(function(){ if(document.body.classList.contains('fg-druckt')) fertig(); },1500);
+  }
+  el('fig-drucken').addEventListener('click', drucken);
+  el('fig-drucken-ende').addEventListener('click', drucken);
+})();
+</script>

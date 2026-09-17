@@ -319,3 +319,20 @@ fg_blatt_aufgaben: Fakten lernen – Reproduktionsphase
 fg_blatt_aufgaben_hinweis: '18 Aufgaben, Zeit: 6 Minuten. Pro Aufgabe ist genau eine
   Antwort richtig.'
 fg_blatt_loesung: Lösungen
+
+# --- Figuren-Generator (Alpha) ---
+fig_intro: Dieser Generator würfelt 18 neue Figuren. Jede ist in fünf verschieden
+  grosse Felder geteilt, genau eines ist schwarz. Nach der Pause werden dieselben
+  Figuren in anderer Reihenfolge abgefragt – du gibst an, welches Feld schwarz war.
+fig_lernen_hinweis: Präge dir ein, welches Feld bei welcher Figur schwarz ist. Auf
+  die Reihenfolge kommt es nicht an – sie ändert sich in der Abfrage.
+fig_abfrage_hinweis: Dieselben Figuren, andere Reihenfolge. Welches Feld war schwarz?
+fig_drucken_hinweis: 'Zum Üben auf Papier: Der Druck enthält drei Blätter – Einprägeblatt,
+  Aufgabenblatt und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch
+  «Als PDF sichern» wählen.'
+fig_blatt_einpraegen: Figuren lernen – Einprägephase
+fig_blatt_einpraegen_hinweis: 'Zeit: 4 Minuten. Präge dir bei jeder Figur ein, welches
+  Feld schwarz ist. Danach dieses Blatt weglegen.'
+fig_blatt_aufgaben: Figuren lernen – Reproduktionsphase
+fig_blatt_aufgaben_hinweis: '18 Aufgaben, Zeit: 5 Minuten. Die Figuren stehen in anderer
+  Reihenfolge. Kreuze an, welches Feld schwarz war.'

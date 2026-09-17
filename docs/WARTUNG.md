@@ -459,18 +459,21 @@ nur ein lokaler Bau-Ordner und landet nie in git.
 
 ## 11b. Die Website auf Fehler prüfen
 
-Zwei Skripte im Ordner `scripts/` prüfen die fertig gebaute Website. Sie
+Fünf Skripte im Ordner `scripts/` prüfen die fertig gebaute Website. Sie
 ersetzen kein Auge, finden aber zuverlässig die Fehlerarten, die sonst erst
 jemandem auf dem Handy auffallen.
 
 ```bash
 npm run build                 # public/ erzeugen
 npx http-server public -p 8099 -s &
-cd public && find . -name index.html | sed 's|^\.||; s|/index\.html$|/|' | sort > /tmp/alle-seiten.txt && cd ..
 
 BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs
 python3 scripts/struktur-pruefen.py
 ```
+
+Beide suchen sich die zu prüfenden Seiten selbst aus `public/` zusammen – es
+ist nichts vorzubereiten. Läuft der Server auf einem anderen Port, sagt man das
+mit `ADRESSE=http://127.0.0.1:8123` davor.
 
 **`seiten-pruefen.mjs`** ruft jede Seite in einem echten Browser auf und misst:
 seitliches Scrollen, sich überlappende oder aneinanderstossende Kästen,
@@ -494,9 +497,18 @@ node scripts/verhalten-pruefen.mjs
 
 Formspree wird dabei abgefangen – es geht **nie** eine echte Nachricht raus.
 
-**Erwartetes Ergebnis:** Beim Struktur-Skript genau neun unerreichbare Seiten –
-der Mitgliederbereich, der absichtlich nirgends verlinkt ist. Alles andere ist
-ein Fund.
+**Die beiden Generatoren haben je ein eigenes Skript,** weil sie bei jedem
+Aufruf etwas anderes auswürfeln und man einem einzelnen Durchlauf nicht ansieht,
+ob er der Normalfall war:
+
+```bash
+node scripts/fakten-generator-pruefen.mjs /tmp/probe   # prüft auch das erzeugte PDF
+node scripts/figuren-generator-pruefen.mjs             # würfelt 12 Sets und misst nach
+```
+
+**Erwartetes Ergebnis:** Beim Struktur-Skript genau zehn unerreichbare Seiten –
+der Mitgliederbereich (neun) und die Alpha-Seite, alle absichtlich nirgends
+verlinkt. Alles andere ist ein Fund.
 
 **Wer eine Prüfung ergänzt, testet sie zuerst gegen einen echten, bekannten
 Fehler.** Eine Prüfung, die den Fehler nicht findet, für den sie gedacht ist,
@@ -552,6 +564,59 @@ verändern das Drucken anderer Seiten nicht.
 **Noch offen:** Die Kategorien sind vorsortiert und von keinem Menschen
 freigegeben. Für echte Abwechslung wären rund 80 Einträge je Kategorie gut,
 aktuell sind es etwa 40.
+
+**Die Vorgabezeiten kommen aus `data/testablauf.yaml`,** sie stehen nicht im
+Template. Wer dort eine Untertest-Zeit ändert, ändert sie hier automatisch mit.
+Die vorgeschlagene Pause ist die **echte Lücke** zwischen Einprägen und
+Reproduktion – am Testtag liegen Textverständnis und die Figuren-Reproduktion
+dazwischen, zusammen 50 Minuten. Genau diese Lücke macht den Untertest schwer,
+deshalb steht sie so in der Vorgabe und nicht als bequeme Drei-Minuten-Pause.
+
+---
+
+## 11b-3. Die Alpha-Seite und der Figuren-Generator
+
+**Was die Alpha-Seite ist:** `content/de/alpha/` – eine Werkbank für neue
+Funktionen, bevor sie auf eine echte Seite kommen. Sie liegt hinter demselben
+Passwort wie der Mitgliederbereich (`geschuetzt: true` im Frontmatter, siehe
+Abschnitt 11), ist in keinem Menü verlinkt, steht nicht in der Sitemap, wird
+von der Suche nicht gefunden und trägt `noindex`.
+
+Sie gibt es **absichtlich nur auf Deutsch**. Sonst gilt hier die Regel, dass
+jeder sichtbare Text dreisprachig sein muss – diese Seite sieht aber niemand
+ausser euch, und drei Fassungen einer Werkbank zu pflegen wäre nur Arbeit ohne
+Nutzen. Sobald eine Funktion von der Alpha-Seite auf eine echte Seite wandert,
+gilt die Regel wieder voll.
+
+**Eine neue Funktion zum Testen dazulegen:** In `content/de/alpha/_index.md`
+einen Abschnitt schreiben, der sagt, *was zu beurteilen ist* (nicht nur, was es
+tut), und den Shortcode darunter setzen. Ist die Funktion freigegeben, wandert
+derselbe Shortcode auf die richtige Seite und der Abschnitt hier wird gelöscht.
+
+**Der Figuren-Generator** (`{{</* figuren-generator */>}}`) würfelt 18 Figuren wie im
+Untertest „Figuren lernen": jede in fünf verschieden grosse Felder geteilt,
+genau eines schwarz. Nach der Pause kommen dieselben Figuren in anderer
+Reihenfolge und mit Feldern A–E beschriftet zurück. Gleiche Begründung wie beim
+Fakten-Generator: Material für diesen Untertest ist einmalig verwendbar. Er
+kann dasselbe wie der Fakten-Generator, Durchlauf am Bildschirm und Druck mit
+drei Blättern, und holt seine Vorgabezeiten ebenfalls aus `data/testablauf.yaml`
+(die Pause dort ist die Lücke aus Fakten-Einprägen und Textverständnis).
+
+Er braucht **keine Datendatei** – die Figuren entstehen im Browser. Deshalb
+funktioniert er in allen drei Sprachen, sobald er auf eine echte Seite kommt;
+nur die Beschriftungen stehen in `i18n/de|fr|it.yaml` (Präfix `fig_`).
+
+**Wer am Zeichnen etwas ändert,** liest zuerst den Kommentarkopf in
+`layouts/shortcodes/figuren-generator.html`. Dort stehen die drei Dinge, die im
+ersten Entwurf schiefgingen: doppelte Clip-Kennungen (die Trennlinien ragten aus
+der Form), Felder, die gar nicht in der Form liegen (eine Antwortmöglichkeit
+wäre unsichtbar), und Buchstaben, die übereinanderrutschen. Das Letzte ist der
+Grund für die Abstandskarte: Der Buchstabe sitzt **nicht** im Schwerpunkt seines
+Feldes, sondern an der Stelle, die am tiefsten darin steckt – bei einem dünnen,
+gebogenen Streifen liegt der Schwerpunkt nämlich fast auf der Kante.
+
+**Noch zu beurteilen:** ob die Figuren schwer genug sind. Zum Vergleich liegen
+die echten Serien unter Übungsaufgaben.
 
 ---
 

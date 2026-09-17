@@ -955,6 +955,14 @@ Datei speist zwei Dinge:
 | --- | --- |
 | Tabelle „Tagesablauf" auf `/ems/` | Shortcode `testablauf`, siehe `layouts/shortcodes/testablauf.html` |
 | Prüfungsmodus | `layouts/partials/pruefungsmodus.html` |
+| Vorgabezeiten der Lern-Generatoren | `layouts/shortcodes/fakten-generator.html`, `layouts/shortcodes/figuren-generator.html` |
+
+Die letzte Zeile ist leicht zu übersehen: Die beiden Generatoren rechnen sich
+ihre Vorgaben aus dieser Datei aus, auch die vorgeschlagene **Pause** – das ist
+nämlich nicht irgendeine Zahl, sondern die tatsächliche Lücke zwischen
+Einprägen und Reproduktion am Testtag (alle Blöcke, die dazwischen liegen,
+zusammengezählt). Wer hier eine Dauer ändert, ändert sie dort mit. Genau dafür
+steht sie nicht fest im Template.
 
 Die **Gesamtzeit** in der Tabelle wird aus den Einzelminuten zusammengezählt und
 nicht eingetragen – sie kann dadurch gar nicht von den Einzelwerten abweichen.

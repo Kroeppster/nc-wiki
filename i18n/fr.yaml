@@ -313,3 +313,21 @@ fg_blatt_aufgaben: Mémorisation de faits – phase de restitution
 fg_blatt_aufgaben_hinweis: '18 questions, temps : 6 minutes. Une seule réponse est
   correcte par question.'
 fg_blatt_loesung: Solutions
+
+# --- Figuren-Generator (Alpha) ---
+fig_intro: Ce générateur crée 18 nouvelles figures. Chacune est divisée en cinq champs
+  de tailles différentes, un seul est noir. Après la pause, les mêmes figures sont
+  interrogées dans un autre ordre – tu indiques quel champ était noir.
+fig_lernen_hinweis: Mémorise quel champ est noir sur chaque figure. L'ordre n'a pas
+  d'importance – il change lors de la restitution.
+fig_abfrage_hinweis: Les mêmes figures, dans un autre ordre. Quel champ était noir
+  ?
+fig_drucken_hinweis: 'Pour s''entraîner sur papier : l''impression contient trois
+  feuilles – mémorisation, questions et solutions. Dans la boîte de dialogue d''impression,
+  on peut aussi choisir «Enregistrer au format PDF».'
+fig_blatt_einpraegen: Mémorisation de figures – phase d'apprentissage
+fig_blatt_einpraegen_hinweis: 'Temps : 4 minutes. Mémorise pour chaque figure quel
+  champ est noir. Range ensuite cette feuille.'
+fig_blatt_aufgaben: Mémorisation de figures – phase de restitution
+fig_blatt_aufgaben_hinweis: '18 questions, temps : 5 minutes. Les figures sont dans
+  un autre ordre. Coche le champ qui était noir.'

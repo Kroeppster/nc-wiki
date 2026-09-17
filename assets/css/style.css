@@ -1557,3 +1557,26 @@ body.pm-aktiv{overflow:hidden;}
   .fg-druck-fragen ul{list-style:none;margin:0;padding-left:.4cm;}
   @page{margin:1.6cm;}
 }
+
+/* ==========================================================================
+   Figuren-Generator (Alpha)
+   ==========================================================================
+   Die Figuren sind erzeugte SVGs. Weiss ist fest verdrahtet und folgt NICHT
+   dem Farbmodus: Die Aufgabe besteht darin, ein SCHWARZES Feld von weissen
+   zu unterscheiden - im Dunkelmodus eingefärbt wäre sie sinnlos. */
+.fig-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin:var(--space-5) 0;}
+.fig-feld{text-align:center;}
+.fig-svg{width:100%;height:auto;display:block;background:#fff;border-radius:var(--radius-sm);}
+.fig-nr{margin:0 0 .2rem;font-size:var(--text-xs);color:var(--color-ink-faint);font-weight:600;}
+.fig-wahl{list-style:none;display:flex;justify-content:center;gap:.5rem;margin:.35rem 0 0;padding:0;font-size:var(--text-sm);}
+.fig-wahl label{cursor:pointer;}
+.fig-raster-abfrage .fig-svg{border:1px solid var(--color-line);}
+@media (max-width:900px){ .fig-raster{grid-template-columns:repeat(3,1fr);} }
+@media (max-width:560px){ .fig-raster{grid-template-columns:repeat(2,1fr);} }
+@media print{
+  .fig-druck-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:.35cm;}
+  .fig-druck-raster .fig-svg{width:100%;height:auto;}
+  /* Eine Figur samt ihrer Antwortzeile gehört zusammen auf eine Seite. */
+  .fig-druck-raster .fig-feld{page-break-inside:avoid;break-inside:avoid;}
+  .fig-loesungsliste{columns:6;font-size:10pt;}
+}

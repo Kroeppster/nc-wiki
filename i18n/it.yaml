@@ -312,3 +312,19 @@ fg_blatt_aufgaben: Memorizzazione di fatti – fase di riproduzione
 fg_blatt_aufgaben_hinweis: '18 esercizi, tempo: 6 minuti. Per ogni esercizio una sola
   risposta è corretta.'
 fg_blatt_loesung: Soluzioni
+
+# --- Figuren-Generator (Alpha) ---
+fig_intro: Questo generatore crea 18 nuove figure. Ognuna è divisa in cinque campi
+  di grandezza diversa, esattamente uno è nero. Dopo la pausa le stesse figure vengono
+  chieste in un altro ordine – indichi quale campo era nero.
+fig_lernen_hinweis: Memorizza quale campo è nero in ogni figura. L'ordine non conta
+  – cambia nella fase di riproduzione.
+fig_abfrage_hinweis: Le stesse figure, in un altro ordine. Quale campo era nero?
+fig_drucken_hinweis: 'Per esercitarsi su carta: la stampa contiene tre fogli – memorizzazione,
+  esercizi e soluzioni. Nella finestra di stampa si può scegliere «Salva come PDF».'
+fig_blatt_einpraegen: Memorizzazione di figure – fase di memorizzazione
+fig_blatt_einpraegen_hinweis: 'Tempo: 4 minuti. Memorizza per ogni figura quale campo
+  è nero. Poi metti via questo foglio.'
+fig_blatt_aufgaben: Memorizzazione di figure – fase di riproduzione
+fig_blatt_aufgaben_hinweis: '18 esercizi, tempo: 5 minuti. Le figure sono in un altro
+  ordine. Segna quale campo era nero.'
