@@ -22,10 +22,32 @@
 {{ define "main" }}
   <section>
     <div class="wrap">
+      {{/* Zurück-Link NUR auf Schlagwort-Seiten (/tags/<wort>/). Die
+           entstehen automatisch aus den Schlagworten der Erfahrungsberichte
+           und hatten bisher keinerlei Navigation: Wer über eine Pille dort
+           landete, kam nur mit dem Zurück-Knopf des Browsers wieder weg.
+           Der Link führt auf die Schlagwort-Übersicht - die war dadurch
+           ebenfalls von nirgends erreichbar.
+           Die übrigen Übersichtsseiten (News, EMS ...) bekommen bewusst
+           KEINEN: Sie hängen im Hauptmenü und brauchen ihn nicht. */}}
+      {{ if eq .Kind "term" }}
+      {{ with .Parent }}
+      <a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>
+      {{ end }}
+      {{ end }}
+
       <div class="section-head">
         {{/* .Section = der Ordnername (z.B. "news"), .Title = der Titel aus
              der _index.md-Datei dieser Übersichtsseite */}}
-        <div><p class="eyebrow">{{ .Section }}</p><h2>{{ .Title }}</h2></div>
+        {{/* Auf Schlagwort-Seiten ".Data.Term" statt ".Title": Hugo schreibt
+             Taxonomie-Titel nach englischer Regel gross, aus "Neben der
+             Matura" wird sonst "Neben Der Matura". ".Data.Term" ist der
+             Rohwert, so wie er im Bericht steht. (Die Einstellung
+             "titleCaseStyle" in hugo.toml aendert daran nichts - probiert
+             und verworfen.) */}}
+        {{ $ueberschrift := .Title }}
+        {{ if eq .Kind "term" }}{{ $ueberschrift = .Data.Term }}{{ end }}
+        <div><p class="eyebrow">{{ .Section }}</p><h2>{{ $ueberschrift }}</h2></div>
       </div>
 
       {{/* Sichtbarer Hinweis auf Seiten des Mitgliederbereichs
@@ -150,7 +172,14 @@
           </div>
           {{ end }}
           {{ with .Params.eyebrow }}<p class="eyebrow">{{ . }}</p>{{ end }}
-          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          {{/* Erfahrungsberichte haben absichtlich KEIN "title" im
+               Frontmatter - ihr Titel wird aus Name und Jahr gebaut (siehe
+               single.html). Ohne diese zwei Zeilen blieb die Überschrift auf
+               Schlagwort-Seiten deshalb LEER: Dort standen Karten ganz ohne
+               Titel, nur mit Anrisstext und "Mehr erfahren". */}}
+          {{ $kartenTitel := .Title }}
+          {{ if and (not $kartenTitel) .Params.name .Params.jahr }}{{ $kartenTitel = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
+          <h3><a href="{{ .RelPermalink }}">{{ $kartenTitel }}</a></h3>
           {{/* Datum nur bei News-Beiträgen anzeigen, damit klar ist, von wann
                eine Meldung ist - sprachabhängig formatiert (":date_long"
                übersetzt Monatsnamen automatisch je nach Sprache der Seite). */}}

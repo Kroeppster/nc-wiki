@@ -78,9 +78,10 @@
       </div>
     </div>
     {{ partial "card-excerpt.html" . }}
-    {{ with .Params.tags }}
+    {{/* Verlinkt wie auf der Einzelseite - siehe Erklärung dort. */}}
+    {{ with .GetTerms "tags" }}
     <ul class="tag-pills">
-      {{ range . }}<li>{{ . }}</li>{{ end }}
+      {{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Data.Term }}</a></li>{{ end }}
     </ul>
     {{ end }}
     <a class="more" href="{{ .RelPermalink }}">{{ i18n "experience_reports_read_more" }}</a>

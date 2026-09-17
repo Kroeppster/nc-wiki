@@ -81,6 +81,21 @@ enableRobotsTXT = true
 # "contentDir" sagt Hugo, in welchem Unterordner von content/ die Texte
 # dieser Sprache liegen.
 # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# TAXONOMIEN
+# ------------------------------------------------------------------------------
+# Hugo legt ohne diese Angabe ZWEI Taxonomien an: "tags" und "categories".
+# Kategorien benutzt aber kein einziger Inhalt - es entstanden nur drei leere
+# Uebersichtsseiten (/categories/ je Sprache), auf die nichts verlinkt.
+# Diese Liste schaltet sie ab; "tags" bleibt, weil 83 Erfahrungsberichte
+# Schlagworte tragen und die Pillen darauf verlinken.
+[taxonomies]
+  tag = 'tags'
+# Zur Schreibweise: Hugo setzt Schlagwort-Titel nach englischer Regel gross
+# ("Neben Der Matura"). "titleCaseStyle" aendert daran nichts - getestet.
+# Die Vorlagen zeigen deshalb ".Data.Term", den Rohwert aus dem Bericht
+# (siehe layouts/_default/list.html und single.html).
+
 [languages]
   [languages.de]
     label = 'Deutsch'

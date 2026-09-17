@@ -457,6 +457,43 @@ nur ein lokaler Bau-Ordner und landet nie in git.
 
 ---
 
+## 11b. Die Website auf Fehler prüfen
+
+Zwei Skripte im Ordner `scripts/` prüfen die fertig gebaute Website. Sie
+ersetzen kein Auge, finden aber zuverlässig die Fehlerarten, die sonst erst
+jemandem auf dem Handy auffallen.
+
+```bash
+npm run build                 # public/ erzeugen
+npx http-server public -p 8099 -s &
+cd public && find . -name index.html | sed 's|^\.||; s|/index\.html$|/|' | sort > /tmp/alle-seiten.txt && cd ..
+
+BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs
+python3 scripts/struktur-pruefen.py
+```
+
+**`seiten-pruefen.mjs`** ruft jede Seite in einem echten Browser auf und misst:
+seitliches Scrollen, sich überlappende oder aneinanderstossende Kästen,
+abgeschnittenen Text, Elemente ausserhalb des Bildes, fehlende Bilder und
+Textkontrast. Oben in der Datei steht zu jeder Prüfung, welchen echten Fehler
+sie einmal gefunden hat.
+
+**`struktur-pruefen.py`** beantwortet drei Fragen, die man der Website nicht
+ansieht: doppelte Inhalte unter verschiedenen Adressen, von der Startseite aus
+unerreichbare Seiten, und Links ins Leere.
+
+**Erwartetes Ergebnis:** Beim Struktur-Skript genau neun unerreichbare Seiten –
+der Mitgliederbereich, der absichtlich nirgends verlinkt ist. Alles andere ist
+ein Fund.
+
+**Wer eine Prüfung ergänzt, testet sie zuerst gegen einen echten, bekannten
+Fehler.** Eine Prüfung, die den Fehler nicht findet, für den sie gedacht ist,
+ist schlimmer als keine – sie macht ruhig. Genauso wichtig: Fehlalarme
+abschalten. Ein Prüfstand, der bei jedem Lauf hundert harmlose Stellen meldet,
+wird nach zwei Wochen nicht mehr gelesen.
+
+---
+
 ## 12. Startseite: Hero-Bild, Logo, Zeitstrahl und Material
 
 ### Die Reihenfolge der Abschnitte

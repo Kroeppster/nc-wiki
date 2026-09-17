@@ -640,6 +640,15 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    das fuer kurze Schlagworte gedacht ist. */
 .detail-list{margin:0;padding-left:1.1rem;display:grid;gap:.35rem;color:var(--color-ink-soft);font-size:var(--text-sm);}
 .tag-pills li{font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-signal);background:var(--color-signal-soft);border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-full);padding:.2rem .65rem;}
+/* Bei den Erfahrungsberichten ist jedes Schlagwort ein Link auf seine
+   Tag-Seite. Die Pille selbst bleibt der Knopf: Das Polster sitzt am <li>,
+   deshalb füllt der Link es mit "display:block" und negativem Ausgleich aus -
+   sonst wäre nur der Text anklickbar und der Rand daneben tot. Im Uniguide
+   sind dieselben Pillen bewusst OHNE Link (dort stehen Besonderheiten, keine
+   Schlagworte) - diese Regel greift dort schlicht nicht. */
+.tag-pills li:has(a){padding:0;}
+.tag-pills li>a{display:block;padding:.2rem .65rem;color:inherit;text-decoration:none;border-radius:var(--radius-full);}
+.tag-pills li>a:hover,.tag-pills li>a:focus-visible{background:var(--color-signal);color:var(--color-paper);}
 
 /* Uniguide */
 .uniguide-disclaimer{background:var(--color-note-bg);border:1px solid var(--color-note-line);color:var(--color-note-text);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);font-size:var(--text-sm);margin:var(--space-6) 0 var(--space-8);line-height:var(--leading-normal);}
@@ -721,9 +730,15 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .uni-detail{display:grid;gap:var(--space-5);max-width:38rem;margin:var(--space-6) 0;}
 .uni-detail>div{border-bottom:1px solid var(--color-line);padding-bottom:var(--space-5);}
 .uni-detail dt{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);margin:0 0 .35rem;}
-.uni-detail dd{margin:0;}
+/* "overflow-wrap:anywhere" an den Stellen, an denen eine ADRESSE WÖRTLICH
+   als Linktext steht (Website, Website Medizin, Quelle): So eine Adresse ist
+   ein einziges Wort ohne Leerzeichen und kann beliebig lang sein. Ohne den
+   Umbruch schiebt sie auf dem Handy die ganze Seite quer - gemessen auf
+   /ems/uniguide/luzern/, 8px Überhang bei 390px Breite. Dieselbe Regel liegt
+   aus demselben Grund auf .download-label. */
+.uni-detail dd{margin:0;overflow-wrap:anywhere;}
 .uni-report{margin:0 0 var(--space-4);}
-.uni-stand{font-size:var(--text-xs);color:var(--color-ink-faint);}
+.uni-stand{font-size:var(--text-xs);color:var(--color-ink-faint);overflow-wrap:anywhere;}
 
 /* Kasten "Diese Angaben fehlen noch". Bewusst im Hinweis-Gelb und nicht in
    Rot: Es ist kein Fehler, sondern eine offene Recherche - und zugleich eine
@@ -1144,7 +1159,13 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .alpha-notice h2{margin:0 0 var(--space-3);font-size:var(--text-lg);}
 .alpha-notice p{margin:0 0 var(--space-5);color:var(--color-ink-soft);font-size:var(--text-sm);}
 
-.note{background:var(--color-note-bg);border:1px solid var(--color-note-line);border-radius:var(--radius-md);padding:.5rem .8rem;font-size:var(--text-xs);color:var(--color-note-text);margin-top:var(--space-2);display:inline-block;}
+/* "display:block" mit "width:fit-content" statt "inline-block": Der Hinweis
+   steht im Quelltext direkt hinter dem Zurück-Link, und beide waren
+   inline-Elemente - sie landeten also auf DERSELBEN Zeile, der Kasten
+   drängte sich neben "← Mitgliederbereich". Mit block bekommt er eine
+   eigene Zeile, mit fit-content bleibt er trotzdem nur so breit wie sein
+   Text und zieht sich nicht über die ganze Spalte. */
+.note{background:var(--color-note-bg);border:1px solid var(--color-note-line);border-radius:var(--radius-md);padding:.5rem .8rem;font-size:var(--text-xs);color:var(--color-note-text);margin-top:var(--space-2);display:block;width:fit-content;max-width:100%;}
 
 /* ==========================================================================
    Downloads

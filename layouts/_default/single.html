@@ -73,9 +73,16 @@
            unter dem Titel anzeigen */}}
       {{ if and .Params.name .Params.jahr }}
       <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
-      {{ with .Params.tags }}
+      {{/* Die Schlagworte sind LINKS auf die jeweilige Tag-Seite. Vorher
+           waren es reine Beschriftungen - dadurch baute Hugo rund 84
+           Tag-Seiten, auf die nichts verwies: Sie existierten, waren aber
+           über die Website nicht erreichbar.
+           ".GetTerms" statt ".Params.tags", weil es die echten
+           Taxonomie-Seiten liefert - damit stimmen Adresse und Schreibweise
+           (Umlaute, Sprachpräfix) automatisch. */}}
+      {{ with .GetTerms "tags" }}
       <ul class="tag-pills">
-        {{ range . }}<li>{{ . }}</li>{{ end }}
+        {{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Data.Term }}</a></li>{{ end }}
       </ul>
       {{ end }}
       {{ end }}
