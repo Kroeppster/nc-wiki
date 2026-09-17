@@ -506,6 +506,40 @@ wird nach zwei Wochen nicht mehr gelesen.
 
 ---
 
+## 11b-2. Der Fakten-Generator
+
+Auf der Seite „Figuren & Fakten lernen" steht ein Generator, der immer neue
+Einpräge-Sets würfelt. **Warum es ihn gibt:** Material für diesen Untertest ist
+einmalig verwendbar – wer eine Serie einmal auswendig gelernt hat, kann sie nie
+wieder zum Üben brauchen. Bei allen anderen Untertests kann man eine Serie nach
+Monaten nochmal rechnen, hier nicht. Deshalb ein Generator statt weiterer PDFs.
+
+**Wortlisten:** `data/fakten-generator/<sprache>.yaml`. Aktuell gibt es nur
+`de.yaml`; auf Französisch und Italienisch erscheint ein Hinweis statt eines
+Sets. Sobald `fr.yaml` bzw. `it.yaml` existiert, taucht der Generator dort von
+selbst auf – am Template ist nichts zu ändern.
+
+**Neue Wörter ergänzen:** einfach unten in der passenden Kategorie eintragen.
+Oben in der Datei steht ausführlich, warum die Kategorien nicht beliebig sind –
+kurz: Eine echte EMS-Serie würfelt nicht, sondern gibt jeder Altersgruppe drei
+Berufe aus **einem** Feld und drei Krankheiten aus **drei verschiedenen** Arten.
+Genau das macht die Menge lernbar. Wer die Kategorien auflöst, erzeugt Sets, die
+deutlich schwerer sind als die Prüfung.
+
+**Wo er auf der Seite steht,** bestimmt ihr: Der Shortcode `{{</* fakten-generator */>}}`
+lässt sich im Text der Seite beliebig verschieben.
+
+**Was die Wörter ursprünglich gefüllt hat:** `scripts/fakten-listen-auslesen.py`
+liest sie aus den eigenen Übungs-PDFs aus. Das Skript **überschreibt die
+YAML-Datei nicht**, es gibt die gefundenen Wörter nur aus – die Kategorien und
+Geschlechtsangaben darin kann kein Skript erraten und wären sonst weg.
+
+**Noch offen:** Die Kategorien sind vorsortiert und von keinem Menschen
+freigegeben. Für echte Abwechslung wären rund 80 Einträge je Kategorie gut,
+aktuell sind es etwa 40.
+
+---
+
 ## 11c. Welches Formular geht an wen
 
 | Formular | Wo | Adresse | Geht an |

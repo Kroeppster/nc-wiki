@@ -17,6 +17,10 @@ Die 15 Personen sind in 5 Altersgruppen zu je 3 Personen eingeteilt. Zu jeder Pe
 
 Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Keller, 30 Jahre, Tierärztin, ängstlich, Kopfschmerzen*.
 
+## Fakten-Generator
+
+{{< fakten-generator >}}
+
 ## Wieso sind diese Untertests fürs spätere Studium relevant?
 
 Bei beiden geht es um deine Gedächtnisleistung. Im Medizinstudium musst du dir nicht nur Fakten, sondern gerade in Anatomie und Histopathologie auch viele bildliche Strukturen merken können – und später stellst du Patient:innen anderen Fachpersonen kurz und präzise vor, mit den wichtigsten Merkmalen, Diagnose und Prozedere. Eine gute Merktechnik hilft dir bei beidem enorm.

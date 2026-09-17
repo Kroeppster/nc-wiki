@@ -1,0 +1,305 @@
+{{- /*
+  ============================================================================
+  FAKTEN-GENERATOR  -  {{< fakten-generator >}}
+  ============================================================================
+  Würfelt immer neue Einpräge-Sets für den Untertest "Fakten lernen" und fragt
+  sie danach ab. Grund: Material für diesen Untertest ist EINMALIG verwendbar.
+  Wer eine Serie einmal auswendig gelernt hat, kann sie nie wieder zum Üben
+  brauchen - anders als bei allen anderen Untertests, wo man eine Serie nach
+  Monaten nochmal rechnen kann. Deshalb ein Generator statt weiterer PDFs.
+
+  WORTLISTEN: data/fakten-generator.yaml. Dort steht auch, warum die
+  Kategorien nicht beliebig sind.
+
+  DER ABLAUF entspricht dem echten Untertest:
+    Einprägephase (6 Min)  ->  Ablenkung  ->  Reproduktion (6 Min, 18 Fragen)
+  Die Ablenkung ist nicht Deko: Im echten Test liegt Textverständnis
+  dazwischen. Ohne Pause übt man Kurzzeitgedächtnis statt das, was geprüft
+  wird. Die Länge ist einstellbar, damit man auch nur schnell etwas testen
+  kann.
+
+  KEIN SET OHNE WORTLISTE: Fehlen für eine Sprache die Listen (aktuell
+  Französisch und Italienisch), erscheint ein Hinweis statt eines kaputten
+  Sets. Lieber ehrlich leer als falsch gefüllt.
+  ----------------------------------------------------------------------------
+  KEINE LEERZEILEN IN DER AUSGABE - das ist keine Kosmetik. Ein Shortcode
+  landet im Markdown, und Goldmark BEENDET einen HTML-Block an der ersten
+  Leerzeile. Alles danach wird als Markdown gelesen, die <div>-Schachtelung
+  bricht auseinander: Der Rahmen war dann 40px hoch, waehrend die Phase
+  darin 679px mass - sie war gar kein Kind mehr, sondern ein Geschwister.
+  Sichtbar wurde es erst im Bildschirmfoto; gemessen hat es niemand.
+  Wer hier etwas ergaenzt: Zeilen duerfen umbrechen, aber nie leer sein.
+  ============================================================================
+*/ -}}
+{{- /* Wortlisten PRO SPRACHE: data/fakten-generator/<sprache>.yaml.
+       Ohne diese Trennung bekaemen Franzoesisch und Italienisch die
+       deutschen Woerter vorgesetzt - schlimmer als gar kein Generator.
+       Fehlt die Datei einer Sprache, greift der Hinweis weiter unten. */ -}}
+{{- $alle := index .Site.Data "fakten-generator" }}
+{{- $d := and $alle (index $alle .Site.Language.Lang) }}
+{{- $genug := and $d $d.namen (ge (len $d.namen) 15) }}
+{{- /* Die Kennung heisst BEWUSST "fg-wurzel" und nicht "fakten-generator":
+       Hugo vergibt jeder Ueberschrift automatisch einen Anker aus ihrem Text,
+       aus "## Fakten-Generator" wird also id="fakten-generator". Hiess der
+       Rahmen genauso, gab es die Kennung ZWEIMAL auf der Seite -
+       getElementById lieferte dann die Ueberschrift (40px hoch, ohne Kinder)
+       statt des Rahmens, und der Sprunglink der Abschnittsliste zeigte auf
+       das falsche Element. Kennungen von Bausteinen deshalb immer mit einem
+       kurzen Praefix, der in keiner Ueberschrift vorkommen kann. */ -}}
+<div class="fg" id="fg-wurzel" data-pagefind-ignore>
+{{- if not $genug }}
+  <p class="note">{{ i18n "fg_keine_liste" }}</p>
+{{- else }}
+  {{- /* Die Listen als JSON in die Seite legen - der Generator läuft
+         vollständig im Browser, es geht nichts an einen Server. */ -}}
+  {{- /* "safeJS" ist hier noetig, NICHT Bequemlichkeit: Hugo escapet den
+         Inhalt eines <script>-Elements noch einmal als JavaScript. Ohne
+         safeJS wird aus dem JSON eine ZEICHENKETTE ("{\"namen\":...") und
+         JSON.parse liefert dann einen String statt eines Objekts - der
+         Generator erzeugt schweigend gar nichts. Die Daten stammen aus der
+         eigenen YAML-Datei, nicht aus einer Eingabe. */ -}}
+  <script type="application/json" id="fg-daten">{{ $d | jsonify | safeJS }}</script>
+  <div class="fg-start" id="fg-start">
+    <p class="fg-intro">{{ i18n "fg_intro" }}</p>
+    <div class="fg-regler">
+      <label>{{ i18n "fg_zeit_einpraegen" }}
+        <input type="number" id="fg-min-lernen" min="1" max="20" value="6"> {{ i18n "fg_minuten" }}
+      </label>
+      <label>{{ i18n "fg_zeit_pause" }}
+        <input type="number" id="fg-min-pause" min="0" max="30" value="3"> {{ i18n "fg_minuten" }}
+      </label>
+      <label>{{ i18n "fg_zeit_abfrage" }}
+        <input type="number" id="fg-min-abfrage" min="1" max="20" value="6"> {{ i18n "fg_minuten" }}
+      </label>
+    </div>
+    <button type="button" class="btn btn-primary" id="fg-los">{{ i18n "fg_starten" }}</button>
+  </div>
+  <div class="fg-phase" id="fg-lernen" hidden>
+    <div class="fg-kopf"><h3>{{ i18n "fg_phase_einpraegen" }}</h3><p class="fg-uhr" id="fg-uhr-lernen">--:--</p></div>
+    <div id="fg-tabelle"></div>
+    <button type="button" class="btn btn-ghost" id="fg-fertig-lernen">{{ i18n "fg_weiter" }}</button>
+  </div>
+  <div class="fg-phase" id="fg-pause" hidden>
+    <div class="fg-kopf"><h3>{{ i18n "fg_phase_pause" }}</h3><p class="fg-uhr" id="fg-uhr-pause">--:--</p></div>
+    <p class="fg-intro">{{ i18n "fg_pause_hinweis" }}</p>
+    <button type="button" class="btn btn-ghost" id="fg-fertig-pause">{{ i18n "fg_weiter" }}</button>
+  </div>
+  <div class="fg-phase" id="fg-abfrage" hidden>
+    <div class="fg-kopf"><h3>{{ i18n "fg_phase_abfrage" }}</h3><p class="fg-uhr" id="fg-uhr-abfrage">--:--</p></div>
+    <ol class="fg-fragen" id="fg-fragen"></ol>
+    <button type="button" class="btn btn-primary" id="fg-auswerten">{{ i18n "fg_auswerten" }}</button>
+  </div>
+  <div class="fg-phase" id="fg-ergebnis" hidden>
+    <div class="fg-kopf"><h3>{{ i18n "fg_phase_ergebnis" }}</h3><p class="fg-punkte" id="fg-punkte"></p></div>
+    <ol class="fg-fragen fg-fragen-geprueft" id="fg-loesung"></ol>
+    <h4>{{ i18n "fg_das_war_das_set" }}</h4>
+    <div id="fg-tabelle-ende"></div>
+    <button type="button" class="btn btn-primary" id="fg-nochmal">{{ i18n "fg_nochmal" }}</button>
+  </div>
+{{- end }}
+</div>
+{{- if $genug }}
+<script>
+(function(){
+  var W = JSON.parse(document.getElementById('fg-daten').textContent);
+  var T = {
+    person: {{ i18n "fg_th_person" | jsonify | safeJS }},
+    alter:  {{ i18n "fg_th_alter" | jsonify | safeJS }},
+    beruf:  {{ i18n "fg_th_beruf" | jsonify | safeJS }},
+    merkmal:{{ i18n "fg_th_merkmal" | jsonify | safeJS }},
+    krank:  {{ i18n "fg_th_krankheit" | jsonify | safeJS }},
+    jahre:  {{ i18n "fg_jahre" | jsonify | safeJS }},
+    richtig:{{ i18n "fg_richtig" | jsonify | safeJS }},
+    falsch: {{ i18n "fg_falsch" | jsonify | safeJS }},
+    punkte: {{ i18n "fg_punkte_von" | jsonify | safeJS }},
+    f_alterVonKrankheit: {{ i18n "fg_f_alter_von_krankheit" | jsonify | safeJS }},
+    f_nameVonKrankheit:  {{ i18n "fg_f_name_von_krankheit" | jsonify | safeJS }},
+    f_krankheitVonName:  {{ i18n "fg_f_krankheit_von_name" | jsonify | safeJS }},
+    f_berufVonName:      {{ i18n "fg_f_beruf_von_name" | jsonify | safeJS }},
+    f_merkmalVonBeruf:   {{ i18n "fg_f_merkmal_von_beruf" | jsonify | safeJS }},
+    f_alterVonBeruf:     {{ i18n "fg_f_alter_von_beruf" | jsonify | safeJS }}
+  };
+  function misch(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+  function zieh(a,n){ return misch(a).slice(0,n); }
+  function eins(a){ return a[Math.floor(Math.random()*a.length)]; }
+  // --- Ein Set bauen -------------------------------------------------------
+  // Nachgebaut nach den echten Serien: fuenf Altersgruppen zu je drei
+  // Personen; die drei Berufe einer Gruppe stammen aus EINEM Berufsfeld, die
+  // drei Krankheiten aus DREI VERSCHIEDENEN Arten. Siehe die Erklaerung in
+  // data/fakten-generator.yaml - zufaelliges Ziehen ergaebe schwerere Sets
+  // als die Pruefung.
+  function baueSet(){
+    var gruppen = W.altersgruppen;
+    var felder  = misch(Object.keys(W.berufe)).filter(function(f){ return W.berufe[f].length >= 3; });
+    var arten   = Object.keys(W.krankheiten);
+    var namen   = zieh(W.namen, gruppen.length*3);
+    var merkmale = misch([].concat(W.merkmale.charakter, W.merkmale.zustand));
+    // Krankheiten werden OHNE ZURUECKLEGEN gezogen. Kaeme eine zweimal vor,
+    // waere die Frage "Die Person mit Karies ist ..." nicht mehr eindeutig
+    // beantwortbar - es gaebe zwei richtige Antworten. Deshalb merkt sich
+    // "vergeben", was schon benutzt ist.
+    var vergeben = {};
+    function krankheitAus(art){
+      var frei = W.krankheiten[art].filter(function(k){ return !vergeben[k]; });
+      // Ist eine Art erschoepft, aus dem gesamten Rest ziehen statt zu
+      // wiederholen - lieber eine Art doppelt als eine Krankheit doppelt.
+      if (!frei.length) {
+        arten.forEach(function(a){
+          W.krankheiten[a].forEach(function(k){ if(!vergeben[k]) frei.push(k); });
+        });
+      }
+      var gewaehlt = eins(frei);
+      vergeben[gewaehlt] = true;
+      return gewaehlt;
+    }
+    var leute = [], i = 0;
+    gruppen.forEach(function(alter, g){
+      var feld = felder[g % felder.length];
+      var berufe = zieh(W.berufe[feld], 3);
+      var dreiArten = zieh(arten, 3);
+      berufe.forEach(function(b, k){
+        var art = dreiArten[k % dreiArten.length];
+        leute.push({
+          name: namen[i], alter: alter, beruf: b.wort, geschlecht: b.geschlecht,
+          feld: feld, merkmal: merkmale[i % merkmale.length],
+          krankheit: krankheitAus(art), art: art
+        });
+        i++;
+      });
+    });
+    return leute;
+  }
+  function tabelle(leute){
+    var h = '<table class="fg-tabelle"><thead><tr><th>'+T.person+'</th><th>'+T.alter+'</th><th>'+T.beruf+'</th><th>'+T.merkmal+'</th><th>'+T.krank+'</th></tr></thead><tbody>';
+    leute.forEach(function(p){
+      h += '<tr><td><strong>'+p.name+'</strong></td><td>ca. '+p.alter+' '+T.jahre+'</td><td>'+p.beruf+'</td><td>'+p.merkmal+'</td><td>'+p.krankheit+'</td></tr>';
+    });
+    return h + '</tbody></table>';
+  }
+  // --- 18 Fragen bauen -----------------------------------------------------
+  // Die Ablenker kommen IMMER aus demselben Set. Zoege man sie aus der ganzen
+  // Wortliste, waere die richtige Antwort oft schon daran erkennbar, dass nur
+  // sie ueberhaupt vorkam - man koennte raten statt sich zu erinnern.
+  function baueFragen(leute){
+    var typen = [
+      {id:'alterVonKrankheit', text:function(p){return T.f_alterVonKrankheit.replace('{x}', p.krankheit);},
+       richtig:function(p){return 'ca. '+p.alter+' '+T.jahre;},
+       ablenker:function(p,l){return l.filter(function(q){return q.alter!==p.alter;}).map(function(q){return 'ca. '+q.alter+' '+T.jahre;});}},
+      {id:'nameVonKrankheit', text:function(p){return T.f_nameVonKrankheit.replace('{x}', p.krankheit);},
+       richtig:function(p){return p.name;},
+       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.name;});}},
+      {id:'krankheitVonName', text:function(p){return T.f_krankheitVonName.replace('{x}', p.name);},
+       richtig:function(p){return p.krankheit;},
+       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.krankheit;});}},
+      {id:'berufVonName', text:function(p){return T.f_berufVonName.replace('{x}', p.name);},
+       richtig:function(p){return p.beruf;},
+       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.beruf;});}},
+      {id:'merkmalVonBeruf', text:function(p){return T.f_merkmalVonBeruf.replace('{x}', p.beruf);},
+       richtig:function(p){return p.merkmal;},
+       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.merkmal;});}},
+      {id:'alterVonBeruf', text:function(p){return T.f_alterVonBeruf.replace('{x}', p.beruf);},
+       richtig:function(p){return 'ca. '+p.alter+' '+T.jahre;},
+       ablenker:function(p,l){return l.filter(function(q){return q.alter!==p.alter;}).map(function(q){return 'ca. '+q.alter+' '+T.jahre;});}}
+    ];
+    var fragen = [], benutzt = {};
+    var reihenfolge = misch(leute);
+    for (var n = 0; n < 18; n++){
+      var p = reihenfolge[n % reihenfolge.length];
+      var typ = typen[n % typen.length];
+      var schluessel = p.name + typ.id;
+      if (benutzt[schluessel]) { typ = typen[(n+1) % typen.length]; schluessel = p.name + typ.id; }
+      benutzt[schluessel] = true;
+      var r = typ.richtig(p);
+      var abl = [];
+      typ.ablenker(p, leute).forEach(function(a){ if (a !== r && abl.indexOf(a) < 0) abl.push(a); });
+      var optionen = misch([r].concat(zieh(abl, 4)));
+      fragen.push({ text: typ.text(p), richtig: r, optionen: optionen });
+    }
+    return fragen;
+  }
+  function zeichneFragen(fragen, ziel, mitLoesung, antworten){
+    ziel.innerHTML = '';
+    fragen.forEach(function(f, i){
+      var li = document.createElement('li');
+      var p = document.createElement('p'); p.className='fg-frage-text'; p.textContent=f.text; li.appendChild(p);
+      var ul = document.createElement('ul'); ul.className='fg-optionen';
+      f.optionen.forEach(function(o, k){
+        var oli=document.createElement('li');
+        if (mitLoesung){
+          oli.textContent = String.fromCharCode(65+k)+') '+o;
+          if (o===f.richtig) oli.className='fg-ist-richtig';
+          else if (antworten[i]===o) oli.className='fg-ist-falsch';
+        } else {
+          var lab=document.createElement('label');
+          var inp=document.createElement('input');
+          inp.type='radio'; inp.name='fg-f'+i; inp.value=o;
+          lab.appendChild(inp);
+          lab.appendChild(document.createTextNode(' '+String.fromCharCode(65+k)+') '+o));
+          oli.appendChild(lab);
+        }
+        ul.appendChild(oli);
+      });
+      li.appendChild(ul); ziel.appendChild(li);
+    });
+  }
+  // --- Uhren ---------------------------------------------------------------
+  var laufend = null;
+  function uhr(anzeige, sekunden, fertig){
+    clearInterval(laufend);
+    var rest = sekunden;
+    function zeig(){
+      var m = Math.floor(rest/60), s = rest%60;
+      anzeige.textContent = m + ':' + (s<10?'0':'') + s;
+    }
+    zeig();
+    laufend = setInterval(function(){
+      rest--; zeig();
+      if (rest <= 0){ clearInterval(laufend); fertig(); }
+    }, 1000);
+  }
+  var el = function(id){ return document.getElementById(id); };
+  var leute = [], fragen = [];
+  function zeige(welche){
+    ['fg-start','fg-lernen','fg-pause','fg-abfrage','fg-ergebnis'].forEach(function(id){
+      el(id).hidden = (id !== welche);
+    });
+  }
+  el('fg-los').addEventListener('click', function(){
+    leute = baueSet();
+    fragen = baueFragen(leute);
+    el('fg-tabelle').innerHTML = tabelle(leute);
+    zeige('fg-lernen');
+    uhr(el('fg-uhr-lernen'), (+el('fg-min-lernen').value||6)*60, zurPause);
+  });
+  function zurPause(){
+    clearInterval(laufend);
+    var p = (+el('fg-min-pause').value||0)*60;
+    if (p <= 0) return zurAbfrage();
+    zeige('fg-pause');
+    uhr(el('fg-uhr-pause'), p, zurAbfrage);
+  }
+  function zurAbfrage(){
+    clearInterval(laufend);
+    zeichneFragen(fragen, el('fg-fragen'), false);
+    zeige('fg-abfrage');
+    uhr(el('fg-uhr-abfrage'), (+el('fg-min-abfrage').value||6)*60, auswerten);
+  }
+  function auswerten(){
+    clearInterval(laufend);
+    var antworten = fragen.map(function(_, i){
+      var g = document.querySelector('input[name="fg-f'+i+'"]:checked');
+      return g ? g.value : null;
+    });
+    var richtig = fragen.filter(function(f,i){ return antworten[i]===f.richtig; }).length;
+    el('fg-punkte').textContent = T.punkte.replace('{n}', richtig).replace('{von}', fragen.length);
+    zeichneFragen(fragen, el('fg-loesung'), true, antworten);
+    el('fg-tabelle-ende').innerHTML = tabelle(leute);
+    zeige('fg-ergebnis');
+  }
+  el('fg-fertig-lernen').addEventListener('click', zurPause);
+  el('fg-fertig-pause').addEventListener('click', zurAbfrage);
+  el('fg-auswerten').addEventListener('click', auswerten);
+  el('fg-nochmal').addEventListener('click', function(){ clearInterval(laufend); zeige('fg-start'); });
+})();
+</script>
+{{- end }}

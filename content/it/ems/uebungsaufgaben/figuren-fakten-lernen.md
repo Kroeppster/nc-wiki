@@ -49,3 +49,7 @@ Memorizzare figure e fatti sono entrambi esercizi di memoria che non ha senso fa
 ## Gestione dei punti
 
 Memorizzare figure e fatti, così come il test di concentrazione, si possono allenare bene fino a 16-20 punti con la pratica – all'inizio non è realistico, ma diventa fattibile con la tecnica giusta. Prenditi piuttosto il tempo necessario per questi sottotest ben allenabili, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per esempio comprensione del testo), che comunque porta solo pochi punti – l'NC è pura gestione dei punti.
+
+## Generatore di fatti
+
+{{< fakten-generator >}}

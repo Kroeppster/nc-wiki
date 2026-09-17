@@ -49,3 +49,7 @@ Mémoriser des figures et des faits sont tous deux des exercices de mémoire qu'
 ## Gestion des points
 
 Mémoriser des figures et des faits, ainsi que le test de concentration, se laissent bien entraîner jusqu'à 16-20 points avec de la pratique – ce n'est pas réaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, au lieu de te précipiter sur le dernier texte des sous-tests plus longs (p. ex. compréhension de textes), qui ne rapporte de toute façon que peu de points – le NC est une pure gestion de points.
+
+## Générateur de faits
+
+{{< fakten-generator >}}

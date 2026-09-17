@@ -1473,3 +1473,45 @@ body.pm-aktiv{overflow:hidden;}
   .countdown-hero .num{font-size:3rem;}
   .footer-grid{grid-template-columns:1fr;}
 }
+
+/* ==========================================================================
+   Fakten-Generator (Seite "Figuren & Fakten lernen")
+   ==========================================================================
+   Aufbau: eine Startkarte, dann drei Phasen (Einprägen, Ablenkung, Abfrage)
+   und das Ergebnis. Immer genau eine davon sichtbar - umgeschaltet über das
+   hidden-Attribut, nicht über display in JS, damit der Zustand auch im
+   Quelltext ablesbar bleibt. */
+.fg{margin:var(--space-8) 0;border:1px solid var(--color-line);border-radius:var(--radius-md);
+  background:var(--color-surface);box-shadow:var(--shadow-sm);padding:var(--space-6);}
+.fg-intro{margin:0 0 var(--space-4);color:var(--color-ink-soft);font-size:var(--text-sm);max-width:44rem;}
+.fg-regler{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-5);}
+.fg-regler label{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:var(--color-ink-soft);}
+.fg-regler input{width:4.5rem;}
+/* Kopfzeile jeder Phase: Titel links, Uhr rechts. Die Uhr nutzt
+   tabular-nums, sonst springt sie beim Herunterzaehlen in der Breite. */
+.fg-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-4);
+  flex-wrap:wrap;margin-bottom:var(--space-4);}
+.fg-kopf h3{margin:0;}
+.fg-uhr{margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);
+  font-variant-numeric:tabular-nums;color:var(--color-signal);}
+.fg-punkte{margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);}
+.fg-tabelle{width:100%;border-collapse:collapse;margin-bottom:var(--space-5);font-size:var(--text-sm);}
+.fg-tabelle th{text-align:left;font-size:var(--text-xs);text-transform:uppercase;
+  letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);padding:.35rem .6rem;}
+.fg-tabelle td{padding:.35rem .6rem;border-top:1px solid var(--color-line);}
+.fg-fragen{margin:0 0 var(--space-5);padding-left:1.4rem;display:grid;gap:var(--space-5);}
+.fg-frage-text{margin:0 0 var(--space-2);font-weight:600;}
+.fg-optionen{list-style:none;margin:0;padding:0;display:grid;gap:.25rem;font-size:var(--text-sm);}
+.fg-optionen label{display:flex;gap:.5rem;align-items:baseline;cursor:pointer;}
+/* Auswertung: richtig gruen, die eigene falsche Antwort rot. Beide tragen
+   zusaetzlich ein Zeichen, damit sie nicht NUR ueber die Farbe zu erkennen
+   sind - Farbe allein ist fuer farbenblinde Personen keine Information. */
+.fg-ist-richtig{color:var(--color-erfolg,#137333);font-weight:600;}
+.fg-ist-richtig::after{content:" ✓";}
+.fg-ist-falsch{color:var(--color-fehler,#c5221f);}
+.fg-ist-falsch::after{content:" ✗";}
+@media (max-width:600px){
+  .fg{padding:var(--space-4);}
+  .fg-tabelle{font-size:var(--text-xs);}
+  .fg-tabelle th,.fg-tabelle td{padding:.3rem .35rem;}
+}

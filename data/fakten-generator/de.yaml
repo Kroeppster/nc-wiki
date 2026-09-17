@@ -1,0 +1,240 @@
+# ==============================================================================
+# WORTLISTEN FÜR DEN FAKTEN-GENERATOR
+# ==============================================================================
+# Der Generator auf der Seite "Figuren & Fakten lernen" würfelt daraus immer
+# neue Einpräge-Sets. Übungsmaterial für diesen Untertest ist EINMALIG
+# verwendbar: Wer eine Serie einmal auswendig gelernt hat, kann sie nie wieder
+# zum Üben brauchen. Deshalb ein Generator statt weiterer PDFs.
+#
+# HERKUNFT: ausgelesen aus den eigenen Übungsserien
+# (assets/downloads/uebungsaufgaben/figuren-fakten-lernen/, Einprägephasen
+# 2022 S02-S04) mit scripts/fakten-listen-auslesen.py. Es ist also eigenes
+# Material, keine fremde Quelle.
+#
+# ------------------------------------------------------------------------------
+# WARUM DIE KATEGORIEN WICHTIG SIND - bitte vor dem Ändern lesen
+# ------------------------------------------------------------------------------
+# Eine echte EMS-Serie würfelt NICHT. Sie ist konstruiert: Jede der fünf
+# Altersgruppen bekommt genau eine Zahn-, eine Herz- und eine Knochenkrankheit,
+# und die drei Berufe einer Gruppe gehören zum selben Feld (z.B. alle drei zur
+# Luftfahrt). Genau das macht die Menge überhaupt lernbar - man merkt sich
+# "die Luftfahrt-Gruppe ist die 45er".
+#
+# Ein Generator, der einfach zufällig zieht, erzeugt deutlich SCHWERERE Sets
+# als das Original und übt damit etwas anderes als die Prüfung. Deshalb steht
+# bei jeder Krankheit und jedem Beruf eine Kategorie, und der Generator zieht
+# pro Altersgruppe aus je einer.
+#
+# ------------------------------------------------------------------------------
+# NOCH ZU PRÜFEN (Stand: erste Fassung)
+# ------------------------------------------------------------------------------
+#  - Die Kategorien sind VORSORTIERT und von keinem Menschen freigegeben.
+#  - "geschlecht" steuert nur die Formulierung der Fragen ("Die Tierärztin",
+#    "Herr Walz"). Meist an der Endung -in erkannt; Sonderfälle wie Imker,
+#    Stewardess oder Bauer/Bäuerin bitte durchsehen.
+#  - Französisch und Italienisch fehlen noch ganz. Solange sie fehlen, zeigt
+#    der Generator dort einen Hinweis statt eines Sets.
+#  - Für echte Abwechslung wären ~80 Einträge je Kategorie gut; aktuell sind
+#    es rund 40. Neue Wörter einfach unten in der passenden Kategorie ergänzen.
+# ==============================================================================
+
+# Die fünf Altersgruppen einer Serie. Genau fünf, zu je drei Personen = 15.
+altersgruppen: [25, 35, 45, 55, 75]
+
+
+# Nachnamen - ohne Kategorie, frei kombinierbar.
+namen:
+  - "Baier"
+  - "Barthel"
+  - "Blumberg"
+  - "Brückener"
+  - "Cheng"
+  - "Eichler"
+  - "Engels"
+  - "Goldbaum"
+  - "Haag"
+  - "Haupt"
+  - "Heinz"
+  - "Herold"
+  - "Hiller"
+  - "Huber"
+  - "Jacob"
+  - "Kahlo"
+  - "Kessler"
+  - "Knoll"
+  - "Kübler"
+  - "Lindemann"
+  - "Matisse"
+  - "Merz"
+  - "Michels"
+  - "Monet"
+  - "Noack"
+  - "Noll"
+  - "Reimer"
+  - "Rosenstein"
+  - "Ruf"
+  - "Scheffler"
+  - "Schnyder"
+  - "Specht"
+  - "Steinbach"
+  - "Stolz"
+  - "Stöckli"
+  - "Töpfer"
+  - "Walz"
+  - "Wichmann"
+  - "Wilke"
+  - "Wulf"
+  - "Yang"
+  - "Zander"
+  - "Zhuen"
+
+# Berufe, nach Themenfeld. Pro Altersgruppe zieht der Generator DREI aus
+# EINEM Feld - siehe Erklärung oben.
+berufe:
+  medizin:
+    - { wort: "Arzt", geschlecht: "m" }
+    - { wort: "Rettungssanitäterin", geschlecht: "w" }
+    - { wort: "Tierärztin", geschlecht: "w" }
+  technik_bau:
+    - { wort: "Architekt", geschlecht: "m" }
+    - { wort: "Automechanikerin", geschlecht: "w" }
+    - { wort: "Chemietechnologe", geschlecht: "m" }
+    - { wort: "Elektroinstallateur", geschlecht: "m" }
+    - { wort: "Energieberater", geschlecht: "m" }
+    - { wort: "Heizungsinstallateurin", geschlecht: "w" }
+    - { wort: "Ingenieurin", geschlecht: "w" }
+    - { wort: "Klavierbauer", geschlecht: "m" }
+    - { wort: "Klavierstimmer", geschlecht: "m" }
+    - { wort: "Mikrotechnikerin", geschlecht: "w" }
+    - { wort: "Schreiner", geschlecht: "m" }
+    - { wort: "Stromleger", geschlecht: "m" }
+    - { wort: "Technikerin", geschlecht: "w" }
+  luftfahrt:
+    - { wort: "Astronautin", geschlecht: "w" }
+    - { wort: "Flugingenieur", geschlecht: "m" }
+    - { wort: "Pilot", geschlecht: "m" }
+    - { wort: "Stewardess", geschlecht: "w" }
+  sport:
+    - { wort: "Fussballspieler", geschlecht: "m" }
+    - { wort: "Skilehrerin", geschlecht: "w" }
+    - { wort: "Sportreporter", geschlecht: "m" }
+    - { wort: "Tennisspieler", geschlecht: "m" }
+  kunst_kultur:
+    - { wort: "Fotografin", geschlecht: "w" }
+    - { wort: "Klavierspieler", geschlecht: "m" }
+    - { wort: "Künstler", geschlecht: "m" }
+    - { wort: "Malerin", geschlecht: "w" }
+    - { wort: "Maskenbildner", geschlecht: "m" }
+  bildung:
+    - { wort: "Jugendleiterin", geschlecht: "w" }
+    - { wort: "Kindergärtner", geschlecht: "m" }
+    - { wort: "Lehrer", geschlecht: "m" }
+    - { wort: "Lehrerin", geschlecht: "w" }
+  buero_recht:
+    - { wort: "Anwältin", geschlecht: "w" }
+    - { wort: "Assistentin", geschlecht: "w" }
+    - { wort: "Auditorin", geschlecht: "w" }
+    - { wort: "Beraterin", geschlecht: "w" }
+  tiere:
+    - { wort: "Hundezüchterin", geschlecht: "w" }
+    - { wort: "Imker", geschlecht: "m" }
+  handwerk_essen:
+    - { wort: "Konditorin", geschlecht: "w" }
+    - { wort: "Kosmetiker", geschlecht: "m" }
+
+# Krankheiten, nach Art. Pro Altersgruppe je eine aus drei verschiedenen
+# Arten - siehe Erklärung oben.
+krankheiten:
+  zaehne:
+    - "Karies"
+    - "Kieferbruch"
+    - "Mundgeruch"
+    - "Parodontose"
+    - "Zahnfleischbluten"
+    - "Zahnwurzelhalsbehandlung"
+  herz_kreislauf:
+    - "Gehirnblutung"
+    - "Herzinfarkt"
+    - "Herzmuskelentzündung"
+    - "Herzprobleme"
+    - "Kreislaufkollaps"
+    - "Kreislaufschwäche"
+    - "Ohnmacht"
+    - "Schwindel"
+  knochen_gelenke:
+    - "Bandscheibenvorfall"
+    - "Beinbruch"
+    - "Bluterguss"
+    - "Gelenkrheuma"
+    - "Knochenkrebs"
+    - "Meniskusentzündung"
+    - "Rippenprellung"
+    - "Schenkelhalsfraktur"
+    - "Schädelhirntrauma"
+  innere:
+    - "Appendizitis"
+    - "Brustkrebs"
+    - "Covid-19"
+    - "Durchfall"
+    - "Durst"
+    - "Eisenmangel"
+    - "Fieberkrampf"
+    - "Gerinnungsstörung"
+    - "Husten"
+    - "Ikterus"
+    - "Schnupfen"
+    - "Übelkeit"
+  psyche_neuro:
+    - "Burnout"
+    - "Demenz"
+    - "Müdigkeit"
+    - "Ohrgeräusche"
+    - "Schlafstörungen"
+    - "Schluckauf"
+    - "Sehstörung"
+
+# Zusätzliche Merkmale. "zustand" sind Angaben zum Aufenthalt oder
+# Zivilstand, "charakter" sind Eigenschaften - gemischt wie im Original.
+merkmale:
+  zustand:
+    - "Ambulanz"
+    - "Notfall"
+    - "Privatpatientin"
+    - "gepflegt"
+    - "geschieden"
+    - "ledig"
+    - "stationär"
+    - "verheiratet"
+  charakter:
+    - "ablehnend"
+    - "ambitioniert"
+    - "authentisch"
+    - "detailorientiert"
+    - "durchblickend"
+    - "durcheinander"
+    - "eitel"
+    - "eklig"
+    - "emsig"
+    - "entschlossen"
+    - "erfinderisch"
+    - "freundlich"
+    - "friedlich"
+    - "friedlos"
+    - "geschickt"
+    - "herzlich"
+    - "humorvoll"
+    - "impulsiv"
+    - "kinderlieb"
+    - "kontaktfreudig"
+    - "materialistisch"
+    - "misstrauisch"
+    - "narzisstisch"
+    - "nervös"
+    - "sensibel"
+    - "seriös"
+    - "sinnlich"
+    - "stur"
+    - "tollpatschig"
+    - "turbulent"
+    - "ängstlich"
+    - "übermütig"
