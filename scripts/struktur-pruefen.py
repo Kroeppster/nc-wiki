@@ -12,20 +12,31 @@ nicht ansieht:
 
     python3 scripts/struktur-pruefen.py
 
-Der Pfad zum gebauten Ordner steht unten in WURZEL.
+Geprueft wird der Ordner "public" neben dem Projekt, also das Ergebnis von
+"hugo --minify". Ein anderer Ordner laesst sich als Argument uebergeben:
 
-ZU ERWARTEN IST GENAU EINE GRUPPE UNERREICHBARER SEITEN: der Mitgliederbereich
-(/mitglieder/ und die beiden Unterseiten, mal drei Sprachen = 9). Der ist
-ABSICHTLICH nirgends verlinkt (siehe docs/WARTUNG.md, Abschnitt
-"Mitgliederbereich"). Taucht sonst etwas auf, ist es ein Fund.
+    python3 scripts/struktur-pruefen.py pfad/zum/ordner
+
+(Frueher stand hier ein fest eingetragener Pfad in den Temp-Ordner einer
+einzelnen Sitzung. Der zeigte spaeter auf einen alten Build, und das Skript
+pruefte klaglos den Stand von vorgestern - deshalb jetzt der Projektordner.)
+
+ZU ERWARTEN SIND GENAU ZEHN UNERREICHBARE SEITEN, alle absichtlich nirgends
+verlinkt: der Mitgliederbereich (/mitglieder/ und die beiden Unterseiten, mal
+drei Sprachen = 9, siehe docs/WARTUNG.md, Abschnitt "Mitgliederbereich") und
+die Alpha-Seite /alpha/ (Abschnitt 11b-3). Taucht sonst etwas auf, ist es ein
+Fund.
 
 Weiterleitungsseiten (Hugo legt sie z.B. fuer /de/ an) werden erkannt und
 nicht als Inhalt gezaehlt.
 ================================================================================
 """
-import os, re, hashlib, json, collections
+import os, re, sys, hashlib, json, collections
 from urllib.parse import unquote
-WURZEL = '/tmp/pub8099'
+PROJEKT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+WURZEL = sys.argv[1] if len(sys.argv) > 1 else os.path.join(PROJEKT, 'public')
+if not os.path.isdir(WURZEL):
+    sys.exit(f'Ordner "{WURZEL}" gibt es nicht. Zuerst "hugo --minify" laufen lassen.')
 
 seiten = {}
 for dp, dn, fn in os.walk(WURZEL):

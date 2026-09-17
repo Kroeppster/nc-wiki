@@ -3,7 +3,11 @@
  * PRUEFSTAND FUER DEN FAKTEN-GENERATOR UND SEINEN DRUCK
  * ============================================================================
  *   ~/bin/hugo --minify && (Server auf public/, Port 8123)
- *   node scripts/fakten-generator-pruefen.mjs /pfad/fuer/das/test-pdf
+ *   node scripts/fakten-generator-pruefen.mjs [/pfad/fuer/das/test-pdf]
+ *
+ * Ohne Pfad landet das Test-PDF im Temp-Ordner. (Frueher fehlte der Standard:
+ * Wer das Argument vergass, hatte hinterher einen Ordner namens "undefined"
+ * im Projekt stehen.)
  *
  * Prueft, dass ein erzeugtes Set die Struktur einer echten Serie hat und dass
  * der Druck drei brauchbare Blaetter liefert - inklusive einer Kontrolle des
@@ -27,7 +31,12 @@
  * ============================================================================
  */
 import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import { mkdtempSync, mkdirSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 const { chromium } = pw;
+const ABLAGE = process.argv[2] || mkdtempSync(join(tmpdir(), 'fakten-'));
+mkdirSync(ABLAGE, { recursive: true });
 const b=await chromium.launch();
 let ok=0,fail=0;
 const pruef=(n,c,i='')=>{ if(c){ok++;console.log('  OK    '+n);} else {fail++;console.log('  FEHLT '+n+'  '+i);} };
@@ -76,7 +85,7 @@ console.log('   ', JSON.stringify(sichtbar));
 pruef('Druckblatt im Druck sichtbar', sichtbar.druck===true, String(sichtbar.druck));
 pruef('Kopfzeile im Druck weg', sichtbar.kopf===false, String(sichtbar.kopf));
 pruef('Startkarte im Druck weg', sichtbar.start===false, String(sichtbar.start));
-await p.pdf({path:process.argv[2]+'/fakten-set.pdf', format:'A4', printBackground:false});
+await p.pdf({path:ABLAGE+'/fakten-set.pdf', format:'A4', printBackground:false});
 // Das eigentliche Kriterium: Was steht im PDF? Die Sichtbarkeitspruefung
 // oben reichte nicht - sie war gruen, waehrend das PDF 15 Seiten hatte und
 // mit Navigation und Artikeltext begann.
@@ -85,7 +94,7 @@ await p.pdf({path:process.argv[2]+'/fakten-set.pdf', format:'A4', printBackgroun
   const info = JSON.parse(execSync('python3 -c "' +
     'import pymupdf,json,sys;d=pymupdf.open(sys.argv[1]);' +
     'print(json.dumps({\'seiten\':d.page_count,\'erste\':d[0].get_text(),\'text\':\' \'.join(s.get_text() for s in d)}))' +
-    '" ' + process.argv[2] + '/fakten-set.pdf').toString());
+    '" ' + ABLAGE + '/fakten-set.pdf').toString());
   // DREI BLAETTER sind nicht drei Seiten: Das Aufgabenblatt mit 18 Aufgaben
   // zu je fuenf Antworten braucht von sich aus mehrere Seiten. Geprueft wird
   // deshalb der Rahmen und die Reihenfolge, nicht eine feste Zahl.

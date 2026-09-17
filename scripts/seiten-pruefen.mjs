@@ -10,13 +10,15 @@
  *   npx http-server public -p 8099 -s &      (oder ein anderer Server)
  *   node scripts/seiten-pruefen.mjs
  *
- * Die Liste der Seiten kommt aus /tmp/alle-seiten.txt:
- *   cd public && find . -name index.html | sed 's|^\.||; s|/index\.html$|/|' \
- *     | sort > /tmp/alle-seiten.txt
+ * Welche Seiten geprueft werden, sucht sich das Skript selbst aus "public"
+ * zusammen. (Frueher musste man die Liste vorher von Hand in eine Datei im
+ * Temp-Ordner schreiben - wer das vergass, pruefte den Stand von vorgestern,
+ * ohne dass etwas darauf hinwies.)
  *
  * Umgebungsvariablen:
  *   BREITEN=1280,768,390   welche Fensterbreiten (Standard 1280,390)
  *   MODI=light,dark        welche Farbmodi (Standard light)
+ *   ADRESSE=http://...     wo der Testserver laeuft (Standard Port 8099)
  *
  * WAS GEPRUEFT WIRD - und warum jede Pruefung existiert:
  *   1 seite-scrollt-quer        Die ganze Seite laesst sich seitlich schieben.
@@ -27,6 +29,8 @@
  *                               Fand den Mitglieder-Hinweis, der sich neben
  *                               den Zurueck-Link draengte.
  *   3 inhalt-abgeschnitten      Text verschwindet hinter overflow:hidden.
+ *                               (Eingabefelder ausgenommen - dort scrollt
+ *                               laengerer Text im Feld, siehe Kommentar dort.)
  *   4 ragt-aus-dem-bild         Ein Element steht seitlich ausserhalb.
  *   5 bild-laedt-nicht          Bild fehlt oder ist kaputt.
  *   6 kontrast-zu-schwach       Text unter WCAG AA.
@@ -46,11 +50,26 @@
  * ============================================================================
  */
 import pw from '/opt/node22/lib/node_modules/playwright/index.js';
-import { readFileSync } from 'node:fs';
+import { readdirSync } from 'node:fs';
+import { join, dirname, relative, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 const { chromium } = pw;
 
-const PFADE = readFileSync('/tmp/alle-seiten.txt','utf8').split('\n').filter(Boolean);
-const BASIS = 'http://127.0.0.1:8099';
+const PROJEKT = dirname(dirname(fileURLToPath(import.meta.url)));
+const OEFFENTLICH = join(PROJEKT, 'public');
+function seitenSuchen(ordner){
+  const gefunden = [];
+  for(const eintrag of readdirSync(ordner, { withFileTypes:true })){
+    if(eintrag.isDirectory()) gefunden.push(...seitenSuchen(join(ordner, eintrag.name)));
+    else if(eintrag.name === 'index.html'){
+      const rel = relative(OEFFENTLICH, ordner).split(sep).join('/');
+      gefunden.push(rel ? '/' + rel + '/' : '/');
+    }
+  }
+  return gefunden;
+}
+const PFADE = seitenSuchen(OEFFENTLICH).sort();
+const BASIS = process.env.ADRESSE || 'http://127.0.0.1:8099';
 const BREITEN = process.env.BREITEN ? process.env.BREITEN.split(',').map(Number) : [1280, 390];
 const MODI   = process.env.MODI ? process.env.MODI.split(',') : ['light'];
 // Wie viele Seiten gleichzeitig geladen werden. Zu hoch angesetzt wirft der
@@ -155,6 +174,13 @@ const pruefung = () => {
     const s = getComputedStyle(el);
     if (!['hidden','clip'].includes(s.overflowX) || !sicht(el)) return;
     if (ignorieren(el)) return;
+    // EINGABEFELDER NICHT: Ein einzeiliges Feld ist laenger als sein Kasten,
+    // sobald der eingetragene Text nicht hineinpasst - das ist bei JEDEM
+    // Formular im Web so, der Text scrollt im Feld und geht nicht verloren.
+    // Auf dem Handy meldete das jedes vorausgefuellte Feld als Fehler
+    // (z.B. "Betroffene Uebung" auf den Untertest-Seiten), und sechs
+    // Fehlalarme decken einen echten Fund zu.
+    if (['INPUT','SELECT','TEXTAREA'].includes(el.tagName)) return;
     if (el.scrollWidth - el.clientWidth > 2 && el.clientWidth > 0) {
       funde.push({ art: 'inhalt-abgeschnitten',
         el: el.tagName.toLowerCase() + '.' + (el.className || '').toString().split(' ')[0],
