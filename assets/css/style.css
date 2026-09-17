@@ -1515,3 +1515,45 @@ body.pm-aktiv{overflow:hidden;}
   .fg-tabelle{font-size:var(--text-xs);}
   .fg-tabelle th,.fg-tabelle td{padding:.3rem .35rem;}
 }
+
+/* Knopfreihe und Hinweis unter der Startkarte */
+.fg-knoepfe{display:flex;flex-wrap:wrap;gap:var(--space-3);}
+.fg-hinweis{margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);max-width:44rem;}
+/* Der Druckbehälter ist am Bildschirm immer leer und unsichtbar. */
+.fg-druck{display:none;}
+
+/* ==========================================================================
+   Drucken: die drei Blätter des Fakten-Generators
+   ==========================================================================
+   BEWUSST AN "body.fg-druckt" GEBUNDEN und nicht allgemein. Die Website hatte
+   bisher gar keine Druckregeln; allgemeine Regeln würden das Drucken JEDER
+   Seite verändern, und das hat niemand verlangt. Die Klasse setzt das Skript
+   nur für die Dauer des Druckdialogs und nimmt sie danach wieder weg. */
+@media print{
+  /* DER BEHÄLTER WIRD BEIM DRUCKEN NACH <body> VERSCHOBEN (siehe drucken()
+     im Shortcode). Erst dadurch lässt sich hier sauber ausblenden:
+     "alle Body-Kinder ausser diesem einen".
+
+     Zwei Versuche vorher gingen daneben, beide stehen hier als Warnung:
+     Erst hatte ich die Body-Kinder ausgeblendet und den Weg zum Behälter
+     wieder eingeblendet - dabei kam der ganze Artikel mit, weil er im
+     selben <main> steht. Dann über "visibility:hidden": Navigation und
+     Text waren zwar weg, aber ihr PLATZ blieb stehen - das PDF hatte acht
+     Seiten, die meisten leer. Nur das Verschieben löst beides. */
+  body.fg-druckt > *:not(.fg-druck){display:none !important;}
+  body.fg-druckt > .fg-druck{display:block !important;}
+  .fg-blatt{page-break-after:always;break-after:page;}
+  .fg-blatt:last-child{page-break-after:auto;break-after:auto;}
+  .fg-blatt h2{font-size:14pt;margin:0 0 .4cm;}
+  .fg-druck-hinweis{font-size:9pt;margin:0 0 .6cm;}
+  .fg-druck .fg-tabelle{width:100%;border-collapse:collapse;font-size:10pt;}
+  .fg-druck .fg-tabelle th{text-align:left;font-size:8pt;text-transform:uppercase;padding:.15cm .2cm;}
+  .fg-druck .fg-tabelle td{padding:.15cm .2cm;border-top:.2pt solid #999;}
+  .fg-druck-fragen{font-size:10pt;padding-left:.8cm;}
+  /* Eine Aufgabe soll nicht über den Seitenrand zerrissen werden - sonst
+     stehen die Antworten auf der nächsten Seite ohne ihre Frage. */
+  .fg-druck-fragen > li{page-break-inside:avoid;break-inside:avoid;margin-bottom:.35cm;}
+  .fg-druck-fragen > li > p{margin:0 0 .12cm;font-weight:600;}
+  .fg-druck-fragen ul{list-style:none;margin:0;padding-left:.4cm;}
+  @page{margin:1.6cm;}
+}

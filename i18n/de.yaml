@@ -305,3 +305,17 @@ fg_f_krankheit_von_name: "{x} wird diagnostiziert mit:"
 fg_f_beruf_von_name: "{x} arbeitet als:"
 fg_f_merkmal_von_beruf: "Die Person mit dem Beruf {x} ist …"
 fg_f_alter_von_beruf: "Die Person mit dem Beruf {x} ist …"
+
+# --- Drucken / als PDF sichern ---
+fg_drucken: Set als PDF / drucken
+fg_drucken_dieses: Dieses Set drucken
+fg_drucken_hinweis: 'Zum Üben auf Papier: Der Druck enthält drei Blätter – Einprägeblatt,
+  Aufgabenblatt und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch
+  «Als PDF sichern» wählen.'
+fg_blatt_einpraegen: Fakten lernen – Einprägephase
+fg_blatt_einpraegen_hinweis: 'Zeit: 6 Minuten. Präge dir alle 15 Personen ein. Danach
+  dieses Blatt weglegen und etwas anderes tun, bevor du das Aufgabenblatt nimmst.'
+fg_blatt_aufgaben: Fakten lernen – Reproduktionsphase
+fg_blatt_aufgaben_hinweis: '18 Aufgaben, Zeit: 6 Minuten. Pro Aufgabe ist genau eine
+  Antwort richtig.'
+fg_blatt_loesung: Lösungen

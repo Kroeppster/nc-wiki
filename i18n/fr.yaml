@@ -299,3 +299,17 @@ fg_f_krankheit_von_name: "{x} reçoit le diagnostic de :"
 fg_f_beruf_von_name: "{x} travaille comme :"
 fg_f_merkmal_von_beruf: "La personne exerçant la profession {x} est …"
 fg_f_alter_von_beruf: "La personne exerçant la profession {x} a …"
+
+# --- Drucken / als PDF sichern ---
+fg_drucken: Enregistrer en PDF / imprimer
+fg_drucken_dieses: Imprimer ce jeu
+fg_drucken_hinweis: 'Pour s''entraîner sur papier : l''impression contient trois feuilles
+  – mémorisation, questions et solutions. Dans la boîte de dialogue d''impression,
+  on peut aussi choisir «Enregistrer au format PDF» au lieu d''une imprimante.'
+fg_blatt_einpraegen: Mémorisation de faits – phase d'apprentissage
+fg_blatt_einpraegen_hinweis: 'Temps : 6 minutes. Mémorise les 15 personnes. Range
+  ensuite cette feuille et fais autre chose avant de prendre la feuille de questions.'
+fg_blatt_aufgaben: Mémorisation de faits – phase de restitution
+fg_blatt_aufgaben_hinweis: '18 questions, temps : 6 minutes. Une seule réponse est
+  correcte par question.'
+fg_blatt_loesung: Solutions

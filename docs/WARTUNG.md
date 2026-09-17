@@ -534,6 +534,21 @@ liest sie aus den eigenen Übungs-PDFs aus. Das Skript **überschreibt die
 YAML-Datei nicht**, es gibt die gefundenen Wörter nur aus – die Kategorien und
 Geschlechtsangaben darin kann kein Skript erraten und wären sonst weg.
 
+**Auf Papier üben:** Neben „Set erzeugen und starten" (Durchlauf am
+Bildschirm mit Uhr) gibt es „Set als PDF / drucken". Der Druck enthält drei
+Blätter wie die echten Serien – Einprägeblatt, Aufgabenblatt, Lösungen. Es
+wird keine PDF-Bibliothek geladen: Der Browser druckt die Seite selbst und
+bietet im Druckdialog „Als PDF sichern" an. Beide Wege stehen nebeneinander,
+man muss den getakteten Durchlauf nicht starten, um drucken zu können.
+
+**Wer an den Druckregeln etwas ändert,** liest zuerst den Kommentar bei
+`@media print` in `assets/css/style.css`. Dort stehen zwei Lösungen, die
+nicht funktioniert haben und warum – das spart den nächsten zwei Anläufen die
+Zeit. Kurz: Der Druckbehälter wird beim Drucken nach `<body>` verschoben, weil
+er sonst entweder den ganzen Artikel mitbringt oder dessen Platz als leere
+Seiten stehen bleibt. Die Druckregeln hängen bewusst an `body.fg-druckt` und
+verändern das Drucken anderer Seiten nicht.
+
 **Noch offen:** Die Kategorien sind vorsortiert und von keinem Menschen
 freigegeben. Für echte Abwechslung wären rund 80 Einträge je Kategorie gut,
 aktuell sind es etwa 40.

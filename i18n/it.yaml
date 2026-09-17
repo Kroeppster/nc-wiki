@@ -298,3 +298,17 @@ fg_f_krankheit_von_name: "A {x} viene diagnosticato:"
 fg_f_beruf_von_name: "{x} lavora come:"
 fg_f_merkmal_von_beruf: "La persona con la professione {x} è …"
 fg_f_alter_von_beruf: "La persona con la professione {x} ha …"
+
+# --- Drucken / als PDF sichern ---
+fg_drucken: Salva come PDF / stampa
+fg_drucken_dieses: Stampa questo gruppo
+fg_drucken_hinweis: 'Per esercitarsi su carta: la stampa contiene tre fogli – memorizzazione,
+  esercizi e soluzioni. Nella finestra di stampa si può scegliere «Salva come PDF»
+  invece di una stampante.'
+fg_blatt_einpraegen: Memorizzazione di fatti – fase di memorizzazione
+fg_blatt_einpraegen_hinweis: 'Tempo: 6 minuti. Memorizza tutte le 15 persone. Poi
+  metti via questo foglio e fai altro prima di prendere il foglio degli esercizi.'
+fg_blatt_aufgaben: Memorizzazione di fatti – fase di riproduzione
+fg_blatt_aufgaben_hinweis: '18 esercizi, tempo: 6 minuti. Per ogni esercizio una sola
+  risposta è corretta.'
+fg_blatt_loesung: Soluzioni

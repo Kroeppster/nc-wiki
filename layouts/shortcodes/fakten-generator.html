@@ -72,7 +72,16 @@
         <input type="number" id="fg-min-abfrage" min="1" max="20" value="6"> {{ i18n "fg_minuten" }}
       </label>
     </div>
-    <button type="button" class="btn btn-primary" id="fg-los">{{ i18n "fg_starten" }}</button>
+    <div class="fg-knoepfe">
+      <button type="button" class="btn btn-primary" id="fg-los">{{ i18n "fg_starten" }}</button>
+      {{- /* Der zweite Weg, und der Grund fuer diesen Knopf: Nicht alle wollen
+             am Bildschirm mit laufender Uhr ueben. Wer lieber auf Papier
+             arbeitet - so wie mit den PDFs der echten Serien - erzeugt hier
+             ein Set und druckt es, ohne den getakteten Durchlauf ueberhaupt
+             zu starten. */ -}}
+      <button type="button" class="btn btn-ghost" id="fg-drucken">{{ i18n "fg_drucken" }}</button>
+    </div>
+    <p class="fg-hinweis">{{ i18n "fg_drucken_hinweis" }}</p>
   </div>
   <div class="fg-phase" id="fg-lernen" hidden>
     <div class="fg-kopf"><h3>{{ i18n "fg_phase_einpraegen" }}</h3><p class="fg-uhr" id="fg-uhr-lernen">--:--</p></div>
@@ -94,8 +103,16 @@
     <ol class="fg-fragen fg-fragen-geprueft" id="fg-loesung"></ol>
     <h4>{{ i18n "fg_das_war_das_set" }}</h4>
     <div id="fg-tabelle-ende"></div>
-    <button type="button" class="btn btn-primary" id="fg-nochmal">{{ i18n "fg_nochmal" }}</button>
+    <div class="fg-knoepfe">
+      <button type="button" class="btn btn-primary" id="fg-nochmal">{{ i18n "fg_nochmal" }}</button>
+      <button type="button" class="btn btn-ghost" id="fg-drucken-ende">{{ i18n "fg_drucken_dieses" }}</button>
+    </div>
   </div>
+{{- /* Wird erst beim Drucken gefuellt und ist am Bildschirm immer leer.
+       Absichtlich im normalen Textfluss und nicht in einem eigenen Fenster:
+       Ein Popup blockieren die meisten Browser, und "neuer Tab" verliert das
+       Stylesheet. So druckt die Seite sich selbst. */ -}}
+<div class="fg-druck" id="fg-druck" aria-hidden="true"></div>
 {{- end }}
 </div>
 {{- if $genug }}
@@ -117,7 +134,12 @@
     f_krankheitVonName:  {{ i18n "fg_f_krankheit_von_name" | jsonify | safeJS }},
     f_berufVonName:      {{ i18n "fg_f_beruf_von_name" | jsonify | safeJS }},
     f_merkmalVonBeruf:   {{ i18n "fg_f_merkmal_von_beruf" | jsonify | safeJS }},
-    f_alterVonBeruf:     {{ i18n "fg_f_alter_von_beruf" | jsonify | safeJS }}
+    f_alterVonBeruf:     {{ i18n "fg_f_alter_von_beruf" | jsonify | safeJS }},
+    blattEinpraegen:        {{ i18n "fg_blatt_einpraegen" | jsonify | safeJS }},
+    blattEinpraegenHinweis: {{ i18n "fg_blatt_einpraegen_hinweis" | jsonify | safeJS }},
+    blattAufgaben:          {{ i18n "fg_blatt_aufgaben" | jsonify | safeJS }},
+    blattAufgabenHinweis:   {{ i18n "fg_blatt_aufgaben_hinweis" | jsonify | safeJS }},
+    blattLoesung:           {{ i18n "fg_blatt_loesung" | jsonify | safeJS }}
   };
   function misch(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
   function zieh(a,n){ return misch(a).slice(0,n); }
@@ -296,6 +318,56 @@
     el('fg-tabelle-ende').innerHTML = tabelle(leute);
     zeige('fg-ergebnis');
   }
+  // --- Drucken -----------------------------------------------------------
+  // Erzeugt drei Blaetter wie die echten Serien: Einpraegeblatt, Aufgaben-
+  // blatt, Loesungsblatt. Gedruckt wird ueber window.print() - der Browser
+  // bietet dort selbst "Als PDF sichern" an. Das spart eine PDF-Bibliothek
+  // (die Seite laedt sonst nichts von fremden Servern) und liefert das
+  // Papierformat, das die Person eingestellt hat.
+  function blatt(titel, inhalt, umbruch){
+    return '<section class="fg-blatt'+(umbruch?' fg-blatt-umbruch':'')+'">'
+      + '<h2>'+titel+'</h2>' + inhalt + '</section>';
+  }
+  function fragenAlsHtml(fragen, mitLoesung){
+    var h = '<ol class="fg-druck-fragen">';
+    fragen.forEach(function(f){
+      h += '<li><p>'+f.text+'</p><ul>';
+      f.optionen.forEach(function(o,k){
+        var marke = (mitLoesung && o===f.richtig) ? ' <strong>&#10004;</strong>' : '';
+        h += '<li>'+String.fromCharCode(65+k)+') '+o+marke+'</li>';
+      });
+      h += '</ul></li>';
+    });
+    return h + '</ol>';
+  }
+  function drucken(l, f){
+    if (!l || !l.length){ l = baueSet(); f = baueFragen(l); }
+    el('fg-druck').innerHTML =
+        blatt(T.blattEinpraegen, '<p class="fg-druck-hinweis">'+T.blattEinpraegenHinweis+'</p>'+tabelle(l), false)
+      + blatt(T.blattAufgaben,  '<p class="fg-druck-hinweis">'+T.blattAufgabenHinweis+'</p>'+fragenAlsHtml(f,false), true)
+      + blatt(T.blattLoesung,   fragenAlsHtml(f,true), true);
+    // Den Behaelter fuer die Dauer des Drucks direkt unter <body> haengen.
+    // Solange er tief in der Seite steckt, laesst sich der Rest nicht sauber
+    // ausblenden: Entweder kommt der Artikel mit (er steht im selben <main>)
+    // oder sein Platz bleibt als leere Seiten stehen. Siehe auch die
+    // Druckregeln in style.css.
+    var behaelter = el('fg-druck');
+    var heimat = behaelter.parentNode, nachbar = behaelter.nextSibling;
+    document.body.appendChild(behaelter);
+    document.body.classList.add('fg-druckt');
+    // Nach dem Dialog wieder aufraeumen - egal ob gedruckt oder abgebrochen.
+    var fertig = function(){
+      document.body.classList.remove('fg-druckt');
+      behaelter.innerHTML = '';
+      heimat.insertBefore(behaelter, nachbar);   // zurueck an seinen Platz
+      window.removeEventListener('afterprint', fertig);
+    };
+    window.addEventListener('afterprint', fertig);
+    window.print();
+    setTimeout(function(){ if (document.body.classList.contains('fg-druckt')) fertig(); }, 1500);
+  }
+  el('fg-drucken').addEventListener('click', function(){ drucken(null, null); });
+  el('fg-drucken-ende').addEventListener('click', function(){ drucken(leute, fragen); });
   el('fg-fertig-lernen').addEventListener('click', zurPause);
   el('fg-fertig-pause').addEventListener('click', zurAbfrage);
   el('fg-auswerten').addEventListener('click', auswerten);
