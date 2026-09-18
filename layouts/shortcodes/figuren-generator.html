@@ -11,21 +11,29 @@
   Wer eine Serie einmal auswendig gelernt hat, kann sie nie wieder zum Ueben
   brauchen - anders als bei allen anderen Untertests.
 
-  WIE DIE FIGUREN ENTSTEHEN, in Kuerze:
-    1. Aussenform = unregelmaessiges Vieleck, mit Bezierkurven geglaettet,
-       gelegentlich mit einer Einbuchtung (die echten sind auch mal spitz).
-    2. Vier WELLIGE Trennlinien quer darueber, jede mit eigener Neigung -
-       ohne die Neigung laufen sie parallel und die Figur sieht gestreift
-       aus statt aufgefaechert.
-    3. Beides wird per clipPath auf die Aussenform beschnitten.
-    4. PUNKTABTASTUNG bestimmt, welches Feld wie viel Flaeche in der Form
-       hat und wo sein Mittelpunkt liegt. Das ist nicht Zierde: Ohne sie
-       landen Buchstaben ausserhalb ihres Feldes, und es kann Felder geben,
-       die gar nicht in der Form liegen - dann waere eine Antwortmoeglichkeit
-       gar nicht sichtbar. Sie liefert ausserdem die Stelle, die am tiefsten
-       in einem Feld steckt - dort steht der Buchstabe (siehe Abstandskarte
-       weiter unten). Figuren mit einem Feld unter 6% Flaeche oder einem zu
-       schmalen Feld werden verworfen und neu gewuerfelt.
+  WIE DIE FIGUREN ENTSTEHEN, in Kuerze (ausfuehrlich bei den vier Abschnitten
+  im Skript weiter unten):
+    1. Aussenform = Vieleck mit geraden, bauchigen und eingekerbten Kanten,
+       anschliessend in eine Richtung gestaucht und gedreht.
+    2. Aufteilung in fuenf Felder ueber ein gewichtetes Voronoi-Muster in
+       einem verbogenen Raum. NICHT ueber Trennlinien quer ueber die Figur -
+       das sah gestreift aus und konnte Felder zerfallen lassen.
+    3. Die Grenzen werden einmal als Netz von Boegen berechnet, aus denen
+       sich alle fuenf Felder zusammensetzen.
+    4. Eine Abstandskarte bestimmt, wo der Buchstabe steht.
+
+  DIE ZAHLEN SIND GEMESSEN, nicht geschaetzt. Aus unseren eigenen Serien
+  (2022, 2024, 2025, 2026) wurden 200 echte Figuren ausgewertet; danach
+  richten sich die Grenzwerte hier. Zum Vergleich der Stand vorher:
+                              echt        jetzt      erster Entwurf
+    genau fuenf Felder        ja          100%       30%
+    Nachbarschaften           7.9         8.2        6.6  (4 = Streifen)
+    Flaeche/Rahmen            0.71        0.68       0.66
+    Seitenverhaeltnis         0.99        1.00       0.97
+    kleinstes Feld            0.10        0.10       0.09
+    groesstes Feld            0.29        0.31       0.35
+  Wer hier etwas aendert, misst danach mit scripts/figuren-vergleichen.py
+  gegen dieselben echten Serien nach.
 
   ACHTUNG, CLIP-IDs MUESSEN EINDEUTIG SEIN: Dieselbe Figur erscheint zweimal
   auf der Seite (Einpraegen und Abfrage). Bei gleicher id greift der Clip der
@@ -100,136 +108,311 @@
   };
   var Z=function(a,b){return a+Math.random()*(b-a);};
   function misch(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-  function ecken(cx,cy,r){
-    var n=Math.round(Z(8,12)), p=[];
+  var G=150;
+  // --- 1. AUSSENFORM -------------------------------------------------------
+  // Vieleck, dessen Kanten entweder gerade, bauchig oder eingekerbt sind, und
+  // das anschliessend in EINE Richtung gestaucht und gedreht wird. Ohne die
+  // Stauchung sind alle Figuren gleich rund; die echten Serien sind mal
+  // hochkant, mal breit, mal schief (gemessen: Seitenverhaeltnis 0.77 bis 1.20).
+  function aussenform(){
+    var cx=G/2, cy=G/2, R=G*0.40, n=Math.floor(Z(6,11));
+    // Das Seitenverhaeltnis selbst wird gewuerfelt, nicht der Streckfaktor:
+    // Wird s gleichverteilt gezogen, streckt s die eine und staucht 1/s die
+    // andere Richtung, und das Verhaeltnis ist s*s - im Mittel 1.08 statt 1.
+    // Die Figuren waeren also systematisch breiter als hoch.
+    var s=Math.sqrt(Z(0.75,1.30)), dreh=Z(0,Math.PI), co=Math.cos(dreh), si=Math.sin(dreh);
+    var ecken=[];
     for(var i=0;i<n;i++){
-      var w=(i/n)*Math.PI*2+Z(-0.15,0.15), rr=r*Z(0.78,1.10);
-      if(Math.random()<0.15) rr=r*Z(0.42,0.60);
-      p.push([cx+Math.cos(w)*rr, cy+Math.sin(w)*rr]);
+      var w=(i/n)*2*Math.PI+Z(-0.16,0.16), r=R*Z(0.84,1.0);
+      var x=Math.cos(w)*r*s, y=Math.sin(w)*r/s;
+      ecken.push([cx+x*co-y*si, cy+x*si+y*co]);
     }
-    return p;
-  }
-  function glatt(p){
-    var n=p.length, d='M'+p[0][0].toFixed(1)+','+p[0][1].toFixed(1);
-    for(var i=0;i<n;i++){
-      var a=p[(i-1+n)%n],b=p[i],c=p[(i+1)%n],e=p[(i+2)%n];
-      var c1=[b[0]+(c[0]-a[0])/6,b[1]+(c[1]-a[1])/6], c2=[c[0]-(e[0]-b[0])/6,c[1]-(e[1]-b[1])/6];
-      d+='C'+c1[0].toFixed(1)+','+c1[1].toFixed(1)+' '+c2[0].toFixed(1)+','+c2[1].toFixed(1)+' '+c[0].toFixed(1)+','+c[1].toFixed(1);
-    }
-    return d+'Z';
+    var kanten=ecken.map(function(a,i){
+      var b=ecken[(i+1)%n], w=Math.random();
+      var bauch = w<0.40 ? Z(-0.02,0.05) : (w<0.92 ? Z(0.08,0.24) : -Z(0.08,0.18));
+      var mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2, dx=b[0]-a[0], dy=b[1]-a[1];
+      return {a:a,b:b,c:[mx-dy*bauch, my+dx*bauch]};
+    });
+    var punkte=[];
+    kanten.forEach(function(k){
+      for(var i=0;i<14;i++){ var t=i/14, u=1-t;
+        punkte.push([u*u*k.a[0]+2*u*t*k.c[0]+t*t*k.b[0], u*u*k.a[1]+2*u*t*k.c[1]+t*t*k.b[1]]); }
+    });
+    var d='M'+kanten[0].a[0].toFixed(1)+','+kanten[0].a[1].toFixed(1);
+    kanten.forEach(function(k){ d+='Q'+k.c[0].toFixed(1)+','+k.c[1].toFixed(1)+' '+k.b[0].toFixed(1)+','+k.b[1].toFixed(1); });
+    return {d:d+'Z', punkte:punkte};
   }
   function drin(x,y,p){var d=false;for(var i=0,j=p.length-1;i<p.length;j=i++){
     if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0])) d=!d;} return d;}
-  function welle(y0,x0,breite,neigung){
-    var n=4, dx=breite/n, punkte=[];
-    for(var i=0;i<=n;i++){ var t=i/n; punkte.push([x0+i*dx, y0+(t-0.5)*neigung+Z(-13,13)]); }
-    var bei=function(x){
-      if(x<=punkte[0][0]) return punkte[0][1];
-      for(var i=0;i<n;i++){ var a=punkte[i],b=punkte[i+1];
-        if(x<=b[0]){ var t=(x-a[0])/(b[0]-a[0]); return a[1]+(b[1]-a[1])*(t*t*(3-2*t)); } }
-      return punkte[n][1];
+  // --- 2. AUFTEILUNG IN FUENF FELDER --------------------------------------
+  // Der erste Entwurf legte vier wellige Linien quer ueber die Figur. Das
+  // sieht GESTREIFT aus, und genau das unterscheidet es von den echten
+  // Serien: Dort grenzt fast jedes Feld an fast jedes andere. Gemessen an 200
+  // echten Figuren: durchschnittlich 7.9 Nachbarschaften zwischen fuenf
+  // Feldern (eine Streifenfolge hat vier). Schlimmer noch, die Streifen
+  // konnten in einer eingebuchteten Form ZERFALLEN - dann zeigte die Figur
+  // sechs Flecken oder nur vier, obwohl fuenf Antworten zur Wahl stehen; das
+  // war bei zwei von drei erzeugten Figuren so.
+  // Deshalb jetzt ein gewichtetes Voronoi-Muster in einem VERBOGENEN Raum:
+  // fuenf Saatpunkte, jede Rasterzelle gehoert zum naechstgelegenen. Das gibt
+  // von sich aus ein Netz statt einer Kette. Die Verbiegung macht aus den
+  // geraden Voronoi-Kanten geschwungene Linien, die Gewichte sorgen fuer
+  // unterschiedlich grosse Felder, und die gestreckte Abstandsmessung dafuer,
+  // dass sich ein Feld auch mal lang an der Kontur entlangzieht.
+  function aufteilen(form){
+    var lab=new Int8Array(G*G); lab.fill(-1);
+    var drinnen=[];
+    for(var x=0;x<G;x++) for(var y=0;y<G;y++)
+      if(drin(x+0.5,y+0.5,form.punkte)) drinnen.push(x*G+y);
+    if(drinnen.length < G*G*0.14) return null;
+    // Wie streng die Saatpunkte auseinandergehalten werden, wird mitgewuerfelt:
+    // Bei strenger Streuung entstehen gleichmaessige Felder, bei lockerer auch
+    // mal ein langes schmales - beides gibt es in den echten Serien.
+    var streuung=Math.round(Z(60,420));
+    var saat=[drinnen[Math.floor(Math.random()*drinnen.length)]];
+    while(saat.length<5){
+      var best=-1, bestD=-1;
+      for(var k=0;k<streuung;k++){
+        var k2=drinnen[Math.floor(Math.random()*drinnen.length)];
+        var px=Math.floor(k2/G), py=k2%G, nah=1e9;
+        saat.forEach(function(s){ var d=Math.hypot(px-Math.floor(s/G), py-s%G); if(d<nah) nah=d; });
+        if(nah>bestD){ bestD=nah; best=k2; }
+      }
+      saat.push(best);
+    }
+    var gew=saat.map(function(){ return Z(-9,9); });
+    var A=Z(10,18), f1=Z(0.040,0.070), f2=Z(0.040,0.070), p1=Z(0,6.3), p2=Z(0,6.3);
+    var bieg=function(x,y){ return [x+A*Math.sin(y*f1+p1), y+A*Math.sin(x*f2+p2)]; };
+    var ws=saat.map(function(s){ return bieg(Math.floor(s/G), s%G); });
+    var st=Z(0.62,1.55), md=Z(0,Math.PI), mc=Math.cos(md), msi=Math.sin(md);
+    var abstand=function(ax,ay,bx,by){
+      var dx=ax-bx, dy=ay-by;
+      return Math.hypot((dx*mc+dy*msi)*st, (-dx*msi+dy*mc)/st);
     };
-    var d='M'+punkte[0][0].toFixed(1)+','+punkte[0][1].toFixed(1);
-    for(var i=0;i<n;i++){ var a=punkte[i],b=punkte[i+1];
-      d+='C'+(a[0]+dx/3).toFixed(1)+','+a[1].toFixed(1)+' '+(b[0]-dx/3).toFixed(1)+','+b[1].toFixed(1)+' '+b[0].toFixed(1)+','+b[1].toFixed(1); }
-    return {d:d,bei:bei,punkte:punkte};
-  }
-  var G=150;
-  function figur(){
-    var cx=G/2, cy=G/2, r=G*0.36;
-    for(var versuch=0; versuch<200; versuch++){
-      var e=ecken(cx,cy,r), form=glatt(e);
-      var winkel=Z(0,360), rad=winkel*Math.PI/180;
-      var x0=cx-r*2.2, breite=r*4.4;
-      var hoehen=[0.18,0.36,0.55,0.74].map(function(t){return cy-r*1.3+t*r*2.6+Z(-10,10);}).sort(function(a,b){return a-b;});
-      var wellen=hoehen.map(function(y){return welle(y,x0,breite,Z(-r*1.1,r*1.1));});
-      // Punktabtastung auf ein Raster: welche Rasterzelle gehoert zu welchem
-      // Feld? -1 heisst "ausserhalb der Aussenform".
-      var N=Math.ceil(G/2), lab=new Int8Array(N*N); lab.fill(-1);
-      var treffer=[0,0,0,0,0];
-      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){
-        var gx=ix*2, gy=iy*2;
-        if(!drin(gx,gy,e)) continue;
-        var dx=gx-cx, dy=gy-cy;
-        var ux=cx+dx*Math.cos(-rad)-dy*Math.sin(-rad);
-        var uy=cy+dx*Math.sin(-rad)+dy*Math.cos(-rad);
-        var feld=4;
-        for(var i=0;i<4;i++) if(uy<wellen[i].bei(ux)){ feld=i; break; }
-        lab[ix*N+iy]=feld; treffer[feld]++;
-      }
-      var gesamt=treffer.reduce(function(s,t){return s+t;},0);
-      if(!gesamt) continue;
-      // Jedes Feld muss sichtbar gross sein, sonst waere eine Antwort-
-      // moeglichkeit praktisch nicht zu erkennen.
-      var zuKlein=false;
-      treffer.forEach(function(t){ if(t < gesamt*0.06) zuKlein=true; });
-      if(zuKlein) continue;
-      // ABSTANDSKARTE. Der erste Entwurf setzte den Buchstaben in den
-      // SCHWERPUNKT seines Feldes - bei einem duennen, gebogenen Streifen
-      // liegt der aber dicht an der Kante, und die Buchstaben zweier
-      // Nachbarfelder landen uebereinander (gemessen: jede fuenfte Figur).
-      // Stattdessen bekommt jede Rasterzelle ihren Abstand zur naechsten
-      // fremden Zelle (anderes Feld oder ausserhalb), und der Buchstabe
-      // kommt an die Stelle mit dem groessten Abstand - der Punkt, der am
-      // tiefsten in seinem Feld steckt. Zwei-Pass-Chamfer, 1 / Wurzel 2.
-      var INF=1e9, ab=new Float32Array(N*N), W1=1, W2=1.4142;
-      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){
-        var k=ix*N+iy, L=lab[k];
-        if(L<0){ ab[k]=0; continue; }
-        var rand=false;
-        for(var a=-1;a<=1&&!rand;a++) for(var c=-1;c<=1;c++){
-          var jx=ix+a, jy=iy+c;
-          if(jx<0||jy<0||jx>=N||jy>=N){ rand=true; break; }
-          if(lab[jx*N+jy]!==L){ rand=true; break; }
+    drinnen.forEach(function(k){
+      var x=Math.floor(k/G), y=k%G, w=bieg(x,y), beste=0, bd=1e9;
+      for(var i=0;i<5;i++){ var d=abstand(w[0],w[1],ws[i][0],ws[i][1])-gew[i];
+        if(d<bd){ bd=d; beste=i; } }
+      lab[k]=beste;
+    });
+    // ZUSAMMENHANG ERZWINGEN: Nur der groesste Klumpen je Feld bleibt, der
+    // Rest waechst ans Nachbarfeld an. Sonst zeigt eine Figur mehr Flecken,
+    // als es Antworten gibt - der haeufigste Fehler des ersten Entwurfs.
+    for(var i=0;i<5;i++){
+      var klumpen=[], gesehen=new Uint8Array(G*G);
+      for(var z=0;z<drinnen.length;z++){
+        var k0=drinnen[z];
+        if(lab[k0]!==i||gesehen[k0]) continue;
+        var stapel=[k0], teil=[]; gesehen[k0]=1;
+        while(stapel.length){
+          var c=stapel.pop(); teil.push(c);
+          var cx2=Math.floor(c/G), cy2=c%G;
+          [[1,0],[-1,0],[0,1],[0,-1]].forEach(function(d){
+            var nx=cx2+d[0], ny=cy2+d[1], nk=nx*G+ny;
+            if(nx>=0&&ny>=0&&nx<G&&ny<G&&!gesehen[nk]&&lab[nk]===i){ gesehen[nk]=1; stapel.push(nk); } });
         }
-        ab[k]= rand?0:INF;
+        klumpen.push(teil);
       }
-      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){ var k=ix*N+iy; if(!ab[k]) continue;
-        var m=ab[k];
-        if(ix>0) m=Math.min(m,ab[(ix-1)*N+iy]+W1);
-        if(iy>0) m=Math.min(m,ab[ix*N+iy-1]+W1);
-        if(ix>0&&iy>0) m=Math.min(m,ab[(ix-1)*N+iy-1]+W2);
-        if(ix>0&&iy<N-1) m=Math.min(m,ab[(ix-1)*N+iy+1]+W2);
-        ab[k]=m; }
-      for(var ix=N-1;ix>=0;ix--) for(var iy=N-1;iy>=0;iy--){ var k=ix*N+iy; if(!ab[k]) continue;
-        var m=ab[k];
-        if(ix<N-1) m=Math.min(m,ab[(ix+1)*N+iy]+W1);
-        if(iy<N-1) m=Math.min(m,ab[ix*N+iy+1]+W1);
-        if(ix<N-1&&iy<N-1) m=Math.min(m,ab[(ix+1)*N+iy+1]+W2);
-        if(ix<N-1&&iy>0) m=Math.min(m,ab[(ix+1)*N+iy-1]+W2);
-        ab[k]=m; }
-      var beste=[-1,-1,-1,-1,-1], besterAbstand=[0,0,0,0,0];
-      for(var ix=0;ix<N;ix++) for(var iy=0;iy<N;iy++){ var k=ix*N+iy, L=lab[k];
-        if(L<0) continue; if(ab[k]>besterAbstand[L]){ besterAbstand[L]=ab[k]; beste[L]=k; } }
-      // 3.5 Rasterzellen sind 7 Einheiten. Ein Buchstabe ist rund 7 breit und
-      // 9 hoch, zwei Mittelpunkte liegen damit mindestens 14 auseinander -
-      // genug Luft. Passt ein Feld nicht, wird die ganze Figur neu gewuerfelt.
-      var zuEng=false; besterAbstand.forEach(function(v){ if(v<3.5) zuEng=true; });
-      if(zuEng) continue;
-      var mitten=beste.map(function(k){ return [Math.floor(k/N)*2, (k%N)*2]; });
-      return {form:form,winkel:winkel,wellen:wellen,mitten:mitten,cx:cx,cy:cy,x0:x0,breite:breite,r:r};
+      if(!klumpen.length) return null;
+      klumpen.sort(function(a,b){ return b.length-a.length; });
+      klumpen.slice(1).forEach(function(t){ t.forEach(function(k){ lab[k]=-2; }); });
+    }
+    var offen=drinnen.filter(function(k){ return lab[k]===-2; });
+    while(offen.length){
+      var naechste=[];
+      offen.forEach(function(k){
+        var x=Math.floor(k/G), y=k%G, paare=[[1,0],[-1,0],[0,1],[0,-1]];
+        for(var d=0;d<4;d++){
+          var nk=(x+paare[d][0])*G+(y+paare[d][1]);
+          if(nk>=0&&nk<G*G&&lab[nk]>=0){ lab[k]=lab[nk]; return; } }
+        naechste.push(k);
+      });
+      if(naechste.length===offen.length){ naechste.forEach(function(k){ lab[k]=0; }); break; }
+      offen=naechste;
+    }
+    var anteile=[0,0,0,0,0];
+    drinnen.forEach(function(k){ anteile[lab[k]]++; });
+    for(var i=0;i<5;i++){ var a=anteile[i]/drinnen.length; if(a<0.07||a>0.31) return null; }
+    return lab;
+  }
+  // --- 3. GRENZEN ALS GEMEINSAME BOEGEN -----------------------------------
+  // Naheliegend waere, jedes Feld einzeln nachzufahren und die Kontur zu
+  // glaetten. Aus der Ferne sieht das richtig aus, aus der Naehe nicht: Zwei
+  // Nachbarfelder glaetten dieselbe Grenze unterschiedlich. Dann bleibt an
+  // jedem Knotenpunkt ein weisser Keil stehen, und die Trennlinie wird von
+  // beiden Seiten gezeichnet und sieht stellenweise doppelt so dick aus.
+  // Deshalb: Die Grenzen werden EINMAL als Netz von Boegen zwischen den
+  // Knotenpunkten berechnet; jedes Feld setzt sich aus genau denselben Boegen
+  // zusammen, und jede Trennlinie existiert genau einmal.
+  function netz(lab){
+    var mitte=[G/2,G/2];
+    var schl=function(x,y){ return x+','+y; };
+    var marke=function(x,y){ return (x<0||y<0||x>=G||y>=G) ? -1 : lab[x*G+y]; };
+    function schleife(w){
+      var kanten=new Map();
+      for(var x=0;x<G;x++) for(var y=0;y<G;y++){
+        if(marke(x,y)!==w) continue;
+        if(marke(x,y-1)!==w) kanten.set(schl(x,y),    {zu:[x+1,y],   nb:marke(x,y-1)});
+        if(marke(x+1,y)!==w) kanten.set(schl(x+1,y),  {zu:[x+1,y+1], nb:marke(x+1,y)});
+        if(marke(x,y+1)!==w) kanten.set(schl(x+1,y+1),{zu:[x,y+1],   nb:marke(x,y+1)});
+        if(marke(x-1,y)!==w) kanten.set(schl(x,y+1),  {zu:[x,y],     nb:marke(x-1,y)});
+      }
+      if(kanten.size<12) return null;
+      var start=kanten.keys().next().value;
+      var punkte=[], nachbarn=[], jetzt=start.split(',').map(Number);
+      for(var i=0;i<kanten.size+4;i++){
+        var k=kanten.get(schl(jetzt[0],jetzt[1]));
+        if(!k) break;
+        punkte.push(jetzt); nachbarn.push(k.nb); jetzt=k.zu;
+        if(schl(jetzt[0],jetzt[1])===start) break;
+      }
+      return punkte.length>=12 ? {punkte:punkte,nachbarn:nachbarn} : null;
+    }
+    function glaetten(pkte, nachAussen){
+      var p=pkte;
+      if(nachAussen){
+        // Aussenboegen ein Stueck nach draussen schieben: Sie werden ohnehin
+        // an der Aussenform abgeschnitten, laegen sie knapp innen, klaffte
+        // zwischen Feld und Kontur eine weisse Linie.
+        p=p.map(function(q){ var dx=q[0]-mitte[0], dy=q[1]-mitte[1], l=Math.hypot(dx,dy)||1;
+          return [q[0]+dx/l*2.5, q[1]+dy/l*2.5]; });
+      }
+      var n=p.length;
+      if(n>6) p=p.map(function(q,i){
+        if(i<2||i>n-3) return q;                 // Enden liegen fest: Knotenpunkte
+        var sx=0, sy=0;
+        for(var d=-2;d<=2;d++){ sx+=p[i+d][0]; sy+=p[i+d][1]; }
+        return [sx/5, sy/5];
+      });
+      var schritt=Math.max(1, Math.round((p.length-1)/7)), d=[p[0]];
+      for(var i=schritt;i<p.length-1;i+=schritt) d.push(p[i]);
+      d.push(p[p.length-1]);
+      return d;
+    }
+    var boegen=new Map(), felder=[];
+    for(var w=0;w<5;w++){
+      var s=schleife(w);
+      if(!s) return null;
+      var n=s.punkte.length, knoten=[];
+      for(var i=0;i<n;i++) if(s.nachbarn[i]!==s.nachbarn[(i-1+n)%n]) knoten.push(i);
+      if(knoten.length<2) knoten=[0, Math.floor(n/2)];
+      var teile=[];
+      for(var k=0;k<knoten.length;k++){
+        var a=knoten[k], b=knoten[(k+1)%knoten.length], stueck=[];
+        for(var i2=a;; i2=(i2+1)%n){ stueck.push(s.punkte[i2]); if(i2===b) break; }
+        teile.push({pkte:stueck, nb:s.nachbarn[a]});
+      }
+      felder.push(teile);
+    }
+    var kn=function(q){ return q[0]+','+q[1]; };
+    var wege=felder.map(function(teile,w){
+      return teile.map(function(t){
+        var a=kn(t.pkte[0]), b=kn(t.pkte[t.pkte.length-1]);
+        var paar=(t.nb<w ? t.nb+':'+w : w+':'+t.nb), vor=a<=b;
+        var schluessel=paar+'|'+(vor?a+'>'+b:b+'>'+a);
+        if(!boegen.has(schluessel)){
+          var g=glaetten(t.pkte, t.nb===-1);
+          boegen.set(schluessel, vor ? g : g.slice().reverse());
+        }
+        var g2=boegen.get(schluessel);
+        return {pkte: vor ? g2 : g2.slice().reverse(), aussen: t.nb===-1};
+      });
+    });
+    var kurve=function(p){
+      var d='M'+p[0][0].toFixed(1)+','+p[0][1].toFixed(1);
+      for(var i=0;i<p.length-1;i++){
+        var p0=p[Math.max(0,i-1)], p1=p[i], p2=p[i+1], p3=p[Math.min(p.length-1,i+2)];
+        d+='C'+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+','+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+' '
+           +(p2[0]-(p3[0]-p1[0])/6).toFixed(1)+','+(p2[1]-(p3[1]-p1[1])/6).toFixed(1)+' '
+           +p2[0].toFixed(1)+','+p2[1].toFixed(1);
+      }
+      return d;
+    };
+    var flaechen=wege.map(function(teile){
+      var d=kurve(teile[0].pkte);
+      for(var i=1;i<teile.length;i++) d+=kurve(teile[i].pkte).replace('M','L');
+      return d+'Z';
+    });
+    var linien=[], gesehen={};
+    wege.forEach(function(teile){ teile.forEach(function(t){
+      if(t.aussen) return;
+      var s1=kn(t.pkte[0])+'/'+kn(t.pkte[t.pkte.length-1]);
+      var s2=kn(t.pkte[t.pkte.length-1])+'/'+kn(t.pkte[0]);
+      if(gesehen[s1]||gesehen[s2]) return;
+      gesehen[s1]=1; linien.push(kurve(t.pkte));
+    }); });
+    return {flaechen:flaechen, linien:linien};
+  }
+  // --- 4. BUCHSTABENPLATZ --------------------------------------------------
+  // ABSTANDSKARTE. Der erste Entwurf setzte den Buchstaben in den SCHWERPUNKT
+  // seines Feldes - bei einem duennen, gebogenen Feld liegt der aber dicht an
+  // der Kante, und die Buchstaben zweier Nachbarfelder landen uebereinander
+  // (gemessen: 47 von 216 Figuren). Stattdessen bekommt jede Rasterzelle
+  // ihren Abstand zur naechsten fremden Zelle, und der Buchstabe kommt an die
+  // Stelle mit dem groessten Abstand - den Punkt, der am tiefsten in seinem
+  // Feld steckt. Zwei-Pass-Chamfer, 1 / Wurzel 2.
+  function buchstabenplatz(lab){
+    var INF=1e9, ab=new Float32Array(G*G), W2=1.4142;
+    for(var x=0;x<G;x++) for(var y=0;y<G;y++){
+      var k=x*G+y, L=lab[k];
+      if(L<0){ ab[k]=0; continue; }
+      var rand=false;
+      for(var a=-1;a<=1&&!rand;a++) for(var c=-1;c<=1;c++){
+        var jx=x+a, jy=y+c;
+        if(jx<0||jy<0||jx>=G||jy>=G){ rand=true; break; }
+        if(lab[jx*G+jy]!==L){ rand=true; break; } }
+      ab[k]=rand?0:INF;
+    }
+    for(var x=0;x<G;x++) for(var y=0;y<G;y++){ var k=x*G+y; if(!ab[k]) continue;
+      var m=ab[k];
+      if(x>0) m=Math.min(m,ab[k-G]+1);
+      if(y>0) m=Math.min(m,ab[k-1]+1);
+      if(x>0&&y>0) m=Math.min(m,ab[k-G-1]+W2);
+      if(x>0&&y<G-1) m=Math.min(m,ab[k-G+1]+W2);
+      ab[k]=m; }
+    for(var x=G-1;x>=0;x--) for(var y=G-1;y>=0;y--){ var k=x*G+y; if(!ab[k]) continue;
+      var m=ab[k];
+      if(x<G-1) m=Math.min(m,ab[k+G]+1);
+      if(y<G-1) m=Math.min(m,ab[k+1]+1);
+      if(x<G-1&&y<G-1) m=Math.min(m,ab[k+G+1]+W2);
+      if(x<G-1&&y>0) m=Math.min(m,ab[k+G-1]+W2);
+      ab[k]=m; }
+    var beste=[-1,-1,-1,-1,-1], weit=[0,0,0,0,0];
+    for(var k=0;k<G*G;k++){ var L=lab[k]; if(L<0) continue;
+      if(ab[k]>weit[L]){ weit[L]=ab[k]; beste[L]=k; } }
+    // 7 Einheiten: Ein Buchstabe ist rund 7 breit und 9 hoch, zwei
+    // Mittelpunkte liegen damit mindestens 14 auseinander - genug Luft.
+    for(var i=0;i<5;i++) if(weit[i]<7) return null;
+    return beste.map(function(k){ return [Math.floor(k/G)+0.5, k%G+0.5]; });
+  }
+  function figur(){
+    for(var versuch=0; versuch<60; versuch++){
+      var form=aussenform();
+      var lab=aufteilen(form);
+      if(!lab) continue;
+      var mitten=buchstabenplatz(lab);
+      if(!mitten) continue;
+      var g=netz(lab);
+      if(!g) continue;
+      return {form:form.d, felder:g.flaechen, linien:g.linien, mitten:mitten};
     }
     return null;
   }
   var lauf=0;
+  // ACHTUNG, CLIP-KENNUNGEN MUESSEN EINDEUTIG SEIN: Dieselbe Figur erscheint
+  // zweimal auf der Seite (Einpraegen und Abfrage). Bei gleicher id greift der
+  // Clip der einen auf die andere zu und die Trennlinien ragen aus der Form.
   function svg(f,schwarz,mitBuchstaben,klasse){
     var k='figclip'+(lauf++);
-    var x1=f.x0+f.breite, oben=f.cy-f.r*2.4, unten=f.cy+f.r*2.4;
-    function feldPfad(i){
-      var obenD = i===0 ? 'M'+f.x0+','+oben+'L'+x1+','+oben : f.wellen[i-1].d;
-      var untenD = i===4 ? 'M'+f.x0+','+unten+'L'+x1+','+unten : f.wellen[i].d;
-      return obenD + ' L'+x1+','+(i===4?unten:f.wellen[i].punkte[4][1]).toFixed(1) + ' '
-           + untenD.replace('M','L') + ' L'+f.x0+','+(i===0?oben:f.wellen[i-1].punkte[0][1]).toFixed(1) + ' Z';
-    }
     var s='<svg class="fig-svg '+(klasse||'')+'" viewBox="0 0 '+G+' '+G+'" role="img">';
     s+='<defs><clipPath id="'+k+'"><path d="'+f.form+'"/></clipPath></defs>';
-    s+='<g clip-path="url(#'+k+')"><g transform="rotate('+f.winkel.toFixed(1)+' '+f.cx+' '+f.cy+')">';
-    for(var i=0;i<5;i++) s+='<path d="'+feldPfad(i)+'" fill="'+(i===schwarz?'#000':'#fff')+'"/>';
-    f.wellen.forEach(function(w){ s+='<path d="'+w.d+'" fill="none" stroke="#000" stroke-width="1.5"/>'; });
-    s+='</g></g>';
+    s+='<g clip-path="url(#'+k+')">';
+    f.felder.forEach(function(d,i){ s+='<path d="'+d+'" fill="'+(i===schwarz?'#000':'#fff')+'"/>'; });
+    f.linien.forEach(function(d){ s+='<path d="'+d+'" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>'; });
+    s+='</g>';
     if(mitBuchstaben) f.mitten.forEach(function(m,i){
       s+='<text x="'+m[0].toFixed(1)+'" y="'+(m[1]+4).toFixed(1)+'" font-size="12" text-anchor="middle" fill="#000">'+'ABCDE'[i]+'</text>'; });
-    s+='<path d="'+f.form+'" fill="none" stroke="#000" stroke-width="1.9"/></svg>';
+    s+='<path d="'+f.form+'" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round"/></svg>';
     return s;
   }
   var el=function(id){ return document.getElementById(id); };

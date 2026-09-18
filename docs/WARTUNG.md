@@ -459,7 +459,7 @@ nur ein lokaler Bau-Ordner und landet nie in git.
 
 ## 11b. Die Website auf Fehler prüfen
 
-Fünf Skripte im Ordner `scripts/` prüfen die fertig gebaute Website. Sie
+Sechs Skripte im Ordner `scripts/` prüfen die fertig gebaute Website. Sie
 ersetzen kein Auge, finden aber zuverlässig die Fehlerarten, die sonst erst
 jemandem auf dem Handy auffallen.
 
@@ -504,6 +504,7 @@ ob er der Normalfall war:
 ```bash
 node scripts/fakten-generator-pruefen.mjs /tmp/probe   # prüft auch das erzeugte PDF
 node scripts/figuren-generator-pruefen.mjs             # würfelt 12 Sets und misst nach
+python3 scripts/figuren-vergleichen.py 150             # gegen die echten Serien
 ```
 
 **Erwartetes Ergebnis:** Beim Struktur-Skript genau zehn unerreichbare Seiten –
@@ -606,17 +607,53 @@ Er braucht **keine Datendatei** – die Figuren entstehen im Browser. Deshalb
 funktioniert er in allen drei Sprachen, sobald er auf eine echte Seite kommt;
 nur die Beschriftungen stehen in `i18n/de|fr|it.yaml` (Präfix `fig_`).
 
-**Wer am Zeichnen etwas ändert,** liest zuerst den Kommentarkopf in
-`layouts/shortcodes/figuren-generator.html`. Dort stehen die drei Dinge, die im
-ersten Entwurf schiefgingen: doppelte Clip-Kennungen (die Trennlinien ragten aus
-der Form), Felder, die gar nicht in der Form liegen (eine Antwortmöglichkeit
-wäre unsichtbar), und Buchstaben, die übereinanderrutschen. Das Letzte ist der
-Grund für die Abstandskarte: Der Buchstabe sitzt **nicht** im Schwerpunkt seines
-Feldes, sondern an der Stelle, die am tiefsten darin steckt – bei einem dünnen,
-gebogenen Streifen liegt der Schwerpunkt nämlich fast auf der Kante.
+**Wie nah die erzeugten Figuren an den echten sind, wird gemessen, nicht
+geschätzt.** Aus unseren eigenen Serien (2022, 2024, 2025, 2026) sind 200
+echte Figuren ausgewertet; danach richten sich die Grenzwerte im Generator.
+Nachrechnen lässt sich das jederzeit:
 
-**Noch zu beurteilen:** ob die Figuren schwer genug sind. Zum Vergleich liegen
-die echten Serien unter Übungsaufgaben.
+```bash
+python3 scripts/figuren-vergleichen.py 150
+```
+
+Das Skript würfelt 150 Figuren, misst beide Seiten mit demselben Massstab und
+stellt sie nebeneinander. Weicht eine Zeile deutlich ab, markiert es sie. Es
+braucht `pip install pymupdf numpy scipy pillow`.
+
+Am meisten sagt die Zeile **Nachbarschaften** aus: Wie viele der zehn möglichen
+Feldpaare grenzen aneinander? Fünf Streifen untereinander ergeben vier – eine
+Kette. Die echten Figuren liegen bei 7.9 – ein Netz. Genau dieser Unterschied
+ist das, was man auf den ersten Blick sieht, und der erste Entwurf lag mit 6.6
+sichtbar daneben.
+
+**Wer am Zeichnen etwas ändert,** liest zuerst den Kommentarkopf in
+`layouts/shortcodes/figuren-generator.html` und die vier Abschnitte im Skript.
+Dort steht, was in den bisherigen Anläufen schiefging – und jeder dieser Fehler
+kostet Zeit, wenn man ihn nochmal macht:
+
+- **Doppelte Clip-Kennungen.** Dieselbe Figur erscheint zweimal auf der Seite.
+  Bei gleicher Kennung beschneidet die Form der einen auch die andere, und
+  Trennlinien ragen aus der Form. (Derselbe Fehler passierte später nochmal im
+  Prüfwerkzeug, als es Figuren aus mehreren Seitenaufrufen zusammenklebte.)
+- **Trennlinien quer über die Figur.** Sah gestreift aus statt aufgeteilt – und
+  schlimmer: In einer eingebuchteten Form konnte ein Feld in zwei Flecken
+  zerfallen oder ganz verschwinden. Dann zeigte die Figur vier oder sechs
+  Flecken, obwohl fünf Antworten zur Wahl stehen. Das war bei zwei von drei
+  Figuren so. Heute: ein gewichtetes Voronoi-Muster in einem verbogenen Raum,
+  und jedes Feld wird zwangsweise auf einen zusammenhängenden Klumpen reduziert.
+- **Jede Feldkontur einzeln geglättet.** Aus der Ferne richtig, aus der Nähe
+  nicht: Zwei Nachbarfelder glätten dieselbe Grenze unterschiedlich, es bleiben
+  weisse Keile an den Knotenpunkten stehen und die Trennlinie wird doppelt
+  gezeichnet. Heute werden die Grenzen einmal als Netz von Bögen berechnet, aus
+  denen sich alle fünf Felder zusammensetzen.
+- **Buchstabe im Schwerpunkt seines Feldes.** Bei einem dünnen, gebogenen Feld
+  liegt der Schwerpunkt fast auf der Kante, und zwei Buchstaben rutschen
+  übereinander (gemessen: 47 von 216 Figuren). Heute steht der Buchstabe an der
+  Stelle, die am tiefsten im Feld steckt.
+
+**Noch zu beurteilen:** ob die Figuren schwer genug sind. Die Zahlen stimmen –
+ob sich 18 davon in vier Minuten merken lassen, sagt keine Messung. Zum
+Vergleich liegen die echten Serien unter Übungsaufgaben.
 
 ---
 
