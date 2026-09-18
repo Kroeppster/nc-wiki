@@ -3,25 +3,33 @@
 ================================================================================
 FIGUREN-GENERATOR GEGEN DIE ECHTEN SERIEN MESSEN
 ================================================================================
-Vergleicht die erzeugten Figuren mit den 200 Figuren aus unseren eigenen
+Vergleicht die erzeugten Figuren mit den echten aus unseren eigenen
 Uebungsserien (2022, 2024, 2025, 2026). Der Generator soll nicht "irgendwie
 aehnlich" aussehen, sondern in denselben Zahlenbereichen liegen.
 
     ~/bin/hugo --minify && (Server auf public/, Port 8123)
-    python3 scripts/figuren-vergleichen.py
+    python3 scripts/figuren-vergleichen.py [anzahl-serien]
 
-Ohne Argument holt sich das Skript die erzeugten Figuren selbst (ueber
-scripts/figuren-abbild.mjs). Ein bereits vorhandenes Blatt geht auch:
-
-    python3 scripts/figuren-vergleichen.py blatt.png
-
-Eine Zahl als Argument legt fest, wie viele Figuren erzeugt werden (54 sind
-die Vorgabe; fuer eine belastbare Aussage eher 150 nehmen, ein Blatt mit 54
-Figuren schwankt spuerbar):
-
-    python3 scripts/figuren-vergleichen.py 150
+Vorgabe sind 10 Serien zu je 18 Figuren; mehr wird genauer und dauert
+laenger. Das Skript holt sich die Figuren selbst (ueber
+scripts/figuren-abbild.mjs) und braucht dafuer den laufenden Testserver.
 
 Gebraucht werden pymupdf, numpy und scipy (pip install pymupdf numpy scipy).
+
+ES GIBT ZWEI TEILE, und der zweite ist der wichtigere:
+
+  TEIL 1 vergleicht die Figuren EINZELN, zusammengeworfen ueber alle Serien.
+  Er beantwortet: Sieht eine Figur aus wie eine echte?
+
+  TEIL 2 vergleicht GANZE SERIEN miteinander. Er beantwortet: Sehen zwei
+  Durchlaeufe verschieden aus? Dass sich die Figuren INNERHALB einer Serie
+  aehneln, ist richtig so - man muss sie ja auseinanderhalten koennen, das
+  ist die Aufgabe. Zwei verschiedene Serien sollen dagegen erkennbar anders
+  wirken, so wie unsere Serien 2022, 2025 und 2026 es untereinander tun.
+  Teil 1 kann perfekt aussehen, waehrend Teil 2 zeigt, dass alle Serien
+  einander gleichen - genau dieser Fall lag vor, bevor der Generator seinen
+  Stil je Serie wuerfelte: Ueber acht Serien lag der Fuellgrad zwischen 0.68
+  und 0.70, bei elf echten Serien zwischen 0.63 und 0.79.
 
 WAS GEMESSEN WIRD - und warum genau das:
   Felder je Figur    Muss 5 sein. Der erste Entwurf legte Trennlinien quer
@@ -116,6 +124,7 @@ def messen(grau, tinte):
     h, b = ys.max() - ys.min() + 1, xs.max() - xs.min() + 1
     schwarz = [f for f in felder if f['schwarz']]
     return dict(felderzahl=len(felder), nachbarn=nachbarn,
+                groesse=float(np.sqrt(flaeche)),
                 fuellgrad=flaeche / (h * b), seitenverh=b / h,
                 schwarzanteil=schwarz[0]['anteil'] if schwarz else 0,
                 anteile=sorted(f['anteil'] for f in felder),
@@ -147,26 +156,56 @@ def zeile(name, echt, neu, ziffern=2):
     print(f'  {name:<26} {z(echt):>22}   {z(neu):>22}{daneben}')
 
 
+def serienwerte(ms):
+    """Kennwerte EINER Serie."""
+    f5 = [m for m in ms if m['felderzahl'] == 5]
+    if len(f5) < 6:
+        return None
+    return dict(
+        nachbarn=np.mean([m['nachbarn'] for m in f5]),
+        fuellgrad=np.mean([m['fuellgrad'] for m in f5]),
+        laenglich=np.mean([m['laenglich'] for m in f5]),
+        kleinstes=np.mean([m['anteile'][0] for m in f5]),
+        groesstes=np.mean([m['anteile'][-1] for m in f5]),
+        # Wie stark die Figuren einer Serie in der GROESSE schwanken.
+        groessenspiel=float(np.std([m['groesse'] for m in f5]) / np.mean([m['groesse'] for m in f5])))
+
+
 def main():
-    blatt = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].isdigit() else None
-    anzahl = next((a for a in sys.argv[1:] if a.isdigit()), '54')
-    weg = None
-    if not blatt:
-        weg = os.path.join(tempfile.mkdtemp(), 'figuren.png')
-        print('Erzeuge ein Blatt mit Figuren ...')
-        r = subprocess.run(['node', os.path.join(PROJEKT, 'scripts/figuren-abbild.mjs'), weg, anzahl])
-        if r.returncode:
-            sys.exit('Das Blatt konnte nicht erzeugt werden. Laeuft der Testserver auf Port 8123?')
-        blatt = weg
+    serien = int(next((a for a in sys.argv[1:] if a.isdigit()), '10'))
+    ordner = tempfile.mkdtemp()
+    print(f'Erzeuge {serien} Serien ...')
+    r = subprocess.run(['node', os.path.join(PROJEKT, 'scripts/figuren-abbild.mjs'),
+                        os.path.join(ordner, 'serie.png'), str(serien), '--je-serie'])
+    if r.returncode:
+        sys.exit('Die Serien konnten nicht erzeugt werden. Laeuft der Testserver auf Port 8123?')
     print('Messe die echten Serien ...')
-    echt = echte_figuren()
-    neu = blatt_messen(np.array(Image.open(blatt).convert('RGB')))
+    echt_serien, echt = [], []
+    for datei in sorted(glob.glob(os.path.join(SERIEN, '*figuren-einpraegen*.pdf'))):
+        if 'Loesung' in os.path.basename(datei):
+            continue
+        d = pymupdf.open(datei)
+        pix = d[0].get_pixmap(dpi=200)
+        bild = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)
+        ms = blatt_messen(bild)
+        echt += ms
+        w = serienwerte(ms)
+        if w:
+            echt_serien.append(w)
+    neu_serien, neu = [], []
+    for datei in sorted(glob.glob(os.path.join(ordner, 'serie-*.png'))):
+        ms = blatt_messen(np.array(Image.open(datei).convert('RGB')))
+        neu += ms
+        w = serienwerte(ms)
+        if w:
+            neu_serien.append(w)
     if not echt or not neu:
         sys.exit('Zu wenig gemessen - stimmen die Pfade?')
 
     def anteil5(ms):
         return sum(1 for m in ms if m['felderzahl'] == 5) / len(ms)
-    print(f'\n{"":<28} {"ECHT (n=" + str(len(echt)) + ")":>22}   {"ERZEUGT (n=" + str(len(neu)) + ")":>22}')
+    print(f'\nTEIL 1 - DIE EINZELNE FIGUR')
+    print(f'{"":<28} {"ECHT (n=" + str(len(echt)) + ")":>22}   {"ERZEUGT (n=" + str(len(neu)) + ")":>22}')
     print(f'  {"genau fuenf Felder":<26} {anteil5(echt)*100:21.0f}%   {anteil5(neu)*100:21.0f}%')
     e5 = [m for m in echt if m['felderzahl'] == 5]
     n5 = [m for m in neu if m['felderzahl'] == 5]
@@ -179,11 +218,25 @@ def main():
     zeile('kleinstes Feld', [m['anteile'][0] for m in e5], [m['anteile'][0] for m in n5])
     zeile('groesstes Feld', [m['anteile'][-1] for m in e5], [m['anteile'][-1] for m in n5])
     zeile('laenglichstes Feld', [m['laenglich'] for m in e5], [m['laenglich'] for m in n5])
-    print('\n  (Mittelwert, in Klammern der Bereich, in dem 80% der Figuren liegen.)')
+    print('  (Mittelwert, in Klammern der Bereich, in dem 80% der Figuren liegen.)')
     print('  Bei den echten Serien sind die "nicht fuenf Felder" fast immer')
     print('  Messfehler an eng beieinander liegenden Feldern, keine echten Fehler.')
-    if weg:
-        print(f'\n  Blatt: {weg}')
+
+    print(f'\nTEIL 2 - UNTERSCHIEDE ZWISCHEN GANZEN SERIEN')
+    print(f'{"":<28} {"ECHT (" + str(len(echt_serien)) + " Serien)":>22}   {"ERZEUGT (" + str(len(neu_serien)) + " Serien)":>22}')
+    for feld, name in [('nachbarn', 'Nachbarschaften'), ('fuellgrad', 'Flaeche/Rahmen'),
+                       ('laenglich', 'laenglichstes Feld'), ('kleinstes', 'kleinstes Feld'),
+                       ('groesstes', 'groesstes Feld'), ('groessenspiel', 'Groessenspiel in der Serie')]:
+        e = np.array([w[feld] for w in echt_serien])
+        n = np.array([w[feld] for w in neu_serien])
+        warnung = '  <-- zu wenig Unterschied' if n.std() < e.std() * 0.55 else ''
+        print(f'  {name:<26} {e.min():7.2f}..{e.max():<6.2f} +-{e.std():.3f}   '
+              f'{n.min():7.2f}..{n.max():<6.2f} +-{n.std():.3f}{warnung}')
+    print('  (Kleinster und groesster SERIENWERT, dahinter die Streuung zwischen')
+    print('  den Serien. Je groesser die Streuung, desto verschiedener wirken')
+    print('  zwei Durchlaeufe. Zu kleine Streuung heisst: alle Serien gleichen')
+    print('  einander, auch wenn Teil 1 stimmt.)')
+    print(f'\n  Blaetter: {ordner}')
 
 
 if __name__ == '__main__':

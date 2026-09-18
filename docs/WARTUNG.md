@@ -504,7 +504,7 @@ ob er der Normalfall war:
 ```bash
 node scripts/fakten-generator-pruefen.mjs /tmp/probe   # prüft auch das erzeugte PDF
 node scripts/figuren-generator-pruefen.mjs             # würfelt 12 Sets und misst nach
-python3 scripts/figuren-vergleichen.py 150             # gegen die echten Serien
+python3 scripts/figuren-vergleichen.py 14              # gegen die echten Serien
 ```
 
 **Erwartetes Ergebnis:** Beim Struktur-Skript genau zehn unerreichbare Seiten –
@@ -607,24 +607,52 @@ Er braucht **keine Datendatei** – die Figuren entstehen im Browser. Deshalb
 funktioniert er in allen drei Sprachen, sobald er auf eine echte Seite kommt;
 nur die Beschriftungen stehen in `i18n/de|fr|it.yaml` (Präfix `fig_`).
 
-**Wie nah die erzeugten Figuren an den echten sind, wird gemessen, nicht
-geschätzt.** Aus unseren eigenen Serien (2022, 2024, 2025, 2026) sind 200
-echte Figuren ausgewertet; danach richten sich die Grenzwerte im Generator.
-Nachrechnen lässt sich das jederzeit:
+**Jede Serie würfelt zuerst ihren eigenen Stil.** Das ist der wichtigste Punkt
+am ganzen Generator, und er war anfangs falsch gelöst. Würfelt jede Figur ihre
+Form aus denselben festen Bereichen, sehen alle Serien gleich aus – über acht
+erzeugte Serien lag der Füllgrad zwischen 0.68 und 0.70, bei elf echten Serien
+zwischen 0.63 und 0.79.
+
+Heute zieht zuerst die **Serie** einen Stil (Eckenzahl, Zackigkeit, Figurgrösse
+und ihre Streuung, Schwung der Trennlinien, Strichstärke, Bauart), und die 18
+Figuren folgen ihm mit kleinen Abweichungen. Das ist auch inhaltlich richtig
+herum: Dass sich die Figuren **innerhalb** einer Serie ähneln, macht den
+Untertest ja aus – man muss sie auseinanderhalten können. Verschiedene Serien
+dürfen und sollen deutlich anders aussehen, genau wie unsere echten Serien
+2022, 2025 und 2026 untereinander.
+
+Es gibt drei **Bauarten**, jede mit eigenem Charakter – auch das ist aus dem
+eigenen Material abgeschaut: **frei** (Felder frei verteilt, wie 2025),
+**Nabe** (ein Feld in der Mitte, vier drumherum, wie 2026) und **Band** (fünf
+Bänder quer durch die Figur; das erklärt die ruhigeren Serien wie 2022 S01).
+
+**Wie nah die Figuren an den echten sind, wird gemessen, nicht geschätzt.**
 
 ```bash
-python3 scripts/figuren-vergleichen.py 150
+python3 scripts/figuren-vergleichen.py 14
 ```
 
-Das Skript würfelt 150 Figuren, misst beide Seiten mit demselben Massstab und
-stellt sie nebeneinander. Weicht eine Zeile deutlich ab, markiert es sie. Es
-braucht `pip install pymupdf numpy scipy pillow`.
+Das Skript würfelt 14 Serien, misst sie und die echten mit demselben Massstab
+und stellt beides nebeneinander. Es braucht `pip install pymupdf numpy scipy
+pillow`. Der Bericht hat **zwei Teile, und der zweite ist der wichtigere**:
+
+- **Teil 1** vergleicht einzelne Figuren: Sieht eine Figur aus wie eine echte?
+- **Teil 2** vergleicht ganze Serien: Sehen zwei Durchläufe verschieden aus?
+  Teil 1 kann tadellos sein, während Teil 2 zeigt, dass alle Serien einander
+  gleichen. Genau dieser Fall lag vor, bevor der Stil je Serie gewürfelt wurde.
 
 Am meisten sagt die Zeile **Nachbarschaften** aus: Wie viele der zehn möglichen
 Feldpaare grenzen aneinander? Fünf Streifen untereinander ergeben vier – eine
 Kette. Die echten Figuren liegen bei 7.9 – ein Netz. Genau dieser Unterschied
 ist das, was man auf den ersten Blick sieht, und der erste Entwurf lag mit 6.6
 sichtbar daneben.
+
+**Eine Falle beim Stil-Würfeln,** die man sonst zweimal baut: Die Grenzwerte
+einer Serie müssen zueinander passen. Verlangt ein Stil sehr unterschiedlich
+grosse Felder **und** enge Grenzen, scheitert fast jede Figur, die Serie wird
+verworfen und neu gewürfelt – am Ende überleben nur die grosszügigen Stile, und
+die Unterschiede zwischen den Serien sind wieder weg. Im Skript sind die beiden
+Werte deshalb aneinander gekoppelt.
 
 **Wer am Zeichnen etwas ändert,** liest zuerst den Kommentarkopf in
 `layouts/shortcodes/figuren-generator.html` und die vier Abschnitte im Skript.

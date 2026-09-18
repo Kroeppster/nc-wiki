@@ -11,27 +11,33 @@
   Wer eine Serie einmal auswendig gelernt hat, kann sie nie wieder zum Ueben
   brauchen - anders als bei allen anderen Untertests.
 
-  WIE DIE FIGUREN ENTSTEHEN, in Kuerze (ausfuehrlich bei den vier Abschnitten
-  im Skript weiter unten):
+  WIE DIE FIGUREN ENTSTEHEN, in Kuerze (ausfuehrlich bei den Abschnitten im
+  Skript weiter unten):
+    0. Jede SERIE wuerfelt zuerst ihren eigenen Stil. Die 18 Figuren folgen
+       ihm dann mit kleinen Abweichungen - innerhalb einer Serie sollen sie
+       sich aehneln, zwischen zwei Serien nicht.
     1. Aussenform = Vieleck mit geraden, bauchigen und eingekerbten Kanten,
        anschliessend in eine Richtung gestaucht und gedreht.
     2. Aufteilung in fuenf Felder ueber ein gewichtetes Voronoi-Muster in
-       einem verbogenen Raum. NICHT ueber Trennlinien quer ueber die Figur -
-       das sah gestreift aus und konnte Felder zerfallen lassen.
+       einem verbogenen Raum, in einer von drei Bauarten (frei, Nabe, Band).
+       NICHT ueber Trennlinien quer ueber die Figur - das sah gestreift aus
+       und konnte Felder zerfallen lassen.
     3. Die Grenzen werden einmal als Netz von Boegen berechnet, aus denen
        sich alle fuenf Felder zusammensetzen.
     4. Eine Abstandskarte bestimmt, wo der Buchstabe steht.
 
   DIE ZAHLEN SIND GEMESSEN, nicht geschaetzt. Aus unseren eigenen Serien
-  (2022, 2024, 2025, 2026) wurden 200 echte Figuren ausgewertet; danach
-  richten sich die Grenzwerte hier. Zum Vergleich der Stand vorher:
-                              echt        jetzt      erster Entwurf
-    genau fuenf Felder        ja          100%       30%
-    Nachbarschaften           7.9         8.2        6.6  (4 = Streifen)
-    Flaeche/Rahmen            0.71        0.68       0.66
-    Seitenverhaeltnis         0.99        1.00       0.97
-    kleinstes Feld            0.10        0.10       0.09
-    groesstes Feld            0.29        0.31       0.35
+  (2022, 2024, 2025, 2026) wurden 260 echte Figuren in 11 Serien ausgewertet;
+  danach richten sich die Grenzwerte hier. Geprueft wird zweierlei, und das
+  zweite ist das wichtigere:
+                                   echt      jetzt    erster Entwurf
+    DIE EINZELNE FIGUR
+      genau fuenf Felder           ja        100%     30%
+      Nachbarschaften              7.9       8.3      6.6  (4 = Streifen)
+      Flaeche/Rahmen               0.71      0.69     0.66
+    UNTERSCHIED ZWISCHEN SERIEN (Streuung der Serienwerte)
+      Nachbarschaften              0.43      0.27     0.11
+      Flaeche/Rahmen               0.046     0.036    0.008
   Wer hier etwas aendert, misst danach mit scripts/figuren-vergleichen.py
   gegen dieselben echten Serien nach.
 
@@ -109,13 +115,71 @@
   var Z=function(a,b){return a+Math.random()*(b-a);};
   function misch(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
   var G=150;
-  // --- 1. AUSSENFORM -------------------------------------------------------
-  // Vieleck, dessen Kanten entweder gerade, bauchig oder eingekerbt sind, und
-  // das anschliessend in EINE Richtung gestaucht und gedreht wird. Ohne die
-  // Stauchung sind alle Figuren gleich rund; die echten Serien sind mal
-  // hochkant, mal breit, mal schief (gemessen: Seitenverhaeltnis 0.77 bis 1.20).
-  function aussenform(){
-    var cx=G/2, cy=G/2, R=G*0.40, n=Math.floor(Z(6,11));
+  // --- 0. SERIENSTIL -------------------------------------------------------
+  // WO DER ZUFALL SITZT, entscheidet, wie das Ganze wirkt. Wuerfelt jede Figur
+  // ihre Form aus denselben festen Bereichen, sehen alle Serien gleich aus -
+  // gemessen: Der Fuellgrad lag ueber acht erzeugte Serien zwischen 0.68 und
+  // 0.70, bei elf echten Serien zwischen 0.63 und 0.79.
+  // Deshalb wuerfelt zuerst die SERIE ihren Stil, und die 18 Figuren folgen
+  // ihm dann mit nur kleinen Abweichungen. Das ist auch inhaltlich richtig
+  // herum: Dass sich die Figuren INNERHALB einer Serie aehneln, macht den
+  // Untertest aus - man muss sie ja auseinanderhalten. Verschiedene Serien
+  // duerfen und sollen dagegen deutlich anders aussehen, genau wie unsere
+  // echten Serien 2022, 2025 und 2026 untereinander.
+  function serienstil(){
+    // Die Bereiche sind bewusst weit. Gemessen wurde nicht der Mittelwert
+    // einer Serie, sondern wie weit die SERIENWERTE auseinanderliegen: Bei
+    // elf echten Serien schwankt der Fuellgrad von 0.63 bis 0.79, die
+    // Nachbarschaften von 7.1 bis 8.7. Enge Bereiche mitteln sich ueber 18
+    // Figuren weg, und alle Serien sehen wieder gleich aus.
+    var bauart=Math.random(), mindest=Z(0.04,0.10), hoechst=Z(0.25,0.37);
+    var art = bauart<0.22 ? 'nabe' : (bauart<0.44 ? 'band' : 'frei');
+    // DIE GEWICHTE MUESSEN ZU DEN GRENZWERTEN PASSEN. Sie machen die Felder
+    // unterschiedlich gross; verlangt eine Serie dazu noch enge Grenzen,
+    // scheitert fast jede Figur, die Serie wird verworfen und neu gewuerfelt.
+    // Unterm Strich ueberleben dann nur die grosszuegigen Serien, und die
+    // Unterschiede zwischen den Serien verschwinden wieder - genau das war
+    // messbar, bevor die beiden Werte aneinander gekoppelt waren.
+    var eng = hoechst<0.29 || mindest>0.075;
+    return {
+      bauart:       art,
+      ecken:        Math.floor(Z(4,13)),   // Grundzahl der Ecken der Aussenform
+      eckenSpiel:   Math.floor(Z(0,4)),    // wie stark sie je Figur schwankt
+      radiusSpiel:  Z(0.03,0.40),          // gleichmaessig rund <-> zackig
+      bauch:        Z(0.04,0.42),          // wie stark die Kanten sich woelben
+      gerade:       Z(0.05,0.70),          // Anteil gerader Kanten
+      kerbe:        Z(0.00,0.34),          // Anteil nach innen gewoelbter Kanten
+      groesse:      Z(0.29,0.36),          // mittlere Figurgroesse
+      groessenSpiel:Z(0.20,0.36),          // Groessenunterschiede in der Serie
+      // Bei Baendern bleibt die Verbiegung klein: Stark geschwungene Baender
+      // beruehren einander ueber Kreuz, und aus der Kette wird doch wieder
+      // ein Netz - dann sieht auch diese Bauart aus wie alle anderen.
+      welle:        art==='band' ? Z(2,9) : Z(2,26),
+      wellenlaenge: Z(0.024,0.100),
+      streuung:     Math.round(Z(40,420)), // wie streng die Felder auseinandergehalten werden
+      dehnung:      Z(0.03,0.75),          // wie laenglich die Felder werden
+      mindest:      mindest,               // kleinstes zugelassenes Feld
+      hoechst:      hoechst,               // groesstes zugelassenes Feld
+      gewicht:      eng ? Z(1,6) : (mindest<0.06 ? Z(9,24) : Z(2,13)),
+      // STRICHSTAERKEN. Sie wirken nur im Verhaeltnis zur Figur: Als die
+      // Figuren kleiner wurden, blieben die Striche gleich dick, und das
+      // schwarze Feld mass mit seiner Umrandung deutlich mehr Flaeche als in
+      // den echten Serien (0.33 statt 0.27 der Figurflaeche). In den echten
+      // Serien ist die Figur rund 100 Strichbreiten gross, hier waren es 60.
+      strich:       Z(0.9,1.6),            // Strichstaerke der Trennlinien
+      kontur:       Z(1.3,2.2)             // Strichstaerke der Aussenlinie
+    };
+  }
+  function aussenform(stil){
+    var cx=G/2, cy=G/2;
+    // Groesse wird je Figur um den Serienwert gestreut. Ohne das ist jede
+    // Figur gleich gross; die echten Serien streuen um 15 bis 24 Prozent.
+    // Gestreut wird das VERHAELTNIS, nicht die Differenz: Sonst stossen die
+    // kleinen Figuren unten an die Schranke, die grossen oben, und die
+    // Streuung faellt am Ende wieder schmaler aus als gewollt.
+    var R=G*stil.groesse*Math.exp(Z(-stil.groessenSpiel, stil.groessenSpiel));
+    R=Math.max(G*0.17, Math.min(G*0.45, R));
+    var n=Math.max(4, stil.ecken+Math.round(Z(-stil.eckenSpiel, stil.eckenSpiel)));
     // Das Seitenverhaeltnis selbst wird gewuerfelt, nicht der Streckfaktor:
     // Wird s gleichverteilt gezogen, streckt s die eine und staucht 1/s die
     // andere Richtung, und das Verhaeltnis ist s*s - im Mittel 1.08 statt 1.
@@ -123,13 +187,20 @@
     var s=Math.sqrt(Z(0.75,1.30)), dreh=Z(0,Math.PI), co=Math.cos(dreh), si=Math.sin(dreh);
     var ecken=[];
     for(var i=0;i<n;i++){
-      var w=(i/n)*2*Math.PI+Z(-0.16,0.16), r=R*Z(0.84,1.0);
+      var w=(i/n)*2*Math.PI+Z(-0.16,0.16), r=R*(1-Z(0,stil.radiusSpiel));
       var x=Math.cos(w)*r*s, y=Math.sin(w)*r/s;
       ecken.push([cx+x*co-y*si, cy+x*si+y*co]);
     }
+    // Die Woelbung ist ein Anteil der KANTENLAENGE. Bei vielen kurzen Kanten
+    // ergibt derselbe Anteil eine Bluete mit lauter Bogen statt einer Figur -
+    // so etwas kommt in den echten Serien nicht vor. Deshalb faellt die
+    // Woelbung mit steigender Eckenzahl.
+    var woelbung=stil.bauch*Math.min(1.4, 7/n);
     var kanten=ecken.map(function(a,i){
-      var b=ecken[(i+1)%n], w=Math.random();
-      var bauch = w<0.40 ? Z(-0.02,0.05) : (w<0.92 ? Z(0.08,0.24) : -Z(0.08,0.18));
+      var b=ecken[(i+1)%n], w=Math.random(), bauch;
+      if(w<stil.gerade) bauch=Z(-0.02,0.04);
+      else if(w<1-stil.kerbe) bauch=Z(woelbung*0.35, woelbung);
+      else bauch=-Z(woelbung*0.35, woelbung*0.8);
       var mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2, dx=b[0]-a[0], dy=b[1]-a[1];
       return {a:a,b:b,c:[mx-dy*bauch, my+dx*bauch]};
     });
@@ -140,7 +211,7 @@
     });
     var d='M'+kanten[0].a[0].toFixed(1)+','+kanten[0].a[1].toFixed(1);
     kanten.forEach(function(k){ d+='Q'+k.c[0].toFixed(1)+','+k.c[1].toFixed(1)+' '+k.b[0].toFixed(1)+','+k.b[1].toFixed(1); });
-    return {d:d+'Z', punkte:punkte};
+    return {d:d+'Z', punkte:punkte, R:R};
   }
   function drin(x,y,p){var d=false;for(var i=0,j=p.length-1;i<p.length;j=i++){
     if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0])) d=!d;} return d;}
@@ -159,32 +230,82 @@
   // geraden Voronoi-Kanten geschwungene Linien, die Gewichte sorgen fuer
   // unterschiedlich grosse Felder, und die gestreckte Abstandsmessung dafuer,
   // dass sich ein Feld auch mal lang an der Kontur entlangzieht.
-  function aufteilen(form){
+  function aufteilen(form, stil){
     var lab=new Int8Array(G*G); lab.fill(-1);
     var drinnen=[];
     for(var x=0;x<G;x++) for(var y=0;y<G;y++)
       if(drin(x+0.5,y+0.5,form.punkte)) drinnen.push(x*G+y);
     if(drinnen.length < G*G*0.14) return null;
-    // Wie streng die Saatpunkte auseinandergehalten werden, wird mitgewuerfelt:
-    // Bei strenger Streuung entstehen gleichmaessige Felder, bei lockerer auch
-    // mal ein langes schmales - beides gibt es in den echten Serien.
-    var streuung=Math.round(Z(60,420));
-    var saat=[drinnen[Math.floor(Math.random()*drinnen.length)]];
-    while(saat.length<5){
-      var best=-1, bestD=-1;
-      for(var k=0;k<streuung;k++){
-        var k2=drinnen[Math.floor(Math.random()*drinnen.length)];
-        var px=Math.floor(k2/G), py=k2%G, nah=1e9;
-        saat.forEach(function(s){ var d=Math.hypot(px-Math.floor(s/G), py-s%G); if(d<nah) nah=d; });
-        if(nah>bestD){ bestD=nah; best=k2; }
+    var saat=[], bandwinkel=null;
+    if(stil.bauart==='band'){
+      // BAENDER: Die Saatpunkte liegen auf einer Linie. Daraus werden fuenf
+      // breite Baender quer durch die Figur - jedes Feld hat dann nur zwei
+      // Nachbarn statt vier, und die Serie wirkt ruhiger. Auch das gibt es
+      // echt: Unsere Serie 2022 S01 kommt auf 7.1 Nachbarschaften, waehrend
+      // 2026 bei 8.7 liegt.
+      // Wichtig: Das ist NICHT der alte Ansatz mit Linien quer ueber die
+      // Figur. Der konnte Felder zerreissen; hier entstehen die Baender als
+      // Voronoi-Zellen und sind damit von sich aus zusammenhaengend.
+      var bw=Z(0,Math.PI), bx=Math.cos(bw), by=Math.sin(bw);
+      bandwinkel=bw;
+      var naechste1=function(zx,zy){
+        var best=drinnen[0], bd=1e9;
+        drinnen.forEach(function(k){
+          var d=Math.hypot(Math.floor(k/G)-zx, k%G-zy);
+          if(d<bd){ bd=d; best=k; } });
+        return best;
+      };
+      for(var i=0;i<5;i++){
+        var t=(i-2)/2*form.R*Z(1.1,1.6);
+        saat.push(naechste1(G/2+bx*t+Z(-3,3), G/2+by*t+Z(-3,3)));
       }
-      saat.push(best);
+    } else if(stil.bauart==='nabe'){
+
+      // NABENAUFBAU: ein Feld in der Mitte, vier drumherum. Das ist keine
+      // Erfindung - unsere Serie 2026 ist durchgehend so gebaut, waehrend
+      // 2025 frei aufgeteilt ist. Eine ganze Serie in dieser Bauart sieht
+      // sofort anders aus als eine freie.
+      var naechste=function(zx,zy){
+        var best=drinnen[0], bd=1e9;
+        drinnen.forEach(function(k){
+          var d=Math.hypot(Math.floor(k/G)-zx, k%G-zy);
+          if(d<bd){ bd=d; best=k; } });
+        return best;
+      };
+      saat.push(naechste(G/2+Z(-6,6), G/2+Z(-6,6)));
+      var dreh0=Z(0,6.3);
+      for(var i=0;i<4;i++){
+        var w=dreh0+i*Math.PI/2+Z(-0.35,0.35), r=form.R*Z(0.55,0.80);
+        saat.push(naechste(G/2+Math.cos(w)*r, G/2+Math.sin(w)*r));
+      }
+    } else {
+      // Wie streng die Saatpunkte auseinandergehalten werden, kommt aus dem
+      // Serienstil: Bei strenger Streuung entstehen gleichmaessige Felder, bei
+      // lockerer auch mal ein langes schmales.
+      saat.push(drinnen[Math.floor(Math.random()*drinnen.length)]);
+      while(saat.length<5){
+        var best=-1, bestD=-1;
+        for(var k=0;k<stil.streuung;k++){
+          var k2=drinnen[Math.floor(Math.random()*drinnen.length)];
+          var px=Math.floor(k2/G), py=k2%G, nah=1e9;
+          saat.forEach(function(s){ var d=Math.hypot(px-Math.floor(s/G), py-s%G); if(d<nah) nah=d; });
+          if(nah>bestD){ bestD=nah; best=k2; }
+        }
+        saat.push(best);
+      }
     }
-    var gew=saat.map(function(){ return Z(-9,9); });
-    var A=Z(10,18), f1=Z(0.040,0.070), f2=Z(0.040,0.070), p1=Z(0,6.3), p2=Z(0,6.3);
+    var gew=saat.map(function(){ return Z(-stil.gewicht, stil.gewicht); });
+    var A=stil.welle*Z(0.8,1.2), f1=stil.wellenlaenge*Z(0.8,1.25), f2=stil.wellenlaenge*Z(0.8,1.25), p1=Z(0,6.3), p2=Z(0,6.3);
     var bieg=function(x,y){ return [x+A*Math.sin(y*f1+p1), y+A*Math.sin(x*f2+p2)]; };
     var ws=saat.map(function(s){ return bieg(Math.floor(s/G), s%G); });
-    var st=Z(0.62,1.55), md=Z(0,Math.PI), mc=Math.cos(md), msi=Math.sin(md);
+    // Die Abstandsmessung wird in eine Richtung gestreckt - so werden die
+    // Felder laenglich statt wabenrund. Bei der Bauart "band" zeigt diese
+    // Richtung entlang der Saatlinie: Dann zaehlt der Abstand quer zum Band
+    // weniger, und aus den Zellen werden wirklich Baender statt Waben.
+    var st, md;
+    if(bandwinkel!==null){ st=Z(1.4,2.0); md=bandwinkel; }
+    else { st=1+Z(-stil.dehnung, stil.dehnung); md=Z(0,Math.PI); }
+    var mc=Math.cos(md), msi=Math.sin(md);
     var abstand=function(ax,ay,bx,by){
       var dx=ax-bx, dy=ay-by;
       return Math.hypot((dx*mc+dy*msi)*st, (-dx*msi+dy*mc)/st);
@@ -232,7 +353,7 @@
     }
     var anteile=[0,0,0,0,0];
     drinnen.forEach(function(k){ anteile[lab[k]]++; });
-    for(var i=0;i<5;i++){ var a=anteile[i]/drinnen.length; if(a<0.07||a>0.31) return null; }
+    for(var i=0;i<5;i++){ var a=anteile[i]/drinnen.length; if(a<stil.mindest||a>stil.hoechst) return null; }
     return lab;
   }
   // --- 3. GRENZEN ALS GEMEINSAME BOEGEN -----------------------------------
@@ -351,7 +472,7 @@
   // ihren Abstand zur naechsten fremden Zelle, und der Buchstabe kommt an die
   // Stelle mit dem groessten Abstand - den Punkt, der am tiefsten in seinem
   // Feld steckt. Zwei-Pass-Chamfer, 1 / Wurzel 2.
-  function buchstabenplatz(lab){
+  function buchstabenplatz(lab, schrift){
     var INF=1e9, ab=new Float32Array(G*G), W2=1.4142;
     for(var x=0;x<G;x++) for(var y=0;y<G;y++){
       var k=x*G+y, L=lab[k];
@@ -380,21 +501,27 @@
     var beste=[-1,-1,-1,-1,-1], weit=[0,0,0,0,0];
     for(var k=0;k<G*G;k++){ var L=lab[k]; if(L<0) continue;
       if(ab[k]>weit[L]){ weit[L]=ab[k]; beste[L]=k; } }
-    // 7 Einheiten: Ein Buchstabe ist rund 7 breit und 9 hoch, zwei
-    // Mittelpunkte liegen damit mindestens 14 auseinander - genug Luft.
-    for(var i=0;i<5;i++) if(weit[i]<7) return null;
+    // Bei Schriftgroesse 12 sind das 7 Einheiten: Ein Buchstabe ist rund 7
+    // breit und 9 hoch, zwei Mittelpunkte liegen damit mindestens 14
+    // auseinander - genug Luft. Kleinere Figuren bekommen kleinere
+    // Buchstaben, also darf auch der geforderte Abstand mitschrumpfen.
+    for(var i=0;i<5;i++) if(weit[i] < schrift*0.58) return null;
     return beste.map(function(k){ return [Math.floor(k/G)+0.5, k%G+0.5]; });
   }
-  function figur(){
+  function figur(stil){
     for(var versuch=0; versuch<60; versuch++){
-      var form=aussenform();
-      var lab=aufteilen(form);
+      var form=aussenform(stil);
+      // Die Buchstaben schrumpfen mit der Figur mit, sonst platzt die
+      // Beschriftung aus einer kleinen Figur heraus.
+      var schrift=Math.max(8, Math.min(13, 12*form.R/(G*0.36)));
+      var lab=aufteilen(form, stil);
       if(!lab) continue;
-      var mitten=buchstabenplatz(lab);
+      var mitten=buchstabenplatz(lab, schrift);
       if(!mitten) continue;
       var g=netz(lab);
       if(!g) continue;
-      return {form:form.d, felder:g.flaechen, linien:g.linien, mitten:mitten};
+      return {form:form.d, felder:g.flaechen, linien:g.linien, mitten:mitten,
+              schrift:schrift, strich:stil.strich, kontur:stil.kontur};
     }
     return null;
   }
@@ -408,17 +535,37 @@
     s+='<defs><clipPath id="'+k+'"><path d="'+f.form+'"/></clipPath></defs>';
     s+='<g clip-path="url(#'+k+')">';
     f.felder.forEach(function(d,i){ s+='<path d="'+d+'" fill="'+(i===schwarz?'#000':'#fff')+'"/>'; });
-    f.linien.forEach(function(d){ s+='<path d="'+d+'" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>'; });
+    f.linien.forEach(function(d){ s+='<path d="'+d+'" fill="none" stroke="#000" stroke-width="'+f.strich.toFixed(2)+'" stroke-linecap="round"/>'; });
     s+='</g>';
     if(mitBuchstaben) f.mitten.forEach(function(m,i){
-      s+='<text x="'+m[0].toFixed(1)+'" y="'+(m[1]+4).toFixed(1)+'" font-size="12" text-anchor="middle" fill="#000">'+'ABCDE'[i]+'</text>'; });
-    s+='<path d="'+f.form+'" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round"/></svg>';
+      s+='<text x="'+m[0].toFixed(1)+'" y="'+(m[1]+f.schrift/3).toFixed(1)+'" font-size="'+f.schrift.toFixed(1)+'" text-anchor="middle" fill="#000">'+'ABCDE'[i]+'</text>'; });
+    s+='<path d="'+f.form+'" fill="none" stroke="#000" stroke-width="'+f.kontur.toFixed(2)+'" stroke-linejoin="round"/></svg>';
     return s;
   }
   var el=function(id){ return document.getElementById(id); };
   var figuren=[], schwarz=[], reihenfolge=[];
   function baueSet(){
-    figuren=[]; while(figuren.length<18){ var f=figur(); if(f) figuren.push(f); }
+    // Ein Stil FUER DIE GANZE SERIE (siehe Abschnitt 0). Kommt ein Stil mit
+    // seinen eigenen Grenzwerten nicht auf 18 Figuren - etwa weil er sehr
+    // unterschiedlich grosse Felder verlangt, die in eine zackige Form kaum
+    // passen -, wird ein neuer Stil gewuerfelt statt endlos weiterzuprobieren.
+    figuren=[];
+    for(var anlauf=0; anlauf<10 && figuren.length<18; anlauf++){
+      var stil=serienstil();
+      figuren=[];
+      for(var i=0;i<18;i++){
+        var f=figur(stil);
+        if(!f) break;
+        figuren.push(f);
+      }
+    }
+    // Sollte auch das nicht reichen, mit gutmuetigen Werten auffuellen.
+    while(figuren.length<18){
+      var notstil=serienstil();
+      notstil.bauart='frei'; notstil.mindest=0.06; notstil.hoechst=0.34; notstil.gewicht=7;
+      var f2=figur(notstil);
+      if(f2) figuren.push(f2);
+    }
     schwarz=figuren.map(function(){ return Math.floor(Math.random()*5); });
     // Abfrage in ANDERER Reihenfolge - so ist es im echten Test auch.
     reihenfolge=misch(figuren.map(function(_,i){ return i; }));
