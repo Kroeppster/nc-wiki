@@ -106,6 +106,66 @@ aber schön, wenn's geht.
 
 ---
 
+## 2b. Texte schreiben und korrigieren – ohne Markdown und ohne Git
+
+Wer Texte schreibt, muss dafür weder Markdown noch GitHub können. Es gibt eine
+Arbeitsmappe, in der **jeder sichtbare Text der Website** steht – Titel,
+Beschreibungen, Überschriften, Absätze, Listen, in allen drei Sprachen. Man
+füllt eine gelbe Spalte aus, und ein Skript trägt die Texte zurück in die
+Website ein.
+
+```bash
+pip install openpyxl                       # einmalig
+python3 scripts/texte-ausgeben.py          # erzeugt ncwiki-texte.xlsx
+```
+
+Die Mappe hat fünf Blätter: **Anleitung** (für die Person, die schreibt),
+**Texte** (die eigentliche Arbeit, ein Textbaustein je Zeile), **Seiten** (eine
+Zeile je Seite, zum Aufteilen der Arbeit), **Übersicht** (wie weit sind wir –
+rechnet sich selbst aus) und **Fehlende Übersetzungen**.
+
+Zurück in die Website geht es so:
+
+```bash
+python3 scripts/texte-einlesen.py ncwiki-texte.xlsx --probe   # nur zeigen
+python3 scripts/texte-einlesen.py ncwiki-texte.xlsx           # schreiben
+hugo --minify                                                 # prüfen
+```
+
+**Warum der Rückweg das Wichtige daran ist:** Eine Liste, die nur ausgibt,
+verschiebt die Arbeit bloss – hinterher müsste jemand 1600 Zeilen von Hand in
+Markdown-Dateien übertragen, und genau dabei entstehen die Fehler. Deshalb
+gibt es beide Richtungen.
+
+**Wie das Skript die Stelle wiederfindet:** Jede Zeile merkt sich (in
+ausgeblendeten Spalten) die Datei, die Nummer des Bausteins und eine
+Prüfsumme des alten Textes. Beim Einlesen wird die Datei neu zerlegt und die
+Prüfsumme verglichen. Hat jemand die Datei in der Zwischenzeit im Repo
+geändert, wird diese eine Zeile **nicht** geschrieben, sondern gemeldet –
+lieber eine Meldung als ein Text an der falschen Stelle. Dann Mappe neu
+erzeugen und die betroffenen Texte dort noch einmal eintragen.
+
+**Die Mappe gehört nicht ins Repo** und steht in `.gitignore`. Sie ist eine
+Arbeitsdatei; als Binärdatei in Git gäbe sie bei jeder Änderung einen
+Konflikt, den niemand auflösen kann. Versioniert sind die Skripte, nicht ihr
+Ergebnis. Zum Verteilen die Datei einfach per Mail oder Cloud herumgeben.
+
+**Zwei Dinge, die beim ersten Durchgang auffallen werden:**
+
+- **152 von 241 Seiten haben keine Beschreibung.** Das ist der Satz, den Google
+  unter dem Seitentitel anzeigt. Diese Zeilen sind in der Mappe rot hinterlegt.
+  Fehlt die Beschreibung, nimmt Hugo den Anfang des Seitentextes – das ist
+  selten ein guter Suchtreffer-Text. Ein bis zwei Sätze, höchstens 160 Zeichen.
+- **Wo „Platzhaltertext" steht,** wartet die Seite noch auf einen richtigen
+  Text.
+
+**Grenzen:** Tabellen, HTML-Blöcke und Shortcode-Zeilen stehen in der Mappe,
+sind aber grau und gesperrt – dort verschiebt ein falsches Zeichen das ganze
+Layout, dafür ist eine Redaktionstabelle das falsche Werkzeug. Neue Seiten
+anlegen geht auch nicht über die Mappe, das steht in Abschnitt 2.
+
+---
+
 ## 3. Wie füge ich ein PDF hinzu?
 
 Es gibt zwei verschiedene Wege, je nachdem, worum es geht.

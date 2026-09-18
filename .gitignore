@@ -7,3 +7,7 @@
 # Python-Zwischenspeicher (entsteht, wenn ein Skript ein anderes einliest)
 __pycache__/
 *.pyc
+
+# Arbeitsmappe der Textliste (wird erzeugt, siehe scripts/texte-ausgeben.py)
+ncwiki-texte.xlsx
+*.xlsx

@@ -119,6 +119,14 @@
 {{- if not $ogDescription }}{{ $ogDescription = .Summary }}{{ end }}
 {{- if not $ogDescription }}{{ $ogDescription = i18n "site_tagline" }}{{ end }}
 {{- $ogDescription = $ogDescription | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace }}
+{{- /* DIE GEWOEHNLICHE SEITENBESCHREIBUNG. Sie fehlte hier lange: Der Wert
+       wurde zwar berechnet und an Facebook und X weitergegeben, aber nie als
+       <meta name="description"> ausgegeben - und genau das ist der Satz, den
+       Google unter dem Seitentitel anzeigt. Gepflegt wird er im Seitenkopf
+       der Markdown-Datei als "description:", am bequemsten ueber die
+       Textliste (scripts/texte-ausgeben.py). Fehlt er, faellt Hugo auf den
+       Anfang des Seitentextes zurueck, und erst danach auf den Slogan. */ -}}
+<meta name="description" content="{{ $ogDescription }}">
 {{- $ogImage := "" }}
 {{- with .Params.image }}{{ $ogImage = . | absURL }}{{ end }}
 {{- if not $ogImage }}{{ $ogImage = "images/og-default.png" | absURL }}{{ end }}
