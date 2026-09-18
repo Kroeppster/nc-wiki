@@ -664,7 +664,7 @@ Kette. Die echten Figuren liegen bei 7.9 – ein Netz. Genau dieser Unterschied
 ist das, was man auf den ersten Blick sieht, und der erste Entwurf lag mit 6.6
 sichtbar daneben.
 
-**Vier Fallen,** die man sonst ein zweites Mal baut – alle vier sind hier
+**Fünf Fallen,** die man sonst ein zweites Mal baut – alle fünf sind hier
 schon zugeschlagen:
 
 - **Logo und Lizenzabzeichen sind keine Figuren.** Auf unseren Blättern stehen
@@ -673,6 +673,12 @@ schon zugeschlagen:
   gemessene Grössenstreuung sprang dadurch von 6 auf 20 Prozent, und der
   Generator wurde auf eine Streuung eingestellt, die es gar nicht gibt.
   `ist_figur()` im Vergleichsskript sortiert sie heute aus.
+- **Beim Grössenunterschied gilt das Original, nicht unser Nachbau.** Die
+  Figuren einer Serie schwanken heute um 1 bis 5 Prozent; das Original liegt
+  bei 2.7. Unsere eigenen Serien streuen je nach Jahrgang bis 11 Prozent –
+  das sieht man der Serie an und gehört nicht nachgebaut. Und Vorsicht beim
+  Schrauben: `groessenSpiel` im Serienstil ist der **Exponent**, die
+  gemessene Streuung ist rund 0.58 davon.
 - **Auf den Rahmen normieren, nicht auf den Radius.** Sonst hängt die Grösse
   einer Figur an ihrer Form: Eine stark eingebuchtete Figur hat bei gleichem
   Radius einen kleineren Rahmen als eine runde. Im Original stehen runde und

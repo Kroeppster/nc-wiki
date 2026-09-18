@@ -34,7 +34,7 @@
     Nachbarschaften           7.9         7.9        8.0   (4 = Streifen)
     Flaeche/Rahmen            0.74        0.72       0.73
     kleinstes Feld            0.12        0.10       0.11
-    Groessenstreuung je Serie 0.027       0.01-0.11  0.01-0.08
+    Groessenstreuung je Serie 0.027       0.01-0.11  0.01-0.05
     (* Messfehler an eng beieinander liegenden Feldern, keine echten Fehler)
   Wer hier etwas aendert, misst danach mit scripts/figuren-vergleichen.py
   nach. DAS ORIGINAL IST NUR EINE SERIE: Was dort innerhalb einer Serie
@@ -157,10 +157,14 @@
       eckenAnteil:  Z(0.00,0.45),          // Anteil spitz bleibender Ecken
       buchtAnteil:  Z(0.00,0.80),          // wie oft eine Figur eine tiefe Bucht hat
       groesse:      Z(0.38,0.44),          // halbe Rahmendiagonale der Figur
-      // Wie stark die Figuren EINER Serie in der Groesse schwanken, ist selbst
-      // Sache der Serie: Die Originalserie 2026 streut um 2.7 Prozent, unsere
-      // eigenen Serien je nach Jahrgang zwischen 1.5 und 11 Prozent.
-      groessenSpiel:Z(0.01,0.18),          // Groessenunterschiede in der Serie
+      // Wie stark die Figuren EINER Serie in der Groesse schwanken. Massstab
+      // ist hier das Original, nicht unsere eigenen Serien: Die Originalserie
+      // 2026 streut um 2.7 Prozent, unsere Nachbauten je nach Jahrgang
+      // zwischen 1.5 und 11 - und 11 Prozent sieht man der Serie an.
+      // ACHTUNG BEIM ANPASSEN: Dieser Wert ist der Exponent, nicht die
+      // Streuung selbst. Der gemessene Variationskoeffizient ist rund 0.58
+      // davon; 0.02 bis 0.09 ergeben also die gewollten 1 bis 5 Prozent.
+      groessenSpiel:Z(0.02,0.09),          // Groessenunterschiede in der Serie
       // VERBIEGUNG DES RAUMS, in dem die Felder aufgeteilt werden. Sie macht
       // aus den geraden Voronoi-Kanten geschwungene Linien. Ohne genuegend
       // Verbiegung sieht die Figur aus wie ein gesprungener Teller: lauter
