@@ -120,6 +120,32 @@ def formeln_pruefen(pfad):
     platz = next((U.cell(row=r, column=3).value for r in range(9, 18)
                   if 'Platzhalter' in str(U.cell(row=r, column=3).value)), None)
     pruef('Platzhalter werden gezaehlt', platz is not None)
+    # WAS BEIM SCHREIBEN VON FORMELN WIRKLICH SCHIEFGEHT, wenn man sie nicht
+    # von einer Tabellenkalkulation gegenlesen lassen kann:
+    #   - eine Funktion, die aelter als Excel 2007 ist, braucht keinen Zusatz;
+    #     alles Neuere muesste "_xlfn." davor haben, sonst steht spaeter
+    #     #NAME? in der Zelle. Hier kommen nur alte Funktionen vor.
+    #   - ein Blattname mit Leerzeichen muss in Anfuehrungszeichen stehen.
+    #     "Fehlende Uebersetzungen" hat eines - in keiner Formel darf darauf
+    #     ohne Anfuehrungszeichen verwiesen werden.
+    #   - eine Formel, die versehentlich als Text in der Zelle landet (fuehrendes
+    #     Apostroph oder fehlendes Gleichheitszeichen), rechnet nie.
+    erlaubt = {'COUNTIF', 'COUNTIFS', 'SUM', 'LEN', 'IFERROR', 'COUNTA'}
+    formeln = []
+    for blatt in (T, S, U):
+        for zeile in blatt.iter_rows():
+            for z in zeile:
+                if isinstance(z.value, str) and z.value.startswith('='):
+                    formeln.append((blatt.title, z.coordinate, z.value))
+    fremde = sorted({f for _, _, w in formeln
+                     for f in re.findall(r'([A-Z_][A-Z0-9_.]*)\(', w)} - erlaubt)
+    pruef(f'{len(formeln)} Formeln, alle mit Funktionen aus Excel 2007', not fremde, fremde)
+    pruef('Keine Formel als Text abgelegt',
+          all(w.startswith('=') and not w.startswith("'") for _, _, w in formeln))
+    pruef('Kein unquotierter Blattname mit Leerzeichen',
+          not [w for _, _, w in formeln if re.search(r'(?<!\')\b\w+ \w+!', w)])
+    pruef('Keine Formel enthaelt einen Zeilenumbruch',
+          not [w for _, _, w in formeln if '\n' in w])
     pruef('Kein leerer Dateiname in der versteckten Spalte', all(dateien))
     pruef('Keine leere Pruefsumme', all(x is not None for x in spalte(T, 'P', 2, letzte_t)))
     return m, letzte_t

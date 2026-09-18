@@ -164,6 +164,17 @@ sind aber grau und gesperrt – dort verschiebt ein falsches Zeichen das ganze
 Layout, dafür ist eine Redaktionstabelle das falsche Werkzeug. Neue Seiten
 anlegen geht auch nicht über die Mappe, das steht in Abschnitt 2.
 
+**Wer an den Skripten etwas ändert, lässt danach `scripts/texte-mappe-pruefen.py`
+laufen** – 18 Prüfungen, darunter ein vollständiger Rundlauf mit einer echten
+Datei, die danach wiederhergestellt wird. Im Kopf des Skripts steht, warum die
+Formeln dort in Python nachgerechnet werden statt von einer echten
+Tabellenkalkulation: LibreOffice lässt sich in der Entwicklungsumgebung dieses
+Projekts nicht starten. Geprüft wird deshalb, was ohne Tabellenkalkulation
+wirklich schiefgehen kann – ob die Formelbereiche zu den Daten passen, ob nur
+Funktionen aus Excel 2007 vorkommen (alles Neuere bräuchte ein `_xlfn.` davor
+und stünde sonst als `#NAME?` in der Zelle) und ob ein Blattname mit Leerzeichen
+irgendwo ohne Anführungszeichen steht.
+
 ---
 
 ## 3. Wie füge ich ein PDF hinzu?
