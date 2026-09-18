@@ -26,20 +26,22 @@
        sich alle fuenf Felder zusammensetzen.
     4. Eine Abstandskarte bestimmt, wo der Buchstabe steht.
 
-  DIE ZAHLEN SIND GEMESSEN, nicht geschaetzt. Aus unseren eigenen Serien
-  (2022, 2024, 2025, 2026) wurden 260 echte Figuren in 11 Serien ausgewertet;
-  danach richten sich die Grenzwerte hier. Geprueft wird zweierlei, und das
-  zweite ist das wichtigere:
-                                   echt      jetzt    erster Entwurf
-    DIE EINZELNE FIGUR
-      genau fuenf Felder           ja        100%     30%
-      Nachbarschaften              7.9       8.3      6.6  (4 = Streifen)
-      Flaeche/Rahmen               0.71      0.69     0.66
-    UNTERSCHIED ZWISCHEN SERIEN (Streuung der Serienwerte)
-      Nachbarschaften              0.43      0.27     0.11
-      Flaeche/Rahmen               0.046     0.036    0.008
+  DIE ZAHLEN SIND GEMESSEN, nicht geschaetzt. Massstab sind die offiziellen
+  Beispielaufgaben von swissuniversities (Jahrgang 2026, 18 Figuren) und
+  unsere eigenen Serien 2022 bis 2026 (11 Serien, 233 Figuren):
+                              Original    unsere     erzeugt
+    genau fuenf Felder        100%        85%*       100%
+    Nachbarschaften           7.9         7.9        8.0   (4 = Streifen)
+    Flaeche/Rahmen            0.74        0.72       0.73
+    kleinstes Feld            0.12        0.10       0.11
+    Groessenstreuung je Serie 0.027       0.01-0.11  0.01-0.08
+    (* Messfehler an eng beieinander liegenden Feldern, keine echten Fehler)
   Wer hier etwas aendert, misst danach mit scripts/figuren-vergleichen.py
-  gegen dieselben echten Serien nach.
+  nach. DAS ORIGINAL IST NUR EINE SERIE: Was dort innerhalb einer Serie
+  streut, taugt als Massstab; wie stark sich zwei Serien unterscheiden
+  duerfen, sagen nur unsere elf eigenen Serien. Und die Aufgaben wechseln
+  jaehrlich - 2026 glatte Kiesel, unsere Serie 2025 deutlich kantiger -,
+  deshalb kann der Serienstil beides.
 
   ACHTUNG, CLIP-IDs MUESSEN EINDEUTIG SEIN: Dieselbe Figur erscheint zweimal
   auf der Seite (Einpraegen und Abfrage). Bei gleicher id greift der Clip der
@@ -132,85 +134,165 @@
     // elf echten Serien schwankt der Fuellgrad von 0.63 bis 0.79, die
     // Nachbarschaften von 7.1 bis 8.7. Enge Bereiche mitteln sich ueber 18
     // Figuren weg, und alle Serien sehen wieder gleich aus.
-    var bauart=Math.random(), mindest=Z(0.04,0.10), hoechst=Z(0.25,0.37);
-    var art = bauart<0.22 ? 'nabe' : (bauart<0.44 ? 'band' : 'frei');
+    var bauart=Math.random(), mindest=Z(0.045,0.13), hoechst=Z(0.26,0.40);
+    var art = bauart<0.20 ? 'nabe' : (bauart<0.50 ? 'band' : 'frei');
     // DIE GEWICHTE MUESSEN ZU DEN GRENZWERTEN PASSEN. Sie machen die Felder
     // unterschiedlich gross; verlangt eine Serie dazu noch enge Grenzen,
     // scheitert fast jede Figur, die Serie wird verworfen und neu gewuerfelt.
     // Unterm Strich ueberleben dann nur die grosszuegigen Serien, und die
     // Unterschiede zwischen den Serien verschwinden wieder - genau das war
     // messbar, bevor die beiden Werte aneinander gekoppelt waren.
-    var eng = hoechst<0.29 || mindest>0.075;
+    var eng = hoechst<0.29 || mindest>0.105;
     return {
       bauart:       art,
-      ecken:        Math.floor(Z(4,13)),   // Grundzahl der Ecken der Aussenform
+      ecken:        Math.floor(Z(6,13)),   // Grundzahl der Stuetzpunkte der Kontur
       eckenSpiel:   Math.floor(Z(0,4)),    // wie stark sie je Figur schwankt
-      radiusSpiel:  Z(0.03,0.40),          // gleichmaessig rund <-> zackig
-      bauch:        Z(0.04,0.42),          // wie stark die Kanten sich woelben
-      gerade:       Z(0.05,0.70),          // Anteil gerader Kanten
-      kerbe:        Z(0.00,0.34),          // Anteil nach innen gewoelbter Kanten
-      groesse:      Z(0.29,0.36),          // mittlere Figurgroesse
-      groessenSpiel:Z(0.20,0.36),          // Groessenunterschiede in der Serie
-      // Bei Baendern bleibt die Verbiegung klein: Stark geschwungene Baender
-      // beruehren einander ueber Kreuz, und aus der Kette wird doch wieder
-      // ein Netz - dann sieht auch diese Bauart aus wie alle anderen.
-      welle:        art==='band' ? Z(2,9) : Z(2,26),
-      wellenlaenge: Z(0.024,0.100),
+      radiusSpiel:  Z(0.03,0.36),          // gleichmaessig rund <-> gewellt
+      // KANTIG ODER RUND ist Sache der Serie, nicht eine feste Entscheidung:
+      // Die Originalaufgaben wechseln von Jahr zu Jahr. Der Jahrgang 2026 der
+      // swissuniversities-Beispielaufgaben zeigt glatte Kiesel, unsere eigene
+      // Serie 2025 deutlich kantigere Formen - beides gehoert in den Topf.
+      // rundung 0.15 ergibt fast ein Vieleck, 1.0 die uebliche weiche Kurve.
+      rundung:      Z(0.15,1.15),          // wie weich die Kontur laeuft
+      eckenAnteil:  Z(0.00,0.45),          // Anteil spitz bleibender Ecken
+      buchtAnteil:  Z(0.00,0.80),          // wie oft eine Figur eine tiefe Bucht hat
+      groesse:      Z(0.38,0.44),          // halbe Rahmendiagonale der Figur
+      // Wie stark die Figuren EINER Serie in der Groesse schwanken, ist selbst
+      // Sache der Serie: Die Originalserie 2026 streut um 2.7 Prozent, unsere
+      // eigenen Serien je nach Jahrgang zwischen 1.5 und 11 Prozent.
+      groessenSpiel:Z(0.01,0.18),          // Groessenunterschiede in der Serie
+      // VERBIEGUNG DES RAUMS, in dem die Felder aufgeteilt werden. Sie macht
+      // aus den geraden Voronoi-Kanten geschwungene Linien. Ohne genuegend
+      // Verbiegung sieht die Figur aus wie ein gesprungener Teller: lauter
+      // kurze, fast gerade Stuecke. Im Original holen die Trennlinien weit
+      // aus und laufen in einem Bogen durch die ganze Figur.
+      // Bei Baendern bleibt sie kleiner: Stark geschwungene Baender beruehren
+      // einander ueber Kreuz, und aus der Kette wird doch wieder ein Netz.
+      welle:        art==='band' ? Z(5,12) : Z(9,28),
+      // WELLENLAENGE, und zwar bezogen auf die Figur: Eine Figur misst rund
+      // 90 Einheiten. Ist die Welle viel laenger als das, wirkt die
+      // Verbiegung ueber die Figur hinweg wie eine reine Scherung - und eine
+      // gescherte Voronoi-Aufteilung hat wieder GERADE Kanten. Erst eine
+      // halbe bis ganze Welle ueber die Figur biegt die Trennlinien
+      // wirklich (0.035 ist eine halbe, 0.07 eine ganze Welle).
+      wellenlaenge: Z(0.035,0.095),
       streuung:     Math.round(Z(40,420)), // wie streng die Felder auseinandergehalten werden
       dehnung:      Z(0.03,0.75),          // wie laenglich die Felder werden
       mindest:      mindest,               // kleinstes zugelassenes Feld
       hoechst:      hoechst,               // groesstes zugelassenes Feld
-      gewicht:      eng ? Z(1,6) : (mindest<0.06 ? Z(9,24) : Z(2,13)),
+      gewicht:      eng ? Z(1,6) : (mindest<0.085 ? Z(9,24) : Z(2,13)),
       // STRICHSTAERKEN. Sie wirken nur im Verhaeltnis zur Figur: Als die
       // Figuren kleiner wurden, blieben die Striche gleich dick, und das
       // schwarze Feld mass mit seiner Umrandung deutlich mehr Flaeche als in
       // den echten Serien (0.33 statt 0.27 der Figurflaeche). In den echten
       // Serien ist die Figur rund 100 Strichbreiten gross, hier waren es 60.
-      strich:       Z(0.9,1.6),            // Strichstaerke der Trennlinien
-      kontur:       Z(1.3,2.2)             // Strichstaerke der Aussenlinie
+      strich:       Z(0.8,1.4),            // Strichstaerke der Trennlinien
+      kontur:       Z(1.1,1.9)             // Strichstaerke der Aussenlinie
     };
   }
   function aussenform(stil){
     var cx=G/2, cy=G/2;
-    // Groesse wird je Figur um den Serienwert gestreut. Ohne das ist jede
-    // Figur gleich gross; die echten Serien streuen um 15 bis 24 Prozent.
-    // Gestreut wird das VERHAELTNIS, nicht die Differenz: Sonst stossen die
-    // kleinen Figuren unten an die Schranke, die grossen oben, und die
-    // Streuung faellt am Ende wieder schmaler aus als gewollt.
+    // GROESSE: Die Originale von swissuniversities sind praktisch alle gleich
+    // gross - die kleinste Figur misst 0.95, die groesste 1.05 des Schnitts,
+    // Streuung 2.7 Prozent. Eine fruehere Fassung streute hier zehnmal so
+    // stark, weil die Messung unserer eigenen Blaetter das Logo und das
+    // Lizenz-Abzeichen als Figuren mitgezaehlt hatte.
     var R=G*stil.groesse*Math.exp(Z(-stil.groessenSpiel, stil.groessenSpiel));
-    R=Math.max(G*0.17, Math.min(G*0.45, R));
-    var n=Math.max(4, stil.ecken+Math.round(Z(-stil.eckenSpiel, stil.eckenSpiel)));
+    R=Math.max(G*0.34, Math.min(G*0.46, R));
+    var n=Math.max(5, stil.ecken+Math.round(Z(-stil.eckenSpiel, stil.eckenSpiel)));
     // Das Seitenverhaeltnis selbst wird gewuerfelt, nicht der Streckfaktor:
     // Wird s gleichverteilt gezogen, streckt s die eine und staucht 1/s die
     // andere Richtung, und das Verhaeltnis ist s*s - im Mittel 1.08 statt 1.
     // Die Figuren waeren also systematisch breiter als hoch.
-    var s=Math.sqrt(Z(0.75,1.30)), dreh=Z(0,Math.PI), co=Math.cos(dreh), si=Math.sin(dreh);
+    var s=Math.sqrt(Z(0.82,1.22)), dreh=Z(0,Math.PI), co=Math.cos(dreh), si=Math.sin(dreh);
+    // Der Serienstil gibt den Charakter vor, aber jede Figur weicht kraeftig
+    // davon ab. Auf der Originalseite fuellen die Figuren DERSELBEN Serie
+    // ihren Rahmen zwischen 62 und 86 Prozent aus - da stehen fast runde
+    // neben stark eingebuchteten Formen. Mit schwacher Abweichung kam eine
+    // Serie nur auf 0.71 bis 0.79, und alle Figuren sahen gleich rund aus.
+    // Der Serienzusammenhalt haengt deshalb nicht an der Rundung, sondern an
+    // Bauart, Linienfuehrung, Groesse und Strichstaerke.
+    // ACHTUNG BEIM NACHMESSEN: Vom Original gibt es nur EINE Serie. Was dort
+    // innerhalb der Serie streut, taugt als Anhaltspunkt - aber wie stark
+    // sich zwei Serien unterscheiden duerfen, sagt diese eine Seite nicht.
+    var wellig=Math.min(0.55, stil.radiusSpiel*Z(0.25,2.10));
+    var rund=stil.rundung*Z(0.70,1.30);
+    var strahl=[];
+    for(var i=0;i<n;i++) strahl.push(1-Z(0,wellig));
+    // EINZELNE TIEFE EINBUCHTUNGEN. Gleichmaessige Wellen allein reichen
+    // nicht: Im Original fuellen manche Figuren ihren Rahmen nur zu 62
+    // Prozent, und das kommt von ein, zwei tiefen Buchten, nicht von lauter
+    // flachen Wellen. Mit Wellen allein kam keine Figur unter 0.71.
+    var buchten=Math.random()<stil.buchtAnteil ? (Math.random()<0.4?2:1) : 0;
+    for(var k=0;k<buchten;k++) strahl[Math.floor(Math.random()*n)]=Z(0.30,0.55);
     var ecken=[];
     for(var i=0;i<n;i++){
-      var w=(i/n)*2*Math.PI+Z(-0.16,0.16), r=R*(1-Z(0,stil.radiusSpiel));
+      var w=(i/n)*2*Math.PI+Z(-0.16,0.16), r=R*strahl[i];
       var x=Math.cos(w)*r*s, y=Math.sin(w)*r/s;
       ecken.push([cx+x*co-y*si, cy+x*si+y*co]);
     }
-    // Die Woelbung ist ein Anteil der KANTENLAENGE. Bei vielen kurzen Kanten
-    // ergibt derselbe Anteil eine Bluete mit lauter Bogen statt einer Figur -
-    // so etwas kommt in den echten Serien nicht vor. Deshalb faellt die
-    // Woelbung mit steigender Eckenzahl.
-    var woelbung=stil.bauch*Math.min(1.4, 7/n);
-    var kanten=ecken.map(function(a,i){
-      var b=ecken[(i+1)%n], w=Math.random(), bauch;
-      if(w<stil.gerade) bauch=Z(-0.02,0.04);
-      else if(w<1-stil.kerbe) bauch=Z(woelbung*0.35, woelbung);
-      else bauch=-Z(woelbung*0.35, woelbung*0.8);
-      var mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2, dx=b[0]-a[0], dy=b[1]-a[1];
-      return {a:a,b:b,c:[mx-dy*bauch, my+dx*bauch]};
+    // GLATTE KONTUR statt Vieleck. Die Originale sind runde Kiesel mit
+    // weichen Wellen, keine Vielecke - sie fuellen ihren Rahmen zu 74
+    // Prozent, ein Vieleck mit denselben Ecken nur zu 69. Deshalb laeuft
+    // hier eine geschlossene Kurve DURCH die Eckpunkte (Catmull-Rom als
+    // Bezier). Der Serienwert "rundung" regelt, wie weich: 0 gaebe wieder
+    // ein Vieleck, 1 die uebliche weiche Kurve, darueber schwingt sie aus.
+    // Einzelne Ecken duerfen spitz bleiben - auch das kommt im Original vor.
+    var spitz=ecken.map(function(){ return Math.random()<stil.eckenAnteil; });
+    var stuecke=[];
+    for(var i=0;i<n;i++){
+      var p0=ecken[(i-1+n)%n], p1=ecken[i], p2=ecken[(i+1)%n], p3=ecken[(i+2)%n];
+      var k1=spitz[i] ? 0 : rund, k2=spitz[(i+1)%n] ? 0 : rund;
+      stuecke.push({
+        a:p1, b:p2,
+        c1:[p1[0]+(p2[0]-p0[0])/6*k1, p1[1]+(p2[1]-p0[1])/6*k1],
+        c2:[p2[0]-(p3[0]-p1[0])/6*k2, p2[1]-(p3[1]-p1[1])/6*k2]
+      });
+    }
+    var abtasten=function(st){
+      var pk=[];
+      st.forEach(function(k){
+        for(var i=0;i<14;i++){
+          var t=i/14, u=1-t;
+          pk.push([
+            u*u*u*k.a[0]+3*u*u*t*k.c1[0]+3*u*t*t*k.c2[0]+t*t*t*k.b[0],
+            u*u*u*k.a[1]+3*u*u*t*k.c1[1]+3*u*t*t*k.c2[1]+t*t*t*k.b[1]]);
+        }
+      });
+      return pk;
+    };
+    var rahmen=function(pk){
+      var a=1e9,b=1e9,c=-1e9,d=-1e9;
+      pk.forEach(function(q){
+        if(q[0]<a) a=q[0]; if(q[0]>c) c=q[0];
+        if(q[1]<b) b=q[1]; if(q[1]>d) d=q[1]; });
+      return {minx:a, miny:b, maxx:c, maxy:d, diag:Math.hypot(c-a, d-b)};
+    };
+    var punkte=abtasten(stuecke);
+    // AUF EINEN FESTEN RAHMEN NORMIEREN, nicht auf einen festen Radius. Sonst
+    // haengt die Groesse einer Figur an ihrer Form: Eine stark eingebuchtete
+    // Figur hat bei gleichem Radius einen kleineren Rahmen als eine runde,
+    // und die gemessene Groessenstreuung stieg allein dadurch von 3 auf 9
+    // Prozent. Im Original stehen runde und zerklueftete Figuren nebeneinander
+    // und sind trotzdem alle gleich gross - die Figur wird also auf ihren
+    // Rahmen gebracht, nicht auf ihren Radius.
+    var r0=rahmen(punkte), f=(R*2)/r0.diag;
+    var mx=(r0.minx+r0.maxx)/2, my=(r0.miny+r0.maxy)/2;
+    var ziehen=function(q){ return [cx+(q[0]-mx)*f, cy+(q[1]-my)*f]; };
+    stuecke=stuecke.map(function(k){
+      return {a:ziehen(k.a), b:ziehen(k.b), c1:ziehen(k.c1), c2:ziehen(k.c2)}; });
+    punkte=abtasten(stuecke);
+    // SICHERHEITSHALBER NACHMESSEN: Eine weiche Kurve durch die Stuetzpunkte
+    // schwingt bei hoher Rundung ueber sie hinaus. Raegt die Figur aus dem
+    // Zeichenfeld, schneidet der Rand sie ab - und das faellt am Bildschirm
+    // erst auf, wenn es jemandem auffaellt. Lieber neu wuerfeln.
+    var r1=rahmen(punkte);
+    if(r1.minx<3||r1.miny<3||r1.maxx>G-3||r1.maxy>G-3) return null;
+    var d='M'+stuecke[0].a[0].toFixed(1)+','+stuecke[0].a[1].toFixed(1);
+    stuecke.forEach(function(k){
+      d+='C'+k.c1[0].toFixed(1)+','+k.c1[1].toFixed(1)+' '+k.c2[0].toFixed(1)+','+k.c2[1].toFixed(1)
+        +' '+k.b[0].toFixed(1)+','+k.b[1].toFixed(1);
     });
-    var punkte=[];
-    kanten.forEach(function(k){
-      for(var i=0;i<14;i++){ var t=i/14, u=1-t;
-        punkte.push([u*u*k.a[0]+2*u*t*k.c[0]+t*t*k.b[0], u*u*k.a[1]+2*u*t*k.c[1]+t*t*k.b[1]]); }
-    });
-    var d='M'+kanten[0].a[0].toFixed(1)+','+kanten[0].a[1].toFixed(1);
-    kanten.forEach(function(k){ d+='Q'+k.c[0].toFixed(1)+','+k.c[1].toFixed(1)+' '+k.b[0].toFixed(1)+','+k.b[1].toFixed(1); });
     return {d:d+'Z', punkte:punkte, R:R};
   }
   function drin(x,y,p){var d=false;for(var i=0,j=p.length-1;i<p.length;j=i++){
@@ -511,17 +593,26 @@
   function figur(stil){
     for(var versuch=0; versuch<60; versuch++){
       var form=aussenform(stil);
+      if(!form) continue;
       // Die Buchstaben schrumpfen mit der Figur mit, sonst platzt die
       // Beschriftung aus einer kleinen Figur heraus.
-      var schrift=Math.max(8, Math.min(13, 12*form.R/(G*0.36)));
+      var schrift=Math.max(9, Math.min(13, 12*form.R/(G*0.38)));
       var lab=aufteilen(form, stil);
       if(!lab) continue;
       var mitten=buchstabenplatz(lab, schrift);
       if(!mitten) continue;
       var g=netz(lab);
       if(!g) continue;
+      // AUSSCHNITT JE SERIE. Das Zeichenfeld ist 150 breit, die Figur misst
+      // aber nur rund 80 - bliebe der Ausschnitt fest, staende die Figur
+      // klein in einem leeren Kasten, waehrend sie im Original ihr Feld gut
+      // ausfuellt. Der Ausschnitt folgt deshalb der Seriengroesse; INNERHALB
+      // einer Serie bleibt er gleich, damit die kleinen Groessenunterschiede
+      // der Figuren sichtbar bleiben.
+      var seite=Math.min(G, 1.75*G*stil.groesse), rand=(G-seite)/2;
       return {form:form.d, felder:g.flaechen, linien:g.linien, mitten:mitten,
-              schrift:schrift, strich:stil.strich, kontur:stil.kontur};
+              schrift:schrift, strich:stil.strich, kontur:stil.kontur,
+              sicht:rand.toFixed(1)+' '+rand.toFixed(1)+' '+seite.toFixed(1)+' '+seite.toFixed(1)};
     }
     return null;
   }
@@ -531,7 +622,7 @@
   // Clip der einen auf die andere zu und die Trennlinien ragen aus der Form.
   function svg(f,schwarz,mitBuchstaben,klasse){
     var k='figclip'+(lauf++);
-    var s='<svg class="fig-svg '+(klasse||'')+'" viewBox="0 0 '+G+' '+G+'" role="img">';
+    var s='<svg class="fig-svg '+(klasse||'')+'" viewBox="'+f.sicht+'" role="img">';
     s+='<defs><clipPath id="'+k+'"><path d="'+f.form+'"/></clipPath></defs>';
     s+='<g clip-path="url(#'+k+')">';
     f.felder.forEach(function(d,i){ s+='<path d="'+d+'" fill="'+(i===schwarz?'#000':'#fff')+'"/>'; });

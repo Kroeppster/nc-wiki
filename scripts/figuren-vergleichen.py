@@ -14,6 +14,21 @@ Vorgabe sind 10 Serien zu je 18 Figuren; mehr wird genauer und dauert
 laenger. Das Skript holt sich die Figuren selbst (ueber
 scripts/figuren-abbild.mjs) und braucht dafuer den laufenden Testserver.
 
+Mit --original <pfad.pdf> kommt zusaetzlich die Seite "Figuren lernen
+(Einpraegephase)" aus den offiziellen Beispielaufgaben von swissuniversities
+dazu. Das PDF liegt NICHT im Repo (es gehoert nicht uns), zu finden ist es
+ueber swissuniversities.ch, Stichwort Beispielaufgaben EMS. Ohne den Schalter
+zeigt die Ausgabe die einmal gemessenen Werte des Jahrgangs 2026 aus der
+Tabelle weiter unten.
+
+Zwei Dinge dabei im Kopf behalten:
+  - Vom Original gibt es nur EINE Serie. Was dort innerhalb der Serie streut,
+    ist ein Anhaltspunkt; wie stark sich zwei Serien unterscheiden duerfen,
+    sagt diese eine Seite nicht.
+  - Die Aufgaben wechseln von Jahr zu Jahr. 2026 sind es glatte Kiesel,
+    unsere Serie 2025 ist deutlich kantiger. Beides ist richtig, der
+    Generator soll beides koennen.
+
 Gebraucht werden pymupdf, numpy und scipy (pip install pymupdf numpy scipy).
 
 ES GIBT ZWEI TEILE, und der zweite ist der wichtigere:
@@ -70,6 +85,23 @@ except ImportError as fehlt:
 PROJEKT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SERIEN = os.path.join(PROJEKT, 'assets/downloads/uebungsaufgaben/figuren-fakten-lernen')
 
+# Einmal gemessen an der Seite "Figuren lernen (Einpraegephase)" der
+# offiziellen Beispielaufgaben 2026 von swissuniversities (18 Figuren).
+# Format: Mittelwert, 10er-, 90er-Perzentil. Das PDF selbst liegt nicht im
+# Repo; mit --original <pfad.pdf> laesst sich das hier nachrechnen.
+ORIGINAL_2026 = {
+    'genau fuenf Felder': (1.00, 1.00, 1.00),
+    'Nachbarschaften': (7.89, 7.00, 9.00),
+    'Flaeche/Rahmen': (0.74, 0.62, 0.86),
+    'Seitenverhaeltnis': (1.02, 0.92, 1.14),
+    'schwarzes Feld': (0.26, 0.21, 0.31),
+    'kleinstes Feld': (0.12, 0.08, 0.16),
+    'groesstes Feld': (0.31, 0.24, 0.38),
+    'laenglichstes Feld': (1.89, 1.34, 2.37),
+    # Groessenstreuung innerhalb der einen Originalserie: praktisch keine.
+    'Groesse CV': (0.027, 0.95, 1.05),
+}
+
 
 def einzelne_figuren(bild):
     """Schneidet ein Blatt in einzelne Figuren."""
@@ -124,15 +156,35 @@ def messen(grau, tinte):
     h, b = ys.max() - ys.min() + 1, xs.max() - xs.min() + 1
     schwarz = [f for f in felder if f['schwarz']]
     return dict(felderzahl=len(felder), nachbarn=nachbarn,
-                groesse=float(np.sqrt(flaeche)),
+                # Fuer die Groesse die RAHMENDIAGONALE, nicht die Flaeche:
+                # Die Flaeche mischt Groesse und Form - eine tief eingekerbte
+                # Figur hat bei gleicher Spannweite weniger davon.
+                groesse=float(np.hypot(h, b)),
                 fuellgrad=flaeche / (h * b), seitenverh=b / h,
                 schwarzanteil=schwarz[0]['anteil'] if schwarz else 0,
                 anteile=sorted(f['anteil'] for f in felder),
                 laenglich=max(f['laenglich'] for f in felder))
 
 
+def ist_figur(m):
+    """Figur oder Beiwerk?
+
+    Auf den echten Blaettern stehen ausser den 18 Figuren noch das Logo (oben
+    rechts) und das Lizenz-Abzeichen (unten). Beide sind gross genug, um als
+    Flaeche erkannt zu werden - und weil sie ganz andere Groessen haben als
+    die Figuren, haben sie die gemessene Groessenstreuung von 6% auf 20%
+    aufgeblaeht. Der Generator wurde daraufhin auf eine Streuung eingestellt,
+    die es in den echten Serien gar nicht gibt.
+    Eine Figur hat vier bis sechs Felder, hoechstens die Haelfte davon
+    schwarz, und fuellt ihren Rahmen weder fast ganz noch fast gar nicht.
+    """
+    return (m is not None and 4 <= m['felderzahl'] <= 6
+            and m['schwarzanteil'] < 0.5 and 0.35 < m['fuellgrad'] < 0.95)
+
+
 def blatt_messen(bild):
-    return [m for f in einzelne_figuren(bild) if (m := messen(*f))]
+    return [m for f in einzelne_figuren(bild)
+            if (m := messen(*f)) and ist_figur(m)]
 
 
 def echte_figuren():
@@ -147,13 +199,19 @@ def echte_figuren():
     return alle
 
 
-def zeile(name, echt, neu, ziffern=2):
+def zeile(name, echt, neu, orig=None, ziffern=2):
     def z(v):
         return f'{np.mean(v):.{ziffern}f} [{np.percentile(v,10):.{ziffern}f}-{np.percentile(v,90):.{ziffern}f}]'
+    if orig is None:
+        orig = ORIGINAL_2026.get(name)
+    if isinstance(orig, tuple):
+        ospalte = f'{orig[0]:.{ziffern}f} [{orig[1]:.{ziffern}f}-{orig[2]:.{ziffern}f}]'
+    else:
+        ospalte = z(orig)
     daneben = ''
     if abs(np.mean(echt) - np.mean(neu)) > 0.25 * (np.percentile(echt, 90) - np.percentile(echt, 10)):
         daneben = '  <-- weicht ab'
-    print(f'  {name:<26} {z(echt):>22}   {z(neu):>22}{daneben}')
+    print(f'  {name:<22} {ospalte:>20} {z(echt):>20} {z(neu):>20}{daneben}')
 
 
 def serienwerte(ms):
@@ -171,8 +229,31 @@ def serienwerte(ms):
         groessenspiel=float(np.std([m['groesse'] for m in f5]) / np.mean([m['groesse'] for m in f5])))
 
 
+def original_lesen(pfad):
+    """Die Einpraegephase-Seite aus den offiziellen Beispielaufgaben messen."""
+    d = pymupdf.open(pfad)
+    for nr in range(d.page_count):
+        t = d[nr].get_text()
+        if 'Figuren lernen' in t and 'Einpr' in t and nr + 1 < d.page_count:
+            pix = d[nr + 1].get_pixmap(dpi=250)   # die Figuren stehen auf der Folgeseite
+            bild = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)
+            ms = blatt_messen(bild)
+            if len(ms) >= 12:
+                return ms, f'{os.path.basename(pfad)[:18]} S.{nr+2}'
+    return None, None
+
+
 def main():
     serien = int(next((a for a in sys.argv[1:] if a.isdigit()), '10'))
+    orig, original_quelle = None, '2026'
+    if '--original' in sys.argv:
+        pfad = sys.argv[sys.argv.index('--original') + 1]
+        orig, quelle = original_lesen(pfad)
+        if not orig:
+            sys.exit(f'In {pfad} keine Figurenseite gefunden.')
+        original_quelle = quelle
+        print(f'Original gemessen: {len(orig)} Figuren aus {quelle}')
+    o5liste = [m for m in orig if m['felderzahl'] == 5] if orig else None
     ordner = tempfile.mkdtemp()
     print(f'Erzeuge {serien} Serien ...')
     r = subprocess.run(['node', os.path.join(PROJEKT, 'scripts/figuren-abbild.mjs'),
@@ -204,20 +285,29 @@ def main():
 
     def anteil5(ms):
         return sum(1 for m in ms if m['felderzahl'] == 5) / len(ms)
-    print(f'\nTEIL 1 - DIE EINZELNE FIGUR')
-    print(f'{"":<28} {"ECHT (n=" + str(len(echt)) + ")":>22}   {"ERZEUGT (n=" + str(len(neu)) + ")":>22}')
-    print(f'  {"genau fuenf Felder":<26} {anteil5(echt)*100:21.0f}%   {anteil5(neu)*100:21.0f}%')
+    print('\nTEIL 1 - DIE EINZELNE FIGUR')
+    print(f'  {"":<22} {"ORIGINAL " + str(original_quelle):>20} {"unsere Serien":>20} {"ERZEUGT":>20}')
+    print(f'  {"":<22} {"(18 Figuren)":>20} {"(n=" + str(len(echt)) + ")":>20} {"(n=" + str(len(neu)) + ")":>20}')
+    o5 = (f'{anteil5(orig)*100:.0f}%' if orig else f'{ORIGINAL_2026["genau fuenf Felder"][0]*100:.0f}%')
+    print(f'  {"genau fuenf Felder":<22} {o5:>20} {anteil5(echt)*100:19.0f}% {anteil5(neu)*100:19.0f}%')
     e5 = [m for m in echt if m['felderzahl'] == 5]
     n5 = [m for m in neu if m['felderzahl'] == 5]
     if not e5 or not n5:
         sys.exit('Keine Figuren mit fuenf Feldern gefunden.')
-    zeile('Nachbarschaften', [m['nachbarn'] for m in e5], [m['nachbarn'] for m in n5])
-    zeile('Flaeche/Rahmen', [m['fuellgrad'] for m in e5], [m['fuellgrad'] for m in n5])
-    zeile('Seitenverhaeltnis', [m['seitenverh'] for m in e5], [m['seitenverh'] for m in n5])
-    zeile('schwarzes Feld', [m['schwarzanteil'] for m in e5], [m['schwarzanteil'] for m in n5])
-    zeile('kleinstes Feld', [m['anteile'][0] for m in e5], [m['anteile'][0] for m in n5])
-    zeile('groesstes Feld', [m['anteile'][-1] for m in e5], [m['anteile'][-1] for m in n5])
-    zeile('laenglichstes Feld', [m['laenglich'] for m in e5], [m['laenglich'] for m in n5])
+    zeile('Nachbarschaften', [m['nachbarn'] for m in e5], [m['nachbarn'] for m in n5],
+          [m['nachbarn'] for m in o5liste] if o5liste else None)
+    zeile('Flaeche/Rahmen', [m['fuellgrad'] for m in e5], [m['fuellgrad'] for m in n5],
+          [m['fuellgrad'] for m in o5liste] if o5liste else None)
+    zeile('Seitenverhaeltnis', [m['seitenverh'] for m in e5], [m['seitenverh'] for m in n5],
+          [m['seitenverh'] for m in o5liste] if o5liste else None)
+    zeile('schwarzes Feld', [m['schwarzanteil'] for m in e5], [m['schwarzanteil'] for m in n5],
+          [m['schwarzanteil'] for m in o5liste] if o5liste else None)
+    zeile('kleinstes Feld', [m['anteile'][0] for m in e5], [m['anteile'][0] for m in n5],
+          [m['anteile'][0] for m in o5liste] if o5liste else None)
+    zeile('groesstes Feld', [m['anteile'][-1] for m in e5], [m['anteile'][-1] for m in n5],
+          [m['anteile'][-1] for m in o5liste] if o5liste else None)
+    zeile('laenglichstes Feld', [m['laenglich'] for m in e5], [m['laenglich'] for m in n5],
+          [m['laenglich'] for m in o5liste] if o5liste else None)
     print('  (Mittelwert, in Klammern der Bereich, in dem 80% der Figuren liegen.)')
     print('  Bei den echten Serien sind die "nicht fuenf Felder" fast immer')
     print('  Messfehler an eng beieinander liegenden Feldern, keine echten Fehler.')
@@ -226,12 +316,16 @@ def main():
     print(f'{"":<28} {"ECHT (" + str(len(echt_serien)) + " Serien)":>22}   {"ERZEUGT (" + str(len(neu_serien)) + " Serien)":>22}')
     for feld, name in [('nachbarn', 'Nachbarschaften'), ('fuellgrad', 'Flaeche/Rahmen'),
                        ('laenglich', 'laenglichstes Feld'), ('kleinstes', 'kleinstes Feld'),
-                       ('groesstes', 'groesstes Feld'), ('groessenspiel', 'Groessenspiel in der Serie')]:
+                       ('groesstes', 'groesstes Feld'), ('groessenspiel', 'Groessenstreuung in Serie')]:
         e = np.array([w[feld] for w in echt_serien])
         n = np.array([w[feld] for w in neu_serien])
         warnung = '  <-- zu wenig Unterschied' if n.std() < e.std() * 0.55 else ''
         print(f'  {name:<26} {e.min():7.2f}..{e.max():<6.2f} +-{e.std():.3f}   '
               f'{n.min():7.2f}..{n.max():<6.2f} +-{n.std():.3f}{warnung}')
+    o = ORIGINAL_2026['Groesse CV']
+    print(f'  (Zum Vergleich: die eine Originalserie 2026 streut in der Groesse um '
+          f'{o[0]:.3f} -')
+    print(f'   ihre kleinste Figur misst {o[1]:.2f}, ihre groesste {o[2]:.2f} des Schnitts.)')
     print('  (Kleinster und groesster SERIENWERT, dahinter die Streuung zwischen')
     print('  den Serien. Je groesser die Streuung, desto verschiedener wirken')
     print('  zwei Durchlaeufe. Zu kleine Streuung heisst: alle Serien gleichen')

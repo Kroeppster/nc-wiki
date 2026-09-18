@@ -630,11 +630,28 @@ Bänder quer durch die Figur; das erklärt die ruhigeren Serien wie 2022 S01).
 
 ```bash
 python3 scripts/figuren-vergleichen.py 14
+python3 scripts/figuren-vergleichen.py 14 --original ~/Beispielaufgaben2026.pdf
 ```
 
 Das Skript würfelt 14 Serien, misst sie und die echten mit demselben Massstab
 und stellt beides nebeneinander. Es braucht `pip install pymupdf numpy scipy
-pillow`. Der Bericht hat **zwei Teile, und der zweite ist der wichtigere**:
+pillow`.
+
+Die erste Spalte sind die **offiziellen Beispielaufgaben von
+swissuniversities** (Jahrgang 2026, Seite „Figuren lernen – Einprägephase").
+Das PDF liegt **nicht im Repo**, es gehört nicht uns; zu finden ist es auf
+swissuniversities.ch unter „Beispielaufgaben EMS". Ohne `--original` zeigt die
+Spalte die einmal gemessenen Werte aus der Tabelle oben im Skript. Zwei Dinge
+dabei im Kopf behalten:
+
+- **Das Original ist nur eine Serie.** Was dort innerhalb einer Serie streut,
+  ist ein guter Massstab. Wie stark sich zwei Serien unterscheiden dürfen,
+  sagt diese eine Seite nicht — dafür sind unsere elf eigenen Serien da.
+- **Die Aufgaben wechseln jährlich.** 2026 sind es glatte Kiesel, unsere Serie
+  2025 ist deutlich kantiger. Beides ist richtig; der Generator kann beides,
+  und welches davon kommt, entscheidet der Serienstil.
+
+Der Bericht hat **zwei Teile, und der zweite ist der wichtigere**:
 
 - **Teil 1** vergleicht einzelne Figuren: Sieht eine Figur aus wie eine echte?
 - **Teil 2** vergleicht ganze Serien: Sehen zwei Durchläufe verschieden aus?
@@ -647,12 +664,29 @@ Kette. Die echten Figuren liegen bei 7.9 – ein Netz. Genau dieser Unterschied
 ist das, was man auf den ersten Blick sieht, und der erste Entwurf lag mit 6.6
 sichtbar daneben.
 
-**Eine Falle beim Stil-Würfeln,** die man sonst zweimal baut: Die Grenzwerte
-einer Serie müssen zueinander passen. Verlangt ein Stil sehr unterschiedlich
-grosse Felder **und** enge Grenzen, scheitert fast jede Figur, die Serie wird
-verworfen und neu gewürfelt – am Ende überleben nur die grosszügigen Stile, und
-die Unterschiede zwischen den Serien sind wieder weg. Im Skript sind die beiden
-Werte deshalb aneinander gekoppelt.
+**Vier Fallen,** die man sonst ein zweites Mal baut – alle vier sind hier
+schon zugeschlagen:
+
+- **Logo und Lizenzabzeichen sind keine Figuren.** Auf unseren Blättern stehen
+  ausser den 18 Figuren noch das NC-Wiki-Logo und das CC-Abzeichen. Beide sind
+  gross genug, um erkannt zu werden, und haben ganz andere Grössen – die
+  gemessene Grössenstreuung sprang dadurch von 6 auf 20 Prozent, und der
+  Generator wurde auf eine Streuung eingestellt, die es gar nicht gibt.
+  `ist_figur()` im Vergleichsskript sortiert sie heute aus.
+- **Auf den Rahmen normieren, nicht auf den Radius.** Sonst hängt die Grösse
+  einer Figur an ihrer Form: Eine stark eingebuchtete Figur hat bei gleichem
+  Radius einen kleineren Rahmen als eine runde. Im Original stehen runde und
+  zerklüftete Figuren nebeneinander und sind trotzdem alle gleich gross.
+- **Die Wellenlänge der Raumverbiegung muss kürzer sein als die Figur.** Ist
+  sie viel länger, wirkt die Verbiegung über die Figur hinweg wie eine reine
+  Scherung – und eine gescherte Voronoi-Aufteilung hat wieder gerade Kanten.
+  Die Figuren sahen aus wie ein gesprungener Teller statt wie die weit
+  ausholenden Schwünge im Original.
+- **Die Grenzwerte einer Serie müssen zueinander passen.** Verlangt ein Stil
+  sehr unterschiedlich grosse Felder **und** enge Grenzen, scheitert fast jede
+  Figur, die Serie wird verworfen und neu gewürfelt – am Ende überleben nur die
+  grosszügigen Stile, und die Unterschiede zwischen den Serien sind wieder weg.
+  Im Skript sind die beiden Werte deshalb aneinander gekoppelt.
 
 **Wer am Zeichnen etwas ändert,** liest zuerst den Kommentarkopf in
 `layouts/shortcodes/figuren-generator.html` und die vier Abschnitte im Skript.
