@@ -3,3 +3,7 @@
 /node_modules/
 /linkcheck-root/
 .hugo_build.lock
+
+# Python-Zwischenspeicher (entsteht, wenn ein Skript ein anderes einliest)
+__pycache__/
+*.pyc
