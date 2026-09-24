@@ -1,0 +1,31 @@
+{{- /*
+  ============================================================================
+  BAUSTEINE IM SEITENTEXT: Testablauf, Team, Fakten- und Figuren-Generator
+  ============================================================================
+  Im Text einer Seite steht ein Baustein so:
+
+      ```baustein
+      testablauf
+      ```
+
+  Beim Bauen wird daraus der jeweilige Teil aus layouts/partials/bausteine/.
+  Erlaubt sind: testablauf, team-leitung, fakten-generator, figuren-generator.
+
+  WARUM EIN CODE-BLOCK und nicht mehr {{< testablauf >}}: Der Web-Editor
+  (Pages CMS) macht aus der Shortcode-Klammer beim Speichern {{&lt; ... &gt;}},
+  und dann steht der Text woertlich auf der Seite statt der Tabelle. Einen
+  Code-Block laesst der Editor dagegen Zeichen fuer Zeichen stehen - im
+  Editor erscheint er als grauer Kasten, und genau dort erscheint auf der
+  Website der Baustein. Die alte Schreibweise funktioniert weiterhin
+  (layouts/shortcodes/), wird im Inhalt aber nicht mehr verwendet.
+
+  Ein unbekannter Name bricht den Build mit einer Meldung ab.
+  ============================================================================
+*/ -}}
+{{- $name := trim .Inner " \n\r\t" -}}
+{{- $erlaubt := slice "testablauf" "team-leitung" "fakten-generator" "figuren-generator" -}}
+{{- if in $erlaubt $name -}}
+  {{- partial (printf "bausteine/%s.html" $name) .Page -}}
+{{- else -}}
+  {{- errorf "Unbekannter Baustein %q in %s. Erlaubt: %s" $name .Page.File.Path (delimit $erlaubt ", ") -}}
+{{- end -}}

@@ -43,7 +43,13 @@ sonst fehl.
 - Neue sichtbare Texte immer dreisprachig anlegen (`content/de|fr|it/...` bzw.
   `i18n/de|fr|it.yaml`) — nie nur Deutsch.
 - Harte Links vermeiden, stattdessen Hugo-Funktionen: `relLangURL`, `.Site.Menus`,
-  `.Parent` (für Zurück-Links zur Übersichtsseite), `{{< ref >}}`.
+  `.Parent` (für Zurück-Links zur Übersichtsseite). Im Seitentext interne Links als
+  normale Markdown-Links schreiben (`[Uniguide](/ems/uniguide)`) – der Render-Hook
+  `layouts/_default/_markup/render-link.html` macht daraus die Adresse in der richtigen
+  Sprache und bricht den Build bei toten Links ab. **Kein `{{< ref >}}` und keine
+  Shortcodes im Inhalt**: Der Web-Editor (Pages CMS) zerstört sie beim Speichern.
+  Eingebettete Bausteine stattdessen als Code-Block ```` ```baustein ```` (siehe
+  `render-codeblock-baustein.html`).
 - Übungsaufgaben-Inhalte (`content/*/ems/uebungsaufgaben/` und zugehörige PDFs unter
   `assets/downloads/uebungsaufgaben/`) stehen unter CC BY-NC 4.0 — Lizenzhinweis nicht
   entfernen.

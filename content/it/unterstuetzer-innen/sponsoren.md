@@ -2,4 +2,4 @@
 title: "Sponsor"
 ---
 
-Testo segnaposto: qui sarà presto disponibile una panoramica dedicata ai nostri sponsor. Nel frattempo trovi i nostri sostenitori attuali nella pagina [Sostenitori e sostenitrici]({{< ref "/unterstuetzer-innen" >}}).
+Testo segnaposto: qui sarà presto disponibile una panoramica dedicata ai nostri sponsor. Nel frattempo trovi i nostri sostenitori attuali nella pagina [Sostenitori e sostenitrici](/unterstuetzer-innen).

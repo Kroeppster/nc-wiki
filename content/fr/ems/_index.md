@@ -8,12 +8,12 @@ menu:
 
 ## Accès direct aux rubriques
 
-- [Exercices]({{< ref "/ems/uebungsaufgaben" >}})
-- [Simulations de test]({{< ref "/ems/testsimulationen" >}})
-- [Cours de préparation]({{< ref "/ems/vorbereitungskurse" >}})
-- [Uniguide]({{< ref "/ems/uniguide" >}})
-- [Témoignages]({{< ref "/ems/erfahrungsberichte" >}})
-- [Q&R]({{< ref "/ems/qa" >}})
+- [Exercices](/ems/uebungsaufgaben)
+- [Simulations de test](/ems/testsimulationen)
+- [Cours de préparation](/ems/vorbereitungskurse)
+- [Uniguide](/ems/uniguide)
+- [Témoignages](/ems/erfahrungsberichte)
+- [Q&R](/ems/qa)
 
 ## 1. Préparation au NC
 
@@ -31,7 +31,7 @@ N'oublie pas que tu dois t'inscrire **avant le 15 février**. N'oublie pas non p
 
 Lors de l'inscription, tu dois indiquer, par ordre de priorité, dans quelle université tu souhaites effectuer tes études de médecine humaine, dentaire ou vétérinaire. Fais attention à deux choses :
 
-- Si tu réussis l'EMS, ton domicile fiscal te garantit une place dans l'université de ton canton de résidence – mais seulement si l'université de ton canton propose aussi un cursus de médecine. Bâle-Campagne est aussi considéré comme un canton universitaire pour l'Université de Bâle. Détails sur chaque université dans notre [Uniguide]({{< ref "/ems/uniguide" >}}).
+- Si tu réussis l'EMS, ton domicile fiscal te garantit une place dans l'université de ton canton de résidence – mais seulement si l'université de ton canton propose aussi un cursus de médecine. Bâle-Campagne est aussi considéré comme un canton universitaire pour l'Université de Bâle. Détails sur chaque université dans notre [Uniguide](/ems/uniguide).
 - Certaines universités sont plus populaires et demandent donc un meilleur classement par rapport aux autres candidat·e·s. Ta première priorité est cependant toujours considérée en premier. Exemple : tu choisis l'ETH comme premier choix et l'Uni Zurich comme deuxième choix. L'ETH est moins populaire pour la médecine humaine qu'Uni Zurich. Même si tu fais partie du 1 % le plus performant, tu seras quand même affecté·e à ton premier choix (ETH).
 
 ### 1.4 Connaître les consignes par cœur
@@ -97,9 +97,11 @@ Tout ce qui est apporté dans la salle d'examen – y compris les boissons – d
 
 Il n'y a pas de pause entre les sous-tests, il faut donc toujours tourner la page directement.
 
-{{< testablauf >}}
+```baustein
+testablauf
+```
 
-Retrouve nos guides pour tous les sous-tests sous [Exercices]({{< ref "/ems/uebungsaufgaben" >}}).
+Retrouve nos guides pour tous les sous-tests sous [Exercices](/ems/uebungsaufgaben).
 
 ### 3.1 Remplir la feuille de réponses et deviner stratégiquement
 
@@ -113,4 +115,4 @@ Tu as terminé le test d'aptitude – félicitations, c'est une belle performanc
 
 ## 5. Témoignages
 
-Jette un coup d'œil aux [témoignages]({{< ref "/ems/erfahrungsberichte" >}}) des années précédentes – ou [soumets le tien]({{< ref "/ems/erfahrungsberichte/bericht-einreichen" >}}).
+Jette un coup d'œil aux [témoignages](/ems/erfahrungsberichte) des années précédentes – ou [soumets le tien](/ems/erfahrungsberichte/bericht-einreichen).

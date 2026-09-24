@@ -52,4 +52,6 @@ Memorizzare figure e fatti, così come il test di concentrazione, si possono all
 
 ## Generatore di fatti
 
-{{< fakten-generator >}}
+```baustein
+fakten-generator
+```

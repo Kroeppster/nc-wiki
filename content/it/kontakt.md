@@ -12,7 +12,7 @@ menu:
 
 Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente di medicina, contattaci pure!
 
-Troverai le risposte alle domande più frequenti più rapidamente nel nostro [Q&A]({{< ref "/ems/qa" >}}).
+Troverai le risposte alle domande più frequenti più rapidamente nel nostro [Q&A](/ems/qa).
 
 Cerchiamo di lavorare con grande cura, ma se noti qualcosa di errato o incompleto, siamo molto felici di ricevere un tuo feedback!
 

@@ -49,7 +49,9 @@ Im NCWiki-Team engagieren sich über 110 Medizinstudierende aus der ganzen Schwe
 
 ## Aktuelles Leitungsteam
 
-{{< team-leitung >}}
+```baustein
+team-leitung
+```
 
 ## Team Saison 2025/26
 
@@ -127,4 +129,4 @@ Wir danken unseren ehemaligen Verantwortlichen für ihr besonderes Engagement in
 
 ## Mitmachen
 
-Für Fragen, Anregungen oder wenn du dich als Medizinstudent\*in auch bei uns engagieren möchtest, melde dich gerne über unser [Kontaktformular]({{< ref "/kontakt" >}})!
+Für Fragen, Anregungen oder wenn du dich als Medizinstudent\*in auch bei uns engagieren möchtest, melde dich gerne über unser [Kontaktformular](/kontakt)!

@@ -177,6 +177,47 @@ irgendwo ohne Anführungszeichen steht.
 
 ---
 
+## 2c. Links und Bausteine im Seitentext
+
+**Interne Links** schreibt man als ganz normalen Markdown-Link mit dem Pfad der
+Seite, ohne Sprache und ohne `/nc-wiki/`:
+
+```markdown
+Mehr dazu im [Uniguide](/ems/uniguide).
+```
+
+Beim Bauen wird daraus die richtige Adresse – auf einer französischen Seite
+automatisch die französische Zielseite. Zeigt der Link auf eine Seite, die es
+(in dieser Sprache) nicht gibt, bricht der Build mit einer Meldung ab, statt
+still einen toten Link zu veröffentlichen.
+
+Früher stand hier `{{</* ref "/ems/uniguide" */>}}`. Das funktioniert noch, gehört
+aber nicht mehr in den Text: Der Web-Editor macht daraus beim Speichern
+`\[Uniguide\]({{&lt; ref … &gt;}})`, und der Link ist weg – und zwar schon, wenn
+jemand auf der Seite nur ein Komma ändert, weil der Editor dann die ganze Seite
+neu schreibt. Gemessen hätte das 58 Zeilen auf 25 Seiten getroffen.
+
+**Bausteine** (die Testablauf-Tabelle, das Leitungsteam, die beiden Generatoren)
+stehen als Code-Block im Text:
+
+````markdown
+```baustein
+testablauf
+```
+````
+
+Erlaubt sind `testablauf`, `team-leitung`, `fakten-generator` und
+`figuren-generator`. Im Web-Editor erscheint so ein Baustein als grauer Kasten –
+den verschiebt man als Ganzes oder lässt ihn stehen, aber schreibt nicht hinein.
+Ein Tippfehler im Namen bricht den Build mit einer Meldung ab.
+
+**Wie das geprüft wurde:** Jede Seite der Website ging einmal durch Laden und
+Speichern im Editor (dieselbe Bibliothek, die Pages CMS benutzt). Danach waren alle
+238 Dateien anders geschrieben – `&` als `&amp;`, Tabellen neu ausgerichtet –, aber
+die gebaute Website war Zeichen für Zeichen dieselbe.
+
+---
+
 ## 3. Wie füge ich ein PDF hinzu?
 
 Es gibt zwei verschiedene Wege, je nachdem, worum es geht.
@@ -610,8 +651,15 @@ Berufe aus **einem** Feld und drei Krankheiten aus **drei verschiedenen** Arten.
 Genau das macht die Menge lernbar. Wer die Kategorien auflöst, erzeugt Sets, die
 deutlich schwerer sind als die Prüfung.
 
-**Wo er auf der Seite steht,** bestimmt ihr: Der Shortcode `{{</* fakten-generator */>}}`
-lässt sich im Text der Seite beliebig verschieben.
+**Wo er auf der Seite steht,** bestimmt ihr: Der Baustein
+
+````
+```baustein
+fakten-generator
+```
+````
+
+lässt sich im Text der Seite beliebig verschieben (siehe Abschnitt 2c).
 
 **Was die Wörter ursprünglich gefüllt hat:** `scripts/fakten-listen-auslesen.py`
 liest sie aus den eigenen Übungs-PDFs aus. Das Skript **überschreibt die
@@ -663,9 +711,9 @@ gilt die Regel wieder voll.
 **Eine neue Funktion zum Testen dazulegen:** In `content/de/alpha/_index.md`
 einen Abschnitt schreiben, der sagt, *was zu beurteilen ist* (nicht nur, was es
 tut), und den Shortcode darunter setzen. Ist die Funktion freigegeben, wandert
-derselbe Shortcode auf die richtige Seite und der Abschnitt hier wird gelöscht.
+derselbe Baustein auf die richtige Seite und der Abschnitt hier wird gelöscht.
 
-**Der Figuren-Generator** (`{{</* figuren-generator */>}}`) würfelt 18 Figuren wie im
+**Der Figuren-Generator** (Baustein `figuren-generator`, siehe Abschnitt 2c) würfelt 18 Figuren wie im
 Untertest „Figuren lernen": jede in fünf verschieden grosse Felder geteilt,
 genau eines schwarz. Nach der Pause kommen dieselben Figuren in anderer
 Reihenfolge und mit Feldern A–E beschriftet zurück. Gleiche Begründung wie beim

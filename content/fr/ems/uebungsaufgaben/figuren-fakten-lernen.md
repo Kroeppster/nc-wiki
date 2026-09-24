@@ -52,4 +52,6 @@ Mémoriser des figures et des faits, ainsi que le test de concentration, se lais
 
 ## Générateur de faits
 
-{{< fakten-generator >}}
+```baustein
+fakten-generator
+```

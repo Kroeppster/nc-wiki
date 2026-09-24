@@ -118,8 +118,9 @@ def anleitung(mappe, anzahl_texte, anzahl_seiten, ohne_beschreibung):
         ('text', '**fett**  ·  *kursiv*  ·  [Linktext](Adresse)  ·  Aufzaehlung mit "- " am '
                  'Zeilenanfang. Ueberschriften beginnen mit # ## ### - diese Zeichen bitte '
                  'stehen lassen und nur den Text dahinter aendern.'),
-        ('text', 'Steht im Text etwas wie {{< ref "/ems/uniguide" >}}, ist das ein interner '
-                 'Link. Unveraendert uebernehmen, sonst bricht der Link.'),
+        ('text', 'Interne Links sehen so aus: [Uniguide](/ems/uniguide) - der Pfad der Seite, '
+                 'ohne Sprache. Ein grauer Kasten mit "baustein" ist die Testablauf-Tabelle, '
+                 'das Team oder ein Generator: bitte stehen lassen.'),
         ('leer', ''),
         ('kopf', 'Zwei Dinge, die auffallen werden'),
         ('text', f'Seitenbeschreibung: {ohne_beschreibung} Seiten haben noch keine. Das ist '

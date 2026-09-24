@@ -1,0 +1,44 @@
+{{- /*
+  ============================================================================
+  LINKS IM SEITENTEXT (automatischer Umbau beim Bauen)
+  ============================================================================
+  Interne Links schreibt man im Text jetzt ganz normal:
+
+      [Uniguide](/ems/uniguide)
+
+  Dieser Baustein sucht beim Bauen die Seite dazu und setzt die richtige
+  Adresse ein - in der Sprache der Seite, auf der der Link steht. Auf einer
+  franzoesischen Seite fuehrt derselbe Link also nach /fr/ems/uniguide/, und
+  der Projektpfad von GitHub Pages (/nc-wiki/) kommt von selbst davor.
+
+  WARUM NICHT MEHR {{< ref "/ems/uniguide" >}}: Das hat funktioniert, aber der
+  Web-Editor (Pages CMS) zerschiesst es beim Speichern - aus dem Link wird
+  \[Uniguide\]({{&lt; ref ... &gt;}}), und das schon, wenn auf der Seite nur
+  ein Komma geaendert wird, weil der Editor die ganze Seite neu schreibt.
+  Gemessen: 58 Zeilen auf 25 Seiten waeren kaputt gegangen. Ein normaler
+  Link uebersteht den Editor unveraendert. Nebenbei ist er auch in der
+  Excel-Textliste leichter zu lesen.
+
+  Fuehrt ein interner Link ins Leere, bricht der Build mit einer Meldung ab,
+  statt still einen toten Link auszuliefern - genau wie vorher bei ref.
+  Dateien (z.B. /downloads/x.pdf) werden nur um den Projektpfad ergaenzt.
+  Externe Links, mailto: und Sprungmarken (#...) bleiben, wie sie sind.
+  ============================================================================
+*/ -}}
+{{- $ziel := .Destination -}}
+{{- $u := urls.Parse .Destination -}}
+{{- if and (not $u.IsAbs) (strings.HasPrefix .Destination "/") -}}
+  {{- $pfad := $u.Path -}}
+  {{- if path.Ext $pfad -}}
+    {{- $ziel = $pfad | relURL -}}
+  {{- else -}}
+    {{- with .PageInner.GetPage $pfad -}}
+      {{- $ziel = .RelPermalink -}}
+    {{- else -}}
+      {{- errorf "Interner Link ins Leere: %q in %s. Gibt es die Seite in dieser Sprache?" $.Destination $.PageInner.File.Path -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $u.Fragment }}{{ $ziel = printf "%s#%s" $ziel . }}{{ end -}}
+{{- end -}}
+<a href="{{ $ziel | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text }}</a>
+{{- /* Kein Zeilenumbruch nach dem Link - sonst stuende im Text ein Leerzeichen zu viel. */ -}}

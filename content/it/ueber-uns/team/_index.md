@@ -49,7 +49,9 @@ Nel team di NCWiki fanno parte più di 110 studentesse e studenti delle facoltà
 
 ## Team dirigente attuale
 
-{{< team-leitung >}}
+```baustein
+team-leitung
+```
 
 ## Team stagione 2025/26
 
@@ -127,4 +129,4 @@ Ringraziamo i nostri ex responsabili per il loro particolare impegno nelle loro 
 
 ## Partecipare
 
-Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente delle facoltà mediche, contattaci tramite il nostro [modulo di contatto]({{< ref "/kontakt" >}})!
+Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente delle facoltà mediche, contattaci tramite il nostro [modulo di contatto](/kontakt)!

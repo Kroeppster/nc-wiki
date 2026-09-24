@@ -1,0 +1,52 @@
+{{- /*
+  ============================================================================
+  AKTUELLES LEITUNGSTEAM ALS FOTO-KARTEN-RASTER
+  ============================================================================
+  Verwendung im Markdown-Text: der Shortcode "team-leitung" ohne Parameter
+  (siehe content/de/ueber-uns/team/_index.md fuer ein Beispiel). Liest die
+  Liste aus dem Frontmatter der Seite (Feld "ressorts:", siehe
+  docs/WARTUNG-DETAILLIERT.md, Abschnitt "Team-Seite pflegen").
+
+  NACH RESSORTS GEGLIEDERT: Frueher war das eine einzige flache Liste aus 14
+  Karten - man sah, WER dabei ist, aber nicht, wer wofuer zustaendig ist. Jetzt
+  steht pro Gruppe eine Zwischenueberschrift darueber, in der Reihenfolge, in
+  der sie im Frontmatter stehen: Praesidium zuerst, dann die Koordination der
+  Sprachregionen, dann die uebrigen Ressorts. Die Reihenfolge aendert man,
+  indem man die Bloecke im Frontmatter verschiebt - hier ist nichts fest
+  verdrahtet.
+
+  Hat eine Person ein Foto hinterlegt (Feld "foto:" pro Eintrag, Pfad
+  relativ zu assets/images/, z. B. "team/alessio-iseli.jpg"), wird das Foto
+  rund zugeschnitten gezeigt. Fehlt das Foto (der Normalfall, solange noch
+  nicht alle Fotos vorliegen), erscheint automatisch ein farbiger Kreis mit
+  den Initialen als Platzhalter - exakt dieselbe Darstellung, die auch bei
+  Erfahrungsberichten ohne Foto verwendet wird (siehe
+  erfahrungsbericht-grid.html), damit die Website konsistent aussieht statt
+  irgendwo ein generisches "Bild fehlt"-Symbol zu zeigen.
+  ============================================================================
+*/ -}}
+{{- range .Params.ressorts }}
+<h3 class="team-ressort">{{ .titel }}</h3>
+<ul class="card-grid team-grid">
+  {{- range .mitglieder }}
+  {{- $name := .name }}
+  {{- $nameParts := split (strings.TrimSpace $name) " " }}
+  {{- $initials := "" }}
+  {{- if ge (len $nameParts) 1 }}{{ $initials = substr (index $nameParts 0) 0 1 }}{{ end }}
+  {{- if ge (len $nameParts) 2 }}{{ $initials = printf "%s%s" $initials (substr (index $nameParts 1) 0 1) }}{{ end }}
+  {{- $initials = upper $initials }}
+  {{- $colorIdx := mod (hash.FNV32a $name) 6 }}
+  <li class="card team-card">
+    {{- if .foto }}
+    <div class="team-photo">
+      {{ partial "image.html" (dict "src" .foto "alt" $name "sizes" "96px") }}
+    </div>
+    {{- else }}
+    <span class="avatar avatar-{{ $colorIdx }} avatar-lg" aria-hidden="true">{{ $initials }}</span>
+    {{- end }}
+    <h3>{{ $name }}</h3>
+    <p class="report-meta">{{ .rolle }}</p>
+  </li>
+  {{- end }}
+</ul>
+{{- end }}

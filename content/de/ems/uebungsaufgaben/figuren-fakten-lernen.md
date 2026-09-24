@@ -20,7 +20,9 @@ Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Kel
 
 ## Fakten-Generator
 
-{{< fakten-generator >}}
+```baustein
+fakten-generator
+```
 
 ## Wieso sind diese Untertests fürs spätere Studium relevant?
 

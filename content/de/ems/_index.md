@@ -9,12 +9,12 @@ menu:
 
 ## Direkt zu den Bereichen
 
-- [Übungsaufgaben]({{< ref "/ems/uebungsaufgaben" >}})
-- [Testsimulationen]({{< ref "/ems/testsimulationen" >}})
-- [Vorbereitungskurse]({{< ref "/ems/vorbereitungskurse" >}})
-- [Uniguide]({{< ref "/ems/uniguide" >}})
-- [Erfahrungsberichte]({{< ref "/ems/erfahrungsberichte" >}})
-- [Q&A]({{< ref "/ems/qa" >}})
+- [Übungsaufgaben](/ems/uebungsaufgaben)
+- [Testsimulationen](/ems/testsimulationen)
+- [Vorbereitungskurse](/ems/vorbereitungskurse)
+- [Uniguide](/ems/uniguide)
+- [Erfahrungsberichte](/ems/erfahrungsberichte)
+- [Q&A](/ems/qa)
 
 ## 1. Vorbereitung auf den NC
 
@@ -32,7 +32,7 @@ Bitte denk daran, dass du dich **bis zum 15. Februar** über [swissuniversities]
 
 Bei der Anmeldung musst du nach Priorität angeben, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Hierbei solltest du auf zwei Dinge achten:
 
-- Dein steuerlicher Wohnsitz garantiert dir bei bestandenem EMS einen Studienplatz in deinem Kanton, sofern dort Medizin angeboten wird. Für die Universität Basel gelten beide Basel als Unikanton und bieten diesen Vorteil. Die ETH bildet als eidgenössische Hochschule die einzige Ausnahme und gewährt keinen kantonalen Wohnsitzvorteil. Details zu den einzelnen Universitäten findest du in unserem [Uniguide]({{< ref "/ems/uniguide" >}}).
+- Dein steuerlicher Wohnsitz garantiert dir bei bestandenem EMS einen Studienplatz in deinem Kanton, sofern dort Medizin angeboten wird. Für die Universität Basel gelten beide Basel als Unikanton und bieten diesen Vorteil. Die ETH bildet als eidgenössische Hochschule die einzige Ausnahme und gewährt keinen kantonalen Wohnsitzvorteil. Details zu den einzelnen Universitäten findest du in unserem [Uniguide](/ems/uniguide).
 - Manche Universitäten sind beliebter, weshalb man einen höheren Rangplatz im Vergleich zu anderen Kandidierenden benötigt. Deine erste Priorität wird dabei immer zuerst berücksichtigt. Beispiel: Du wählst die ETH als erste Wahl und Uni Zürich als zweite Wahl. Die ETH ist für Humanmedizin weniger beliebt als die Uni Zürich. Da du bei deinem Testresultat unter den 1 % Besten warst, wirst du nun deiner Erstwahl (ETH) zugeteilt.
 
 ### 1.4 Aufgabenstellungen auswendig kennen
@@ -95,9 +95,11 @@ Alles, was in den Testsaal mitgenommen wird – auch die Getränke – muss in e
 
 Zwischen den Untertests gibt es keine Pausen – es heisst immer gleich weiterblättern.
 
-{{< testablauf >}}
+```baustein
+testablauf
+```
 
-Guides zu allen Untertests findest du unter [Übungsaufgaben]({{< ref "/ems/uebungsaufgaben" >}}).
+Guides zu allen Untertests findest du unter [Übungsaufgaben](/ems/uebungsaufgaben).
 
 ### 3.1 Antwortbogen vervollständigen und strategisches Raten
 
@@ -111,4 +113,4 @@ Du hast den Eignungstest hinter dir – das ist eine starke Leistung, gönn dir 
 
 ## 5. Erfahrungsberichte
 
-Schau bei den [Erfahrungsberichten]({{< ref "/ems/erfahrungsberichte" >}}) früherer Teilnehmender vorbei – oder [reiche selbst einen ein]({{< ref "/ems/erfahrungsberichte/bericht-einreichen" >}}).
+Schau bei den [Erfahrungsberichten](/ems/erfahrungsberichte) früherer Teilnehmender vorbei – oder [reiche selbst einen ein](/ems/erfahrungsberichte/bericht-einreichen).

@@ -49,7 +49,9 @@ Plus de 110 étudiant·e·s en médecine de toute la Suisse sont impliqué·e·s
 
 ## Équipe dirigeante actuelle
 
-{{< team-leitung >}}
+```baustein
+team-leitung
+```
 
 ## Équipe saison 2025/26
 
@@ -127,4 +129,4 @@ Nous remercions tou·te·s nos ancien·ne·s responsables pour leur engagement p
 
 ## S'engager
 
-Pour toute question, suggestion ou si tu souhaites t'engager avec nous en tant qu'étudiant·e en médecine, contacte-nous via notre [formulaire de contact]({{< ref "/kontakt" >}}) !
+Pour toute question, suggestion ou si tu souhaites t'engager avec nous en tant qu'étudiant·e en médecine, contacte-nous via notre [formulaire de contact](/kontakt) !

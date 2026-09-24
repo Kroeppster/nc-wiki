@@ -277,9 +277,10 @@ leitungsteam:
     rolle: "Events & Qualitätskontrolle"
 ```
 
-Der Shortcode `{{</* team-leitung */>}}` im Markdown-Text (direkt unter der Überschrift
-"Aktuelles Leitungsteam") liest diese Liste aus und baut daraus automatisch das
-Karten-Raster (siehe `layouts/shortcodes/team-leitung.html`).
+Der Baustein `team-leitung` im Markdown-Text (direkt unter der Überschrift
+"Aktuelles Leitungsteam", als Code-Block ```` ```baustein ```` – siehe Kurzguide,
+Abschnitt 2c) liest diese Liste aus und baut daraus automatisch das
+Karten-Raster (siehe `layouts/partials/bausteine/team-leitung.html`).
 
 **Foto oder Platzhalter:** Jeder Eintrag kann zusätzlich ein Feld `foto:` bekommen, mit
 dem Pfad zum Foto relativ zu `assets/images/`, z. B.:

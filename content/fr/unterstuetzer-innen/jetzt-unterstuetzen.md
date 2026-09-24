@@ -14,4 +14,4 @@ Verein NCWiki
 Basellandschaftliche Kantonalbank  
 IBAN : CH16 0076 9436 6089 3200 1
 
-Un don est aussi possible par Twint – contacte-nous via notre [formulaire de contact]({{< ref "/kontakt" >}}) pour obtenir le code QR.
+Un don est aussi possible par Twint – contacte-nous via notre [formulaire de contact](/kontakt) pour obtenir le code QR.
