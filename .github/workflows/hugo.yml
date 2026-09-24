@@ -30,6 +30,12 @@ name: Deploy Hugo site to GitHub Pages
 on:
   push:
     branches: ["main"]
+    # Eine hochgeladene Textmappe allein ändert an der Website nichts - die
+    # verarbeitet texte-einlesen.yml zu einem Pull Request. Erst wenn der
+    # übernommen wird, wird hier gebaut und veröffentlicht.
+    paths-ignore:
+      - "redaktion/*.xlsx"
+      - "redaktion/**/*.xlsx"
   pull_request:
     branches: ["main"]
   workflow_dispatch:
@@ -116,6 +122,28 @@ jobs:
       # Ordner von eben und legt seinen Index dort mit ab).
       - name: Build search index with Pagefind
         run: npx pagefind --site public
+
+      # Frische Textmappen zum Herunterladen, passend zu genau diesem Stand
+      # der Website: <website>/redaktion/ncwiki-texte-de.xlsx (-fr, -it),
+      # siehe docs/WARTUNG.md, Abschnitt 2b. Stand, Bemerkungen und
+      # Zuständigkeiten kommen aus redaktion/stand.json. Ohne Entwürfe und
+      # ohne passwortgeschützte Seiten (--oeffentlich) - die Mappen liegen
+      # frei lesbar auf der Website.
+      #
+      # "continue-on-error": Klappt das einmal nicht, wird die Website
+      # trotzdem veröffentlicht - dann eben ohne neue Mappen.
+      - name: Set up Python (for the text workbooks)
+        uses: actions/setup-python@v5
+        continue-on-error: true
+        with:
+          python-version: "3.12"
+
+      - name: Build fresh text workbooks
+        continue-on-error: true
+        run: |
+          pip install --quiet openpyxl pyyaml
+          python3 scripts/texte-ausgeben.py --oeffentlich --ziel public/redaktion \
+            --basis-url "${{ steps.pages.outputs.base_url }}/" --uebernehmen redaktion/stand.json
 
       # Technischer Zwischenschritt für die Link-Prüfung gleich danach: die
       # fertigen Seiten enthalten absolute Links wie "/nc-wiki/fr/news/"

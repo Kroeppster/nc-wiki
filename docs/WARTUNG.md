@@ -108,72 +108,140 @@ aber schön, wenn's geht.
 
 ## 2b. Texte schreiben und korrigieren – ohne Markdown und ohne Git
 
-Wer Texte schreibt, muss dafür weder Markdown noch GitHub können. Es gibt eine
-Arbeitsmappe, in der **jeder sichtbare Text der Website** steht – Titel,
-Beschreibungen, Überschriften, Absätze, Listen, in allen drei Sprachen. Man
-füllt eine gelbe Spalte aus, und ein Skript trägt die Texte zurück in die
-Website ein.
+Wer Texte schreibt, muss dafür weder Markdown noch Git können. Es gibt drei
+Excel-Mappen, **eine je Sprache**, mit jedem sichtbaren Text der Website: Titel,
+Beschreibungen, Überschriften, Absätze, Listen. Jede Seite hat ein eigenes Blatt,
+in der Reihenfolge der Navigationsleiste; die Erfahrungsberichte stehen gesammelt
+auf einem Blatt. Vorne gibt es eine **Anleitung** (in der Sprache der Mappe) und
+ein **Inhalt**-Blatt mit einem Link zu jeder Seite, Änderungszähler, fehlenden
+Beschreibungen und Spalten zum Aufteilen der Arbeit (Zuständig, Stand, Bemerkung).
+
+### Der Ablauf
+
+1. **Frische Mappe holen.** Nach jeder Veröffentlichung neu erzeugt:
+   `https://kroeppster.github.io/nc-wiki/redaktion/ncwiki-texte-de.xlsx` (bzw. `-fr`,
+   `-it`). Die Links stehen auch in [`redaktion/README.md`](../redaktion/README.md).
+2. **Direkt in den Zellen arbeiten:**
+
+   | Was | Wie | Die Zelle wird |
+   | --- | --- | --- |
+   | Text ändern | in der Spalte „Text" überschreiben | gelb |
+   | Neuer Absatz | Zeile einfügen, hineinschreiben; in „Typ" Absatz, Überschrift, Unterüberschrift, Liste oder Zitat wählen (leer = Absatz) | grün |
+   | Absatz löschen | `!Löschen!` in die Zelle | rot |
+   | Ganze Seite löschen | `!Löschen!` in die graue Zeile „Seite" | rot |
+   | Reihenfolge ändern | Zeile ausschneiden, an der neuen Stelle einfügen | – |
+   | Überschrift ↔ Absatz | in der Spalte „Typ" umstellen | – |
+
+   `!Löschen!` geht gross oder klein und in jeder Sprache (`!Supprimer!`,
+   `!Eliminare!`). Die Spalte „Änderung" sagt zu jeder Zeile, was beim Einlesen
+   passiert.
+3. **In den Ordner [`redaktion/`](../redaktion/) hochladen** (*Add file → Upload
+   files → Commit directly to the main branch*). Nach ein, zwei Minuten eröffnet
+   `.github/workflows/texte-einlesen.yml` einen Pull Request: die geänderten Seiten,
+   die Mappe wieder entfernt, die Website probeweise gebaut, und im Text ein
+   Bericht, was übernommen, übersprungen oder zu prüfen ist. **Live ist es erst
+   nach dem Übernehmen (Merge).**
+
+> **Das Repository ist öffentlich.** Eine hochgeladene Mappe – auch mit ihren
+> Bemerkungen und Zuständigkeiten – bleibt in der Git-Geschichte für alle lesbar.
+> Die veröffentlichten Mappen enthalten keine Entwürfe und keine
+> passwortgeschützten Seiten (Mitgliederbereich, Alpha).
+
+**Französisch und Italienisch** zeigen daneben die deutsche Vorlage. Fehlt ein
+Absatz in der Übersetzung, steht eine leere Zeile mit Vorlage da („· fehlt noch");
+ausfüllen genügt. Fehlt eine **ganze Seite**, hat sie trotzdem ein Blatt: Titel
+und Texte ausfüllen, und beim Einlesen wird sie angelegt – mit dem Seitenkopf der
+deutschen Seite (Datum, Menü, Reihenfolge), aber ohne deren Beschreibung.
+Unübersetzte Absätze bleiben dabei weg (und werden gemeldet), Tabellen und
+Bausteine kommen aus der deutschen Seite mit.
+
+### Was beim Einlesen passiert – und was absichtlich nicht
+
+Jede geänderte Seite wird **aus den Zeilen ihres Blatts neu zusammengesetzt**.
+Unveränderte Absätze werden dabei zeichengenau aus der Datei übernommen, samt den
+Leerzeilen dazwischen – an einer Seite ändert sich nur, was in der Mappe geändert
+wurde, und eine Seite ohne Änderung wird gar nicht angefasst. Woran eine Zeile
+ihren Absatz erkennt, steht in ausgeblendeten Spalten (Nummer, Originaltext,
+Datei).
+
+Lieber eine Meldung im Bericht als ein falscher Text auf der Website. Deshalb:
+
+- **Seite inzwischen anderswo geändert** (Prüfsumme passt nicht): Die Seite wird
+  übersprungen, die anderen Seiten derselben Mappe kommen trotzdem an. Die
+  Änderungen für diese Seite in einer frischen Mappe noch einmal eintragen.
+  Dieselbe Mappe ein zweites Mal hochladen schadet nicht – was schon drin ist,
+  steht als „schon übernommen" im Bericht.
+- **Leere Zelle, gelöschte Zeile:** Der Absatz bleibt. Gelöscht wird nur mit
+  `!Löschen!`.
+- **Tabellen, Bausteine, Code, HTML** (grau, kursiv): bleiben, wie sie sind, auch
+  wenn in der Zelle etwas geändert wurde. Die ändert man in der Datei.
+- **Blatt sortiert** (die Reihenfolge ist fast ganz durcheinander): Die Seite
+  bleibt.
+- **Graue Seiten-Zeile gelöscht, oder eine ganze Zeile aus einer anderen Seite
+  hineinkopiert:** wird erkannt und gemeldet, nichts davon landet auf einer
+  falschen Seite.
+- **Titel und alle Texte einer Seite mit `!Löschen!`** heisst: die Seite soll weg
+  – sie wird gelöscht (so wurde „Gedruckte Versionen" markiert).
+- **Seite löschen,** auf die noch verlinkt wird: wird gelöscht, aber der Bericht
+  nennt die Seiten mit dem Link – sonst baut die Website nicht. Eine
+  Übersichtsseite (`_index.md`) mit Seiten darunter wird nicht gelöscht. Die
+  Seite in den anderen Sprachen bleibt; dort in der jeweiligen Mappe löschen.
+
+**„Stand", „Bemerkung", „Zuständig"** gehen nicht auf die Website. Der
+Einlese-Workflow merkt sie sich in `redaktion/stand.json` (je Text nur eine
+Prüfsumme, nicht der Text), und die nächste frische Mappe hat sie wieder. Beim
+Umstieg auf die neuen Mappen wurde dort nur der Stand übernommen; die
+Bemerkungen und Zuständigkeiten aus der ersten, privat herumgereichten Mappe
+wurden bewusst nicht ins öffentliche Repo gelegt.
+
+### Einmalig einzustellen
+
+Damit der Workflow Pull Requests eröffnen darf: *Settings → Actions → General →
+Workflow permissions → Allow GitHub Actions to create and approve pull requests*.
+Ist das aus, schlägt der letzte Schritt fehl; die Zusammenfassung des Laufs
+(Actions-Tab) enthält dann den Bericht und einen Link, um den Pull Request von
+Hand zu eröffnen.
+
+Ein Pull Request, den ein Workflow eröffnet, bekommt **keinen** Bau-Haken aus
+`hugo.yml` – GitHub lässt Workflows keine Workflows auslösen. Deshalb baut
+`texte-einlesen.yml` die Website selbst probeweise und schreibt das Ergebnis
+(✅ oder ❌ mit Fehlermeldung) oben in den Pull Request.
+
+### Am eigenen Rechner, ohne Hochladen
 
 ```bash
-pip install openpyxl                       # einmalig
-python3 scripts/texte-ausgeben.py          # erzeugt ncwiki-texte.xlsx
+pip install openpyxl pyyaml                                     # einmalig
+python3 scripts/texte-ausgeben.py                               # drei Mappen im Projektordner
+python3 scripts/texte-einlesen.py ncwiki-texte-de.xlsx --probe  # nur zeigen
+python3 scripts/texte-einlesen.py ncwiki-texte-de.xlsx          # schreiben
+hugo --minify                                                   # prüfen
 ```
 
-Die Mappe hat fünf Blätter: **Anleitung** (für die Person, die schreibt),
-**Texte** (die eigentliche Arbeit, ein Textbaustein je Zeile), **Seiten** (eine
-Zeile je Seite, zum Aufteilen der Arbeit), **Übersicht** (wie weit sind wir –
-rechnet sich selbst aus) und **Fehlende Übersetzungen**.
+`texte-ausgeben.py --uebernehmen redaktion/stand.json` übernimmt Stand und
+Bemerkungen, `--sprachen fr` erzeugt nur eine Mappe. Die Mappen gehören nicht
+ins Repo (`.gitignore`) – ausser für den kurzen Weg durch `redaktion/`.
 
-Zurück in die Website geht es so:
+### Wer an den Skripten etwas ändert
 
-```bash
-python3 scripts/texte-einlesen.py ncwiki-texte.xlsx --probe   # nur zeigen
-python3 scripts/texte-einlesen.py ncwiki-texte.xlsx           # schreiben
-hugo --minify                                                 # prüfen
-```
+Die Zerlegung einer Seite in Absätze steht genau einmal, in
+`scripts/texte_bausteine.py` – Ausgeben und Einlesen müssen eine Seite gleich
+zerlegen. Danach **`python3 scripts/texte-mappe-pruefen.py`** laufen lassen: Es
+arbeitet in einer Kopie des Projekts wie eine Redaktorin (Text ändern, Zeilen
+einfügen, verschieben, löschen, Typ umstellen, Beschreibung ergänzen, Seiten
+löschen, eine französische Seite anlegen, Konflikt, sortiertes Blatt,
+gelöschte Seiten-Zeile, alte Mappe …), prüft danach jede Seite Baustein für
+Baustein und baut die Kopie mit Hugo. Die echten Dateien fasst es nicht an.
+Probehalber eingebaute Fehler im Einlesen (falsche Überschriftenebene, gelöschte
+statt behaltene Zeile, `!löschen!` klein geschrieben nicht erkannt) hat es alle
+gefunden.
 
-**Warum der Rückweg das Wichtige daran ist:** Eine Liste, die nur ausgibt,
-verschiebt die Arbeit bloss – hinterher müsste jemand 1600 Zeilen von Hand in
-Markdown-Dateien übertragen, und genau dabei entstehen die Fehler. Deshalb
-gibt es beide Richtungen.
-
-**Wie das Skript die Stelle wiederfindet:** Jede Zeile merkt sich (in
-ausgeblendeten Spalten) die Datei, die Nummer des Bausteins und eine
-Prüfsumme des alten Textes. Beim Einlesen wird die Datei neu zerlegt und die
-Prüfsumme verglichen. Hat jemand die Datei in der Zwischenzeit im Repo
-geändert, wird diese eine Zeile **nicht** geschrieben, sondern gemeldet –
-lieber eine Meldung als ein Text an der falschen Stelle. Dann Mappe neu
-erzeugen und die betroffenen Texte dort noch einmal eintragen.
-
-**Die Mappe gehört nicht ins Repo** und steht in `.gitignore`. Sie ist eine
-Arbeitsdatei; als Binärdatei in Git gäbe sie bei jeder Änderung einen
-Konflikt, den niemand auflösen kann. Versioniert sind die Skripte, nicht ihr
-Ergebnis. Zum Verteilen die Datei einfach per Mail oder Cloud herumgeben.
-
-**Zwei Dinge, die beim ersten Durchgang auffallen werden:**
-
-- **152 von 241 Seiten haben keine Beschreibung.** Das ist der Satz, den Google
-  unter dem Seitentitel anzeigt. Diese Zeilen sind in der Mappe rot hinterlegt.
-  Fehlt die Beschreibung, nimmt Hugo den Anfang des Seitentextes – das ist
-  selten ein guter Suchtreffer-Text. Ein bis zwei Sätze, höchstens 160 Zeichen.
-- **Wo „Platzhaltertext" steht,** wartet die Seite noch auf einen richtigen
-  Text.
-
-**Grenzen:** Tabellen, HTML-Blöcke und Shortcode-Zeilen stehen in der Mappe,
-sind aber grau und gesperrt – dort verschiebt ein falsches Zeichen das ganze
-Layout, dafür ist eine Redaktionstabelle das falsche Werkzeug. Neue Seiten
-anlegen geht auch nicht über die Mappe, das steht in Abschnitt 2.
-
-**Wer an den Skripten etwas ändert, lässt danach `scripts/texte-mappe-pruefen.py`
-laufen** – 18 Prüfungen, darunter ein vollständiger Rundlauf mit einer echten
-Datei, die danach wiederhergestellt wird. Im Kopf des Skripts steht, warum die
-Formeln dort in Python nachgerechnet werden statt von einer echten
-Tabellenkalkulation: LibreOffice lässt sich in der Entwicklungsumgebung dieses
-Projekts nicht starten. Geprüft wird deshalb, was ohne Tabellenkalkulation
-wirklich schiefgehen kann – ob die Formelbereiche zu den Daten passen, ob nur
-Funktionen aus Excel 2007 vorkommen (alles Neuere bräuchte ein `_xlfn.` davor
-und stünde sonst als `#NAME?` in der Zelle) und ob ein Blattname mit Leerzeichen
-irgendwo ohne Anführungszeichen steht.
+Die Formeln der Mappen rechnet das Skript in Python nach, weil sich LibreOffice
+in der Entwicklungsumgebung nicht starten lässt. Geprüft wird, was ohne
+Tabellenkalkulation unbemerkt schiefginge: Formeln, die nicht auf die Spalten
+der eigenen Zeile zeigen, zu kurze Bereiche, Blattnamen ohne Anführungszeichen,
+und Funktionen, die neuer als Excel 2007 sind (die bräuchten ein `_xlfn.` davor
+und stünden sonst als `#NAME?` in der Zelle). Die Spalte „Text" ist als Text
+formatiert – sonst nimmt Excel eine Eingabe wie „- Punkt" als Formel.
 
 ---
 

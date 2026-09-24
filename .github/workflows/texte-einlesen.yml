@@ -1,0 +1,171 @@
+# ==============================================================================
+# TEXTMAPPE HOCHLADEN -> PULL REQUEST
+# ==============================================================================
+# Wer Texte in einer der Excel-Mappen bearbeitet hat (ncwiki-texte-de.xlsx,
+# -fr, -it; siehe docs/WARTUNG.md, Abschnitt 2b), lädt sie auf GitHub in den
+# Ordner "redaktion/" hoch (Add file -> Upload files). Diese Automatisierung
+# macht daraus einen Pull Request zum Gegenlesen:
+#
+#   1. die hochgeladenen Mappen mit scripts/texte-einlesen.py einlesen,
+#   2. Stand/Bemerkung/Zuständig nach redaktion/stand.json übernehmen (daraus
+#      entstehen die nächsten frischen Mappen, siehe hugo.yml),
+#   3. die Mappen wieder entfernen (die Texte stehen ja jetzt in den Seiten),
+#   4. die Website probeweise bauen,
+#   5. alles als Pull Request mit einem Bericht, was geändert, übersprungen
+#      oder zu prüfen ist.
+#
+# Live geht erst etwas, wenn jemand den Pull Request übernimmt (mergt).
+#
+# WICHTIG, EINMALIG EINZUSTELLEN: GitHub lässt Automatisierungen nur dann
+# Pull Requests eröffnen, wenn das erlaubt ist - Settings -> Actions ->
+# General -> Workflow permissions -> "Allow GitHub Actions to create and
+# approve pull requests". Ist es aus, bricht der letzte Schritt ab; der
+# Branch mit den Änderungen ist dann trotzdem da, und die Zusammenfassung
+# des Laufs sagt, wie man den Pull Request von Hand eröffnet.
+#
+# GUT ZU WISSEN: Ein Pull Request, den eine Automatisierung eröffnet, löst
+# keine weiteren Automatisierungen aus (Regel von GitHub gegen Endlos-
+# schleifen). Der übliche Bau-Haken aus hugo.yml erscheint an diesem Pull
+# Request deshalb nicht - darum baut dieser Ablauf die Website selbst einmal
+# probeweise und schreibt das Ergebnis in den Pull Request.
+# ==============================================================================
+
+name: Textmappe einlesen
+
+on:
+  push:
+    paths:
+      - "redaktion/*.xlsx"
+      - "redaktion/**/*.xlsx"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Zwei Uploads kurz nacheinander: nacheinander abarbeiten, nicht abbrechen.
+concurrency:
+  group: texte-einlesen-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  einlesen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Nur die Mappen, die mit DIESEM Upload kamen. Liegt von einem früheren
+      # Upload noch eine Mappe im Ordner (deren Pull Request noch offen ist),
+      # wird sie nicht ein zweites Mal eingelesen.
+      - name: Hochgeladene Mappen finden
+        id: mappen
+        run: |
+          jq -r '.commits[] | (.added + .modified)[]' "$GITHUB_EVENT_PATH" \
+            | grep -E '^redaktion/.+\.xlsx$' | sort -u > "$RUNNER_TEMP/gemeldet.txt" || true
+          # Beim Anlegen eines neuen Branchs kann die Liste leer sein - dann
+          # alle Mappen im Ordner.
+          [ -s "$RUNNER_TEMP/gemeldet.txt" ] || git ls-files 'redaktion/*.xlsx' > "$RUNNER_TEMP/gemeldet.txt"
+          : > "$RUNNER_TEMP/mappen.txt"
+          while IFS= read -r f; do
+            [ -f "$f" ] && echo "$f" >> "$RUNNER_TEMP/mappen.txt"
+          done < "$RUNNER_TEMP/gemeldet.txt"
+          echo "anzahl=$(wc -l < "$RUNNER_TEMP/mappen.txt")" >> "$GITHUB_OUTPUT"
+          echo "Mappen:"; cat "$RUNNER_TEMP/mappen.txt"
+
+      - name: Python einrichten
+        if: steps.mappen.outputs.anzahl != '0'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Mappen einlesen
+        if: steps.mappen.outputs.anzahl != '0'
+        run: |
+          pip install --quiet openpyxl pyyaml
+          mapfile -t MAPPEN < "$RUNNER_TEMP/mappen.txt"
+          # Das Einlesen darf "scheitern" (z. B. eine Mappe im alten Format):
+          # der Bericht sagt dann warum, und der Pull Request entfernt die
+          # Mappe trotzdem wieder.
+          python3 scripts/texte-einlesen.py "${MAPPEN[@]}" --bericht "$RUNNER_TEMP/bericht.md" || true
+          ALT=(); [ -f redaktion/stand.json ] && ALT=(redaktion/stand.json)
+          python3 scripts/texte-ausgeben.py --uebernehmen "${ALT[@]}" "${MAPPEN[@]}" \
+            --stand-speichern redaktion/stand.json || true
+          git rm -q -- "${MAPPEN[@]}"
+          # Titel des Pull Requests: die Namen der Mappen
+          NAMEN=$(for m in "${MAPPEN[@]}"; do basename "$m"; done | paste -sd ',' | sed 's/,/, /g')
+          echo "NAMEN=$NAMEN" >> "$GITHUB_ENV"
+
+      - name: Hugo installieren
+        if: steps.mappen.outputs.anzahl != '0'
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.164.0"
+          extended: true
+
+      # Bewusst ohne --quiet: das würde auch die Fehlermeldung verschlucken.
+      - name: Website probeweise bauen
+        if: steps.mappen.outputs.anzahl != '0'
+        run: |
+          if hugo --minify -d "$RUNNER_TEMP/public" > "$RUNNER_TEMP/hugo.txt" 2>&1; then
+            BAU="✅ Die Website baut mit diesen Änderungen fehlerfrei."
+          else
+            BAU=$(printf '%s\n\n```\n%s\n```' \
+              "❌ **Die Website baut mit diesen Änderungen NICHT** – bitte vor dem Übernehmen beheben (oft ein Link auf eine gelöschte Seite):" \
+              "$(grep -E 'ERROR|Error' "$RUNNER_TEMP/hugo.txt" | tail -15)")
+          fi
+          {
+            echo "Eingelesen aus: **$NAMEN** (hochgeladen von @${{ github.actor }})."
+            echo
+            echo "$BAU"
+            echo
+            cat "$RUNNER_TEMP/bericht.md" 2>/dev/null || echo "(kein Bericht - siehe Log dieses Laufs)"
+            echo
+            echo "---"
+            echo "Bitte die Änderungen im Tab **Files changed** durchsehen und den Pull Request dann übernehmen (Merge). Was im Bericht unter *Übersprungen* oder *Bitte ansehen* steht, ist **nicht** drin – das in einer frischen Mappe noch einmal eintragen. Anleitung: docs/WARTUNG.md, Abschnitt 2b."
+          } > "$RUNNER_TEMP/pr.md"
+          cat "$RUNNER_TEMP/pr.md" >> "$GITHUB_STEP_SUMMARY"
+
+      # Hochgeladen direkt in main: neuer Branch + Pull Request.
+      - name: Pull Request eröffnen
+        if: steps.mappen.outputs.anzahl != '0' && github.ref == 'refs/heads/main'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: redaktion/einlesen-${{ github.run_number }}
+          commit-message: "Texte aus ${{ env.NAMEN }} einlesen"
+          title: "Texte aus ${{ env.NAMEN }}"
+          body-path: ${{ runner.temp }}/pr.md
+          delete-branch: true
+
+      # Hochgeladen in einen eigenen Branch (Option "Create a new branch" beim
+      # Hochladen): die Änderungen kommen in DIESEN Branch, und es gibt einen
+      # Pull Request dafür - einen schon offenen ergänzt der Bericht als
+      # Kommentar.
+      - name: In den Branch schreiben
+        if: steps.mappen.outputs.anzahl != '0' && github.ref != 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A content redaktion
+          git commit -q -m "Texte aus $NAMEN einlesen"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          NR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number -q '.[0].number')
+          if [ -n "$NR" ]; then
+            gh pr comment "$NR" --body-file "$RUNNER_TEMP/pr.md"
+          else
+            gh pr create --base main --head "$GITHUB_REF_NAME" --title "Texte aus $NAMEN" \
+              --body-file "$RUNNER_TEMP/pr.md"
+          fi
+
+      - name: Hinweis, falls der Pull Request nicht eröffnet werden durfte
+        if: failure()
+        run: |
+          {
+            echo "### Der Pull Request konnte nicht eröffnet werden"
+            echo "Meist ist in den Einstellungen nicht erlaubt, dass Automatisierungen Pull Requests eröffnen:"
+            echo "Settings → Actions → General → Workflow permissions → *Allow GitHub Actions to create and approve pull requests*."
+            echo "Die Änderungen liegen im Branch \`redaktion/einlesen-${{ github.run_number }}\` (falls schon hochgeladen) –"
+            echo "Pull Request von Hand: ${{ github.server_url }}/${{ github.repository }}/compare/main...redaktion/einlesen-${{ github.run_number }}"
+          } >> "$GITHUB_STEP_SUMMARY"

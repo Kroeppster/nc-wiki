@@ -34,7 +34,8 @@ sonst fehl.
 | `assets/css/style.css`, `static/css/style.css` | Design, unverändert aus der ursprünglichen HTML-Vorlage übernommen. |
 | `archetypes/`, `docs/vorlage-*.md` | Copy-Paste-Vorlagen für neue Seiten (News, Erfahrungsbericht, Jahresbericht). |
 | `docs/WARTUNG.md`, `docs/WARTUNG-DETAILLIERT.md` | Redaktions-Anleitung für Nicht-Entwickler:innen (Kurz- bzw. Langfassung) — bei Änderungen an Navigation, Design, Formularen etc. mitpflegen. |
-| `.github/workflows/hugo.yml` | Build + interner Link-Check laufen bei jedem PR gegen `main` und bei Push; **Deploy läuft nur bei Push auf `main`**, nie bei PRs. |
+| `.github/workflows/hugo.yml` | Build + interner Link-Check laufen bei jedem PR gegen `main` und bei Push; **Deploy läuft nur bei Push auf `main`**, nie bei PRs. Legt beim Bauen frische Textmappen nach `public/redaktion/`. |
+| `redaktion/`, `.github/workflows/texte-einlesen.yml` | Textmappen (Excel, eine je Sprache, `scripts/texte-*.py`): hochgeladen in `redaktion/` → Workflow liest ein und eröffnet einen PR. `redaktion/stand.json` = Stand/Bemerkungen, vom Workflow gepflegt. Siehe `docs/WARTUNG.md` 2b; nach Änderungen an den Skripten `scripts/texte-mappe-pruefen.py`. |
 
 ## Konventionen
 
