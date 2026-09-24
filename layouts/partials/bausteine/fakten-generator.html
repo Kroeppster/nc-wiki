@@ -11,6 +11,14 @@
   WORTLISTEN: data/fakten-generator.yaml. Dort steht auch, warum die
   Kategorien nicht beliebig sind.
 
+  DAS FORMAT IST DAS DES TESTHEFTS: Ueberschrift mit Lernzeit, Kasten mit
+  der Anleitung im Wortlaut des Hefts, die Einpraegeliste in drei Spalten
+  (Name | Alter | Beruf, Merkmal - Diagnose) in fuenf Altersgruppen, die
+  Fragen zweispaltig mit (A) bis (E), STOPP am Ende. Masse und Seitenbau
+  kommen aus dem NCWiki-Formatierungstool, siehe bausteine/ems-heft.html.
+  Gedruckt entsteht ein kleines Testheft: Teil A (Anleitung, Liste), Teil B
+  (Fragen), Antwortbogen, Loesungen.
+
   DER ABLAUF entspricht dem echten Untertest:
     Einprägephase (6 Min)  ->  Ablenkung  ->  Reproduktion (6 Min, 18 Fragen)
   Die Ablenkung ist nicht Deko: Im echten Test liegt Textverständnis
@@ -63,6 +71,7 @@
        statt des Rahmens, und der Sprunglink der Abschnittsliste zeigte auf
        das falsche Element. Kennungen von Bausteinen deshalb immer mit einem
        kurzen Praefix, der in keiner Ueberschrift vorkommen kann. */ -}}
+{{- partial "bausteine/ems-heft.html" . }}
 <div class="fg" id="fg-wurzel" data-pagefind-ignore>
 {{- if not $genug }}
   <p class="note">{{ i18n "fg_keine_liste" }}</p>
@@ -91,18 +100,16 @@
     </div>
     <div class="fg-knoepfe">
       <button type="button" class="btn btn-primary" id="fg-los">{{ i18n "fg_starten" }}</button>
-      {{- /* Der zweite Weg, und der Grund fuer diesen Knopf: Nicht alle wollen
-             am Bildschirm mit laufender Uhr ueben. Wer lieber auf Papier
-             arbeitet - so wie mit den PDFs der echten Serien - erzeugt hier
-             ein Set und druckt es, ohne den getakteten Durchlauf ueberhaupt
-             zu starten. */ -}}
+      {{- /* Der zweite Weg: Wer lieber auf Papier arbeitet - so wie mit den
+             PDFs der echten Serien - erzeugt hier ein Set und druckt es,
+             ohne den getakteten Durchlauf ueberhaupt zu starten. */ -}}
       <button type="button" class="btn btn-ghost" id="fg-drucken">{{ i18n "fg_drucken" }}</button>
     </div>
     <p class="fg-hinweis">{{ i18n "fg_drucken_hinweis" }}</p>
   </div>
   <div class="fg-phase" id="fg-lernen" hidden>
     <div class="fg-kopf"><h3>{{ i18n "fg_phase_einpraegen" }}</h3><p class="fg-uhr" id="fg-uhr-lernen">--:--</p></div>
-    <div id="fg-tabelle"></div>
+    <div class="ems-blatt" id="fg-blatt-lernen"></div>
     <button type="button" class="btn btn-ghost" id="fg-fertig-lernen">{{ i18n "fg_weiter" }}</button>
   </div>
   <div class="fg-phase" id="fg-pause" hidden>
@@ -112,81 +119,95 @@
   </div>
   <div class="fg-phase" id="fg-abfrage" hidden>
     <div class="fg-kopf"><h3>{{ i18n "fg_phase_abfrage" }}</h3><p class="fg-uhr" id="fg-uhr-abfrage">--:--</p></div>
-    <ol class="fg-fragen" id="fg-fragen"></ol>
+    <div class="ems-blatt" id="fg-blatt-abfrage"></div>
     <button type="button" class="btn btn-primary" id="fg-auswerten">{{ i18n "fg_auswerten" }}</button>
   </div>
   <div class="fg-phase" id="fg-ergebnis" hidden>
     <div class="fg-kopf"><h3>{{ i18n "fg_phase_ergebnis" }}</h3><p class="fg-punkte" id="fg-punkte"></p></div>
-    <ol class="fg-fragen fg-fragen-geprueft" id="fg-loesung"></ol>
+    <div class="ems-blatt" id="fg-blatt-loesung"></div>
     <h4>{{ i18n "fg_das_war_das_set" }}</h4>
-    <div id="fg-tabelle-ende"></div>
+    <div class="ems-blatt" id="fg-blatt-set"></div>
     <div class="fg-knoepfe">
       <button type="button" class="btn btn-primary" id="fg-nochmal">{{ i18n "fg_nochmal" }}</button>
       <button type="button" class="btn btn-ghost" id="fg-drucken-ende">{{ i18n "fg_drucken_dieses" }}</button>
     </div>
   </div>
-{{- /* Wird erst beim Drucken gefuellt und ist am Bildschirm immer leer.
-       Absichtlich im normalen Textfluss und nicht in einem eigenen Fenster:
-       Ein Popup blockieren die meisten Browser, und "neuer Tab" verliert das
-       Stylesheet. So druckt die Seite sich selbst. */ -}}
-<div class="fg-druck" id="fg-druck" aria-hidden="true"></div>
 {{- end }}
 </div>
 {{- if $genug }}
 <script>
 (function(){
   var W = JSON.parse(document.getElementById('fg-daten').textContent);
+  var H = window.EMSHeft, BST = H.BST, F = W.fragen;
   var T = {
-    person: {{ i18n "fg_th_person" | jsonify | safeJS }},
-    alter:  {{ i18n "fg_th_alter" | jsonify | safeJS }},
-    beruf:  {{ i18n "fg_th_beruf" | jsonify | safeJS }},
-    merkmal:{{ i18n "fg_th_merkmal" | jsonify | safeJS }},
-    krank:  {{ i18n "fg_th_krankheit" | jsonify | safeJS }},
-    jahre:  {{ i18n "fg_jahre" | jsonify | safeJS }},
-    richtig:{{ i18n "fg_richtig" | jsonify | safeJS }},
-    falsch: {{ i18n "fg_falsch" | jsonify | safeJS }},
-    punkte: {{ i18n "fg_punkte_von" | jsonify | safeJS }},
-    f_alterVonKrankheit: {{ i18n "fg_f_alter_von_krankheit" | jsonify | safeJS }},
-    f_nameVonKrankheit:  {{ i18n "fg_f_name_von_krankheit" | jsonify | safeJS }},
-    f_krankheitVonName:  {{ i18n "fg_f_krankheit_von_name" | jsonify | safeJS }},
-    f_berufVonName:      {{ i18n "fg_f_beruf_von_name" | jsonify | safeJS }},
-    f_merkmalVonBeruf:   {{ i18n "fg_f_merkmal_von_beruf" | jsonify | safeJS }},
-    f_alterVonBeruf:     {{ i18n "fg_f_alter_von_beruf" | jsonify | safeJS }},
-    blattEinpraegen:        {{ i18n "fg_blatt_einpraegen" | jsonify | safeJS }},
-    blattEinpraegenHinweis: {{ i18n "fg_blatt_einpraegen_hinweis" | jsonify | safeJS }},
-    blattAufgaben:          {{ i18n "fg_blatt_aufgaben" | jsonify | safeJS }},
-    blattAufgabenHinweis:   {{ i18n "fg_blatt_aufgaben_hinweis" | jsonify | safeJS }},
-    blattLoesung:           {{ i18n "fg_blatt_loesung" | jsonify | safeJS }}
+    heftEinpraegen: {{ i18n "fg_heft_einpraegen" | jsonify | safeJS }},
+    heftAbfrage:    {{ i18n "fg_heft_abfrage" | jsonify | safeJS }},
+    e1: {{ i18n "fg_anl_e1" | jsonify | safeJS }},
+    e2: {{ i18n "fg_anl_e2" | jsonify | safeJS }},
+    e3: {{ i18n "fg_anl_e3" | jsonify | safeJS }},
+    beispiel: {{ i18n "fg_anl_beispiel" | jsonify | safeJS }},
+    e4: {{ i18n "fg_anl_e4" | jsonify | safeJS }},
+    beispielFrage: {{ i18n "fg_anl_beispielfrage" | jsonify | safeJS }},
+    beispielOptionen: {{ i18n "fg_anl_beispieloptionen" | jsonify | safeJS }},
+    beispielLoesung: {{ i18n "fg_anl_beispielloesung" | jsonify | safeJS }},
+    a1: {{ i18n "fg_anl_a1" | jsonify | safeJS }},
+    a2: {{ i18n "fg_anl_a2" | jsonify | safeJS }},
+    punkte: {{ i18n "fg_punkte_von" | jsonify | safeJS }}
   };
   function misch(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
   function zieh(a,n){ return misch(a).slice(0,n); }
   function eins(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function ersetze(s, werte){ return s.replace(/\{(\w+)\}/g, function(m, k){ return k in werte ? werte[k] : m; }); }
   // --- Ein Set bauen -------------------------------------------------------
   // Nachgebaut nach den echten Serien: fuenf Altersgruppen zu je drei
   // Personen; die drei Berufe einer Gruppe stammen aus EINEM Berufsfeld, die
-  // drei Krankheiten aus DREI VERSCHIEDENEN Arten. Siehe die Erklaerung in
-  // data/fakten-generator.yaml - zufaelliges Ziehen ergaebe schwerere Sets
-  // als die Pruefung.
+  // drei Krankheiten aus DREI VERSCHIEDENEN Arten, die drei NAMEN aus einer
+  // Namensgruppe (Meier, Meister, Mettler). Siehe die Erklaerung in
+  // data/fakten-generator/de.yaml - zufaelliges Ziehen ergaebe schwerere Sets
+  // als die Pruefung, aehnliche Namen machen sie so schwer wie die Pruefung.
+  function altersgruppen(){
+    var vorrat = W.altersgruppen_wahl, abstand = W.altersgruppen_abstand || 5;
+    if (vorrat && vorrat.length >= 5){
+      for (var v = 0; v < 200; v++){
+        var z = zieh(vorrat, 5).sort(function(a, b){ return a - b; });
+        if (z.every(function(x, i){ return !i || x - z[i-1] >= abstand; })) return z;
+      }
+    }
+    return W.altersgruppen.slice(0, 5);
+  }
+  function namenJeGruppe(n){
+    var gruppen = misch((W.namensgruppen || []).filter(function(g){ return g.length >= 3; }));
+    var raus = gruppen.slice(0, n).map(function(g){ return zieh(g, 3); });
+    // Zu wenige Namensgruppen: der Rest frei aus der Namensliste, ohne einen
+    // Namen zu wiederholen.
+    var frei = misch(W.namen.filter(function(x){ return !raus.some(function(g){ return g.indexOf(x) >= 0; }); }));
+    while (raus.length < n) raus.push(frei.splice(0, 3));
+    return raus;
+  }
+  // Das Merkmal vor dem Nomen: "der nervoese Patient". Geht nur bei
+  // Adjektiven; Nomen (grosser Anfangsbuchstabe) und die Ausnahmen aus der
+  // Wortliste geben null zurueck.
+  function attributiv(m){
+    if (!m || /^[A-ZÄÖÜ]/.test(m) || (W.nicht_attributiv || []).indexOf(m) >= 0) return null;
+    if (/e$/.test(m)) return m;
+    if (/el$/.test(m)) return m.slice(0, -2) + 'le';
+    return m + 'e';
+  }
   function baueSet(){
-    var gruppen = W.altersgruppen;
+    var gruppen = altersgruppen();
     var felder  = misch(Object.keys(W.berufe)).filter(function(f){ return W.berufe[f].length >= 3; });
     var arten   = Object.keys(W.krankheiten);
-    var namen   = zieh(W.namen, gruppen.length*3);
-    var merkmale = misch([].concat(W.merkmale.charakter, W.merkmale.zustand));
+    var namen   = namenJeGruppe(gruppen.length);
+    // Nur Adjektive (klein geschrieben): Ein Nomen wie "Notfall" passt weder
+    // in "Der Urologe ist …" noch waere es unter lauter Adjektiven als
+    // Antwort zu verstecken.
+    var merkmale = misch([].concat(W.merkmale.charakter, W.merkmale.zustand).filter(function(m){ return !/^[A-ZÄÖÜ]/.test(m); }));
     // Krankheiten werden OHNE ZURUECKLEGEN gezogen. Kaeme eine zweimal vor,
-    // waere die Frage "Die Person mit Karies ist ..." nicht mehr eindeutig
-    // beantwortbar - es gaebe zwei richtige Antworten. Deshalb merkt sich
-    // "vergeben", was schon benutzt ist.
+    // waere "Die Person mit Karies ist …" nicht mehr eindeutig.
     var vergeben = {};
     function krankheitAus(art){
       var frei = W.krankheiten[art].filter(function(k){ return !vergeben[k]; });
-      // Ist eine Art erschoepft, aus dem gesamten Rest ziehen statt zu
-      // wiederholen - lieber eine Art doppelt als eine Krankheit doppelt.
-      if (!frei.length) {
-        arten.forEach(function(a){
-          W.krankheiten[a].forEach(function(k){ if(!vergeben[k]) frei.push(k); });
-        });
-      }
+      if (!frei.length) arten.forEach(function(a){ W.krankheiten[a].forEach(function(k){ if(!vergeben[k]) frei.push(k); }); });
       var gewaehlt = eins(frei);
       vergeben[gewaehlt] = true;
       return gewaehlt;
@@ -197,118 +218,149 @@
       var berufe = zieh(W.berufe[feld], 3);
       var dreiArten = zieh(arten, 3);
       berufe.forEach(function(b, k){
-        var art = dreiArten[k % dreiArten.length];
-        leute.push({
-          name: namen[i], alter: alter, beruf: b.wort, geschlecht: b.geschlecht,
-          feld: feld, merkmal: merkmale[i % merkmale.length],
-          krankheit: krankheitAus(art), art: art
-        });
+        leute.push({ name: namen[g][k], alter: alter, gruppe: g, beruf: b.wort, geschlecht: b.geschlecht === 'w' ? 'w' : 'm',
+                     merkmal: merkmale[i % merkmale.length], krankheit: krankheitAus(dreiArten[k % dreiArten.length]) });
         i++;
       });
     });
     return leute;
   }
-  function tabelle(leute){
-    var h = '<table class="fg-tabelle"><thead><tr><th>'+T.person+'</th><th>'+T.alter+'</th><th>'+T.beruf+'</th><th>'+T.merkmal+'</th><th>'+T.krank+'</th></tr></thead><tbody>';
-    leute.forEach(function(p){
-      h += '<tr><td><strong>'+p.name+'</strong></td><td>ca. '+p.alter+' '+T.jahre+'</td><td>'+p.beruf+'</td><td>'+p.merkmal+'</td><td>'+p.krankheit+'</td></tr>';
-    });
-    return h + '</tbody></table>';
-  }
-  // --- 18 Fragen bauen -----------------------------------------------------
-  // Die Ablenker kommen IMMER aus demselben Set. Zoege man sie aus der ganzen
-  // Wortliste, waere die richtige Antwort oft schon daran erkennbar, dass nur
-  // sie ueberhaupt vorkam - man koennte raten statt sich zu erinnern.
-  function baueFragen(leute){
-    var typen = [
-      {id:'alterVonKrankheit', text:function(p){return T.f_alterVonKrankheit.replace('{x}', p.krankheit);},
-       richtig:function(p){return 'ca. '+p.alter+' '+T.jahre;},
-       ablenker:function(p,l){return l.filter(function(q){return q.alter!==p.alter;}).map(function(q){return 'ca. '+q.alter+' '+T.jahre;});}},
-      {id:'nameVonKrankheit', text:function(p){return T.f_nameVonKrankheit.replace('{x}', p.krankheit);},
-       richtig:function(p){return p.name;},
-       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.name;});}},
-      {id:'krankheitVonName', text:function(p){return T.f_krankheitVonName.replace('{x}', p.name);},
-       richtig:function(p){return p.krankheit;},
-       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.krankheit;});}},
-      {id:'berufVonName', text:function(p){return T.f_berufVonName.replace('{x}', p.name);},
-       richtig:function(p){return p.beruf;},
-       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.beruf;});}},
-      {id:'merkmalVonBeruf', text:function(p){return T.f_merkmalVonBeruf.replace('{x}', p.beruf);},
-       richtig:function(p){return p.merkmal;},
-       ablenker:function(p,l){return l.filter(function(q){return q!==p;}).map(function(q){return q.merkmal;});}},
-      {id:'alterVonBeruf', text:function(p){return T.f_alterVonBeruf.replace('{x}', p.beruf);},
-       richtig:function(p){return 'ca. '+p.alter+' '+T.jahre;},
-       ablenker:function(p,l){return l.filter(function(q){return q.alter!==p.alter;}).map(function(q){return 'ca. '+q.alter+' '+T.jahre;});}}
-    ];
-    var fragen = [], benutzt = {};
-    var reihenfolge = misch(leute);
-    for (var n = 0; n < 18; n++){
-      var p = reihenfolge[n % reihenfolge.length];
-      var typ = typen[n % typen.length];
-      var schluessel = p.name + typ.id;
-      if (benutzt[schluessel]) { typ = typen[(n+1) % typen.length]; schluessel = p.name + typ.id; }
-      benutzt[schluessel] = true;
-      var r = typ.richtig(p);
-      var abl = [];
-      typ.ablenker(p, leute).forEach(function(a){ if (a !== r && abl.indexOf(a) < 0) abl.push(a); });
-      var optionen = misch([r].concat(zieh(abl, 4)));
-      fragen.push({ text: typ.text(p), richtig: r, optionen: optionen });
-    }
-    return fragen;
-  }
-  function zeichneFragen(fragen, ziel, mitLoesung, antworten){
-    ziel.innerHTML = '';
-    fragen.forEach(function(f, i){
-      var li = document.createElement('li');
-      var p = document.createElement('p'); p.className='fg-frage-text'; p.textContent=f.text; li.appendChild(p);
-      var ul = document.createElement('ul'); ul.className='fg-optionen';
-      f.optionen.forEach(function(o, k){
-        var oli=document.createElement('li');
-        if (mitLoesung){
-          oli.textContent = String.fromCharCode(65+k)+') '+o;
-          if (o===f.richtig) oli.className='fg-ist-richtig';
-          else if (antworten[i]===o) oli.className='fg-ist-falsch';
-        } else {
-          var lab=document.createElement('label');
-          var inp=document.createElement('input');
-          inp.type='radio'; inp.name='fg-f'+i; inp.value=o;
-          lab.appendChild(inp);
-          lab.appendChild(document.createTextNode(' '+String.fromCharCode(65+k)+') '+o));
-          oli.appendChild(lab);
-        }
-        ul.appendChild(oli);
+  // --- Die Einpraegeliste --------------------------------------------------
+  // Drei Spalten wie im Heft: "Meier:" | "ca. 35 Jahre" | "Beruf, Merkmal -
+  // Diagnose". Die Gruppen nach Alter, dazwischen Luft.
+  function lernliste(leute){
+    var h = '<div class="ems-lernliste">';
+    for (var g = 0; g * 3 < leute.length; g++){
+      h += '<div class="ems-gruppe">';
+      leute.slice(g * 3, g * 3 + 3).forEach(function(p){
+        h += '<div class="ems-zeile"><span>' + p.name + ':</span><span>' + ersetze(F.alter_liste, { alter: p.alter })
+          + '</span><span>' + ersetze(F.zeile, { beruf: p.beruf, merkmal: p.merkmal, diagnose: p.krankheit }) + '</span></div>';
       });
-      li.appendChild(ul); ziel.appendChild(li);
+      h += '</div>';
+    }
+    return h + '</div>';
+  }
+  // --- 18 Fragen, im Wortlaut des Hefts --------------------------------------
+  // Jeder Fragetyp nennt eine Angabe und fragt eine andere ab. Die Ablenker
+  // kommen IMMER aus demselben Set - sonst waere die richtige Antwort daran
+  // zu erkennen, dass nur sie in der Liste stand.
+  var TYPEN = [
+    { id: 'alter_von_diagnose',   nennt: 'krankheit', fragt: 'alter' },
+    { id: 'beruf_von_diagnose',   nennt: 'krankheit', fragt: 'beruf' },
+    { id: 'name_von_diagnose',    nennt: 'krankheit', fragt: 'name' },
+    { id: 'merkmal_von_diagnose', nennt: 'krankheit', fragt: 'merkmal' },
+    { id: 'name_von_merkmal',     nennt: 'merkmal',   fragt: 'name' },
+    { id: 'diagnose_von_merkmal', nennt: 'merkmal',   fragt: 'krankheit' },
+    { id: 'name_von_beruf',       nennt: 'beruf',     fragt: 'name' },
+    { id: 'merkmal_von_beruf',    nennt: 'beruf',     fragt: 'merkmal' },
+    { id: 'diagnose_von_beruf',   nennt: 'beruf',     fragt: 'krankheit' },
+    { id: 'beruf_von_name',       nennt: 'name',      fragt: 'beruf' },
+    { id: 'diagnose_von_name',    nennt: 'name',      fragt: 'krankheit' },
+    { id: 'beruf_von_alter',      nennt: 'alter',     fragt: 'beruf' }
+  ].filter(function(t){ return F.typen[t.id]; });
+  function antwortText(p, was){ return was === 'alter' ? ersetze(F.alter_antwort, { alter: p.alter }) : p[was]; }
+  function frageText(t, p){
+    return ersetze(F.typen[t.id], { Der: F.der[p.geschlecht], Patient: F.patient[p.geschlecht], Anrede: F.anrede[p.geschlecht],
+      diagnose: (W.dativ && W.dativ[p.krankheit]) || p.krankheit, name: p.name, beruf: p.beruf, alter: p.alter, merkmal_attr: attributiv(p.merkmal) });
+  }
+  // Nennt eine Frage das Geschlecht ("Frau Koskinen ist …") und fragt nach
+  // dem Beruf, muessen auch die Ablenker Berufe dieses Geschlechts sein -
+  // "Frau Koskinen ist … Pilot" waere geschenkt. Im Heft genauso: alle fuenf
+  // Antworten weiblich.
+  function nenntGeschlecht(t){ return t.fragt === 'beruf' && (t.nennt === 'name' || t.nennt === 'alter'); }
+  function gueltig(t, p, leute){
+    if (t.nennt === 'merkmal' && !attributiv(p.merkmal)) return false;
+    if (nenntGeschlecht(t) && leute.filter(function(q){ return q !== p && q.geschlecht === p.geschlecht; }).length < 4) return false;
+    // "Die 55-jaehrige Patientin" muss es genau einmal geben.
+    if (t.nennt === 'alter' && leute.some(function(q){ return q !== p && q.alter === p.alter && q.geschlecht === p.geschlecht; })) return false;
+    return true;
+  }
+  function optionen(t, p, leute){
+    if (t.fragt === 'alter'){
+      // Alle fuenf Altersgruppen, aufsteigend - so steht es im Heft.
+      var alter = leute.map(function(q){ return q.alter; }).filter(function(a, i, l){ return l.indexOf(a) === i; }).sort(function(a, b){ return a - b; });
+      return { liste: alter.map(function(a){ return ersetze(F.alter_antwort, { alter: a }); }), richtig: alter.indexOf(p.alter) };
+    }
+    var andere = leute.filter(function(q){ return q !== p && (!nenntGeschlecht(t) || q.geschlecht === p.geschlecht); });
+    // Namen und Berufe: zuerst die beiden aus derselben Gruppe. "Meier,
+    // Meister oder Mettler?" ist die eigentliche Frage des Untertests.
+    var nah = (t.fragt === 'name' || t.fragt === 'beruf') ? misch(andere.filter(function(q){ return q.gruppe === p.gruppe; })) : [];
+    var fern = misch(andere.filter(function(q){ return nah.indexOf(q) < 0; }));
+    var ablenker = nah.concat(fern).slice(0, 4).map(function(q){ return antwortText(q, t.fragt); });
+    var liste = misch([antwortText(p, t.fragt)].concat(ablenker));
+    return { liste: liste, richtig: liste.indexOf(antwortText(p, t.fragt)) };
+  }
+  function baueFragen(leute){
+    var kandidaten = [];
+    leute.forEach(function(p){ TYPEN.forEach(function(t){ if (gueltig(t, p, leute)) kandidaten.push({ p: p, t: t }); }); });
+    kandidaten = misch(kandidaten);
+    var gewaehlt = [], proTyp = {};
+    // Wer zweimal gefragt wird, darf keine Angabe doppelt haben: Fragt eine
+    // Frage nach dem Namen und nennt die andere ihn ("Frau Meier ist …"),
+    // verraet die eine die Antwort der anderen.
+    function passt(k, maxTyp, maxPerson){
+      if ((proTyp[k.t.id] || 0) >= maxTyp) return false;
+      var bisher = gewaehlt.filter(function(g){ return g.p === k.p; });
+      if (bisher.length >= maxPerson) return false;
+      return bisher.every(function(g){ return [g.t.nennt, g.t.fragt].indexOf(k.t.nennt) < 0 && [g.t.nennt, g.t.fragt].indexOf(k.t.fragt) < 0; });
+    }
+    // Zuerst jede Person einmal, dann drei Personen ein zweites Mal; je Typ
+    // hoechstens zweimal, sonst gleicht sich das Heft zu sehr.
+    [[2, 1], [2, 2], [3, 2], [6, 3]].forEach(function(grenze){
+      kandidaten.forEach(function(k){
+        if (gewaehlt.length < 18 && gewaehlt.indexOf(k) < 0 && passt(k, grenze[0], grenze[1])){
+          gewaehlt.push(k); proTyp[k.t.id] = (proTyp[k.t.id] || 0) + 1;
+        }
+      });
+    });
+    return misch(gewaehlt).map(function(k){
+      var o = optionen(k.t, k.p, leute);
+      return { text: frageText(k.t, k.p), optionen: o.liste, richtig: o.richtig, typ: k.t.id };
     });
   }
+  // --- Fragen zeichnen -------------------------------------------------------
+  // Wie im Heft: Nummer "1)" fett, Frage daneben, darunter (A) bis (E).
+  // Zweispaltig, "spaltenweise Abfolge" - erst die linke Spalte hinunter.
+  function fragenHtml(fragen, start, art, antworten){
+    return '<ol class="ems-fragen ems-zweispaltig">' + fragen.map(function(f, i){
+      var n = start + i;
+      return '<li class="ems-frage"><span class="ems-nr">' + (n + 1) + ')</span><span class="ems-frage-text">' + f.text + '</span>'
+        + '<span class="ems-optionen">' + f.optionen.map(function(o, k){
+          var marke = '(' + BST[k] + ')';
+          if (art === 'wahl') return '<label class="ems-option ems-option-wahl"><input type="radio" name="fg-f' + n + '" value="' + k + '"><span>' + marke + '</span><span>' + o + '</span></label>';
+          var kl = '';
+          if (art === 'loesung') kl = k === f.richtig ? ' fg-ist-richtig' : (antworten && antworten[n] === k ? ' fg-ist-falsch' : '');
+          return '<span class="ems-option' + kl + '"><span>' + marke + '</span><span>' + o + '</span></span>';
+        }).join('') + '</span></li>';
+    }).join('') + '</ol>';
+  }
+  function anleitungEinpraegen(){
+    var opt = T.beispielOptionen.split('|').map(function(o, k){ return '(' + BST[k] + ') ' + o; }).join('<br>');
+    return [T.e1, T.e2, T.e3, '<p class="ems-einzug">' + T.beispiel + '</p>', T.e4,
+            '<p class="ems-einzug">' + T.beispielFrage + '</p><p class="ems-einzug">' + opt + '</p>', T.beispielLoesung];
+  }
+  function minuten(id, vorgabe){ return +el(id).value || vorgabe; }
   // --- Uhren ---------------------------------------------------------------
   var laufend = null;
   function uhr(anzeige, sekunden, fertig){
     clearInterval(laufend);
     var rest = sekunden;
-    function zeig(){
-      var m = Math.floor(rest/60), s = rest%60;
-      anzeige.textContent = m + ':' + (s<10?'0':'') + s;
-    }
+    function zeig(){ var m = Math.floor(rest/60), s = rest%60; anzeige.textContent = m + ':' + (s<10?'0':'') + s; }
     zeig();
-    laufend = setInterval(function(){
-      rest--; zeig();
-      if (rest <= 0){ clearInterval(laufend); fertig(); }
-    }, 1000);
+    laufend = setInterval(function(){ rest--; zeig(); if (rest <= 0){ clearInterval(laufend); fertig(); } }, 1000);
   }
   var el = function(id){ return document.getElementById(id); };
   var leute = [], fragen = [];
   function zeige(welche){
-    ['fg-start','fg-lernen','fg-pause','fg-abfrage','fg-ergebnis'].forEach(function(id){
-      el(id).hidden = (id !== welche);
-    });
+    ['fg-start','fg-lernen','fg-pause','fg-abfrage','fg-ergebnis'].forEach(function(id){ el(id).hidden = (id !== welche); });
   }
   el('fg-los').addEventListener('click', function(){
     leute = baueSet();
     fragen = baueFragen(leute);
-    el('fg-tabelle').innerHTML = tabelle(leute);
+    el('fg-blatt-lernen').innerHTML = H.kopf(T.heftEinpraegen, H.zeit('lern', minuten('fg-min-lernen', {{ $lern }})))
+      + H.kasten(anleitungEinpraegen()) + lernliste(leute) + H.marke('stopp');
     zeige('fg-lernen');
-    uhr(el('fg-uhr-lernen'), (+el('fg-min-lernen').value||{{ $lern }})*60, zurPause);
+    uhr(el('fg-uhr-lernen'), minuten('fg-min-lernen', {{ $lern }})*60, zurPause);
   });
   function zurPause(){
     clearInterval(laufend);
@@ -319,69 +371,39 @@
   }
   function zurAbfrage(){
     clearInterval(laufend);
-    zeichneFragen(fragen, el('fg-fragen'), false);
+    el('fg-blatt-abfrage').innerHTML = H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fg-min-abfrage', {{ $abfrage }})))
+      + H.kasten([T.a1, T.a2]) + fragenHtml(fragen, 0, 'wahl') + H.marke('stopp');
     zeige('fg-abfrage');
-    uhr(el('fg-uhr-abfrage'), (+el('fg-min-abfrage').value||{{ $abfrage }})*60, auswerten);
+    uhr(el('fg-uhr-abfrage'), minuten('fg-min-abfrage', {{ $abfrage }})*60, auswerten);
   }
   function auswerten(){
     clearInterval(laufend);
     var antworten = fragen.map(function(_, i){
       var g = document.querySelector('input[name="fg-f'+i+'"]:checked');
-      return g ? g.value : null;
+      return g ? +g.value : null;
     });
-    var richtig = fragen.filter(function(f,i){ return antworten[i]===f.richtig; }).length;
+    var richtig = fragen.filter(function(f,i){ return antworten[i] === f.richtig; }).length;
     el('fg-punkte').textContent = T.punkte.replace('{n}', richtig).replace('{von}', fragen.length);
-    zeichneFragen(fragen, el('fg-loesung'), true, antworten);
-    el('fg-tabelle-ende').innerHTML = tabelle(leute);
+    el('fg-blatt-loesung').innerHTML = H.kopf(T.heftAbfrage, '') + fragenHtml(fragen, 0, 'loesung', antworten);
+    el('fg-blatt-set').innerHTML = H.kopf(T.heftEinpraegen, '') + lernliste(leute);
     zeige('fg-ergebnis');
   }
-  // --- Drucken -----------------------------------------------------------
-  // Erzeugt drei Blaetter wie die echten Serien: Einpraegeblatt, Aufgaben-
-  // blatt, Loesungsblatt. Gedruckt wird ueber window.print() - der Browser
-  // bietet dort selbst "Als PDF sichern" an. Das spart eine PDF-Bibliothek
-  // (die Seite laedt sonst nichts von fremden Servern) und liefert das
-  // Papierformat, das die Person eingestellt hat.
-  function blatt(titel, inhalt, umbruch){
-    return '<section class="fg-blatt'+(umbruch?' fg-blatt-umbruch':'')+'">'
-      + '<h2>'+titel+'</h2>' + inhalt + '</section>';
-  }
-  function fragenAlsHtml(fragen, mitLoesung){
-    var h = '<ol class="fg-druck-fragen">';
-    fragen.forEach(function(f){
-      h += '<li><p>'+f.text+'</p><ul>';
-      f.optionen.forEach(function(o,k){
-        var marke = (mitLoesung && o===f.richtig) ? ' <strong>&#10004;</strong>' : '';
-        h += '<li>'+String.fromCharCode(65+k)+') '+o+marke+'</li>';
-      });
-      h += '</ul></li>';
-    });
-    return h + '</ol>';
-  }
+  // --- Drucken: ein kleines Testheft ------------------------------------------
+  // Wie im echten Heft: Teil A mit Anleitung und Einpraegeliste (STOPP),
+  // Teil B mit den Fragen - 8 unter dem Anleitungskasten, 10 auf der
+  // naechsten Seite, je zweispaltig wie im Testheft 2026 -, dann ein
+  // Antwortbogen und die Loesungen. Gedruckt wird ueber window.print(); der
+  // Browser bietet dort selbst "Als PDF sichern" an.
   function drucken(l, f){
     if (!l || !l.length){ l = baueSet(); f = baueFragen(l); }
-    el('fg-druck').innerHTML =
-        blatt(T.blattEinpraegen, '<p class="fg-druck-hinweis">'+T.blattEinpraegenHinweis+'</p>'+tabelle(l), false)
-      + blatt(T.blattAufgaben,  '<p class="fg-druck-hinweis">'+T.blattAufgabenHinweis+'</p>'+fragenAlsHtml(f,false), true)
-      + blatt(T.blattLoesung,   fragenAlsHtml(f,true), true);
-    // Den Behaelter fuer die Dauer des Drucks direkt unter <body> haengen.
-    // Solange er tief in der Seite steckt, laesst sich der Rest nicht sauber
-    // ausblenden: Entweder kommt der Artikel mit (er steht im selben <main>)
-    // oder sein Platz bleibt als leere Seiten stehen. Siehe auch die
-    // Druckregeln in style.css.
-    var behaelter = el('fg-druck');
-    var heimat = behaelter.parentNode, nachbar = behaelter.nextSibling;
-    document.body.appendChild(behaelter);
-    document.body.classList.add('fg-druckt');
-    // Nach dem Dialog wieder aufraeumen - egal ob gedruckt oder abgebrochen.
-    var fertig = function(){
-      document.body.classList.remove('fg-druckt');
-      behaelter.innerHTML = '';
-      heimat.insertBefore(behaelter, nachbar);   // zurueck an seinen Platz
-      window.removeEventListener('afterprint', fertig);
-    };
-    window.addEventListener('afterprint', fertig);
-    window.print();
-    setTimeout(function(){ if (document.body.classList.contains('fg-druckt')) fertig(); }, 1500);
+    H.drucken([
+      H.seite({ teil: 'A', nr: 1, inhalt: H.kopf(T.heftEinpraegen, H.zeit('lern', minuten('fg-min-lernen', {{ $lern }}))) + H.kasten(anleitungEinpraegen()) }),
+      H.seite({ teil: 'A', nr: 2, inhalt: lernliste(l), marke: 'stopp' }),
+      H.seite({ teil: 'B', nr: 3, inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fg-min-abfrage', {{ $abfrage }}))) + H.kasten([T.a1, T.a2]) + fragenHtml(f.slice(0, 8), 0, 'druck'), marke: 'weiter' }),
+      H.seite({ teil: 'B', nr: 4, inhalt: fragenHtml(f.slice(8), 8, 'druck'), marke: 'stopp' }),
+      H.seite({ nr: 5, inhalt: H.antwortbogen(T.heftAbfrage, f.length) }),
+      H.seite({ nr: 6, inhalt: H.loesungsblatt(T.heftAbfrage, f.map(function(x){ return BST[x.richtig]; })) })
+    ]);
   }
   el('fg-drucken').addEventListener('click', function(){ drucken(null, null); });
   el('fg-drucken-ende').addEventListener('click', function(){ drucken(leute, fragen); });

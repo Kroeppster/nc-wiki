@@ -1495,14 +1495,6 @@ body.pm-aktiv{overflow:hidden;}
 .fg-uhr{margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);
   font-variant-numeric:tabular-nums;color:var(--color-signal);}
 .fg-punkte{margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);}
-.fg-tabelle{width:100%;border-collapse:collapse;margin-bottom:var(--space-5);font-size:var(--text-sm);}
-.fg-tabelle th{text-align:left;font-size:var(--text-xs);text-transform:uppercase;
-  letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);padding:.35rem .6rem;}
-.fg-tabelle td{padding:.35rem .6rem;border-top:1px solid var(--color-line);}
-.fg-fragen{margin:0 0 var(--space-5);padding-left:1.4rem;display:grid;gap:var(--space-5);}
-.fg-frage-text{margin:0 0 var(--space-2);font-weight:600;}
-.fg-optionen{list-style:none;margin:0;padding:0;display:grid;gap:.25rem;font-size:var(--text-sm);}
-.fg-optionen label{display:flex;gap:.5rem;align-items:baseline;cursor:pointer;}
 /* Auswertung: richtig gruen, die eigene falsche Antwort rot. Beide tragen
    zusaetzlich ein Zeichen, damit sie nicht NUR ueber die Farbe zu erkennen
    sind - Farbe allein ist fuer farbenblinde Personen keine Information. */
@@ -1512,8 +1504,6 @@ body.pm-aktiv{overflow:hidden;}
 .fg-ist-falsch::after{content:" ✗";}
 @media (max-width:600px){
   .fg{padding:var(--space-4);}
-  .fg-tabelle{font-size:var(--text-xs);}
-  .fg-tabelle th,.fg-tabelle td{padding:.3rem .35rem;}
 }
 
 /* Knopfreihe und Hinweis unter der Startkarte */
@@ -1523,16 +1513,16 @@ body.pm-aktiv{overflow:hidden;}
 .fg-druck{display:none;}
 
 /* ==========================================================================
-   Drucken: die drei Blätter des Fakten-Generators
+   Drucken: die Testheft-Seiten der beiden Generatoren
    ==========================================================================
-   BEWUSST AN "body.fg-druckt" GEBUNDEN und nicht allgemein. Die Website hatte
-   bisher gar keine Druckregeln; allgemeine Regeln würden das Drucken JEDER
-   Seite verändern, und das hat niemand verlangt. Die Klasse setzt das Skript
-   nur für die Dauer des Druckdialogs und nimmt sie danach wieder weg. */
+   BEWUSST AN "body.fg-druckt" GEBUNDEN und nicht allgemein: Allgemeine
+   Regeln würden das Drucken JEDER Seite der Website verändern. Die Klasse
+   setzt das Skript (bausteine/ems-heft.html) nur für die Dauer des
+   Druckdialogs. Die Seitenränder (@page margin 0) setzt es ebenso nur für
+   diesen Druck - die Heftseiten bringen ihre Ränder selbst mit. */
 @media print{
-  /* DER BEHÄLTER WIRD BEIM DRUCKEN NACH <body> VERSCHOBEN (siehe drucken()
-     im Shortcode). Erst dadurch lässt sich hier sauber ausblenden:
-     "alle Body-Kinder ausser diesem einen".
+  /* DER BEHÄLTER HÄNGT BEIM DRUCKEN DIREKT UNTER <body>. Erst dadurch lässt
+     sich hier sauber ausblenden: "alle Body-Kinder ausser diesem einen".
 
      Zwei Versuche vorher gingen daneben, beide stehen hier als Warnung:
      Erst hatte ich die Body-Kinder ausgeblendet und den Weg zum Behälter
@@ -1542,41 +1532,121 @@ body.pm-aktiv{overflow:hidden;}
      Seiten, die meisten leer. Nur das Verschieben löst beides. */
   body.fg-druckt > *:not(.fg-druck){display:none !important;}
   body.fg-druckt > .fg-druck{display:block !important;}
-  .fg-blatt{page-break-after:always;break-after:page;}
-  .fg-blatt:last-child{page-break-after:auto;break-after:auto;}
-  .fg-blatt h2{font-size:14pt;margin:0 0 .4cm;}
-  .fg-druck-hinweis{font-size:9pt;margin:0 0 .6cm;}
-  .fg-druck .fg-tabelle{width:100%;border-collapse:collapse;font-size:10pt;}
-  .fg-druck .fg-tabelle th{text-align:left;font-size:8pt;text-transform:uppercase;padding:.15cm .2cm;}
-  .fg-druck .fg-tabelle td{padding:.15cm .2cm;border-top:.2pt solid #999;}
-  .fg-druck-fragen{font-size:10pt;padding-left:.8cm;}
-  /* Eine Aufgabe soll nicht über den Seitenrand zerrissen werden - sonst
-     stehen die Antworten auf der nächsten Seite ohne ihre Frage. */
-  .fg-druck-fragen > li{page-break-inside:avoid;break-inside:avoid;margin-bottom:.35cm;}
-  .fg-druck-fragen > li > p{margin:0 0 .12cm;font-weight:600;}
-  .fg-druck-fragen ul{list-style:none;margin:0;padding-left:.4cm;}
-  @page{margin:1.6cm;}
+  body.fg-druckt{background:#fff !important;}
 }
 
 /* ==========================================================================
-   Figuren-Generator (Alpha)
+   Figuren-Generator
    ==========================================================================
    Die Figuren sind erzeugte SVGs. Weiss ist fest verdrahtet und folgt NICHT
    dem Farbmodus: Die Aufgabe besteht darin, ein SCHWARZES Feld von weissen
    zu unterscheiden - im Dunkelmodus eingefärbt wäre sie sinnlos. */
-.fig-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin:var(--space-5) 0;}
+.fig-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:14pt 10pt;margin:14pt 0 0;}
 .fig-feld{text-align:center;}
-.fig-svg{width:100%;height:auto;display:block;background:#fff;border-radius:var(--radius-sm);}
-.fig-nr{margin:0 0 .2rem;font-size:var(--text-xs);color:var(--color-ink-faint);font-weight:600;}
-.fig-wahl{list-style:none;display:flex;justify-content:center;gap:.5rem;margin:.35rem 0 0;padding:0;font-size:var(--text-sm);}
+.fig-svg{width:100%;max-width:120pt;height:auto;display:block;margin:0 auto;background:#fff;}
+/* "1)" über der Figur, fett - wie im Heft (ems.typ: figuren-raster). */
+.fig-nr{margin:0 0 4pt;font-weight:700;}
+.fig-wahl{list-style:none;display:flex;justify-content:center;flex-wrap:wrap;gap:.1rem .5rem;margin:.35rem 0 0;padding:0;}
 .fig-wahl label{cursor:pointer;}
-.fig-raster-abfrage .fig-svg{border:1px solid var(--color-line);}
 @media (max-width:900px){ .fig-raster{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:560px){ .fig-raster{grid-template-columns:repeat(2,1fr);} }
-@media print{
-  .fig-druck-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:.35cm;}
-  .fig-druck-raster .fig-svg{width:100%;height:auto;}
-  /* Eine Figur samt ihrer Antwortzeile gehört zusammen auf eine Seite. */
-  .fig-druck-raster .fig-feld{page-break-inside:avoid;break-inside:avoid;}
-  .fig-loesungsliste{columns:6;font-size:10pt;}
+
+/* ==========================================================================
+   EMS-Heft: Fakten- und Figuren-Generator im Format des Testhefts
+   ==========================================================================
+   Masse aus dem NCWiki-Formatierungstool (vorlage/ems.typ), dort am
+   Original gemessen - deshalb hier in pt und mit denselben Zahlen:
+     Satzspiegel links 42.5, rechts 42, oben 88.1; Einzug 28.4 (10 mm)
+     Schrift 10 pt, Durchschuss 12 pt, Absatzabstand 12 pt
+     Ueberschrift 12 pt fett, danach 31 pt; Kasten 1 pt, Innenrand 5/3.9
+     Einpraegeliste: Spalten bei 42.5 / 127.6 / 240.9, Zeilen 17.65 pt,
+                     zwischen zwei Altersgruppen zwei Leerzeilen mehr
+   Am Bildschirm steht das Ganze auf einem weissen Blatt (.ems-blatt) - wie
+   die Figuren folgt es nicht dem Dunkelmodus: Es ist eine Testheft-Seite.
+   Im Druck ist jede .ems-seite genau eine A4-Seite. */
+.ems-blatt,.ems-seite{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;color:#000;background:#fff;color-scheme:light;}
+.ems-blatt{font-size:11pt;line-height:1.2;padding:24pt 28pt;margin:0 0 var(--space-5);
+  border:1px solid var(--color-line);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);overflow-x:auto;}
+.ems-blatt:empty{display:none;}
+/* :where() - ohne Gewicht, damit die Abstaende unten (Kasten, Beispiel)
+   gegen diese Grundregel ankommen. Mit ".ems-seite p" stand der Kasten im
+   Druck ohne jeden Absatzabstand da. */
+:where(.ems-blatt,.ems-seite) p{margin:0;}
+.ems-kopf{display:flex;justify-content:space-between;gap:1em;flex-wrap:wrap;font-weight:700;font-size:1.2em;margin:0 0 31pt;}
+.ems-kasten{border:1pt solid #000;padding:5pt 3.9pt;margin:0 0 14pt;}
+.ems-kasten > * + *{margin-top:12pt;}
+.ems-einzug{padding-left:28.4pt;}
+.ems-beispielbild{display:block;}
+.ems-beispielbild .fig-svg{width:110pt;max-width:110pt;}
+/* Einpraegeliste: drei Spalten, fuenf Gruppen */
+.ems-lernliste{margin-top:6pt;}
+.ems-zeile{display:grid;grid-template-columns:85.1pt 113.3pt 1fr;}
+.ems-zeile + .ems-zeile{margin-top:5.65pt;}
+.ems-gruppe + .ems-gruppe{margin-top:35.7pt;}
+@media (max-width:560px){
+  .ems-blatt{padding:16pt 12pt;font-size:10.5pt;}
+  .ems-zeile{grid-template-columns:auto 1fr;column-gap:.6em;}
+  .ems-zeile > :nth-child(3){grid-column:1 / -1;padding-left:1.2em;}
 }
+/* Fragen: Nummer "1)" fett in der Einzugsspalte, (A) bis (E) darunter mit
+   einfachem Zeilenabstand, zweispaltig mit Trennlinie wie im Testheft 2026
+   ("spaltenweise Abfolge"). Mit dem weiteren Abstand der Med-Nat-Aufgaben
+   laufen 18 Fakten-Fragen ueber die Seite - im Tool deshalb noch ein TODO. */
+.ems-fragen{list-style:none;margin:0;padding:0;}
+.ems-zweispaltig{columns:2;column-gap:28pt;column-rule:.5pt solid #000;}
+.ems-frage{break-inside:avoid;display:grid;grid-template-columns:28.4pt 1fr;margin:0 0 20pt;}
+.ems-nr{font-weight:700;}
+.ems-optionen{grid-column:2;display:block;margin-top:12pt;}
+.ems-option{display:grid;grid-template-columns:28.4pt 1fr;}
+.ems-option-wahl{grid-template-columns:auto 28.4pt 1fr;column-gap:.4em;cursor:pointer;margin-left:-1.6em;}
+.ems-option-wahl input{margin:0;align-self:center;}
+@media (max-width:700px){ .ems-zweispaltig{columns:1;} }
+/* Die Fussmarken, Masse aus ems.typ (pfeil-weiter, stopp-marke) */
+.ems-marke{position:relative;font-size:8pt;line-height:1.15;margin:20pt 0 0 auto;}
+.ems-marke-kasten{position:absolute;left:0;box-sizing:border-box;border:1pt solid #000;background:#fff;
+  display:flex;align-items:center;justify-content:center;text-align:center;}
+.ems-marke-zeichen{position:absolute;top:0;overflow:visible;}
+.ems-marke-zeichen text{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;}
+.ems-marke-weiter{width:201.3pt;height:52.3pt;}
+.ems-marke-weiter .ems-marke-kasten{top:8.95pt;width:147.9pt;height:34.4pt;}
+.ems-marke-weiter .ems-marke-zeichen{left:148.4pt;width:52.9pt;height:52.3pt;}
+.ems-marke-stopp{width:200.6pt;height:62.17pt;}
+.ems-marke-stopp .ems-marke-kasten{top:13pt;width:148.2pt;height:35.6pt;}
+.ems-marke-stopp .ems-marke-zeichen{left:129.8pt;width:71.23pt;height:63.17pt;}
+.ems-blatt .ems-marke{margin-top:24pt;}
+/* Antwortbogen: Zeilen wie auf dem echten Bogen (ems.typ: bogen-zeile) */
+.ems-bogen-name{margin:0 0 6pt;}
+.ems-bogen-name span{display:inline-block;width:200pt;border-bottom:.5pt solid #000;margin-left:6pt;}
+.ems-bogen-hinweis{font-size:8pt;margin:0 0 18pt;}
+.ems-bogen{width:122.2pt;}
+.ems-bogen-titel{box-sizing:border-box;width:121.92pt;height:32.4pt;border:.24pt solid #000;padding:1pt 3pt;
+  font-size:7pt;line-height:8.04pt;overflow:hidden;margin-bottom:4.8pt;}
+.ems-bogen-zeile{display:flex;align-items:center;height:13.48pt;}
+.ems-bogen-hell{background:#ffccff;}
+.ems-bogen-nr{width:15pt;text-align:right;font-size:9pt;margin-right:3.48pt;}
+.ems-bogen-feld{display:flex;align-items:center;width:20.82pt;font-size:8pt;}
+.ems-bogen-feld span{width:7.92pt;}
+.ems-bogen-feld i{display:block;box-sizing:border-box;width:9.12pt;height:6.24pt;border:1.07pt solid #ff00ff;background:#fff;}
+/* Loesungsblatt wie vorlage/loesungsblatt.typ */
+.ems-loesung-titel{font-weight:700;margin:0 0 5.65pt;}
+.ems-loesung{border-collapse:collapse;margin:0 0 12pt;}
+.ems-loesung td{width:36pt;border:.5pt solid #000;padding:5pt;text-align:center;font-size:10pt;}
+
+/* Die gedruckte Heftseite: A4, alles in pt ab der Blattecke. Etwas weniger
+   hoch als A4 (841.9 pt), sonst erzeugt Rundung eine leere Seite dazwischen. */
+.ems-druck .ems-seite{position:relative;width:595.3pt;height:841pt;overflow:hidden;font-size:10pt;line-height:12pt;
+  break-after:page;page-break-after:always;}
+.ems-druck .ems-seite:last-child{break-after:auto;page-break-after:auto;}
+.ems-kopfzeile{position:absolute;left:42.5pt;right:42pt;top:38pt;display:grid;grid-template-columns:1fr 1fr 1fr;}
+.ems-kopfzeile span:nth-child(2){text-align:center;}
+.ems-kopfzeile span:nth-child(3){text-align:right;}
+.ems-satz{position:absolute;left:42.5pt;right:42pt;top:88.1pt;bottom:70pt;}
+.ems-seite .ems-kopf{font-size:12pt;}
+.ems-seite .ems-marke{margin:0;}
+.ems-fussmarke{position:absolute;right:42pt;top:776pt;}
+.ems-seitenzahl{position:absolute;left:0;right:0;top:804pt;text-align:center;}
+.ems-seite .ems-frage{margin-bottom:16pt;}
+/* Figuren auf festen Plaetzen (ems.typ: FL-X, FL-Y, FL-SPALTE, FL-ZEILE) */
+.ems-fl-zelle{position:absolute;width:80.2pt;text-align:center;}
+.ems-fl-zelle b{display:block;height:17.6pt;}
+.ems-fl-zelle .fig-svg{width:80.2pt;height:80.2pt;max-width:none;}

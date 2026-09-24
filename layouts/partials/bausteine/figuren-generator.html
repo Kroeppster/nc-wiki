@@ -7,6 +7,13 @@
   werden dieselben Figuren in ANDERER Reihenfolge und mit Feldern A-E
   beschriftet abgefragt.
 
+  DAS FORMAT IST DAS DES TESTHEFTS: Ueberschrift mit Lernzeit, Kasten mit der
+  Anleitung im Wortlaut des Hefts (mit einer Beispielfigur - erzeugt, nicht
+  aus dem Heft kopiert), die 18 Figuren im Raster aus vier Spalten, in der
+  Abfrage mit "1)" darueber, STOPP am Ende. Masse und Seitenbau aus dem
+  NCWiki-Formatierungstool, siehe bausteine/ems-heft.html. Gedruckt entsteht
+  ein kleines Testheft mit Antwortbogen und Loesungen.
+
   Warum ein Generator: Material fuer diesen Untertest ist EINMALIG verwendbar.
   Wer eine Serie einmal auswendig gelernt hat, kann sie nie wieder zum Ueben
   brauchen - anders als bei allen anderen Untertests.
@@ -62,6 +69,7 @@
   {{- if $zaehle }}{{ $pause = add $pause .minuten }}{{ end }}
   {{- if eq .key "figuren-einpraegen" }}{{ $zaehle = true }}{{ $lern = .minuten }}{{ end }}
 {{- end }}
+{{- partial "bausteine/ems-heft.html" . }}
 <div class="fg" id="fig-wurzel" data-pagefind-ignore>
 <div class="fg-start" id="fig-start">
 <p class="fg-intro">{{ i18n "fig_intro" }}</p>
@@ -78,8 +86,7 @@
 </div>
 <div class="fg-phase" id="fig-lernen" hidden>
 <div class="fg-kopf"><h3>{{ i18n "fg_phase_einpraegen" }}</h3><p class="fg-uhr" id="fig-uhr-lernen">--:--</p></div>
-<p class="fg-intro">{{ i18n "fig_lernen_hinweis" }}</p>
-<div class="fig-raster" id="fig-tafel"></div>
+<div class="ems-blatt" id="fig-blatt-lernen"></div>
 <button type="button" class="btn btn-ghost" id="fig-fertig-lernen">{{ i18n "fg_weiter" }}</button>
 </div>
 <div class="fg-phase" id="fig-pause" hidden>
@@ -89,30 +96,32 @@
 </div>
 <div class="fg-phase" id="fig-abfrage" hidden>
 <div class="fg-kopf"><h3>{{ i18n "fg_phase_abfrage" }}</h3><p class="fg-uhr" id="fig-uhr-abfrage">--:--</p></div>
-<p class="fg-intro">{{ i18n "fig_abfrage_hinweis" }}</p>
-<div class="fig-raster fig-raster-abfrage" id="fig-fragen"></div>
+<div class="ems-blatt" id="fig-blatt-abfrage"></div>
 <button type="button" class="btn btn-primary" id="fig-auswerten">{{ i18n "fg_auswerten" }}</button>
 </div>
 <div class="fg-phase" id="fig-ergebnis" hidden>
 <div class="fg-kopf"><h3>{{ i18n "fg_phase_ergebnis" }}</h3><p class="fg-punkte" id="fig-punkte"></p></div>
-<div class="fig-raster fig-raster-abfrage" id="fig-loesung"></div>
+<div class="ems-blatt" id="fig-blatt-loesung"></div>
 <div class="fg-knoepfe">
 <button type="button" class="btn btn-primary" id="fig-nochmal">{{ i18n "fg_nochmal" }}</button>
 <button type="button" class="btn btn-ghost" id="fig-drucken-ende">{{ i18n "fg_drucken_dieses" }}</button>
 </div>
 </div>
-<div class="fg-druck" id="fig-druck" aria-hidden="true"></div>
 </div>
 <script>
 (function(){
+  var H = window.EMSHeft, BST = H.BST;
   var T = {
-    richtig: {{ i18n "fg_richtig" | jsonify | safeJS }},
-    punkte:  {{ i18n "fg_punkte_von" | jsonify | safeJS }},
-    blattEinpraegen:        {{ i18n "fig_blatt_einpraegen" | jsonify | safeJS }},
-    blattEinpraegenHinweis: {{ i18n "fig_blatt_einpraegen_hinweis" | jsonify | safeJS }},
-    blattAufgaben:          {{ i18n "fig_blatt_aufgaben" | jsonify | safeJS }},
-    blattAufgabenHinweis:   {{ i18n "fig_blatt_aufgaben_hinweis" | jsonify | safeJS }},
-    blattLoesung:           {{ i18n "fg_blatt_loesung" | jsonify | safeJS }}
+    punkte: {{ i18n "fg_punkte_von" | jsonify | safeJS }},
+    heftEinpraegen: {{ i18n "fig_heft_einpraegen" | jsonify | safeJS }},
+    heftAbfrage:    {{ i18n "fig_heft_abfrage" | jsonify | safeJS }},
+    e1: {{ i18n "fig_anl_e1" | jsonify | safeJS }},
+    e2: {{ i18n "fig_anl_e2" | jsonify | safeJS }},
+    beispiel: {{ i18n "fig_anl_beispiel" | jsonify | safeJS }},
+    e3: {{ i18n "fig_anl_e3" | jsonify | safeJS }},
+    beispielAbfrage: {{ i18n "fig_anl_beispiel_abfrage" | jsonify | safeJS }},
+    beispielLoesung: {{ i18n "fig_anl_beispiel_loesung" | jsonify | safeJS }},
+    a1: {{ i18n "fig_anl_a1" | jsonify | safeJS }}
   };
   var Z=function(a,b){return a+Math.random()*(b-a);};
   function misch(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -638,7 +647,7 @@
     return s;
   }
   var el=function(id){ return document.getElementById(id); };
-  var figuren=[], schwarz=[], reihenfolge=[];
+  var figuren=[], schwarz=[], reihenfolge=[], beispiel=null, beispielSchwarz=0;
   function baueSet(){
     // Ein Stil FUER DIE GANZE SERIE (siehe Abschnitt 0). Kommt ein Stil mit
     // seinen eigenen Grenzwerten nicht auf 18 Figuren - etwa weil er sehr
@@ -661,30 +670,45 @@
       var f2=figur(notstil);
       if(f2) figuren.push(f2);
     }
+    // Die Beispielfigur der Anleitung, im Stil derselben Serie - so zeigt die
+    // Anleitung, wie die Figuren gleich aussehen werden. Im Heft steht dort
+    // ein festes Bild; ein erzeugtes passt zu jeder Serie.
+    beispiel=null;
+    for(var b=0; b<20 && !beispiel; b++) beispiel=figur(stil||serienstil());
+    beispielSchwarz=Math.floor(Math.random()*5);
     schwarz=figuren.map(function(){ return Math.floor(Math.random()*5); });
     // Abfrage in ANDERER Reihenfolge - so ist es im echten Test auch.
     reihenfolge=misch(figuren.map(function(_,i){ return i; }));
   }
-  function zeichneTafel(){
-    el('fig-tafel').innerHTML = figuren.map(function(f,i){
-      return '<div class="fig-feld">'+svg(f,schwarz[i],false)+'</div>'; }).join('');
+  // --- Das Blatt wie im Heft ------------------------------------------------
+  function anleitungEinpraegen(){
+    var k = [T.e1, T.e2];
+    if (beispiel){
+      k.push(T.beispiel, '<div class="ems-beispielbild">'+svg(beispiel,beispielSchwarz,false)+'</div>',
+             T.e3, T.beispielAbfrage, '<div class="ems-beispielbild">'+svg(beispiel,-1,true)+'</div>',
+             T.beispielLoesung.replace('{x}', BST[beispielSchwarz]));
+    } else k.push(T.e3);
+    return k;
   }
-  function zeichneAbfrage(ziel,mitLoesung,antworten){
-    ziel.innerHTML = reihenfolge.map(function(idx,n){
-      var f=figuren[idx], h='<div class="fig-feld"><p class="fig-nr">'+(n+1)+'</p>'+svg(f,-1,true);
-      h+='<ul class="fig-wahl">';
+  // Das Raster am Bildschirm: vier Spalten, in der Abfrage mit "1)" ueber
+  // jeder Figur - zeilenweise nummeriert wie im Heft.
+  function raster(art, antworten){
+    var liste = art === 'lernen' ? figuren.map(function(_,i){ return i; }) : reihenfolge;
+    return '<div class="fig-raster">' + liste.map(function(idx,n){
+      if (art === 'lernen') return '<div class="fig-feld">'+svg(figuren[idx],schwarz[idx],false)+'</div>';
+      var h='<div class="fig-feld"><p class="fig-nr">'+(n+1)+')</p>'+svg(figuren[idx],-1,true)+'<ul class="fig-wahl">';
       for(var k=0;k<5;k++){
-        var b='ABCDE'[k];
-        if(mitLoesung){
+        if (art === 'loesung'){
           var kl = k===schwarz[idx] ? 'fg-ist-richtig' : (antworten[n]===k ? 'fg-ist-falsch' : '');
-          h+='<li class="'+kl+'">'+b+'</li>';
+          h+='<li class="'+kl+'">'+BST[k]+'</li>';
         } else {
-          h+='<li><label><input type="radio" name="fig-'+n+'" value="'+k+'"> '+b+'</label></li>';
+          h+='<li><label><input type="radio" name="fig-'+n+'" value="'+k+'"> '+BST[k]+'</label></li>';
         }
       }
       return h+'</ul></div>';
-    }).join('');
+    }).join('') + '</div>';
   }
+  function minuten(id, vorgabe){ return +el(id).value || vorgabe; }
   var laufend=null;
   function uhr(anzeige,sekunden,fertig){
     clearInterval(laufend);
@@ -698,8 +722,11 @@
       el(id).hidden = (id!==welche); });
   }
   el('fig-los').addEventListener('click', function(){
-    baueSet(); zeichneTafel(); zeige('fig-lernen');
-    uhr(el('fig-uhr-lernen'), (+el('fig-min-lernen').value||{{ $lern }})*60, zurPause);
+    baueSet();
+    el('fig-blatt-lernen').innerHTML = H.kopf(T.heftEinpraegen, H.zeit('lern', minuten('fig-min-lernen', {{ $lern }})))
+      + H.kasten(anleitungEinpraegen()) + raster('lernen') + H.marke('stopp');
+    zeige('fig-lernen');
+    uhr(el('fig-uhr-lernen'), minuten('fig-min-lernen', {{ $lern }})*60, zurPause);
   });
   function zurPause(){
     clearInterval(laufend);
@@ -709,9 +736,10 @@
   }
   function zurAbfrage(){
     clearInterval(laufend);
-    zeichneAbfrage(el('fig-fragen'), false);
+    el('fig-blatt-abfrage').innerHTML = H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fig-min-abfrage', {{ $abfrage }})))
+      + H.kasten([T.a1]) + raster('wahl') + H.marke('stopp');
     zeige('fig-abfrage');
-    uhr(el('fig-uhr-abfrage'), (+el('fig-min-abfrage').value||{{ $abfrage }})*60, auswerten);
+    uhr(el('fig-uhr-abfrage'), minuten('fig-min-abfrage', {{ $abfrage }})*60, auswerten);
   }
   function auswerten(){
     clearInterval(laufend);
@@ -721,40 +749,36 @@
     });
     var richtig = reihenfolge.filter(function(idx,n){ return antworten[n]===schwarz[idx]; }).length;
     el('fig-punkte').textContent = T.punkte.replace('{n}', richtig).replace('{von}', 18);
-    zeichneAbfrage(el('fig-loesung'), true, antworten);
+    el('fig-blatt-loesung').innerHTML = H.kopf(T.heftAbfrage, '') + raster('loesung', antworten);
     zeige('fig-ergebnis');
   }
   el('fig-fertig-lernen').addEventListener('click', zurPause);
   el('fig-fertig-pause').addEventListener('click', zurAbfrage);
   el('fig-auswerten').addEventListener('click', auswerten);
   el('fig-nochmal').addEventListener('click', function(){ clearInterval(laufend); zeige('fig-start'); });
-  function blatt(titel,inhalt,umbruch){
-    return '<section class="fg-blatt'+(umbruch?' fg-blatt-umbruch':'')+'"><h2>'+titel+'</h2>'+inhalt+'</section>';
+  // --- Drucken: ein kleines Testheft ------------------------------------------
+  // Die Figuren stehen auf festen Plaetzen wie im Tool (ems.typ:
+  // figuren-raster): vier Spalten ab x = 49 im Abstand 124.5, Zeilen ab
+  // y = 83 im Abstand 135.6, Figur 80.2 pt gross, 17.6 pt unter der Nummer.
+  function druckRaster(nummern){
+    var liste = nummern ? reihenfolge : figuren.map(function(_,i){ return i; });
+    return liste.map(function(idx,n){
+      var x = 49 + (n % 4) * 124.5, y = 83 + Math.floor(n / 4) * 135.6;
+      return '<div class="ems-fl-zelle" style="left:'+x+'pt;top:'+y+'pt">'
+        + (nummern ? '<b>'+(n+1)+')</b>' : '')
+        + svg(figuren[idx], nummern ? -1 : schwarz[idx], nummern) + '</div>';
+    }).join('');
   }
   function drucken(){
     if(!figuren.length) baueSet();
-    var lern = '<div class="fig-raster fig-druck-raster">' + figuren.map(function(f,i){
-      return '<div class="fig-feld">'+svg(f,schwarz[i],false)+'</div>'; }).join('') + '</div>';
-    var auf = '<div class="fig-raster fig-druck-raster">' + reihenfolge.map(function(idx,n){
-      return '<div class="fig-feld"><p class="fig-nr">'+(n+1)+'</p>'+svg(figuren[idx],-1,true)+'</div>'; }).join('') + '</div>';
-    var los = '<ol class="fg-druck-fragen fig-loesungsliste">' + reihenfolge.map(function(idx){
-      return '<li>'+'ABCDE'[schwarz[idx]]+'</li>'; }).join('') + '</ol>';
-    el('fig-druck').innerHTML =
-        blatt(T.blattEinpraegen, '<p class="fg-druck-hinweis">'+T.blattEinpraegenHinweis+'</p>'+lern, false)
-      + blatt(T.blattAufgaben,  '<p class="fg-druck-hinweis">'+T.blattAufgabenHinweis+'</p>'+auf, true)
-      + blatt(T.blattLoesung, los, true);
-    var behaelter=el('fig-druck'), heimat=behaelter.parentNode, nachbar=behaelter.nextSibling;
-    document.body.appendChild(behaelter);
-    document.body.classList.add('fg-druckt');
-    var fertig=function(){
-      document.body.classList.remove('fg-druckt');
-      behaelter.innerHTML='';
-      heimat.insertBefore(behaelter, nachbar);
-      window.removeEventListener('afterprint', fertig);
-    };
-    window.addEventListener('afterprint', fertig);
-    window.print();
-    setTimeout(function(){ if(document.body.classList.contains('fg-druckt')) fertig(); },1500);
+    H.drucken([
+      H.seite({ teil: 'A', nr: 1, inhalt: H.kopf(T.heftEinpraegen, H.zeit('lern', minuten('fig-min-lernen', {{ $lern }}))) + H.kasten(anleitungEinpraegen()) }),
+      H.seite({ teil: 'A', nr: 2, frei: druckRaster(false), marke: 'stopp' }),
+      H.seite({ teil: 'B', nr: 3, inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fig-min-abfrage', {{ $abfrage }}))) + H.kasten([T.a1]), marke: 'weiter' }),
+      H.seite({ teil: 'B', nr: 4, frei: druckRaster(true), marke: 'stopp' }),
+      H.seite({ nr: 5, inhalt: H.antwortbogen(T.heftAbfrage, 18) }),
+      H.seite({ nr: 6, inhalt: H.loesungsblatt(T.heftAbfrage, reihenfolge.map(function(idx){ return BST[schwarz[idx]]; })) })
+    ]);
   }
   el('fig-drucken').addEventListener('click', drucken);
   el('fig-drucken-ende').addEventListener('click', drucken);

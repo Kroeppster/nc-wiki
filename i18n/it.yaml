@@ -283,48 +283,53 @@ fg_phase_abfrage: "Fase di riproduzione"
 fg_phase_ergebnis: "Risultato"
 fg_pause_hinweis: "Nel test vero qui si inserisce un sottotest del tutto diverso. Alzati un attimo o fai un calcolo – senza questa pausa alleni solo la memoria a breve termine."
 fg_das_war_das_set: "Questo era il gruppo"
-fg_th_person: "Persona"
-fg_th_alter: "Età"
-fg_th_beruf: "Professione"
-fg_th_merkmal: "Caratteristica"
-fg_th_krankheit: "Diagnosi"
-fg_jahre: "anni"
-fg_richtig: "corretto"
-fg_falsch: "sbagliato"
 fg_punkte_von: "{n} su {von} corretti"
-fg_f_alter_von_krankheit: "La persona con {x} ha …"
-fg_f_name_von_krankheit: "Il nome della persona con {x} è:"
-fg_f_krankheit_von_name: "A {x} viene diagnosticato:"
-fg_f_beruf_von_name: "{x} lavora come:"
-fg_f_merkmal_von_beruf: "La persona con la professione {x} è …"
-fg_f_alter_von_beruf: "La persona con la professione {x} ha …"
 
 # --- Drucken / als PDF sichern ---
 fg_drucken: Salva come PDF / stampa
 fg_drucken_dieses: Stampa questo gruppo
-fg_drucken_hinweis: 'Per esercitarsi su carta: la stampa contiene tre fogli – memorizzazione,
-  esercizi e soluzioni. Nella finestra di stampa si può scegliere «Salva come PDF»
-  invece di una stampante.'
-fg_blatt_einpraegen: Memorizzazione di fatti – fase di memorizzazione
-fg_blatt_einpraegen_hinweis: 'Tempo: 6 minuti. Memorizza tutte le 15 persone. Poi
-  metti via questo foglio e fai altro prima di prendere il foglio degli esercizi.'
-fg_blatt_aufgaben: Memorizzazione di fatti – fase di riproduzione
-fg_blatt_aufgaben_hinweis: '18 esercizi, tempo: 6 minuti. Per ogni esercizio una sola
-  risposta è corretta.'
-fg_blatt_loesung: Soluzioni
+fg_drucken_hinweis: "Per esercitarsi su carta: la stampa è costruita come un fascicolo di test – fase di apprendimento (parte A), fase di riproduzione (parte B), foglio delle risposte e soluzioni. Nella finestra di stampa si può scegliere anche «Salva come PDF» invece di una stampante."
 
 # --- Figuren-Generator (Alpha) ---
 fig_intro: Questo generatore crea 18 nuove figure. Ognuna è divisa in cinque campi
   di grandezza diversa, esattamente uno è nero. Dopo la pausa le stesse figure vengono
   chieste in un altro ordine – indichi quale campo era nero.
-fig_lernen_hinweis: Memorizza quale campo è nero in ogni figura. L'ordine non conta
-  – cambia nella fase di riproduzione.
-fig_abfrage_hinweis: Le stesse figure, in un altro ordine. Quale campo era nero?
-fig_drucken_hinweis: 'Per esercitarsi su carta: la stampa contiene tre fogli – memorizzazione,
-  esercizi e soluzioni. Nella finestra di stampa si può scegliere «Salva come PDF».'
-fig_blatt_einpraegen: Memorizzazione di figure – fase di memorizzazione
-fig_blatt_einpraegen_hinweis: 'Tempo: 4 minuti. Memorizza per ogni figura quale campo
-  è nero. Poi metti via questo foglio.'
-fig_blatt_aufgaben: Memorizzazione di figure – fase di riproduzione
-fig_blatt_aufgaben_hinweis: '18 esercizi, tempo: 5 minuti. Le figure sono in un altro
-  ordine. Segna quale campo era nero.'
+fig_drucken_hinweis: "Per esercitarsi su carta: la stampa è costruita come un fascicolo di test – fase di apprendimento (parte A), fase di riproduzione (parte B), foglio delle risposte e soluzioni. Nella finestra di stampa si può scegliere anche «Salva come PDF» invece di una stampante."
+
+# --- Testheft-Format der beiden Generatoren (bausteine/ems-heft.html) ---
+# EIGENE ÜBERSETZUNG des deutschen Testhefts. Sobald ein italienisches
+# NCWiki-Testheft existiert, dessen Wortlaut übernehmen.
+ems_testteil: "Parte"
+ems_lernzeit: "Tempo di apprendimento: {n} minuti"
+ems_bearbeitungszeit: "Tempo di lavoro: {n} minuti"
+ems_lernzeit_1: "Tempo di apprendimento: 1 minuto"
+ems_bearbeitungszeit_1: "Tempo di lavoro: 1 minuto"
+ems_weiter: "Girare pagina e<br>continuare subito!"
+ems_stopp: "Non girare pagina!<br>Attendere il segnale<br>del sorvegliante!"
+ems_stopp_wort: "STOP"
+ems_set: "Serie di esercizi del {datum}"
+ems_antwortbogen: "Foglio delle risposte"
+ems_antwortbogen_hinweis: "Segnare esattamente una casella per domanda."
+ems_name: "Cognome:"
+ems_loesungen: "Soluzioni"
+fg_heft_einpraegen: "Memorizzazione di fatti (fase di apprendimento)"
+fg_heft_abfrage: "Memorizzazione di fatti (fase di riproduzione)"
+fg_anl_e1: "Il test seguente serve a verificare quanto bene riuscite a memorizzare e ricordare dei fatti."
+fg_anl_e2: "Vi vengono presentati 15 pazienti. Di ognuno apprendete il nome, la fascia d'età, la professione e il sesso, un'ulteriore caratteristica (p. es. lo stato civile) e la diagnosi."
+fg_anl_e3: "Un esempio di una tale descrizione:"
+fg_anl_beispiel: "Meier: ca. 40 anni, poliziotta, nubile - frattura dell'omero"
+fg_anl_e4: "Il vostro compito è memorizzare le informazioni su ogni persona in modo da poter rispondere più tardi a domande sui dettagli. Una tale domanda potrebbe essere p. es.:"
+fg_anl_beispielfrage: "La persona con la frattura dell'omero è di professione …"
+fg_anl_beispieloptionen: "elettricista|violinista|poliziotta|biologa|venditore"
+fg_anl_beispielloesung: "La risposta giusta sarebbe (C)."
+fg_anl_a1: "Avete cercato in precedenza di memorizzare le caratteristiche di più persone. Ora dovete rispondere ad alcune domande su queste persone."
+fg_anl_a2: "Segnate sul vostro foglio delle risposte la risposta giusta per ogni domanda. (Rispettate l'ordine delle domande <b>per colonne</b>!)"
+fig_heft_einpraegen: "Memorizzazione di figure (fase di apprendimento)"
+fig_heft_abfrage: "Memorizzazione di figure (fase di riproduzione)"
+fig_anl_e1: "Questo gruppo di compiti verifica quanto bene riuscite a memorizzare e ricordare dettagli di oggetti che percepite con la vista."
+fig_anl_e2: "Vi vengono presentate 18 figure; una parte di ogni figura è annerita."
+fig_anl_beispiel: "Un esempio:"
+fig_anl_e3: "Dovete imparare la posizione della superficie nera in modo da poter indicare più tardi quale parte della figura era annerita. Le figure vi verranno però presentate in un ordine diverso."
+fig_anl_beispiel_abfrage: "Un esempio del modo in cui verrete interrogati più tardi:"
+fig_anl_beispiel_loesung: "La soluzione sarebbe allora ({x})."
+fig_anl_a1: "Indicate ora quale parte di ogni figura era annerita durante la fase di apprendimento. Segnate per ogni figura la lettera giusta sul vostro foglio delle risposte. (Rispettate l'ordine delle figure <b>per righe</b>!)"

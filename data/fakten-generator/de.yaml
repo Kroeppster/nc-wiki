@@ -36,10 +36,51 @@
 #    der Generator dort einen Hinweis statt eines Sets.
 #  - Für echte Abwechslung wären ~80 Einträge je Kategorie gut; aktuell sind
 #    es rund 40. Neue Wörter einfach unten in der passenden Kategorie ergänzen.
+#  - Die "namensgruppen" sind nach dem Muster des Testhefts 2026 neu
+#    zusammengestellt (gleicher Anfang, gleiche Herkunft, gleiches Thema) -
+#    ebenfalls noch von niemandem durchgesehen.
 # ==============================================================================
 
 # Die fünf Altersgruppen einer Serie. Genau fünf, zu je drei Personen = 15.
+# Rückfall, falls "altersgruppen_wahl" fehlt.
 altersgruppen: [25, 35, 45, 55, 75]
+
+# Jedes Set zieht seine fünf Altersgruppen neu aus diesem Vorrat, mit
+# mindestens "altersgruppen_abstand" Jahren dazwischen. Die echten Serien
+# haben keine festen Alter (Testheft 2026: 18, 25, 35, 42, 55) - mit immer
+# denselben fünf würde man mit der Zeit die Alter mitlernen statt der Personen.
+altersgruppen_wahl: [18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45, 48, 50, 52, 55, 58, 60, 62, 65, 68, 70, 72, 75]
+altersgruppen_abstand: 5
+
+# NAMENSGRUPPEN - die drei Personen einer Altersgruppe heissen ähnlich.
+# So ist es im echten Heft (Testheft 2026: Müller, Meister, Meier /
+# Garcia, Gracia, Garza / Wisniewski, Kowalczyk, Kowalski), und genau das
+# macht den Untertest schwer: Man muss sich merken, WELCHER der drei Meier-
+# ähnlichen Namen die Schenkelhalsfraktur hatte. Je Gruppe zieht der
+# Generator drei Namen aus einer Zeile. Eine Zeile braucht mindestens drei
+# Namen; vier oder mehr sorgen für Abwechslung. Kein Name in zwei Zeilen.
+# Fehlt dieser Abschnitt, zieht der Generator frei aus "namen" (unten).
+namensgruppen:
+  - ["Meier", "Meister", "Mäder", "Mettler"]
+  - ["Zürcher", "Basler", "Berner", "Luzerner", "Genfer"]
+  - ["Ferrari", "Maserati", "Lancia", "Bugatti"]
+  - ["Kowalski", "Kowalczyk", "Kowalewski", "Nowak"]
+  - ["Garcia", "Gracia", "Garza", "Garrido"]
+  - ["Koskinen", "Korhonen", "Kokkonen", "Karjalainen"]
+  - ["D'Angelo", "D'Amico", "D'Alessio", "D'Onofrio"]
+  - ["Tanaka", "Takahashi", "Nakamura", "Nakano"]
+  - ["Ulrich", "Udry", "Uhlmann", "Urech"]
+  - ["Hansen", "Jansen", "Jensen", "Larsen"]
+  - ["Schmid", "Schmidt", "Schmied", "Schmidlin"]
+  - ["Bauer", "Baumann", "Baumeister", "Bäumler"]
+  - ["Weiss", "Schwarz", "Roth", "Braun"]
+  - ["Fink", "Specht", "Adler", "Sperling"]
+  - ["de Vries", "de Groot", "de Jong", "de Boer"]
+  - ["Dubois", "Dupont", "Dumont", "Durand"]
+  - ["Papadakis", "Papadopoulos", "Pappas", "Papageorgiou"]
+  - ["Keller", "Koller", "Kohler", "Köhler"]
+  - ["O'Brien", "O'Connor", "O'Neill", "O'Hara"]
+  - ["Lindemann", "Lindner", "Lindgren", "Lindqvist"]
 
 
 # Nachnamen - ohne Kategorie, frei kombinierbar.
@@ -238,3 +279,56 @@ merkmale:
     - "turbulent"
     - "ängstlich"
     - "übermütig"
+
+
+# ==============================================================================
+# FRAGEN - Wortlaut wie im Testheft 2026
+# ==============================================================================
+# Die Formulierungen stehen hier und nicht in i18n/, weil sie zur Grammatik
+# der Sprache gehören wie die Wörter oben: "Der Urologe ist …", "Frau
+# Kowalski ist …", "Die 55-jährige Patientin ist von Beruf …". Platzhalter:
+#   {Der} {Patient} {Anrede}   je nach Geschlecht der Person (m/w, unten)
+#   {diagnose} {name} {beruf} {alter}
+#   {merkmal_attr}             das Merkmal vor dem Nomen: "der nervöse
+#                              Patient". Gebildet wird es mit -e ("nervöse",
+#                              "ledige"), bei -el ohne e ("sensibel" ->
+#                              "sensible"). Merkmale, die so nicht gehen,
+#                              stehen in "nicht_attributiv".
+# Ein Fragetyp, der hier fehlt, wird nicht gestellt. Welche Angabe gefragt
+# ist, steckt im Namen: alter_von_diagnose fragt nach dem Alter.
+#
+# Merkmale mit grossem Anfangsbuchstaben (Nomen wie "Notfall") kommen in
+# keinem Set vor: "Der Urologe ist … Notfall" geht nicht, und als einzige
+# Nomen unter lauter Adjektiven wären sie als Antwort sofort zu erkennen.
+nicht_attributiv: ["durcheinander"]
+
+# Diagnosen im Plural brauchen nach "mit" den Dativ: "Der Patient mit
+# Herzproblemen", nicht "mit Herzprobleme". In der Einprägeliste bleibt die
+# Grundform. Wer eine Diagnose im Plural ergänzt, trägt sie hier ein.
+dativ:
+  Herzprobleme: Herzproblemen
+  Ohrgeräusche: Ohrgeräuschen
+
+fragen:
+  der:     { m: "Der", w: "Die" }
+  patient: { m: "Patient", w: "Patientin" }
+  anrede:  { m: "Herr", w: "Frau" }
+  # So steht eine Person in der Einprägeliste (dritte Spalte) - wie im
+  # Beispiel der Anleitung: "Meier: ca. 40 Jahre, Polizistin, ledig - Oberarmfraktur".
+  alter_liste: "ca. {alter} Jahre"
+  zeile: "{beruf}, {merkmal} - {diagnose}"
+  # Antwort auf eine Frage nach dem Alter
+  alter_antwort: "ca. {alter} Jahre alt"
+  typen:
+    alter_von_diagnose:   "Die Person mit {diagnose} ist …"
+    beruf_von_diagnose:   "Die Person mit {diagnose} ist von Beruf …"
+    name_von_diagnose:    "{Der} {Patient} mit {diagnose} heisst …"
+    merkmal_von_diagnose: "{Der} {Patient} mit {diagnose} ist …"
+    name_von_merkmal:     "{Der} {merkmal_attr} {Patient} heisst …"
+    diagnose_von_merkmal: "{Der} {merkmal_attr} {Patient} hat …"
+    name_von_beruf:       "{Der} {beruf} heisst …"
+    merkmal_von_beruf:    "{Der} {beruf} ist …"
+    diagnose_von_beruf:   "{Der} {beruf} hat …"
+    beruf_von_name:       "{Anrede} {name} ist …"
+    diagnose_von_name:    "{Anrede} {name} hat …"
+    beruf_von_alter:      "{Der} {alter}-jährige {Patient} ist von Beruf …"

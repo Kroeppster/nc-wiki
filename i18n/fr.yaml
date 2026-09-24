@@ -284,50 +284,53 @@ fg_phase_abfrage: "Phase de restitution"
 fg_phase_ergebnis: "Résultat"
 fg_pause_hinweis: "Dans le test réel, un tout autre sous-test s'intercale ici. Lève-toi un instant ou calcule quelque chose – sans cette coupure, tu n'entraînes que la mémoire à court terme."
 fg_das_war_das_set: "Voici le jeu"
-fg_th_person: "Personne"
-fg_th_alter: "Âge"
-fg_th_beruf: "Profession"
-fg_th_merkmal: "Caractéristique"
-fg_th_krankheit: "Diagnostic"
-fg_jahre: "ans"
-fg_richtig: "correct"
-fg_falsch: "faux"
 fg_punkte_von: "{n} sur {von} corrects"
-fg_f_alter_von_krankheit: "La personne atteinte de {x} a …"
-fg_f_name_von_krankheit: "Le nom de la personne atteinte de {x} est :"
-fg_f_krankheit_von_name: "{x} reçoit le diagnostic de :"
-fg_f_beruf_von_name: "{x} travaille comme :"
-fg_f_merkmal_von_beruf: "La personne exerçant la profession {x} est …"
-fg_f_alter_von_beruf: "La personne exerçant la profession {x} a …"
 
 # --- Drucken / als PDF sichern ---
 fg_drucken: Enregistrer en PDF / imprimer
 fg_drucken_dieses: Imprimer ce jeu
-fg_drucken_hinweis: 'Pour s''entraîner sur papier : l''impression contient trois feuilles
-  – mémorisation, questions et solutions. Dans la boîte de dialogue d''impression,
-  on peut aussi choisir «Enregistrer au format PDF» au lieu d''une imprimante.'
-fg_blatt_einpraegen: Mémorisation de faits – phase d'apprentissage
-fg_blatt_einpraegen_hinweis: 'Temps : 6 minutes. Mémorise les 15 personnes. Range
-  ensuite cette feuille et fais autre chose avant de prendre la feuille de questions.'
-fg_blatt_aufgaben: Mémorisation de faits – phase de restitution
-fg_blatt_aufgaben_hinweis: '18 questions, temps : 6 minutes. Une seule réponse est
-  correcte par question.'
-fg_blatt_loesung: Solutions
+fg_drucken_hinweis: "Pour s'entraîner sur papier : l'impression est construite comme un cahier de test – phase d'apprentissage (partie A), phase de reproduction (partie B), feuille de réponses et solutions. Dans la boîte de dialogue d'impression, on peut aussi choisir « Enregistrer en PDF » au lieu d'une imprimante."
 
 # --- Figuren-Generator (Alpha) ---
 fig_intro: Ce générateur crée 18 nouvelles figures. Chacune est divisée en cinq champs
   de tailles différentes, un seul est noir. Après la pause, les mêmes figures sont
   interrogées dans un autre ordre – tu indiques quel champ était noir.
-fig_lernen_hinweis: Mémorise quel champ est noir sur chaque figure. L'ordre n'a pas
-  d'importance – il change lors de la restitution.
-fig_abfrage_hinweis: Les mêmes figures, dans un autre ordre. Quel champ était noir
-  ?
-fig_drucken_hinweis: 'Pour s''entraîner sur papier : l''impression contient trois
-  feuilles – mémorisation, questions et solutions. Dans la boîte de dialogue d''impression,
-  on peut aussi choisir «Enregistrer au format PDF».'
-fig_blatt_einpraegen: Mémorisation de figures – phase d'apprentissage
-fig_blatt_einpraegen_hinweis: 'Temps : 4 minutes. Mémorise pour chaque figure quel
-  champ est noir. Range ensuite cette feuille.'
-fig_blatt_aufgaben: Mémorisation de figures – phase de restitution
-fig_blatt_aufgaben_hinweis: '18 questions, temps : 5 minutes. Les figures sont dans
-  un autre ordre. Coche le champ qui était noir.'
+fig_drucken_hinweis: "Pour s'entraîner sur papier : l'impression est construite comme un cahier de test – phase d'apprentissage (partie A), phase de reproduction (partie B), feuille de réponses et solutions. Dans la boîte de dialogue d'impression, on peut aussi choisir « Enregistrer en PDF » au lieu d'une imprimante."
+
+# --- Testheft-Format der beiden Generatoren (bausteine/ems-heft.html) ---
+# EIGENE ÜBERSETZUNG des deutschen Testhefts. Sobald ein französisches
+# NCWiki-Testheft existiert, dessen Wortlaut übernehmen.
+ems_testteil: "Partie"
+ems_lernzeit: "Temps d'apprentissage : {n} minutes"
+ems_bearbeitungszeit: "Temps de travail : {n} minutes"
+ems_lernzeit_1: "Temps d'apprentissage : 1 minute"
+ems_bearbeitungszeit_1: "Temps de travail : 1 minute"
+ems_weiter: "Veuillez tourner la page et<br>continuer immédiatement !"
+ems_stopp: "Ne tournez pas la page !<br>Attendez le signal<br>du surveillant !"
+ems_stopp_wort: "STOP"
+ems_set: "Série d'entraînement du {datum}"
+ems_antwortbogen: "Feuille de réponses"
+ems_antwortbogen_hinweis: "Cocher exactement une case par question."
+ems_name: "Nom :"
+ems_loesungen: "Solutions"
+fg_heft_einpraegen: "Mémorisation de faits (phase d'apprentissage)"
+fg_heft_abfrage: "Mémorisation de faits (phase de reproduction)"
+fg_anl_e1: "Le test suivant doit évaluer dans quelle mesure vous êtes capable de mémoriser et de retenir des faits."
+fg_anl_e2: "15 patients vous sont présentés. Vous apprenez pour chacun le nom, la tranche d'âge, la profession et le sexe, une autre caractéristique (p. ex. l'état civil) ainsi que le diagnostic."
+fg_anl_e3: "Exemple d'une telle description :"
+fg_anl_beispiel: "Meier : env. 40 ans, policière, célibataire - fracture de l'humérus"
+fg_anl_e4: "Votre tâche consiste à mémoriser les informations sur chaque personne de manière à pouvoir répondre plus tard à des questions de détail. Une telle question pourrait être p. ex. :"
+fg_anl_beispielfrage: "La personne avec la fracture de l'humérus est de profession …"
+fg_anl_beispieloptionen: "électricien|violoniste|policière|biologiste|vendeur"
+fg_anl_beispielloesung: "La bonne réponse serait (C)."
+fg_anl_a1: "Vous avez essayé auparavant de mémoriser les caractéristiques de plusieurs personnes. Vous devez maintenant répondre à quelques questions sur ces personnes."
+fg_anl_a2: "Marquez sur votre feuille de réponses la bonne réponse pour chaque question. (Veuillez respecter l'ordre des questions <b>colonne par colonne</b> !)"
+fig_heft_einpraegen: "Mémorisation de figures (phase d'apprentissage)"
+fig_heft_abfrage: "Mémorisation de figures (phase de reproduction)"
+fig_anl_e1: "Ce groupe de tâches évalue dans quelle mesure vous êtes capable de mémoriser et de retenir des détails d'objets que vous percevez visuellement."
+fig_anl_e2: "18 figures vous sont présentées ; une partie de chaque figure est noircie."
+fig_anl_beispiel: "Un exemple :"
+fig_anl_e3: "Vous devez apprendre la position de la surface noire de manière à pouvoir indiquer plus tard quelle partie de la figure était noircie. Les figures vous seront toutefois présentées dans un ordre différent."
+fig_anl_beispiel_abfrage: "Un exemple de la façon dont les questions vous seront posées plus tard :"
+fig_anl_beispiel_loesung: "La solution serait alors ({x})."
+fig_anl_a1: "Indiquez maintenant quelle partie de chaque figure était noircie pendant la phase d'apprentissage. Marquez pour chaque figure la bonne lettre sur votre feuille de réponses. (Veuillez respecter l'ordre des figures <b>ligne par ligne</b> !)"

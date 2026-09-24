@@ -1,0 +1,157 @@
+{{- /*
+  ============================================================================
+  EMS-HEFT  -  der gemeinsame Rahmen der beiden Lern-Generatoren
+  ============================================================================
+  Fakten- und Figuren-Generator zeigen ihre Sets so, wie sie im Testheft
+  stehen, und drucken sie als Testheft-Seiten. Das Format dafuer kommt aus
+  dem NCWiki-Formatierungstool (github.com/Kroeppster/NCWiki-Formatierungstool,
+  vorlage/ems.typ): Masse am Original gemessen, dort als benannte Konstanten
+  - hier dieselben Zahlen, in pt, damit ein gedrucktes Set genauso aussieht
+  wie eine Seite aus dem Heft. Wo das Tool noch nichts festlegt (die
+  zweispaltigen Fakten-Fragen), gilt unser veroeffentlichtes Testheft 2026
+  (assets/downloads/testsimulationen/TESTHEFT_2026_DE_V6_...pdf).
+
+  Wird von beiden Generatoren eingebunden, landet aber nur EINMAL auf der
+  Seite (.Store merkt sich, ob er schon da ist) - auf "Figuren & Fakten
+  lernen" stehen beide Generatoren untereinander.
+
+  Stile: assets/css/style.css, Abschnitt "EMS-Heft".
+  ============================================================================
+*/ -}}
+{{- if not (.Store.Get "emsHeft") }}
+{{- .Store.Set "emsHeft" true }}
+<script>
+window.EMSHeft = (function(){
+  var T = {
+    testteil: {{ i18n "ems_testteil" | jsonify | safeJS }},
+    lernzeit: {{ i18n "ems_lernzeit" | jsonify | safeJS }},
+    bearbeitungszeit: {{ i18n "ems_bearbeitungszeit" | jsonify | safeJS }},
+    lernzeit1: {{ i18n "ems_lernzeit_1" | jsonify | safeJS }},
+    bearbeitungszeit1: {{ i18n "ems_bearbeitungszeit_1" | jsonify | safeJS }},
+    weiter: {{ i18n "ems_weiter" | jsonify | safeJS }},
+    stopp: {{ i18n "ems_stopp" | jsonify | safeJS }},
+    stoppWort: {{ i18n "ems_stopp_wort" | jsonify | safeJS }},
+    set: {{ i18n "ems_set" | jsonify | safeJS }},
+    antwortbogen: {{ i18n "ems_antwortbogen" | jsonify | safeJS }},
+    antwortbogenHinweis: {{ i18n "ems_antwortbogen_hinweis" | jsonify | safeJS }},
+    name: {{ i18n "ems_name" | jsonify | safeJS }},
+    loesungen: {{ i18n "ems_loesungen" | jsonify | safeJS }}
+  };
+  var BST = 'ABCDE';
+  function zeit(art, minuten){
+    if (+minuten === 1) return art === 'lern' ? T.lernzeit1 : T.bearbeitungszeit1;
+    return (art === 'lern' ? T.lernzeit : T.bearbeitungszeit).replace('{n}', minuten);
+  }
+  // Ueberschrift eines Untertests: Name links, Zeit rechts, beides fett
+  // 12 pt (ems.typ: untertest).
+  function kopf(titel, zeitText){
+    return '<div class="ems-kopf"><span>' + titel + '</span><span>' + zeitText + '</span></div>';
+  }
+  // Der Kasten unter der Ueberschrift (ems.typ: anleitung) - 1 pt Rahmen.
+  function kasten(absaetze){
+    return '<div class="ems-kasten">' + absaetze.map(function(a){
+      return a.charAt(0) === '<' ? a : '<p>' + a + '</p>'; }).join('') + '</div>';
+  }
+  // --- Die Fussmarken, nachgezeichnet wie im Tool, nicht als Bild --------
+  //   Pfeil:  Kasten 147.9 x 34.4, Dreieck 52.9 x 52.3 ab x = 148.4
+  //   STOPP:  Kasten 148.2 x 35.6 (13 pt tiefer), Sechseck 70.23 x 62.17 ab
+  //           x = 130.3, weiss gefuellt - es ueberdeckt den Kasten um knapp
+  //           18 pt, genau wie im Original. Sechs Ecken, KEIN Achteck.
+  function weiter(){
+    return '<div class="ems-marke ems-marke-weiter"><div class="ems-marke-kasten">' + T.weiter + '</div>'
+      + '<svg class="ems-marke-zeichen" viewBox="0 0 52.9 52.3" aria-hidden="true">'
+      + '<polygon points="0.5,0.5 52.4,26.15 0.5,51.8" fill="#fff" stroke="#000" stroke-width="1"/></svg></div>';
+  }
+  function stopp(){
+    var w = 70.23, h = 62.17, e = 17.55;
+    return '<div class="ems-marke ems-marke-stopp"><div class="ems-marke-kasten">' + T.stopp + '</div>'
+      + '<svg class="ems-marke-zeichen" viewBox="-0.5 -0.5 ' + (w + 1) + ' ' + (h + 1) + '" aria-hidden="true">'
+      + '<polygon points="' + [e,0, w-e,0, w,h/2, w-e,h, e,h, 0,h/2].join(',') + '" fill="#fff" stroke="#000" stroke-width="1"/>'
+      + '<text x="' + (w/2) + '" y="' + (h/2 + 6.5) + '" text-anchor="middle" font-size="18.7" font-weight="700">' + T.stoppWort + '</text></svg></div>';
+  }
+  function marke(art){ return art === 'stopp' ? stopp() : art === 'weiter' ? weiter() : ''; }
+  // --- Eine gedruckte Heftseite -------------------------------------------
+  // A4 in pt, Satzspiegel wie ems.typ: links 42.5, rechts 42, oben 88.1.
+  // Kopfzeile in drei Spalten (Set | Testteil | nc-wiki.ch), Seitenzahl
+  // mittig am Fuss, Fussmarke fest bei y = 776. "frei" ist Inhalt, der auf
+  // festen Plaetzen steht (das Figuren-Raster), gerechnet von der Blattecke.
+  var datum = new Date().toLocaleDateString(document.documentElement.lang || 'de');
+  function seite(o){
+    return '<section class="ems-seite">'
+      + '<div class="ems-kopfzeile"><span>' + T.set.replace('{datum}', datum) + '</span><span>'
+      + (o.teil ? T.testteil + ' ' + o.teil : '') + '</span><span>nc-wiki.ch</span></div>'
+      + '<div class="ems-satz">' + (o.inhalt || '') + '</div>'
+      + (o.frei || '')
+      + (o.marke ? '<div class="ems-fussmarke">' + marke(o.marke) + '</div>' : '')
+      + '<div class="ems-seitenzahl">' + o.nr + '</div></section>';
+  }
+  // --- Antwortbogen ---------------------------------------------------------
+  // Die Zeilen wie auf dem echten Bogen (ems.typ: bogen-zeile): 13.48 pt
+  // hoch, Nummer rechtsbuendig, Buchstabe und Kaestchen 9.12 x 6.24 mit
+  // Magenta-Rahmen, jede zweite Zeile hell hinterlegt. Den Bogen selbst
+  // (Passermarken, Strichcode) braucht ein Uebungsset nicht.
+  function antwortbogen(titel, anzahl){
+    var z = '';
+    for (var i = 0; i < anzahl; i++){
+      z += '<div class="ems-bogen-zeile' + (i % 2 === 0 ? ' ems-bogen-hell' : '') + '"><span class="ems-bogen-nr">' + (i + 1) + '</span>';
+      for (var k = 0; k < 5; k++) z += '<span class="ems-bogen-feld"><span>' + BST[k] + '</span><i></i></span>';
+      z += '</div>';
+    }
+    return kopf(T.antwortbogen, titel)
+      + '<p class="ems-bogen-name">' + T.name + '<span></span></p>'
+      + '<p class="ems-bogen-hinweis">' + T.antwortbogenHinweis + '</p>'
+      + '<div class="ems-bogen"><div class="ems-bogen-titel">' + titel + '</div>' + z + '</div>';
+  }
+  // --- Loesungsblatt ---------------------------------------------------------
+  // Wie vorlage/loesungsblatt.typ: Nummern und fette Loesungsbuchstaben in
+  // einer Tabelle mit zehn Spalten - aber je ZEHN in einem eigenen
+  // Zeilenpaar. Die Vorlage im Tool legt alle Nummern hintereinander und
+  // danach alle Loesungen; ab elf Aufgaben stehen die Buchstaben dort unter
+  // den falschen Nummern.
+  function loesungsblatt(titel, loesungen){
+    var h = kopf(T.loesungen, '') + '<p class="ems-loesung-titel">' + titel + '</p>';
+    for (var s = 0; s < loesungen.length; s += 10){
+      var teil = loesungen.slice(s, s + 10);
+      h += '<table class="ems-loesung"><tr>' + teil.map(function(_, i){ return '<td>' + (s + i + 1) + '</td>'; }).join('')
+        + '</tr><tr>' + teil.map(function(l){ return '<td><b>' + l + '</b></td>'; }).join('') + '</tr></table>';
+    }
+    return h;
+  }
+  // --- Drucken ----------------------------------------------------------------
+  // Die Seiten kommen in einen eigenen Behaelter direkt unter <body>; die
+  // Druckregeln in style.css blenden fuer die Dauer des Drucks alles andere
+  // aus. @page { margin: 0 } gilt nur waehrend dieses Drucks (als <style>
+  // eingefuegt und danach wieder entfernt): Die Heftseiten bringen ihre
+  // Raender selbst mit, und jede andere Seite der Website soll beim Drucken
+  // ihre normalen Raender behalten.
+  function drucken(seiten){
+    aufraeumen();
+    var behaelter = document.createElement('div');
+    behaelter.className = 'fg-druck ems-druck';
+    behaelter.id = 'ems-druck';
+    behaelter.setAttribute('aria-hidden', 'true');
+    behaelter.innerHTML = seiten.join('');
+    document.body.appendChild(behaelter);
+    var stil = document.createElement('style');
+    stil.id = 'ems-druck-seite';
+    stil.textContent = '@media print{@page{size:A4;margin:0}}';
+    document.head.appendChild(stil);
+    document.body.classList.add('fg-druckt');
+    window.addEventListener('afterprint', aufraeumen, { once: true });
+    window.print();
+  }
+  // Kein Zeitgeber zum Aufraeumen: Wo afterprint nicht kommt, stoert der
+  // Behaelter nicht (am Bildschirm ist er unsichtbar), und ein Zeitgeber
+  // haette in Browsern mit nicht blockierendem Druckdialog den Inhalt
+  // entfernt, WAEHREND gedruckt wird. Aufgeraeumt wird spaetestens beim
+  // naechsten Druck.
+  function aufraeumen(){
+    document.body.classList.remove('fg-druckt');
+    ['ems-druck', 'ems-druck-seite'].forEach(function(id){
+      var e = document.getElementById(id); if (e) e.parentNode.removeChild(e); });
+  }
+  return { T: T, BST: BST, zeit: zeit, kopf: kopf, kasten: kasten, marke: marke, seite: seite,
+           antwortbogen: antwortbogen, loesungsblatt: loesungsblatt, drucken: drucken };
+})();
+</script>
+{{- end }}

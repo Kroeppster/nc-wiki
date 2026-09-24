@@ -290,49 +290,52 @@ fg_phase_abfrage: "Reproduktionsphase"
 fg_phase_ergebnis: "Ergebnis"
 fg_pause_hinweis: "Im echten Test liegt hier ein ganz anderer Untertest dazwischen. Steh kurz auf oder rechne etwas – ohne diese Lücke übst du nur das Kurzzeitgedächtnis."
 fg_das_war_das_set: "Das war das Set"
-fg_th_person: "Person"
-fg_th_alter: "Alter"
-fg_th_beruf: "Beruf"
-fg_th_merkmal: "Merkmal"
-fg_th_krankheit: "Diagnose"
-fg_jahre: "Jahre"
-fg_richtig: "richtig"
-fg_falsch: "falsch"
 fg_punkte_von: "{n} von {von} richtig"
-fg_f_alter_von_krankheit: "Die Person mit {x} ist …"
-fg_f_name_von_krankheit: "Der Name der Person mit {x} lautet:"
-fg_f_krankheit_von_name: "{x} wird diagnostiziert mit:"
-fg_f_beruf_von_name: "{x} arbeitet als:"
-fg_f_merkmal_von_beruf: "Die Person mit dem Beruf {x} ist …"
-fg_f_alter_von_beruf: "Die Person mit dem Beruf {x} ist …"
 
 # --- Drucken / als PDF sichern ---
 fg_drucken: Set als PDF / drucken
 fg_drucken_dieses: Dieses Set drucken
-fg_drucken_hinweis: 'Zum Üben auf Papier: Der Druck enthält drei Blätter – Einprägeblatt,
-  Aufgabenblatt und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch
-  «Als PDF sichern» wählen.'
-fg_blatt_einpraegen: Fakten lernen – Einprägephase
-fg_blatt_einpraegen_hinweis: 'Zeit: 6 Minuten. Präge dir alle 15 Personen ein. Danach
-  dieses Blatt weglegen und etwas anderes tun, bevor du das Aufgabenblatt nimmst.'
-fg_blatt_aufgaben: Fakten lernen – Reproduktionsphase
-fg_blatt_aufgaben_hinweis: '18 Aufgaben, Zeit: 6 Minuten. Pro Aufgabe ist genau eine
-  Antwort richtig.'
-fg_blatt_loesung: Lösungen
+fg_drucken_hinweis: "Zum Üben auf Papier: Der Druck ist aufgebaut wie ein Testheft – Einprägephase (Testteil A), Reproduktionsphase (Testteil B), Antwortbogen und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch «Als PDF sichern» wählen."
 
 # --- Figuren-Generator (Alpha) ---
 fig_intro: Dieser Generator würfelt 18 neue Figuren. Jede ist in fünf verschieden
   grosse Felder geteilt, genau eines ist schwarz. Nach der Pause werden dieselben
   Figuren in anderer Reihenfolge abgefragt – du gibst an, welches Feld schwarz war.
-fig_lernen_hinweis: Präge dir ein, welches Feld bei welcher Figur schwarz ist. Auf
-  die Reihenfolge kommt es nicht an – sie ändert sich in der Abfrage.
-fig_abfrage_hinweis: Dieselben Figuren, andere Reihenfolge. Welches Feld war schwarz?
-fig_drucken_hinweis: 'Zum Üben auf Papier: Der Druck enthält drei Blätter – Einprägeblatt,
-  Aufgabenblatt und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch
-  «Als PDF sichern» wählen.'
-fig_blatt_einpraegen: Figuren lernen – Einprägephase
-fig_blatt_einpraegen_hinweis: 'Zeit: 4 Minuten. Präge dir bei jeder Figur ein, welches
-  Feld schwarz ist. Danach dieses Blatt weglegen.'
-fig_blatt_aufgaben: Figuren lernen – Reproduktionsphase
-fig_blatt_aufgaben_hinweis: '18 Aufgaben, Zeit: 5 Minuten. Die Figuren stehen in anderer
-  Reihenfolge. Kreuze an, welches Feld schwarz war.'
+fig_drucken_hinweis: "Zum Üben auf Papier: Der Druck ist aufgebaut wie ein Testheft – Einprägephase (Testteil A), Reproduktionsphase (Testteil B), Antwortbogen und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch «Als PDF sichern» wählen."
+
+# --- Testheft-Format der beiden Generatoren (bausteine/ems-heft.html) ---
+# Wortlaut wie in unserem Testheft 2026 (Anleitungen, Marken, Überschriften).
+ems_testteil: "Testteil"
+ems_lernzeit: "Lernzeit: {n} Minuten"
+ems_bearbeitungszeit: "Bearbeitungszeit: {n} Minuten"
+ems_lernzeit_1: "Lernzeit: 1 Minute"
+ems_bearbeitungszeit_1: "Bearbeitungszeit: 1 Minute"
+ems_weiter: "Bitte umblättern und<br>sofort weiterarbeiten!"
+ems_stopp: "Nicht umblättern!<br>Warten Sie auf das<br>Zeichen des Testleiters!"
+ems_stopp_wort: "STOPP"
+ems_set: "Übungsset vom {datum}"
+ems_antwortbogen: "Antwortbogen"
+ems_antwortbogen_hinweis: "Pro Aufgabe genau ein Kästchen ankreuzen."
+ems_name: "Name:"
+ems_loesungen: "Lösungen"
+fg_heft_einpraegen: "Fakten lernen (Einprägephase)"
+fg_heft_abfrage: "Fakten lernen (Reproduktionsphase)"
+fg_anl_e1: "Der folgende Test soll prüfen, wie gut Sie sich Fakten einprägen und merken können."
+fg_anl_e2: "15 Patienten werden Ihnen vorgestellt. Sie erfahren jeweils den Namen, die Altersgruppe, Beruf und Geschlecht, ein weiteres Beschreibungsmerkmal (z.B. Familienstand) sowie die Diagnose."
+fg_anl_e3: "Ein Beispiel für eine derartige Fallbeschreibung:"
+fg_anl_beispiel: "Meier: ca. 40 Jahre, Polizistin, ledig - Oberarmfraktur"
+fg_anl_e4: "Ihre Aufgabe ist es nun, sich die Informationen über jede Person so einzuprägen, dass Sie später Fragen nach Details beantworten können. Eine solche Frage könnte z.B. lauten:"
+fg_anl_beispielfrage: "Die Person mit der Oberarmfraktur ist von Beruf …"
+fg_anl_beispieloptionen: "Elektriker|Violinistin|Polizistin|Biologin|Verkäufer"
+fg_anl_beispielloesung: "Die richtige Antwort wäre (C)."
+fg_anl_a1: "Sie hatten zuvor versucht, sich die Charakterisierungen von mehreren Personen einzuprägen. Nun sollen Sie einige Fragen zu diesen Personen beantworten."
+fg_anl_a2: "Markieren Sie auf Ihrem Antwortbogen für jede Aufgabe die richtige Antwort. (Beachten Sie bitte die <b>spaltenweise</b> Abfolge der Fragen!)"
+fig_heft_einpraegen: "Figuren lernen (Einprägephase)"
+fig_heft_abfrage: "Figuren lernen (Reproduktionsphase)"
+fig_anl_e1: "Diese Aufgabengruppe prüft, wie gut Sie sich Einzelheiten von Gegenständen, die Sie mit dem Auge wahrnehmen, einprägen und merken können."
+fig_anl_e2: "Es werden Ihnen 18 Figuren vorgegeben; ein Teil jeder Figur ist geschwärzt."
+fig_anl_beispiel: "Ein Beispiel:"
+fig_anl_e3: "Die Lage der schwarzen Fläche sollen Sie nun so erlernen, dass Sie später angeben können, welcher Teil der Abbildung geschwärzt war. Die Figuren werden Ihnen dann jedoch in veränderter Reihenfolge vorgelegt."
+fig_anl_beispiel_abfrage: "Ein Beispiel für die Art, in der Sie später abgefragt werden:"
+fig_anl_beispiel_loesung: "Die Lösung wäre dann ({x})."
+fig_anl_a1: "Geben Sie nun bitte an, welcher Teil jeder Figur während der Einprägephase geschwärzt war. Markieren Sie für jede Figur den richtigen Lösungsbuchstaben auf Ihrem Antwortbogen. (Beachten Sie bitte die <b>zeilenweise</b> Abfolge der Figuren!)"
