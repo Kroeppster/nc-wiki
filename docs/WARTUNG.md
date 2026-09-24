@@ -286,6 +286,86 @@ die gebaute Website war Zeichen für Zeichen dieselbe.
 
 ---
 
+## 2d. Der Web-Editor (Pages CMS)
+
+Für schnelle Korrekturen an einer Seite gibt es einen Editor im Browser:
+**[app.pagescms.org](https://app.pagescms.org)**. Man sieht die Seiten als Baum,
+ändert Titel, Beschreibung und Text wie in einem Textprogramm (fett, Listen,
+Links, Tabellen) und speichert. Das Speichern ist ein Commit auf `main` – nach ein,
+zwei Minuten ist die Änderung live, wenn der Build grün ist (sonst bleibt die
+alte Fassung online, siehe Abschnitt 7).
+
+**Welcher Weg wofür:** Der Editor für eine Seite hier, einen Tippfehler dort. Die
+Excel-Mappen (2b) für die Durchsicht vieler Seiten, für Übersetzungen und wenn
+jemand gegenlesen soll, bevor etwas live geht. Beide schreiben dieselben Dateien.
+Hat jemand eine Seite im Editor geändert, nachdem eine Mappe erzeugt wurde, wird
+diese Seite beim Einlesen der Mappe übersprungen und gemeldet – nichts wird
+überschrieben.
+
+### Einrichten (einmalig, durch jemanden mit Zugriff aufs Repo)
+
+1. Auf [app.pagescms.org](https://app.pagescms.org) mit GitHub anmelden.
+2. **Install GitHub App** und dabei das Repository `Kroeppster/nc-wiki` freigeben.
+3. Das Repository öffnen, Branch `main`. Die Einstellungen kommen aus
+   [`.pages.yml`](../.pages.yml) im Repo – dort ist nichts mehr einzurichten.
+4. Mitschreibende unter **Collaborators** per E-Mail einladen. Sie brauchen kein
+   GitHub-Konto; sie melden sich über den Link in der Einladung an.
+
+### Was im Editor steht – und was nicht
+
+Je Sprache drei Listen: **Seiten** (der ganze Seitenbaum), **News** (mit Datum)
+und **Erfahrungsberichte** (mit Name, Jahr, Ort, Stichworten). Neue Seiten,
+News und Berichte lassen sich anlegen; **umbenennen und löschen nicht** – das
+ändert Adressen und bricht Links, dafür Abschnitt 8.
+
+Nicht im Editor, mit Absicht:
+
+- **Mitgliederbereich** und **Alpha** – der Mitgliederbereich hat im Seitenkopf
+  einen Kommentar, der erklärt, warum er keinen RSS-Feed hat; der Editor würde
+  ihn beim Speichern löschen. Alpha ist Werkbank.
+- **`data/*.yaml`** (FAQ, Uniguide, Sponsoren …) – diese Dateien sind voller
+  erklärender Kommentare, die der Editor beim ersten Speichern verlieren würde.
+- **Bilder hochladen** – Bilder wie in Abschnitt 9.
+
+Beim Schreiben gilt, was in 2c steht: Links auf eigene Seiten nur mit dem Pfad
+(`/ems/uniguide`), und die grauen `baustein`-Kästen stehen lassen.
+
+### Was der Editor an den Dateien ändert
+
+Sobald eine Seite im Editor gespeichert wird, schreibt Pages CMS sie **ganz neu**:
+Anführungszeichen im Seitenkopf fallen weg, lange Texte werden auf mehrere Zeilen
+umbrochen, `tags: ["a", "b"]` wird zur Liste untereinander, leere Felder
+verschwinden, `&` wird zu `&amp;`, Tabellen werden neu ausgerichtet. Im Diff sieht
+das nach viel aus – für Hugo ist es dasselbe:
+
+**Geprüft mit `scripts/editor-rundlauf.mjs`:** Das Skript speichert jede Seite, die
+der Editor erreicht, so, wie Pages CMS es tut (nachgebaut aus dessen Quellcode:
+Seitenkopf lesen, mit den bearbeiteten Feldern zusammenführen, neu schreiben;
+Text durch denselben Editor mit denselben Einstellungen), baut danach beide
+Fassungen und vergleicht: **440 von 440 Seiten Zeichen für Zeichen gleich**, bei
+228 neu geschriebenen Dateien.
+
+Die Excel-Mappen kommen mit den umbrochenen Texten zurecht: Eine Beschreibung
+über drei Zeilen steht ganz in der Zelle und wird beim Einlesen ganz ersetzt
+(im Prüfskript der Mappen als eigener Fall).
+
+### Wer `.pages.yml` ändert
+
+- **`settings.content.merge: true` muss bleiben.** Ohne das schreibt Pages CMS nur
+  die in `.pages.yml` genannten Felder zurück. Ausprobiert: Nach dem Speichern
+  wäre das ganze Hauptmenü leer (die Menüeinträge stehen im Seitenkopf), dazu
+  Reihenfolge, Tags und die ganze Startseite (`hero`, `weg`, `material`).
+- Danach `node scripts/editor-rundlauf.mjs` laufen lassen. Es braucht ein paar
+  npm-Pakete, die nicht zur Website gehören; wie man sie einmalig in einen
+  eigenen Ordner installiert, steht im Kopf des Skripts. Bei einem Unterschied
+  zeigt es die betroffenen Seiten und die Stelle.
+- `.pages.yml` wurde zusätzlich mit dem Konfigurations-Schema von Pages CMS selbst
+  geprüft (`lib/config-schema.ts` aus dem Quellcode). Unbekannte Schlüssel lehnt
+  Pages CMS ab – deshalb stehen die wiederverwendeten Felder als YAML-Anker
+  (`&titel`, `*titel`) bei Deutsch und nicht in einem eigenen Abschnitt.
+
+---
+
 ## 3. Wie füge ich ein PDF hinzu?
 
 Es gibt zwei verschiedene Wege, je nachdem, worum es geht.

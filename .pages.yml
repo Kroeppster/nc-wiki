@@ -1,0 +1,198 @@
+# ==============================================================================
+# PAGES CMS - der Web-Editor für die Texte der Website
+# ==============================================================================
+# https://app.pagescms.org -> mit GitHub anmelden -> Kroeppster/nc-wiki.
+# Anleitung für Redaktion und Einrichtung: docs/WARTUNG.md, Abschnitt 2d.
+#
+# BEVOR HIER ETWAS GEÄNDERT WIRD - drei Dinge, die im Quellcode von Pages
+# CMS nachgelesen und an jeder Seite durchprobiert wurden:
+#
+#  1. settings.content.merge MUSS true bleiben. Ohne das schreibt Pages CMS
+#     beim Speichern nur die hier aufgeführten Felder in den Seitenkopf -
+#     Menü, Reihenfolge, Tags, auf der Startseite hero/weg/material ...
+#     wären nach dem ersten Speichern weg.
+#  2. Pages CMS schreibt den Seitenkopf beim Speichern neu. Kommentare darin
+#     gehen verloren, leere Felder (tags: []) fallen weg, lange Texte werden
+#     umbrochen. Für Hugo ist das dasselbe. Aber: Der Mitgliederbereich hat
+#     einen wichtigen Kommentar im Kopf, und data/*.yaml ist voller
+#     Erklärungen - beides ist deshalb NICHT hier drin (und wird wie bisher
+#     auf GitHub bearbeitet). Alpha ist Werkbank, auch nicht.
+#  3. Der Seitentext geht durch einen Editor (TipTap), der beim Speichern
+#     die ganze Seite neu schreibt. Das ist nur sicher, weil interne Links
+#     normale Markdown-Links sind und Bausteine Code-Blöcke (Abschnitt 2c).
+#
+# Nach JEDER Änderung an dieser Datei: node scripts/editor-rundlauf.mjs -
+# prüft die Datei gegen das Schema von Pages CMS, schickt jede Seite durch
+# Laden und Speichern wie Pages CMS und vergleicht die gebaute Website mit
+# der jetzigen.
+#
+# Felder und Ansichten, die in allen drei Sprachen gleich sind, stehen einmal
+# bei Deutsch: &name definiert sie, *name verwendet sie wieder (YAML-Anker).
+# ==============================================================================
+
+settings:
+  content:
+    merge: true
+  commit:
+    templates:
+      create: "Neu: {path} (Web-Editor, {user})"
+      update: "Text: {path} (Web-Editor, {user})"
+      delete: "Gelöscht: {path} (Web-Editor, {user})"
+      rename: "Umbenannt: {oldPath} -> {newPath} (Web-Editor, {user})"
+
+content:
+  # ---------------------------------------------------------------- Deutsch
+  - name: deutsch
+    label: Deutsch
+    type: group
+    items:
+      - name: seiten-de
+        label: Seiten
+        type: collection
+        path: content/de
+        subfolders: true
+        exclude: [mitglieder, alpha]
+        filename: "{primary}.md"
+        view: &baum
+          layout: tree
+          node: _index.md
+          primary: title
+          fields: [title]
+        # Neue Seiten ja; umbenennen und löschen nicht - das ändert Adressen
+        # und bricht Links (dafür GitHub, docs/WARTUNG.md Abschnitt 8).
+        operations: &nur-bearbeiten
+          create: true
+          rename: false
+          delete: false
+        fields: &seitenfelder
+          - &titel
+            name: title
+            label: Titel
+            type: string
+          - &beschreibung
+            name: description
+            label: Beschreibung
+            description: "1–2 Sätze, höchstens etwa 160 Zeichen. So steht die Seite bei Google und beim Teilen."
+            type: text
+          - &text
+            name: body
+            label: Text
+            type: rich-text
+            description: "Links auf eigene Seiten nur mit dem Pfad, ohne Sprache: /ems/uniguide. Graue Code-Kästen (baustein) stehen lassen."
+
+      - name: news-de
+        label: News
+        type: collection
+        path: content/de/news
+        subfolders: false
+        exclude: [_index.md]
+        filename: "{primary}.md"
+        view: &newsansicht
+          primary: title
+          fields: [title, date]
+          sort: [date]
+          default: { sort: date, order: desc }
+        operations: *nur-bearbeiten
+        fields: &newsfelder
+          - *titel
+          - { name: date, label: Datum, type: date }
+          - { name: eyebrow, label: Kleine Zeile über dem Titel, type: string }
+          - *beschreibung
+          - &entwurf
+            name: draft
+            label: Entwurf (nicht veröffentlichen)
+            type: boolean
+          - *text
+
+      - name: berichte-de
+        label: Erfahrungsberichte
+        type: collection
+        path: content/de/ems/erfahrungsberichte
+        subfolders: false
+        exclude: [_index.md, bericht-einreichen.md]
+        filename: "bericht-{fields.name}.md"
+        view: &berichtansicht
+          primary: name
+          fields: [name, jahr, ort]
+          sort: [jahr, name]
+          default: { sort: jahr, order: desc }
+        operations: *nur-bearbeiten
+        fields: &berichtfelder
+          - { name: name, label: Name (wie er auf der Website steht), type: string, required: true }
+          - { name: jahr, label: EMS-Jahr, type: number }
+          - { name: ort, label: Studienort, type: string }
+          - { name: tags, label: Stichworte, type: string, list: true }
+          - *entwurf
+          - *text
+
+  # ---------------------------------------------------------------- Français
+  - name: francais
+    label: Français
+    type: group
+    items:
+      - name: seiten-fr
+        label: Pages
+        type: collection
+        path: content/fr
+        subfolders: true
+        exclude: [mitglieder, alpha]
+        filename: "{primary}.md"
+        view: *baum
+        operations: *nur-bearbeiten
+        fields: *seitenfelder
+      - name: news-fr
+        label: Actualités
+        type: collection
+        path: content/fr/news
+        subfolders: false
+        exclude: [_index.md]
+        filename: "{primary}.md"
+        view: *newsansicht
+        operations: *nur-bearbeiten
+        fields: *newsfelder
+      - name: berichte-fr
+        label: Témoignages
+        type: collection
+        path: content/fr/ems/erfahrungsberichte
+        subfolders: false
+        exclude: [_index.md, bericht-einreichen.md]
+        filename: "bericht-{fields.name}.md"
+        view: *berichtansicht
+        operations: *nur-bearbeiten
+        fields: *berichtfelder
+
+  # ---------------------------------------------------------------- Italiano
+  - name: italiano
+    label: Italiano
+    type: group
+    items:
+      - name: seiten-it
+        label: Pagine
+        type: collection
+        path: content/it
+        subfolders: true
+        exclude: [mitglieder, alpha]
+        filename: "{primary}.md"
+        view: *baum
+        operations: *nur-bearbeiten
+        fields: *seitenfelder
+      - name: news-it
+        label: Notizie
+        type: collection
+        path: content/it/news
+        subfolders: false
+        exclude: [_index.md]
+        filename: "{primary}.md"
+        view: *newsansicht
+        operations: *nur-bearbeiten
+        fields: *newsfelder
+      - name: berichte-it
+        label: Testimonianze
+        type: collection
+        path: content/it/ems/erfahrungsberichte
+        subfolders: false
+        exclude: [_index.md, bericht-einreichen.md]
+        filename: "bericht-{fields.name}.md"
+        view: *berichtansicht
+        operations: *nur-bearbeiten
+        fields: *berichtfelder
