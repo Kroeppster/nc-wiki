@@ -160,7 +160,12 @@ pruef('keine Frage verraet die Antwort einer anderen', !fehler.verraten.length, 
 pruef('Plural-Diagnosen im Dativ ("mit Herzproblemen")', !fehler.dativ.length, zeig(fehler.dativ));
 const n = Object.keys(typen).length;
 console.log('    Fragetypen (nennt>fragt): ' + Object.entries(typen).sort((a, c) => c[1] - a[1]).map(([k, v]) => k + ' ' + v).join(', '));
-pruef('alle zwoelf Fragetypen kommen vor', n === 12, String(n));
+// Erst ab 50 Sets gewertet: "Der 42-jaehrige Patient ist von Beruf …" geht
+// nur, wenn in der Altersgruppe genau eine Person ihres Geschlechts steckt,
+// und macht deshalb nur rund 4 % der Fragen aus. Bei 5 Sets fehlte sie in
+// 2 von 20 Laeufen - ein Zufall der kleinen Stichprobe, kein Fehler.
+if (RUNDEN >= 50) pruef('alle zwoelf Fragetypen kommen vor', n === 12, String(n));
+else console.log('    (Fragetypen erst ab RUNDEN=50 gewertet)');
 
 // --- 3. Der Druck ---------------------------------------------------------------
 console.log('\n=== Druck ===');
