@@ -505,7 +505,7 @@ def deutsch_pruefen(projekt, mappen, ordner):
           tb.kopf_trennen(q_neu)[1] == tb.kopf_trennen(vorher[q_datei].decode('utf-8'))[1])
     pruef('Bericht mit !Löschen! in der Seiten-Zeile geloescht', weg1 not in nachher)
     pruef('Bericht mit !Löschen! in Titel und allen Texten geloescht, mit Hinweis',
-          weg2 not in nachher and 'als ganze Seite geloescht' in aus)
+          weg2 not in nachher and 'als ganze Seite gelöscht' in aus)
     return dict(datei=datei, bearbeitet=bearbeitet, blatt=b.ws.title)
 
 
@@ -585,7 +585,7 @@ def franzoesisch_pruefen(projekt, mappen, ordner):
               if tb.kopf_feld(kopf_de, f)[0] is not None))
     pruef('neue Seite: keine deutsche Beschreibung', tb.kopf_feld(kopf_neu, 'description')[0] is None)
     pruef('neue Seite: nur der uebersetzte Absatz, unuebersetzte weggelassen und gemeldet',
-          koerper(neu_roh) == [('absatz', 'Nous avons remanié NCWiki.')] and 'ohne Uebersetzung weggelassen' in aus,
+          koerper(neu_roh) == [('absatz', 'Nous avons remanié NCWiki.')] and 'ohne Übersetzung weggelassen' in aus,
           koerper(neu_roh))
     return dict(bearbeitet=bearbeitet)
 
@@ -619,7 +619,7 @@ def fehlerfaelle_pruefen(projekt, ordner, de, fr):
     rc, aus = einlesen(projekt, p)
     danach = zustand(projekt)
     pruef('Konflikt: die anderswo geaenderte Seite wird uebersprungen und gemeldet',
-          danach[de['datei']] == anderswo[de['datei']] and 'wurde seit dem Ausgeben der Mappe geaendert' in aus)
+          danach[de['datei']] == anderswo[de['datei']] and 'wurde seit dem Ausgeben der Mappe geändert' in aus)
     pruef('Konflikt betrifft nur diese Seite - die andere Aenderung derselben Mappe kommt an',
           unterschiede(anderswo, danach) == ['content/de/_index.md'], unterschiede(anderswo, danach))
 
@@ -696,7 +696,7 @@ def fehlerfaelle_pruefen(projekt, ordner, de, fr):
     rc, aus = einlesen(projekt, p)
     pruef('graue Seiten-Zeile geloescht: nichts geaendert, beide Faelle gemeldet',
           unterschiede(vorher, zustand(projekt)) == []
-          and f'{davor_datei}: 1 Zeile(n)' not in aus and f'gehoeren zur Seite {fremd_datei}' in aus
+          and f'{davor_datei}: 1 Zeile(n)' not in aus and f'gehören zur Seite {fremd_datei}' in aus
           and f'{fremd_datei}: fehlt in' in aus, aus[-600:])
     pruef('hineinkopierte Zeile einer anderen Seite: gemeldet, nicht uebernommen',
           'content/de/_index.md: 1 Zeile(n)' in aus, aus[-600:])

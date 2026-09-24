@@ -114,13 +114,13 @@ def mappe_lesen(pfad):
     try:
         mappe = load_workbook(pfad, data_only=True)
     except Exception as e:
-        raise Mappenfehler(f'{os.path.basename(pfad)} laesst sich nicht als Excel-Datei oeffnen ({e}).')
+        raise Mappenfehler(f'{os.path.basename(pfad)} lässt sich nicht als Excel-Datei öffnen ({e}).')
     if 'Texte' in mappe.sheetnames and 'Seiten' in mappe.sheetnames:
         raise Mappenfehler(
-            f'{os.path.basename(pfad)} ist noch die alte Textliste (eine Mappe fuer alles, Spalte '
+            f'{os.path.basename(pfad)} ist noch die alte Textliste (eine Mappe für alles, Spalte '
             '"Text neu"). Dieses Skript liest nur das neue Format mit einer Mappe je Sprache. Bitte eine '
             'frische Mappe nehmen (python3 scripts/texte-ausgeben.py oder <website>/redaktion/) und die '
-            'Aenderungen dort eintragen.')
+            'Änderungen dort eintragen.')
     seiten, hinweise, verzeichnis = [], [], []
     if '_seiten' in mappe.sheetnames:
         for z in mappe['_seiten'].iter_rows(min_row=2, values_only=True):
@@ -149,7 +149,7 @@ def mappe_lesen(pfad):
             if aktuell is None:
                 if z['text'] and nr > 5:
                     hinweise.append(f'Blatt "{blatt.title}", Zeile {nr}: Text oberhalb der ersten '
-                                    'Seiten-Zeile - nicht uebernommen.')
+                                    'Seiten-Zeile - nicht übernommen.')
                 continue
             aktuell['zeilen'].append(z)
     if not blaetter:
@@ -305,7 +305,7 @@ def seite_anwenden(seite, projekt, meldungen):
 
     m = re.fullmatch(r'content/(de|fr|it)/([\w./-]+\.md)', datei)
     if not m or '..' in datei:
-        melde('unerwarteter Dateiname in der Seiten-Zeile - uebersprungen.')
+        melde('unerwarteter Dateiname in der Seiten-Zeile - übersprungen.')
         return dict(art='uebersprungen')
     sprache, innen = m.group(1), m.group(2)
     pfad = os.path.join(projekt, datei)
@@ -318,17 +318,17 @@ def seite_anwenden(seite, projekt, meldungen):
         zuletzt = s
         (eigene if s == datei else fremd.setdefault(s, [])).append(z)
     for andere, zeilen in fremd.items():
-        melde(f'{len(zeilen)} Zeile(n) ab {wo(zeilen[0])} gehoeren zur Seite {andere}, deren graue '
-              'Seiten-Zeile fehlt (geloescht?) oder die aus einer anderen Seite kopiert wurden - nicht '
-              'uebernommen. Neuen Text bitte in eine neu eingefuegte Zeile schreiben.')
+        melde(f'{len(zeilen)} Zeile(n) ab {wo(zeilen[0])} gehören zur Seite {andere}, deren graue '
+              'Seiten-Zeile fehlt (gelöscht?) oder die aus einer anderen Seite kopiert wurden - nicht '
+              'übernommen. Neuen Text bitte in eine neu eingefügte Zeile schreiben.')
     seite = dict(kopf=k, zeilen=eigene)
 
     seite_weg = bool(LOESCHEN.search(k['text']))
     implizit = not seite_weg and ganz_geloescht(seite)
     seite_weg = seite_weg or implizit
     if not seite_weg and k['text'] and k['original'] and k['text'] != k['original']:
-        melde(f'{wo(k)}: Die graue Seiten-Zeile ist nur die Ueberschrift des Abschnitts - den Titel '
-              'bitte in der Zeile "Titel" aendern. Nicht uebernommen.')
+        melde(f'{wo(k)}: Die graue Seiten-Zeile ist nur die Überschrift des Abschnitts - den Titel '
+              'bitte in der Zeile "Titel" ändern. Nicht übernommen.')
 
     if str(k.get('summe')) == 'NEU':
         if seite_weg:
@@ -340,7 +340,7 @@ def seite_anwenden(seite, projekt, meldungen):
             return dict(art='bereits')
         if any(z['text'] != z['original'] or (z['text'] and not ist_nummer(z.get('nr')))
                for z in seite['zeilen']):
-            melde('die Datei gibt es nicht mehr (inzwischen geloescht oder umbenannt?) - uebersprungen.')
+            melde('die Datei gibt es nicht mehr (inzwischen gelöscht oder umbenannt?) - übersprungen.')
             return dict(art='uebersprungen')
         return dict(art='unveraendert')
     with open(pfad, 'rb') as f:
@@ -355,19 +355,19 @@ def seite_anwenden(seite, projekt, meldungen):
 
     if tb.pruefsumme(roh) != str(k.get('summe')):
         if seite_weg:
-            melde('soll geloescht werden, wurde aber seit dem Ausgeben der Mappe geaendert - bitte '
-                  'nachsehen und von Hand loeschen. Uebersprungen.')
+            melde('soll gelöscht werden, wurde aber seit dem Ausgeben der Mappe geändert - bitte '
+                  'nachsehen und von Hand löschen. Übersprungen.')
             return dict(art='uebersprungen')
         if soll_gleich_ist(seite, bausteine):
             return dict(art='bereits')
-        melde('wurde seit dem Ausgeben der Mappe geaendert (anderswo bearbeitet oder schon einmal '
-              'eingelesen) - uebersprungen, damit nichts ueberschrieben wird. Bitte die Aenderungen in '
+        melde('wurde seit dem Ausgeben der Mappe geändert (anderswo bearbeitet oder schon einmal '
+              'eingelesen) - übersprungen, damit nichts überschrieben wird. Bitte die Änderungen in '
               'einer frischen Mappe noch einmal eintragen.')
         return dict(art='uebersprungen')
 
     if seite_weg:
         if implizit:
-            melde('Titel und alle Texte mit !Löschen! markiert - als ganze Seite geloescht.')
+            melde('Titel und alle Texte mit !Löschen! markiert - als ganze Seite gelöscht.')
         return seite_loeschen(projekt, pfad, datei, sprache, innen, melde)
 
     kopf, _, versatz = tb.kopf_trennen(roh)
@@ -399,13 +399,13 @@ def seite_anwenden(seite, projekt, meldungen):
                 zaehler['neu'] += 1
         elif LOESCHEN.search(wert):
             if art == 'titel':
-                melde(f'{wo(z)}: Der Titel kann nicht geloescht werden - bleibt. (Ganze Seite: !Löschen! '
+                melde(f'{wo(z)}: Der Titel kann nicht gelöscht werden - bleibt. (Ganze Seite: !Löschen! '
                       'in die graue Seiten-Zeile.)')
             else:
                 neuer_kopf = tb.kopf_setzen(neuer_kopf, feld, None)
                 zaehler['geloescht'] += 1
         elif not wert:
-            melde(f'{wo(z)}: Zelle leer - bleibt. Zum Loeschen !Löschen! schreiben.')
+            melde(f'{wo(z)}: Zelle leer - bleibt. Zum Löschen !Löschen! schreiben.')
         elif z['text'] != z['original']:
             neuer_kopf = tb.kopf_setzen(neuer_kopf, feld, wert)
             zaehler['geaendert'] += 1
@@ -427,14 +427,14 @@ def seite_anwenden(seite, projekt, meldungen):
         if b['typ'] in tb.GESPERRT:
             if z['text'] != z['original']:
                 melde(f'{wo(z)}: {GESPERRT_NAME[b["typ"]]} ist gesperrt und bleibt, wie es ist '
-                      '(in der Datei selbst aendern).')
+                      '(in der Datei selbst ändern).')
             stuecke.append(('alt', b))
             continue
         if LOESCHEN.search(z['text']):
             zaehler['geloescht'] += 1
             continue
         if not z['text']:
-            melde(f'{wo(z)}: Zelle leer - der Absatz bleibt. Zum Loeschen !Löschen! schreiben.')
+            melde(f'{wo(z)}: Zelle leer - der Absatz bleibt. Zum Löschen !Löschen! schreiben.')
             stuecke.append(('alt', b))
             continue
         typ, ebene = gewollter_typ(z, b)
@@ -449,7 +449,7 @@ def seite_anwenden(seite, projekt, meldungen):
     for b in koerper_bausteine:
         if b['nr'] in vergeben:
             continue
-        melde(f'die Zeile mit "{kurz(b["text"])}" fehlt in der Mappe (geloescht statt !Löschen!?) - '
+        melde(f'die Zeile mit "{kurz(b["text"])}" fehlt in der Mappe (gelöscht statt !Löschen!?) - '
               'der Absatz bleibt.')
         stelle = 0
         for i, (a, x) in enumerate(stuecke):
@@ -526,17 +526,17 @@ def seite_loeschen(projekt, pfad, datei, sprache, innen, melde):
     if os.path.basename(pfad) == '_index.md':
         rest = [n for n in os.listdir(ordner) if n != '_index.md']
         if rest:
-            melde(f'ist die Uebersichtsseite eines Bereichs mit {len(rest)} weiteren Seiten - so nicht '
-                  'loeschbar (die Seiten darunter haengen daran). Uebersprungen.')
+            melde(f'ist die Übersichtsseite eines Bereichs mit {len(rest)} weiteren Seiten - so nicht '
+                  'löschbar (die Seiten darunter hängen daran). Übersprungen.')
             return dict(art='uebersprungen')
     links = [p for p in verlinkt_von(projekt, sprache, innen) if p != datei]
     if links:
-        melde('wird geloescht, aber diese Seiten verlinken noch darauf - dort den Link entfernen, sonst '
-              'schlaegt der Website-Bau fehl: ' + ', '.join(links))
+        melde('wird gelöscht, aber diese Seiten verlinken noch darauf - dort den Link entfernen, sonst '
+              'schlägt der Website-Bau fehl: ' + ', '.join(links))
     andere = [s for s in tb.SPRACHEN if s != sprache
               and os.path.exists(os.path.join(projekt, 'content', s, innen))]
     if andere:
-        melde('geloescht; die Seite gibt es noch auf ' + ', '.join(andere).upper()
+        melde('gelöscht; die Seite gibt es noch auf ' + ', '.join(andere).upper()
               + ' - falls sie dort auch weg soll, in der Mappe dieser Sprache ebenfalls !Löschen!.')
     return dict(art='geloescht', ordner_leer=os.path.basename(pfad) == '_index.md')
 
@@ -553,7 +553,7 @@ def neue_seite(seite, projekt, pfad, melde, zaehler):
         return dict(art='unveraendert')
     titel = felder.get('titel')
     if not titel or not titel['text'] or LOESCHEN.search(titel['text']):
-        melde('neue Seite ohne Titel - nicht angelegt. Bitte die Zeile "Titel" ausfuellen.')
+        melde('neue Seite ohne Titel - nicht angelegt. Bitte die Zeile "Titel" ausfüllen.')
         return dict(art='uebersprungen')
     quelle = os.path.join(projekt, str(k.get('quelle') or ''))
     if not k.get('quelle') or not os.path.isfile(quelle):
@@ -570,7 +570,7 @@ def neue_seite(seite, projekt, pfad, melde, zaehler):
         elif art == 'beschreibung':
             kopf = tb.kopf_setzen(kopf, feld, None)
         elif art == 'bildtext' and tb.kopf_feld(kopf, feld)[0] is not None:
-            melde('Bildtext nicht uebersetzt - vorerst der deutsche.')
+            melde('Bildtext nicht übersetzt - vorerst der deutsche.')
     koerper, ausgelassen = [], 0
     for z in zeilen:
         art = str(z.get('art') or '')
@@ -583,7 +583,7 @@ def neue_seite(seite, projekt, pfad, melde, zaehler):
             # Tabelle/Baustein aus der deutschen Seite, vorbelegt
             koerper.append(z['original'])
             if t != z['original']:
-                melde(f'{wo(z)}: gesperrt - aus der deutschen Seite uebernommen, wie es dort steht.')
+                melde(f'{wo(z)}: gesperrt - aus der deutschen Seite übernommen, wie es dort steht.')
             continue
         if not t:
             if z.get('vorlage') or art:
@@ -597,11 +597,11 @@ def neue_seite(seite, projekt, pfad, melde, zaehler):
         with open(pfad, encoding='utf-8') as f:
             if f.read() == inhalt:
                 return dict(art='bereits')      # schon einmal eingelesen
-        melde('soll neu angelegt werden, gibt es aber inzwischen - uebersprungen. Bitte in einer frischen '
+        melde('soll neu angelegt werden, gibt es aber inzwischen - übersprungen. Bitte in einer frischen '
               'Mappe bearbeiten.')
         return dict(art='uebersprungen')
     if ausgelassen:
-        melde(f'neu angelegt; {ausgelassen} Absatz/Absaetze ohne Uebersetzung weggelassen.')
+        melde(f'neu angelegt; {ausgelassen} Absatz/Absätze ohne Übersetzung weggelassen.')
     return dict(art='neu', inhalt=inhalt, crlf=False, zaehler=zaehler)
 
 
@@ -643,8 +643,8 @@ def einlesen(pfade, projekt=PROJEKT, probe=False):
                     os.rmdir(os.path.dirname(ziel))
         for datei in verzeichnis:
             if datei not in gefunden:
-                meldungen.append(f'{datei}: fehlt in {name} (Zeilen oder Blatt geloescht?) - die Seite '
-                                 'bleibt. Zum Loeschen !Löschen! in die graue Seiten-Zeile schreiben.')
+                meldungen.append(f'{datei}: fehlt in {name} (Zeilen oder Blatt gelöscht?) - die Seite '
+                                 'bleibt. Zum Löschen !Löschen! in die graue Seiten-Zeile schreiben.')
     return ergebnisse, meldungen, fehler
 
 
