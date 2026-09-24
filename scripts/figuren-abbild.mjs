@@ -56,9 +56,9 @@ async function eineSerie() {
   await p.goto(ADRESSE, { waitUntil: 'networkidle' });
   await p.fill('#fig-min-pause', '0');
   await p.click('#fig-los');
-  await p.waitForSelector('#fig-tafel .fig-svg');
+  await p.waitForSelector('#fig-blatt-lernen .fig-raster .fig-svg');
   await p.waitForTimeout(400);
-  return p.evaluate(() => [...document.querySelectorAll('#fig-tafel .fig-svg')].map(s => s.outerHTML));
+  return p.evaluate(() => [...document.querySelectorAll('#fig-blatt-lernen .fig-raster .fig-svg')].map(s => s.outerHTML));
 }
 if (jeSerie) {
   const ohne = ziel.replace(/\.png$/, '');

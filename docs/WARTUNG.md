@@ -814,20 +814,77 @@ liest sie aus den eigenen Übungs-PDFs aus. Das Skript **überschreibt die
 YAML-Datei nicht**, es gibt die gefundenen Wörter nur aus – die Kategorien und
 Geschlechtsangaben darin kann kein Skript erraten und wären sonst weg.
 
+**Wie ein Set aussieht – das Testheft-Format.** Beide Lern-Generatoren
+(Fakten und Figuren) zeigen und drucken ihre Sets so, wie sie im Testheft
+stehen: Überschrift mit Lern- bzw. Bearbeitungszeit rechts, Anleitung im
+Kasten, Fakten-Liste in drei Spalten nach Altersgruppen, Fragen zweispaltig mit
+A)–E), Fussmarke „Bitte umblättern" bzw. STOPP. Die Masse stammen aus dem
+**NCWiki-Formatierungstool** (eigenes, privates Repository,
+`vorlage/ems.typ`), das sie am Original gemessen hat – Satzspiegel,
+Schriftgrade, Spaltenbreiten, Fussmarken, Figurenraster, Antwortbogen-Zeilen.
+Wo das Tool noch nichts festlegt (zweispaltige Fakten-Fragen, zehn je Seite),
+gilt unser eigenes Testheft 2026 unter `assets/downloads/testsimulationen/`.
+Die Anleitungstexte sind auf Deutsch dem Testheft entnommen; Französisch und
+Italienisch sind eigene Übersetzungen.
+
+Der gemeinsame Rahmen steht in `layouts/partials/bausteine/ems-heft.html`
+(Kopf, Kasten, Fussmarken, Seiten, Antwortbogen, Lösungsblatt, Drucken), die
+Stile in `assets/css/style.css`, Abschnitt „EMS-Heft". **Wer ein Mass ändert,
+ändert es zuerst im Formatierungstool** und übernimmt dann dieselbe Zahl – die
+Konstantennamen aus `ems.typ` stehen in den Kommentaren daneben. Übernommen
+wird nur das **Format**, nie Inhalte aus dem Tool: Das Tool ist privat, diese
+Website öffentlich.
+
 **Auf Papier üben:** Neben „Set erzeugen und starten" (Durchlauf am
-Bildschirm mit Uhr) gibt es „Set als PDF / drucken". Der Druck enthält drei
-Blätter wie die echten Serien – Einprägeblatt, Aufgabenblatt, Lösungen. Es
-wird keine PDF-Bibliothek geladen: Der Browser druckt die Seite selbst und
-bietet im Druckdialog „Als PDF sichern" an. Beide Wege stehen nebeneinander,
-man muss den getakteten Durchlauf nicht starten, um drucken zu können.
+Bildschirm mit Uhr) gibt es „Set als PDF / drucken". Gedruckt wird ein
+kleines Testheft mit sechs A4-Seiten: Anleitung mit Beispiel, Einprägeseite
+(mit STOPP), Anleitung und Fragen der Reproduktion (zwei Seiten, „Bitte
+umblättern" und STOPP), ein Antwortbogen mit den Kästchen wie am Testtag und
+das Lösungsblatt. Jede Seite trägt oben „Übungsset vom <Datum> | Testteil … |
+nc-wiki.ch" und unten die Seitenzahl. Es wird keine PDF-Bibliothek geladen:
+Der Browser druckt die Seiten selbst und bietet im Druckdialog „Als PDF
+sichern" an – Ränder auf „Keine" bzw. Standard lassen, die Heftseiten bringen
+ihre Ränder selbst mit. Man muss den getakteten Durchlauf nicht starten, um
+drucken zu können.
+
+**Das Lösungsblatt weicht bewusst von der Vorlage im Tool ab:**
+`vorlage/loesungsblatt.typ` schreibt alle Nummern in eine Tabelle mit zehn
+Spalten und danach alle Lösungen – ab elf Aufgaben stehen die Buchstaben dort
+unter den falschen Nummern. Hier kommt je zehn Aufgaben ein eigenes
+Zeilenpaar (Nummern, darunter fett die Lösung).
 
 **Wer an den Druckregeln etwas ändert,** liest zuerst den Kommentar bei
 `@media print` in `assets/css/style.css`. Dort stehen zwei Lösungen, die
 nicht funktioniert haben und warum – das spart den nächsten zwei Anläufen die
-Zeit. Kurz: Der Druckbehälter wird beim Drucken nach `<body>` verschoben, weil
-er sonst entweder den ganzen Artikel mitbringt oder dessen Platz als leere
-Seiten stehen bleibt. Die Druckregeln hängen bewusst an `body.fg-druckt` und
-verändern das Drucken anderer Seiten nicht.
+Zeit. Kurz: Die Heftseiten kommen beim Drucken in einen eigenen Behälter
+direkt unter `<body>`, weil sonst entweder der ganze Artikel mitkommt oder
+dessen Platz als leere Seiten stehen bleibt. Die Druckregeln hängen bewusst an
+`body.fg-druckt`; `@page { margin: 0 }` wird nur für die Dauer dieses Drucks
+eingefügt. Das Drucken anderer Seiten ändert sich dadurch nicht.
+
+**Die Fragen** entstehen aus Satzvorlagen in `de.yaml` unter `fragen` – zwölf
+Fragearten wie im Heft („Frau Meier ist …", „Der 42-jährige Patient ist von
+Beruf …", „Der Patient mit Herzproblemen ist …"). Dazu gehören drei kleine
+Listen: `namensgruppen` (die drei Personen einer Altersgruppe heissen ähnlich,
+wie Müller/Meister/Meier im Heft), `dativ` (Krankheiten, die nach „mit" eine
+andere Form brauchen) und `nicht_attributiv` (Merkmale, die sich nicht vor ein
+Nomen stellen lassen – „der durcheinandere Patient" gibt es nicht). Jede
+Frage hat genau eine richtige Antwort; das prüft das Testskript unten an
+hunderten Sets nach.
+
+**Testen:** wie in Abschnitt 11b `public/` bauen und ausliefern, diesmal auf
+Port 8123, dann
+
+```bash
+node scripts/fakten-generator-pruefen.mjs
+node scripts/figuren-generator-pruefen.mjs
+```
+
+Das Fakten-Skript würfelt 150 Sets (`RUNDEN=300` davor ändert die Zahl) und
+kontrolliert jede einzelne Frage gegen die Liste: richtige Lösung, genau eine
+passende Person, Antworten im richtigen Geschlecht. Beide Skripte drucken ein
+PDF und prüfen, dass es sechs A4-Seiten hat und die Lösungen mit der
+Auswertung am Bildschirm übereinstimmen.
 
 **Noch offen:** Die Kategorien sind vorsortiert und von keinem Menschen
 freigegeben. Für echte Abwechslung wären rund 80 Einträge je Kategorie gut,
@@ -866,8 +923,8 @@ Untertest „Figuren lernen": jede in fünf verschieden grosse Felder geteilt,
 genau eines schwarz. Nach der Pause kommen dieselben Figuren in anderer
 Reihenfolge und mit Feldern A–E beschriftet zurück. Gleiche Begründung wie beim
 Fakten-Generator: Material für diesen Untertest ist einmalig verwendbar. Er
-kann dasselbe wie der Fakten-Generator, Durchlauf am Bildschirm und Druck mit
-drei Blättern, und holt seine Vorgabezeiten ebenfalls aus `data/testablauf.yaml`
+kann dasselbe wie der Fakten-Generator, Durchlauf am Bildschirm und Druck als
+sechsseitiges Testheft (Figuren im Raster aus `ems.typ`, vier je Zeile), und holt seine Vorgabezeiten ebenfalls aus `data/testablauf.yaml`
 (die Pause dort ist die Lücke aus Fakten-Einprägen und Textverständnis).
 
 Er braucht **keine Datendatei** – die Figuren entstehen im Browser. Deshalb
@@ -962,7 +1019,7 @@ schon zugeschlagen:
   Im Skript sind die beiden Werte deshalb aneinander gekoppelt.
 
 **Wer am Zeichnen etwas ändert,** liest zuerst den Kommentarkopf in
-`layouts/shortcodes/figuren-generator.html` und die vier Abschnitte im Skript.
+`layouts/partials/bausteine/figuren-generator.html` und die vier Abschnitte im Skript.
 Dort steht, was in den bisherigen Anläufen schiefging – und jeder dieser Fehler
 kostet Zeit, wenn man ihn nochmal macht:
 

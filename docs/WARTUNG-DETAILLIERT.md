@@ -956,7 +956,7 @@ Datei speist zwei Dinge:
 | --- | --- |
 | Tabelle „Tagesablauf" auf `/ems/` | Shortcode `testablauf`, siehe `layouts/shortcodes/testablauf.html` |
 | Prüfungsmodus | `layouts/partials/pruefungsmodus.html` |
-| Vorgabezeiten der Lern-Generatoren | `layouts/shortcodes/fakten-generator.html`, `layouts/shortcodes/figuren-generator.html` |
+| Vorgabezeiten der Lern-Generatoren | `layouts/partials/bausteine/fakten-generator.html`, `layouts/partials/bausteine/figuren-generator.html` |
 
 Die letzte Zeile ist leicht zu übersehen: Die beiden Generatoren rechnen sich
 ihre Vorgaben aus dieser Datei aus, auch die vorgeschlagene **Pause** – das ist

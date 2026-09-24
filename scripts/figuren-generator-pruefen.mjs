@@ -57,7 +57,8 @@ pruef('Vorgabe: echte Pause (51 Min)', vor.p === 51, String(vor.p));
 await p.fill('#fig-min-lernen', '1'); await p.fill('#fig-min-pause', '0'); await p.fill('#fig-min-abfrage', '9');
 await p.click('#fig-los'); await p.waitForTimeout(2500);
 const lern = await p.evaluate(() => {
-  const svgs = [...document.querySelectorAll('#fig-tafel .fig-svg')];
+  // Nur das Raster - im Anleitungskasten darueber stehen zwei Beispielfiguren.
+  const svgs = [...document.querySelectorAll('#fig-blatt-lernen .fig-raster .fig-svg')];
   return { anzahl: svgs.length,
     schwarzProFigur: svgs.map(s => [...s.querySelectorAll('path[fill="#000"]')].length),
     clipIds: new Set([...document.querySelectorAll('clipPath')].map(c => c.id)).size,
@@ -68,35 +69,66 @@ pruef('je genau ein schwarzes Feld', lern.schwarzProFigur.every(n => n === 1), J
 // Gleiche Clip-Kennung = der Clip der einen Figur greift auf die andere zu,
 // und die Trennlinien ragen aus der Form heraus. Genau das war der erste Bug.
 pruef('Clip-Kennungen eindeutig', lern.clipIds === lern.clipGesamt, `${lern.clipIds}/${lern.clipGesamt}`);
+// Format wie im Testheft: Ueberschrift, Kasten mit Beispielfigur, STOPP.
+const heft = await p.evaluate(() => {
+  const b = document.getElementById('fig-blatt-lernen'), k = b.querySelector('.ems-kasten');
+  const bsp = [...k.querySelectorAll('.fig-svg')];
+  const schwarz = bsp[0] ? [...bsp[0].querySelectorAll('g > path[fill]')].findIndex(e => e.getAttribute('fill') === '#000') : -1;
+  return { kopf: b.querySelector('.ems-kopf').textContent, beispiele: bsp.length, schwarz,
+    buchstaben: bsp[1] ? [...bsp[1].querySelectorAll('text')].map(t => t.textContent).join('') : '',
+    loesung: (k.textContent.match(/Lösung wäre dann \(([A-E])\)/) || [])[1], stopp: !!b.querySelector('.ems-marke-stopp') };
+});
+pruef('Ueberschrift wie im Heft', /Figuren lernen \(Einprägephase\)\s*Lernzeit: 1 Minute$/.test(heft.kopf), heft.kopf);
+pruef('Anleitung mit Beispielfigur (schwarz) und abgefragter Fassung (A-E)', heft.beispiele === 2 && heft.schwarz >= 0 && heft.buchstaben === 'ABCDE', JSON.stringify(heft));
+pruef('"Die Loesung waere dann (X)" nennt das schwarze Feld der Beispielfigur', heft.loesung === 'ABCDE'[heft.schwarz], JSON.stringify(heft));
+pruef('STOPP am Ende', heft.stopp);
 
 await p.click('#fig-fertig-lernen'); await p.waitForTimeout(800);
 const ab = await p.evaluate(() => {
-  const felder = [...document.querySelectorAll('#fig-fragen .fig-feld')];
-  return { anzahl: felder.length,
+  const felder = [...document.querySelectorAll('#fig-blatt-abfrage .fig-feld')];
+  return { anzahl: felder.length, nummern: felder.map(f => f.querySelector('.fig-nr').textContent).join(' '),
     buchstabenProFigur: felder.map(f => [...f.querySelectorAll('text')].map(t => t.textContent).join('')),
     wahl: felder.map(f => f.querySelectorAll('input[type=radio]').length),
-    schwarz: [...document.querySelectorAll('#fig-fragen path[fill="#000"]')].length };
+    schwarz: [...document.querySelectorAll('#fig-blatt-abfrage path[fill="#000"]')].length };
 });
 pruef('18 Aufgaben', ab.anzahl === 18, String(ab.anzahl));
+pruef('nummeriert 1) bis 18), zeilenweise', ab.nummern === Array.from({ length: 18 }, (_, i) => (i + 1) + ')').join(' '), ab.nummern);
 pruef('jede Figur zeigt A-E', ab.buchstabenProFigur.every(s => s === 'ABCDE'), JSON.stringify([...new Set(ab.buchstabenProFigur)]).slice(0, 60));
 pruef('je 5 Auswahlfelder', ab.wahl.every(n => n === 5), JSON.stringify([...new Set(ab.wahl)]));
 // In der Abfrage darf nichts schwarz sein - sonst waere die Loesung zu sehen.
 pruef('in der Abfrage ist NICHTS schwarz', ab.schwarz === 0, String(ab.schwarz));
 
-await p.evaluate(() => { document.querySelectorAll('#fig-fragen input[type=radio][value="0"]').forEach(r => { r.checked = true; }); });
+await p.evaluate(() => { document.querySelectorAll('#fig-blatt-abfrage input[type=radio][value="0"]').forEach(r => { r.checked = true; }); });
 await p.click('#fig-auswerten'); await p.waitForTimeout(700);
 const erg = await p.evaluate(() => ({ text: document.getElementById('fig-punkte').textContent,
-  richtig: document.querySelectorAll('#fig-loesung .fg-ist-richtig').length }));
+  richtig: document.querySelectorAll('#fig-blatt-loesung .fg-ist-richtig').length,
+  buchstaben: [...document.querySelectorAll('#fig-blatt-loesung .fg-ist-richtig')].map(e => e.textContent.trim()[0]).join('') }));
 pruef('Auswertung erscheint', /\d+\s*von\s*18/.test(erg.text), erg.text);
 pruef('genau 18 Loesungen markiert', erg.richtig === 18, String(erg.richtig));
 
 await p.click('#fig-drucken-ende'); await p.waitForTimeout(600);
-const dr = await p.evaluate(() => { const d = document.getElementById('fig-druck');
-  return { blaetter: d.querySelectorAll('.fg-blatt').length, svgs: d.querySelectorAll('.fig-svg').length,
-    loesungen: d.querySelectorAll('.fig-loesungsliste li').length }; });
-pruef('Druck: drei Blaetter', dr.blaetter === 3, String(dr.blaetter));
-pruef('Druck: 36 Figuren (18 + 18)', dr.svgs === 36, String(dr.svgs));
-pruef('Druck: 18 Loesungen', dr.loesungen === 18, String(dr.loesungen));
+const dr = await p.evaluate(() => { const d = document.getElementById('ems-druck');
+  return { seiten: d.querySelectorAll('.ems-seite').length, svgs: d.querySelectorAll('.fig-svg').length,
+    zellen: d.querySelectorAll('.ems-fl-zelle').length, bogen: d.querySelectorAll('.ems-bogen-zeile').length,
+    loesungen: [...d.querySelectorAll('.ems-loesung b')].map(e => e.textContent).join('') }; });
+pruef('Druck: sechs Heftseiten', dr.seiten === 6, String(dr.seiten));
+pruef('Druck: 38 Figuren (2 Beispiele + 18 + 18) auf festen Plaetzen', dr.svgs === 38 && dr.zellen === 36, JSON.stringify(dr));
+pruef('Druck: Antwortbogen mit 18 Zeilen', dr.bogen === 18, String(dr.bogen));
+pruef('Druck: Loesungsblatt = Auswertung am Bildschirm', dr.loesungen === erg.buchstaben, dr.loesungen + ' / ' + erg.buchstaben);
+await p.emulateMedia({ media: 'print' });
+await p.pdf({ path: (process.env.ABLAGE || '/tmp') + '/figuren-set.pdf', preferCSSPageSize: true, printBackground: true });
+await p.emulateMedia({ media: 'screen' });
+{
+  const { execSync } = await import('node:child_process');
+  const info = JSON.parse(execSync('python3 -c "import pymupdf,json,sys;d=pymupdf.open(sys.argv[1]);print(json.dumps({\'masse\':[[round(s.rect.width),round(s.rect.height)] for s in d],\'texte\':[s.get_text() for s in d]}))" '
+    + (process.env.ABLAGE || '/tmp') + '/figuren-set.pdf').toString());
+  pruef('PDF: sechs A4-Seiten', info.masse.length === 6 && info.masse.every(m => m[0] === 595 && m[1] === 842), JSON.stringify(info.masse));
+  pruef('PDF: Teil A Einpraegephase, Teil B Reproduktionsphase, Antwortbogen, Loesungen',
+    /Testteil A/.test(info.texte[0]) && /Einprägephase/.test(info.texte[0]) && /STOPP/.test(info.texte[1])
+    && /Testteil B/.test(info.texte[2]) && /Reproduktionsphase/.test(info.texte[2]) && /18\)/.test(info.texte[3])
+    && /Antwortbogen/.test(info.texte[4]) && /Lösungen/.test(info.texte[5]));
+}
+await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
 
 console.log(`\n=== Buchstaben-Abstaende ueber ${RUNDEN} Runden ===`);
 let schlimmste = 0, faelle = 0, figuren = 0;
@@ -107,7 +139,7 @@ for (let runde = 0; runde < RUNDEN; runde++) {
   await p.click('#fig-fertig-lernen'); await p.waitForTimeout(400);
   const r = await p.evaluate(() => {
     const raus = [];
-    document.querySelectorAll('#fig-fragen .fig-feld svg').forEach(svg => {
+    document.querySelectorAll('#fig-blatt-abfrage .fig-feld svg').forEach(svg => {
       const t = [...svg.querySelectorAll('text')].map(e => e.getBoundingClientRect());
       let max = 0;
       for (let a = 0; a < t.length; a++) for (let d = a + 1; d < t.length; d++) {
