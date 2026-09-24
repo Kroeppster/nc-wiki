@@ -64,17 +64,34 @@ def kopf_trennen(roh):
 
 
 def kopf_feld(kopf, feld):
-    """Liest ein einzeiliges Feld aus dem Seitenkopf.
+    """Liest ein Textfeld aus dem Seitenkopf.
 
-    Bewusst ohne YAML-Bibliothek: Der Wert soll zeichengenau zurueckgeschrieben
-    werden koennen, und eine YAML-Bibliothek formatiert beim Schreiben den
-    ganzen Kopf neu. Gibt (wert_ohne_anfuehrungszeichen, zeile_von, zeile_bis)
-    oder (None, None, None) zurueck; zeile_von/bis umfassen die ganze Zeile
-    samt Zeilenumbruch.
+    Gibt (wert, zeile_von, zeile_bis) oder (None, None, None) zurueck;
+    zeile_von/bis umfassen das ganze Feld samt Zeilenumbruch - auch die
+    Folgezeilen, wenn der Wert ueber mehrere Zeilen geht. Das tut er, sobald
+    der Web-Editor (Pages CMS) eine Seite gespeichert hat: Er bricht lange
+    Texte um (eingerueckte Folgezeilen). Wuerde hier nur die erste Zeile
+    gelesen, stuende die Beschreibung abgeschnitten in der Mappe, und beim
+    Zurueckschreiben blieben die Folgezeilen als Muell im Seitenkopf stehen.
+
+    Einzeilige Werte werden ohne YAML-Bibliothek gelesen: So bleibt der Wert
+    zeichengenau, wie er dasteht (PyYAML machte z. B. aus "2024" eine Zahl).
     """
     m = re.search(r'^%s:[ \t]*(.*)$\n?' % re.escape(feld), kopf, re.MULTILINE)
     if not m:
         return None, None, None
+    ende = m.end()
+    folge = re.match(r'(?:[ \t]+\S.*(?:\n|$)|[ \t]*\n(?=[ \t]+\S))*', kopf[ende:])
+    if folge and folge.group(0):
+        # Mehrzeilig (umbrochen, oder > / | Blocktext): YAML entscheidet
+        import yaml
+        ende += len(folge.group(0))
+        try:
+            wert = yaml.safe_load(kopf[m.start():ende]).get(feld)
+        except Exception:
+            wert = None
+        wert = '' if wert is None else str(wert)
+        return wert, m.start(), ende
     wert = m.group(1).rstrip()
     if len(wert) >= 2 and wert[0] == wert[-1] and wert[0] in '"\'':
         innen = wert[1:-1]

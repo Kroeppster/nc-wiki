@@ -769,6 +769,47 @@ def stand_pruefen(projekt, ordner, mappen):
               f'https://beispiel.example/nc-wiki/redaktion/ncwiki-texte-{sprache}.xlsx' in anleitung)
 
 
+def editor_kopf_pruefen(projekt, ordner):
+    """Eine Seite, die der Web-Editor gespeichert hat: Der Seitenkopf ist neu
+    geschrieben, ohne Anfuehrungszeichen, lange Texte auf mehrere Zeilen
+    umbrochen. Die Mappe muss den ganzen Text zeigen, und Aendern und
+    Loeschen muessen das ganze Feld treffen - nicht nur die erste Zeile."""
+    import yaml
+    print('\n=== Seite, die der Web-Editor gespeichert hat (umbrochener Seitenkopf) ===')
+    rel = 'content/de/impressum.md'
+    roh = lesen(projekt, rel)
+    kopf, koerper, _ = tb.kopf_trennen(roh)
+    daten = yaml.safe_load(kopf.strip().strip('-'))
+    lang = 'Ein langer Beschreibungstext, der ueber mehrere Zeilen umbrochen wird, so wie ihn der Web-Editor schreibt.'
+    daten['description'] = lang
+    neu_kopf = '---\n' + yaml.safe_dump(daten, allow_unicode=True, sort_keys=False, width=50) + '---\n'
+    with open(os.path.join(projekt, rel), 'w', encoding='utf-8') as f:
+        f.write(neu_kopf + koerper)
+    pruef('Testseite hat einen umbrochenen Seitenkopf', re.search(r'^description: .*\n  \S', neu_kopf, re.M),
+          neu_kopf[:200])
+    mappen = ausgeben(projekt, os.path.join(ordner, 'editor-kopf'), '--sprachen', 'de')
+    m = load_workbook(mappen['de'])
+    b = next(Blatt(ws) for ws in m.worksheets if ist_seitenblatt(ws) and Blatt(ws).finde(datei=rel))
+    r_seite = b.finde(datei=rel)
+    r = next(r for r in b.zeilen() if r > r_seite and b.wert(r, 'art') == 'beschreibung')
+    pruef('Mappe zeigt die ganze umbrochene Beschreibung', b.wert(r, 'text') == lang, b.wert(r, 'text'))
+    b.setze(r, 'text', 'Kurz und neu.')
+    p = os.path.join(ordner, 'editor-kopf.xlsx')
+    m.save(p)
+    rc, aus = einlesen(projekt, p)
+    nachher = lesen(projekt, rel)
+    k2 = tb.kopf_trennen(nachher)[0]
+    try:
+        d2 = yaml.safe_load(k2.strip().strip('-'))
+    except Exception as e:
+        d2 = {'fehler': str(e)}
+    erwartet = dict(daten, description='Kurz und neu.')
+    pruef('geaenderte Beschreibung ersetzt das ganze Feld, Seitenkopf bleibt gueltig, alles andere gleich',
+          rc == 0 and d2 == erwartet and tb.kopf_trennen(nachher)[1] == koerper, (d2, aus[-200:]))
+    with open(os.path.join(projekt, rel), 'w', encoding='utf-8') as f:
+        f.write(roh)
+
+
 def bauen(projekt, ordner):
     print('\n=== Website aus der bearbeiteten Kopie bauen ===')
     hugo = os.environ.get('HUGO') or shutil.which('hugo') or os.path.expanduser('~/bin/hugo')
@@ -801,6 +842,7 @@ def main():
         bauen(projekt, ordner)
         if de and fr:
             fehlerfaelle_pruefen(projekt, ordner, de, fr)
+        editor_kopf_pruefen(projekt, ordner)
     finally:
         if a.behalten:
             print(f'\nArbeitsordner: {ordner}')
