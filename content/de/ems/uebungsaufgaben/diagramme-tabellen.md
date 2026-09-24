@@ -1,13 +1,12 @@
 ---
 title: "Diagramme und Tabellen"
+description: "Diagramme und Tabellen im EMS: Kostenlose Übungsserien und Tipps, mit denen du Grafiken und Tabellen sicher und schnell auswertest."
 weight: 7
 ---
 
 ## Kurze Zusammenfassung
 
-Bei diesem Untertest bekommst du ein Diagramm oder eine Tabelle (manchmal mit kurzem Begleittext) und fünf Aussagen dazu. Gefragt ist entweder die einzig **richtige** oder die einzig **falsche** Aussage. Alle nötigen Informationen stehen im Diagramm bzw. Begleittext – es braucht kein Fachwissen. Du hast 18 Aufgaben in 45 Minuten, also rund 2.5 Minuten pro Aufgabe.
-
-**Warum das im Studium relevant ist:** Wissenschaftliche Arbeiten stellen ihre Ergebnisse oft in Diagrammen und Tabellen dar. Diese korrekt lesen und interpretieren zu können, ist eine Kernkompetenz im Studium.
+Zu jeder Aufgabe erhältst du ein Diagramm oder eine Tabelle, meist ergänzt durch einen kurzen Begleittext. Gefragt ist, welche von fünf Aussagen sich aus den Informationen ableiten lässt oder welche nicht ableitbar ist. In einzelnen Aufgaben wählst du umgekehrt jenes Diagramm aus, das einen beschriebenen Sachverhalt korrekt darstellt. Fachwissen ist nicht erforderlich, alle nötigen Informationen sind in der Aufgabe enthalten. Für 18 Aufgaben stehen dir 45 Minuten zur Verfügung, also rund 2.5 Minuten pro Aufgabe. Die Bearbeitungszeit ist bewusst so bemessen, dass in der Regel nicht alle Aufgaben gelöst werden können.
 
 ## Wann und wie oft üben?
 

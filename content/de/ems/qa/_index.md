@@ -1,5 +1,6 @@
 ---
 title: "Q&A"
+description: "Alle wichtigen Antworten zum Eignungstest auf einen Blick. Erfahre alles, was du über die Anmeldung, den Testablauf und die Wiederholung wissen musst."
 menu:
   main:
     parent: ems

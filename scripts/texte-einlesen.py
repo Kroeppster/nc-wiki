@@ -45,6 +45,8 @@ PROJEKT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Die Spalten werden ueber die KOPFZEILE gesucht, nicht ueber ihre Position.
 # Sonst schreibt dieses Skript stillschweigend Unsinn, sobald jemand in der
 # Mappe eine Spalte einfuegt oder verschiebt.
+# Wer einen Baustein loswerden will, schreibt !Löschen! (Gross/klein egal).
+LOESCHEN = re.compile(r'!\s*l(ö|oe)schen\s*!', re.IGNORECASE)
 GEBRAUCHT = ('Typ', 'Text bisher', 'Text neu', 'Datei', 'Baustein', 'Pruefsumme')
 
 
@@ -119,6 +121,23 @@ def main():
                 uebersprungen.append((z, 'Datei wurde inzwischen geaendert'))
                 continue
             text = z['neu']
+            if LOESCHEN.fullmatch(text.strip()):
+                # LOESCHEN: Baustein samt der Leerzeile danach entfernen, sonst
+                # bleiben zwei Leerzeilen stehen. Im Seitenkopf die ganze Zeile.
+                with open(pfad, encoding='utf-8') as f:
+                    roh0 = f.read()
+                if b['typ'] in ('Titel', 'Beschreibung'):
+                    if b['von'] == b['bis']:
+                        continue                  # gab es gar nicht
+                    anfang = roh0.rfind('\n', 0, b['von']) + 1
+                    ende = roh0.find('\n', b['bis'])
+                    aenderungen.append((anfang, ende + 1 if ende >= 0 else len(roh0), '', z, b))
+                else:
+                    ende = b['bis']
+                    while ende < len(roh0) and roh0[ende] == '\n':
+                        ende += 1
+                    aenderungen.append((b['von'], ende, '', z, b))
+                continue
             if b['typ'] == 'Ueberschrift' and not text.lstrip().startswith('#'):
                 rauten = re.match(r'^(#+)', b['text'].lstrip()).group(1)
                 text = f'{rauten} {text.lstrip()}'

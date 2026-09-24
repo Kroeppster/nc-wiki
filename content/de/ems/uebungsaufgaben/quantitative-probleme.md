@@ -1,11 +1,12 @@
 ---
 title: "Quantitative und formale Probleme"
+description: "Quantitative und formale Probleme im EMS: Kostenlose Übungsserien und Tipps zu Dreisatz, Einheiten und Formeln, damit du unter Zeitdruck sicher rechnest."
 weight: 4
 ---
 
 ## Kurze Zusammenfassung
 
-Bei diesem Untertest geht es um mathematische Aufgaben und logisches Denken. Jede Frage besteht aus einer kurzen Textaufgabe mit fünf Antwortmöglichkeiten. Ein Taschenrechner ist nicht erlaubt – gefragt wird aber nur Mathematik bis zur 9. Klasse, du brauchst also kein Fachwissen darüber hinaus.
+In diesem Untertest löst du mathematische Sachaufgaben mit medizinischem oder naturwissenschaftlichem Bezug. Gefordert sind insbesondere Dreisatz, Proportionalitäten, Potenzrechnung, Einheitenumrechnungen sowie das Umformen von Formeln. Vorausgesetzt werden Kenntnisse der Sekundarstufe. Differential- und Integralrechnung, Trigonometrie und Wahrscheinlichkeitsrechnung sind nicht Teil des Tests, benötigte geometrische Formeln werden angegeben. Für 18 Aufgaben stehen dir 45 Minuten zur Verfügung, also rund 2.5 Minuten pro Aufgabe.
 
 Mit 45 Minuten für 18 Aufgaben (2.5 Min/Aufgabe) ist dieser Untertest eher nicht auf Zeitdruck ausgelegt.
 

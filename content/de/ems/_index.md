@@ -1,5 +1,6 @@
 ---
 title: "EMS"
+description: "Alles für deine EMS-Vorbereitung: Kostenlose Übungsserien, Testsimulationen, Vorbereitungskurse und ein Uniguide. Von Studierenden für dich."
 menu:
   main:
     identifier: ems
@@ -21,7 +22,7 @@ menu:
 
 Die offiziellen Informationen zum EMS erhältst du, wenn du angemeldet bist, im April von swissuniversities. Falls du widersprüchliche Infos findest, richte dich nach der offiziellen "Test Info".
 
-Dies ist die [offizielle Internetseite von swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium), auf der du dich für das Medizinstudium anmelden kannst und auch die Informationsbroschüren zum Test sowie Beispielaufgaben erhältst (unter „Dokumente"). Hier ist die Website des [Testentwicklungszentrums ZTD](https://www.unifr.ch/ztd/de/ems) mit weiteren offiziellen Informationen.
+[Dies ist die offizielle Internetseite von swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium), auf der du dich für das Medizinstudium anmelden kannst und auch die Informationsbroschüren zum Test sowie Beispielaufgaben erhältst (unter „Dokumente"). Hier ist die Website des [Testentwicklungszentrums ZTD](https://www.unifr.ch/ztd/de/ems) mit weiteren offiziellen Informationen.
 
 ### 1.2 Anmeldung für die Prüfung
 
@@ -31,7 +32,7 @@ Bitte denk daran, dass du dich **bis zum 15. Februar** über [swissuniversities]
 
 Bei der Anmeldung musst du nach Priorität angeben, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Hierbei solltest du auf zwei Dinge achten:
 
-- Dein steuerlicher Wohnsitz garantiert dir bei Bestehen des EMS einen Studienplatz in deinem Kanton – aber nur, falls die Universität deines Kantons auch den Medizin-Studiengang anbietet. Baselland gilt hier auch als Uni-Kanton für die Universität Basel. Zürich gilt aber nur als Uni-Kanton für die Universität Zürich, nicht für die ETH Zürich, da diese eine eidgenössische Hochschule ist. Details zu den einzelnen Universitäten findest du in unserem [Uniguide]({{< ref "/ems/uniguide" >}}).
+- Dein steuerlicher Wohnsitz garantiert dir bei bestandenem EMS einen Studienplatz in deinem Kanton, sofern dort Medizin angeboten wird. Für die Universität Basel gelten beide Basel als Unikanton und bieten diesen Vorteil. Die ETH bildet als eidgenössische Hochschule die einzige Ausnahme und gewährt keinen kantonalen Wohnsitzvorteil. Details zu den einzelnen Universitäten findest du in unserem [Uniguide]({{< ref "/ems/uniguide" >}}).
 - Manche Universitäten sind beliebter, weshalb man einen höheren Rangplatz im Vergleich zu anderen Kandidierenden benötigt. Deine erste Priorität wird dabei immer zuerst berücksichtigt. Beispiel: Du wählst die ETH als erste Wahl und Uni Zürich als zweite Wahl. Die ETH ist für Humanmedizin weniger beliebt als die Uni Zürich. Da du bei deinem Testresultat unter den 1 % Besten warst, wirst du nun deiner Erstwahl (ETH) zugeteilt.
 
 ### 1.4 Aufgabenstellungen auswendig kennen
@@ -57,7 +58,7 @@ Du sparst dir wertvolle Zeit am NC, wenn du die Aufgabenstellungen schon kennst 
 
 ## 2. Am Tag des NC
 
-### 2.1 Verpflegung / Mittagspause
+### 2.1 Verpflegung
 
 Frühstücke am Tag des NC gut und trinke etwas – aber nicht zu viel, damit du während des Tests nicht auf die Toilette musst (die Zeit läuft währenddessen weiter).
 
@@ -77,7 +78,7 @@ Die Lösungen müssen im separaten Lösungsblatt eingetragen werden – was im A
 
 - ID
 - Testanmeldung
-- Schwarzer oder blauer dicker Fineliner für den Konzentrationstest
+- Schwarzer oder blauer, dicker Fineliner für den Konzentrationstest
 - Weiche Bleistifte (HB, 2 oder 2B)
 - Leuchtstifte
 - Radiergummi
@@ -86,6 +87,7 @@ Die Lösungen müssen im separaten Lösungsblatt eingetragen werden – was im A
 - Getränk(e)
 - Evtl. Ohrstöpsel
 - Evtl. Glücksbringer
+- Evtl. Medikamente
 
 Alles, was in den Testsaal mitgenommen wird – auch die Getränke – muss in einem durchsichtigen Behälter sein. Handy und Smartwatch bleiben in der Garderobe.
 

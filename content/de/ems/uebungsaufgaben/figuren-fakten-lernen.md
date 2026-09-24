@@ -1,15 +1,16 @@
 ---
 title: "Figuren & Fakten lernen"
+description: "Figuren und Fakten lernen im EMS: Kostenlose Übungsserien und Merktechniken, mit denen du dir 18 Figuren und 15 Patientenfälle zuverlässig einprägst."
 weight: 5
 ---
 
 ## Kurze Zusammenfassung
 
 ### Figuren
-In diesem Teil wird geprüft, wie gut du visuelle Informationen in kurzer Zeit aufnehmen und über längere Zeit im Gedächtnis behalten kannst. In der Einprägephase hast du 4 Minuten Zeit, dir 18 Figuren einzuprägen. Jede Figur ist in 5 unterschiedlich grosse Felder unterteilt, von denen genau eines schwarz gefärbt ist. Danach folgt ein anderer Untertest (Textverständnis) als Ablenkung, bevor in der Reproduktionsphase (5 Minuten) abgefragt wird, welches Feld bei welcher Figur schwarz war – und zwar nicht in derselben Reihenfolge wie beim Einprägen.
+In der Einprägephase werden dir 18 Figuren gezeigt, bei denen jeweils eine Fläche geschwärzt ist. Du hast 4 Minuten Zeit, dir die Lage dieser Flächen einzuprägen. Nach rund einer Stunde folgt die Reproduktionsphase: Die Figuren erscheinen in veränderter Reihenfolge und ohne Markierung, und du gibst an, welche Fläche geschwärzt war. Hierfür stehen dir 5 Minuten zur Verfügung.
 
 ### Fakten
-Hier lernst du von 15 fiktiven Personen Merkmale wie Name, Alter, Beruf, Diagnose und ein zusätzliches Merkmal. Dafür hast du 6 Minuten (Einprägephase). Danach kommt wieder ein anderer Untertest dazwischen (Textverständnis) – erst danach werden die Fakten wieder abgefragt, ebenfalls mit 6 Minuten Zeit (Reproduktionsphase).
+In der Einprägephase werden dir 15 Patientinnen und Patienten vorgestellt, jeweils mit Name, Altersgruppe, Beruf, einem weiteren Merkmal wie Gemütszustand oder Aufenthaltsort sowie einer Diagnose. Für das Einprägen hast du 6 Minuten Zeit. In der späteren Reproduktionsphase beantwortest du 18 Fragen zu diesen Personen. Die Reihenfolge ist dabei verändert, und die Angaben werden in unterschiedlichen Kombinationen abgefragt, beispielsweise «Die Person mit Diabetes ist von Beruf …». Auch hierfür stehen dir 6 Minuten zur Verfügung.
 
 ## Aufbau des Fakten-Teils
 

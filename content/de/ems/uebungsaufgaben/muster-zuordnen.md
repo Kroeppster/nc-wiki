@@ -1,11 +1,12 @@
 ---
 title: "Muster zuordnen"
+description: "Muster zuordnen im EMS: Kostenlose Übungsserien und bewährte Tipps, mit denen du den passenden Ausschnitt schneller findest und typische Fehler vermeidest."
 weight: 1
 ---
 
 ## Kurze Zusammenfassung
 
-„Muster zuordnen" ist der erste Untertest am EMS. Dir werden 18 Muster mit jeweils fünf zugehörigen Ausschnitten gezeigt. Deine Aufgabe: herausfinden, welcher der fünf Ausschnitte tatsächlich im Ausgangsmuster wiederzufinden ist. In den anderen vier Ausschnitten sind Fehler versteckt.
+Zu jeder Aufgabe erhältst du ein komplexes Muster sowie fünf Ausschnitte. Nur einer dieser Ausschnitte lässt sich an einer beliebigen Stelle deckungsgleich und vollständig auf das Muster legen. Die übrigen vier weichen in einzelnen Details ab. Die Ausschnitte sind weder gedreht noch vergrössert oder verkleinert. Für 18 Aufgaben stehen dir 16 Minuten zur Verfügung, also knapp eine Minute pro Aufgabe.
 
 Bei jeder Aufgabe wird ein Bild (Muster) vorgegeben, daneben fünf Ausschnitte (a–e). Nur einer davon ist zu 100 % im Ausgangsbild wiederzufinden, bei den anderen vieren wurde ein Detail entfernt, hinzugefügt oder verändert. Die Musterausschnitte sind nicht vergrössert, verkleinert, gedreht oder gespiegelt – es kann aber vorkommen, dass ein Ausschnitt gar nicht vollumfänglich ins Originalmuster passen würde. Die Fehler sind jeweils klar und eindeutig; kleine Pünktchen oder Druckfehler zählen nicht als Fehler.
 

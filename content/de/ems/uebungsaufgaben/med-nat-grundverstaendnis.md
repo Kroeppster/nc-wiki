@@ -1,11 +1,12 @@
 ---
 title: "Medizinisch-naturwissenschaftliches Grundverständnis"
+description: "Medizinisch-naturwissenschaftliches Grundverständnis im EMS: Kostenlose Übungsserien und Tipps, um Sachverhalte zu erfassen und Aussagen sicher zu prüfen."
 weight: 3
 ---
 
 ## Kurze Zusammenfassung
 
-Im Untertest „Medizinisch-naturwissenschaftliches Grundverständnis" geht es darum, kurze Texte so zu verstehen, dass inhaltliche Fragen dazu beantwortet werden können – pro Text ist eine Frage zu lösen. Die Textabschnitte behandeln meist medizinische Zusammenhänge, Signalkaskaden oder anatomische Beschreibungen.
+Jede Aufgabe schildert in wenigen Sätzen einen medizinischen oder naturwissenschaftlichen Sachverhalt. Anschliessend beurteilst du drei oder fünf Aussagen daraufhin, ob sie sich aus den gegebenen Informationen ableiten lassen. Häufig sind die Aussagen nummeriert (I, II, III), und die Antwortoptionen A bis E geben mögliche Kombinationen vor. Fachwissen ist nicht erforderlich, da alle Fachbegriffe im Text erläutert werden. Für 18 Aufgaben stehen dir 45 Minuten zur Verfügung, also rund 2.5 Minuten pro Aufgabe.
 
 ## Test-Eckdaten
 

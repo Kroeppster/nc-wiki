@@ -1,11 +1,12 @@
 ---
 title: "Textverständnis"
+description: "Textverständnis im EMS: Kostenlose Übungsserien und Tipps, mit denen du komplexe Fachtexte schneller erfasst und Aussagen sicher beurteilst."
 weight: 6
 ---
 
 ## Kurze Zusammenfassung
 
-In diesem Untertest wird dein Textverständnis anhand von drei naturwissenschaftlichen Texten geprüft. Zu jedem Text werden sechs Fragen zum Inhalt gestellt. Für alle drei Texte zusammen stehen dir 45 Minuten zur Verfügung – im Schnitt also 15 Minuten pro Text.
+Dieser Untertest prüft, wie gut du umfangreiche und komplexe Texte erfassen und verarbeiten kannst. Du erhältst drei Texte von jeweils rund einer Seite zu Themen aus Medizin oder Naturwissenschaft, zu jedem Text folgen sechs Fragen. Zu beurteilen ist, welche Aussagen sich aus dem Text ableiten lassen, teils als Einzelantwort, teils als Kombination nummerierter Aussagen. Vorwissen ist nicht erforderlich. Für 18 Aufgaben stehen dir 45 Minuten zur Verfügung, also rund 15 Minuten pro Text.
 
 ## Aufbau des Tests
 

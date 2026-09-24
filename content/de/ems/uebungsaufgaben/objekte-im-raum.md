@@ -1,11 +1,12 @@
 ---
 title: "Objekte im Raum"
+description: "Objekte im Raum im EMS: Kostenlose Übungsserien und Tipps, mit denen du Drehungen und Kippbewegungen des Würfels schnell und sicher nachvollziehst."
 weight: 2
 ---
 
 ## Kurze Zusammenfassung
 
-Im Untertest „Objekte im Raum" wird dir jeweils dasselbe Objekt aus zwei verschiedenen Blickwinkeln gezeigt – einmal aus der Frontalansicht, einmal von einer anderen Seite. Deine Aufgabe: herausfinden, von welcher Seite die zweite Ansicht gezeigt wird. Geprüft wird damit deine Fähigkeit, dir abstrakte Objekte dreidimensional vorzustellen und im Raum zu drehen.
+Dieser Untertest prüft dein räumliches Vorstellungsvermögen. Du siehst einen durchsichtigen Würfel mit Objekten, links in der Ausgangsposition und rechts nach zwei aufeinanderfolgenden Bewegungen. Möglich sind Drehungen um 90° nach links oder rechts sowie Kippbewegungen um 90° nach oben oder unten. Deine Aufgabe ist es, die Kombination zu bestimmen, die zur rechten Ansicht führt. Dabei ist auch die Reihenfolge der Bewegungen entscheidend. Für 18 Aufgaben stehen dir 10 Minuten zur Verfügung, also etwas über 30 Sekunden pro Aufgabe.
 
 ## Test-Eckdaten
 

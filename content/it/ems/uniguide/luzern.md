@@ -1,4 +1,4 @@
 ---
-title: "Universität Luzern"
+title: "Universität Zürich - Luzerner Track"
 uni_slug: "luzern"
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Startseite"
-description: "Kostenloses Übungsmaterial, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium (EMS) – von Studierenden für Studierende, schweizweit."
+description: "Kostenloses Übungsmaterial, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium (EMS) – von Studierenden für zukünftige Studierende, schweizweit, dreisprachig."
 menu:
   main:
     identifier: home

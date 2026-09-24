@@ -1,11 +1,12 @@
 ---
 title: "Konzentriertes und sorgfältiges Arbeiten"
+description: "Konzentriertes und sorgfältiges Arbeiten im EMS: Kostenlose Übungsserien und Tipps, mit denen du schneller markierst und weniger Fehler machst."
 weight: 8
 ---
 
 ## Kurze Zusammenfassung
 
-Bei diesem Untertest liegt ein A4-Blatt mit sehr vielen Zeichen vor dir. Deine Aufgabe ist es, während 8 Minuten möglichst viele Zeichen nach einer vorgegebenen Bedingung durchzustreichen – schnell und sorgfältig, denn falsch durchgestrichene und übersprungene Zeichen geben Abzug. Die Bedingung gilt dabei immer nur pro Zeile.
+Du erhältst ein Blatt mit 40 Zeilen zu je 40 Zeichen und markierst nach einer vorgegebenen Regel bestimmte Zielzeichen. Die Bearbeitung erfolgt strikt zeilenweise und ohne Auslassungen. Bis zum letzten markierten Zeichen wird jedes fälschlich markierte oder übersehene Zeichen als Fehler gewertet und von den richtigen Markierungen abgezogen. Zeichen und Regel ändern sich jedes Jahr und werden im Voraus nicht bekannt gegeben. Für diesen Untertest stehen dir 8 Minuten zur Verfügung, wobei das Blatt so umfangreich ist, dass es kaum vollständig bearbeitet werden kann.
 
 ## Wieso ist dieser Untertest fürs spätere Studium relevant?
 

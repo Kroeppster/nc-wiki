@@ -263,7 +263,7 @@
   berichte_ort: ""
 
 - slug: "luzern"
-  name: "Universität Luzern"
+  name: "Universität Zürich - Luzerner Track"
   kanton: "Luzern"
   sprache: ["Deutsch"]
   studiengaenge: ["Master"]
@@ -287,7 +287,7 @@
   berichte_ort: "Luzern"
 
 - slug: "st-gallen"
-  name: "Universität St.Gallen"
+  name: "Universität Zürich - St. Galler Track"
   kanton: "St. Gallen"
   sprache: ["Deutsch"]
   studiengaenge: ["Master"]
