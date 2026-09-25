@@ -1,39 +1,57 @@
 ---
 title: "Lavoro concentrato e accurato"
+description: "Lavoro concentrato e accurato all'EMS: serie di esercizi gratuite e consigli per marcare più in fretta e fare meno errori."
 weight: 8
 ---
 
 ## Breve riassunto
 
-In questo sottotest hai davanti un foglio A4 con moltissimi caratteri. Il tuo compito è barrare, in 8 minuti, il maggior numero possibile di caratteri secondo una condizione data – velocemente e con precisione, perché i caratteri barrati per errore e quelli tralasciati comportano una detrazione. La condizione vale sempre solo per riga.
+Ricevi un foglio con 40 righe di 40 simboli ciascuna e marchi determinati simboli bersaglio secondo una regola data. Si lavora rigorosamente riga per riga e senza omissioni. Fino all'ultimo simbolo marcato, ogni simbolo marcato per errore o tralasciato conta come errore e viene sottratto dalle marcature corrette. Simboli e regola cambiano ogni anno e non vengono comunicati in anticipo.
 
-## Perché questo sottotest è rilevante per gli studi futuri?
+- **Posizione nella giornata del test:** 11° e ultimo sottotest, dopo diagrammi e tabelle
+- **Volume:** 40 righe di 40 simboli (1600 simboli), 18 punti
+- **Tempo:** 8 minuti
 
-Come medico è importante saper lavorare in modo concentrato e preciso anche sotto stress. Questo è esattamente ciò che verifica questo sottotest.
+Il foglio è così lungo che difficilmente si riesce a completarlo.
 
-## Come viene valutato?
+### Come avviene la valutazione?
 
-Questo è l'unico sottotest in cui viene creata una classifica tra tutti/e i/le candidati/e – i punti vengono assegnati in base a questa classifica. Non c'è quindi un numero minimo fisso di caratteri, devi semplicemente ottenere un buon risultato relativo agli altri.
+È l'unico sottotest per cui viene stilata una classifica tra tutti i candidati e le candidate – i punti vengono assegnati in base a questa classifica. Non c'è quindi un numero minimo fisso di simboli, devi semplicemente fare bene rispetto agli altri.
 
-Per ogni carattere marcato correttamente c'è un punto, per ogni carattere marcato erroneamente o tralasciato viene sottratto un punto. Poiché un carattere tralasciato ti toglie anche la possibilità di un punto, tralasciare è tendenzialmente peggio di un segno sbagliato. In totale ci sono 40 righe con caratteri distribuiti in modo approssimativamente uniforme – in media se ne possono marcare circa 10 per riga, il che può servire come orientamento approssimativo.
+Per ogni simbolo marcato correttamente c'è un punto, per ogni simbolo marcato per errore o tralasciato se ne toglie uno. Siccome un simbolo saltato ti toglie in più la possibilità di un punto, tralasciare è tendenzialmente peggio di un segno sbagliato. In tutto ci sono 40 righe con simboli distribuiti in modo più o meno uniforme – in media se ne possono marcare circa 10 per riga, il che può servire da orientamento approssimativo.
 
-## Quando e quanto spesso dovresti esercitarti?
+## Perché questo sottotest è rilevante per gli studi?
 
-In questo sottotest i progressi sono visibili rapidamente – di solito basta iniziare 1.5-2 mesi prima, ma con 4-5 sessioni a settimana, poiché ogni sessione dura poco. Per simulare in modo realistico la situazione del test, conviene non risolvere il test di concentrazione come primo durante l'esercizio, ma dopo qualche altro sottotest – così, come nel giorno vero del test, sei già un po' stanco/a quando lo affronti.
+Come medico è importante riuscire a lavorare in modo concentrato e preciso anche sotto stress. È proprio ciò che verifica questo sottotest.
 
-## Trucchi per la risoluzione
+## Quando e quanto spesso esercitarsi?
 
-- **Memorizzare la condizione, non consultarla:** Ogni secondo conta – memorizza bene la condizione mentre viene spiegata, così durante gli 8 minuti non devi pensarci.
-- **Concentrarsi su un carattere:** Concentrati solo sul carattere decisivo (per esempio "q") e verifica rapidamente a ogni occorrenza se la condizione è soddisfatta, invece di leggere carattere per carattere.
-- **Memorizzare uno schema invece di una regola:** Memorizza lo schema visivo della soluzione corretta (per esempio "pq") invece della regola a parole – questo si riconosce spesso più velocemente. Fai attenzione a non confondere caratteri simili come "pq" e "bd".
-- **Metodo a serpentina:** Risolvi la prima riga da sinistra a destra, la successiva da destra a sinistra e così via, così non perdi righe per il salto di riga. Fai però attenzione a lavorare negli ultimi 30 secondi circa (da circa il minuto 7.5) solo più da sinistra a destra, poiché la valutazione avviene nel senso di lettura.
-- **Annotare prima le combinazioni:** Se la condizione richiede un calcolo (per esempio "barra il secondo di due numeri che insieme danno 8"), scriviti prima tutte le combinazioni adatte (ma solo dopo il segnale di partenza!), invece di ricalcolare a ogni carattere.
-- **Testare prima la penna:** Il test viene valutato meccanicamente – la tua penna deve essere abbastanza scura e non deve macchiare.
-- **Esercitarsi nel modo più vario possibile:** Al vero NC compaiono spesso più condizioni combinate (per esempio "barra ogni q dopo una p e ogni b prima di una d"). Esercitati quindi con diversi tipi di condizioni, non solo con un tipo.
-- **Archiviare gli errori:** Arrabbiarsi per un errore costa solo ulteriore concentrazione e tempo – tornare indietro e correggere non conviene comunque, poiché conta solo l'ultimo segno.
+In questo sottotest i progressi si vedono in fretta – di solito basta iniziare 1.5–2 mesi prima, però con 4–5 sessioni a settimana, perché ogni sessione dura poco. Per simulare in modo realistico la situazione del test, conviene non risolvere il test di concentrazione per primo durante l'esercizio, ma solo dopo alcuni altri sottotest – così, come il giorno del test, sei già un po' stanco·a quando lo affronti.
 
-## Da testimonianze
+## Come procedere
 
-*"Il momento del test è scelto in modo un po' crudele, perché prima hai già risolto molte altre prove per ore. È duro, ma è così per tutti/e. Il compito è inoltre concepito in modo che praticamente non si finisce mai negli 8 minuti – quindi non preoccuparti se non arrivi alla fine. Anche così puoi ottenere il punteggio massimo senza errori."*
+1. **Memorizzare la regola invece di rileggerla:** ogni secondo conta – memorizza bene la regola mentre viene spiegata, così durante gli 8 minuti non devi pensarci.
+2. **Annotare prima le combinazioni:** se la regola richiede un calcolo (per es. «cancella il secondo di due numeri che insieme fanno 8»), annota tutte le combinazioni possibili prima di iniziare (ma solo dopo il segnale di partenza!), invece di ricalcolare a ogni simbolo.
+3. **Concentrarsi su un simbolo:** concentrati solo sul simbolo decisivo (per es. «q») e a ogni occorrenza verifica rapidamente se la regola è soddisfatta, invece di leggere simbolo per simbolo.
+4. **Ricordare lo schema invece della regola:** memorizza lo schema visivo della soluzione giusta (per es. «pq») invece della regola a parole – spesso si riconosce più in fretta.
+5. **Metodo a serpentina:** risolvi la prima riga da sinistra a destra, la successiva da destra a sinistra e così via, per non perdere nessuna riga al cambio di riga. Negli ultimi 30 secondi circa (da circa il minuto 7.5) lavora di nuovo solo da sinistra a destra, perché la valutazione segue il senso di lettura.
 
-*"Al mio primo NC ho puntato solo sulla velocità e per questo ho tralasciato molti caratteri. Al secondo NC sapevo di dover fare attenzione a entrambe le cose: velocità e precisione. Per simulare questa sensazione, durante l'esercizio ho sempre risolto il test di concentrazione per ultimo."*
+## Altri consigli
+
+- **Provare prima la penna:** il test viene valutato a macchina – la tua penna deve essere abbastanza scura e non deve sbavare.
+- **Esercitarsi nel modo più vario possibile:** al vero NC compaiono spesso più regole combinate (per es. «cancella ogni q dopo una p e ogni b prima di una d»). Esercitati quindi con diversi tipi di regole, non con uno solo.
+- **Lasciarsi alle spalle gli errori:** arrabbiarsi per un errore costa solo concentrazione e tempo in più – tornare indietro a correggere comunque non conviene, perché conta solo l'ultima marcatura.
+
+## Tranelli tipici
+
+- **Simboli simili:** simboli come «pq» e «bd» si confondono facilmente.
+- **Puntare solo sulla velocità:** chi bada solo alla velocità tralascia facilmente dei simboli – e ogni simbolo tralasciato viene sottratto.
+- **Senso di lettura alla fine:** chi lavora a serpentina fino all'ultimo perde i simboli dell'ultima riga iniziata, perché la valutazione segue il senso di lettura.
+
+## Dai resoconti di esperienza
+
+*«Il momento del test è scelto in modo un po' crudele, perché prima hai già risolto altri test per diverse ore. È dura, ma vale per tutti. Il compito è inoltre pensato in modo che negli 8 minuti praticamente non si finisca mai – quindi non preoccuparti se non arrivi alla fine. Senza errori puoi comunque ottenere il punteggio pieno.»*
+
+*«Al mio primo NC ho puntato solo sulla velocità e così ho tralasciato molti simboli. Al secondo NC sapevo di dover badare a entrambe le cose: velocità e precisione. Per simulare questa sensazione, durante l'esercizio ho sempre risolto il test di concentrazione alla fine.»*
+
+Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).

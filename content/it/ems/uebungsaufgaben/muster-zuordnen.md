@@ -1,42 +1,57 @@
 ---
 title: "Abbinamento di schemi"
+description: "Abbinamento di schemi all'EMS: serie di esercizi gratuite e consigli collaudati per trovare più in fretta il ritaglio giusto ed evitare gli errori tipici."
 weight: 1
 ---
 
 ## Breve riassunto
 
-"Abbinamento di schemi" è il primo sottotest dell'EMS. Ti vengono mostrati 18 schemi con cinque ritagli corrispondenti ciascuno. Il tuo compito: scoprire quale dei cinque ritagli si ritrova effettivamente nello schema originale. Negli altri quattro ritagli sono nascosti degli errori.
+L'abbinamento di schemi è il primo sottotest dell'EMS e apre la giornata del test. Per ogni domanda ricevi uno schema complesso e cinque ritagli (da A a E). Gli schemi si trovano nella parte superiore della pagina, i ritagli corrispondenti più in basso sulla stessa pagina. Solo uno dei cinque ritagli si può sovrapporre allo schema in modo esatto e completo, in un punto qualsiasi. Negli altri quattro un dettaglio è stato aggiunto, tolto o modificato. I ritagli non sono né ingranditi o rimpiccioliti, né ruotati o specchiati. Le differenze sono sempre univoche; puntini o imperfezioni di stampa non contano come errori.
 
-Per ogni domanda viene data un'immagine (schema), accanto cinque ritagli (a–e). Solo uno di essi si ritrova al 100 % nell'immagine originale, negli altri quattro è stato rimosso, aggiunto o modificato un dettaglio. I ritagli non sono ingranditi, rimpiccioliti, ruotati o specchiati – può però capitare che un ritaglio non si inserisca completamente nello schema originale. Gli errori sono sempre chiari e univoci; piccoli puntini o errori di stampa non contano come errori.
+- **Posizione nella giornata del test:** 1° sottotest, seguito dalla comprensione medico-scientifica
+- **Volume:** 18 domande, 18 punti
+- **Tempo:** 16 minuti, cioè poco meno di 53 secondi per domanda
 
-## Dati chiave del test
+Il sottotest è pensato apposta perché nel tempo a disposizione di solito non si riescano a svolgere tutte le domande. Se non finisci, quindi, non significa che sia andata male.
 
-18 domande in 16 minuti – in media ti restano quindi appena 53 secondi a domanda.
+## Perché questo sottotest è rilevante per gli studi?
 
-## Perché è rilevante per gli studi futuri?
-
-Viene verificata la capacità di confrontare immagini, schemi e strutture e riconoscere differenze. Questo è richiesto per esempio nell'osservazione al microscopio di sezioni istologiche, ma anche nel riconoscimento di determinate caratteristiche in radiologia o dermatologia.
+Si verifica la capacità di confrontare con precisione immagini e strutture e di riconoscere piccole differenze. Questa capacità ti servirà di continuo durante gli studi di medicina, per esempio al microscopio con le sezioni istologiche o nel valutare radiografie e alterazioni cutanee in radiologia e dermatologia.
 
 ## Quando e quanto spesso esercitarsi?
 
-Questo sottotest si allena bene e velocemente – circa 1.5-2 mesi prima dell'esame bastano per iniziare. Raccomandiamo 3-4 serie a settimana. Importante: all'inizio esercitati senza pressione di tempo, per farti un'idea del compito, e introduci la pressione di tempo solo quando ti senti sicuro/a nella risoluzione.
+L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1.5–2 mesi prima dell'EMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
 
-## Trucchi per la risoluzione
+Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anche le sessioni di esercizio con questo sottotest. In condizioni realistiche, con cronometro e istruzioni, ti eserciti nella [modalità esame](/ems/pruefungsmodus).
 
-Vale la pena esercitarsi finché non conosci la tua strategia personale e riesci a passare rapidamente alla domanda successiva dopo aver risolto una – dopodiché di solito non si migliora più così velocemente.
+## Come procedere
 
-**Sullo svolgimento:**
+1. **Farsi una visione d'insieme:** osserva prima lo schema e i ritagli con un po' di distanza, invece di concentrarti subito sui dettagli. Così saltano all'occhio le differenze grossolane e puoi escludere subito alcuni ritagli.
+2. **Cercare le differenze, non le somiglianze:** il fatto che un ritaglio coincida con lo schema in un punto evidente non garantisce che coincida ovunque. Di solito trovi un errore più in fretta di una corrispondenza completa. Cerca quindi in modo mirato i quattro ritagli sbagliati.
+3. **Confrontare in modo sistematico:** esamina ogni ritaglio in un ordine fisso, per esempio da sinistra a destra e dall'alto in basso. Aiutati con una matita, così lo sguardo resta sulla punta.
+4. **Cancellare subito i ritagli sbagliati:** appena trovi un errore, cancella il ritaglio con la matita. Così non lo controlli una seconda volta per sbaglio.
+5. **Andare avanti in fretta:** se resta un solo ritaglio, controllalo brevemente e passa alla domanda successiva. Se ti blocchi, segna una risposta e prosegui. Le risposte sbagliate non vengono penalizzate.
 
-1. Osserva prima le immagini con un certo distacco, invece di concentrarti subito sui dettagli – così notano errori grossolani, in realtà evidenti, e puoi escludere subito alcuni ritagli.
-2. Procedi poi in modo strutturato da destra a sinistra e dall'alto verso il basso. Una matita aiuta, così il tuo occhio deve scivolare solo verso la punta della matita invece che verso il dito.
-3. Se trovi un errore, barra subito il ritaglio dell'immagine con la matita – altrimenti rischi di ripercorrere per errore le immagini una seconda volta e perdere tempo prezioso.
+## Altri consigli
 
-**Altri consigli:**
+- **Confrontare direttamente i ritagli simili:** se due ritagli mostrano lo stesso punto dello schema, conviene confrontarli direttamente. Almeno uno dei due è per forza sbagliato.
+- **Provare lo sguardo incrociato:** con questa tecnica incroci volutamente gli occhi in modo che ritaglio e punto dello schema si sovrappongano. Le differenze appaiono allora come zone che tremolano. Alcune persone risolvono così le domande molto più in fretta, altre non ci riescono affatto. Prova la tecnica presto e poi decidi se fa per te.
+- **Non intestardirsi su una domanda:** ogni domanda vale esattamente un punto. Una domanda difficile che ti costa due minuti ti manca per due domande facili.
+- **Non piegare il fascicolo:** secondo le direttive ufficiali, le pagine del fascicolo del test non devono essere piegate. Abituati quindi già durante l'esercizio a confrontare schema e ritagli sulla stessa pagina.
 
-- Se due schemi tra cui scegliere mostrano nella panoramica generale lo stesso ritaglio di immagine, conviene confrontarli prima direttamente tra loro – uno dei due deve necessariamente essere sbagliato.
-- Alcuni/e si esercitano inoltre nella cosiddetta tecnica dello "sguardo incrociato", che per alcuni/e funziona molto bene, ma è impegnativa da imparare.
+## Tranelli tipici
 
-**Trappole tipiche:**
+- **Modifiche minime:** alcune differenze sono così sottili da non notarsi a un primo sguardo. Si trovano in modo affidabile solo con un procedimento sistematico, che costa tempo in più.
+- **Ritagli che non stanno affatto nello schema:** alcuni ritagli non si ritrovano per intero nello schema, oppure un errore si trova appena fuori dalla parte visibile ma si può dedurre logicamente. Già nella visione d'insieme controlla quindi se un ritaglio corrisponde davvero a un punto dello schema.
+- **Decidere troppo in fretta:** chi si decide alla prima caratteristica che coincide si lascia sfuggire facilmente una differenza in un altro punto del ritaglio.
+- **Nervosismo all'inizio:** essendo il primo sottotest, l'abbinamento di schemi ti coglie nel momento di massima tensione. Un inizio difficile dice poco sul tuo risultato complessivo.
 
-- Alcuni errori sono modifiche molto piccole che nella panoramica generale non si notano e richiedono un approccio sistematico – questo costa tempo aggiuntivo.
-- Alcuni errori si trovano in una posizione tale da non essere più visibili nel ritaglio dell'immagine, ma sarebbero logicamente deducibili. Verifica quindi nella panoramica generale anche se tutti i ritagli si trovano effettivamente nell'immagine originale.
+## Dai resoconti di esperienza
+
+*«Prima delle sessioni di esercizio risolvevo sempre qualche confronto di schemi, per preparare il cervello al primo (e più difficile) compito del vero NC.»*
+
+*«Il primo compito di confronto di schemi l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciatevi scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di voi non dovete mai arrendervi prima dell'ultimo compito.»* Questa persona ha superato l'EMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
+
+*«Gli schemi con lo sguardo incrociato valgono davvero tantissimo, per quanto difficili siano gli schemi.»* Un'altra persona ha invece abbandonato lo sguardo incrociato dopo due ore. Quale metodo funziona per te lo scopri solo esercitandoti.
+
+Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).

@@ -8,4 +8,4 @@ menu:
     weight: 1
 ---
 
-Kostenlose Übungsaufgaben zu allen 8 Themenbereichen des EMS – von Studierenden für Studierende zusammengestellt.
+Hier findest du kostenlose Übungsserien mit Lösungen zu allen Untertests des EMS, zusammengestellt von Medizinstudierenden, die den Test selbst geschrieben haben. Zu jedem Untertest gibt es ausserdem eine kurze Einführung und bewährte Tipps für deine Vorbereitung.

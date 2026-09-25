@@ -6,13 +6,15 @@ weight: 2
 
 ## Kurze Zusammenfassung
 
-Dieser Untertest prüft dein räumliches Vorstellungsvermögen. Du siehst einen durchsichtigen Würfel mit Objekten, links in der Ausgangsposition und rechts nach zwei aufeinanderfolgenden Bewegungen. Möglich sind Drehungen um 90° nach links oder rechts sowie Kippbewegungen um 90° nach oben oder unten. Deine Aufgabe ist es, die Kombination zu bestimmen, die zur rechten Ansicht führt. Dabei ist auch die Reihenfolge der Bewegungen entscheidend. Für 18 Aufgaben stehen dir 10 Minuten zur Verfügung, also etwas über 30 Sekunden pro Aufgabe.
+Dieser Untertest prüft dein räumliches Vorstellungsvermögen. Du siehst einen durchsichtigen Würfel mit Objekten, links in der Ausgangsposition und rechts nach zwei aufeinanderfolgenden Bewegungen. Möglich sind Drehungen um 90° nach links oder rechts sowie Kippbewegungen um 90° nach oben oder unten. Deine Aufgabe ist es, die Kombination zu bestimmen, die zur rechten Ansicht führt. Dabei ist auch die Reihenfolge der Bewegungen entscheidend.
 
-## Test-Eckdaten
+- **Stellung im Testtag:** 3. Untertest, nach Medizinisch-naturwissenschaftliches Grundverständnis, danach folgt Quantitative und formale Probleme
+- **Umfang:** 18 Aufgaben, 18 Punkte
+- **Zeit:** 10 Minuten, also rund 33 Sekunden pro Aufgabe
 
-18 Aufgaben in 10 Minuten – im Schnitt bleiben dir nur rund 33 Sekunden pro Aufgabe. Einer der kürzeren, aber intensiveren Untertests.
+Objekte im Raum ist einer der kürzeren, aber intensiveren Untertests.
 
-## Wieso relevant fürs spätere Studium?
+## Wieso ist dieser Untertest fürs Studium relevant?
 
 In der Anatomie ist die räumliche Vorstellung von Knochen und Organen sehr wichtig, um zu verstehen, wie diese zusammenhängen. Fachliteratur bildet Strukturen oft nur zweidimensional ab, obwohl man sich am Patienten dreidimensional orientieren muss.
 
@@ -20,16 +22,32 @@ In der Anatomie ist die räumliche Vorstellung von Knochen und Organen sehr wich
 
 Dieser Untertest gehört zu den einfacheren und lässt sich gut lernen – ein Start 1–1.5 Monate vorher reicht meist. Übe etwa 2–3 Mal pro Woche, um die Routine nicht zu verlieren und die für dich passende Technik zu finden. Da der Test mit 10 Minuten recht kurz ist, eignet er sich auch gut für kurze Übungseinheiten zwischendurch.
 
-## Tricks für das Lösen
+## Vorgehen beim Lösen
 
-**Systematisches Vorgehen:** Überlege dir eine feste Vorgehensweise, mit der du alle Aufgaben auf die gleiche Art angehst. Siehst du nicht sofort die Lösung, gehst du dein Schema systematisch durch, um sicherzustellen, dass du keine Falle übersiehst. Arbeite erst unter Zeitdruck, wenn dir dein Vorgehen zur Routine geworden ist.
+Überlege dir eine feste Vorgehensweise, mit der du alle Aufgaben auf die gleiche Art angehst. Siehst du nicht sofort die Lösung, gehst du dein Schema systematisch durch, um sicherzustellen, dass du keine Falle übersiehst.
 
-**Lösungsstrategien:**
+1. **Art der Bewegung bestimmen:** Frage dich zuerst: Handelt es sich um ein Spiegelbild, eine Kippbewegung oder eine Drehung?
+2. **Markante Stellen suchen:** Achte auf markante Strukturen oder Enden, an denen du die Ausrichtung festmachen kannst.
+3. **Berührungspunkte nutzen:** Berührungspunkte mit dem Rand/Glas geben Aufschluss darüber, wie die Figur im Raum liegt – die Höhe gegenüberliegender Berührungspunkte verrät die Position der jeweiligen Struktur.
+4. **Schatten und Spiegelungen beachten:** Hilft dir das alles nicht weiter, können Schatten oder Spiegelungen zusätzliche Hinweise liefern – manchmal sieht man so verdeckte Strukturen, die sonst nicht sichtbar wären.
+5. **Blickrichtung klären:** Siehst du die Figur direkt vor dir, oder schaust du quasi hindurch? Das hilft besonders bei symmetrischen Figuren, rechts von links zu unterscheiden.
 
-- Frage dich zuerst: Handelt es sich um ein Spiegelbild, eine Kippbewegung oder eine Drehung?
-- Achte auf markante Strukturen oder Enden, an denen du die Ausrichtung festmachen kannst.
-- Berührungspunkte mit dem Rand/Glas geben Aufschluss darüber, wie die Figur im Raum liegt – die Höhe gegenüberliegender Berührungspunkte verrät die Position der jeweiligen Struktur.
-- Hilft dir das alles nicht weiter, können Schatten oder Spiegelungen zusätzliche Hinweise liefern – manchmal sieht man so verdeckte Strukturen, die sonst nicht sichtbar wären.
-- Frage dich auch: Siehst du die Figur direkt vor dir, oder schaust du quasi hindurch? Das hilft besonders bei symmetrischen Figuren, rechts von links zu unterscheiden.
+## Weitere Tipps
 
-**Während der Prüfung:** Tendenziell sind die einfacheren Aufgaben am Anfang und die schwereren gegen Schluss platziert – es kann aber vorkommen, dass bewusst eine schwere Aufgabe an den Anfang gesetzt wird, um zu verunsichern. Mut zur Lücke: Lass diese Aufgabe stehen und komm später darauf zurück, statt dich gleich zu Beginn zu verzetteln. Genauso wenig solltest du dich von einfachen Aufgaben am Schluss irritieren lassen und dort Fallen suchen, wo keine sind.
+- **Erst Routine, dann Zeitdruck:** Arbeite erst unter Zeitdruck, wenn dir dein Vorgehen zur Routine geworden ist.
+- **Mut zur Lücke:** Tendenziell sind die einfacheren Aufgaben am Anfang und die schwereren gegen Schluss platziert. Lass eine schwierige Aufgabe stehen und komm später darauf zurück, statt dich zu verzetteln.
+
+## Typische Fallen
+
+- **Schwere Aufgabe am Anfang:** Es kann vorkommen, dass bewusst eine schwere Aufgabe an den Anfang gesetzt wird, um zu verunsichern.
+- **Fallen suchen, wo keine sind:** Lass dich von einfachen Aufgaben am Schluss nicht irritieren.
+- **Reihenfolge übersehen:** Zwei Bewegungen in anderer Reihenfolge führen meist zu einer anderen Ansicht.
+- **Links und rechts vertauschen:** Bei symmetrischen Figuren passiert das leicht – klär deshalb immer die Blickrichtung.
+
+## Aus Erfahrungsberichten
+
+*„Bei Objekte im Raum: kurz die Drehung erkennen, sonst gleiche Objekte suchen, konsequent von A bis E durcharbeiten statt nach Einfachheit zu sortieren."*
+
+*„Fakten, Figuren, Konzi und Objekte im Raum lohnen sich dagegen besonders, da man dort schnell Fortschritte macht."*
+
+Weitere Berichte findest du bei den [Erfahrungsberichten](/ems/erfahrungsberichte).

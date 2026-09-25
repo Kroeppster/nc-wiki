@@ -1,57 +1,71 @@
 ---
 title: "Imparare figure & fatti"
+description: "Imparare figure e fatti all'EMS: serie di esercizi gratuite e tecniche di memorizzazione per ricordare in modo affidabile 18 figure e 15 casi di pazienti."
 weight: 5
 ---
 
 ## Breve riassunto
 
 ### Figure
-In questo sottotest si verifica quanto bene riesci ad assorbire informazioni visive in poco tempo e a mantenerle in memoria per un periodo più lungo. Nella fase di memorizzazione hai 4 minuti di tempo per memorizzare 18 figure. Ogni figura è suddivisa in 5 campi di dimensioni diverse, di cui esattamente uno è colorato di nero. Segue poi un altro sottotest (comprensione del testo) come distrazione, prima che nella fase di riproduzione (5 minuti) venga chiesto quale campo era nero per quale figura – e non nello stesso ordine della memorizzazione.
+
+Nella fase di apprendimento ti vengono mostrate 18 figure, in ognuna delle quali una superficie è annerita. Hai 4 minuti per memorizzare la posizione di queste superfici. Circa un'ora dopo segue la fase di riproduzione: le figure compaiono in un ordine diverso e senza marcatura, e tu indichi quale superficie era annerita. Hai a disposizione 5 minuti.
 
 ### Fatti
-Qui impari le caratteristiche di 15 persone fittizie come nome, età, professione, diagnosi e una caratteristica aggiuntiva. Per questo hai 6 minuti (fase di memorizzazione). Dopo si inserisce un altro sottotest (comprensione del testo) – solo dopo vengono richiesti nuovamente i fatti, anche qui con 6 minuti di tempo (fase di riproduzione).
 
-## Struttura della parte "Fatti"
+Nella fase di apprendimento ti vengono presentati 15 pazienti, ciascuno con nome, fascia d'età, professione, un'altra caratteristica come lo stato d'animo o il luogo in cui si trova e una diagnosi. Le 15 persone sono suddivise in 5 fasce d'età di 3 persone ciascuna. Per memorizzarle hai 6 minuti. Nella successiva fase di riproduzione rispondi a 18 domande a scelta multipla su queste persone, con 5 risposte possibili ciascuna. L'ordine è cambiato, e le informazioni vengono chieste in combinazioni diverse, per esempio «La persona con il diabete di professione è …». Anche qui hai 6 minuti.
 
-Le 15 persone sono suddivise in 5 fasce d'età di 3 persone ciascuna. A ogni persona appartengono: cognome, età/fascia d'età, professione, una caratteristica aggiuntiva e una diagnosi/un disturbo. Nella fase di riproduzione ti vengono poste 18 domande a scelta multipla su queste persone (5 opzioni di risposta ciascuna).
+Esempio (abbreviato): *Maier, 20 anni, mugnaio, sposato, Covid-19* – *Keller, 30 anni, veterinaria, ansiosa, mal di testa*.
 
-Esempio (abbreviato): *Maier, 20 anni, fornaio, sposato, Covid-19* – *Keller, 30 anni, veterinaria, ansiosa, mal di testa*.
+- **Posizione nella giornata del test:** le fasi di apprendimento seguono i problemi quantitativi e formali, le fasi di riproduzione seguono la comprensione del testo
+- **Volume:** figure 18 domande, 18 punti; fatti 18 domande, 18 punti
+- **Tempo:** figure 4 minuti di apprendimento e 5 minuti di riproduzione; fatti 6 minuti ciascuna
 
-## Perché questi sottotest sono rilevanti per gli studi futuri?
+## Perché questo sottotest è rilevante per gli studi?
 
-In entrambi i casi si tratta della tua capacità mnemonica. Negli studi di medicina devi memorizzare non solo fatti, ma proprio in anatomia e istopatologia anche molte strutture figurative – e più avanti presenterai i/le pazienti ad altri professionisti in modo breve e preciso, con le caratteristiche più importanti, la diagnosi e la procedura. Una buona tecnica di memorizzazione ti aiuta enormemente in entrambi i casi.
+In entrambi i casi si tratta della tua memoria. Durante gli studi di medicina devi ricordare non solo fatti, ma soprattutto in anatomia e istopatologia anche molte strutture visive – e più tardi presenti pazienti ad altri professionisti in modo breve e preciso, con le caratteristiche principali, la diagnosi e la procedura. Una buona tecnica di memorizzazione ti aiuta moltissimo in entrambi i casi.
 
-## Quando e quanto spesso dovresti esercitarti?
+## Quando e quanto spesso esercitarsi?
 
-Memorizzare figure e fatti sono entrambi esercizi di memoria che non ha senso fare quotidianamente. Inizia presto, circa 3 mesi prima dell'EMS, con 3-4 sessioni a settimana. Concediti consapevolmente più tempo del previsto all'inizio (per esempio 10 minuti invece di 6 per i fatti), per provare diverse strategie, e riduci il tempo solo gradualmente, man mano che diventi più sicuro/a. Fai attenzione a non "consumare" troppo presto le tue serie di esercizi – ripetere più volte la stessa serie falsa la tua percezione del tuo livello reale. Nell'ultimo mese dovresti esercitarti in condizioni reali di NC: memorizzazione di figure prima, comprensione del testo in mezzo, poi memorizzazione di fatti. Interrompi l'esercizio mirato alcuni giorni prima dell'NC, così la testa resta libera.
+Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare ogni giorno. Inizia presto, circa 3 mesi prima dell'EMS, con 3–4 sessioni a settimana. All'inizio concediti volutamente più tempo del previsto (per es. 10 invece di 6 minuti per i fatti), per provare diverse strategie, e riduci il tempo solo gradualmente, man mano che diventi più sicuro·a. Nell'ultimo mese esercitati nelle condizioni reali del NC: memorizzare le figure prima, comprensione del testo in mezzo, poi memorizzare i fatti. Interrompi l'esercizio mirato qualche giorno prima del NC, per avere la testa libera.
 
-## Trucchi per la risoluzione
-
-### Figure
-- **Riconoscere strutture:** Le figure si possono spesso suddividere in gruppi con forma simile (per esempio più forme "a palla", più triangoli, più forme a "L"). All'interno di un tale gruppo anche le linee interne seguono spesso un andamento simile.
-- **Simbolizzare:** Associa le figure a oggetti o forme già conosciuti – sono particolarmente memorabili le associazioni che scatenano una reazione emotiva (ricordi d'infanzia, assurdità, umorismo).
-- **Collegare gruppi con un'azione:** Collega mentalmente due o tre figure simili con una piccola storia o azione, questo facilita il richiamo successivo.
-- **"Bluffare" in caso di accumuli:** Fatti una panoramica generale di tutte le figure all'inizio della fase di memorizzazione. Se più figure hanno il segno nero in circa la stessa posizione (per esempio in alto a sinistra), non devi memorizzarle singolarmente – basta ricordare la posizione approssimativa dell'accumulo. Usa però questa tattica con moderazione e non a ogni serie, e testala prima per vedere se si adatta al tuo modo di lavorare.
-- **Fare attenzione alle sfumature:** Se le figure si assomigliano molto, fai attenzione a piccole differenze geometriche (per esempio angoli retti) o concentrati soprattutto sulla forma e posizione dell'area scura in caso di forme esterne simili.
-- **Non puntare a 18 su 18:** Spesso conviene di più memorizzare davvero bene 12-15 figure, invece di tutte e 18 solo superficialmente – non ti serve il punteggio massimo.
-- **Provare diverse strategie:** Non esiste un unico metodo giusto per tutti. Non farti confondere se una strategia funziona meglio per altri che per te – conta ciò che funziona per te personalmente.
-
-### Fatti
-- **Suddivisione spaziale e simbolizzazione:** Suddividi mentalmente le persone in diverse stanze (per esempio il gruppo più giovane = stanza del fratello o della sorella più giovane). Immagina le persone nel modo più bizzarro e visivo possibile – più insolita è l'immagine, meglio resta impressa. Collega le diagnosi a dei simboli (per esempio infarto = cuore nero).
-- **Raccontare una storia:** Racchiudi i fatti di ogni persona in una piccola storia, il più possibile assurda.
-- **Elefante rosa:** Immagina un'immagine davanti al tuo occhio interiore e "scrivici" sopra una parola chiave.
-- **Trucchi mnemonici fissi:** Dopo qualche sessione di esercizio noterai che alcune caratteristiche e diagnosi si ripetono – creati per questo un elenco fisso dei tuoi trucchi mnemonici (per esempio "celibe" → "celeste" → cielo).
-
-## Da una testimonianza
-
-*"Sotto lo stress dell'esame i 4 minuti passeranno in un lampo – preparati a questo, ma non farti destabilizzare. Spesso conviene di più non voler memorizzare tutte le figure, ma solo 12-15 molto bene. Molto materiale di esercizio disponibile in commercio è inoltre piuttosto troppo facile – le differenze tra le figure lì sono spesso più marcate che al vero EMS."*
-
-## Gestione dei punti
-
-Memorizzare figure e fatti, così come il test di concentrazione, si possono allenare bene fino a 16-20 punti con la pratica – all'inizio non è realistico, ma diventa fattibile con la tecnica giusta. Prenditi piuttosto il tempo necessario per questi sottotest ben allenabili, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per esempio comprensione del testo), che comunque porta solo pochi punti – l'NC è pura gestione dei punti.
-
-## Generatore di fatti
+### Generatore di fatti
 
 ```baustein
 fakten-generator
 ```
+
+## Come procedere
+
+### Figure
+
+1. **Riconoscere strutture:** le figure si possono spesso suddividere in gruppi di forma simile (per es. diverse a forma di «palla», diversi triangoli, diverse forme a «L»). All'interno di un gruppo anche le linee interne hanno spesso un andamento simile.
+2. **Simbolizzare:** associa le figure a oggetti o forme già noti – le associazioni che suscitano una reazione emotiva (ricordi d'infanzia, assurdità, umorismo) si ricordano particolarmente bene.
+3. **Collegare gruppi con un'azione:** collega mentalmente due o tre figure simili con una piccola storia o azione, così è più facile richiamarle.
+
+### Fatti
+
+1. **Suddividere in stanze e simbolizzare:** distribuisci mentalmente le persone in stanze diverse (per es. gruppo più giovane = camera del fratello o della sorella più giovane). Immagina le persone nel modo più bizzarro e visivo possibile – più l'immagine è insolita, meglio resta in mente. Collega le diagnosi a simboli (per es. infarto = cuore nero).
+2. **Raccontare una storia:** racchiudi i fatti di ogni persona in una piccola storia, il più folle possibile.
+3. **Elefante rosa:** immagina un'immagine davanti al tuo occhio interiore e «scrivici sopra» una parola chiave.
+
+## Altri consigli
+
+- **«Bluffare» in caso di accumuli:** all'inizio della fase di apprendimento fatti una visione d'insieme di tutte le figure. Se più figure hanno la marcatura nera più o meno nello stesso punto (per es. in alto a sinistra), non devi memorizzarle una per una – ricorda solo la posizione approssimativa dell'accumulo. Usa questa tattica con moderazione e non a ogni prova, e verifica prima se si adatta al tuo modo di lavorare.
+- **Non puntare a 18 su 18:** spesso conviene memorizzare davvero bene 12–15 figure invece di tutte e 18 in modo superficiale – non ti serve il punteggio pieno.
+- **Mnemotecniche fisse:** dopo qualche prova noterai che alcune caratteristiche e diagnosi si ripetono – prepara per queste una lista fissa delle tue mnemotecniche.
+- **Provare strategie diverse:** non esiste un unico metodo giusto per tutti. Non lasciarti scoraggiare se una strategia funziona meglio per altri che per te – conta ciò che funziona per te.
+- **Raccogliere punti in modo mirato:** imparare figure e fatti e il test di concentrazione si possono allenare bene fino a 16–20 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi piuttosto il tempo necessario per questi sottotest ben allenabili, invece di affrettare nei sottotest più lunghi (per es. comprensione del testo) l'ultimo testo, che comunque porta pochi punti – il NC è pura gestione dei punti.
+
+## Tranelli tipici
+
+- **Figure molto simili:** quando le figure si somigliano molto, fai attenzione alle sottili differenze geometriche (per es. angoli retti) o concentrati, con contorni simili, soprattutto sulla forma e sulla posizione della superficie scura.
+- **Consumare troppo presto le serie di esercizi:** ripetere più volte la stessa serie falsa la percezione del tuo livello. Il generatore qui sopra ti fornisce nuovi set di fatti.
+- **Materiale di esercizio troppo facile:** in molto materiale in commercio le differenze tra le figure sono più evidenti che al vero EMS.
+
+## Dai resoconti di esperienza
+
+*«Sotto lo stress dell'esame i 4 minuti voleranno – preparati, ma non farti prendere dall'agitazione. Spesso conviene non voler memorizzare tutte le figure, ma solo 12–15, però molto bene. Molto materiale di esercizio in commercio è inoltre piuttosto troppo facile – le differenze tra le figure sono spesso più evidenti che al vero EMS.»*
+
+*«Fatti, figure, test di concentrazione e oggetti nello spazio invece valgono particolarmente la pena, perché lì si fanno progressi in fretta.»*
+
+Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).

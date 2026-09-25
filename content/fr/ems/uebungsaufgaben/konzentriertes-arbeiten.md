@@ -1,39 +1,57 @@
 ---
 title: "Travail concentré et soigné"
+description: "Travail concentré et soigné à l'EMS : séries d'exercices gratuites et conseils pour marquer plus vite et faire moins d'erreurs."
 weight: 8
 ---
 
 ## Bref résumé
 
-Dans ce sous-test, une feuille A4 remplie de très nombreux caractères t'est présentée. Ta tâche est de barrer, en 8 minutes, le plus grand nombre possible de caractères correspondant à une condition donnée – rapidement et soigneusement, car les caractères barrés à tort et ceux oubliés entraînent une déduction. La condition ne vaut toujours que pour la ligne en cours.
+Tu reçois une feuille de 40 lignes de 40 caractères chacune et tu marques certains caractères cibles selon une règle donnée. Le travail se fait strictement ligne par ligne et sans omission. Jusqu'au dernier caractère marqué, chaque caractère marqué à tort ou oublié compte comme une erreur et est déduit des marquages corrects. Les caractères et la règle changent chaque année et ne sont pas communiqués à l'avance.
+
+- **Place dans la journée de test :** 11e et dernier sous-test, après les diagrammes et tableaux
+- **Volume :** 40 lignes de 40 caractères (1600 caractères), 18 points
+- **Temps :** 8 minutes
+
+La feuille est si longue qu'on ne peut guère la traiter entièrement.
+
+### Comment l'évaluation se fait-elle ?
+
+C'est le seul sous-test pour lequel un classement est établi entre tous les candidats et candidates – les points sont attribués sur la base de ce classement. Il n'y a donc pas de nombre minimal fixe de caractères, tu dois simplement bien réussir par rapport aux autres.
+
+Chaque caractère correctement marqué rapporte un point, chaque caractère marqué à tort ou omis en retire un. Comme un caractère sauté te prive en plus de la chance d'un point, omettre est plutôt pire qu'un trait mal placé. Il y a au total 40 lignes avec des caractères répartis à peu près uniformément – on peut en moyenne marquer environ 10 caractères par ligne, ce qui peut servir de repère approximatif.
 
 ## Pourquoi ce sous-test est-il pertinent pour tes études ?
 
-En tant que médecin, il est important de pouvoir travailler de manière concentrée et précise, même sous stress. C'est exactement ce que ce sous-test évalue.
+En tant que médecin, il est important de pouvoir travailler de façon concentrée et précise, même sous stress. C'est exactement ce que teste ce sous-test.
 
-## Comment est-il évalué ?
+## Quand et à quelle fréquence s'entraîner ?
 
-C'est le seul sous-test pour lequel un classement est établi entre tous les candidat·e·s – les points sont attribués sur la base de ce classement. Il n'y a donc pas de nombre minimal fixe de caractères à trouver, tu dois simplement bien te positionner par rapport aux autres.
+Dans ce sous-test, les progrès sont vite visibles – il suffit généralement de commencer 1.5 à 2 mois avant, mais avec 4 à 5 séances par semaine, car chaque séance est courte. Pour simuler la situation de test de façon réaliste, il vaut la peine de ne pas résoudre le test de concentration en premier à l'entraînement, mais seulement après quelques autres sous-tests – tu es ainsi déjà un peu fatigué·e, comme le jour du test.
 
-Chaque caractère correctement marqué rapporte un point, chaque caractère marqué à tort ou oublié fait perdre un point. Comme un caractère oublié te fait en plus perdre la chance d'obtenir un point, omettre est tendanciellement pire qu'un trait mal placé. Au total, il y a 40 lignes avec des caractères répartis à peu près uniformément – en moyenne, environ 10 par ligne peuvent être marqués, ce qui peut servir de repère approximatif.
+## Marche à suivre pour résoudre
 
-## Quand et à quelle fréquence devrais-tu t'entraîner ?
+1. **Mémoriser la règle au lieu de la relire :** chaque seconde compte – retiens la règle précisément pendant qu'elle est expliquée, pour ne pas avoir à réfléchir pendant les 8 minutes.
+2. **Noter les combinaisons à l'avance :** si la règle demande un calcul (par ex. « barre le second de deux chiffres dont la somme fait 8 »), note toutes les combinaisons possibles avant de commencer (mais seulement après le signal de départ !), plutôt que de recalculer à chaque caractère.
+3. **Se concentrer sur un caractère :** concentre-toi uniquement sur le caractère décisif (par ex. « q ») et vérifie rapidement à chaque apparition si la règle est remplie, plutôt que de lire caractère par caractère.
+4. **Retenir le motif plutôt que la règle :** mémorise le motif visuel de la bonne solution (par ex. « pq ») plutôt que la règle en mots – il se reconnaît souvent plus vite.
+5. **Méthode du serpentin :** résous la première ligne de gauche à droite, la suivante de droite à gauche, etc., pour ne perdre aucune ligne au changement de ligne. Pendant les 30 dernières secondes environ (à partir de la minute 7.5 environ), travaille à nouveau seulement de gauche à droite, car l'évaluation se fait dans le sens de lecture.
 
-Les progrès sont vite visibles pour ce sous-test – il suffit en général de commencer 1.5 à 2 mois avant, mais avec 4 à 5 séances par semaine, car chaque séance ne dure que peu de temps. Pour simuler la situation de test de manière réaliste, il vaut la peine de ne pas résoudre le test de concentration en premier lors de l'entraînement, mais après quelques autres sous-tests – ainsi, comme le jour du vrai test, tu es déjà un peu fatigué·e quand tu l'abordes.
+## Autres conseils
 
-## Astuces pour résoudre
+- **Tester son stylo à l'avance :** le test est évalué par machine – ton stylo doit être assez foncé et ne doit pas baver.
+- **S'entraîner de façon aussi variée que possible :** au vrai NC, plusieurs règles couplées apparaissent souvent (par ex. « barre chaque q après un p et chaque b avant un d »). Entraîne-toi donc avec différents types de règles, pas avec un seul.
+- **Passer sur ses erreurs :** s'énerver pour une erreur ne coûte que de la concentration et du temps en plus – revenir en arrière pour corriger ne vaut de toute façon pas la peine, car seul le dernier marquage compte.
 
-- **Mémoriser la condition, pas la consulter :** Chaque seconde compte – retiens précisément la condition pendant qu'elle est expliquée, pour ne pas devoir réfléchir pendant les 8 minutes.
-- **Se concentrer sur un caractère :** Concentre-toi uniquement sur le caractère décisif (p. ex. « q ») et vérifie rapidement à chaque occurrence si la condition est remplie, plutôt que de lire caractère par caractère.
-- **Retenir un motif plutôt qu'une règle :** Mémorise le motif visuel de la bonne solution (p. ex. « pq ») plutôt que la règle en mots – cela se reconnaît souvent plus vite. Veille à ne pas confondre des caractères similaires comme « pq » et « bd ».
-- **Méthode en serpentin :** Résous la première ligne de gauche à droite, la suivante de droite à gauche, etc., pour ne perdre aucune ligne lors du saut de ligne. Veille cependant à ne travailler que de gauche à droite durant les 30 dernières secondes environ (à partir d'environ la minute 7.5), car la correction se fait dans le sens de lecture.
-- **Noter les combinaisons à l'avance :** Si la condition demande un calcul (p. ex. « barre le deuxième de deux chiffres dont la somme fait 8 »), note toutes les combinaisons possibles avant de commencer (mais seulement après le signal de départ !), plutôt que de recalculer à chaque caractère.
-- **Tester son stylo au préalable :** Le test est corrigé de manière automatisée – ton stylo doit être assez foncé et ne pas baver.
-- **S'entraîner de manière variée :** Au véritable NC, plusieurs conditions combinées apparaissent souvent (p. ex. « barre chaque q après un p et chaque b avant un d »). Entraîne-toi donc avec différents types de conditions, pas seulement un seul.
-- **Passer l'éponge sur les erreurs :** S'énerver pour une erreur coûte seulement de la concentration et du temps supplémentaires – revenir en arrière pour corriger ne vaut de toute façon pas la peine, car seul le dernier marquage compte.
+## Pièges typiques
 
-## Extraits de témoignages
+- **Caractères semblables :** des caractères comme « pq » et « bd » se confondent facilement.
+- **Miser uniquement sur la vitesse :** qui ne fait attention qu'à la vitesse oublie facilement des caractères – et chaque caractère omis est déduit.
+- **Sens de lecture à la fin :** qui travaille en serpentin jusqu'au bout perd les caractères de la dernière ligne commencée, car l'évaluation se fait dans le sens de lecture.
 
-*« Le moment du test est un peu cruel, car tu as déjà résolu de nombreux autres tests avant. C'est dur, mais c'est pareil pour tout le monde. La tâche est en outre conçue de sorte qu'on ne finit pratiquement jamais dans les 8 minutes – ne t'inquiète donc pas si tu n'arrives pas au bout. Sans erreur, tu peux quand même obtenir le score maximal. »*
+## Extraits de rapports d'expérience
 
-*« Lors de mon premier NC, je n'ai visé que la vitesse et j'ai donc omis beaucoup de caractères. Au deuxième NC, je savais qu'il fallait faire attention aux deux : vitesse et précision. Pour simuler cette sensation, je résolvais toujours le test de concentration en dernier lors de l'entraînement. »*
+*« Le moment du test est un peu méchamment choisi, car tu as déjà résolu d'autres tests pendant plusieurs heures. C'est dur, mais c'est pareil pour tout le monde. La tâche est en outre conçue de sorte qu'on ne la termine pratiquement jamais en 8 minutes – ne t'inquiète donc pas si tu n'arrives pas au bout. Sans erreur, tu peux quand même obtenir le score maximal. »*
+
+*« Lors de mon premier NC, je n'ai misé que sur la vitesse et j'ai ainsi omis beaucoup de caractères. Au deuxième NC, je savais que je devais faire attention aux deux : vitesse et précision. Pour simuler cette sensation, j'ai toujours résolu le test de concentration à la fin à l'entraînement. »*
+
+Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).

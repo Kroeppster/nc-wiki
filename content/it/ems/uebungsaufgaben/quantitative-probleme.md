@@ -1,35 +1,52 @@
 ---
 title: "Problemi quantitativi e formali"
+description: "Problemi quantitativi e formali all'EMS: serie di esercizi gratuite e consigli su proporzioni, unità e formule per calcolare con sicurezza sotto pressione."
 weight: 4
 ---
 
 ## Breve riassunto
 
-In questo sottotest si tratta di problemi matematici e ragionamento logico. Ogni domanda consiste in un breve problema testuale con cinque opzioni di risposta. Non è permessa la calcolatrice – ma viene richiesta solo matematica fino alla 9a classe, quindi non servono conoscenze specialistiche oltre a questo.
+In questo sottotest risolvi problemi matematici legati alla medicina o alle scienze naturali. Si tratta in particolare di proporzioni, calcolo con potenze, conversioni di unità e trasformazione di formule. Si presuppongono le conoscenze della scuola secondaria. Calcolo differenziale e integrale, trigonometria e calcolo delle probabilità non fanno parte del test; le formule geometriche necessarie vengono fornite.
 
-Con 45 minuti per 18 domande (2.5 min/domanda), questo sottotest non è pensato principalmente per mettere sotto pressione di tempo.
+- **Posizione nella giornata del test:** 4° sottotest, dopo gli oggetti nello spazio, seguito dalle fasi di apprendimento della memorizzazione di figure e fatti
+- **Volume:** 18 domande, 18 punti
+- **Tempo:** 45 minuti, cioè circa 2.5 minuti per domanda
 
-## Perché questo sottotest è rilevante per gli studi futuri?
+Con 2.5 minuti per domanda, questo sottotest non è pensato tanto per la pressione del tempo.
 
-Molte relazioni biologiche nel corpo seguono leggi fisiche (velocità di flusso, diffusione – la fisiologia ti saluta). Chi capisce come la variazione di una variabile influisce su un'altra se la caverà più facilmente in seguito e si risparmierà parecchio apprendimento a memoria.
+## Perché questo sottotest è rilevante per gli studi?
 
-## Quando e quanto spesso dovresti esercitarti?
+Molti nessi biologici nel corpo seguono leggi fisiche (velocità di flusso, diffusione – la fisiologia ti saluta). Chi capisce come la variazione di una grandezza si ripercuote su un'altra ha poi vita più facile e si risparmia parecchio studio a memoria.
 
-Poiché qui si tratta soprattutto di esercizio, conviene un inizio precoce – idealmente 2-3 mesi prima, con almeno 2-3 sessioni da 1 ora a settimana. All'inizio conviene un blocco in cui ti occupi per più giorni di fila solo di questo sottotest, per familiarizzare con i tipi di domande ricorrenti. Dopo puoi lavorare in modo più mirato sui tipi di domande che ti riescono meno bene.
+## Quando e quanto spesso esercitarsi?
 
-## Trucchi per la risoluzione
+Siccome qui conta soprattutto l'esercizio, conviene iniziare presto – idealmente 2–3 mesi prima, con almeno 2–3 sessioni da un'ora a settimana. All'inizio è utile un blocco di più giorni dedicati solo a questo sottotest, per familiarizzare con i tipi di domande ricorrenti. Dopo puoi lavorare in modo più mirato sui tipi che ti riescono meno.
 
-- **Esercitare il calcolo mentale/scritto:** Poiché al test non è permessa la calcolatrice, dovresti rinunciarci anche durante l'esercizio. Il livello di difficoltà resta nella "matematica di base" – non vengono mai richiesti integrali o simili, ma dovresti avere pronte tecniche di base come la divisione scritta.
-- **Leggere con precisione:** Le domande contengono spesso informazioni superflue o nascondono il dato decisivo solo alla fine. Una lettura attenta costa prima tempo, ma ne fa risparmiare molto nel complesso.
-- **Scrivere tutto:** Usa i fogli per appunti per i passaggi intermedi, invece di tenere tutto a mente.
-- **Trucco delle percentuali:** Una percentuale di un valore è lo stesso del valore come percentuale della percentuale originale – 7 % di 50 è quindi uguale a 50 % di 7, cioè 3.5. Questo funziona sempre e fa risparmiare tempo.
-- **Conoscere le frazioni:** Riconoscere numeri decimali ricorrenti come 0.166 come frazione (⅙) rende molti calcoli decisamente più semplici.
-- **Spostare la virgola nella moltiplicazione/divisione:** Nella moltiplicazione somma le cifre decimali di entrambi i numeri, calcola senza virgola e la reinserisci alla fine. Nella divisione rendi divisore e dividendo ugualmente senza virgola prima di calcolare.
-- **Coraggio di arrotondare:** I risultati intermedi non devono essere esatti – con cinque opzioni di risposta basta di solito un arrotondamento sensato per riconoscere la risposta corretta.
-- **Ripassare le unità di misura:** Rinfresca in anticipo le conversioni tra per esempio cm³ e m³ o altre unità comuni.
-- **Esercitare la trasformazione di formule:** Alcune domande richiedono di risolvere una formula rispetto a una determinata grandezza o unità – questo si allena bene con le formule di fisica.
-- **Gestire il tempo:** 45 minuti sono relativamente tanti. Se non riesci ad andare avanti con una domanda, segnala e prosegui – alla fine resta tempo per compilare comunque le risposte lasciate in bianco (non c'è detrazione per risposte sbagliate).
+## Come procedere
 
-## Da una testimonianza
+1. **Leggere con attenzione:** i problemi contengono spesso informazioni superflue o nascondono l'indicazione decisiva alla fine. Leggere con attenzione all'inizio costa tempo, ma nel complesso ne fa risparmiare molto.
+2. **Annotare tutto:** usa i fogli per gli appunti per i passaggi intermedi, invece di tenere tutto a mente.
+3. **Coraggio di arrotondare:** i risultati intermedi non devono essere esatti – con cinque opzioni di risposta di solito basta un arrotondamento sensato per riconoscere la risposta giusta.
+4. **Gestire il tempo:** 45 minuti sono relativamente tanti. Se ti blocchi su una domanda, contrassegnala e vai avanti – alla fine resta il tempo per compilare comunque le risposte aperte (le risposte sbagliate non vengono penalizzate).
 
-*"Prima di iniziare a risolvere esercizi, mi sono fatto/a prima una panoramica generale e ho guardato quali tipi di domande mi risultavano più difficili. Ho iniziato da lì e ho cercato di elaborare una tecnica di risoluzione prima di creare un piano di allenamento. Durante l'NC consiglierei di scrivere i passaggi di calcolo e i risultati intermedi, così in un test così lungo non si crea confusione – e di non farsi stressare dal tempo."*
+## Altri consigli
+
+- **Allenare il calcolo mentale e scritto:** siccome al test la calcolatrice non è ammessa, dovresti farne a meno anche durante l'esercizio. Il livello resta quello della «matematica di base» – mai integrali o simili, ma tecniche di base come la divisione scritta devi averle a portata di mano.
+- **Trucco delle percentuali:** una percentuale di un valore equivale al valore come percentuale della percentuale iniziale – il 7 % di 50 è quindi uguale al 50 % di 7, cioè 3.5. Funziona sempre e fa risparmiare tempo.
+- **Conoscere le frazioni:** riconoscere numeri decimali ricorrenti come 0.166 in forma di frazione (⅙) rende alcuni calcoli molto più semplici.
+- **Spostare la virgola nelle moltiplicazioni e divisioni:** per moltiplicare conti i decimali di entrambi i numeri, calcoli senza virgola e la rimetti alla fine. Per dividere rendi divisore e dividendo allo stesso modo interi prima di calcolare.
+- **Esercitarsi a trasformare le formule:** alcune domande chiedono di risolvere una formula rispetto a una certa grandezza o unità – con le formule di fisica si allena bene.
+
+## Tranelli tipici
+
+- **Unità:** le conversioni, per esempio tra cm³ e m³ o altre unità comuni, sono una fonte di errore frequente – ripassale prima.
+- **Indicazioni nascoste:** l'informazione decisiva a volte compare solo nell'ultima frase, e altre indicazioni non ti servono affatto.
+- **Abitudine alla calcolatrice:** chi si esercita con la calcolatrice al test senza è molto più lento·a.
+
+## Dai resoconti di esperienza
+
+*«Prima di iniziare a risolvere esercizi, mi sono fatto·a una visione d'insieme e ho guardato quali tipi di domande mi riuscivano più difficili. Ho iniziato da lì e ho cercato di elaborare una tecnica di risoluzione prima di preparare un piano di allenamento. Durante il NC consiglierei di annotare i passaggi di calcolo e i risultati intermedi, così che in un test così lungo non si crei confusione – e di non farsi stressare dal tempo.»*
+
+*«Per i problemi quantitativi e formali esercitatevi sempre senza calcolatrice e semplificate il più possibile.»*
+
+Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).

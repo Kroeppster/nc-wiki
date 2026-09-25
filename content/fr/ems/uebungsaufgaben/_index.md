@@ -7,4 +7,4 @@ menu:
     weight: 1
 ---
 
-Exercices gratuits pour les 8 thèmes de l'EMS – préparés par des étudiant·e·s pour des étudiant·e·s.
+Tu trouveras ici des séries d'exercices gratuites avec solutions pour tous les sous-tests de l'EMS, préparées par des étudiant·e·s en médecine qui ont passé le test eux-mêmes. Pour chaque sous-test, il y a en plus une courte introduction et des conseils éprouvés pour ta préparation.

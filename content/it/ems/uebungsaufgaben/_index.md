@@ -7,4 +7,4 @@ menu:
     weight: 1
 ---
 
-Esercizi gratuiti per tutti gli 8 ambiti dell'EMS – realizzati da studenti per studenti.
+Qui trovi serie di esercizi gratuite con soluzioni per tutti i sottotest dell'EMS, preparate da studenti di medicina che hanno sostenuto il test in prima persona. Per ogni sottotest trovi inoltre una breve introduzione e consigli collaudati per la tua preparazione.
