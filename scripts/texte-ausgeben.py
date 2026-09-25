@@ -176,10 +176,15 @@ ANLEITUNG = {
         ('kopf', 'So wird gearbeitet'),
         ('text', 'Text ändern: direkt in der Zelle in der Spalte „Text" überschreiben, wie in Word. '
                  'Die Zelle wird gelb.'),
-        ('text', 'Neuer Absatz: an der gewünschten Stelle eine Zeile einfügen (Rechtsklick auf die '
-                 'Zeilennummer → Zellen einfügen) und den Text hineinschreiben. In der Spalte „Typ" '
-                 'lässt sich wählen, ob es ein Absatz, eine Überschrift oder eine Liste ist – ohne Angabe '
-                 'wird es ein Absatz. Die Zeile wird grün.'),
+        ('text', 'Neuer Absatz, am einfachsten: den Text in dieselbe Zelle schreiben, mit einer leeren '
+                 'Zeile dazwischen (zweimal Alt+Enter, Mac: Ctrl+Option+Enter). Jede Leerzeile in einer '
+                 'Zelle wird auf der Website ein neuer Absatz; auch Listen („- ") gehen so.'),
+        ('text', 'Neue Überschrift oder neue Zeile: links auf die Zeilennummer klicken, sodass die GANZE '
+                 'Zeile markiert ist, dann Rechtsklick → Zeilen einfügen, und den Text hineinschreiben. In '
+                 'der Spalte „Typ" wählen, ob es ein Absatz, eine Überschrift oder eine Liste ist – ohne '
+                 'Angabe wird es ein Absatz. Die Zeile wird grün. Wurden aus Versehen nur Zellen statt der '
+                 'ganzen Zeile eingefügt oder verschoben, ist das nicht schlimm: Das Einlesen merkt es und '
+                 'übernimmt die Seite so, wie sie im Blatt zu sehen ist.'),
         ('text', 'Absatz löschen: !Löschen! in die Zelle schreiben. Die Zelle wird rot.'),
         ('text', 'Ganze Seite löschen: !Löschen! in die graue Zeile „Seite" oben im Blatt schreiben.'),
         ('text', 'Reihenfolge ändern: Zeile ausschneiden und an der neuen Stelle einfügen.'),
@@ -218,9 +223,15 @@ ANLEITUNG = {
         ('kopf', 'Comment travailler'),
         ('text', 'Modifier un texte : écrire directement dans la cellule de la colonne « Texte ». La '
                  'cellule devient jaune.'),
-        ('text', 'Nouveau paragraphe : insérer une ligne à l\'endroit voulu et y écrire le texte. La '
-                 'colonne « Type » permet de choisir paragraphe, titre ou liste – par défaut, paragraphe. '
-                 'La ligne devient verte.'),
+        ('text', 'Nouveau paragraphe, le plus simple : écrire le texte dans la même cellule, avec une '
+                 'ligne vide entre les deux (deux fois Alt+Entrée, Mac : Ctrl+Option+Entrée). Chaque ligne '
+                 'vide dans une cellule devient un nouveau paragraphe sur le site ; les listes (« - ») '
+                 'fonctionnent aussi.'),
+        ('text', 'Nouveau titre ou nouvelle ligne : cliquer à gauche sur le numéro de ligne pour sélectionner '
+                 'la ligne ENTIÈRE, puis clic droit → Insérer, et y écrire le texte. La colonne « Type » '
+                 'permet de choisir paragraphe, titre ou liste – par défaut, paragraphe. La ligne devient '
+                 'verte. Si seules des cellules ont été insérées ou déplacées par erreur, ce n\'est pas '
+                 'grave : l\'import le remarque et reprend la page telle qu\'elle apparaît dans la feuille.'),
         ('text', 'Supprimer un paragraphe : écrire !Supprimer! dans la cellule. Elle devient rouge.'),
         ('text', 'Supprimer toute la page : écrire !Supprimer! dans la ligne grise « Page » en haut.'),
         ('text', '« État » et « Remarque » sont pour vous : ils ne vont pas sur le site, mais sont '
@@ -252,9 +263,14 @@ ANLEITUNG = {
         ('kopf', 'Come lavorare'),
         ('text', 'Modificare un testo: scrivere direttamente nella cella della colonna «Testo». La cella '
                  'diventa gialla.'),
-        ('text', 'Nuovo paragrafo: inserire una riga nel punto desiderato e scriverci il testo. La colonna '
-                 '«Tipo» permette di scegliere paragrafo, titolo o elenco – di default paragrafo. La riga '
-                 'diventa verde.'),
+        ('text', 'Nuovo paragrafo, il modo più semplice: scrivere il testo nella stessa cella, con una riga '
+                 'vuota in mezzo (due volte Alt+Invio, Mac: Ctrl+Option+Invio). Ogni riga vuota in una cella '
+                 'diventa un nuovo paragrafo sul sito; funzionano anche gli elenchi («- »).'),
+        ('text', 'Nuovo titolo o nuova riga: cliccare a sinistra sul numero di riga, in modo da selezionare '
+                 'l\'INTERA riga, poi clic destro → Inserisci, e scriverci il testo. La colonna «Tipo» permette '
+                 'di scegliere paragrafo, titolo o elenco – di default paragrafo. La riga diventa verde. Se '
+                 'per errore sono state inserite o spostate solo delle celle, non è grave: l\'importazione '
+                 'se ne accorge e riprende la pagina così come appare nel foglio.'),
         ('text', 'Eliminare un paragrafo: scrivere !Eliminare! nella cella. Diventa rossa.'),
         ('text', 'Eliminare tutta la pagina: scrivere !Eliminare! nella riga grigia «Pagina» in alto.'),
         ('text', '«Stato» e «Nota» sono per voi: non vanno sul sito, ma vengono ripresi nella prossima '
@@ -635,6 +651,14 @@ def frueheren_stand_lesen(pfade):
                         for t in (z[s['original']], z[s['text']]):
                             if t:
                                 zeilen[(datei, schluessel_text(t))] = (st, bem)
+                        # Mehrere Absaetze in EINER Zelle (Leerzeile dazwischen)
+                        # werden beim Einlesen mehrere Absaetze - jeder erbt
+                        # Stand und Bemerkung der Zelle.
+                        teile = re.split(r'\n\s*\n', str(z[s['text']] or '').replace('\r', ''))
+                        if len(teile) > 1:
+                            for t in teile:
+                                if t.strip():
+                                    zeilen.setdefault((datei, schluessel_text(t)), (st, bem))
             elif kopf and kopf[0] == 'inhalt':
                 for z in blatt.iter_rows(min_row=2, values_only=True):
                     if len(z) > 9 and z[9]:

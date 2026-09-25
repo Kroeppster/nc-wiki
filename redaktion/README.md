@@ -7,7 +7,8 @@
 - Italiano: <https://kroeppster.github.io/nc-wiki/redaktion/ncwiki-texte-it.xlsx>
 
 **2. Bearbeiten** – direkt in den Zellen. Wie, steht vorne in der Mappe im Blatt
-„Anleitung": Text überschreiben (wird gelb), Zeile einfügen (grün),
+„Anleitung": Text überschreiben (wird gelb), neuer Absatz in derselben Zelle
+nach einer Leerzeile (Alt+Enter), ganze Zeile einfügen (grün),
 `!Löschen!` in die Zelle (rot), `!Löschen!` in die graue Zeile „Seite" für eine
 ganze Seite.
 

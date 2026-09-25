@@ -39,6 +39,7 @@ import sys
 
 try:
     from openpyxl import load_workbook
+    from openpyxl.utils import get_column_letter
 except ImportError:
     sys.exit('Fehlendes Paket: openpyxl. Bitte "pip install openpyxl pyyaml".')
 
@@ -105,6 +106,31 @@ class Mappenfehler(Exception):
     pass
 
 
+def verrutscht(fblatt, sp, nr):
+    """Wurden in dieser Zeile Zellen statt ganzer Zeilen verschoben?
+
+    Die Formel in der Spalte "Änderung" zeigt auf den Text (sichtbar) UND
+    auf den gemerkten Originaltext (versteckt) derselben Zeile. Fuegt jemand
+    nur in den sichtbaren Spalten Zellen ein oder schneidet sie aus und fuegt
+    sie woanders ein, rutscht der Text, die versteckten Spalten aber nicht -
+    Excel passt die Formel an, und sie zeigt danach auf zwei verschiedene
+    Zeilen. Genau daran ist es zu erkennen; sonst gehoerte ab da jeder Text
+    zum falschen Absatz (so geschehen bei "Muster zuordnen")."""
+    if fblatt is None or 'aenderung' not in sp or 'text' not in sp or 'original' not in sp:
+        return False
+    f = fblatt.cell(row=nr, column=sp['aenderung'] + 1).value
+    if not isinstance(f, str) or not f.startswith('='):
+        return False
+    buchstabe = lambda i: get_column_letter(i + 1)
+    text, original = ({int(x) for x in re.findall(r'\$?%s\$?(\d+)' % buchstabe(sp[k]), f)}
+                      for k in ('text', 'original'))
+    # Nur Text- gegen Original-Verweis vergleichen, nicht gegen die eigene
+    # Zeilennummer: Programme, die beim Einfuegen ganzer Zeilen die Formeln
+    # nicht nachfuehren, lassen beide Verweise gemeinsam stehen - das ist
+    # harmlos, die versteckten Spalten sind ja mitgerutscht.
+    return bool(text) and bool(original) and text != original
+
+
 def mappe_lesen(pfad):
     """Liest eine Mappe. Gibt (seiten, verzeichnis, hinweise) zurueck.
 
@@ -121,6 +147,10 @@ def mappe_lesen(pfad):
             '"Text neu"). Dieses Skript liest nur das neue Format mit einer Mappe je Sprache. Bitte eine '
             'frische Mappe nehmen (python3 scripts/texte-ausgeben.py oder <website>/redaktion/) und die '
             'Änderungen dort eintragen.')
+    try:
+        formeln = load_workbook(pfad, data_only=False)
+    except Exception:
+        formeln = None
     seiten, hinweise, verzeichnis = [], [], []
     if '_seiten' in mappe.sheetnames:
         for z in mappe['_seiten'].iter_rows(min_row=2, values_only=True):
@@ -133,11 +163,13 @@ def mappe_lesen(pfad):
             continue
         blaetter += 1
         sp = {k: kopf.index(k) for k in kopf if k}
+        fblatt = formeln[blatt.title] if formeln is not None and blatt.title in formeln.sheetnames else None
         aktuell = None
         for nr, werte in enumerate(blatt.iter_rows(min_row=2, values_only=True), start=2):
             werte = list(werte) + [None] * (len(kopf) - len(werte))
             z = {k: werte[i] for k, i in sp.items()}
             z['blatt'], z['zeile'] = blatt.title, nr
+            z['verrutscht'] = verrutscht(fblatt, sp, nr)
             z['text'] = zellwert(z.get('text'))
             z['original'] = zellwert(z.get('original'))
             if z.get('datei'):
@@ -236,6 +268,42 @@ def zeilen_zuordnen(seite, bausteine):
                     z['baustein'] = b
                     vergeben.add(b['nr'])
     return vergeben
+
+
+def nach_sicht_ordnen(seite, bausteine, vergeben, melde):
+    """Sind Zeilen verrutscht (siehe verrutscht()), zaehlt ab der ersten
+    verrutschten Zeile nur noch, was man in der Mappe SIEHT: Typ und Text.
+    Die versteckten Spalten gehoeren dort zu anderen Zeilen und werden
+    vergessen. Eine Zeile, deren Text woertlich ein Absatz der Seite ist,
+    ist dieser Absatz (bleibt zeichengenau); alles andere ist neuer Text.
+    Absaetze, die nirgends mehr zu sehen sind, wurden ueberschrieben - sie
+    fallen weg (gemeldet, der Vorschlag zeigt es). Nur Gesperrtes (Tabellen,
+    Bausteine) bleibt immer. Gibt True zurueck, wenn so geordnet wurde."""
+    erste = next((i for i, z in enumerate(seite['zeilen']) if z.get('verrutscht')), None)
+    if erste is None:
+        return False
+    melde(f'ab {wo(seite["zeilen"][erste])} sind die Zeilen verrutscht (Zellen statt ganzer Zeilen '
+          'eingefügt oder verschoben). Übernommen wurde die Seite so, wie sie in der Mappe zu sehen '
+          'ist - bitte im Vorschlag genau ansehen.')
+    norm = lambda t: ' '.join(str(t or '').split())
+    for z in seite['zeilen'][erste:]:
+        b = z.get('baustein')
+        if b is not None:
+            vergeben.discard(b['nr'])
+    frei = [b for b in bausteine if b['typ'] not in KOPFTYPEN and b['nr'] not in vergeben]
+    for z in seite['zeilen'][erste:]:
+        beschriftet = typ_aus_beschriftung(z.get('typ'))
+        z['baustein'], z['kopie'], z['nr'], z['original'] = None, False, None, ''
+        z['art'] = beschriftet[0] if beschriftet else ''
+        if not z['text'] or LOESCHEN.search(z['text']):
+            continue
+        treffer = next((b for b in frei if norm(b['text']) == norm(z['text'])), None)
+        if treffer is not None:
+            frei.remove(treffer)
+            z['baustein'], z['nr'], z['original'] = treffer, treffer['nr'], zellwert(treffer['text'])
+            z['art'] = treffer['typ']
+            vergeben.add(treffer['nr'])
+    return True
 
 
 GESPERRT_NAME = dict(tabelle='Die Tabelle', code='Der Code-Block', baustein='Der Baustein',
@@ -349,8 +417,9 @@ def seite_anwenden(seite, projekt, meldungen):
         roh = f.read()
     bausteine = tb.bausteine_aus_text(roh)
     vergeben = zeilen_zuordnen(seite, bausteine)
+    nach_sicht = nach_sicht_ordnen(seite, bausteine, vergeben, melde)
 
-    if not seite_weg and not any(zeile_aendert(z) for z in seite['zeilen']):
+    if not seite_weg and not nach_sicht and not any(zeile_aendert(z) for z in seite['zeilen']):
         return dict(art='unveraendert')
 
     if tb.pruefsumme(roh) != str(k.get('summe')):
@@ -448,6 +517,10 @@ def seite_anwenden(seite, projekt, meldungen):
     # ihrem Vorgaenger.
     for b in koerper_bausteine:
         if b['nr'] in vergeben:
+            continue
+        if nach_sicht and b['typ'] not in tb.GESPERRT:
+            melde(f'nicht mehr in der Mappe zu sehen - entfernt: "{kurz(b["text"])}"')
+            zaehler['geloescht'] += 1
             continue
         melde(f'die Zeile mit "{kurz(b["text"])}" fehlt in der Mappe (gelöscht statt !Löschen!?) - '
               'der Absatz bleibt.')

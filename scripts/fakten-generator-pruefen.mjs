@@ -202,7 +202,7 @@ pruef('S. 4: Fragen 9-18 und STOPP', /\n9\)/.test(t[3]) && /\n18\)/.test(t[3]) &
 pruef('S. 5: Antwortbogen', /Antwortbogen/.test(t[4]));
 const loes = (t[5].match(/^[A-E]$/gm) || []).join('');
 pruef('S. 6: Loesungen stimmen mit der Auswertung ueberein', loes === erwartet, loes + ' / ' + erwartet);
-pruef('PDF ohne Navigation und Artikeltext', !t.join(' ').includes('Wieso sind diese Untertests') && !/Unterstützer:innen/.test(t.join(' ')));
+pruef('PDF ohne Navigation und Artikeltext', !t.join(' ').includes('Wieso ist dieser Untertest') && !/Unterstützer:innen/.test(t.join(' ')));
 
 await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
 pruef('nach dem Druck aufgeraeumt', await p.evaluate(() => !document.body.classList.contains('fg-druckt')

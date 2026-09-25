@@ -512,7 +512,20 @@ def deutsch_pruefen(projekt, mappen, ordner):
 # ---------------------------------------------------------------------------
 # 3. Franzoesisch: Luecke fuellen, Seite neu anlegen
 # ---------------------------------------------------------------------------
-def franzoesisch_pruefen(projekt, mappen, ordner):
+def luecke_anlegen(projekt):
+    """Sind alle franzoesischen Seiten vollstaendig uebersetzt, gibt es keine
+    Luecke zum Pruefen - dann in der KOPIE einer Seite einen Absatz aus der
+    Mitte entfernen. (So geschehen, als die Untertest-Seiten in allen drei
+    Sprachen neu geschrieben wurden.)"""
+    rel = 'content/fr/ems/uebungsaufgaben/objekte-im-raum.md'
+    roh = lesen(projekt, rel)
+    absaetze = [x for x in tb.bausteine_aus_text(roh) if x['typ'] == 'absatz']
+    x = absaetze[len(absaetze) // 2]
+    with open(os.path.join(projekt, rel), 'w', encoding='utf-8') as f:
+        f.write(roh[:x['von']] + roh[x['bis']:].lstrip('\n'))
+
+
+def franzoesisch_pruefen(projekt, mappen, ordner, zweiter_versuch=False):
     print('\n=== Franzoesisch: fehlenden Absatz uebersetzen, fehlende Seite anlegen ===')
     m = load_workbook(mappen['fr'])
     luecke = neu_blatt = None
@@ -531,6 +544,10 @@ def franzoesisch_pruefen(projekt, mappen, ordner):
                         and r > r_seite + 1 and b.wert(r - 1, 'nr') not in (None, ''):
                     luecke = (b, r)
                     break
+    if luecke is None and neu_blatt is not None and not zweiter_versuch:
+        luecke_anlegen(projekt)
+        return franzoesisch_pruefen(projekt, ausgeben(projekt, os.path.join(ordner, 'mit-luecke')),
+                                    ordner, zweiter_versuch=True)
     pruef('eine Luecke und eine fehlende Seite gefunden', luecke and neu_blatt)
     if not (luecke and neu_blatt):
         return None
@@ -711,6 +728,93 @@ def fehlerfaelle_pruefen(projekt, ordner, de, fr):
           rc == 1 and 'alte Textliste' in aus, aus[-300:])
 
 
+def verrutscht_pruefen(projekt, ordner):
+    """Zellen statt ganzer Zeilen eingefuegt bzw. geloescht - so geschehen bei
+    "Muster zuordnen": Der sichtbare Text rutscht, die versteckten Spalten
+    nicht. Excel passt dabei die Formel "Änderung" an: Der Verweis auf den
+    (verschobenen) Text zeigt auf die neue Zeile, der auf den (nicht
+    verschobenen) Originaltext bleibt. Genau so wird es hier nachgestellt -
+    openpyxl.move_range(translate=True) wuerde beide Verweise verschieben."""
+    print('\n=== Zellen statt Zeilen eingefuegt/geloescht (Zeilen verrutscht) ===')
+    datei = 'content/de/ems/uebungsaufgaben/muster-zuordnen.md'
+
+    def blatt_holen(mappe):
+        for ws in mappe.worksheets:
+            if ist_seitenblatt(ws):
+                b = Blatt(ws)
+                if b.finde(art='seite', datei=datei):
+                    return b
+        return None
+
+    def zellen_schieben(b, ab, um):
+        """Sichtbare Spalten A-F ab Zeile ab um "um" Zeilen verschieben (+ runter, - hoch)."""
+        letzte = b.ws.max_row
+        sicht = range(1, b.sp['bemerkung'] + 1)
+        spalte_b = get_column_letter(b.sp['text'])
+        alt = {(r, c): b.ws.cell(row=r, column=c).value for r in range(ab, letzte + 1) for c in sicht}
+        for r in range(min(ab, ab + um), letzte + abs(um) + 1):
+            for c in sicht:
+                b.ws.cell(row=r, column=c).value = None
+        for (r, c), v in alt.items():
+            ziel = r + um
+            if isinstance(v, str) and v.startswith('=') and c == b.sp['aenderung']:
+                v = re.sub(r'\$%s%d\b' % (spalte_b, r), f'${spalte_b}{ziel}', v)
+            b.ws.cell(row=ziel, column=c).value = v
+
+    roh = lesen(projekt, datei)
+    vorher_liste = [tb.anzeige(t, x) for t, x in koerper(roh)]
+    mappen = ausgeben(projekt, os.path.join(ordner, 'verrutscht'))
+
+    # 1) Zwei Zellen einfuegen (nach unten verschieben) und dort schreiben,
+    #    weiter unten einen verrutschten Absatz aendern
+    m = load_workbook(mappen['de'])
+    b = blatt_holen(m)
+    if b is None:
+        pruef('Blatt "Muster zuordnen" gefunden', False)
+        return
+    ueber = [r for r in b.zeilen() if b.wert(r, 'art') == 'ueberschrift']
+    r0 = ueber[1]
+    zweite = b.wert(r0, 'text')
+    geaendert_alt = b.wert(ueber[2] + 1, 'text')
+    zellen_schieben(b, r0, 2)
+    b.setze(r0, 'typ', 'Überschrift')
+    b.setze(r0, 'text', 'Neue Zwischenüberschrift')
+    b.setze(r0 + 1, 'typ', 'Absatz')
+    b.setze(r0 + 1, 'text', 'Neuer Absatz aus verrutschten Zellen.')
+    b.setze(ueber[2] + 3, 'text', 'Geändert nach dem Verrutschen.')
+    pm = os.path.join(ordner, 'verrutscht-einfuegen.xlsx')
+    m.save(pm)
+    vorher = zustand(projekt)
+    rc, aus = einlesen(projekt, pm)
+    ist = [tb.anzeige(t, x) for t, x in koerper(lesen(projekt, datei))]
+    i = vorher_liste.index(zweite)
+    soll = vorher_liste[:i] + ['Neue Zwischenüberschrift', 'Neuer Absatz aus verrutschten Zellen.'] \
+        + [('Geändert nach dem Verrutschen.' if x == geaendert_alt else x) for x in vorher_liste[i:]]
+    pruef('Zellen eingefuegt: Seite genau so, wie sie in der Mappe zu sehen ist', ist == soll,
+          [x[:40] for x in ist if x not in soll] + ['|'] + [x[:40] for x in soll if x not in ist])
+    pruef('Zellen eingefuegt: verrutscht gemeldet, keine andere Datei geaendert',
+          'verrutscht' in aus and unterschiede(vorher, zustand(projekt)) == [datei], aus[-400:])
+    with open(os.path.join(projekt, datei), 'w', encoding='utf-8') as f:
+        f.write(roh)
+
+    # 2) Eine Zelle loeschen (nach oben verschieben): der Absatz fehlt danach
+    m = load_workbook(mappen['de'])
+    b = blatt_holen(m)
+    absaetze = [r for r in b.zeilen() if b.wert(r, 'art') in ('absatz', 'liste')]
+    r_weg = absaetze[2]
+    weg = b.wert(r_weg, 'text')
+    zellen_schieben(b, r_weg + 1, -1)
+    pm = os.path.join(ordner, 'verrutscht-loeschen.xlsx')
+    m.save(pm)
+    rc, aus = einlesen(projekt, pm)
+    ist = [tb.anzeige(t, x) for t, x in koerper(lesen(projekt, datei))]
+    pruef('Zelle geloescht: genau dieser Absatz fehlt, alles andere bleibt in Reihenfolge',
+          ist == [x for x in vorher_liste if x != weg], [x[:40] for x in ist][:12])
+    pruef('Zelle geloescht: Entfernen gemeldet', 'entfernt' in aus and 'verrutscht' in aus, aus[-400:])
+    with open(os.path.join(projekt, datei), 'w', encoding='utf-8') as f:
+        f.write(roh)
+
+
 def stand_pruefen(projekt, ordner, mappen):
     print('\n=== Stand, Bemerkung, Zustaendig: ueber stand.json in die naechste Mappe ===')
     m = load_workbook(mappen['de'])
@@ -843,6 +947,7 @@ def main():
         if de and fr:
             fehlerfaelle_pruefen(projekt, ordner, de, fr)
         editor_kopf_pruefen(projekt, ordner)
+        verrutscht_pruefen(projekt, ordner)
     finally:
         if a.behalten:
             print(f'\nArbeitsordner: {ordner}')

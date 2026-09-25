@@ -126,7 +126,8 @@ Beschreibungen und Spalten zum Aufteilen der Arbeit (Zuständig, Stand, Bemerkun
    | Was | Wie | Die Zelle wird |
    | --- | --- | --- |
    | Text ändern | in der Spalte „Text" überschreiben | gelb |
-   | Neuer Absatz | Zeile einfügen, hineinschreiben; in „Typ" Absatz, Überschrift, Unterüberschrift, Liste oder Zitat wählen (leer = Absatz) | grün |
+   | Neuer Absatz | am einfachsten in dieselbe Zelle, mit einer Leerzeile dazwischen (zweimal Alt+Enter, Mac: Ctrl+Option+Enter) – jede Leerzeile wird ein neuer Absatz | gelb |
+   | Neue Überschrift / Zeile | ganze Zeile einfügen (Zeilennummer anklicken → Rechtsklick → Zeilen einfügen), hineinschreiben; in „Typ" Absatz, Überschrift, Unterüberschrift, Liste oder Zitat wählen (leer = Absatz) | grün |
    | Absatz löschen | `!Löschen!` in die Zelle | rot |
    | Ganze Seite löschen | `!Löschen!` in die graue Zeile „Seite" | rot |
    | Reihenfolge ändern | Zeile ausschneiden, an der neuen Stelle einfügen | – |
@@ -177,6 +178,15 @@ Lieber eine Meldung im Bericht als ein falscher Text auf der Website. Deshalb:
   wenn in der Zelle etwas geändert wurde. Die ändert man in der Datei.
 - **Blatt sortiert** (die Reihenfolge ist fast ganz durcheinander): Die Seite
   bleibt.
+- **Zellen statt ganzer Zeilen eingefügt, gelöscht oder verschoben:** Dann
+  rutscht der sichtbare Text, die versteckten Spalten (welcher Absatz das war)
+  aber nicht – ab da gehörte jeder Text zum falschen Absatz (so geschehen bei
+  „Muster zuordnen"). Das Einlesen erkennt es an der Formel in „Änderung", die
+  dann auf zwei verschiedene Zeilen zeigt, und übernimmt die Seite ab dort so,
+  wie sie im Blatt **zu sehen** ist: Absätze mit unverändertem Text bleiben
+  zeichengenau, alles andere wird neu geschrieben, und Absätze, die nirgends
+  mehr stehen, fallen weg. Jeder weggefallene Absatz steht im Bericht – im
+  Vorschlag also genau ansehen. Tabellen und Bausteine bleiben immer.
 - **Graue Seiten-Zeile gelöscht, oder eine ganze Zeile aus einer anderen Seite
   hineinkopiert:** wird erkannt und gemeldet, nichts davon landet auf einer
   falschen Seite.
