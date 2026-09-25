@@ -1645,6 +1645,8 @@ body.pm-aktiv{overflow:hidden;}
 .ems-seite .ems-marke{margin:0;}
 .ems-fussmarke{position:absolute;right:42pt;top:776pt;}
 .ems-seitenzahl{position:absolute;left:0;right:0;top:804pt;text-align:center;}
+/* CC-BY-NC-Signet: Lage und Breite wie im Testheft 2026 (x 38.85, y 789.15). */
+.ems-druck .ems-signet{position:absolute;left:38.85pt;top:789.15pt;width:74.5pt;height:auto;}
 .ems-seite .ems-frage{margin-bottom:16pt;}
 /* Figuren auf festen Plaetzen (ems.typ: FL-X, FL-Y, FL-SPALTE, FL-ZEILE) */
 .ems-fl-zelle{position:absolute;width:80.2pt;text-align:center;}

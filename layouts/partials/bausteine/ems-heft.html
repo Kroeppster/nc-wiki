@@ -73,8 +73,10 @@ window.EMSHeft = (function(){
   // --- Eine gedruckte Heftseite -------------------------------------------
   // A4 in pt, Satzspiegel wie ems.typ: links 42.5, rechts 42, oben 88.1.
   // Kopfzeile in drei Spalten (Set | Testteil | nc-wiki.ch), Seitenzahl
-  // mittig am Fuss, Fussmarke fest bei y = 776. "frei" ist Inhalt, der auf
+  // mittig am Fuss, CC-BY-NC-Signet unten links (74.5 pt breit, wie im
+  // Testheft und in ems.typ: fusszeile), Fussmarke fest bei y = 776. "frei" ist Inhalt, der auf
   // festen Plaetzen steht (das Figuren-Raster), gerechnet von der Blattecke.
+  var signet = {{ "images/cc-by-nc.png" | relURL | jsonify | safeJS }};
   var datum = new Date().toLocaleDateString(document.documentElement.lang || 'de');
   function seite(o){
     return '<section class="ems-seite">'
@@ -83,6 +85,7 @@ window.EMSHeft = (function(){
       + '<div class="ems-satz">' + (o.inhalt || '') + '</div>'
       + (o.frei || '')
       + (o.marke ? '<div class="ems-fussmarke">' + marke(o.marke) + '</div>' : '')
+      + '<img class="ems-signet" src="' + signet + '" alt="CC BY-NC 4.0">'
       + '<div class="ems-seitenzahl">' + o.nr + '</div></section>';
   }
   // --- Antwortbogen ---------------------------------------------------------
@@ -138,8 +141,16 @@ window.EMSHeft = (function(){
     document.head.appendChild(stil);
     document.body.classList.add('fg-druckt');
     window.addEventListener('afterprint', aufraeumen, { once: true });
-    window.print();
+    // Erst drucken, wenn das Signet geladen ist - sonst fehlt es auf dem
+    // Papier. Es ist beim Laden der Seite schon vorgeholt (unten), meist
+    // geht es also sofort; ein kaputtes Bild haelt den Druck nicht auf.
+    var offen = [].filter.call(behaelter.querySelectorAll('img'), function(i){ return !i.complete; });
+    if (!offen.length) { window.print(); return; }
+    var rest = offen.length;
+    offen.forEach(function(i){ i.addEventListener('load', fertig); i.addEventListener('error', fertig); });
+    function fertig(){ if (--rest === 0) window.print(); }
   }
+  new Image().src = signet;
   // Kein Zeitgeber zum Aufraeumen: Wo afterprint nicht kommt, stoert der
   // Behaelter nicht (am Bildschirm ist er unsichtbar), und ein Zeitgeber
   // haette in Browsern mit nicht blockierendem Druckdialog den Inhalt

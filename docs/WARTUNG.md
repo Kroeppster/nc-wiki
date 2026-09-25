@@ -841,7 +841,8 @@ kleines Testheft mit sechs A4-Seiten: Anleitung mit Beispiel, Einprägeseite
 (mit STOPP), Anleitung und Fragen der Reproduktion (zwei Seiten, „Bitte
 umblättern" und STOPP), ein Antwortbogen mit den Kästchen wie am Testtag und
 das Lösungsblatt. Jede Seite trägt oben „Übungsset vom <Datum> | Testteil … |
-nc-wiki.ch" und unten die Seitenzahl. Es wird keine PDF-Bibliothek geladen:
+nc-wiki.ch", unten die Seitenzahl und links das CC-BY-NC-Signet
+(`static/images/cc-by-nc.png`, aus dem Testheft 2026). Es wird keine PDF-Bibliothek geladen:
 Der Browser druckt die Seiten selbst und bietet im Druckdialog „Als PDF
 sichern" an – Ränder auf „Keine" bzw. Standard lassen, die Heftseiten bringen
 ihre Ränder selbst mit. Man muss den getakteten Durchlauf nicht starten, um
