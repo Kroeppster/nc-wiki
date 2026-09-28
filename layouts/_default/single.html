@@ -41,8 +41,9 @@
       <p class="note">{{ i18n "mitglieder_interner_hinweis" }}</p>
       {{ end }}
 
-      {{/* Kleines Schlagwort über dem Titel = der Ordnername (z.B. "News", "EMS") */}}
-      {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
+      {{/* Kleine Zeile über dem Titel = Titel des Bereichs (z.B. "EMS",
+           "Über uns"), siehe bereich-label.html */}}
+      {{ with partial "bereich-label.html" . }}<p class="eyebrow">{{ . }}</p>{{ end }}
 
       {{/* Normalerweise kommt der Titel direkt aus dem Frontmatter ("title:").
            Ausnahme: Erfahrungsberichte haben absichtlich KEIN title-Feld -

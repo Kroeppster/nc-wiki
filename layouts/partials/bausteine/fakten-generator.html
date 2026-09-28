@@ -43,7 +43,7 @@
        Ohne diese Trennung bekaemen Franzoesisch und Italienisch die
        deutschen Woerter vorgesetzt - schlimmer als gar kein Generator.
        Fehlt die Datei einer Sprache, greift der Hinweis weiter unten. */ -}}
-{{- $alle := index .Site.Data "fakten-generator" }}
+{{- $alle := index hugo.Data "fakten-generator" }}
 {{- $d := and $alle (index $alle .Site.Language.Lang) }}
 {{- $genug := and $d $d.namen (ge (len $d.namen) 15) }}
 {{- /* DIE VORGABEZEITEN KOMMEN AUS data/testablauf.yaml, nicht fest
@@ -58,7 +58,7 @@
        warum der Untertest schwer ist: Nach 50 Minuten mit ganz anderen
        Aufgaben muss man die 15 Personen noch wissen. */ -}}
 {{- $lern := 6 }}{{- $abfrage := 6 }}{{- $pause := 0 }}{{- $zaehle := false }}
-{{- range .Site.Data.testablauf.bloecke }}
+{{- range hugo.Data.testablauf.bloecke }}
   {{- if eq .key "fakten-reproduktion" }}{{ $zaehle = false }}{{ $abfrage = .minuten }}{{ end }}
   {{- if $zaehle }}{{ $pause = add $pause .minuten }}{{ end }}
   {{- if eq .key "fakten-einpraegen" }}{{ $zaehle = true }}{{ $lern = .minuten }}{{ end }}

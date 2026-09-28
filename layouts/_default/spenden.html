@@ -24,7 +24,7 @@
   <section>
     <div class="wrap">
       {{ with .Parent }}<a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
-      {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
+      {{ with partial "bereich-label.html" . }}<p class="eyebrow">{{ . }}</p>{{ end }}
       <h1>{{ .Title }}</h1>
       {{ with $vorne }}<div class="spenden-vorne">{{ . | safeHTML }}</div>{{ end }}
 

@@ -12,7 +12,7 @@
   (sponsoring_kontakt_*). Ohne Telefonnummer kein Telefon-Knopf.
   ============================================================================
 */ -}}
-{{- $d := site.Data.sponsoring -}}
+{{- $d := hugo.Data.sponsoring -}}
 <div class="sponsoring-kontakt">
   {{- with $d.email }}
   <p class="sponsoring-kontakt-label">{{ i18n "sponsoring_kontakt_email" }}</p>

@@ -81,10 +81,12 @@
 
     var abschnitte = [];
     Array.prototype.forEach.call(bereich.querySelectorAll('h2'), function(h){
-      /* Der Seitentitel (den gibt list.html als h2 aus, er ist aber kein
+      /* Der Seitentitel (den gibt list.html als h1 aus, er ist aber kein
          Abschnitt) und alles gerade Ausgeblendete - vor allem die
-         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Liste. */
-      if(h.closest && h.closest('.section-head, .pm-buehne, [hidden]')) return;
+         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Liste.
+         Ebenso Kartentitel (.card): Auf Übersichtsseiten sind sie h2, weil sie
+         direkt unter dem h1 stehen - Abschnitte der Seite sind sie nicht. */
+      if(h.closest && h.closest('.section-head, .pm-buehne, [hidden], .card')) return;
       var titel = (h.textContent || '').trim();
       if(!titel) return;
       if(!h.id){

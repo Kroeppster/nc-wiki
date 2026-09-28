@@ -40,6 +40,11 @@
      es absichtlich kein title-Feld, der Titel wird aus Name+Jahr gebaut). */}}
 {{- $pageTitle := .Title }}
 {{- if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
+{{- /* Schlagwort-Seiten: .Title schreibt Hugo nach englischer Regel gross
+       ("Neben Der Matura") und heisst auf der Übersicht in allen Sprachen
+       "Tags" - so wie list.html den Titel zeigt, so auch hier. */ -}}
+{{- if eq .Kind "term" }}{{ $pageTitle = .Data.Term }}{{ end }}
+{{- if eq .Kind "taxonomy" }}{{ $pageTitle = i18n "schlagwoerter" }}{{ end }}
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ $pageTitle }}{{ end }}</title>
 
 {{/* Das Aussehen der ganzen Website kommt aus GENAU dieser einen CSS-Datei -
@@ -119,6 +124,10 @@
 {{- if not $ogDescription }}{{ $ogDescription = .Summary }}{{ end }}
 {{- if not $ogDescription }}{{ $ogDescription = i18n "site_tagline" }}{{ end }}
 {{- $ogDescription = $ogDescription | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace }}
+{{- /* Ohne eigene "description:" kommt der Anfang des Textes - der konnte bis
+       zu 600 Zeichen lang sein. Google zeigt etwa 160; länger wird mitten im
+       Wort abgeschnitten. Deshalb hier an einer Wortgrenze gekürzt. */ -}}
+{{- if gt (strings.RuneCount $ogDescription) 160 }}{{ $ogDescription = truncate 157 "…" $ogDescription }}{{ end }}
 {{- /* DIE GEWOEHNLICHE SEITENBESCHREIBUNG. Sie fehlte hier lange: Der Wert
        wurde zwar berechnet und an Facebook und X weitergegeben, aber nie als
        <meta name="description"> ausgegeben - und genau das ist der Satz, den

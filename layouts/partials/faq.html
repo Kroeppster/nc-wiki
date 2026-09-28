@@ -28,8 +28,8 @@
   ============================================================================
 */}}
 {{- $lang := .Site.Language.Lang }}
-{{- $faq := .Site.Data.faq }}
-{{- $subtests := .Site.Data.subtests }}
+{{- $faq := hugo.Data.faq }}
+{{- $subtests := hugo.Data.subtests }}
 
 {{- /* Liste aller vorkommenden Kategorien einsammeln (ohne Duplikate),
        in der Reihenfolge, in der sie in data/faq.yaml zum ersten Mal auftauchen. */ -}}
@@ -43,7 +43,7 @@
   {{- range $categories }}
   {{- $cat := . }}
   <div class="faq-category">
-    <h3>{{ $cat }}</h3>
+    <h2>{{ $cat }}</h2>
     {{- /* Alle Fragen ausgeben, die zu dieser Kategorie gehören */ -}}
     {{- range $faq }}
     {{- if eq (index .category $lang) $cat }}

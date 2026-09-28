@@ -32,7 +32,7 @@
            KEINEN: Sie hängen im Hauptmenü und brauchen ihn nicht. */}}
       {{ if eq .Kind "term" }}
       {{ with .Parent }}
-      <a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>
+      <a class="back-link" href="{{ .RelPermalink }}">← {{ i18n "schlagwoerter" }}</a>
       {{ end }}
       {{ end }}
 
@@ -47,7 +47,11 @@
              und verworfen.) */}}
         {{ $ueberschrift := .Title }}
         {{ if eq .Kind "term" }}{{ $ueberschrift = .Data.Term }}{{ end }}
-        <div><p class="eyebrow">{{ .Section }}</p><h2>{{ $ueberschrift }}</h2></div>
+        {{ if eq .Kind "taxonomy" }}{{ $ueberschrift = i18n "schlagwoerter" }}{{ end }}
+        {{/* h1: Das ist der Titel der Seite (vorher ein h2 - die Übersichtsseiten
+             hatten damit gar keine Hauptüberschrift). Aussehen unverändert, siehe
+             .section-head h1 in style.css. Die Zeile darüber: bereich-label.html. */}}
+        <div>{{ with partial "bereich-label.html" . }}<p class="eyebrow">{{ . }}</p>{{ end }}<h1>{{ $ueberschrift }}</h1></div>
       </div>
 
       {{/* Sichtbarer Hinweis auf Seiten des Mitgliederbereichs
@@ -179,7 +183,7 @@
                Titel, nur mit Anrisstext und "Mehr erfahren". */}}
           {{ $kartenTitel := .Title }}
           {{ if and (not $kartenTitel) .Params.name .Params.jahr }}{{ $kartenTitel = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
-          <h3><a href="{{ .RelPermalink }}">{{ $kartenTitel }}</a></h3>
+          <h2><a href="{{ .RelPermalink }}">{{ $kartenTitel }}</a></h2>
           {{/* Datum nur bei News-Beiträgen anzeigen, damit klar ist, von wann
                eine Meldung ist - sprachabhängig formatiert (":date_long"
                übersetzt Monatsnamen automatisch je nach Sprache der Seite). */}}

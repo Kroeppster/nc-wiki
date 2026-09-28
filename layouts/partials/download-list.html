@@ -34,7 +34,7 @@
 {{- $page := .page }}
 {{- $site := $page.Site }}
 {{- $lang := $site.Language.Lang }}
-{{- $overrides := $site.Data.downloads.overrides }}
+{{- $overrides := hugo.Data.downloads.overrides }}
 
 {{- /* Alle PDF-Dateien im angegebenen Ordner finden, neueste (alphabetisch
        letzte, meist die mit der höchsten Jahreszahl im Namen) zuerst. */ -}}

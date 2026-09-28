@@ -346,3 +346,6 @@ sponsoring_kontakt_telefon: "ou joignables par téléphone"
 sprache_Deutsch: "allemand"
 sprache_Français: "français"
 sprache_Italiano: "italien"
+
+# Schlagwort-Seiten (Titel der Übersicht, Zeile über dem Titel, Zurück-Link)
+schlagwoerter: "Mots-clés"

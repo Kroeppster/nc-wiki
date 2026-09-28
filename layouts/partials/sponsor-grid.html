@@ -16,7 +16,7 @@
   Text-Platzhalter, bis das Logo nachgereicht wird.
   ============================================================================
 */}}
-{{- $sponsors := .Site.Data.sponsors }}
+{{- $sponsors := hugo.Data.sponsors }}
 {{- if $sponsors }}
 <ul class="sponsor-grid">
   {{- range $sponsors }}

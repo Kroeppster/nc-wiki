@@ -1,0 +1,18 @@
+{{- /*
+  Die kleine Zeile ueber dem Seitentitel ("eyebrow"): der Titel des obersten
+  Bereichs, in dem die Seite liegt (z. B. "Über uns" ueber "Team"), in der
+  Sprache der Seite. Auf den Bereichsseiten selbst (EMS, News, Über uns ...)
+  und auf Seiten direkt unter der Startseite bleibt sie leer - dort wuerde sie
+  nur den Titel wiederholen. Schlagwort-Seiten bekommen "Schlagwörter".
+  Vorher stand hier .Section, also der rohe Ordnername ("ueber-uns", "tags").
+*/ -}}
+{{- $label := "" -}}
+{{- if in (slice "term" "taxonomy") .Kind -}}
+  {{- if eq .Kind "term" }}{{ $label = i18n "schlagwoerter" }}{{ end -}}
+{{- else -}}
+  {{- $bereich := .FirstSection -}}
+  {{- if and $bereich (not $bereich.IsHome) (ne $bereich.RelPermalink .RelPermalink) -}}
+    {{- $label = $bereich.Title -}}
+  {{- end -}}
+{{- end -}}
+{{- return $label -}}

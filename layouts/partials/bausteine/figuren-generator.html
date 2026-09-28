@@ -64,7 +64,7 @@
        Luecke zwischen den beiden Figuren-Phasen - am Testtag liegen Fakten
        einpraegen und Textverstaendnis dazwischen. */ -}}
 {{- $lern := 4 }}{{- $abfrage := 5 }}{{- $pause := 0 }}{{- $zaehle := false }}
-{{- range .Site.Data.testablauf.bloecke }}
+{{- range hugo.Data.testablauf.bloecke }}
   {{- if eq .key "figuren-reproduktion" }}{{ $zaehle = false }}{{ $abfrage = .minuten }}{{ end }}
   {{- if $zaehle }}{{ $pause = add $pause .minuten }}{{ end }}
   {{- if eq .key "figuren-einpraegen" }}{{ $zaehle = true }}{{ $lern = .minuten }}{{ end }}

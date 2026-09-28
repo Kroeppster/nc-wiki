@@ -16,7 +16,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <h4>{{ .Site.Title }}</h4>
+        <h2 class="footer-titel">{{ .Site.Title }}</h2>
         <p class="footer-lead">{{ i18n "site_tagline" }}</p>
         {{/* Adresse/E-Mail kommen NICHT aus dieser Datei, sondern aus
              hugo.toml (Bereich [params]) - dort ändern, nicht hier, dann
@@ -25,7 +25,7 @@
         <p class="footer-address">{{ .Site.Params.org_name }}<br>{{ .Site.Params.org_address }}<br>{{ .Site.Params.org_email }}</p>
       </div>
       <div>
-        <h4>{{ i18n "footer_main_menu_heading" }}</h4>
+        <h2 class="footer-titel">{{ i18n "footer_main_menu_heading" }}</h2>
         <ul>
           {{/* Gleiche automatische Menü-Logik wie im Hauptmenü oben, siehe
                header.html - anders als dort ist diese Liste hier aber flach
@@ -42,7 +42,7 @@
         </ul>
       </div>
       <div>
-        <h4>{{ i18n "footer_legal_heading" }}</h4>
+        <h2 class="footer-titel">{{ i18n "footer_legal_heading" }}</h2>
         <ul>
           {{/* "legal"-Menü = eigenes, zweites Menü nur für rechtliche Seiten
                (Impressum usw.) - genauso über "menu: legal:" im Frontmatter
@@ -58,7 +58,7 @@
              Abmelden sind zwei echte Seiten (newsletter-einschreiben.md und
              newsletter-abmelden.md, je Sprache) mit "menu: newsletter: ..."
              im Frontmatter, keine feste Liste hier in der Vorlage. */}}
-        <h4>{{ i18n "footer_newsletter_heading" }}</h4>
+        <h2 class="footer-titel">{{ i18n "footer_newsletter_heading" }}</h2>
         <p class="footer-lead">{{ i18n "footer_newsletter_text" }}</p>
         <ul>
           {{ range .Site.Menus.newsletter }}

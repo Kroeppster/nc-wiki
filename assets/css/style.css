@@ -555,6 +555,9 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    eine einzige lange Fläche wirkt. Welche Sektion welche Fläche bekommt, steht
    in layouts/index.html. */
 .section-surface{background:var(--color-section-alt);}
+/* Titel einer Übersichtsseite: ein h1 (die Hauptüberschrift der Seite), das
+   aussieht wie die übrigen Abschnittstitel. */
+.section-head h1{font-size:var(--text-3xl);}
 .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-8);flex-wrap:wrap;gap:var(--space-2);}
 /* Kein "white-space:nowrap" mehr: Auf der Q&A-Seite tragen diese Links die
    vollen Untertest-Namen ("Medizinisch-naturwissenschaftliches
@@ -590,7 +593,9 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    ganz oben). */
 .card{background:var(--color-surface);border:1px solid var(--color-line);padding:var(--space-6);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s,transform .2s;}
 .card:hover{border-color:var(--color-line-strong);box-shadow:var(--shadow-md);transform:translateY(-2px);}
-.card h3{margin:.3rem 0 var(--space-2);font-size:var(--text-lg);}
+/* Kartentitel sind auf Übersichtsseiten h2 (direkt unter dem h1 der Seite),
+   sonst h3 - aussehen sollen beide gleich. */
+.card h2,.card h3{margin:.3rem 0 var(--space-2);font-size:var(--text-lg);}
 .card p{color:var(--color-ink-soft);font-size:var(--text-sm);margin:0 0 var(--space-4);}
 .card-thumb{margin:calc(var(--space-6) * -1) calc(var(--space-6) * -1) var(--space-4);overflow:hidden;border-radius:var(--radius-md) var(--radius-md) 0 0;}
 .card-thumb img{width:100%;height:180px;object-fit:cover;display:block;}
@@ -614,7 +619,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .report-grid{grid-template-columns:repeat(2,1fr);}
 .report-head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);}
 .avatar{flex-shrink:0;width:2.7rem;height:2.7rem;border-radius:50%;display:grid;place-items:center;color:var(--color-on-signal);font-family:var(--font-body);font-size:var(--text-sm);font-weight:700;}
-.report-head h3{margin:0;font-size:var(--text-base);}
+.report-head h2,.report-head h3{margin:0;font-size:var(--text-base);}
 .report-meta{margin:.15rem 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);font-family:var(--font-body);}
 .avatar-0{background:var(--color-avatar-0);}
 .avatar-1{background:var(--color-avatar-1);}
@@ -770,7 +775,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .faq{margin-top:var(--space-6);max-width:44rem;}
 .faq-category{margin-bottom:var(--space-10);}
 .faq-category:last-child{margin-bottom:0;}
-.faq-category h3{font-family:var(--font-body);font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);margin:0 0 var(--space-4);}
+.faq-category h2{font-family:var(--font-body);font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-signal);margin:0 0 var(--space-4);}
 .faq-item{border:1px solid var(--color-line);border-radius:var(--radius-md);background:var(--color-surface);margin-bottom:var(--space-3);box-shadow:var(--shadow-sm);}
 .faq-item summary{cursor:pointer;list-style:none;padding:var(--space-4) var(--space-5);font-weight:600;position:relative;padding-right:2.6rem;}
 .faq-item summary::-webkit-details-marker{display:none;}
@@ -1140,7 +1145,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    ========================================================================== */
 footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top));color:var(--color-band-text);padding-block:var(--space-12) var(--space-6);border-top:1px solid rgba(255,255,255,.06);}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:var(--space-8);margin-bottom:var(--space-10);}
-.footer-grid h4{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-band-text-soft);margin:0 0 var(--space-4);}
+.footer-grid .footer-titel{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:var(--tracking-wide);color:var(--color-band-text-soft);margin:0 0 var(--space-4);}
 .footer-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:.6rem;font-size:var(--text-base);}
 .footer-grid a:hover{color:var(--color-signal-strong);}
 .footer-lead{color:var(--color-band-text-soft);font-size:var(--text-sm);max-width:22rem;}
