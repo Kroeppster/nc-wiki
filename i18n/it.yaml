@@ -333,3 +333,17 @@ fig_anl_e3: "Dovete imparare la posizione della superficie nera in modo da poter
 fig_anl_beispiel_abfrage: "Un esempio del modo in cui verrete interrogati più tardi:"
 fig_anl_beispiel_loesung: "La soluzione sarebbe allora ({x})."
 fig_anl_a1: "Indicate ora quale parte di ogni figura era annerita durante la fase di apprendimento. Segnate per ogni figura la lettera giusta sul vostro foglio delle risposte. (Rispettate l'ordine delle figure <b>per righe</b>!)"
+
+# Spenden-Baustein (layouts/partials/bausteine/spenden.html)
+spenden_twint_titel: "Donare con TWINT"
+spenden_twint_text: "Apri l'app TWINT, tocca «Scansiona» e inquadra il codice con la fotocamera. L'importo lo scegli tu."
+spenden_twint_alt: "Codice QR TWINT per una donazione a NCWiki"
+spenden_twint_download: "Scarica il codice"
+spenden_bank_eyebrow: "Bonifico bancario"
+spenden_bank_titel: "Donare con bonifico"
+spenden_bank_text: "Preferisci l'e-banking? Versa la tua donazione sul conto dell'associazione:"
+spenden_bank_inhaber: "Titolare del conto"
+spenden_bank_bank: "Banca"
+spenden_kopieren: "Copia"
+spenden_kopiert: "Copiato ✓"
+spenden_bank_hinweis: "Come comunicazione basta «Donazione»."

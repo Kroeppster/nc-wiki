@@ -314,8 +314,9 @@ testablauf
 ```
 ````
 
-Erlaubt sind `testablauf`, `team-leitung`, `fakten-generator` und
-`figuren-generator`. Im Web-Editor erscheint so ein Baustein als grauer Kasten –
+Erlaubt sind `testablauf`, `team-leitung`, `fakten-generator`,
+`figuren-generator` und `spenden` (TWINT-Code und Kontoangaben auf „Jetzt
+unterstützen“; Konto in `data/spenden.yaml`, QR-Code `assets/images/twint-qr.png`). Im Web-Editor erscheint so ein Baustein als grauer Kasten –
 den verschiebt man als Ganzes oder lässt ihn stehen, aber schreibt nicht hinein.
 Ein Tippfehler im Namen bricht den Build mit einer Meldung ab.
 

@@ -1662,3 +1662,26 @@ body.pm-aktiv{overflow:hidden;}
 .ems-fl-zelle{position:absolute;width:80.2pt;text-align:center;}
 .ems-fl-zelle b{display:block;height:17.6pt;}
 .ems-fl-zelle .fig-svg{width:80.2pt;height:80.2pt;max-width:none;}
+
+/* ---------------------------------------------------------------------------
+   SPENDEN (Baustein "spenden" auf "Jetzt unterstützen"): TWINT-Code und
+   Überweisung als zwei Karten nebeneinander, auf schmalen Bildschirmen
+   untereinander. Der QR-Code bleibt auch im dunklen Modus auf Weiss.
+   --------------------------------------------------------------------------- */
+.spenden{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:var(--space-5);margin:var(--space-6) 0 var(--space-8);}
+.spenden .card:hover{transform:none;}
+.spenden-karte{display:flex;flex-direction:column;align-items:flex-start;}
+.spenden-karte h2{margin:.2rem 0 var(--space-2);font-size:var(--text-xl);}
+.spenden .spenden-eyebrow{margin:0;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent);}
+.spenden-qr{align-self:center;margin:var(--space-4) 0;padding:12px;background:#fff;border:1px solid var(--color-line);border-radius:var(--radius-lg);line-height:0;}
+.spenden-qr img{display:block;width:240px;max-width:100%;height:auto;}
+.spenden-download{align-self:center;}
+.spenden-konto{display:block;width:100%;margin:var(--space-4) 0;padding:var(--space-4);background:var(--color-surface-sunken);border-radius:var(--radius-md,8px);}
+.spenden-konto dt{color:var(--color-ink-soft);font-size:.8rem;}
+.spenden-konto dd{margin:0 0 .6rem;font-size:1rem;font-weight:600;}
+.spenden-konto dd:last-child{margin-bottom:0;}
+.spenden-iban{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-variant-numeric:tabular-nums;}
+.spenden-iban span{white-space:nowrap;}
+.spenden-kopieren{font:inherit;font-size:.8rem;font-weight:600;padding:.2rem .6rem;border:1px solid var(--color-line-strong);border-radius:999px;background:var(--color-surface);color:var(--color-signal);cursor:pointer;}
+.spenden-kopieren:hover{border-color:var(--color-signal);}
+.spenden-hinweis{margin-top:auto;font-size:.9rem;color:var(--color-ink-soft);}
