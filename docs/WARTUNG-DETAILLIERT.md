@@ -1,788 +1,354 @@
-# Wartung der NCWiki-Website – ausführliche Anleitung
+# Website pflegen – ausführliche Anleitung
 
-Das hier ist die **lange Version** von [`docs/WARTUNG.md`](WARTUNG.md). Die kurze Version
-deckt die alltäglichen Aufgaben ab (neue Seite, PDF hochladen, News schreiben, Datei
-löschen, Bild einfügen). Dieses Dokument geht zusätzlich auf alles ein, was seltener
-vorkommt, aber irgendwann garantiert mal ansteht: Navigation umbauen, Logo/Icons
-austauschen, Sponsoren pflegen, Farben/Schrift anpassen, die verschiedenen `data/`-Listen
-(FAQ, Uniguide, Untertests) verwalten, Übersetzungen der festen Bedienelement-Texte,
-Countdown-Datum, Cookie-Banner/Google Analytics, Formulare, und eine klare Grenze, ab
-wann eine Aufgabe wirklich Hugo-Kenntnisse braucht statt nur Copy-Paste.
+**Deutsch** · [Français](WARTUNG-DETAILLIERT.fr.md) · [Italiano](WARTUNG-DETAILLIERT.it.md)
 
-Wie im Kurzguide gilt: alles hier geht über die normale GitHub-Weboberfläche
-(github.com), kein Programm muss installiert werden – **ausser bei den wenigen Stellen,
-die das ausdrücklich anders sagen** (z. B. Favicon neu erzeugen).
-
-Genau wie im Kurzguide: neue Seiten/Änderungen immer als **eigener Branch + Pull
-Request**, nie direkt in `main`. Das wird unten nicht bei jedem einzelnen Schritt
-wiederholt, gilt aber überall.
-
----
+Die Alltagsaufgaben (Texte, News, PDFs, Bilder, Löschen) stehen in der
+**[Kurzanleitung](WARTUNG.md)**. Hier steht alles andere – vom Menü über Startseite,
+Team und Design bis zur Technik dahinter. Die meisten Abschnitte gehen im Browser auf
+github.com; wo es einen eigenen Rechner oder Programmierkenntnisse braucht, steht das
+dabei.
 
 ## Inhalt
 
-1. [Neue Seiten und Bereiche – vertieft](#1-neue-seiten-und-bereiche--vertieft)
-2. [Navigationsleiste ändern](#2-navigationsleiste-ändern)
-3. [Logo und Favicon austauschen](#3-logo-und-favicon-austauschen)
-4. [Sponsor:innen verwalten](#4-sponsorinnen-verwalten)
-5. [Team-Seite pflegen](#5-team-seite-pflegen)
-6. [FAQ verwalten](#6-faq-verwalten)
-7. [Uniguide (Universitäts-Liste) verwalten](#7-uniguide-universitäts-liste-verwalten)
-8. [Untertests verwalten](#8-untertests-verwalten)
-9. [Countdown-Datum ändern](#9-countdown-datum-ändern)
-10. [Cookie-Banner und Google Analytics](#10-cookie-banner-und-google-analytics)
-11. [Formulare (Formspree) ändern oder ergänzen](#11-formulare-formspree-ändern-oder-ergänzen)
-12. [Feste Bedienelement-Texte übersetzen (i18n)](#12-feste-bedienelement-texte-übersetzen-i18n)
-13. [Social-Media-Links und Newsletter](#13-social-media-links-und-newsletter)
-14. [Farben, Schrift und generelles Design](#14-farben-schrift-und-generelles-design)
-15. [Eine ganze Seite/einen ganzen Bereich löschen](#15-eine-ganze-seiteinen-ganzen-bereich-löschen)
-16. [Wo hört "nur Copy-Paste" auf?](#16-wo-hört-nur-copy-paste-auf)
-17. [Startseite: der Zeitstrahl und das Material](#17-startseite-der-zeitstrahl-und-das-material)
-18. [Prüfungsmodus: Uhr, Ansagen und der Testablauf](#18-prüfungsmodus-uhr-ansagen-und-der-testablauf)
-19. [Die Abschnittsliste („Auf dieser Seite")](#19-die-abschnittsliste-auf-dieser-seite)
+1. [Aufbau des Projekts](#1-aufbau-des-projekts)
+2. [Seiten, Menü und Navigation](#2-seiten-menü-und-navigation)
+3. [Textmappen (Excel) im Detail](#3-textmappen-excel-im-detail)
+4. [Web-Editor (Pages CMS) im Detail](#4-web-editor-pages-cms-im-detail)
+5. [Links, Bausteine und zeitgesteuerte Inhalte](#5-links-bausteine-und-zeitgesteuerte-inhalte)
+6. [Startseite](#6-startseite)
+7. [Team und neue Saison](#7-team-und-neue-saison)
+8. [Unterstützen, Spenden, Sponsoren](#8-unterstützen-spenden-sponsoren)
+9. [FAQ, Uniguide, Untertests, Download-Namen](#9-faq-uniguide-untertests-download-namen)
+10. [Prüfungsmodus](#10-prüfungsmodus)
+11. [Lern-Generatoren und Alpha-Seite](#11-lern-generatoren-und-alpha-seite)
+12. [Mitgliederbereich](#12-mitgliederbereich)
+13. [Formulare](#13-formulare)
+14. [Einstellungen in hugo.toml](#14-einstellungen-in-hugotoml)
+15. [Feste Texte (i18n)](#15-feste-texte-i18n)
+16. [Design: Farben, Schrift, Logo, Abschnittsliste](#16-design-farben-schrift-logo-abschnittsliste)
+17. [Einen ganzen Bereich löschen](#17-einen-ganzen-bereich-löschen)
+18. [Automatisierungen (GitHub Actions)](#18-automatisierungen-github-actions)
+19. [Die Website prüfen](#19-die-website-prüfen)
+20. [Drittdienste und Zugänge](#20-drittdienste-und-zugänge)
+21. [Wo hört „nur ausfüllen“ auf?](#21-wo-hört-nur-ausfüllen-auf)
 
 ---
 
-## 1. Neue Seiten und Bereiche – vertieft
+## 1. Aufbau des Projekts
 
-Der Kurzguide (Abschnitt 2) zeigt die Grundschritte. Ergänzend:
+Die Website wird mit [Hugo](https://gohugo.io/) aus Textdateien gebaut. Jede Änderung auf
+`main` löst einen Bau aus; nach ein bis zwei Minuten ist die neue Fassung auf GitHub Pages
+live (`kroeppster.github.io/nc-wiki/`).
 
-### Übersichtsseite vs. Unterseite
+| Ordner / Datei | Inhalt | Anfassen? |
+| --- | --- | --- |
+| `content/de\|fr\|it/` | Alle Seiten, gleiche Struktur je Sprache | ständig |
+| `data/*.yaml` | Listen: FAQ, Unis, Untertests, Testablauf, Sponsoren, Download-Namen, Spenden-/Sponsoring-Kontakt, Wortlisten | gelegentlich |
+| `assets/downloads/` | PDFs, die automatisch aufgelistet werden | beim Hochladen |
+| `assets/images/`, `static/images/` | Bilder (Titelbilder, Logos) bzw. Logo und feste Grafiken | gelegentlich |
+| `i18n/de\|fr\|it.yaml` | feste Texte (Knöpfe, Formulare, Ansagen) | selten |
+| `hugo.toml` | Einstellungen (Countdown, Analytics, Social Media) | selten |
+| `layouts/`, `assets/css/` | Aussehen und Logik | nur mit Kenntnissen |
+| `.github/workflows/` | Automatisierungen | nur mit Kenntnissen |
+| `redaktion/` | Ablage für hochgeladene Textmappen | beim Hochladen |
+| `scripts/` | Hilfsprogramme (Textmappen, Prüfungen, Bilder) | nur mit Kenntnissen |
+| `archetypes/`, `docs/vorlage-*.md` | Vorlagen zum Kopieren | als Hilfe |
 
-- **`_index.md`** in einem Ordner = die Übersichtsseite dieses Ordners selbst (z. B.
-  `content/de/ems/uebungsaufgaben/_index.md` ist der Text ganz oben auf der
-  Übungsaufgaben-Übersicht, bevor die einzelnen Untertests aufgelistet werden).
-- **Jede andere `.md`-Datei** im selben Ordner = eine eigenständige Unterseite.
+In jedem Ordner unter `content/` ist **`_index.md`** die Übersichtsseite des Ordners; jede
+andere `.md`-Datei ist eine einzelne Seite. Ein neuer Bereich braucht immer zuerst eine
+`_index.md` – ohne sie gibt es den Ordner für Hugo nicht.
 
-Ein komplett neuer Bereich (z. B. eine neue Rubrik neben "Übungsaufgaben") braucht immer
-zuerst eine `_index.md` in einem neuen Unterordner von `content/de/` (bzw. `content/fr/`,
-`content/it/`) – ohne `_index.md` "gibt es den Ordner für Hugo nicht".
+Jede Datei beginnt mit einem **Seitenkopf** zwischen zwei `---`-Zeilen (Titel,
+Beschreibung, Menü, Datum …), danach folgt der Text in Markdown (`**fett**`,
+`[Link](/pfad)`, `- ` für Listen, `## ` für Zwischentitel).
 
-### Menü-Platzierung im Detail
+**Lokal arbeiten** (nur wer will): Hugo Extended installieren (Version siehe
+`.github/workflows/hugo.yml`), dann `npm install` und `hugo server -D` –
+die Seite läuft auf http://localhost:1313/. `npm run build` baut wie auf GitHub.
 
-Ein `menu`-Block im Frontmatter macht aus einer Seite einen Menüpunkt:
+---
+
+## 2. Seiten, Menü und Navigation
+
+### Wichtige Felder im Seitenkopf
+
+| Feld | Wirkung |
+| --- | --- |
+| `title` | Seitentitel |
+| `description` | Text unter dem Titel in Google; höchstens ~160 Zeichen |
+| `draft: true` | Seite wird nicht veröffentlicht |
+| `date` | bei News und Jahresberichten: Sortierung |
+| `featured_image`, `featured_image_alt` | Titelbild, siehe Kurzanleitung 6 |
+| `menu` | Menüpunkt, siehe unten |
+| `aliases` | alte Adressen, die hierher weiterleiten |
+| `downloads` | eigene PDF-Liste (Jahresberichte) |
+| `download_ordner` | automatische PDF-Liste aus einem Ordner unter `assets/` |
+| `geschuetzt: true` | Passwortschutz, siehe [12](#12-mitgliederbereich) |
+| `layout` | besondere Vorlage, z. B. `spenden` |
+
+### Das Menü
+
+Das Hauptmenü setzt sich **nur aus den Seitenköpfen** zusammen – es gibt keine eigene
+Menüdatei. Oberste Ebene heute: Startseite, News, EMS, Unterstützer:innen, Über uns,
+Kontakt.
 
 ```yaml
 menu:
   main:
-    parent: ems
-    weight: 5
+    parent: ueber-uns   # unter welchem Menüpunkt
+    weight: 5           # Reihenfolge, kleiner = weiter vorne
+    name: "Kurzname"    # optional, sonst gilt der title
 ```
 
-- **`parent`** muss der `identifier` eines bestehenden Menüpunkts sein. Für Seiten ist
-  das automatisch der Dateiname des Ordners (z. B. `content/de/ems/_index.md` hat
-  implizit den Identifier `ems`). Für die beiden reinen Dropdown-Überschriften
-  "Vorbereitung" und "Austausch" (die zu keiner eigenen Seite gehören) ist der Identifier
-  in `hugo.toml` festgelegt (`vorbereitung`, `austausch`) – siehe Abschnitt 2 unten.
-- **`weight`** bestimmt die Reihenfolge unter Geschwister-Menüpunkten (kleinere Zahl =
-  weiter vorne). Beim Einfügen eines neuen Punkts dazwischen: die anderen `weight`-Werte
-  im selben `parent` müssen nicht zwingend angepasst werden, solange die neue Zahl
-  irgendwo dazwischen passt (auch Kommazahlen wie `2.5` funktionieren).
-- **Fehlt `parent`**, erscheint der Punkt als eigener Top-Level-Punkt im Hauptmenü statt
-  als Kind eines Dropdowns.
-- Dasselbe `menu`-Frontmatter muss in **jeder Sprachversion** der Seite einzeln gesetzt
-  werden (mit dem übersetzten `name`, falls einer angegeben ist – ohne `name` wird
-  automatisch der `title` der Seite verwendet).
+- `parent` ist der Ordnername des übergeordneten Bereichs (`ems`, `ueber-uns`,
+  `unterstuetzer-innen`); ohne `parent` wird die Seite ein Punkt der obersten Ebene.
+- `weight` darf auch eine Kommazahl sein (`2.5`), um etwas dazwischenzuschieben.
+- Der Menüblock muss in **jeder Sprachfassung** stehen.
+- Die Fusszeile hat ein eigenes Menü `legal` (Impressum, Datenschutz …), gleich aufgebaut.
+- Untermenüs öffnen per Maus und per Tippen; auf dem Handy nur per Tippen. Dafür ist
+  nichts einzustellen.
 
-### Alias/Weiterleitung für eine umbenannte Seite
+### Seite umbenennen oder verschieben
 
-Wird eine Seite umbenannt oder verschoben (neuer Dateiname/Pfad), ändert sich ihre
-Web-Adresse – alte Links (von aussen, z. B. aus Social Media oder E-Mails) würden dann
-ins Leere führen. Um das zu vermeiden, im Frontmatter der Seite an ihrem NEUEN Ort:
+Die Adresse ändert sich mit. Damit alte Links weiter funktionieren, am **neuen** Ort:
 
 ```yaml
 aliases:
   - /alter/pfad/
 ```
 
-Hugo erzeugt dann unter der alten Adresse automatisch eine Weiterleitung auf die neue.
+Links innerhalb der Website zeigen danach ins Leere, bis sie angepasst sind – der Bau
+nennt jede Stelle.
 
----
+### Jahresbericht und andere Einzeldokumente
 
-## 2. Navigationsleiste ändern
-
-Wichtig zu verstehen: **Es gibt keine einzige Datei, in der "das Menü" steht.** Es setzt
-sich automatisch aus zwei Quellen zusammen:
-
-1. **Menüpunkte, die zu einer echten Seite gehören** – gesteuert über den
-   `menu:`-Frontmatter-Block der jeweiligen Seite (siehe Abschnitt 1 oben). Um z. B. den
-   Menüpunkt "Team" von "Über Uns" nach "Kontakt" zu verschieben, ändert man `parent:
-   ueber-uns` auf `parent: kontakt` in `content/<sprache>/ueber-uns/team/_index.md`.
-2. **Die beiden reinen Dropdown-Überschriften "Vorbereitung" und "Austausch"** – diese
-   gehören zu keiner echten Seite (ein Klick auf "Vorbereitung" selbst führt nirgendwo
-   hin, nur seine Kinder sind anklickbar). Sie stehen in `hugo.toml`, einmal pro Sprache:
-
-   ```toml
-   [[languages.de.menu.main]]
-     identifier = 'vorbereitung'
-     name = 'Vorbereitung'
-     weight = 3
-   ```
-
-   Um z. B. eine **dritte** solche Dropdown-Gruppe einzuführen (weder an eine Seite
-   gebunden), denselben Block mit neuem `identifier`/`name`/`weight` in **allen drei**
-   Sprachblöcken (`languages.de`, `languages.fr`, `languages.it`) von `hugo.toml`
-   ergänzen, und danach bei den gewünschten Seiten `parent: <neuer-identifier>` setzen.
-
-**Reihenfolge der Top-Level-Punkte** (Startseite, Übungsaufgaben, Vorbereitung, Austausch,
-News, Über Uns, Unterstützen, Kontakt) ergibt sich rein aus den `weight`-Werten aller
-Top-Level-Menüpunkte zusammen (egal ob sie aus einer Seite oder aus `hugo.toml` kommen) –
-sie werden nicht getrennt behandelt.
-
-**Menüpunkt umbenennen** (z. B. "Übungsaufgaben" → "Übungsserien"): für einen
-Seiten-Menüpunkt entweder den `title` der Seite ändern (ändert dann auch die
-Seitenüberschrift selbst) oder gezielt nur die Menü-Beschriftung mit einem eigenen `name`
-im `menu`-Block überschreiben:
-
-```yaml
-menu:
-  main:
-    parent: ems
-    weight: 1
-    name: "Übungsserien"
-```
-
-**Neuer Top-Level-Punkt, der auf eine bestehende Seite zeigt:** einfach `parent`
-weglassen (siehe Abschnitt 1).
-
-**Technisches Verhalten der Dropdowns** (keine Codeänderung nötig, nur zum Verständnis):
-Untermenüs öffnen sowohl per Maus-Hover als auch per Klick/Tap (wichtig für
-Touch-Geräte) – die Logik dafür liegt in `layouts/partials/footer.html` (gemeinsamer
-`<script>`-Block) und reagiert automatisch auf jeden Menüpunkt mit Kindern, unabhängig
-davon, wie viele es sind. Auf schmalen Bildschirmen (Hamburger-Menü) verschwindet die
-Maus-Hover-Öffnung automatisch und es bleibt nur Klick/Tap.
-
----
-
-## 3. Logo und Favicon austauschen
-
-**Das Logo** liegt unter `static/images/logo.svg` und wird an genau drei Stellen
-eingebunden: in der Kopfzeile jeder Seite (`layouts/partials/header.html`), im
-dekorativen Banner auf der Startseite (`layouts/partials/brand-band.html`), und als
-Quelle für das Favicon (siehe unten). Es einfach zu ersetzen reicht für die ersten beiden
-Stellen: neue Datei mit demselben Namen (`logo.svg`) hochladen, alte überschreiben lassen
-(GitHub fragt beim Hochladen automatisch danach).
-
-**Wichtig:** Wird das Logo ersetzt, sollte es aus denselben Gründen wie das aktuelle
-(Lesbarkeit in Hell- **und** Dunkelmodus, siehe Abschnitt 14 unten zum Theme-System)
-entweder als reines Liniensymbol ohne Hintergrundfläche gestaltet sein, oder es braucht
-zusätzlich eine eigene Behandlung für den Dunkelmodus – im Zweifel jemanden mit
-CSS-Kenntnissen dazuholen, damit das Logo im Dunkelmodus nicht z. B. schwarz auf
-dunkelblau unsichtbar wird.
-
-**Im dunklen Banner unten wird das Logo automatisch weiss dargestellt.** Genau dieses
-Problem trat dort nämlich auf: Das aktuelle Logo ist eine Rastergrafik (sechs eingebettete
-PNG-Bilder in einer SVG-Datei), seine Farben lassen sich also nicht per CSS umfärben – und
-sein "WIKI"-Schriftzug ist schwarz und war auf dem dunkelblauen Band praktisch unsichtbar.
-Seit dem 8. September 2026 liegt deshalb in `assets/css/style.css` auf
-`.brand-band-logo` ein Filter (`brightness(0) invert(1)`), der das Logo dort vollständig
-weiss einfärbt. Die Logodatei selbst bleibt davon unberührt – in der Kopfzeile auf hellem
-Grund erscheint sie weiterhin in Originalfarben.
-
-Für ein neues Logo heisst das:
-
-- Ist es ebenfalls dunkel gezeichnet, passt alles – der Filter macht es im Banner weiss.
-- Ist es **mehrfarbig und sollen die Farben auch im Banner erhalten bleiben**, muss dieser
-  Filter entfernt und stattdessen eine helle Fassung des Logos hinterlegt werden. Das ist
-  ein CSS-Schritt, siehe Abschnitt 16.
-
-**Das Favicon** (Browser-Tab-Icon, drei Dateien: `static/favicon.ico`,
-`static/favicon-32.png`, `static/apple-touch-icon.png`) wird **nicht automatisch** beim
-Bauen der Website aus `logo.svg` erzeugt, sondern ist einmalig vorab generiert worden
-(kleiner Ausschnitt des Logos, ohne den "WIKI"-Schriftzug, der bei 16×16px ohnehin
-unlesbar wäre) – siehe Kommentar in `layouts/partials/head.html`. Ändert sich das Logo
-grundlegend, sollten diese drei Dateien neu erzeugt werden, sonst zeigt der Browser-Tab
-weiterhin das alte Icon.
-
-**Das ist die eine Stelle in diesem ganzen Dokument, die nicht rein über die
-GitHub-Weboberfläche geht** – dafür braucht es ein Programm, das aus einer SVG-Datei
-kleine PNG/ICO-Ausschnitte erzeugt (z. B. ein Bildbearbeitungswerkzeug oder ein
-Online-Favicon-Generator). Alternativ: jemanden mit Hugo-Kenntnissen (oder einen
-KI-Assistenten mit Dateizugriff aufs Repo) bitten, das zu übernehmen – die neuen drei
-Dateien werden dann einfach unter denselben drei Namen wie oben hochgeladen.
-
----
-
-## 4. Sponsor:innen verwalten
-
-Sponsor:innen-Logos auf der "Unterstützer:innen"-Seite kommen aus `data/sponsors.yaml` –
-die Datei ist direkt im Repo ausführlich kommentiert (Feld für Feld), kurz
-zusammengefasst:
-
-1. Logo-Datei hochladen nach `assets/images/sponsors/<dateiname>` (SVG bevorzugt, geht
-   aber auch als PNG/JPG).
-2. In `data/sponsors.yaml` einen neuen Eintrag ergänzen:
+1. PDF hochladen nach `static/downloads/jahresberichte/2027.pdf`.
+2. Neue Seite unter `content/de/ueber-uns/jahresberichte/2027.md` (Vorlage:
+   `archetypes/jahresbericht.md`):
 
    ```yaml
-   - name: "Firmenname"
-     logo: "dateiname.svg"
-     website: "https://beispiel.ch/"
+   ---
+   title: "Jahresbericht 2027"
+   date: 2027-01-01
+   downloads:
+     - path: "downloads/jahresberichte/2027.pdf"   # relativ zu static/
+       label: "Jahresbericht 2027 (PDF)"
+   ---
+   Zwei, drei Sätze zum Jahr.
    ```
 
-3. Reihenfolge der Kacheln = Reihenfolge der Einträge in der Datei (kein separates
-   `weight`-Feld nötig – einfach den Eintrag an die gewünschte Stelle in der Liste
-   verschieben).
-4. Sponsor entfernen: den entsprechenden Eintrag (die 3 Zeilen mit `- name:` bis
-   `website:`) löschen. Die Logo-Datei kann zusätzlich gelöscht werden, muss aber nicht
-   (sie wird dann einfach nirgends mehr verwendet).
+   Die Dateigrösse wird automatisch ergänzt. Dasselbe in FR und IT.
 
-**Kontrast-Hinweis:** Ist ein Logo sehr dunkel (z. B. reines Schwarz ohne eigenen
-Hintergrund), kann es auf den dunklen Kacheln im Dunkelmodus schlecht lesbar sein. Für
-diesen Fall gibt es in `assets/css/style.css` einen hellen Hintergrund-Chip
-(`.sponsor-logo`), der konsistent auf allen Logo-Kacheln liegt – kein Grund, deswegen die
-Logo-Datei selbst zu bearbeiten.
+### Automatische PDF-Listen
+
+`download_ordner: "downloads/mitglieder"` im Seitenkopf listet alle PDFs aus
+`assets/downloads/mitglieder/` auf. Übungsaufgaben, Testsimulationen und Kursskripte
+haben ihre Listen fest eingebaut. Schönere Anzeigenamen als den Dateinamen: in
+`data/downloads.yaml` (dort steht das Format, mit Übersetzungen).
 
 ---
 
-## 5. Team-Seite pflegen
+## 3. Textmappen (Excel) im Detail
 
-Die Team-Seite (`content/de/ueber-uns/team/_index.md`, plus `content/fr/...` und
-`content/it/...`) hat zwei verschiedene Bereiche, die unterschiedlich gepflegt werden:
+Ablauf für Redaktion: [Kurzanleitung 2](WARTUNG.md#2-texte-ändern-mit-der-excel-textmappe).
 
-### Aktuelles Leitungsteam (nach Ressorts gegliedert)
+### Wie die Mappen entstehen
 
-Seit September 2026 steht das Leitungsteam im Frontmatter unter **`ressorts:`**
-statt in einer flachen Liste. Jeder Block hat einen `titel` (übersetzt, also in
-allen drei Sprachdateien eigens) und darunter `mitglieder` mit `name` und
-`rolle`:
+`.github/workflows/textmappen.yml` erzeugt nach jeder Änderung auf `main` drei Mappen
+(`scripts/texte-ausgeben.py`) und hängt sie an das GitHub-Release **„Textmappen“** – bewusst
+nicht auf die Website. Sie enthalten keine Entwürfe und keine passwortgeschützten Seiten.
 
-```yaml
-ressorts:
-  - titel: "Präsidium"
-    mitglieder:
-      - name: "Alessio Iseli"
-        rolle: "Koordinator"
-  - titel: "Koordination Romandie & Ticino"
-    mitglieder:
-      - name: "Selina Buchser"
-        rolle: "Koordinatorin Romandie"
+Aufbau: Blatt „Anleitung“ (in der Sprache der Mappe), Blatt „Inhalt“ (Link zu jeder Seite,
+Änderungszähler, fehlende Beschreibungen, Spalten Zuständig/Stand/Bemerkung), danach ein
+Blatt je Seite in der Reihenfolge der Navigation. Jedes Seitenblatt ist eine
+**Excel-Tabelle** mit der berechneten Spalte „Änderung“ – fügt man in Excel eine Zeile
+ein, steht dort automatisch „+ neu“. (LibreOffice, Numbers und Google Tabellen rechnen das
+nicht mit; der Text wird trotzdem grün.) Versteckte Spalten merken sich, zu welchem Absatz
+eine Zeile gehört.
+
+### Ansicht-Blätter für Startseite und Team
+
+„Startseite – Ansicht“ und „Team – Ansicht“ (orange Lasche) sind wie die Website
+aufgebaut: Kopfbereich, Zeitstrahl-Etappen und Kacheln nebeneinander, im Team je Ressort
+eine Reihe Karten. Nur die weissen Felder sind beschreibbar (Blattschutz ohne Passwort).
+
+- Team: leere Karte = neue Person, `!Löschen!` im Namen = Person weg, im Ressort-Titel =
+  ganzes Ressort weg; unten stehen zwei leere Ressorts für neue bereit.
+- Auf FR/IT steht der deutsche Text als Kommentar an der Zelle.
+- Das Team jeder Sprache wird in der Mappe dieser Sprache gepflegt.
+
+Code: `scripts/texte_ansicht.py`.
+
+### Was beim Einlesen passiert
+
+`.github/workflows/texte-einlesen.yml` liest hochgeladene Mappen mit
+`scripts/texte-einlesen.py` ein, baut die Website probeweise und eröffnet einen Pull
+Request mit Bericht. Jede geänderte Seite wird aus den Zeilen ihres Blatts neu
+zusammengesetzt; unveränderte Absätze bleiben zeichengenau, unveränderte Seiten werden
+nicht angefasst. Lieber eine Meldung als ein falscher Text:
+
+| Fall | Was passiert |
+| --- | --- |
+| Seite wurde inzwischen anderswo geändert | Seite wird übersprungen, Rest kommt an – Änderung in frischer Mappe neu eintragen |
+| Dieselbe Mappe zweimal hochgeladen | schadet nicht („schon übernommen“) |
+| Leere Zelle / gelöschte Zeile | Absatz bleibt – gelöscht wird nur mit `!Löschen!` (auch `!Supprimer!`, `!Eliminare!`) |
+| Tabellen, Bausteine, Code (grau, kursiv) | bleiben unverändert; die ändert man in der Datei |
+| Blatt sortiert | Seite bleibt, Meldung |
+| Zellen statt ganzer Zeilen verschoben | wird an der Formel in „Änderung“ erkannt; die Seite wird so übernommen, wie sie **zu sehen** ist, jeder weggefallene Absatz steht im Bericht |
+| Zeile aus anderer Seite hineinkopiert, graue Seiten-Zeile gelöscht | erkannt und gemeldet |
+| Titel und alle Texte mit `!Löschen!` | Seite wird gelöscht |
+| Seite löschen, auf die noch verlinkt wird | wird gelöscht, Bericht nennt die Links (sonst wird der Bau rot) |
+| Übersichtsseite (`_index.md`) löschen | nur, wenn alle Seiten darunter ebenfalls markiert sind |
+| Französische/italienische Seite fehlt | Blatt ausfüllen → Seite wird mit dem Kopf der deutschen Seite angelegt |
+| Feld „Neue Saison“ im Team-Blatt | Saisonwechsel wie [7](#7-team-und-neue-saison) |
+
+„Stand“, „Bemerkung“ und „Zuständig“ gehen nicht auf die Website; der Workflow speichert
+sie in `redaktion/stand.json` (je Text nur eine Prüfsumme), die nächste Mappe hat sie
+wieder.
+
+### Einmalig einzustellen
+
+*Settings → Actions → General → Workflow permissions → „Allow GitHub Actions to create and
+approve pull requests“*. Sonst schlägt der letzte Schritt fehl; der Bericht steht dann in
+der Zusammenfassung des Laufs. Ein vom Workflow eröffneter Pull Request bekommt keinen
+Bau-Haken von `hugo.yml` (GitHub lässt Workflows keine Workflows starten) – deshalb baut
+`texte-einlesen.yml` selbst und schreibt ✅/❌ in den Pull Request.
+
+### Am eigenen Rechner
+
+```bash
+pip install openpyxl pyyaml
+python3 scripts/texte-ausgeben.py --uebernehmen redaktion/stand.json   # drei Mappen
+python3 scripts/texte-einlesen.py ncwiki-texte-de.xlsx --probe         # nur zeigen
+python3 scripts/texte-einlesen.py ncwiki-texte-de.xlsx                 # schreiben
 ```
 
-**Die Reihenfolge der Blöcke ist die Reihenfolge auf der Seite** – im Template
-ist nichts fest verdrahtet. Ein Ressort umbenennen, verschieben, hinzufügen
-oder auflösen heisst: die Blöcke im Frontmatter umstellen, in allen drei
-Sprachdateien. Wechselt jemand das Ressort, wandert der Eintrag in einen
-anderen Block.
+`--sprachen fr` erzeugt nur eine Mappe. Mappen gehören nicht ins Repo (`.gitignore`).
 
+### Wer an den Skripten etwas ändert
 
-
-Dieser Bereich wird NICHT als Fliesstext gepflegt, sondern als strukturierte Liste im
-Frontmatter jeder der drei Dateien, Feld `leitungsteam:`:
-
-```yaml
-leitungsteam:
-  - name: "Alessio Iseli"
-    rolle: "Koordinator"
-  - name: "Kron Mustafa"
-    rolle: "Events & Qualitätskontrolle"
-```
-
-Der Baustein `team-leitung` im Markdown-Text (direkt unter der Überschrift
-"Aktuelles Leitungsteam", als Code-Block ```` ```baustein ```` – siehe Kurzguide,
-Abschnitt 2c) liest diese Liste aus und baut daraus automatisch das
-Karten-Raster (siehe `layouts/partials/bausteine/team-leitung.html`).
-
-**Foto oder Platzhalter:** Jeder Eintrag kann zusätzlich ein Feld `foto:` bekommen, mit
-dem Pfad zum Foto relativ zu `assets/images/`, z. B.:
-
-```yaml
-  - name: "Alessio Iseli"
-    rolle: "Koordinator"
-    foto: "team/alessio-iseli.jpg"
-```
-
-Die Bilddatei kommt dann nach `assets/images/team/alessio-iseli.jpg` (Ordner bei Bedarf
-neu anlegen). **Fehlt das Feld `foto:` (der Normalfall, solange noch nicht für alle
-Personen ein Foto vorliegt), erscheint automatisch ein farbiger Kreis mit den Initialen
-als Platzhalter** – dieselbe Darstellung, die auch bei Erfahrungsberichten ohne Foto
-verwendet wird. Es muss also nichts Zusätzliches eingerichtet werden, damit die Seite
-auch ohne Fotos sauber aussieht.
-
-Da es sich um drei separate Dateien handelt (eine pro Sprache), muss ein neues
-Teammitglied (Name **und** übersetzte Rolle) in allen dreien nachgezogen werden. Der
-Name bleibt dabei überall gleich, nur `rolle:` wird pro Sprache übersetzt.
-
-### Frühere Saisons, Content Creators, Ehemalige Verantwortliche
-
-Alles unterhalb von "Aktuelles Leitungsteam" bleibt ganz normaler Markdown-Fliesstext mit
-Überschriften und Aufzählungen (keine Fotos, kein Karten-Raster) – neue Namen werden
-einfach als neue Aufzählungspunkte ergänzt. Beim Saisonwechsel wandert die bisherige
-Besetzung des Leitungsteams (aus `leitungsteam:` oben) sinnvollerweise als neuer
-Textabschnitt unter "Frühere Saisons", nach demselben Muster wie die bereits dort
-stehenden Jahrgänge, bevor `leitungsteam:` mit der neuen Besetzung überschrieben wird.
+Die Zerlegung einer Seite in Absätze steht genau einmal, in `scripts/texte_bausteine.py`.
+Danach immer **`python3 scripts/texte-mappe-pruefen.py`**: Es arbeitet in einer Kopie des
+Projekts wie eine Redaktorin (ändern, einfügen, verschieben, löschen, Ansicht-Blätter,
+neue Saison, Konflikte …), prüft jede Seite und baut die Kopie. Die echten Dateien fasst es
+nicht an. Die Formeln der Mappen prüft es in Python nach (Bezüge, Bereiche, keine
+Funktionen neuer als Excel 2007). Die Spalte „Text“ ist als Text formatiert, sonst hielte
+Excel „- Punkt“ für eine Formel.
 
 ---
 
-## 6. FAQ verwalten
+## 4. Web-Editor (Pages CMS) im Detail
 
-Die FAQ-Sektion kommt aus `data/faq.yaml` – jeder Eintrag hat eine `id`, sowie Frage und
-Antwort **einmal pro Sprache**:
+Bedienung: [Kurzanleitung 3](WARTUNG.md#3-kleine-korrekturen-im-web-editor).
 
-```yaml
-- id: "eindeutige-kurzbezeichnung"
-  frage:
-    de: "Frage auf Deutsch?"
-    fr: "Question en français ?"
-    it: "Domanda in italiano?"
-  antwort:
-    de: "Antwort auf Deutsch."
-    fr: "Réponse en français."
-    it: "Risposta in italiano."
-```
+### Einrichten (einmalig)
 
-Neue Frage hinzufügen: neuen Eintrag mit eindeutiger `id` ergänzen (wird intern
-verwendet, erscheint nirgends sichtbar). Reihenfolge auf der Seite = Reihenfolge in der
-Datei. Frage entfernen: kompletten Eintrag löschen.
+1. Auf [app.pagescms.org](https://app.pagescms.org) mit GitHub anmelden.
+2. *Install GitHub App* und das Repository `Kroeppster/nc-wiki` freigeben.
+3. Repository öffnen, Branch `main`. Die Einstellungen stehen in
+   [`.pages.yml`](../.pages.yml).
+4. Mitschreibende unter *Collaborators* per E-Mail einladen – sie brauchen kein
+   GitHub-Konto.
+
+### Was drin ist – und was absichtlich nicht
+
+Je Sprache: **Seiten** (ganzer Baum), **News**, **Erfahrungsberichte**. Anlegen geht,
+umbenennen und löschen nicht (das bricht Links).
+
+Nicht im Editor: **Mitgliederbereich** und **Alpha** (ein erklärender Kommentar im
+Seitenkopf ginge verloren), **`data/*.yaml`** (voller Kommentare, die der Editor löschen
+würde), **Bilder hochladen**.
+
+### Was der Editor an Dateien ändert
+
+Beim Speichern schreibt Pages CMS die ganze Datei neu: Anführungszeichen im Kopf fallen
+weg, lange Texte werden umbrochen, Listen untereinander geschrieben, `&` wird `&amp;`,
+Tabellen neu ausgerichtet. Für Hugo ist das dasselbe. `scripts/editor-rundlauf.mjs`
+speichert jede Seite so, wie Pages CMS es tut, baut beide Fassungen und vergleicht –
+zuletzt 440 von 440 Seiten gleich. Die Textmappen kommen mit den umbrochenen Texten
+zurecht.
+
+### Wer `.pages.yml` ändert
+
+- **`settings.content.merge: true` muss bleiben.** Sonst schreibt Pages CMS nur die dort
+  genannten Felder zurück – Menü, Reihenfolge, Tags und die Startseite (`hero`, `weg`,
+  `material`) wären nach dem ersten Speichern weg.
+- Danach `node scripts/editor-rundlauf.mjs` (braucht einmalig ein paar npm-Pakete in
+  einem eigenen Ordner, siehe Kopf des Skripts).
+- Unbekannte Schlüssel lehnt Pages CMS ab; wiederverwendete Felder stehen deshalb als
+  YAML-Anker (`&titel`, `*titel`) beim Deutschen.
 
 ---
 
-## 7. Uniguide (Universitäts-Liste) verwalten
+## 5. Links, Bausteine und zeitgesteuerte Inhalte
 
-_Zur Team-Seite siehe Abschnitt 5: Das Leitungsteam ist seit September 2026 nach
-Ressorts gegliedert (`ressorts:` im Frontmatter statt der früheren flachen
-Liste `leitungsteam:`)._
+### Interne Links
 
-Die Uniguide-Vergleichstabelle und die Detailseiten kommen aus `data/unis.yaml` – auch
-diese Datei ist im Repo bereits ausführlich Feld für Feld kommentiert. Zwei wichtige
-Besonderheiten:
+Normale Markdown-Links mit Pfad, ohne Sprache und ohne `/nc-wiki/`:
+`[Uniguide](/ems/uniguide)`. Der Render-Hook
+`layouts/_default/_markup/render-link.html` macht daraus die richtige Adresse in der
+Sprache der Seite und bricht den Bau ab, wenn es das Ziel nicht gibt.
 
-- **Jede Universität braucht zwei Dinge gleichzeitig:** einen Eintrag in
-  `data/unis.yaml` **und** eine eigene, fast leere Seite unter
-  `content/<sprache>/ems/uniguide/<slug>.md` (nur `title` und `uni_slug` im
-  Frontmatter). Fehlt die Seite, führt der Link aus der Tabelle ins Leere.
-- **Nichts erfinden/schätzen:** Ist eine Angabe (z. B. Studienplatz-Zahl) nicht sicher
-  bekannt, bleibt das Feld leer (`null`) statt eine Zahl zu raten – das sollte so
-  bleiben, bis der echte Wert auf der offiziellen Uni-Website nachgeprüft wurde. Bei
-  jeder inhaltlichen Änderung auch das Feld `stand:` (Datum der letzten Prüfung) **und**
-  `quelle:` (Link zur verwendeten Seite) aktualisieren.
+**Kein `{{< ref >}}` und keine anderen Shortcodes im Text.** Der Web-Editor schreibt sie
+beim Speichern kaputt – schon, wenn jemand auf der Seite nur ein Komma ändert.
 
-### Die noch leeren Felder
+### Bausteine
 
-Am 8. September 2026 sind pro Universität vier weitere Felder dazugekommen. Sie stehen
-**alle auf `null`**, weil sie noch nicht an offizieller Stelle nachgeprüft sind:
+Als Code-Block mit der Sprache `baustein` (`layouts/_default/_markup/render-codeblock-baustein.html`):
 
-| Feld | Was hinein gehört | Beispiel |
+| Name | Was | Daten |
 | --- | --- | --- |
-| `website_medizin` | Direktlink zur medizinischen Fakultät, nicht zur Uni-Startseite | `"https://medizin.unibas.ch"` |
-| `anmeldefrist` | Frist als Text | `"15. Februar"` |
-| `studienbeginn` | Wann das Studium startet | `"Mitte September"` |
-| `semestergebuehr` | Betrag inkl. Währung, als Text | `"CHF 850 pro Semester"` |
+| `testablauf` | Tabelle Tagesablauf | `data/testablauf.yaml` |
+| `team-leitung` | Karten des Leitungsteams | `ressorts:` im Kopf der Team-Seite |
+| `fakten-generator` | Fakten-Generator | `data/fakten-generator/` |
+| `figuren-generator` | Figuren-Generator | – |
+| `sponsoring-kontakt` | E-Mail-/Telefon-Knopf | `data/sponsoring.yaml` |
 
-**Was passiert, solange ein Feld leer ist:** Es erscheint auf der Website gar nicht – es
-gibt also keine leeren Zeilen und keine Platzhalter mitten in den Angaben. Stattdessen
-steht auf der Uni-Seite ein gelber Kasten "Diese Angaben fehlen noch", der genau die
-fehlenden Felder aufzählt und zum Melden einlädt. Sobald ein Feld gefüllt ist,
-verschwindet es aus diesem Kasten und taucht bei den Angaben auf. Es ist also **kein
-Fehler**, wenn dieser Kasten erscheint – er ist der ehrliche Zwischenstand.
+Ein Tippfehler im Namen bricht den Bau ab. Neue Bausteine: Partial unter
+`layouts/partials/bausteine/` anlegen und den Namen in die Liste `$erlaubt` im Render-Hook
+aufnehmen.
 
-### Erfahrungsberichte automatisch bei der Universität anzeigen
+### Etwas erst ab einer bestimmten Uhrzeit zeigen
 
-Das Feld `berichte_ort` verknüpft eine Universität mit den Erfahrungsberichten. Sein Wert
-muss **genau** dem entsprechen, was in den Berichten im Frontmatter unter `ort:` steht
-(z. B. `"Zürich"`). Passt es, erscheinen auf der Uni-Seite automatisch die drei neuesten
-Berichte von diesem Ort. Gibt es zu diesem Ort keine, bleibt der Abschnitt weg – dann
-einfach `""` eintragen.
+```
+{{< reveal-at when="2027-02-10T22:00:00+01:00" >}}
+[Jetzt anmelden](https://...)
+{{< /reveal-at >}}
+```
 
-Dieses Feld wird **nie angezeigt**, es ist reine Technik. Deshalb wird es auch nicht
-übersetzt: Es steht in `data/unis.yaml` genau einmal und gilt für alle drei Sprachen.
-
-### Der Vergleich ("mehrere Unis nebeneinander")
-
-In der Tabelle lassen sich in der ersten Spalte bis zu **vier** Universitäten ankreuzen.
-Unten erscheint dann eine Leiste; ein Klick auf "Vergleichen" stellt sie nebeneinander –
-eine Spalte pro Universität, eine Zeile pro Angabe.
-
-**Daran gibt es nichts zu pflegen.** Der Vergleich zieht dieselben Felder aus
-`data/unis.yaml`; ein neu gefülltes Feld erscheint automatisch auch dort. Zwei Dinge sind
-Entwickler-Schritte (Abschnitt 16):
-
-- eine **weitere Zeile** in den Vergleich aufnehmen → `layouts/partials/uniguide-table.html`,
-  Abschnitt "VERGLEICHSANSICHT"
-- die **Obergrenze von vier** ändern → dieselbe Datei, ganz unten im Skript `var MAX = 4;`.
-  Die Grenze ist bewusst gesetzt: Mehr Spalten passen auf einem Handy nicht mehr
-  nebeneinander.
+Zeitzone ist Pflicht (`+01:00` Winter, `+02:00` Sommer); ohne gültiges Datum bleibt der
+Inhalt versteckt. Das Verstecken passiert nur im Browser – nicht für Geheimes geeignet.
+**Achtung:** Das ist ein Shortcode. Die Seite danach nicht im Web-Editor speichern, und den
+Block nach dem Termin wieder entfernen.
 
 ---
 
-## 8. Untertests verwalten
+## 6. Startseite
 
-Die Kachel-Übersicht auf der Startseite wird aus `data/subtests.yaml`
-erzeugt.
+Die Startseite wird aus dem **Seitenkopf** von `content/de|fr|it/_index.md` gebaut
+(Vorlage `layouts/index.html`). Texte am einfachsten über das Blatt „Startseite – Ansicht“
+der Textmappe; sonst in allen drei Dateien.
 
-**Die Reihenfolge in dieser Datei ist die des echten Testtags**, keine freie
-Sortierung – sie muss mit `data/testablauf.yaml` übereinstimmen, der Liste, nach der
-der Prüfungsmodus taktet und nach der der Tagesablauf auf `/ems/` steht. Wer nur an
-einer der beiden Stellen umsortiert, lässt die Website zwei verschiedene
-Reihenfolgen behaupten. Genau das war bis September 2026 der Fall: „Objekte im Raum"
-stand an zweiter Stelle, am Testtag kommt aber das medizinisch-naturwissenschaftliche
-Grundverständnis zuerst.
+### Reihenfolge der Abschnitte
 
-Das Feld `number` wird übrigens **nirgends angezeigt** – es ist nur eine Lesehilfe in
-der Datei. Beim Umsortieren trotzdem durchnummerieren lassen. Jeder Eintrag hat eine Nummer, einen Slug (muss zum Ordnernamen unter
-`content/<sprache>/ems/uebungsaufgaben/` passen) und einen Namen pro Sprache. Auf der
-Q&A-Seite hängt die Antwort zur Frage "Welche Untertests gibt es?" (siehe
-`data/faq.yaml`, Feld `dynamic: subtests`) automatisch dieselbe Liste als Aufzählung an –
-die Liste selbst muss also nur an dieser einen Stelle gepflegt werden.
+Hero → News → „Was du wann brauchst“ (Zeitstrahl) → „Das Material selbst“ → die acht
+Untertests → Mission → Marken-Band → Spendenaufruf. Umsortieren: die `<section>`-Blöcke
+in `layouts/index.html` verschieben und dabei die Klasse `section-surface` so verteilen,
+dass sich helle und getönte Abschnitte abwechseln.
 
-**Wichtig, seit der Zusammenlegung von "Figuren einprägen" und "Fakten einprägen" zu
-"Figuren & Fakten lernen" (2026-08-16):** `data/subtests.yaml` zählt jetzt bewusst nur
-noch 8 Einträge, weil zwei thematisch sehr ähnliche Übungsaufgaben-Seiten zu einer
-zusammengefasst wurden. Das ist eine reine Organisationsentscheidung für die
-Übungsseiten dieser Website – die echte EMS-Prüfung hat nach wie vor 9 offiziell
-getaktete Untertests (siehe Tagesablauf-Tabelle auf `/ems/`). Die FAQ-Antwort selbst
-("Der EMS besteht aus 9 Untertests...") ist deshalb bewusst **nicht** automatisch aus
-`data/subtests.yaml` abgeleitet, sondern ein fest formulierter Satz in `data/faq.yaml` –
-nur die darunter angehängte Aufzählung kommt aus `data/subtests.yaml`. Ändert sich die
-offizielle Anzahl oder Reihenfolge der echten EMS-Untertests (kommt selten vor, aber
-offiziell schon passiert), beide Stellen prüfen: den Text in `data/faq.yaml` UND die
-Liste in `data/subtests.yaml`.
-
-Wird ein Eintrag in `data/subtests.yaml` umbenannt oder verschoben, das gleiche `weight:`
-(Reihenfolge) im Frontmatter der passenden Seite unter `content/<sprache>/ems/
-uebungsaufgaben/` nachziehen, damit die (unnummerierte) Kartenliste auf der
-Übungsaufgaben-Übersichtsseite dieselbe Reihenfolge zeigt.
-
-### Zusatz-Hinweis bei den Downloads einer Übungsaufgaben-Seite
-
-Direkt beim Download-Bereich jeder Übungsaufgaben-Unterseite erscheint automatisch ein
-kleines "CC BY-NC 4.0"-Badge (zusätzlich zum grossen Lizenzhinweis oben unter dem
-Titel). Braucht eine Serie mal einen zusätzlichen, auffälligen Hinweis daneben – z. B.
-weil sich das Format kürzlich geändert hat –, im Frontmatter der jeweiligen Seite
-einfach ergänzen:
+### Hero
 
 ```yaml
-downloads_notice: "Neues Layout!"
+hero:
+  bild: "testsimulationen/testsimulation-2023.jpg"   # relativ zu assets/images/
+  bild_alt: "Voller Hörsaal während einer Testsimulation …"
 ```
 
-Ohne dieses Feld erscheint nur das Lizenz-Badge, kein zusätzlicher Hinweis. Der Text ist
-frei wählbar und wird nicht automatisch übersetzt – bei Bedarf pro Sprachdatei einzeln
-eintragen.
-
----
-
-## 9. Countdown-Datum ändern
-
-Der Countdown auf der Startseite ("noch X Tage bis zum EMS") zählt auf das Datum in
-`hugo.toml` unter `[params]` → `ems_exam_date` herunter:
-
-```toml
-ems_exam_date = '2027-07-09T08:00:00+02:00'
-```
-
-Format: `JJJJ-MM-TTTHH:MM:SS+ZZ:ZZ`. Die Zeitzone am Ende (`+02:00` = Schweizer
-Sommerzeit, `+01:00` = Winterzeit) muss dabei sein.
-
----
-
-## 10. Cookie-Banner und Google Analytics
-
-Der Cookie-Banner (erscheint beim ersten Website-Besuch) bietet echte
-Akzeptieren/Ablehnen-Wahl. Google Analytics wird **nur** geladen, wenn aktiv
-"Akzeptieren" gewählt wurde – ohne Einwilligung lädt kein Google-Skript und wird kein
-Cookie gesetzt.
-
-Die Google-Analytics-ID steht in `hugo.toml` unter `[params]` → `google_analytics_id`
-(Format `G-XXXXXXXXXX`, zu finden in Google Analytics unter Verwaltung → Datenstreams →
-[Datenstream auswählen]). Feld leeren, um Google Analytics komplett zu deaktivieren – der
-Cookie-Banner zeigt dann weiterhin Akzeptieren/Ablehnen an, aber ohne Wirkung.
-
-Die Cookie-Banner-**Texte** selbst (was genau dem/der Besucher:in erklärt wird) stehen in
-`i18n/de.yaml`, `i18n/fr.yaml`, `i18n/it.yaml` unter den Schlüsseln, die mit `cookie_`
-beginnen – siehe Abschnitt 12 unten zur allgemeinen Funktionsweise dieser Dateien.
-
----
-
-## 11. Formulare (Formspree) ändern oder ergänzen
-
-**Stand heute: drei Formulare, zwei Adressen.** Kontakt und Fehlermeldung
-teilen sich `mvkpgrpl`, die Erfahrungsberichte haben mit `xaewqwoj` eine
-eigene. Wer die Meldungen nach Zuständigkeit trennen will, braucht pro
-Empfängerkreis eine eigene Formspree-Adresse – die Übersicht, welches
-Formular heute wohin geht, steht im Kurzguide, Abschnitt 11c.
-
-Die Website hat keinen eigenen Server, darum laufen alle Formulare (Kontakt,
-Erfahrungsbericht-Einreichung, "Fehler melden" bei PDFs) über den externen Dienst
-Formspree. Jedes Formular ist über eine eigene Formspree-Adresse (Format
-`https://formspree.io/f/xxxxxxxx`) mit dem jeweiligen Formspree-Konto verbunden – diese
-Adresse steht direkt im jeweiligen Partial:
-
-| Formular | Datei |
-| --- | --- |
-| Kontaktformular | `layouts/partials/contact-form.html` |
-| Erfahrungsbericht-Einreichung | `layouts/partials/experience-form.html` |
-| Fehlermeldungen zu den Übungsaufgaben | `layouts/partials/report-error-general.html` |
-
-Um ein Formular an ein anderes Formspree-Konto/-Formular umzuhängen: die Adresse in der
-jeweiligen Datei ersetzen. Der Zugang zum Formspree-Konto selbst (Login) gehört in den
-gemeinsamen Passwort-Manager des Teams, nicht ins Repo (siehe Kurzguide, Abschnitt 6).
-
-**Zwei Adressen, drei Formulare.** Das Fehlermelde-Formular auf der
-Übungsaufgaben-Übersicht sendet vorläufig an **dieselbe** Adresse wie das
-Kontaktformular. Vorher stand dort ein Platzhalter: Jede Fehlermeldung ging ins Leere,
-während die meldende Person eine Bestätigung sah – schlimmer als gar kein Formular.
-
-Damit die Meldungen im gemeinsamen Postfach nicht untergehen, setzt das Formular über ein
-verstecktes Feld `_subject` den festen Betreff **"Fehlermeldung Uebungsaufgaben
-(Website)"**. Danach lässt sich filtern oder eine Regel anlegen. Der Betreff ist immer
-deutsch, unabhängig von der Sprache der Besucherin – er ist eine interne Sortierhilfe, und
-ein Filter funktioniert nur bei immer gleichem Wortlaut.
-
-Sobald ein eigenes Formspree-Formular für Fehlermeldungen besteht, genügt es, dessen
-Adresse in `report-error-general.html` einzutragen. Das versteckte `_subject`-Feld kann
-dann bleiben oder weg – es stört nicht.
-
-**Die Erfahrungsbericht-Adresse bitte nicht mit umhängen.** An ihr hängt mehr als ein
-Postfach: Eine Einsendung löst über `repository_dispatch` den Workflow
-`.github/workflows/erfahrungsbericht-intake.yml` aus, der daraus automatisch eine neue
-Datei und einen Pull Request baut. Wird diese Adresse geändert, ohne die Weiterleitung
-mit anzupassen, bricht diese Automatisierung.
-
-Der frühere "Fehler melden"-Knopf bei **jedem einzelnen** PDF-Download existiert nicht
-mehr – er wurde durch dieses eine zentrale Formular ersetzt. In `download-list.html` gibt
-es deshalb kein Formular mehr.
-
-Beide neuen Formulare nutzen dieselbe generische Klasse `report-error` wie die
-bestehenden PDF-Fehlermeldungen – das dazugehörige JavaScript (Senden per Fetch im
-Hintergrund, Status-Text im Knopf) liegt zentral in `layouts/partials/footer.html`
-(Teil 5) und muss für ein neues Formular dieser Art NICHT angepasst werden, solange das
-Formular die Klasse `report-error` und einen `button[type="submit"]` hat.
-
-Ein **neues** Formular an einer anderen Stelle der Website einzubauen, ist keine reine
-Copy-Paste-Aufgabe mehr (neues HTML-Formular + neue Formspree-Adresse einrichten) – siehe
-Abschnitt 16.
-
----
-
-## 12. Feste Bedienelement-Texte übersetzen (i18n)
-
-Nicht zu verwechseln mit den Seiteninhalten selbst (die liegen unter `content/`)! Die
-`i18n/de.yaml`, `i18n/fr.yaml`, `i18n/it.yaml`-Dateien enthalten stattdessen alle **festen
-Texte, die überall auf der Website gleich wiederverwendet werden** – Knopf-Beschriftungen
-("Senden", "Mehr erfahren"), Menü-Hilfstexte für Screenreader, Formular-Labels,
-Fehlermeldungen, Cookie-Banner-Texte usw.
-
-Jede Zeile hat links einen "Schlüssel" (z. B. `cookie_reject:`) und rechts den
-tatsächlichen Text. **Alle drei Dateien haben dieselben Schlüssel**, nur mit übersetztem
-Text rechts. Einen bestehenden Text ändern: den Wert rechts vom Doppelpunkt in **allen
-drei** Dateien anpassen (nicht nur in einer, sonst zeigen die anderen beiden Sprachen
-weiter den alten Text). Es dürfen keine neuen Schlüssel frei erfunden werden, ohne dass
-sie auch irgendwo in `layouts/` tatsächlich abgerufen werden – das würde folgenlos
-bleiben (der Text würde einfach nirgends erscheinen).
-
----
-
-## 13. Social-Media-Links und Newsletter
-
-In `hugo.toml` unter `[params]`:
-
-```toml
-social_instagram = 'https://www.instagram.com/ncwiki.ch/'
-social_discord = 'https://discord.com/invite/DhgYpUGss9'
-social_linkedin = ''
-newsletter_url = ''
-```
-
-Bleibt eines dieser Felder leer (`''`), verschwindet der entsprechende Knopf/Bereich in
-der Fusszeile automatisch komplett, statt auf eine leere oder kaputte Adresse zu
-verlinken. Sobald z. B. ein LinkedIn-Auftritt existiert, einfach die echte Adresse
-eintragen – der Knopf erscheint dann automatisch, ohne dass sonst etwas geändert werden
-müsste.
-
----
-
-## 14. Farben, Schrift und generelles Design
-
-**Das gesamte Erscheinungsbild** (Farben, Schriftgrössen, Abstände) kommt aus einer
-einzigen Datei: `assets/css/style.css`. Ganz oben stehen alle Grundfarben und
-Schriftarten als benannte Variablen:
-
-```css
-:root{
-  --color-signal:#223FCB;         /* Primärfarbe */
-  --color-accent:#F5813C;
-  --font-display:'Poppins','Trebuchet MS',system-ui,sans-serif;
-  --font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
-  ...
-}
-```
-
-Eine Variable dort ändern (z. B. `--color-signal`) wirkt sich **automatisch überall** auf
-der Website aus, wo diese Farbe verwendet wird (Knöpfe, Links, Hervorhebungen) – nicht
-einzeln pro Seite oder Element ändern.
-
-**Zu den Schriften:** Die Website nutzt zwei Schriftarten – **Poppins** für Überschriften
-und **Inter** für den Fliesstext. Beide liegen als Dateien im Ordner `static/fonts/` und
-werden von dort ausgeliefert, **nicht** von Google Fonts nachgeladen: So bekommt Google
-beim Besuch der Website keine IP-Adressen unserer Besucher:innen zu sehen. Wer eine
-Schrift austauschen will, muss deshalb beides tun – die `.woff2`-Datei in `static/fonts/`
-ablegen **und** den passenden `@font-face`-Block in `assets/css/style.css` anpassen; es
-reicht nicht, nur den Namen in der Variable zu ändern.
-
-Bis August 2026 waren hier Space Grotesk und Space Mono im Einsatz. Beide wurden ersetzt,
-weil die Kombination technisch/"cyber" wirkte – für eine Lernplattform für Maturand:innen
-der falsche Ton. Eine Monospace-Schrift gibt es seither gar nicht mehr: Labels und
-Eyebrows tragen ihren Charakter jetzt über Versalien und Sperrung statt über die
-Schriftart.
-
-**Wichtig: Zwei getrennte Paletten für Hell- und Dunkelmodus.** Direkt unter dem ersten
-`:root{...}`-Block (helle Palette) folgt weiter unten in derselben Datei ein zweiter
-Block `:root[data-theme="dark"]{...}` mit denselben Variablennamen, aber den Werten für
-den Dunkelmodus. **Beide Blöcke müssen bei einer Farbänderung zusammen angepasst
-werden**, sonst stimmt z. B. die Primärfarbe im Hellmodus, aber im Dunkelmodus steht dort
-noch die alte Farbe (oder ein schlecht lesbarer Kontrast).
-
-### Tiefe: Schatten und Verläufe
-
-Bis zum 8. September 2026 hatte die Website **keinen einzigen Schatten**. Jede Karte war
-ein umrandetes Rechteck, in dieselbe Fläche gemalt wie alles andere – die Rückmeldung
-lautete entsprechend "sehr viele einfarbige Flächen". Seither gibt es dafür eigene
-Variablen im selben `:root`-Block:
-
-| Variable | Wofür |
-| --- | --- |
-| `--shadow-sm` | Ruhezustand von Karten, Kacheln, Download-Knöpfen, Tabellen |
-| `--shadow-md` | Zeigen mit der Maus ("hebt sich an") |
-| `--shadow-lg` | Die wenigen Elemente, die wirklich schweben sollen: Countdown-Karte, Spenden-Aufruf |
-| `--glow-signal`, `--glow-accent` | Zwei sehr blasse Farbwolken hinter der ganzen Seite |
-| `--band-top`, `--band-glow`, `--band-texture` | Verlauf, Lichtschein und Punktraster im dunklen Band unten |
-| `--color-section-alt` | Fläche der abwechselnd getönten Sektionen auf der Startseite |
-
-**Schatten müssen im Dunkelmodus kräftiger sein.** Ein Schatten ist dunkel – auf dunklem
-Grund ist ein zarter Schatten schlicht unsichtbar, und die Karten wären wieder flach.
-Deshalb stehen im `:root[data-theme="dark"]`-Block deutlich höhere Deckkraft-Werte.
-
-**`--color-section-alt` ist im Dunkelmodus absichtlich nicht dieselbe Farbe wie
-`--color-surface`.** Die Karten in diesen Sektionen haben genau die Kartenfarbe und wären
-sonst kaum vom Untergrund zu unterscheiden.
-
-### Warum es einen eigenen Knopf-Hintergrund gibt
-
-`--color-btn-bg` sieht im Hellmodus genauso aus wie `--color-signal` – im Dunkelmodus
-aber nicht, und das ist Absicht. Der Dunkelmodus macht `--color-signal` bewusst **heller**,
-damit Link-**Text** auf dunklem Grund lesbar bleibt. Als Hintergrund für weisse
-Knopfbeschriftung ist genau das falsch: Dort kam die weisse Schrift nur auf 3.1 : 1,
-gefordert sind 4.5 : 1. Wer die Markenfarbe ändert, muss deshalb **beide** Variablen
-anpassen – `--color-signal` für Links und `--color-btn-bg` für gefüllte Knöpfe, jeweils in
-beiden Paletten.
-
-Dasselbe gilt für `--cta-from`/`--cta-to` (die blaue Spenden-Karte) und
-`--color-avatar-0` bis `-5`: Diese Werte stehen bewusst **nur** im hellen Block und werden
-im Dunkelmodus *nicht* überschrieben, weil auf ihnen weisser Text steht. Sie dürfen
-deshalb nie so hell werden, dass Weiss darauf nicht mehr lesbar ist.
-
-**Kontrast prüfen, bevor eine Farbe geändert wird.** Ein Online-Kontrastrechner
-(Suchbegriff "WCAG contrast checker") reicht: Normaler Text braucht 4.5 : 1, grosse
-Überschriften 3 : 1 – und zwar in **beiden** Modi.
-
-**Schriftarten austauschen:** In `--font-display`/`--font-body` die erste
-Schriftart in der Liste ersetzen (eine `--font-mono` gibt es seit dem Schriftwechsel
-nicht mehr, siehe oben; die folgenden Namen sind reine Rückfall-Schriften,
-falls die erste beim Besuch nicht verfügbar wäre). Eine komplett neue Schriftart
-einzubinden (die nicht schon als Google Font o. Ä. im Projekt vorbereitet ist) braucht
-zusätzliche technische Schritte (Schriftdatei einbinden/laden) – das ist keine reine
-Ein-Zeilen-Änderung mehr, siehe Abschnitt 16.
-
-**Grössere Layout-Änderungen** (neue Sektionen, andere Seitenaufteilung, neue
-Komponenten) erfordern Kenntnisse über Hugo-Templates (`layouts/`) und gehören ebenfalls
-zu Abschnitt 16.
-
----
-
-## 15. Eine ganze Seite/einen ganzen Bereich löschen
-
-Der Kurzguide (Abschnitt 8) erklärt das Löschen einer einzelnen Datei. Beim Löschen eines
-**ganzen Bereichs** (mehrere Seiten auf einmal, z. B. ein kompletter Unterordner unter
-`content/`) zusätzlich beachten:
-
-- **Menüpunkt verschwindet automatisch**, sobald die zugehörige `_index.md` mit ihrem
-  `menu`-Block gelöscht ist – nichts in `hugo.toml` oder `layouts/` muss dafür separat
-  angepasst werden.
-- **Alle drei Sprachversionen löschen**, nicht nur die deutsche – sonst bleibt z. B. die
-  französische Version eines eigentlich entfernten Bereichs weiter online erreichbar
-  (auch wenn sie im deutschen Menü nicht mehr auftaucht).
-- **Interne Links prüfen:** Der automatische Link-Check (Kurzguide, Abschnitt 7) macht
-  den nächsten Build zuverlässig rot, falls eine andere Seite noch auf den gelöschten
-  Bereich verweist – das zeigt zuverlässig, wo noch aufgeräumt werden muss, sollte aber
-  nicht einfach ignoriert werden, nur weil die Seite trotzdem online bleibt (siehe
-  Kurzguide, Abschnitt 7: ein roter Build heisst nicht "offline", aber sollte trotzdem
-  zeitnah behoben werden).
-- **Zugehörige Downloads/Bilder** unter `assets/downloads/`, `static/downloads/` bzw.
-  `assets/images/` werden beim Löschen der Seite **nicht automatisch mitgelöscht** – bei
-  Bedarf separat entfernen, sonst bleiben verwaiste Dateien im Repo liegen (kein
-  Sicherheitsproblem, nur unnötiger Ballast).
-
----
-
-## 16. Wo hört "nur Copy-Paste" auf?
-
-Die allermeisten Alltagsaufgaben in diesem Dokument und im Kurzguide sind reines Ausfüllen
-bestehender Muster – Frontmatter-Felder setzen, YAML-Einträge ergänzen, Dateien
-hochladen. Das reicht bewusst so weit wie möglich, damit Team-Mitglieder ohne
-Hugo-Kenntnisse die Website selbstständig pflegen können.
-
-**Folgende Aufgaben brauchen echte Hugo-/Web-Kenntnisse** und sollten an jemanden mit
-diesem Hintergrund gehen (oder an einen KI-Assistenten mit Zugriff aufs Repo, der die
-bestehenden Muster in `layouts/` versteht) statt per Trial-and-Error selbst versucht zu
-werden:
-
-- Eine **neue Art** von Seite/Komponente einführen, die es so noch nicht gibt (z. B. eine
-  völlig neue Sektion auf der Startseite, ein neuer Formular-Typ, ein neues
-  interaktives Element).
-- Änderungen an Dateien unter `layouts/` (das eigentliche Design/die
-  Seitenstruktur-Logik) oder an `.github/workflows/` (die Automatisierung).
-- Eine neue Schriftart einbinden, die noch nicht vorbereitet ist.
-- Das Favicon neu erzeugen (siehe Abschnitt 3 – braucht ein externes Werkzeug).
-- Alles, wobei unklar ist, ob eine Änderung an einer Stelle unbeabsichtigt eine andere
-  Stelle der Website mitbeeinflusst (z. B. weil eine Datei von mehreren Seiten
-  gleichzeitig verwendet wird, wie `data/subtests.yaml` oder die Farbvariablen in
-  `assets/css/style.css`).
-
-**Faustregel:** Wenn eine Änderung sich als "Feld X in Datei Y auf Wert Z setzen"
-beschreiben lässt und Y eine der in diesem Dokument genannten Dateien ist – selbst
-machen. Wenn dafür neuer HTML/CSS/Template-Code geschrieben werden müsste, der so noch
-nirgends im Projekt existiert – Hilfe holen.
-
----
-
-## 17. Startseite: der Zeitstrahl und das Material
-
-Unter dem Hero stehen zwei Abschnitte, die zusammen das Angebot zeigen. Sie haben im
-September 2026 ein Raster aus sechs Kacheln mit grossen Zahlen abgelöst.
-
-Der Grund für den ersten Anlauf: Die Startseite zeigte vorher nur Hero, News, die acht
-Untertest-Kacheln, drei Mission-Sätze und den Spendenaufruf. Der gesamte tatsächliche
-Bestand – über 150 Übungs-PDFs, die Testsimulationen, die Kursskripte, der Uniguide, die
-Erfahrungsberichte – tauchte auf der Startseite nirgends auf. Die Seite wirkte dadurch
-leerer, als sie ist.
-
-Der Grund für die Ablösung: Sechs Kacheln, die jede mit einer grossen Zahl aufmachen,
-lasen sich wie eine automatisch erzeugte Statistik – und beantworteten die eigentliche
-Frage nicht. Wer vor dem EMS steht, will wissen **wann** er was braucht und **wie** das
-Material aussieht. Genau das sind heute die zwei Abschnitte:
-
-1. **„Was du wann brauchst"** – ein Zeitstrahl über das Jahr.
-2. **„Alles kostenlos, alles von Studierenden gemacht"** – vier Kacheln, die echte
-   Seiten aus den PDFs und echte Fotos zeigen.
-
-### Der Zeitstrahl und sein unsichtbares Raster
-
-Vier Etappen liegen nebeneinander auf einer waagrechten Linie mit Punkten; auf schmalen
-Bildschirmen wird die Linie senkrecht. Jede Etappe besteht aus vier Teilen: Zeitangabe,
-Titel, Text, Links.
-
-Die vier Teile sind bewusst **direkte Kinder** von `.weg-etappe`. Das Listenelement
-setzt `grid-row: span 4` und `grid-template-rows: subgrid`, übernimmt also die vier
-Zeilen des äusseren Rasters. Dadurch beginnen Titel, Text und Links in allen vier
-Spalten auf **genau derselben Höhe**, auch wenn ein Titel zweizeilig wird
-(„Entscheiden und anmelden"). Vorher richtete sich jede Spalte nach ihrem eigenen
-Inhalt, und die Etappen standen sichtbar versetzt.
-
-Wer die vier Teile in ein zusätzliches `<div>` einpackt, zerstört diese Ausrichtung
-lautlos – `subgrid` wirkt nur auf direkte Kinder.
-
-Im Zeitstrahl stehen **keine Zahlen**, nur die Namen der Angebote. Vier Etappen, die
-jede eine Zahl herausstellen, lenkten vom Ablauf ab, um den es dort geht; die Zahlen
-stehen im Abschnitt darunter, wo sie das Material beschreiben.
+`bild_alt` ist Pflicht, sobald ein Bild gesetzt ist (in jeder Sprache übersetzt). Ohne
+`bild` erscheint kein Foto. Das Foto soll zeigen, dass hier Echtes passiert – kein
+Symbolbild.
+
+### Zeitstrahl (`weg:`)
 
 ```yaml
 weg:
@@ -791,356 +357,485 @@ weg:
   etappen:
     - wann: "Bis 15. Februar"
       titel: "Entscheiden und anmelden"
-      text: "Welche Universität, welche Priorität ..."
+      text: "…"
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
 ```
 
-### Die vier Material-Kacheln
+Die Termine folgen dem offiziellen Zeitplan von swissuniversities. Im Zeitstrahl stehen
+keine Zahlen. Die vier Teile einer Etappe müssen im Template direkte Kinder von
+`.weg-etappe` bleiben (CSS `subgrid` richtet sie über alle Spalten aus; ein zusätzliches
+`<div>` zerstört das lautlos).
 
-Jede Kachel zeigt ein Bild und darunter Titel und einen Satz. Die Bilder sind **echt** –
-gerenderte Seiten aus den PDFs, die auch zum Download stehen, und das Foto des letzten
-Kurses:
-
-| Kachel | Bild |
-| --- | --- |
-| Übungsserien | neun **ganze Seiten**, drei pro Reihe: zuerst das Antwortblatt, dann die acht Untertests in der Reihenfolge des Testtags |
-| Testhefte | Titelseite einer Testsimulation, ebenfalls ganz |
-| Vorbereitungskurs | das vorhandene Kursfoto |
-| Orientierung und Austausch | Uniguide-Tabelle, ein Erfahrungsbericht und die Discord-Karte übereinander |
-
-### Ganze Seiten statt Ausschnitte
-
-Die Übungs-Kachel zeigte zuerst neun geschnittene Stücke. Die sahen willkürlich
-aus, und zwar aus einem konkreten Grund: Was ein Blatt als Blatt lesbar macht,
-steht am Rand – Titel des Untertests, Anzahl Aufgaben, Bearbeitungszeit, Logo,
-Lizenzhinweis. Schneidet man in die Fläche hinein, bleibt eine Textur übrig.
-
-Jetzt ist jedes Feld eine vollständige Seite. Damit das aufgeht, mussten zwei
-Dinge zusammenkommen:
-
-1. **Das Papierformat ist nicht einheitlich.** Sechs der neun Quell-PDFs sind US
-   Letter (612×792 pt, 1:1.294), drei sind A4 (595×842 pt, 1:1.415). Auf ein
-   gemeinsames Verhältnis geschnitten würde bei der einen Hälfte der Rand
-   abgeschnitten – genau der Rand, um den es geht.
-2. **Deshalb `object-fit: contain` statt `cover`.** Jede Seite wird vollständig
-   in ihr Feld gelegt, der Rest ist weiss. Der weisse Grund ist im Stylesheet
-   fest verdrahtet und nicht `--color-surface`: Die Seiten sind selbst weiss,
-   im Dunkelmodus bekämen sie sonst einen dunklen Rahmen ums Papier.
-
-Gesteuert wird das über `papier: true` im Block `$quellen` des Templates. Fotos
-und Bildschirmfotos stehen auf `false` – bei ihnen ist ein Anschnitt richtig.
-
-Alle vier Flächen haben dasselbe Verhältnis (1:1.35, zwischen Letter und A4).
-Das ist kein Schönheitswert: Wären sie verschieden hoch, stünden die Titel
-darunter auf verschiedenen Höhen.
-
-Die Reihenfolge der neun Ausschnitte ist nicht beliebig: Sie folgt `data/testablauf.yaml`,
-also dem echten Testtag. Wer die Untertests umsortiert, sortiert auch hier um.
-
-Die Discord-Karte ist das einzige selbst gestaltete Bild – es gibt keinen Screenshot, der
-sich zeigen liesse, ohne fremde Beiträge abzubilden. Sie stellt deshalb **keine
-Oberfläche nach**, sondern nennt in der Hausschrift, was die Community ausmacht. Nichts
-daran soll aussehen wie ein echter Screenshot.
-
-Welche Bilder zu welcher Kachel gehören, steht im Template
-(`layouts/partials/material-grid.html`, Block `$quellen`) und nicht im Frontmatter: Es
-ist ein Gestaltungsentscheid, keine Redaktionsangabe. Ein Name **mit** Punkt und Endung
-wird unter `assets/images/` gesucht, ein Name **ohne** unter `assets/images/angebot/`.
-
-**Achtung beim Bearbeiten des Templates:** Ein Hugo-Kommentar `{{- /* ... */ -}}` darf
-nicht innerhalb der Argumentliste eines `dict` stehen – der Build bricht dann mit
-`unexpected "{" in operand` ab. Kommentare gehören über die Zuweisung.
-
-### Die Bilder neu erzeugen
-
-`scripts/angebot-bilder-erzeugen.py` erzeugt alle Ausschnitte reproduzierbar aus den
-PDFs im Repo (braucht `pip install pymupdf`):
-
-```bash
-python3 scripts/angebot-bilder-erzeugen.py
-```
-
-Oben in der Datei stehen die Quellen: pro Bild das PDF und die Seite daraus. Mehr
-braucht es nicht mehr – seit ganze Seiten gezeigt werden, gibt es keine
-Ausschnitts-Koordinaten und kein Seitenverhältnis zu pflegen. Gewählt ist jeweils
-eine Seite mit **Aufgaben** darauf, nicht das Deckblatt und nicht die Anleitung.
-
-Das Kursskript fehlt dort absichtlich: Seine Kachel zeigt das Kursfoto, nicht die
-Titelseite.
-
-### Die Zahlen niemals von Hand eintragen
-
-Sie werden bei **jedem Bauen der Website neu gezählt**, an einer einzigen Stelle
-(`layouts/partials/angebot-zahlen.html`): die PDFs direkt in den Ordnern unter
-`assets/downloads/`, die Erfahrungsberichte aus den Seiten im jeweiligen Sprachordner,
-die Universitäten und Fragen aus `data/unis.yaml` bzw. `data/faq.yaml`. Werden zehn neue
-Übungsserien hochgeladen, steht dort beim nächsten Build automatisch die neue Zahl.
-
-Deshalb gehört in die Texte **keine ausgeschriebene Zahl** – sie wäre beim nächsten
-Upload sofort falsch. Stattdessen setzt man Platzhalter und nennt daneben, was eingesetzt
-werden soll:
+### Material-Kacheln (`material:`)
 
 ```yaml
-    - key: community
-      titel: "Orientierung und Austausch"
-      zahlen: ["unis", "berichte"]
-      text: "{1} Universitäten im Vergleich, {2} Erfahrungsberichte und unser Discord."
+material:
+  items:
+    - key: uebungsaufgaben        # nicht übersetzen
+      titel: "Übungsserien"
+      zahlen: ["uebungen"]        # füllt {1}
+      text: "{1} Serien zu allen acht Untertests, mit Lösungen."
 ```
 
-Weil die Erfahrungsberichte nicht in allen Sprachen gleich weit übersetzt sind, zählt
-jede Sprachfassung ihre eigenen (aktuell 66 auf Deutsch, 13 auf Französisch, 4 auf
-Italienisch). Es steht also nie eine Zahl da, die es in dieser Sprache gar nicht gibt.
+Erlaubte `key`: `uebungsaufgaben`, `testsimulationen`, `vorbereitungskurse`, `community`.
 
-### Was genau gezählt wird
+**Zahlen nie von Hand schreiben.** `layouts/partials/angebot-zahlen.html` zählt bei jedem
+Bau neu: Übungsserien ohne Lösungs-PDFs, Testsimulationen als Jahrgänge, Unis und Fragen
+aus den Datendateien, Erfahrungsberichte je Sprache. In den Text kommt `{1}`, `{2}` …
 
-Gezählt wird, was jemanden interessiert – nicht, was im Ordner liegt:
+Welche Bilder eine Kachel zeigt, steht in `layouts/partials/material-grid.html` (Block
+`$quellen`). PDF-Seiten werden immer **ganz** gezeigt (`papier: true`, weisser Grund,
+`object-fit: contain`) – die Quell-PDFs sind teils A4, teils US Letter. Fotos dürfen
+angeschnitten werden. Ein Name mit Endung wird unter `assets/images/` gesucht, einer ohne
+unter `assets/images/angebot/`. Neu erzeugen mit `python3 scripts/angebot-bilder-erzeugen.py`
+(braucht `pip install pymupdf`; oben im Skript stehen PDF und Seite je Bild). Die
+Discord-Karte ist bewusst kein nachgemachter Screenshot.
 
-- **Übungsaufgaben:** die Übungsserien, ohne die Lösungs-PDFs. Eine Serie mit
-  Lösung ist eine Übung, nicht zwei (auf der Seite erscheint sie ja auch als
-  ein Eintrag mit zwei Knöpfen).
-- **Testsimulationen:** die Jahrgänge. Zu einem Jahrgang gehören mehrere PDFs
-  (Testheft, Lösungen, Auswertung des Konzentrationstests, Prozentrang-
-  Tabelle) – das sind trotzdem zusammen **eine** Simulation. Gezählt werden
-  die Jahreszahlen in den Dateinamen, jede nur einmal.
-- **Vorbereitungskurse:** gar keine gezählte Zahl. Es gibt genau ein aktuelles
-  Kursskript, und „1 Kursskript" sagt über das Angebot nichts aus – das Angebot
-  sind die Kurse, nicht die Dateien. Auf der Kachel steht deshalb ein Satz
-  („Zwei Tage im Hörsaal, in Kleingruppen …").
+Etappen und Kacheln entfernen oder umsortieren: Eintrag in allen drei Dateien löschen bzw.
+verschieben. Eine ganz neue Kachel braucht einen Eintrag in `$quellen` (Entwickler-Schritt).
 
-Die ersten beiden Regeln sind keine Kosmetik: Ungefiltert gezählt stünden dort
-153 „Übungsaufgaben" und 21 „Testsimulationen" – beide Zahlen klingen grösser,
-als das Angebot ist, und die zweite ist schlicht falsch. Wer die Zählweise
-ändert, sollte vorher nachsehen, ob die neue Zahl das beschreibt, was auf der
-Kachel steht.
-
-### Texte ändern
-
-Beide Abschnitte stehen im Frontmatter der Startseite unter `weg:` bzw. `material:` – und
-zwar in **allen drei** Sprachdateien `content/de/_index.md`, `content/fr/_index.md`,
-`content/it/_index.md`.
-
-`key` ist der einzige Wert, der **nicht** übersetzt wird – er ist der interne Name und
-muss in allen drei Sprachen gleich bleiben. Erlaubt sind: `uebungsaufgaben`,
-`testsimulationen`, `vorbereitungskurse`, `community`.
-
-### Eine Etappe oder Kachel entfernen oder umsortieren
-
-Den Eintrag in allen drei Dateien löschen bzw. verschieben. Beide Raster richten sich
-automatisch nach der Anzahl; es müssen keine Spalten angepasst werden.
-
-### Eine ganz neue Kachel
-
-Dafür braucht es zusätzlich eine Ergänzung im Template
-(`layouts/partials/material-grid.html`, Block `$quellen`): Dort steht pro `key`, welche
-Zieladresse verlinkt und welche Bilder gezeigt werden. Das ist ein Entwickler-Schritt
-(Abschnitt 16) – die Datei erklärt oben im Kommentar, was einzutragen ist.
+Achtung im Template: Ein Hugo-Kommentar `{{/* */}}` innerhalb eines `dict` bricht den Bau.
 
 ---
 
-## 18. Prüfungsmodus: Uhr, Ansagen und der Testablauf
+## 7. Team und neue Saison
 
-Die Seite `/ems/pruefungsmodus/` stellt die Prüfungsbedingungen her: Anweisung
-vorlesen, Zeit nehmen, "Stopp" sagen – einzeln oder für den ganzen Testtag.
-Der Kurzguide (Abschnitt 14) erklärt, wie man Zeiten und Sätze ändert. Hier
-steht, wie es aufgebaut ist.
+### Leitungsteam
 
-### Eine Quelle für den Testablauf
+Steht im Kopf von `content/<sprache>/ueber-uns/team/_index.md` unter `ressorts:`; der
+Baustein `team-leitung` macht daraus die Karten.
 
-`data/testablauf.yaml` enthält die elf Blöcke in der Reihenfolge des Testtags,
-mit Dauer, Aufgabenzahl, Punktzahl und den Namen in allen drei Sprachen. Diese
-Datei speist zwei Dinge:
+```yaml
+ressorts:
+  - titel: "Präsidium"
+    mitglieder:
+      - name: "Vorname Nachname"
+        rolle: "Co-Präsident"
+        foto: "team/vorname-nachname.jpg"   # optional, relativ zu assets/images/
+```
 
-| Wo | Wie |
-| --- | --- |
-| Tabelle „Tagesablauf" auf `/ems/` | Shortcode `testablauf`, siehe `layouts/shortcodes/testablauf.html` |
-| Prüfungsmodus | `layouts/partials/pruefungsmodus.html` |
-| Vorgabezeiten der Lern-Generatoren | `layouts/partials/bausteine/fakten-generator.html`, `layouts/partials/bausteine/figuren-generator.html` |
+Reihenfolge der Blöcke = Reihenfolge auf der Seite. Ohne Foto erscheint ein farbiger
+Kreis mit Initialen. Namen sind in allen Sprachen gleich, `titel` und `rolle` werden
+übersetzt. Am einfachsten über das Blatt „Team – Ansicht“ der Textmappe.
 
-Die letzte Zeile ist leicht zu übersehen: Die beiden Generatoren rechnen sich
-ihre Vorgaben aus dieser Datei aus, auch die vorgeschlagene **Pause** – das ist
-nämlich nicht irgendeine Zahl, sondern die tatsächliche Lücke zwischen
-Einprägen und Reproduktion am Testtag (alle Blöcke, die dazwischen liegen,
-zusammengezählt). Wer hier eine Dauer ändert, ändert sie dort mit. Genau dafür
-steht sie nicht fest im Template.
+### Neue Saison
 
-Die **Gesamtzeit** in der Tabelle wird aus den Einzelminuten zusammengezählt und
-nicht eingetragen – sie kann dadurch gar nicht von den Einzelwerten abweichen.
-Wer eine Dauer ändert, sieht die neue Gesamtzeit automatisch.
+Zwei Wege, beide machen dasselbe (`scripts/texte_saison.py`):
 
-### Warum die Uhr nicht Sekunden zählt
+- in der Textmappe, Blatt „Team – Ansicht“, das Feld „Neue Saison starten“ ausfüllen und
+  hochladen, **oder**
+- auf GitHub *Actions → Neue Saison starten → Run workflow*, Saison eintragen (ergibt
+  einen Pull Request).
 
-Browser verlangsamen Zeitgeber in Hintergrund-Tabs. Eine Uhr, die einfach
-Sekunden herunterzählt, ginge nach einer 45-Minuten-Runde deutlich falsch. Der
-Prüfungsmodus merkt sich deshalb einen festen **Endzeitpunkt** und rechnet bei
-jedem Bildaufbau die Differenz zur echten Uhrzeit aus. Wer daran etwas ändert,
-sollte diesen Punkt kennen – es ist der Unterschied zwischen einer Übungsuhr und
-einer, der man nicht trauen kann.
+In allen drei Sprachen wandert der Abschnitt „Team Saison …“ samt einer Liste des
+Leitungsteams ins Archiv (`ueber-uns/archiv/`, zuoberst unter „Frühere Saisons“), und auf
+der Team-Seite beginnt die neue Saison mit einem Platzhalter-Satz. Das Leitungsteam
+selbst bleibt stehen; wer wechselt, wird danach geändert. Ein zweiter Lauf mit derselben
+Saison tut nichts.
 
-### Vorlesen
+### Archiv
 
-Über `SpeechSynthesis`, die Sprachausgabe des Browsers. Bewusst kein externer
-Dienst und keine hochgeladenen Audiodateien:
-
-- kein fremder Server erfährt, wer hier übt
-- es sind keine Dateien zu pflegen
-- es funktioniert automatisch in allen drei Sprachen, weil die Stimme der
-  Seitensprache folgt (`lang`-Attribut am `html`-Tag)
-
-Der Preis ist die maschinelle Stimme – und dass sie auf jedem Gerät anders
-klingt. Deshalb hat eine **Aufnahme immer Vorrang**: Findet sich unter
-`assets/audio/pruefungsmodus/<sprache>/` eine Datei mit dem passenden Namen,
-wird sie abgespielt; nur wenn keine da ist (oder sie sich nicht abspielen
-lässt), wird vorgelesen. Umzustellen ist dafür nichts.
-
-Für Deutsch und Französisch liegen die 15 Dateien bereits im Repo, erzeugt mit
-`scripts/ansagen-erzeugen.py`. Das Skript liest die Sätze aus der **gebauten**
-Seite statt aus einer eigenen Liste – so kann eine Aufnahme gar nicht etwas
-anderes sagen als der Bildschirm. Ändert sich ein `pm_`-Text, muss es erneut
-laufen (oder die betroffene Datei wird gelöscht).
-
-Italienisch fehlt bewusst: Die Lizenz des verfügbaren italienischen Datensatzes
-liess sich nicht eindeutig klären. Die französische Stimme steht unter CC-BY 4.0
-und braucht deshalb eine Namensnennung – sie steht im README des Audio-Ordners.
-
-Wichtig beim Übersetzen der `pm_`-Einträge in `i18n/*.yaml`: Diese Sätze werden
-**gesprochen**. Klammern, Abkürzungen und Halbsätze klingen vorgelesen falsch.
-
-### Weitere Details, die leicht übersehen werden
-
-- **Bildschirm bleibt an:** Über die Wake-Lock-Funktion des Browsers – sonst
-  geht der Bildschirm mitten in einem 45-Minuten-Block aus, also genau dann,
-  wenn man die Uhr braucht. Unterstützt das Gerät sie nicht, läuft alles normal
-  weiter, der Bildschirm kann dann aber abschalten.
-- **Vollbild ist nur eine Zugabe:** Die Bühne liegt ohnehin als fest
-  positionierte Fläche über der Seite. Verlässt jemand das Vollbild mit Esc,
-  bleibt die Übung sichtbar und läuft weiter.
-- **Zwischen zwei Blöcken wird nicht gewartet.** Am echten EMS heisst es
-  "Stopp, blättern Sie jetzt zum nächsten Untertest" und praktisch unmittelbar
-  danach die nächste Ansage und "Start". Der Wechsel hängt deshalb nur daran,
-  dass der Stopp-Satz zu Ende gesprochen ist - es gibt keine eingebaute
-  Umblätter-Dauer und auch keine Rückfrage.
-- **Eine Endzeit wird nirgends angezeigt**, auch nicht vor dem Start. Im
-  Testsaal steht sie nirgends geschrieben; es gibt wirklich nur die Uhr.
-- **Intern wird in SEKUNDEN gerechnet, nicht in Minuten.** Ohne Expertenmodus
-  ergibt sich die Zeit aus der Aufgabenzahl, im Verhältnis des echten Blocks
-  (`aufgaben` zu `minuten` aus `data/testablauf.yaml`). Auf ganze Minuten
-  gerundet wäre der Schnitt pro Aufgabe ein anderer als am echten Test – 7
-  Aufgaben „Muster zuordnen" sind 6:13, nicht 6 Minuten. Wer hier wieder auf
-  Minuten umstellt, macht genau den Fehler, den diese Umstellung behoben hat.
-- **`aufgaben_fest: true` dreht die Bedienung um.** Bei Figuren und Fakten
-  einprägen gibt das Übungsblatt die Anzahl vor; einstellbar ist dort die Zeit,
-  auch ohne Expertenmodus (Zeilenklasse `zeit-frei`). Blöcke ohne Aufgabenzahl
-  – die Einprägephasen und das konzentrierte Arbeiten – behalten sonst ihre
-  echte Zeit, dort gibt es nichts zu rechnen.
-- **Die Eingabefelder für die Zeit stehen immer im Quelltext**, sind aber per
-  `display:none` ausgeblendet (nicht nur unsichtbar, sondern auch nicht per
-  Tabulator erreichbar) und erscheinen im Expertenmodus bzw. in den
-  `zeit-frei`-Zeilen.
-- **Die Ansage nennt die Dauer über `{dauer}`, nicht über `{min}`.** Dahinter
-  stehen zwei Vorlagen (`pm_dauer_min`, `pm_dauer_min_sek`), damit „0 Sekunden"
-  nicht mitgesprochen wird. Bei unveränderten Werten kommt exakt derselbe Satz
-  heraus wie vorher – deshalb passen die fertigen Aufnahmen weiterhin.
-- **Das Zeitformat im Link ist `<min>m<sek>`** (z. B. `6m13`). Das „m" ist nicht
-  Zierde: Vor der Umstellung stand dort eine reine Minutenzahl. Ein alter,
-  weitergegebener Link bleibt dadurch gültig und wird weiter als Minuten
-  gelesen, statt still als Sekunden missverstanden zu werden.
-- **Ein geteilter Link schaltet den Expertenmodus selbst ein**, wenn er Zeiten
-  oder Pausen enthält, die sich im Normalmodus gar nicht darstellen liessen.
-  Ohne das würde ein weitergegebener Ablauf beim Öffnen stillschweigend
-  verändert. Zeilen mit `aufgaben_fest` zählen dabei nicht mit – dort ist eine
-  eigene Zeit ja der Normalfall.
-- **Die Pause gibt es am echten EMS nicht.** Sie ist absichtlich eingebaut und
-  ebenso absichtlich beschriftet („Am echten EMS gibt es keine Pause – diese
-  hier gibt es nur zum Üben").
-- **`safeJS` im Partial nicht entfernen.** Die Blöcke und Texte werden als JSON
-  an das Skript übergeben. Ohne diesen Zusatz verpackt Hugo den fertigen
-  JSON-Text ein zweites Mal, im Browser käme Text statt Daten an – und die
-  Seite bliebe stumm, ohne sichtbare Fehlermeldung.
+`content/<sprache>/ueber-uns/archiv/_index.md` ist normaler Text: frühere Saisons,
+ehemalige Verantwortliche, ältere Kursskripte (automatische Liste aus
+`assets/downloads/archiv-kursskripte/`) und darunter die früheren News
+(`ueber-uns/archiv/news/`).
 
 ---
 
-## 19. Die Abschnittsliste („Auf dieser Seite")
+## 8. Unterstützen, Spenden, Sponsoren
 
-| Was | Wo |
+### „Jetzt unterstützen“
+
+`content/<sprache>/unterstuetzer-innen/jetzt-unterstuetzen.md` hat `layout: spenden`
+(`layouts/_default/spenden.html`):
+
+- die **erste** `##`-Überschrift mit ihrem Text steht links neben dem grossen TWINT-Code,
+  darunter der Knopf „Spenden mit Überweisung“;
+- die **zweite** `##`-Überschrift bildet den Sponsoring-Teil mit dem Knopf „Weitere
+  Informationen“ (zur Seite Sponsoren).
+
+Die Texte bleiben also normaler Seitentext (Mappe, Editor). Knopf-Beschriftungen:
+`i18n`, Präfix `spenden_`. TWINT-Code austauschen: `assets/images/unterstuetzen/twint-qr.png`
+ersetzen (quadratisch). Er steht auch im Dunkelmodus auf Weiss, damit die App ihn liest.
+Die Kontoangaben stehen auf `unterstuetzer-innen/spenden-ueberweisung.md`.
+Kartenzahlung gibt es noch nicht.
+
+### Sponsoren-Seite
+
+`unterstuetzer-innen/sponsoren.md` ist normaler Text; am Ende steht der Baustein
+`sponsoring-kontakt`. E-Mail und Telefon in `data/sponsoring.yaml` – ist `telefon` leer,
+erscheint kein Telefon-Knopf.
+
+### Sponsoren-Logos
+
+Die Logos auf „Unterstützer:innen“ kommen aus `data/sponsors.yaml` (in der Datei Feld für
+Feld erklärt):
+
+1. Logo nach `assets/images/sponsors/` hochladen (SVG bevorzugt).
+2. Eintrag ergänzen:
+
+   ```yaml
+   - name: "Firmenname"
+     logo: "dateiname.svg"
+     website: "https://beispiel.ch/"
+   ```
+
+Reihenfolge in der Datei = Reihenfolge der Kacheln. Entfernen: Eintrag löschen. Dunkle
+Logos bekommen automatisch einen hellen Hintergrund-Chip (`.sponsor-logo`).
+
+---
+
+## 9. FAQ, Uniguide, Untertests, Download-Namen
+
+### FAQ (`data/faq.yaml`)
+
+```yaml
+- id: "eindeutige-kurzbezeichnung"
+  frage:   { de: "…?", fr: "… ?", it: "…?" }
+  antwort: { de: "…",  fr: "…",   it: "…" }
+```
+
+Reihenfolge in der Datei = Reihenfolge auf der Seite. Die Frage „Welche Untertests gibt
+es?“ hängt automatisch die Liste aus `data/subtests.yaml` an (`dynamic: subtests`); der
+Satz davor („9 Untertests“) steht fest in der FAQ.
+
+### Uniguide (`data/unis.yaml`)
+
+Eine Datei speist die Tabelle `/ems/uniguide/`, jede Uni-Seite und den Vergleich. Jede Uni
+braucht zusätzlich eine fast leere Seite `content/<sprache>/ems/uniguide/<slug>.md` mit
+`title` und `uni_slug`.
+
+**Nichts schätzen.** Felder wie `website_medizin`, `anmeldefrist`, `studienbeginn`,
+`semestergebuehr`, `studienplaetze` bleiben `null`, bis der Wert auf einer offiziellen
+Seite steht – dann `stand` (Datum) und `quelle` (Link) mitändern. Leere Felder erscheinen
+nicht; stattdessen zeigt die Uni-Seite den Kasten „Diese Angaben fehlen noch“.
+
+`berichte_ort` muss genau dem `ort:` der Erfahrungsberichte entsprechen; dann erscheinen
+die drei neuesten Berichte auf der Uni-Seite. Im Vergleich lassen sich bis zu vier Unis
+nebeneinander stellen (`var MAX = 4` in `layouts/partials/uniguide-table.html`; weitere
+Zeilen im Abschnitt „VERGLEICHSANSICHT“ – Entwickler-Schritt).
+
+### Untertests (`data/subtests.yaml`)
+
+Speist die Untertest-Kacheln. **Reihenfolge = Reihenfolge am Testtag** und muss zu
+`data/testablauf.yaml` passen. `slug` = Ordnername unter
+`content/<sprache>/ems/uebungsaufgaben/`; `number` wird nicht angezeigt. Beim Umsortieren
+auch das `weight` der Übungsseiten nachziehen. Die Website hat 8 Übungsseiten, weil
+„Figuren & Fakten lernen“ zwei offizielle Untertests zusammenfasst – der echte EMS hat 9.
+
+Ein zusätzlicher Hinweis bei den Downloads einer Übungsseite:
+`downloads_notice: "Neues Layout!"` im Kopf (je Sprache).
+
+### Download-Namen (`data/downloads.yaml`)
+
+Überschreibt den automatisch aus dem Dateinamen gebauten Namen eines PDFs, mit
+Übersetzungen. Beispiele stehen in der Datei.
+
+---
+
+## 10. Prüfungsmodus
+
+`/ems/pruefungsmodus/`: liest Anweisungen vor, zeigt eine Vollbild-Uhr und sagt „Stopp“ –
+für einen Untertest oder den ganzen Testtag ohne Pausen. Die Aufgaben kommen aus den PDFs.
+
+### Zeiten und Reihenfolge
+
+Alles in **`data/testablauf.yaml`**: Blöcke in der Reihenfolge des Testtags mit
+`minuten`, Aufgabenzahl, Punkten und Namen in drei Sprachen. Die Datei speist die Tabelle
+auf `/ems/` (Baustein `testablauf`), den Prüfungsmodus und die Vorgabezeiten der
+Generatoren. Die Gesamtzeit wird zusammengezählt. **Sorgfältig ändern** – eine falsche
+Zahl heisst monatelanges Üben mit falscher Dauer.
+
+### Eigener Ablauf
+
+- **Normal:** Untertests und Aufgabenzahl wählen; die Zeit rechnet sich im Tempo des
+  echten EMS (7 Aufgaben „Muster zuordnen“ = 6:13). Intern wird in **Sekunden** gerechnet.
+- `aufgaben_fest: true` (Figuren/Fakten einprägen): dort ist die **Zeit** einstellbar
+  statt der Anzahl.
+- **Expertenmodus:** Minuten und Pausen frei. Ein geteilter Link, der das braucht, schaltet
+  ihn selbst ein. Zeitformat im Link `6m13` (reine Zahlen gelten als Minuten, alte Links
+  bleiben gültig).
+- Die Zusammenstellung lässt sich als Link teilen; nichts wird auf einem Server
+  gespeichert.
+
+### Ansagen
+
+Texte in `i18n/*.yaml`, Präfix `pm_` – kurz, ohne Klammern und Abkürzungen, sie werden
+gesprochen. Anrede **Sie**, wie eine Aufsichtsperson. Für DE und FR liegen 15 Aufnahmen
+unter `assets/audio/pruefungsmodus/<sprache>/` (Liste im README dort; FR-Stimme CC-BY 4.0,
+Namensnennung im README); eine Aufnahme hat Vorrang vor der Sprachausgabe des Browsers.
+Italienisch liest das Gerät vor. Nach einer Änderung an einem `pm_`-Text die Aufnahme
+löschen oder mit `scripts/ansagen-erzeugen.py` neu erzeugen. Echte Aufnahmen aus dem
+Verein: Datei mit gleichem Namen überschreiben.
+
+### Technisches, das man kennen muss
+
+- Die Uhr merkt sich einen **Endzeitpunkt** statt Sekunden zu zählen (Browser bremsen
+  Hintergrund-Tabs).
+- Wake-Lock hält den Bildschirm an; Vollbild ist nur Zugabe.
+- Zwischen Blöcken wird nicht gewartet, eine Endzeit wird nie angezeigt, die Pause ist
+  als „nur zum Üben“ beschriftet.
+- Geänderte Aufgabenzahl/Zeit → der Satz wird vorgelesen statt der Aufnahme (die nennt die
+  echten Werte). `{dauer}` nutzt `pm_dauer_min`/`pm_dauer_min_sek`.
+- `safeJS` in `layouts/partials/pruefungsmodus.html` nicht entfernen – sonst bleibt die
+  Seite stumm.
+
+---
+
+## 11. Lern-Generatoren und Alpha-Seite
+
+Material für „Figuren & Fakten lernen“ ist nur einmal brauchbar – deshalb würfeln zwei
+Generatoren immer neue Sets. Beide lassen sich am Bildschirm mit Uhr durchspielen oder als
+sechsseitiges Testheft drucken (Anleitung, Einprägeseite, Fragen, Antwortbogen,
+Lösungsblatt; Kopfzeile, Seitenzahl, CC-BY-NC-Signet). Vorgabezeiten und die Pause (die
+echte Lücke am Testtag) kommen aus `data/testablauf.yaml`.
+
+### Heftformat
+
+Masse aus dem privaten **NCWiki-Formatierungstool** (`vorlage/ems.typ`). Gemeinsamer Rahmen:
+`layouts/partials/bausteine/ems-heft.html`, Stile in `assets/css/style.css`
+(„EMS-Heft“). Ein Mass zuerst im Tool ändern, dann dieselbe Zahl übernehmen. **Nur das
+Format übernehmen, nie Inhalte** – das Tool ist privat, die Website öffentlich. Vor
+Änderungen an den Druckregeln den Kommentar bei `@media print` lesen (Heftseiten kommen
+in einen eigenen Behälter unter `<body>`; Regeln hängen an `body.fg-druckt`).
+
+### Fakten-Generator
+
+Wortlisten in `data/fakten-generator/<sprache>.yaml` (aktuell nur `de.yaml`; sobald
+`fr.yaml`/`it.yaml` existiert, erscheint er dort von selbst). Kategorien nicht auflösen: Eine
+echte Serie gibt jeder Altersgruppe drei Berufe aus **einem** Feld und drei Krankheiten aus
+**drei** Arten. Fragen entstehen aus Satzvorlagen (`fragen`), dazu `namensgruppen`,
+`dativ`, `nicht_attributiv`. `scripts/fakten-listen-auslesen.py` liest Wörter aus den PDFs,
+überschreibt die YAML aber nicht. Offen: Kategorien noch nicht menschlich freigegeben; ~40
+statt ~80 Einträge je Kategorie.
+
+### Figuren-Generator
+
+Braucht keine Datendatei, Beschriftungen in `i18n` (Präfix `fig_`). Jede **Serie** würfelt
+zuerst ihren Stil (Ecken, Zackigkeit, Grösse, Bauart frei/Nabe/Band), die 18 Figuren folgen
+ihm – sonst sähen alle Serien gleich aus. Messen statt schätzen:
+`python3 scripts/figuren-vergleichen.py 14 [--original <PDF>]` (braucht `pymupdf numpy
+scipy pillow`; das offizielle Beispiel-PDF von swissuniversities liegt nicht im Repo).
+Vor Änderungen am Zeichnen den Kommentarkopf in
+`layouts/partials/bausteine/figuren-generator.html` lesen – dort stehen die bisherigen
+Fehler (doppelte Clip-Kennungen, zerfallende Felder, getrennt geglättete Konturen,
+Buchstaben im Schwerpunkt, Logo als Figur mitgemessen).
+
+### Alpha-Seite
+
+`content/de/alpha/` ist die Werkbank für neue Funktionen: passwortgeschützt, nirgends
+verlinkt, **nur Deutsch**. Pro Funktion ein Abschnitt, der sagt, was zu beurteilen ist.
+Ist sie freigegeben, wandert der Baustein auf die echte Seite (dann dreisprachig).
+
+---
+
+## 12. Mitgliederbereich
+
+`content/<sprache>/mitglieder/` – nicht im Menü, beim Veröffentlichen mit Passwort
+verschlüsselt (StatiCrypt, `scripts/encrypt-protected-pages.mjs`).
+
+### Was der Schutz leistet
+
+Er hält Suchmaschinen und Zufallsbesuche fern, ist aber **kein Login**: ein gemeinsames
+Passwort; die verschlüsselte Seite ist öffentlich und kann offline durchprobiert werden;
+**verlinkte PDFs sind nicht geschützt** (wer die Adresse kennt, kann sie laden). Also nur
+Internes ohne Schadenspotenzial – keine Personendaten, Kontoauszüge, Bewerbungen.
+
+### Neue geschützte Seite
+
+Wie jede Seite, zusätzlich `geschuetzt: true` im Kopf (in allen drei Sprachen). Das setzt
+`noindex`, nimmt die Seite aus Suche, Sitemap und RSS und verschlüsselt sie. PDF-Liste:
+`download_ordner: "downloads/mitglieder"`.
+
+### Passwort
+
+- Gilt **zwei Stunden** ab dem letzten Aufruf, für alle Mitgliederseiten und Sprachen
+  (`MERKDAUER_MINUTEN` in `scripts/passwort-vorlage.html`). Im Browser liegt ein gesalzener
+  Prüfwert, nicht das Passwort. Abmelden: `?staticrypt_logout` an die Adresse hängen.
+- **Ändern:** *Settings → Secrets and variables → Actions →* `MITGLIEDER_PASSWORT` →
+  neues Passwort (mindestens 16 zufällige Zeichen) → danach *Actions → Deploy Hugo site
+  to GitHub Pages → Run workflow*. Neues Passwort in den Passwort-Manager und an die
+  Mitglieder. Das `SALZ` im Skript bleibt.
+- **Bau rot mit „Kein Passwort gesetzt“:** Secret fehlt – der Bau bricht absichtlich ab,
+  statt unverschlüsselt zu veröffentlichen. Bei Pull Requests nur Warnung.
+- Lokal: `npm run build && STATICRYPT_PASSWORD='test' npm run schuetzen`, Ergebnis in
+  `public/mitglieder/`.
+
+---
+
+## 13. Formulare
+
+Die Website hat keinen Server; Formulare laufen über **Formspree**.
+
+| Formular | Wo | Formspree-ID | Datei |
+| --- | --- | --- | --- |
+| Kontakt | `/kontakt/` | `mvkpgrpl` | `layouts/partials/contact-form.html` |
+| Fehlermeldung Übungsaufgaben | Übungsaufgaben-Seiten | ebenfalls `mvkpgrpl` | `layouts/partials/report-error-general.html` |
+| Erfahrungsbericht | `/ems/erfahrungsberichte/` | `xaewqwoj` | `layouts/partials/experience-form.html` |
+
+Fehlermeldungen landen vorläufig im Kontakt-Postfach, mit festem Betreff „Fehlermeldung
+Uebungsaufgaben (Website)“ zum Filtern. Eigene Adresse später: nur in
+`report-error-general.html` eintragen.
+
+**Die Erfahrungsbericht-Adresse nicht umhängen:** Eine Einsendung löst über
+`repository_dispatch` den Workflow `erfahrungsbericht-intake.yml` aus, der Datei und Pull
+Request baut (der dafür nötige GitHub-Token ist nur in Formspree hinterlegt).
+
+Das Senden im Hintergrund erledigt ein gemeinsames Skript in
+`layouts/partials/footer.html` für alle Formulare mit der Klasse `report-error`. Ein neues
+Formular an neuer Stelle ist ein Entwickler-Schritt.
+
+---
+
+## 14. Einstellungen in hugo.toml
+
+Unter `[params]`:
+
+| Feld | Wirkung |
 | --- | --- |
-| Die ganze Funktion | `layouts/partials/seiten-uebersicht.html` |
-| Zweispalten-Raster | `layouts/_default/single.html`, `layouts/_default/list.html` (`.seite-raster` / `.seite-inhalt`) |
-| Beschriftung | `i18n/de\|fr\|it.yaml`, Eintrag `auf_dieser_seite` |
-| Aussehen | `assets/css/style.css`, Regeln ab `.seite-raster` |
+| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | Ziel des Countdowns auf der Startseite (Zeitzone Pflicht) |
+| `google_analytics_id` | Google Analytics; leer = aus |
+| `social_instagram`, `social_discord`, `social_linkedin` | Knöpfe in der Fusszeile; leer = kein Knopf |
+| `newsletter_url` | Newsletter-Anmeldung; leer = kein Newsletter-Block |
 
-**Drei frühere Versuche waren falsch – bitte nicht zurückbauen:**
+Google Analytics lädt **nur**, wenn im Cookie-Banner „Akzeptieren“ gewählt wurde. Texte
+des Banners: `i18n`, Präfix `cookie_`.
 
-1. *Ein Block mit Rahmen und Überschrift zwischen Titel und erstem Satz.* Der
-   stand genau da im Weg, wo man anfangen will zu lesen, und brach auf Seiten
-   mit vielen Abschnitten auf zwei Zeilen um.
-2. *Eine Leiste, die erst beim Scrollen auftauchte.* Damit war am Seitenanfang
-   – also genau dann, wenn man sich orientieren will – gar nichts da.
-3. *Eine waagrechte Reihe, die seitwärts scrollt.* Die Abschnittsnamen sind
-   hier ganze Fragen („Wieso sind diese Untertests fürs spätere Studium
-   relevant?"). Nebeneinandergelegt sieht das zusammengestückelt aus, und das
-   meiste davon ist abgeschnitten.
+---
 
-Die jetzige Form ist **senkrecht**, und das ist der Punkt: Eine Spalte darf so
-lange Namen tragen, wie sie eben sind. Ab 1100px steht sie rechts neben dem
-Text (`.seite-raster` wird zum Raster), darunter zugeklappt darüber. Beides ist
-von Anfang an sichtbar.
+## 15. Feste Texte (i18n)
 
-Die Spalte steht **rechts**, nicht links: Dadurch beginnt die Textspalte an
-derselben Kante wie die Überschrift darüber. Links hätte sie den ganzen
-Fliesstext gegenüber dem Titel eingerückt.
+`i18n/de.yaml`, `fr.yaml`, `it.yaml` enthalten alle Texte, die nicht zu einer Seite
+gehören: Knöpfe, Formulare, Cookie-Banner, Ansagen, Beschriftungen. Links steht der
+Schlüssel, rechts der Text; **alle drei Dateien haben dieselben Schlüssel**. Einen Text
+immer in allen drei Dateien ändern. Ein neuer Schlüssel wirkt nur, wenn er in `layouts/`
+auch benutzt wird.
 
-Die Abschnitte werden **nach dem Laden im Browser** eingesammelt, nicht beim
-Bauen. Grund: Manche Seiten bekommen ihre Abschnitte nicht aus dem Fliesstext,
-sondern aus einer Vorlage – der Prüfungsmodus, die Uniguide-Tabelle, die
-Übungsaufgaben-Übersicht. Davon weiss Hugo an dieser Stelle nichts. Fehlende
-Sprungmarken (`id`) vergibt das Skript dabei selbst.
+---
 
-Wer daran etwas ändert, sollte fünf Dinge kennen:
+## 16. Design: Farben, Schrift, Logo, Abschnittsliste
 
-- **Das Skript wartet auf `DOMContentLoaded`.** Die Vorlage steht weit oben –
-  zu dem Zeitpunkt, an dem das Skript im Quelltext auftaucht, ist der Rest der
-  Seite noch gar nicht da. Ohne das Warten bliebe die Liste leer, und zwar ohne
-  Fehlermeldung.
-- **Die Liste steht im Quelltext VOR dem Text** (damit sie auf schmalen
-  Bildschirmen oben landet) und wird auf breiten Bildschirmen per `order` nach
-  rechts sortiert.
-- **Zwei Spalten gibt es nur mit der Klasse `mit-liste`.** Ohne sie bleibt
-  `.seite-raster` ein normaler Block über die volle Breite. Hugo setzt die
-  Klasse beim Bauen, wenn der Fliesstext mindestens zwei `##`-Überschriften
-  hat; bei Seiten, deren Überschriften aus einer Vorlage kommen (Prüfungsmodus,
-  Uniguide, Q&A), ergänzt oder entfernt das Skript sie nach dem Laden. Fehlt
-  diese Bedingung, reserviert das Raster die rechte Spalte auch auf Seiten ganz
-  ohne Liste – auf dem Uniguide war die grosse Tabelle deshalb eine Zeitlang
-  grundlos abgeschnitten.
-- **Die Spalte holt sich ihren Platz aus dem leeren Seitenrand**, nicht vom
-  Text: `--rand-ausbruch` rechnet aus, wie viel Rand neben `--max-width`
-  überhaupt da ist, und zieht die Spalte per negativem `margin-right` so weit
-  hinaus. Ab etwa 1900px steht sie ganz im Rand und der Text behält seine volle
-  Breite; darunter geht nur die Differenz vom Text ab. Der Abzug von `2rem` in
-  der Rechnung ist Sicherheitsabstand, weil `100vw` je nach Browser die
-  Bildlaufleiste mitzählt.
-- **Es ist ein `<details>`.** Auf breiten Bildschirmen setzt das Skript es auf
-  „offen", und die Beschriftung wird zur reinen Überschrift
-  (`pointer-events:none`); darunter bleibt es zu, bis jemand tippt. Wer es dort
-  selbst aufklappt, behält es offen – auch das merkt sich das Skript.
-- **`--sprung-abstand` und `--kopf-hoehe` müssen bleiben.** Beide setzt das
-  Skript aus der gemessenen Kopfzeilenhöhe. Die Kopfzeile bleibt nur ab 861px
-  Breite beim Scrollen stehen (siehe `header.site` im Abschnitt „Responsiv");
-  darunter scrollt sie weg und zählt deshalb nicht mit. Ohne den Abstand landet
-  ein angesprungener Abschnitt unter der Kopfzeile und ist unsichtbar.
-- **Zwei Dinge sind ausgenommen:** der Seitentitel (den gibt `list.html` als
-  `h2` aus, er ist aber kein Abschnitt) und alles gerade Ausgeblendete – vor
-  allem die Vollbild-Ansicht des Prüfungsmodus, deren Titel sonst als Abschnitt
-  erschiene.
+### Farben
 
-Ohne JavaScript gibt es die Liste nicht, und das ist Absicht: Sie ist reine
-Bequemlichkeit, alle Abschnitte stehen ja ohnehin untereinander auf der Seite.
-Sie bleibt deshalb ausgeblendet, bis das Skript sie gefüllt hat – eine leere
-Liste wäre schlimmer als keine. Aus demselben Grund trägt sie
-`data-pagefind-ignore`: Ihr Text ist Navigation und hat in den Suchergebnissen
-nichts verloren.
+Alles in `assets/css/style.css`, oben als Variablen. Es gibt **zwei Paletten**: `:root{…}`
+(hell) und `:root[data-theme="dark"]{…}` (dunkel) – eine Farbänderung immer in beiden.
 
-Überschriften tiefer als `h2` kommen bewusst nicht hinein – sonst wird die
-Spalte länger als der Text daneben.
+- `--color-signal` ist die Link- und Markenfarbe, `--color-btn-bg` der Hintergrund
+  gefüllter Knöpfe. Im Dunkelmodus unterscheiden sie sich absichtlich (heller Text-Link,
+  aber genug Kontrast für weisse Knopfschrift) – beide anpassen.
+- `--cta-from`/`--cta-to` und `--color-avatar-0…5` stehen nur hell, weil weisser Text
+  darauf steht – nie zu hell machen.
+- Tiefe: `--shadow-sm|md|lg`, `--glow-*`, `--band-*`, `--color-section-alt`. Schatten sind
+  im Dunkelmodus kräftiger.
+- Vor jeder Farbänderung Kontrast prüfen („WCAG contrast checker“): Text 4.5 : 1,
+  grosse Überschriften 3 : 1, in beiden Modi.
+
+### Schrift
+
+**Poppins** (Überschriften) und **Inter** (Text), selbst ausgeliefert aus `static/fonts/`
+(nicht von Google geladen – Datenschutz). Austauschen: `.woff2` dort ablegen **und** den
+`@font-face`-Block sowie `--font-display`/`--font-body` anpassen.
+
+### Logo und Favicon
+
+Logo: `static/images/logo.svg` (Kopfzeile, Hero, Marken-Band). Es ist dunkel gezeichnet und
+wird im Dunkelmodus und im dunklen Band per Filter weiss (`--logo-filter`,
+`.brand-band-logo`). Ein mehrfarbiges neues Logo braucht dafür eine eigene Lösung.
+Favicon (`static/favicon.ico`, `favicon-32.png`, `apple-touch-icon.png`) wird nicht
+automatisch erzeugt – bei neuem Logo mit einem Bild- oder Favicon-Werkzeug neu machen und
+unter denselben Namen hochladen.
+
+### Abschnittsliste („Auf dieser Seite“)
+
+Entsteht automatisch aus den `##`-Überschriften (erst ab zwei). Ab 1100 px rechts neben
+dem Text, darunter zugeklappt über dem Text. Code: `layouts/partials/seiten-uebersicht.html`,
+Raster `.seite-raster`/`.mit-liste` in `single.html`/`list.html`, Beschriftung
+`auf_dieser_seite`. Nicht zurückbauen zu: Block zwischen Titel und Text, Leiste erst beim
+Scrollen, waagrechte Scroll-Reihe. Das Skript wartet auf `DOMContentLoaded`, sammelt auch
+Überschriften aus Vorlagen, holt sich Platz aus dem Seitenrand (`--rand-ausbruch`) und
+braucht `--sprung-abstand`/`--kopf-hoehe`, damit Sprungziele nicht unter der Kopfzeile
+landen.
+
+---
+
+## 17. Einen ganzen Bereich löschen
+
+- `_index.md` und alle Seiten darunter löschen, **in allen drei Sprachen**. Der Menüpunkt
+  verschwindet mit.
+- Der Bau wird rot, solange noch Links auf den Bereich zeigen – die Stellen anpassen.
+- PDFs und Bilder unter `assets/` bzw. `static/` werden nicht mitgelöscht.
+- Alternativ in der Textmappe: Titel und alle Texte mit `!Löschen!` markieren.
+
+---
+
+## 18. Automatisierungen (GitHub Actions)
+
+| Workflow | Wann | Was |
+| --- | --- | --- |
+| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, veröffentlichen (nur `main`) |
+| `textmappen.yml` | jede Änderung an `main` | frische Textmappen ans Release „Textmappen“ |
+| `texte-einlesen.yml` | Mappe in `redaktion/` hochgeladen | einlesen, probeweise bauen, Pull Request mit Bericht |
+| `neue-saison.yml` | von Hand (*Run workflow*) | Saisonwechsel als Pull Request |
+| `erfahrungsbericht-intake.yml` | Formspree-Einsendung | neue Erfahrungsbericht-Datei als Pull Request |
+
+Ein fehlgeschlagener Bau nimmt die Website nicht offline; es bleibt die letzte gute
+Fassung. Hugo-Version: in `hugo.yml` fest eingetragen – beim Erhöhen auch lokal testen.
+
+---
+
+## 19. Die Website prüfen
+
+Der Bau prüft interne Links selbst. Zusätzlich gibt es Prüfskripte (lokal, mit gebauter
+Seite unter `public/`):
+
+```bash
+npm run build
+npx http-server public -p 8099 -s &
+BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs  # Layout, Kontrast, Bilder
+python3 scripts/struktur-pruefen.py                                  # Duplikate, unerreichbare Seiten, tote Links
+npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # Bedienung, Formulare (Formspree abgefangen)
+node scripts/fakten-generator-pruefen.mjs                            # 150 Sets + PDF
+node scripts/figuren-generator-pruefen.mjs                           # 12 Sets + PDF
+python3 scripts/texte-mappe-pruefen.py                               # Textmappen
+node scripts/editor-rundlauf.mjs                                     # Web-Editor
+```
+
+Anderer Port: `ADRESSE=http://127.0.0.1:8123` davor. Erwartet: genau zehn unerreichbare
+Seiten (Mitgliederbereich und Alpha). Eine neue Prüfung zuerst an einem echten, bekannten
+Fehler testen und Fehlalarme abschalten – sonst liest sie bald niemand mehr.
+
+---
+
+## 20. Drittdienste und Zugänge
+
+| Dienst | Wofür |
+| --- | --- |
+| GitHub Pages / Actions | Hosting und Automatisierung. Umzug auf `nc-wiki.ch` ist vorbereitet, aber nicht aktiv (keine `CNAME`, DNS nicht umgestellt). |
+| Formspree | Formulare ([13](#13-formulare)) |
+| Pages CMS | Web-Editor ([4](#4-web-editor-pages-cms-im-detail)) |
+| Pagefind | Suche, läuft ganz im Browser |
+| Google Analytics | nur nach Einwilligung |
+| Instagram, Discord | nur Links |
+
+**Zugänge gehören nie ins Repository** – auch gelöschte Dateien bleiben in der Geschichte
+lesbar. Sie gehören in einen gemeinsamen Passwort-Manager des Vereins, mindestens:
+Owner/Admins des Repos, `MITGLIEDER_PASSWORT`, Formspree-Login (welche ID wozu, welche
+Empfänger-Adresse), der GitHub-Token in Formspree, Admins von Instagram/Discord, Registrar
+und Zugang der Domain `nc-wiki.ch`, das Postfach `sponsoring@nc-wiki.ch`.
+
+---
+
+## 21. Wo hört „nur ausfüllen“ auf?
+
+**Selbst machen:** alles, was sich als „Feld X in Datei Y auf Wert Z setzen“ beschreiben
+lässt, wo Y eine der hier genannten Dateien ist.
+
+**Hilfe holen** (jemand mit Hugo-/Web-Kenntnissen oder ein KI-Assistent mit Repo-Zugriff):
+
+- neue Art von Seite, Abschnitt, Formular oder interaktivem Element;
+- Änderungen unter `layouts/`, `assets/css/` oder `.github/workflows/`;
+- neue Schrift, neues Favicon;
+- alles, was mehrere Stellen gleichzeitig betrifft (Farbvariablen,
+  `data/testablauf.yaml`, `data/subtests.yaml`).

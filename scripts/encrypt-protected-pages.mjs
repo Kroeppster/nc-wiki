@@ -31,7 +31,7 @@
  *  - Der verschlüsselte Zeichensalat liegt öffentlich im Netz. Wer ihn
  *    herunterlädt, kann in aller Ruhe Passwörter durchprobieren, ohne dass
  *    das jemand mitbekommt oder bremsen könnte. Deshalb MUSS das Passwort
- *    lang und zufällig sein (siehe docs/WARTUNG.md) - ein kurzes oder
+ *    lang und zufällig sein (siehe docs/WARTUNG-DETAILLIERT.md) - ein kurzes oder
  *    erratbares Passwort ist hier praktisch kein Schutz.
  *  - Die verlinkten PDF-Dateien sind NICHT geschützt (siehe
  *    assets/downloads/mitglieder/README.md).
@@ -145,7 +145,7 @@ if (!passwort) {
     "Kein Passwort gesetzt (Umgebungsvariable STATICRYPT_PASSWORD ist leer).\n" +
     "Im Workflow wird sie aus dem GitHub-Secret MITGLIEDER_PASSWORT befüllt -\n" +
     "fehlt das Secret, ist es dort nicht (oder falsch benannt) hinterlegt.\n" +
-    'Siehe docs/WARTUNG.md, Abschnitt "Mitgliederbereich".';
+    'Siehe docs/WARTUNG-DETAILLIERT.md, Abschnitt "Mitgliederbereich".';
   if (ohnePasswortErlauben) {
     console.warn("\nWARNUNG: " + text);
     console.warn("Die Seiten bleiben deshalb UNVERSCHLÜSSELT. Das ist bei lokalen Test-Builds und");
@@ -161,7 +161,7 @@ if (passwort.length < 16) {
   console.warn(
     `\nWARNUNG: Das Passwort ist mit ${passwort.length} Zeichen kurz. Weil der verschlüsselte\n` +
     "Inhalt öffentlich im Netz liegt, kann man Passwörter unbemerkt und beliebig oft\n" +
-    "durchprobieren - empfohlen sind mindestens 16 zufällige Zeichen (siehe docs/WARTUNG.md).\n"
+    "durchprobieren - empfohlen sind mindestens 16 zufällige Zeichen (siehe docs/WARTUNG-DETAILLIERT.md).\n"
   );
 }
 

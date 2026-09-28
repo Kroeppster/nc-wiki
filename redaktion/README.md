@@ -30,6 +30,6 @@ Nicht von Hand bearbeiten.
 
 Nur eine Seite schnell korrigieren? Dafür gibt es auch den Web-Editor
 [app.pagescms.org](https://app.pagescms.org) – siehe
-[docs/WARTUNG.md, Abschnitt 2d](../docs/WARTUNG.md#2d-der-web-editor-pages-cms).
+[docs/WARTUNG.md, Abschnitt 3](../docs/WARTUNG.md#3-kleine-korrekturen-im-web-editor).
 
-Alles Weitere: [docs/WARTUNG.md, Abschnitt 2b](../docs/WARTUNG.md#2b-texte-schreiben-und-korrigieren--ohne-markdown-und-ohne-git).
+Alles Weitere: [docs/WARTUNG.md, Abschnitt 2](../docs/WARTUNG.md#2-texte-ändern-mit-der-excel-textmappe) und [docs/WARTUNG-DETAILLIERT.md, Abschnitt 3](../docs/WARTUNG-DETAILLIERT.md#3-textmappen-excel-im-detail).

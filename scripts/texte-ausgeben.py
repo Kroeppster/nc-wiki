@@ -207,7 +207,7 @@ ANLEITUNG = {
         ('text', 'Die Datei auf GitHub in den Ordner „redaktion" hochladen: {ordner} → Add file → Upload '
                  'files → „Commit directly to the main branch". Nach ein, zwei Minuten erscheint ein '
                  'Vorschlag (Pull Request) mit einem Bericht, was übernommen wurde. Live ist es, sobald '
-                 'jemand den Vorschlag übernimmt. Genaueres: docs/WARTUNG.md, Abschnitt 2b.'),
+                 'jemand den Vorschlag übernimmt. Genaueres: docs/WARTUNG.md, Abschnitt 2.'),
         ('text', 'Achtung: Das Repository ist öffentlich. Alles in der Mappe – auch Bemerkungen und '
                  'Zuständigkeiten – ist nach dem Hochladen für alle sichtbar.'),
         ('text', 'Immer mit einer frischen Mappe anfangen: {mappe} (nach jeder Veröffentlichung neu). '
@@ -973,7 +973,7 @@ def stand_speichern(pfad, projekt, zeilen, seiten):
                         if xs else '[]')
     with open(pfad, 'w', encoding='utf-8') as f:
         f.write('{\n "hinweis": "Stand, Bemerkung und Zustaendig aus den Textmappen - gepflegt von '
-                '.github/workflows/texte-einlesen.yml, siehe docs/WARTUNG.md 2b. Zeilen: [Datei, '
+                '.github/workflows/texte-einlesen.yml, siehe docs/WARTUNG-DETAILLIERT.md 3. Zeilen: [Datei, '
                 'Pruefsumme des Textes, Stand, Bemerkung]. Seiten: [Datei, Zustaendig, Stand, Bemerkung].",\n'
                 f' "zeilen": {liste(zl)},\n "seiten": {liste(sl)}\n}}\n')
     return len(zl), len(sl)

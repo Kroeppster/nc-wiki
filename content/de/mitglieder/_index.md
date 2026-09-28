@@ -9,4 +9,4 @@ outputs: ["html"]
 
 Dieser Bereich ist nur für NCWiki-Mitglieder. Er ist bewusst **nicht im Menü verlinkt** und wird beim Veröffentlichen mit einem Passwort geschützt.
 
-Das Passwort bekommst du vom Vorstand. Bitte gib es nicht öffentlich weiter – wie das Passwort geändert wird, steht in `docs/WARTUNG.md`.
+Das Passwort bekommst du vom Vorstand. Bitte gib es nicht öffentlich weiter – wie das Passwort geändert wird, steht in `docs/WARTUNG-DETAILLIERT.md`, Abschnitt 12.

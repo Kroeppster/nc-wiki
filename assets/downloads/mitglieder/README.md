@@ -24,4 +24,4 @@ NICHT hierher gehören Personendaten von Mitgliedern, Kontoauszüge,
 Bewerbungsunterlagen oder irgendetwas anderes, das echten Schaden
 anrichtet, wenn es an die Öffentlichkeit gerät.
 
-Mehr dazu in `docs/WARTUNG.md`, Abschnitt "Mitgliederbereich".
+Mehr dazu in `docs/WARTUNG-DETAILLIERT.md`, Abschnitt "Mitgliederbereich".

@@ -9,4 +9,4 @@ outputs: ["html"]
 
 Quest'area è riservata ai soci di NCWiki. **Non è volutamente collegata al menu** ed è protetta da una password al momento della pubblicazione.
 
-La password ti viene comunicata dal comitato. Ti preghiamo di non diffonderla pubblicamente – come cambiarla è descritto in `docs/WARTUNG.md`.
+La password ti viene comunicata dal comitato. Ti preghiamo di non diffonderla pubblicamente – come cambiarla è descritto in `docs/WARTUNG-DETAILLIERT.it.md`, sezione 12.

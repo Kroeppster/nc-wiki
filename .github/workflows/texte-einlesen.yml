@@ -2,7 +2,7 @@
 # TEXTMAPPE HOCHLADEN -> PULL REQUEST
 # ==============================================================================
 # Wer Texte in einer der Excel-Mappen bearbeitet hat (ncwiki-texte-de.xlsx,
-# -fr, -it; siehe docs/WARTUNG.md, Abschnitt 2b), lädt sie auf GitHub in den
+# -fr, -it; siehe docs/WARTUNG.md, Abschnitt 2), lädt sie auf GitHub in den
 # Ordner "redaktion/" hoch (Add file -> Upload files). Diese Automatisierung
 # macht daraus einen Pull Request zum Gegenlesen:
 #
@@ -122,7 +122,7 @@ jobs:
             cat "$RUNNER_TEMP/bericht.md" 2>/dev/null || echo "(kein Bericht - siehe Log dieses Laufs)"
             echo
             echo "---"
-            echo "Bitte die Änderungen im Tab **Files changed** durchsehen und den Pull Request dann übernehmen (Merge). Was im Bericht unter *Übersprungen* oder *Bitte ansehen* steht, ist **nicht** drin – das in einer frischen Mappe noch einmal eintragen. Anleitung: docs/WARTUNG.md, Abschnitt 2b."
+            echo "Bitte die Änderungen im Tab **Files changed** durchsehen und den Pull Request dann übernehmen (Merge). Was im Bericht unter *Übersprungen* oder *Bitte ansehen* steht, ist **nicht** drin – das in einer frischen Mappe noch einmal eintragen. Anleitung: docs/WARTUNG.md, Abschnitt 2."
           } > "$RUNNER_TEMP/pr.md"
           cat "$RUNNER_TEMP/pr.md" >> "$GITHUB_STEP_SUMMARY"
 

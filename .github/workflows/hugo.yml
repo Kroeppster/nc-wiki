@@ -8,8 +8,8 @@
 # die Suchfunktion vorbereiten, prüfen ob alle internen Links funktionieren,
 # und das Ergebnis live auf GitHub Pages veröffentlichen.
 #
-# WICHTIG zu wissen (siehe auch docs/WARTUNG.md, Abschnitt 7 "Was tun, wenn
-# der Build rot wird?"): Der Bau- und Link-Prüf-Teil läuft seit 2026-08-15
+# WICHTIG zu wissen (siehe auch docs/WARTUNG.md, Abschnitt 10 "Wenn der Bau
+# rot ist"): Der Bau- und Link-Prüf-Teil läuft seit 2026-08-15
 # auch direkt auf jedem Pull Request gegen "main" - man sieht die rote/grüne
 # Markierung (inkl. kaputter interner Links) also schon VOR dem Mergen,
 # direkt im Pull Request. Veröffentlicht (auf GitHub Pages deployt) wird
@@ -202,7 +202,7 @@ jobs:
 
       # Legt eine Passwort-Abfrage vor alle Seiten des Mitgliederbereichs
       # (alles mit "geschuetzt: true" im Frontmatter, siehe
-      # content/<sprache>/mitglieder/ und docs/WARTUNG.md, Abschnitt 11).
+      # content/<sprache>/mitglieder/ und docs/WARTUNG-DETAILLIERT.md, Abschnitt 12).
       #
       # Die Reihenfolge ist hier WICHTIG - dieser Schritt steht bewusst ganz
       # am Ende, hinter allen Prüfungen:

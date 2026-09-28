@@ -2,7 +2,8 @@
 # PAGES CMS - der Web-Editor für die Texte der Website
 # ==============================================================================
 # https://app.pagescms.org -> mit GitHub anmelden -> Kroeppster/nc-wiki.
-# Anleitung für Redaktion und Einrichtung: docs/WARTUNG.md, Abschnitt 2d.
+# Anleitung für Redaktion und Einrichtung: docs/WARTUNG.md Abschnitt 3 (Bedienung) und
+# docs/WARTUNG-DETAILLIERT.md Abschnitt 4 (Einrichtung, Technik).
 #
 # BEVOR HIER ETWAS GEÄNDERT WIRD - drei Dinge, die im Quellcode von Pages
 # CMS nachgelesen und an jeder Seite durchprobiert wurden:

@@ -23,7 +23,7 @@ pruefte klaglos den Stand von vorgestern - deshalb jetzt der Projektordner.)
 
 ZU ERWARTEN SIND GENAU ZEHN UNERREICHBARE SEITEN, alle absichtlich nirgends
 verlinkt: der Mitgliederbereich (/mitglieder/ und die beiden Unterseiten, mal
-drei Sprachen = 9, siehe docs/WARTUNG.md, Abschnitt "Mitgliederbereich") und
+drei Sprachen = 9, siehe docs/WARTUNG-DETAILLIERT.md, Abschnitt "Mitgliederbereich") und
 die Alpha-Seite /alpha/ (Abschnitt 11b-3). Taucht sonst etwas auf, ist es ein
 Fund.
 

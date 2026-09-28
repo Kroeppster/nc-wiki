@@ -9,7 +9,7 @@
 # Kurzfassung: Formspree (der externe Formular-Dienst) nimmt die Antworten
 # entgegen und benachrichtigt daraufhin GitHub automatisch (diese Verbindung
 # ist NICHT in diesem Code sichtbar, sondern in den Formspree-Kontoeinstel-
-# lungen konfiguriert - siehe docs/WARTUNG.md, Abschnitt 6). Das startet
+# lungen konfiguriert - siehe docs/WARTUNG-DETAILLIERT.md, Abschnitt 13). Das startet
 # diese Automatisierung hier: sie baut aus den einzelnen Formular-Antworten
 # selbst eine fertige Markdown-Seite und öffnet dafür automatisch einen
 # Pull Request. Jemand aus dem Team muss diesen PR danach nur noch kurz

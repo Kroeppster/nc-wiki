@@ -11,8 +11,10 @@ Vorbereitungskurse, mehrsprachig (Deutsch, Français, Italiano).
 Dafür gibt es eine eigene Anleitung, geschrieben für Leute ohne Programmierkenntnisse –
 alles läuft über die normale GitHub-Weboberfläche, nichts muss installiert werden:
 
-👉 **[docs/WARTUNG.md](docs/WARTUNG.md)** (Alltägliches) · für alles Seltenere (Navigation,
-Logo, Sponsor:innen, Design, ...) siehe [docs/WARTUNG-DETAILLIERT.md](docs/WARTUNG-DETAILLIERT.md)
+👉 **[docs/WARTUNG.md](docs/WARTUNG.md)** (Kurzanleitung, Alltag) · alles andere (Startseite,
+Team, Menü, Design, Technik …) in [docs/WARTUNG-DETAILLIERT.md](docs/WARTUNG-DETAILLIERT.md).
+Auch auf Französisch ([court](docs/WARTUNG.fr.md), [détaillé](docs/WARTUNG-DETAILLIERT.fr.md))
+und Italienisch ([breve](docs/WARTUNG.it.md), [dettagliato](docs/WARTUNG-DETAILLIERT.it.md)).
 
 ## Technisch
 

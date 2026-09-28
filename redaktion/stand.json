@@ -1,5 +1,5 @@
 {
- "hinweis": "Stand, Bemerkung und Zustaendig aus den Textmappen - gepflegt von .github/workflows/texte-einlesen.yml, siehe docs/WARTUNG.md 2b. Zeilen: [Datei, Pruefsumme des Textes, Stand, Bemerkung]. Seiten: [Datei, Zustaendig, Stand, Bemerkung].",
+ "hinweis": "Stand, Bemerkung und Zustaendig aus den Textmappen - gepflegt von .github/workflows/texte-einlesen.yml, siehe docs/WARTUNG-DETAILLIERT.md 3. Zeilen: [Datei, Pruefsumme des Textes, Stand, Bemerkung]. Seiten: [Datei, Zustaendig, Stand, Bemerkung].",
  "zeilen": [
   ["content/de/_index.md", "b660f83df4d6", "passt", null],
   ["content/de/_index.md", "febdd4ac5641", "passt", "Nicht ändern"],
