@@ -797,10 +797,12 @@ def ansicht_pruefen(projekt, ordner):
         ws[zelle].value = wert
     setze(start, ['hero', 'title'], 'Neuer "Titel" im Test')
     setze(team, ['r', 0, 'm', 0, 'rolle'], 'Neue Rolle')
-    setze(team, ['r', 0, 'm', 1, 'name'], 'Neue Person')          # leere Karte im Ressort 1
-    setze(team, ['r', 0, 'm', 1, 'rolle'], 'Neu dabei')
+    ressorts_jetzt = yaml.safe_load(tb.kopf_trennen(lesen(projekt, team))[0].strip().strip('-'))['ressorts']
+    leer = len(ressorts_jetzt[0]['mitglieder'])                  # erste leere Karte im Ressort 1
+    setze(team, ['r', 0, 'm', leer, 'name'], 'Neue Person')
+    setze(team, ['r', 0, 'm', leer, 'rolle'], 'Neu dabei')
     setze(team, ['r', 1, 'm', 0, 'name'], '!Löschen!')
-    n_ressorts = len(yaml.safe_load(tb.kopf_trennen(lesen(projekt, team))[0].strip().strip('-'))['ressorts'])
+    n_ressorts = len(ressorts_jetzt)
     setze(team, ['r', n_ressorts, 'titel'], 'Neues Ressort')
     setze(team, ['r', n_ressorts, 'm', 0, 'name'], 'Erste Person')
     p = os.path.join(ordner, 'ansicht.xlsx')
@@ -817,7 +819,7 @@ def ansicht_pruefen(projekt, ordner):
     neu_t = yaml.safe_load(tb.kopf_trennen(lesen(projekt, team))[0].strip().strip('-'))['ressorts']
     erwartet = [dict(r, mitglieder=[dict(x) for x in r['mitglieder']]) for r in alt_t]
     erwartet[0]['mitglieder'][0]['rolle'] = 'Neue Rolle'
-    erwartet[0]['mitglieder'].insert(1, {'name': 'Neue Person', 'rolle': 'Neu dabei'})
+    erwartet[0]['mitglieder'].append({'name': 'Neue Person', 'rolle': 'Neu dabei'})
     del erwartet[1]['mitglieder'][0]
     if not erwartet[1]['mitglieder']:
         del erwartet[1]
