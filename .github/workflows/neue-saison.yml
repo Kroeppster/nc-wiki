@@ -1,0 +1,88 @@
+# ==============================================================================
+# NEUE SAISON STARTEN (Knopf auf GitHub)
+# ==============================================================================
+# Actions -> "Neue Saison starten" -> Run workflow -> Saison eintragen (z. B.
+# 2026/27) -> Run workflow.
+#
+# Verschiebt in allen drei Sprachen den Abschnitt der laufenden Saison von der
+# Team-Seite ins Archiv, samt dem Leitungsteam dieser Saison, und beginnt auf
+# der Team-Seite die neue Saison (scripts/texte_saison.py). Das Leitungsteam
+# selbst bleibt stehen und wird danach in der Textmappe (Blatt "Team -
+# Ansicht") angepasst - nur wer wechselt, muss geändert werden.
+#
+# Das Ergebnis kommt als Pull Request; live geht es erst nach dem Übernehmen
+# (Merge). Braucht dieselbe Einstellung wie texte-einlesen.yml: Settings ->
+# Actions -> General -> "Allow GitHub Actions to create and approve pull
+# requests".
+#
+# Dasselbe geht auch ohne diesen Knopf: in der Textmappe im Blatt "Team -
+# Ansicht" die neue Saison eintragen und die Mappe hochladen.
+# ==============================================================================
+
+name: Neue Saison starten
+
+on:
+  workflow_dispatch:
+    inputs:
+      saison:
+        description: "Neue Saison, z. B. 2026/27"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  saison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Saison wechseln
+        env:
+          SAISON: ${{ inputs.saison }}
+        run: |
+          pip install --quiet pyyaml
+          python3 scripts/texte_saison.py "$SAISON" | tee "$RUNNER_TEMP/meldung.txt"
+          SICHER=$(printf '%s' "$SAISON" | tr -cd '0-9')
+          echo "ZWEIG=redaktion/saison-${SICHER}" >> "$GITHUB_ENV"
+
+      - name: Hugo installieren
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.164.0"
+          extended: true
+
+      - name: Website probeweise bauen
+        run: |
+          if hugo --minify -d "$RUNNER_TEMP/public" > "$RUNNER_TEMP/hugo.txt" 2>&1; then
+            BAU="✅ Die Website baut mit diesen Änderungen fehlerfrei."
+          else
+            BAU="❌ **Die Website baut mit diesen Änderungen NICHT** – bitte vor dem Übernehmen beheben."
+          fi
+          {
+            echo "Neue Saison **${{ inputs.saison }}**, gestartet von @${{ github.actor }}."
+            echo
+            sed 's/^/- /' "$RUNNER_TEMP/meldung.txt"
+            echo
+            echo "$BAU"
+            echo
+            echo "Das Leitungsteam ist unverändert – bitte danach in der Textmappe (Blatt „Team – Ansicht“) anpassen."
+          } > "$RUNNER_TEMP/pr.md"
+          cat "$RUNNER_TEMP/pr.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Pull Request eröffnen
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ env.ZWEIG }}
+          commit-message: "Neue Saison ${{ inputs.saison }}: bisheriges Team ins Archiv"
+          title: "Neue Saison ${{ inputs.saison }}"
+          body-path: ${{ runner.temp }}/pr.md
+          delete-branch: true

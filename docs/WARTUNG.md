@@ -142,16 +142,24 @@ Beschreibungen und Spalten zum Aufteilen der Arbeit (Zuständig, Stand, Bemerkun
    mit.) LibreOffice, Numbers und Google Tabellen kennen das nicht; dort bleibt
    „Änderung" in neuen Zeilen leer, grün wird der Text trotzdem.
 
-   **Startseite und aktuelles Leitungsteam:** Ihre Texte stehen nicht im
-   Seitentext, sondern in Feldern im Seitenkopf (`hero`, `weg`, `material` …
-   bzw. `ressorts`). In der Mappe erscheinen sie als Zeilen „Feld: …" mit
-   ihrem Pfad, z. B. „Feld: weg › etappen 2 › text" oder „Feld: ressorts 3 ›
-   mitglieder 1 › name". Text ändern geht wie überall; beim Einlesen ändert
-   sich genau diese eine Zeile im Seitenkopf. Felder lassen sich nicht löschen
-   oder neu anlegen – eine neue Person im Leitungsteam kommt über den
-   Web-Editor oder direkt in `content/<sprache>/ueber-uns/team/_index.md` dazu.
-   Welche Felder angeboten werden, steht in `scripts/texte_bausteine.py`
-   (`FELD_WURZELN`); Adressen, Bilder und Schlüssel bleiben draussen.
+   **Startseite und Team haben je ein Blatt „… – Ansicht"** (orange Lasche,
+   direkt hinter dem Seitenblatt), aufgebaut wie die Website: Kopfbereich, die
+   vier Etappen nebeneinander, die Kacheln nebeneinander; im Team je Ressort
+   eine Reihe Karten mit Name und Rolle. Geschrieben wird nur in die weissen
+   Felder, der Rest ist gesperrt (Blattschutz ohne Passwort). Im Team: leere
+   Karte ausfüllen = neue Person, `!Löschen!` im Namen = Person weg, im
+   Ressort-Titel = ganzes Ressort weg; zwei leere Ressorts stehen unten für
+   neue bereit. Auf Französisch/Italienisch steht der deutsche Text als
+   Kommentar an der Zelle. Wie es funktioniert: `scripts/texte_ansicht.py`.
+
+   **Neue Saison:** Im Team-Blatt oben „Neue Saison starten" ausfüllen (z. B.
+   2026/27) und die Mappe hochladen – oder auf GitHub unter *Actions → Neue
+   Saison starten → Run workflow*. Beides verschiebt in allen drei Sprachen den
+   Abschnitt der laufenden Saison samt Leitungsteam von der Team-Seite ins
+   Archiv (zuoberst unter „Frühere Saisons") und beginnt auf der Team-Seite
+   die neue Saison mit einem Platzhalter-Satz. Das Leitungsteam selbst bleibt
+   stehen; wer wechselt, wird danach im Team-Blatt geändert. Ein zweiter Lauf
+   mit derselben Saison tut nichts. Skript: `scripts/texte_saison.py`.
 3. **In den Ordner [`redaktion/`](../redaktion/) hochladen** (*Add file → Upload
    files → Commit directly to the main branch*). Nach ein, zwei Minuten eröffnet
    `.github/workflows/texte-einlesen.yml` einen Pull Request: die geänderten Seiten,

@@ -769,47 +769,85 @@ def fehlerfaelle_pruefen(projekt, ordner, de, fr):
           rc == 1 and 'alte Textliste' in aus, aus[-300:])
 
 
-def felder_pruefen(projekt, ordner):
-    """Startseite und Leitungsteam: Texte stehen in verschachtelten Feldern
-    des Seitenkopfs (hero, ressorts ...). Sie kommen als Zeilen "Feld: ..." in
-    die Mappe; beim Einlesen aendert sich genau die eine Zeile im Seitenkopf."""
-    print('\n=== Felder im Seitenkopf: Startseite und Leitungsteam ===')
-    mappen = ausgeben(projekt, os.path.join(ordner, 'felder'))
+def ansicht_pruefen(projekt, ordner):
+    """Startseite und Team stehen in eigenen Blaettern, aufgebaut wie die
+    Website (scripts/texte_ansicht.py). Geprueft: ein Feld der Startseite
+    aendern (genau eine Zeile im Seitenkopf), im Team eine Rolle aendern,
+    eine Person dazu, eine weg, ein neues Ressort - und die neue Saison."""
+    import json
+    import yaml
+    print('\n=== Ansichtsblaetter: Startseite und Team ===')
+    mappen = ausgeben(projekt, os.path.join(ordner, 'ansicht'))
     m = load_workbook(mappen['de'])
-    ziele = {'content/de/_index.md': 'hero › title',
-             'content/de/ueber-uns/team/_index.md': 'ressorts 1 › mitglieder 1 › rolle'}
-    gefunden = {}
-    for ws in m.worksheets:
-        if not ist_seitenblatt(ws):
-            continue
-        b = Blatt(ws)
-        for r in b.zeilen():
-            if b.wert(r, 'art') == 'feld' and b.wert(r, 'seite') in ziele \
-                    and str(b.wert(r, 'typ')).endswith(ziele[b.wert(r, 'seite')]):
-                gefunden[b.wert(r, 'seite')] = (b, r)
-    pruef('Startseite und Leitungsteam haben Feld-Zeilen in der Mappe', len(gefunden) == 2, list(gefunden))
-    if len(gefunden) != 2:
-        return
-    vorher = {d: lesen(projekt, d) for d in ziele}
-    for d, (b, r) in gefunden.items():
-        b.setze(r, 'text', b.wert(r, 'text') + ' – geändert "im" Test')
-    p = os.path.join(ordner, 'felder.xlsx')
+    namen = [n for n in m.sheetnames if n.endswith('Ansicht')]
+    pruef('Startseite und Team haben je ein Ansichtsblatt, direkt hinter ihrem Seitenblatt',
+          len(namen) == 2 and all(n.startswith(m.sheetnames[m.sheetnames.index(n) - 1][:10]) for n in namen),
+          namen)
+    pruef('Ansichtsblaetter sind geschuetzt, die weissen Felder nicht',
+          all(m[n].protection.sheet for n in namen))
+    felder = {}
+    for z in m['_ansicht'].iter_rows(min_row=2, values_only=True):
+        felder[(z[3], z[4])] = (m[z[1]], z[2], z[5])
+    pruef('keine "Feld:"-Zeilen mehr in den Seitenblaettern',
+          not any(str(ws.cell(row=r, column=1).value or '').startswith('Feld') for ws in m.worksheets
+                  for r in range(1, ws.max_row + 1)))
+    start, team = 'content/de/_index.md', 'content/de/ueber-uns/team/_index.md'
+    def setze(datei, pfad, wert):
+        ws, zelle, _ = felder[(datei, json.dumps(pfad, ensure_ascii=False))]
+        ws[zelle].value = wert
+    setze(start, ['hero', 'title'], 'Neuer "Titel" im Test')
+    setze(team, ['r', 0, 'm', 0, 'rolle'], 'Neue Rolle')
+    setze(team, ['r', 0, 'm', 1, 'name'], 'Neue Person')          # leere Karte im Ressort 1
+    setze(team, ['r', 0, 'm', 1, 'rolle'], 'Neu dabei')
+    setze(team, ['r', 1, 'm', 0, 'name'], '!Löschen!')
+    n_ressorts = len(yaml.safe_load(tb.kopf_trennen(lesen(projekt, team))[0].strip().strip('-'))['ressorts'])
+    setze(team, ['r', n_ressorts, 'titel'], 'Neues Ressort')
+    setze(team, ['r', n_ressorts, 'm', 0, 'name'], 'Erste Person')
+    p = os.path.join(ordner, 'ansicht.xlsx')
+    m.save(p)
+    vorher = {d: lesen(projekt, d) for d in (start, team)}
+    stand = zustand(projekt)
+    rc, aus = einlesen(projekt, p)
+    neu_start = lesen(projekt, start)
+    anders = [(a, b) for a, b in zip(vorher[start].split('\n'), neu_start.split('\n')) if a != b]
+    daten = yaml.safe_load(tb.kopf_trennen(neu_start)[0].strip().strip('-'))
+    pruef('Startseite: genau eine Zeile geaendert, Wert richtig, gueltiges YAML',
+          len(anders) == 1 and daten['hero']['title'] == 'Neuer "Titel" im Test', anders[:2])
+    alt_t = yaml.safe_load(tb.kopf_trennen(vorher[team])[0].strip().strip('-'))['ressorts']
+    neu_t = yaml.safe_load(tb.kopf_trennen(lesen(projekt, team))[0].strip().strip('-'))['ressorts']
+    erwartet = [dict(r, mitglieder=[dict(x) for x in r['mitglieder']]) for r in alt_t]
+    erwartet[0]['mitglieder'][0]['rolle'] = 'Neue Rolle'
+    erwartet[0]['mitglieder'].insert(1, {'name': 'Neue Person', 'rolle': 'Neu dabei'})
+    del erwartet[1]['mitglieder'][0]
+    if not erwartet[1]['mitglieder']:
+        del erwartet[1]
+    erwartet.append({'titel': 'Neues Ressort', 'mitglieder': [{'name': 'Erste Person'}]})
+    pruef('Team: Rolle geaendert, Person dazu, Person weg, neues Ressort - Rest gleich', neu_t == erwartet,
+          neu_t[:2])
+    pruef('Team: Seitentext unveraendert',
+          tb.kopf_trennen(vorher[team])[1] == tb.kopf_trennen(lesen(projekt, team))[1])
+    pruef('nur Startseite und Team geaendert', unterschiede(stand, zustand(projekt)) == sorted([start, team]),
+          unterschiede(stand, zustand(projekt)))
+    for d, t in vorher.items():
+        with open(os.path.join(projekt, d), 'w', encoding='utf-8') as f:
+            f.write(t)
+
+    # Neue Saison ueber das Feld im Team-Blatt
+    m = load_workbook(mappen['de'])
+    for z in m['_ansicht'].iter_rows(min_row=2, values_only=True):
+        if z[0] == 'saison':
+            m[z[1]][z[2]].value = '2099/00'
+    p = os.path.join(ordner, 'saison.xlsx')
     m.save(p)
     stand = zustand(projekt)
     rc, aus = einlesen(projekt, p)
-    import yaml
-    for d in ziele:
-        neu = lesen(projekt, d)
-        anders = [(a, n) for a, n in zip(vorher[d].split('\n'), neu.split('\n')) if a != n]
-        daten = yaml.safe_load(tb.kopf_trennen(neu)[0].strip().strip('-'))
-        wert = daten['hero']['title'] if d.endswith('de/_index.md') else daten['ressorts'][0]['mitglieder'][0]['rolle']
-        pruef(f'{d}: genau eine Zeile geaendert, Wert richtig und gueltiges YAML',
-              len(anders) == 1 and wert.endswith(' – geändert "im" Test')
-              and len(vorher[d].split('\n')) == len(neu.split('\n')), anders[:2])
-        with open(os.path.join(projekt, d), 'w', encoding='utf-8') as f:
-            f.write(vorher[d])
-    pruef('Felder: keine anderen Dateien geaendert',
-          set(unterschiede(stand, zustand(projekt))) <= set(ziele), aus[-300:])
+    geaendert = unterschiede(stand, zustand(projekt))
+    erwartet = sorted(f'content/{s}/ueber-uns/{x}/_index.md' for s in tb.SPRACHEN for x in ('team', 'archiv'))
+    pruef('Neue Saison: Team und Archiv in allen drei Sprachen geaendert', geaendert == erwartet, geaendert)
+    t, a = lesen(projekt, team), lesen(projekt, 'content/de/ueber-uns/archiv/_index.md')
+    pruef('Neue Saison: Team-Seite zeigt 2099/00, Archiv hat die alte Saison samt Leitungsteam',
+          '## Team Saison 2099/00' in t and re.search(r'^### Team Saison \d{4}/\d{2}\n\n\*\*Leitungsteam\*\*', a, re.M)
+          is not None, aus[-300:])
 
 
 def verrutscht_pruefen(projekt, ordner):
@@ -1032,7 +1070,7 @@ def main():
             fehlerfaelle_pruefen(projekt, ordner, de, fr)
         editor_kopf_pruefen(projekt, ordner)
         verrutscht_pruefen(projekt, ordner)
-        felder_pruefen(projekt, ordner)
+        ansicht_pruefen(projekt, ordner)
     finally:
         if a.behalten:
             print(f'\nArbeitsordner: {ordner}')

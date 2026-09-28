@@ -50,6 +50,7 @@ except ImportError:
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import texte_bausteine as tb
+import texte_ansicht
 
 SCHRIFT = 'Arial'
 ERSTE_ZEILE = 6            # hier beginnen die Daten auf jedem Seitenblatt
@@ -422,6 +423,9 @@ def zeilen_fuer_seite(sprache, seite, de_seite, projekt):
         z['_gesperrt'] = gesperrt
         return z
 
+    # Felder (Startseite, Leitungsteam) stehen nicht als Zeilen hier, sondern
+    # im eigenen Ansichtsblatt (scripts/texte_ansicht.py)
+    paare = [(u, v) for u, v in paare if (u or v)['typ'] != 'feld']
     kopfpaare = [(u, v) for u, v in paare if (u or v)['typ'] in ('titel', 'beschreibung', 'bildtext', 'feld')]
     rumpfpaare = [(u, v) for u, v in paare if (u or v)['typ'] not in ('titel', 'beschreibung', 'bildtext', 'feld')]
     reihenfolge = {'titel': 0, 'beschreibung': 1, 'bildtext': 2, 'feld': 3}
@@ -778,6 +782,7 @@ def mappe_erzeugen(projekt, sprache, ziel, stand_zeilen, stand_seiten, oeffentli
 
     vergeben = {L['anleitung'].lower(), L['inhalt'].lower()}
     berichte_gruppen, blaetter = [], []
+    ansicht = {}
     for seite, de in liste:
         innen = (seite or de)['innen']
         zeilen = zeilen_fuer_seite(sprache, seite, de, projekt)
@@ -819,8 +824,11 @@ def mappe_erzeugen(projekt, sprache, ziel, stand_zeilen, stand_seiten, oeffentli
         name = blattname(ziel_seite, vergeben)
         _, letzte = seitenblatt(mappe, sprache, name, farbe, [(seite, de, zeilen)], stand_zeilen,
                                 basis_url, L['inhalt'])
+        if seite and ziel_seite['innen'] in texte_ansicht.SEITEN:
+            ansicht[ziel_seite['innen']] = (name, len(mappe.worksheets))
         inhalt_zeilen.append((ziel_seite, seite, name, letzte, zeilen, '', zeilen))
 
+    texte_ansicht.blaetter_anlegen(mappe, sprache, projekt, ansicht)
     inhaltsblatt(inhalt, sprache, inhalt_zeilen, stand_seiten)
     anleitungsblatt(anleitung, sprache, basis_url)
     # Verzeichnis aller Seiten: Fehlt beim Einlesen eine davon (Zeilen oder

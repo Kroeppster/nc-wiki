@@ -45,6 +45,7 @@ except ImportError:
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import texte_bausteine as tb
+import texte_ansicht
 
 PROJEKT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOESCHEN = re.compile(r'!\s*(l(ö|oe)schen|supprimer|eliminare)\s*!', re.IGNORECASE)
@@ -748,6 +749,25 @@ def einlesen(pfade, projekt=PROJEKT, probe=False):
                 while ordner != os.path.join(projekt, 'content') and not os.listdir(ordner):
                     os.rmdir(ordner)
                     ordner = os.path.dirname(ordner)
+        # Ansichtsblaetter (Startseite, Team) - nach den Seitenblaettern, damit
+        # sie auf dem Stand aufsetzen, den diese geschrieben haben
+        try:
+            ansicht = texte_ansicht.lesen(load_workbook(pfad, data_only=True))
+        except Exception:
+            ansicht = {}
+        for datei, eintraege in ansicht.items():
+            n, saison = texte_ansicht.anwenden(projekt, datei, eintraege,
+                                               lambda t, d=datei: meldungen.append(f'{d}: {t}'), probe)
+            for d, zusatz in [(datei, n)] + [(x, 1) for x in saison]:
+                if not zusatz:
+                    continue
+                da = next((e for m_, d_, e in ergebnisse if d_ == d), None)
+                if da is not None and da['art'] in ('geaendert', 'unveraendert', 'bereits'):
+                    da['art'] = 'geaendert'
+                    da.setdefault('zaehler', {})
+                    da['zaehler']['geaendert'] = da['zaehler'].get('geaendert', 0) + zusatz
+                elif da is None:
+                    ergebnisse.append((name, d, dict(art='geaendert', zaehler=dict(geaendert=zusatz))))
         for datei in verzeichnis:
             if datei not in gefunden:
                 meldungen.append(f'{datei}: fehlt in {name} (Zeilen oder Blatt gelöscht?) - die Seite '
