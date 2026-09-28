@@ -19,7 +19,7 @@ ressorts:
       - name: "Selina Buchser"
         rolle: "Coordinatrice Francofona"
       - name: "Fabiano Mohr"
-        rolle: "Coordinatrice Italofona"
+        rolle: "Coordinatore Italofono"
   - titel: "Offerta"
     mitglieder:
       - name: "Posto vacante"

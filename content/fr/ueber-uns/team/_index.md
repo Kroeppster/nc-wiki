@@ -19,7 +19,7 @@ ressorts:
       - name: "Selina Buchser"
         rolle: "Coordinatrice Romandie"
       - name: "Fabiano Mohr"
-        rolle: "Coordinatrice Ticino"
+        rolle: "Coordinateur Ticino"
   - titel: "Offre"
     mitglieder:
       - name: "Poste vacant"
