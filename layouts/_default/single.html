@@ -121,11 +121,6 @@
       {{/* Der eigentliche Fliesstext der Seite (alles nach dem Frontmatter-Block) */}}
       {{ .Content }}
 
-      {{/* Auffälliger Sponsoring-Hinweis NUR auf "Jetzt unterstützen" - siehe
-           sponsoring-cta.html. Vorher war das nur ein kleiner Absatz im
-           Fliesstext ganz unten und ging leicht unter. */}}
-      {{ if eq .Path "/unterstuetzer-innen/jetzt-unterstuetzen" }}{{ partial "sponsoring-cta.html" . }}{{ end }}
-
       {{/* Manuelle Download-Liste aus dem Frontmatter (Feld "downloads:") -
            wird z.B. für Jahresberichte verwendet, siehe archetypes/jahresbericht.md */}}
       {{ with .Params.downloads }}

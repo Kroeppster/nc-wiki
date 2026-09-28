@@ -334,3 +334,8 @@ fig_anl_e3: "Vous devez apprendre la position de la surface noire de manière à
 fig_anl_beispiel_abfrage: "Un exemple de la façon dont les questions vous seront posées plus tard :"
 fig_anl_beispiel_loesung: "La solution serait alors ({x})."
 fig_anl_a1: "Indiquez maintenant quelle partie de chaque figure était noircie pendant la phase d'apprentissage. Marquez pour chaque figure la bonne lettre sur votre feuille de réponses. (Veuillez respecter l'ordre des figures <b>ligne par ligne</b> !)"
+
+# Seite "Jetzt unterstützen" (layouts/_default/spenden.html)
+spenden_ueberweisung_knopf: "Faire un don par virement"
+spenden_twint_alt: "Code QR TWINT pour un don à NCWiki"
+spenden_twint_hinweis: "À scanner avec l'app TWINT – tu choisis toi-même le montant."

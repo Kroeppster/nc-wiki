@@ -339,3 +339,8 @@ fig_anl_e3: "Die Lage der schwarzen Fläche sollen Sie nun so erlernen, dass Sie
 fig_anl_beispiel_abfrage: "Ein Beispiel für die Art, in der Sie später abgefragt werden:"
 fig_anl_beispiel_loesung: "Die Lösung wäre dann ({x})."
 fig_anl_a1: "Geben Sie nun bitte an, welcher Teil jeder Figur während der Einprägephase geschwärzt war. Markieren Sie für jede Figur den richtigen Lösungsbuchstaben auf Ihrem Antwortbogen. (Beachten Sie bitte die <b>zeilenweise</b> Abfolge der Figuren!)"
+
+# Seite "Jetzt unterstützen" (layouts/_default/spenden.html)
+spenden_ueberweisung_knopf: "Spenden mit Überweisung"
+spenden_twint_alt: "TWINT-QR-Code für eine Spende an NCWiki"
+spenden_twint_hinweis: "Mit der TWINT-App scannen – den Betrag wählst du selbst."

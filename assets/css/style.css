@@ -816,12 +816,24 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .badge-license:hover{color:var(--color-signal);}
 .badge-notice{color:var(--color-warn-text);background:var(--color-warn-bg);border-color:transparent;}
 
-/* Auffällige Sponsoring-Box auf "Jetzt unterstützen" (siehe
-   sponsoring-cta.html) - deutlich sichtbarer als der vorherige kleine
-   Textabsatz: farblich abgesetzte Fläche + echter Knopf statt Text-Link. */
-.sponsoring-cta{margin-top:var(--space-8);padding:var(--space-6);background:linear-gradient(150deg,var(--color-signal-soft),var(--color-surface));border:1px solid var(--color-signal-soft-line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);}
-.sponsoring-cta h2{margin-top:0;}
-.sponsoring-cta p{margin-bottom:var(--space-4);}
+/* "Jetzt unterstützen" (layouts/_default/spenden.html), nach dem Vorbild
+   ncwiki-new.ch: oben Spendentext + Überweisungs-Knopf neben dem grossen
+   TWINT-Code, darunter der Sponsoring-Hinweis. Auf schmalen
+   Bildschirmen alles untereinander. Der QR-Code bleibt auch im dunklen
+   Modus auf Weiss, sonst liest ihn die TWINT-App nicht zuverlässig. */
+.spenden-vorne{max-width:70ch;}
+.spenden-teil{display:grid;gap:var(--space-6) var(--space-8);align-items:center;margin:var(--space-8) 0;}
+.spenden-teil-sponsoring{padding-top:var(--space-8);border-top:1px solid var(--color-line);}
+.spenden-text h2{margin:0 0 var(--space-3);}
+.spenden-text p{font-size:var(--text-lg,1.125rem);}
+.spenden-knoepfe{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-5);}
+.spenden-qr{margin:0;justify-self:center;text-align:center;}
+.spenden-qr img{display:block;width:min(100%,380px);height:auto;padding:14px;background:#fff;border:1px solid var(--color-line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);}
+.spenden-qr figcaption{margin-top:var(--space-3);font-size:var(--text-sm,.9rem);color:var(--color-ink-soft);max-width:380px;}
+@media (min-width:860px){
+  .spenden-teil{grid-template-columns:1fr 1fr;}
+  .spenden-teil-sponsoring{grid-template-columns:minmax(0,70ch);}
+}
 
 /* Diskreter Spendenaufruf ganz am Seitenende (siehe donation-note.html) -
    bewusst unauffällig: kleine Schrift, dezente Trennlinie, keine Box. */

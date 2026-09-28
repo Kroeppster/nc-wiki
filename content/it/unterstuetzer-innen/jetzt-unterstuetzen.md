@@ -5,14 +5,15 @@ menu:
   main:
     parent: unterstuetzer-innen
     weight: 1
+layout: spenden
 ---
 
-Le nostre offerte sono completamente gratuite. Se ne benefici e desideri fare una piccola donazione, saremo lieti di ricevere il tuo sostegno per coprire costi come quelli di stampa.
+## Dona ora!
 
-## Conto di donazione
+Siamo grati per ogni donazione. Con la tua donazione possiamo offrire gratuitamente esercizi, simulazioni del test e corsi di preparazione. Senza donazioni e sponsor, l'intero progetto non sarebbe possibile.
 
-Verein NCWiki  
-Basellandschaftliche Kantonalbank  
-IBAN: CH16 0076 9436 6089 3200 1
+## Diventa sponsor!
 
-Una donazione è possibile anche tramite Twint – contattaci tramite il nostro [modulo di contatto](/kontakt) per ricevere il codice QR.
+Saremmo lieti di collaborare con la vostra organizzazione. Con il pulsante qui sotto potete contattarci – vi invieremo volentieri tutte le informazioni utili.
+
+Grazie mille per il vostro interesse!

@@ -1,0 +1,58 @@
+{{- /*
+  ============================================================================
+  VORLAGE "JETZT UNTERSTÜTZEN" (layout: spenden im Frontmatter)
+  ============================================================================
+  Nach dem Vorbild von ncwiki-new.ch/jetzt-unterstutzen, zwei Teile:
+
+    1. Spenden: Text + Knopf "Spenden mit Überweisung" links, daneben gross
+       der TWINT-Code (assets/images/unterstuetzen/twint-qr.png).
+    2. Sponsoring: Text + Knopf zum Kontaktformular.
+
+  Die Texte bleiben normaler Seitentext (Excel-Mappe, Web-Editor): Die erste
+  "##"-Überschrift samt Absätzen landet im Spenden-Teil, die zweite im
+  Sponsoring-Teil. Text vor der ersten Überschrift steht darüber. Nur die
+  Knöpfe und die Bildbeschreibungen kommen aus i18n (spenden_*).
+  Kartenzahlung gibt es vorerst nicht.
+  ============================================================================
+*/ -}}
+{{ define "main" }}
+  {{- $teile := split .Content "<h2" -}}
+  {{- $vorne := index $teile 0 -}}
+  {{- $spenden := "" -}}{{- $sponsoring := "" -}}
+  {{- if ge (len $teile) 2 }}{{ $spenden = printf "<h2%s" (index $teile 1) }}{{ end -}}
+  {{- if ge (len $teile) 3 }}{{ $sponsoring = printf "<h2%s" (delimit (after 2 $teile) "<h2") }}{{ end -}}
+  <section>
+    <div class="wrap">
+      {{ with .Parent }}<a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+      {{ with .Section }}<p class="eyebrow">{{ . }}</p>{{ end }}
+      <h1>{{ .Title }}</h1>
+      {{ with $vorne }}<div class="spenden-vorne">{{ . | safeHTML }}</div>{{ end }}
+
+      <div class="spenden-teil">
+        <div class="spenden-text">
+          {{ $spenden | safeHTML }}
+          <p class="spenden-knoepfe">
+            <a class="btn btn-ghost" href="{{ relLangURL "unterstuetzer-innen/spenden-ueberweisung/" }}">{{ i18n "spenden_ueberweisung_knopf" }}</a>
+          </p>
+        </div>
+        {{ with resources.Get "images/unterstuetzen/twint-qr.png" }}
+        <figure class="spenden-qr">
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="{{ i18n "spenden_twint_alt" }}">
+          <figcaption>{{ i18n "spenden_twint_hinweis" }}</figcaption>
+        </figure>
+        {{ end }}
+      </div>
+
+      {{ with $sponsoring }}
+      <div class="spenden-teil spenden-teil-sponsoring">
+        <div class="spenden-text">
+          {{ . | safeHTML }}
+          <p class="spenden-knoepfe">
+            <a class="btn btn-ghost" href="{{ relLangURL "kontakt/" }}">{{ i18n "sponsoring_cta_button" }}</a>
+          </p>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

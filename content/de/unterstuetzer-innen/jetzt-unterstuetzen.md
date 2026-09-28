@@ -5,14 +5,15 @@ menu:
   main:
     parent: unterstuetzer-innen
     weight: 1
+layout: spenden
 ---
 
-Unsere Angebote sind komplett kostenlos. Wenn du von ihnen profitierst und einen kleinen Betrag spenden möchtest, freuen wir uns sehr über deine Unterstützung, um Sachen wie Druckkosten zu decken.
+## Jetzt spenden!
 
-## Spendenkonto
+Wir sind dankbar für jede Spende. Mit deiner Spende können wir die kostenlosen Übungen, Testsimulationen und Vorbereitungskurse bereitstellen. Ohne Spenden und Sponsoren wäre das ganze Vorhaben nicht möglich.
 
-Verein NCWiki  
-Basellandschaftliche Kantonalbank  
-IBAN: CH16 0076 9436 6089 3200 1
+## Jetzt Sponsor:in werden!
 
-Eine Spende ist auch per Twint möglich – melde dich über unser [Kontaktformular](/kontakt), falls du den QR-Code dafür möchtest.
+Gerne würden wir mit Ihrer Organisation zusammenarbeiten. Über den Knopf unten können Sie mit uns Kontakt aufnehmen – wir senden Ihnen gerne alle relevanten Informationen.
+
+Vielen Dank für Ihr Interesse!
