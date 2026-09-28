@@ -1,5 +1,6 @@
 ---
 title: "Chi siamo"
+description: "Chi siamo: dal 2021 oltre 110 studenti di medicina di tutta la Svizzera si impegnano affinché la preparazione all'EMS sia gratuita per tutti."
 menu:
   main:
     identifier: ueber-uns
@@ -8,16 +9,16 @@ menu:
 
 ## La nostra missione
 
-Siamo un team di studentesse e studenti delle facoltà mediche che ha come obiettivo di facilitare e rendere equa la preparazione al numerus clausus (EMS).
+Siamo un team di studentesse e studenti di medicina e vogliamo facilitarti la preparazione al test attitudinale per gli studi di medicina (EMS).
 
-Per noi è importante che la tua prestazione al giorno decisivo e la possibilità di iniziare lo studio dei tuoi sogni a settembre non dipendano dalle tue risorse finanziarie. Ecco perché vogliamo fornirti tutte le informazioni di cui hai bisogno per prepararti bene al NC, senza costi aggiuntivi.
+Il tuo risultato il giorno del test e la possibilità di iniziare a settembre gli studi che desideri non devono dipendere dalle tue possibilità economiche. Per questo ti mettiamo a disposizione gratuitamente tutto ciò che ti serve per prepararti bene.
 
-Nel team di NCWiki fanno parte più di 110 studentesse e studenti delle facoltà mediche di tutta la Svizzera – scopri di più nel nostro [team](/ueber-uns/team).
+Dalla fondazione nel 2021 NCWiki è cresciuto molto: oggi nel team si impegnano oltre 110 studentesse e studenti di medicina di tutta la Svizzera. Chi c'è dietro lo scopri alla pagina [Team](/ueber-uns/team).
 
 ## Partecipare
 
-Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente delle facoltà mediche, contattaci tramite il nostro [modulo di contatto](/kontakt)!
+Studi medicina e vuoi impegnarti con noi? Oppure hai domande e suggerimenti? Allora scrivici tramite il nostro [modulo di contatto](/kontakt).
 
 ## Supporto
 
-Se anche tu vorresti sostenere la nostra missione, saremo lieti di ricevere la tua [donazione](/unterstuetzer-innen/jetzt-unterstuetzen)!
+Vuoi sostenere la nostra missione? Saremo lieti di ricevere la tua [donazione](/unterstuetzer-innen/jetzt-unterstuetzen).

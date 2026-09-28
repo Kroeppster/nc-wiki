@@ -1,5 +1,6 @@
 ---
 title: "Informativa sulla privacy"
+description: "Informativa sulla protezione dei dati di NCWiki: quali dati vengono trattati durante la visita del sito e nei moduli, e quali servizi esterni utilizziamo."
 menu:
   legal:
     identifier: datenschutzbestimmungen

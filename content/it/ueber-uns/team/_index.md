@@ -1,5 +1,6 @@
 ---
 title: "Team"
+description: "Scopri il team dietro NCWiki: team dirigente, content creator e responsabili della Svizzera tedesca, della Romandia e del Ticino."
 menu:
   main:
     parent: ueber-uns
@@ -45,7 +46,7 @@ ressorts:
         rolle: "Protocollo & Dati"
 ---
 
-Nel team di NCWiki fanno parte più di 110 studentesse e studenti delle facoltà mediche di tutta la Svizzera.
+Dietro NCWiki ci sono oltre 110 studentesse e studenti di medicina di tutta la Svizzera che si impegnano come volontari. Qui ti presentiamo l'attuale team dirigente, i responsabili in Romandia e in Ticino e tutti coloro che hanno contribuito a NCWiki nelle stagioni precedenti.
 
 ## Team dirigente attuale
 

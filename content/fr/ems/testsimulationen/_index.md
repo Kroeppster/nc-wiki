@@ -1,5 +1,6 @@
 ---
 title: "Simulations de test"
+description: "Simule l'EMS dans des conditions réelles. Télécharge gratuitement cinq cahiers de test complets des années précédentes, la répétition générale idéale."
 menu:
   main:
     identifier: testsimulationen
@@ -13,6 +14,6 @@ Tout ce qu'il faut savoir sur nos simulations de test.
 
 **Inscription :** L'inscription se fait en ligne dès que les dates de la prochaine session sont fixées – premier arrivé, premier servi.
 
-**Dates :** Nos simulations de test ont lieu chaque printemps dans plusieurs sites universitaires suisses.
+**Dates :** Nos simulations de test ont lieu chaque année début mai, environ deux mois avant l'EMS. Elles se déroulent dans toutes les universités qui utilisent l'EMS : à Bâle, Berne, Fribourg, Lugano et Zurich.
 
 **Merch :** Sur place, vous pouvez comme d'habitude découvrir notre merch NCWiki au stand d'information.

@@ -1,5 +1,6 @@
 ---
 title: "Vorbereitungskurse"
+description: "Kostenloser EMS-Vorbereitungskurs: Zwei Tage in Kleingruppen mit erfahrenen Medizinstudierenden, inklusive Kursskript mit Strategien und Übungsaufgaben."
 menu:
   main:
     parent: ems
@@ -8,8 +9,12 @@ featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Gedrucktes NCWiki-Kursskript zum EMS-Vorbereitungskurs vom März 2024 auf einem Hörsaaltisch"
 ---
 
-Unsere kostenlosen Vorbereitungskurse finden jeweils an mehreren Schweizer Hochschulstandorten statt (u. a. Zürich, Bern und Basel). An zwei Tagen vermitteln wir dir die wichtigsten Strategien zu den Untertests und wie du dich optimal auf den EMS vorbereitest – in Kleingruppen und begleitet von erfahrenen Medizinstudierenden als Tutor:innen, die selbst den EMS durchlaufen haben. Der Kurs beinhaltet ein Kursskript mit integrierten Übungseinheiten, und du lernst gleichzeitig Leute kennen, mit denen sich Lerngruppen bilden lassen.
+In unserem kostenlosen Vorbereitungskurs lernst du an zwei Tagen die wichtigsten Strategien für alle Untertests kennen und erfährst, wie du deine Vorbereitung auf den EMS sinnvoll planst. Du arbeitest in Kleingruppen, begleitet von Medizinstudierenden, die den EMS selbst geschrieben haben und ihre Erfahrungen direkt an dich weitergeben.
 
-Die Anmeldung für die nächste Runde wird jeweils rechtzeitig hier und über unsere Kanäle angekündigt – die Plätze sind limitiert und werden nach Anmeldedatum vergeben.
+Zum Kurs gehört ein Kursskript mit Übungsaufgaben, das du auch danach für deine Vorbereitung nutzen kannst. Nebenbei lernst du andere Teilnehmende kennen, mit denen du Lerngruppen bilden kannst.
 
-Das aktuelle Kursskript findest du hier zum Herunterladen.
+Die Kurse finden an mehreren Schweizer Hochschulstandorten statt, unter anderem in Basel, Bern und Zürich.
+
+Sobald die Anmeldung für die nächste Runde offen ist, kündigen wir das auf dieser Seite, auf [Instagram](https://www.instagram.com/ncwiki.ch/) und in unserer [Discord-Community](https://discord.com/invite/DhgYpUGss9) an. Die Plätze sind begrenzt und werden unter allen Anmeldungen ausgelost. Wichtig ist also nicht, wie schnell du dich anmeldest, sondern dass du es bis zum Anmeldeschluss tust.
+
+Das aktuelle Kursskript kannst du hier kostenlos herunterladen. Es enthält Strategien und Tipps zu allen Untertests, allgemeine Hinweise zur Vorbereitung und zur Prüfungssituation sowie zahlreiche Übungsaufgaben. Die Ausgabe 2026 berücksichtigt bereits den angepassten Untertest Muster zuordnen. Wenn du an unserem Vorbereitungskurs teilnimmst, lade das Skript bitte vorher herunter und bring es am Kurstag digital oder ausgedruckt mit.

@@ -1,5 +1,6 @@
 ---
 title: "Impressum"
+description: "Impressum di NCWiki: recapiti dell'associazione, note sui nostri contenuti e sulle fonti ufficiali di informazione sull'EMS."
 menu:
   legal:
     identifier: impressum
@@ -11,12 +12,12 @@ NCWiki
 
 E-mail: info@nc-wiki.ch
 
-## Avvertenza
+## Note sui nostri contenuti
 
-I consigli e gli esercizi sono stati preparati con la massima cura. Ovviamente non possiamo garantire il successo all'EMS (test attitudinale per gli studi di medicina).
+Abbiamo preparato tutti i consigli e gli esercizi in buona fede e con la massima cura. Non possiamo tuttavia garantire il superamento dell'EMS (test attitudinale per gli studi di medicina).
 
-Ci impegniamo molto per fornire informazioni corrette sull'EMS. Per una verifica autonoma dei fatti, informati direttamente alla fonte: [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) e [Centro per lo sviluppo dei test](https://webapps.unifr.ch/ztd/ems/).
+Teniamo molto alla correttezza delle nostre informazioni sull'EMS. Fanno comunque sempre fede le indicazioni ufficiali di [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) e del [Centro per lo sviluppo di test e la diagnostica (ZTD)](https://www.unifr.ch/ztd/de/ems).
 
-I contenuti dei commenti nel forum o nelle testimonianze riflettono le opinioni personali di chi li ha scritti.
+Le testimonianze riflettono le esperienze e le opinioni personali di chi le ha scritte.
 
-Ci riserviamo il diritto di eliminare commenti con contenuti offensivi o simili.
+Ci riserviamo il diritto di abbreviare o di non pubblicare le testimonianze inviate, in particolare se contengono contenuti offensivi o inappropriati.

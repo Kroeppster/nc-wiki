@@ -1,5 +1,6 @@
 ---
 title: "Uniguide"
+description: "Études de médecine en Suisse : notre Uniguide compare toutes les universités et filières selon la langue d'études, la procédure d'admission et leurs particularités."
 menu:
   main:
     parent: ems
@@ -7,4 +8,4 @@ menu:
     name: "Guide des universités"
 ---
 
-Aperçu comparatif des universités suisses proposant des études de médecine – langue, procédure d'admission et plus encore.
+Tu trouveras ici toutes les universités suisses proposant des études de médecine, avec la langue d'études, la procédure d'admission et les particularités de chaque site. Tu peux ainsi comparer quelle université te convient avant de fixer tes priorités lors de l'inscription, jusqu'au 15 février.

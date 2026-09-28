@@ -14,5 +14,4 @@ Hier findest du alle Informationen rund um unsere Testsimulationen.
 
 **Anmeldung:** Die Anmeldung erfolgt online. Sobald die Termine für die nächste Runde feststehen, geben wir sie auf unserer Website und auf Instagram bekannt.
 
-**Termine:** Unsere Testsimulationen finden jeweils Anfang Mai an mehreren Schweizer Hochschulstandorten statt.
-
+**Termine:** Unsere Testsimulationen finden jeweils Anfang Mai statt, rund zwei Monate vor dem EMS. Durchgeführt werden sie an allen Universitäten, die den EMS verwenden: in Basel, Bern, Freiburg, Lugano und Zürich.

@@ -1,5 +1,6 @@
 ---
 title: "Über Uns"
+description: "Über NCWiki: Seit 2021 setzen sich über 110 Medizinstudierende aus der ganzen Schweiz dafür ein, dass die EMS-Vorbereitung für alle kostenlos ist."
 menu:
   main:
     identifier: ueber-uns
@@ -8,16 +9,16 @@ menu:
 
 ## Unsere Mission
 
-Wir sind ein Team, bestehend aus Medizinstudent\*innen, die dir als zukünftige\*r Medizinstudent\*in die Vorbereitung auf den Eignungstest fürs Medizinstudium erleichtern möchten.
+Wir sind ein Team von Medizinstudierenden und möchten dir die Vorbereitung auf den Eignungstest für das Medizinstudium (EMS) erleichtern.
 
-Uns ist es wichtig, dass es nicht von deinen finanziellen Ressourcen abhängt, wie gut du am entscheidenden Tag abschneidest und ob du dein Traumstudium im September beginnen kannst oder nicht. Deshalb wollen wir dir alle nötigen Informationen für eine gute Vorbereitung auf den Numerus clausus ohne zusätzliche Kosten zur Verfügung stellen.
+Wie gut du am Testtag abschneidest und ob du im September dein Wunschstudium beginnen kannst, soll nicht von deinen finanziellen Möglichkeiten abhängen. Deshalb stellen wir dir alles, was du für eine gute Vorbereitung brauchst, kostenlos zur Verfügung.
 
-Im NCWiki-Team engagieren sich über 110 Medizinstudierende aus der ganzen Schweiz – mehr dazu im [Team](/ueber-uns/team).
+Seit der Gründung 2021 ist NCWiki stark gewachsen: Heute engagieren sich über 110 Medizinstudierende aus der ganzen Schweiz im Team. Wer dahintersteht, erfährst du auf der Seite [Team](/ueber-uns/team).
 
 ## Mitmachen
 
-Für Fragen, Anregungen oder wenn du dich als Medizinstudent\*in auch bei uns engagieren möchtest, melde dich gerne über unser [Kontaktformular](/kontakt)!
+Du studierst Medizin und möchtest dich bei uns engagieren? Oder hast du Fragen und Anregungen? Dann melde dich über unser [Kontaktformular](/kontakt).
 
 ## Unterstützung
 
-Du möchtest unsere Mission auch gerne unterstützen? Wir freuen uns über deine [Spende](/unterstuetzer-innen/jetzt-unterstuetzen)!
+Du möchtest unsere Mission unterstützen? Wir freuen uns über deine [Spende](/unterstuetzer-innen/jetzt-unterstuetzen).

@@ -1,5 +1,6 @@
 ---
 title: "Contatto"
+description: "Contatta NCWiki: scrivici per domande sull'EMS o sulla nostra offerta, per suggerimenti o se studi medicina e vuoi partecipare."
 contact_form: true
 menu:
   main:
@@ -10,10 +11,10 @@ menu:
     weight: 4
 ---
 
-Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente di medicina, contattaci pure!
+Siamo felici di ricevere il tuo messaggio. Scrivici per domande, suggerimenti o se studi medicina e vuoi impegnarti con noi.
 
-Troverai le risposte alle domande più frequenti più rapidamente nel nostro [Q&A](/ems/qa).
+Rispondiamo già a molte domande sull'EMS e sulla nostra offerta nelle [domande frequenti](/ems/qa). Lì trovi spesso la risposta più in fretta.
 
-Cerchiamo di lavorare con grande cura, ma se noti qualcosa di errato o incompleto, siamo molto felici di ricevere un tuo feedback!
+Lavoriamo con grande cura. Se dovessi comunque notare un errore, ti saremo molto grati per una breve segnalazione.
 
 NCWiki · 8000 Zurigo · info@nc-wiki.ch

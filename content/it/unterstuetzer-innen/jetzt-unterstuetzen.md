@@ -1,5 +1,6 @@
 ---
 title: "Sostienici ora!"
+description: "Sostieni NCWiki con una donazione tramite bonifico o Twint e aiutaci a mantenere gratuita la preparazione all'EMS per tutti."
 menu:
   main:
     parent: unterstuetzer-innen

@@ -1,5 +1,6 @@
 ---
 title: "Équipe"
+description: "Découvre l'équipe derrière NCWiki : équipe dirigeante, créateur·rice·s de contenu et responsables de Suisse alémanique, de Romandie et du Tessin."
 menu:
   main:
     parent: ueber-uns
@@ -45,7 +46,7 @@ ressorts:
         rolle: "Protocole & Dates"
 ---
 
-Plus de 110 étudiant·e·s en médecine de toute la Suisse sont impliqué·e·s dans l'équipe de NCWiki.
+Derrière NCWiki, il y a plus de 110 étudiant·e·s en médecine de toute la Suisse qui s'engagent bénévolement. Nous te présentons ici l'équipe dirigeante actuelle, les responsables en Romandie et au Tessin, ainsi que toutes celles et ceux qui ont façonné NCWiki lors des saisons précédentes.
 
 ## Équipe dirigeante actuelle
 

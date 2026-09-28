@@ -1,5 +1,6 @@
 ---
 title: "Protection des données"
+description: "Déclaration de protection des données de NCWiki : quelles données sont traitées lors de la visite du site et des formulaires, et quels services externes nous utilisons."
 menu:
   legal:
     identifier: datenschutzbestimmungen

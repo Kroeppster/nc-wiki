@@ -1,9 +1,10 @@
 ---
 title: "Jahresberichte"
+description: "Die Jahresberichte von NCWiki: Rückblick auf ein Vereinsjahr mit unseren Angeboten, Zahlen, Projekten und allen, die uns dabei unterstützt haben."
 menu:
   main:
     parent: ueber-uns
     weight: 4
 ---
 
-Der erste Jahresbericht von NCWiki ist in Vorbereitung und wird hier veröffentlicht, sobald er vorliegt.
+Hier findest du alle Jahresberichte von NCWiki. Sie geben einen Einblick in unsere Angebote, die Entwicklung des Vereins und die Menschen, die NCWiki möglich machen.

@@ -1,9 +1,10 @@
 ---
 title: "Rapports annuels"
+description: "Les rapports annuels de NCWiki : rétrospective d'une année associative avec nos offres, nos chiffres, nos projets et toutes celles et ceux qui nous ont soutenus."
 menu:
   main:
     parent: ueber-uns
     weight: 4
 ---
 
-Le premier rapport annuel de NCWiki est en préparation et sera publié ici dès qu'il sera disponible.
+Tu trouveras ici tous les rapports annuels de NCWiki. Ils donnent un aperçu de nos offres, du développement de l'association et des personnes qui rendent NCWiki possible.

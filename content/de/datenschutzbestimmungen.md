@@ -1,5 +1,6 @@
 ---
 title: "Datenschutzbestimmungen"
+description: "Datenschutzerklärung von NCWiki: welche Daten beim Besuch der Website und bei Formularen bearbeitet werden und welche externen Dienste wir nutzen."
 menu:
   legal:
     identifier: datenschutzbestimmungen

@@ -1,5 +1,6 @@
 ---
 title: "Jetzt unterstützen!"
+description: "Unterstütze NCWiki mit einer Spende per Überweisung oder Twint und hilf mit, dass die EMS-Vorbereitung für alle kostenlos bleibt."
 menu:
   main:
     parent: unterstuetzer-innen

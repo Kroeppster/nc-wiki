@@ -1,5 +1,6 @@
 ---
 title: "Team"
+description: "Lerne das Team hinter NCWiki kennen: Leitungsteam, Content Creators und Verantwortliche aus der Deutschschweiz, der Romandie und dem Tessin."
 menu:
   main:
     parent: ueber-uns
@@ -45,7 +46,7 @@ ressorts:
         rolle: "Protokoll & Daten"
 ---
 
-Im NCWiki-Team engagieren sich über 110 Medizinstudierende aus der ganzen Schweiz.
+Hinter NCWiki stehen über 110 Medizinstudierende aus der ganzen Schweiz, die sich ehrenamtlich engagieren. Hier stellen wir dir das aktuelle Leitungsteam, die Verantwortlichen in der Romandie und im Tessin sowie alle vor, die NCWiki in früheren Saisons mitgestaltet haben.
 
 ## Aktuelles Leitungsteam
 
