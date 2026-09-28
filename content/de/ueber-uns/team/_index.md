@@ -8,42 +8,56 @@ menu:
 ressorts:
   - titel: "Präsidium"
     mitglieder:
+      - name: "Kron Mustafa"
+        rolle: "Co-Präsident"
+      - name: "Yannis Heutschi"
+        rolle: "Co-Präsident"
       - name: "Alessio Iseli"
-        rolle: "Koordinator"
+        rolle: "Handover Präsidium"
   - titel: "Koordination Romandie & Ticino"
     mitglieder:
       - name: "Selina Buchser"
         rolle: "Koordinatorin Romandie"
-      - name: "Margherita Bernasconi"
+      - name: "Fabiano Mohr"
         rolle: "Koordinatorin Ticino"
   - titel: "Angebot"
     mitglieder:
-      - name: "Francesca Serra"
+      - name: "Vakant"
         rolle: "Vorbereitungskurse"
       - name: "Matthias Schütz"
         rolle: "Übungsserien"
-      - name: "Olivia Schiess"
+      - name: "Gabriel Unglert"
         rolle: "Testsimulation"
       - name: "Sabrina Zeller"
         rolle: "Testsimulation"
-      - name: "Kron Mustafa"
-        rolle: "Events & Qualitätskontrolle"
+      - name: "Elena Wittig"
+        rolle: "Qualitätskontrolle"
+      - name: "Marlon Seonbuchner"
+        rolle: "Qualitätskontrolle"
   - titel: "Kommunikation"
     mitglieder:
-      - name: "Valentina Nocito"
+      - name: "Julia Freiermuth"
         rolle: "Marketing"
-      - name: "Isabel Kretschi"
+      - name: "Niklas Probst"
         rolle: "Public Relations"
       - name: "Johanna Denz"
         rolle: "Social & Onboarding"
       - name: "Edgar Brändle"
         rolle: "Website"
+      - name: "Valentina Nocito"
+        rolle: "Handover Marketing"
+      - name: "Isabel Kretschi"
+        rolle: "Handover Public Relations"
   - titel: "Verein & Administration"
     mitglieder:
-      - name: "Lea Meyer"
+      - name: "Valentin Hesselbarth"
         rolle: "Finanzen"
-      - name: "Kilian Belohlavek"
+      - name: "Vakant"
         rolle: "Protokoll & Daten"
+      - name: "Vakant"
+        rolle: "Sponsoring"
+      - name: "Lea Meyer"
+        rolle: "Handover Finanzen"
 ---
 
 Hinter NCWiki stehen über 110 Medizinstudierende aus der ganzen Schweiz, die sich ehrenamtlich engagieren. Hier stellen wir dir das aktuelle Leitungsteam und die Verantwortlichen dieser Saison vor. Wer NCWiki in früheren Saisons mitgestaltet hat, findest du im [Archiv](/ueber-uns/archiv).
@@ -54,23 +68,9 @@ Hinter NCWiki stehen über 110 Medizinstudierende aus der ganzen Schweiz, die si
 team-leitung
 ```
 
-## Team Saison 2025/26
+## Team Saison 2026/27
 
-### Verantwortliche – Team Romandie
-
-- Koordinierung: Selina Buchser
-- Öffentlichkeitsarbeit: Lucie Duperrex und Julie Eschmann
-- Übersetzungsmanagement: Esaïe Konrad
-- Vorbereitungskurs: Jef Osstyn
-- Testsimulation: Hadrien Dorsaz und Pierre Lanners
-- Kommunikation: Jef Osstyn und Hadrien Dorsaz
-- Webseite: Mathieu Ribeaud
-- Abende: Lucie Duperrex und Julie Eschmann
-- Sponsoring: Lucie Duperrex und Julie Eschmann
-
-### Content Creators – Team Romandie
-
-Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garance Genier, Gökhan Akdag, Clarisse Gumy, Estelle Turpin, Juliette Nguyen, Talia Leu, Johanna Denz, Emilia Bargiel, Mathilde Berchier, Lucia Blarer, Selina Buchser, Julie Eschmann, Lucie Duperrex, Hadrien Dorsaz, Jef Osstyn, Pierre Lanners, Esaïe Konrad
+Das Team der Saison 2026/27 stellen wir hier bald vor.
 
 ## Mitmachen
 

@@ -12,6 +12,32 @@ Qui trovi ciò che resta degli anni precedenti di NCWiki: i team delle stagioni 
 
 ## Stagioni precedenti
 
+### Team stagione 2025/26
+
+**Team dirigente**
+
+- **Presidenza:** Alessio Iseli (Coordinazione generale)
+- **Coordinamento Romandia e Ticino:** Selina Buchser (Coordinatrice Francofona), Margherita Bernasconi (Coordinatrice Italofona)
+- **Offerta:** Francesca Serra (Corso di Preparazione), Matthias Schütz (Esercizi), Olivia Schiess (Simulazione del Test), Sabrina Zeller (Simulazione del Test), Kron Mustafa (Eventi e Controlli di Qualità)
+- **Comunicazione:** Valentina Nocito (Marketing), Isabel Kretschi (Public Relations), Johanna Denz (Social & Onboarding), Edgar Brändle (Sito Web)
+- **Associazione e amministrazione:** Lea Meyer (Finanze), Kilian Belohlavek (Protocollo & Dati)
+
+#### I responsabili, team francofono
+
+- Coordinamento: Selina Buchser
+- Relazioni pubbliche: Lucie Duperrex e Julie Eschmann
+- Gestione della traduzione: Esaïe Konrad
+- Corso preparatorio: Jef Osstyn
+- Simulazione di prova: Hadrien Dorsaz e Pierre Lanners
+- Comunicazione: Jef Osstyn e Hadrien Dorsaz
+- Sito web: Mathieu Ribeaud
+- Serate: Lucie Duperrex e Julie Eschmann
+- Sponsoring: Lucie Duperrex e Julie Eschmann
+
+#### Content Creators, team francofono
+
+Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garance Genier, Gökhan Akdag, Clarisse Gumy, Estelle Turpin, Juliette Nguyen, Talia Leu, Johanna Denz, Emilia Bargiel, Mathilde Berchier, Lucia Blarer, Selina Buchser, Julie Eschmann, Lucie Duperrex, Hadrien Dorsaz, Jef Osstyn, Pierre Lanners, Esaïe Konrad
+
 ### Stagione 2024/25 – I responsabili, team francofono
 
 - Coordinamento: Aline Turpin

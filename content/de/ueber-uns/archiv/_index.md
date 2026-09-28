@@ -12,6 +12,32 @@ Hier findest du, was aus früheren Jahren von NCWiki bleibt: die Teams vergangen
 
 ## Frühere Saisons
 
+### Team Saison 2025/26
+
+**Leitungsteam**
+
+- **Präsidium:** Alessio Iseli (Koordinator)
+- **Koordination Romandie & Ticino:** Selina Buchser (Koordinatorin Romandie), Margherita Bernasconi (Koordinatorin Ticino)
+- **Angebot:** Francesca Serra (Vorbereitungskurse), Matthias Schütz (Übungsserien), Olivia Schiess (Testsimulation), Sabrina Zeller (Testsimulation), Kron Mustafa (Events & Qualitätskontrolle)
+- **Kommunikation:** Valentina Nocito (Marketing), Isabel Kretschi (Public Relations), Johanna Denz (Social & Onboarding), Edgar Brändle (Website)
+- **Verein & Administration:** Lea Meyer (Finanzen), Kilian Belohlavek (Protokoll & Daten)
+
+#### Verantwortliche – Team Romandie
+
+- Koordinierung: Selina Buchser
+- Öffentlichkeitsarbeit: Lucie Duperrex und Julie Eschmann
+- Übersetzungsmanagement: Esaïe Konrad
+- Vorbereitungskurs: Jef Osstyn
+- Testsimulation: Hadrien Dorsaz und Pierre Lanners
+- Kommunikation: Jef Osstyn und Hadrien Dorsaz
+- Webseite: Mathieu Ribeaud
+- Abende: Lucie Duperrex und Julie Eschmann
+- Sponsoring: Lucie Duperrex und Julie Eschmann
+
+#### Content Creators – Team Romandie
+
+Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garance Genier, Gökhan Akdag, Clarisse Gumy, Estelle Turpin, Juliette Nguyen, Talia Leu, Johanna Denz, Emilia Bargiel, Mathilde Berchier, Lucia Blarer, Selina Buchser, Julie Eschmann, Lucie Duperrex, Hadrien Dorsaz, Jef Osstyn, Pierre Lanners, Esaïe Konrad
+
 ### Team Saison 2024/25 – Verantwortliche, Team Romandie
 
 - Koordinierung: Aline Turpin

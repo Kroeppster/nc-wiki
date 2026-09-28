@@ -8,42 +8,56 @@ menu:
 ressorts:
   - titel: "Presidenza"
     mitglieder:
+      - name: "Kron Mustafa"
+        rolle: "Co-presidente"
+      - name: "Yannis Heutschi"
+        rolle: "Co-presidente"
       - name: "Alessio Iseli"
-        rolle: "Coordinazione generale"
+        rolle: "Passaggio di consegne presidenza"
   - titel: "Coordinamento Romandia e Ticino"
     mitglieder:
       - name: "Selina Buchser"
         rolle: "Coordinatrice Francofona"
-      - name: "Margherita Bernasconi"
+      - name: "Fabiano Mohr"
         rolle: "Coordinatrice Italofona"
   - titel: "Offerta"
     mitglieder:
-      - name: "Francesca Serra"
+      - name: "Posto vacante"
         rolle: "Corso di Preparazione"
       - name: "Matthias Schütz"
         rolle: "Esercizi"
-      - name: "Olivia Schiess"
+      - name: "Gabriel Unglert"
         rolle: "Simulazione del Test"
       - name: "Sabrina Zeller"
         rolle: "Simulazione del Test"
-      - name: "Kron Mustafa"
-        rolle: "Eventi e Controlli di Qualità"
+      - name: "Elena Wittig"
+        rolle: "Controllo di Qualità"
+      - name: "Marlon Seonbuchner"
+        rolle: "Controllo di Qualità"
   - titel: "Comunicazione"
     mitglieder:
-      - name: "Valentina Nocito"
+      - name: "Julia Freiermuth"
         rolle: "Marketing"
-      - name: "Isabel Kretschi"
+      - name: "Niklas Probst"
         rolle: "Public Relations"
       - name: "Johanna Denz"
         rolle: "Social & Onboarding"
       - name: "Edgar Brändle"
         rolle: "Sito Web"
+      - name: "Valentina Nocito"
+        rolle: "Passaggio di consegne marketing"
+      - name: "Isabel Kretschi"
+        rolle: "Passaggio di consegne public relations"
   - titel: "Associazione e amministrazione"
     mitglieder:
-      - name: "Lea Meyer"
+      - name: "Valentin Hesselbarth"
         rolle: "Finanze"
-      - name: "Kilian Belohlavek"
+      - name: "Posto vacante"
         rolle: "Protocollo & Dati"
+      - name: "Posto vacante"
+        rolle: "Sponsoring"
+      - name: "Lea Meyer"
+        rolle: "Passaggio di consegne finanze"
 ---
 
 Dietro NCWiki ci sono oltre 110 studentesse e studenti di medicina di tutta la Svizzera che si impegnano come volontari. Qui ti presentiamo l'attuale team dirigente e i responsabili di questa stagione. Chi ha contribuito a NCWiki nelle stagioni precedenti lo trovi nell'[archivio](/ueber-uns/archiv).
@@ -54,23 +68,9 @@ Dietro NCWiki ci sono oltre 110 studentesse e studenti di medicina di tutta la S
 team-leitung
 ```
 
-## Team stagione 2025/26
+## Team stagione 2026/27
 
-### I responsabili, team francofono
-
-- Coordinamento: Selina Buchser
-- Relazioni pubbliche: Lucie Duperrex e Julie Eschmann
-- Gestione della traduzione: Esaïe Konrad
-- Corso preparatorio: Jef Osstyn
-- Simulazione di prova: Hadrien Dorsaz e Pierre Lanners
-- Comunicazione: Jef Osstyn e Hadrien Dorsaz
-- Sito web: Mathieu Ribeaud
-- Serate: Lucie Duperrex e Julie Eschmann
-- Sponsoring: Lucie Duperrex e Julie Eschmann
-
-### Content Creators, team francofono
-
-Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garance Genier, Gökhan Akdag, Clarisse Gumy, Estelle Turpin, Juliette Nguyen, Talia Leu, Johanna Denz, Emilia Bargiel, Mathilde Berchier, Lucia Blarer, Selina Buchser, Julie Eschmann, Lucie Duperrex, Hadrien Dorsaz, Jef Osstyn, Pierre Lanners, Esaïe Konrad
+Presto presenteremo qui il team della stagione 2026/27.
 
 ## Partecipare
 

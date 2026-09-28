@@ -8,42 +8,56 @@ menu:
 ressorts:
   - titel: "Présidence"
     mitglieder:
+      - name: "Kron Mustafa"
+        rolle: "Co-président"
+      - name: "Yannis Heutschi"
+        rolle: "Co-président"
       - name: "Alessio Iseli"
-        rolle: "Coordinateur"
+        rolle: "Passation présidence"
   - titel: "Coordination Romandie & Tessin"
     mitglieder:
       - name: "Selina Buchser"
         rolle: "Coordinatrice Romandie"
-      - name: "Margherita Bernasconi"
+      - name: "Fabiano Mohr"
         rolle: "Coordinatrice Ticino"
   - titel: "Offre"
     mitglieder:
-      - name: "Francesca Serra"
+      - name: "Poste vacant"
         rolle: "Cours de Préparation"
       - name: "Matthias Schütz"
         rolle: "Séries d'Exercices"
-      - name: "Olivia Schiess"
+      - name: "Gabriel Unglert"
         rolle: "Simulation de Test"
       - name: "Sabrina Zeller"
         rolle: "Simulation de Test"
-      - name: "Kron Mustafa"
-        rolle: "Events & Contrôle Qualité"
+      - name: "Elena Wittig"
+        rolle: "Contrôle Qualité"
+      - name: "Marlon Seonbuchner"
+        rolle: "Contrôle Qualité"
   - titel: "Communication"
     mitglieder:
-      - name: "Valentina Nocito"
+      - name: "Julia Freiermuth"
         rolle: "Marketing"
-      - name: "Isabel Kretschi"
+      - name: "Niklas Probst"
         rolle: "Public Relations"
       - name: "Johanna Denz"
         rolle: "Social & Onboarding"
       - name: "Edgar Brändle"
         rolle: "Site Web"
+      - name: "Valentina Nocito"
+        rolle: "Passation marketing"
+      - name: "Isabel Kretschi"
+        rolle: "Passation public relations"
   - titel: "Association & administration"
     mitglieder:
-      - name: "Lea Meyer"
+      - name: "Valentin Hesselbarth"
         rolle: "Finances"
-      - name: "Kilian Belohlavek"
-        rolle: "Protocole & Dates"
+      - name: "Poste vacant"
+        rolle: "Protocole & Données"
+      - name: "Poste vacant"
+        rolle: "Sponsoring"
+      - name: "Lea Meyer"
+        rolle: "Passation finances"
 ---
 
 Derrière NCWiki, il y a plus de 110 étudiant·e·s en médecine de toute la Suisse qui s'engagent bénévolement. Nous te présentons ici l'équipe dirigeante actuelle et les responsables de cette saison. Celles et ceux qui ont façonné NCWiki lors des saisons précédentes se trouvent dans les [archives](/ueber-uns/archiv).
@@ -54,23 +68,9 @@ Derrière NCWiki, il y a plus de 110 étudiant·e·s en médecine de toute la Su
 team-leitung
 ```
 
-## Équipe saison 2025/26
+## Équipe saison 2026/27
 
-### Responsables, Team Romandie
-
-- Coordination : Selina Buchser
-- Relations publiques : Lucie Duperrex et Julie Eschmann
-- Gestion des traductions : Esaïe Konrad
-- Cours de préparation : Jef Osstyn
-- Simulation de test : Hadrien Dorsaz et Pierre Lanners
-- Communication : Jef Osstyn et Hadrien Dorsaz
-- Site web : Mathieu Ribeaud
-- Soirées : Lucie Duperrex et Julie Eschmann
-- Sponsoring : Lucie Duperrex et Julie Eschmann
-
-### Créateur·rice·s de contenu, Team Romandie
-
-Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garance Genier, Gökhan Akdag, Clarisse Gumy, Estelle Turpin, Juliette Nguyen, Talia Leu, Johanna Denz, Emilia Bargiel, Mathilde Berchier, Lucia Blarer, Selina Buchser, Julie Eschmann, Lucie Duperrex, Hadrien Dorsaz, Jef Osstyn, Pierre Lanners, Esaïe Konrad
+Nous présenterons bientôt ici l'équipe de la saison 2026/27.
 
 ## S'engager
 
