@@ -942,7 +942,11 @@ def verrutscht_pruefen(projekt, ordner):
 def stand_pruefen(projekt, ordner, mappen):
     print('\n=== Stand, Bemerkung, Zustaendig: ueber stand.json in die naechste Mappe ===')
     m = load_workbook(mappen['de'])
-    b = Blatt(m.worksheets[2])
+    # erstes Seitenblatt mit einem Absatz (die Startseite hat keinen Fliesstext)
+    idx = next(i for i in range(2, len(m.worksheets))
+               if 'art' in Blatt(m.worksheets[i]).sp
+               and any(Blatt(m.worksheets[i]).wert(z, 'art') == 'absatz' for z in Blatt(m.worksheets[i]).zeilen()))
+    b = Blatt(m.worksheets[idx])
     r = next(r for r in b.zeilen() if b.wert(r, 'art') == 'absatz')
     nr = b.wert(r, 'nr')
     b.setze(r, 'stand', 'fertig')
@@ -956,7 +960,7 @@ def stand_pruefen(projekt, ordner, mappen):
                          '--stand-speichern', js], capture_output=True, text=True)
     neu = ausgeben(projekt, os.path.join(ordner, 'nach-stand'), '--uebernehmen', js)
     m2 = load_workbook(neu['de'])
-    b2 = Blatt(m2.worksheets[2])
+    b2 = Blatt(m2.worksheets[idx])
     r2 = b2.finde(nr=nr)
     pruef('Stand und Bemerkung kommen ueber stand.json in die naechste Mappe, an dieselbe Zeile',
           r1.returncode == 0 and (b2.wert(r2, 'stand'), b2.wert(r2, 'bemerkung')) == ('fertig', 'Bitte noch gegenlesen.'),
@@ -971,7 +975,7 @@ def stand_pruefen(projekt, ordner, mappen):
     subprocess.run([sys.executable, AUSGEBEN, '--projekt', projekt, '--uebernehmen', js, p2,
                     '--stand-speichern', js], capture_output=True, text=True)
     neu = ausgeben(projekt, os.path.join(ordner, 'nach-stand2'), '--uebernehmen', js)
-    b3 = Blatt(load_workbook(neu['de']).worksheets[2])
+    b3 = Blatt(load_workbook(neu['de']).worksheets[idx])
     r3 = b3.finde(nr=nr)
     pruef('in neuerer Mappe geleerte Bemerkung ist weg, der Stand bleibt',
           (b3.wert(r3, 'stand'), b3.wert(r3, 'bemerkung')) == ('fertig', None))

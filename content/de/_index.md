@@ -84,15 +84,13 @@ mission:
   heading: "Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt."
   features:
     - title: "Seit 2021"
-      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
+      text: "Entstanden als studentische Initiative und bis heute ehrenamtlich getragen – ohne Firma dahinter, ohne Gebühren."
     - title: "Über 110 Freiwillige"
-      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
+      text: "Medizinstudierende aus der ganzen Schweiz schreiben Aufgaben, übersetzen, halten Kurse und betreuen die Testsimulationen."
     - title: "Drei Sprachen"
-      text: "zu Anmeldung, Ablauf, Kosten und Wiederholung – kurz beantwortet."
+      text: "Eigene Teams in der Deutschschweiz, der Romandie und im Tessin – das Material gibt es auf Deutsch, Französisch und Italienisch."
 support:
   heading: "Ihr macht das möglich."
   text: "Unser Material bleibt kostenlos – dank Spenden und Sponsoring."
   cta: "Jetzt unterstützen"
 ---
-
-Platzhaltertext: Startseite von NCWiki. Der eigentliche Inhalt dieser Seite wird über das Homepage-Template (layouts/index.html) gerendert.
