@@ -1,6 +1,6 @@
 ---
 title: "Cours de préparation"
-description: "Cours de préparation à l'EMS gratuit : deux jours en petits groupes avec des étudiant·e·s en médecine expérimenté·e·s, script de cours avec stratégies et exercices inclus."
+description: "Cours de préparation à l'EMS gratuit : deux jours en petits groupes avec des étudiant·e·s en médecine, script avec stratégies et exercices inclus."
 menu:
   main:
     parent: ems

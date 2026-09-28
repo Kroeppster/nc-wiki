@@ -1,6 +1,6 @@
 ---
 title: "Accueil"
-description: "Matériel d'exercices gratuit, simulations de test et cours de préparation pour le test d'aptitudes pour les études de médecine (EMS) – par des étudiant·e·s pour les futur·e·s étudiant·e·s, dans toute la Suisse, en trois langues."
+description: "Préparation gratuite à l'EMS : séries d'exercices, simulations de test et cours pour le test d'aptitudes aux études de médecine – par des étudiant·e·s."
 menu:
   main:
     identifier: home
@@ -23,33 +23,33 @@ weg:
   eyebrow: "De l'inscription au résultat"
   heading: "Ce dont tu as besoin, et quand"
   etappen:
-    - wann: "Jusqu'au 15 février"
-      titel: "Décider et s'inscrire"
-      text: "Quelle université, quelle priorité, quels délais – et ce que le test attend de toi."
+    - wann: "Septembre au 15 février"
+      titel: "S'informer et se préinscrire"
+      text: "Quelle université, quelle priorité – et ce que le test attend de toi. La préinscription auprès de swissuniversities est ouverte jusqu'au 15 février."
       mittel:
         - titel: "Guide des universités"
           url: "ems/uniguide/"
         - titel: "Questions & réponses"
           url: "ems/qa/"
-    - wann: "3 à 6 mois avant"
+    - wann: "Février à mai"
       titel: "Construire la technique"
-      text: "Pour chaque sous-test un guide avec la stratégie et les pièges classiques, et des séries pour t'entraîner – d'abord sans chrono, puis avec."
+      text: "Pour chaque sous-test un guide avec la stratégie et les pièges classiques, et des séries pour t'entraîner – d'abord sans chrono, puis avec. À ne pas oublier : inscription à l'EMS dès avril, délai le 25 mai."
       mittel:
         - titel: "Exercices"
           url: "ems/uebungsaufgaben/"
         - titel: "Cours de préparation"
           url: "ems/vorbereitungskurse/"
-    - wann: "Les 4 dernières semaines"
+    - wann: "Mai à début juillet"
       titel: "Répétition générale"
-      text: "Une fois la journée entière d'affilée : 235 minutes, onze blocs, sans pause. Chez toi avec l'horloge et les annonces, ou chez nous en auditoire."
+      text: "Une fois la journée entière d'affilée : 235 minutes, onze blocs, sans pause. Chez toi avec l'horloge et les annonces, ou début mai chez nous en auditoire."
       mittel:
         - titel: "Simulations de test"
           url: "ems/testsimulationen/"
         - titel: "Mode examen"
           url: "ems/pruefungsmodus/"
-    - wann: "Le jour J et après"
+    - wann: "9 juillet à août"
       titel: "Passer le cap"
-      text: "Quoi emporter, comment gérer le temps, comment deviner – et comment cela s'est passé pour d'autres."
+      text: "Quoi emporter, comment gérer le temps, comment deviner. Fin juillet vient l'attribution des places d'études, début août tu confirmes ta place."
       mittel:
         - titel: "Guide EMS"
           url: "ems/"

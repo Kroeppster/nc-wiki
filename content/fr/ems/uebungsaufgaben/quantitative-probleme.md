@@ -1,6 +1,6 @@
 ---
 title: "Problèmes quantitatifs et formels"
-description: "Problèmes quantitatifs et formels à l'EMS : séries d'exercices gratuites et conseils sur la règle de trois, les unités et les formules pour calculer sûrement sous pression."
+description: "Problèmes quantitatifs et formels à l'EMS : séries gratuites et conseils sur la règle de trois, les unités et les formules pour calculer sûrement."
 weight: 4
 ---
 

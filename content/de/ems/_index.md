@@ -28,6 +28,17 @@ Die offiziellen Informationen zum EMS erhältst du, wenn du angemeldet bist, im 
 
 Bitte denk daran, dass du dich **bis zum 15. Februar** über [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) **anmelden** musst. Denk auch an die Deadlines für die anderen Studiengänge, falls das dein Plan B ist.
 
+Der Zeitplan von swissuniversities für den Studienstart im Herbst 2027:
+
+- **September bis November:** über Studienangebot, Zulassung und den Eignungstest informieren
+- **Dezember bis 15. Februar 2027:** Voranmeldung bei swissuniversities über die Plattform MEDON (dafür brauchst du eine SWITCH-edu-ID). Prüfe, ob du eine Bestätigung per E-Mail erhalten hast, auch im Spam-Ordner.
+- **Januar bis März:** prüfen, ob du dich zusätzlich bei deiner Wunsch-Universität anmelden musst
+- **April bis 25. Mai 2027:** Anmeldung zum EMS über MEDON, gültig erst mit der fristgerechten Zahlung der Teilnahmegebühr von 300 Franken
+- **Juni:** spätestens 10 Tage vor dem Test kommen per E-Mail Einlasszeit und Platznummer
+- **9. Juli 2027:** Eignungstest für das Medizinstudium – gültigen amtlichen Ausweis (ID oder Pass) mitnehmen
+- **Ende Juli:** Zuteilung der Studienplätze per Post (teilweise eingeschrieben) oder E-Mail
+- **Anfang August:** Studienplatz innert der Frist der Universität bestätigen, meist 10 Tage
+
 ### 1.3 Wahl des Uni-Standortes bei der Anmeldung
 
 Bei der Anmeldung musst du nach Priorität angeben, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Hierbei solltest du auf zwei Dinge achten:
@@ -109,7 +120,7 @@ Wenn du raten musst, erhöht ein festes Schema deine Zufallschancen – zum Beis
 
 ## 4. Nach dem NC
 
-Du hast den Eignungstest hinter dir – das ist eine starke Leistung, gönn dir etwas! Die EMS-Resultate kommen gemäss den letzten Jahren jeweils anfangs August per Post. Das genaue Versanddatum variiert je nach Kanton und zugeteilter Universität.
+Du hast den Eignungstest hinter dir – das ist eine starke Leistung, gönn dir etwas! Ende Juli informiert dich deine Wunsch-Universität per Post (teilweise eingeschrieben) oder per E-Mail über die Zuteilung der Studienplätze – sorge dafür, dass du die Post entgegennehmen kannst. Wenn du einen Studienplatz erhalten hast, musst du ihn Anfang August innert der Frist der Universität bestätigen, in der Regel innerhalb von 10 Tagen.
 
 ## 5. Erfahrungsberichte
 

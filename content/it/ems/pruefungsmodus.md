@@ -1,6 +1,6 @@
 ---
 title: "Modalità esame"
-description: "Esercitati in condizioni d'esame reali: cronometro, istruzioni lette ad alta voce e annuncio di stop – per singoli sottotest o per l'intera giornata del test di fila."
+description: "Esercitati in condizioni d'esame reali: cronometro, istruzioni lette ad alta voce e annuncio di stop – per un sottotest o per l'intera giornata."
 pruefungsmodus: true
 menu:
   main:

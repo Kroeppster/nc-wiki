@@ -1,6 +1,6 @@
 ---
 title: "Uniguide"
-description: "Études de médecine en Suisse : notre Uniguide compare toutes les universités et filières selon la langue d'études, la procédure d'admission et leurs particularités."
+description: "Études de médecine en Suisse : notre Uniguide compare toutes les universités et filières selon la langue, l'admission et leurs particularités."
 menu:
   main:
     parent: ems

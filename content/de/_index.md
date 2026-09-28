@@ -1,6 +1,6 @@
 ---
 title: "Startseite"
-description: "Kostenloses Übungsmaterial, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium (EMS) – von Studierenden für zukünftige Studierende, schweizweit, dreisprachig."
+description: "Kostenlose EMS-Vorbereitung: Übungsserien, Testsimulationen und Vorbereitungskurse für den Eignungstest fürs Medizinstudium – von Medizinstudierenden."
 menu:
   main:
     identifier: home
@@ -23,33 +23,33 @@ weg:
   eyebrow: "Von der Anmeldung bis zum Resultat"
   heading: "Was du wann brauchst"
   etappen:
-    - wann: "Bis 15. Februar"
-      titel: "Entscheiden und anmelden"
-      text: "Welche Universität, welche Priorität, welche Fristen – und was der Test überhaupt von dir will."
+    - wann: "September bis 15. Februar"
+      titel: "Informieren und voranmelden"
+      text: "Welche Universität, welche Priorität – und was der Test von dir will. Die Voranmeldung bei swissuniversities läuft bis 15. Februar."
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
         - titel: "Fragen & Antworten"
           url: "ems/qa/"
-    - wann: "3–6 Monate vorher"
+    - wann: "Februar bis Mai"
       titel: "Technik aufbauen"
-      text: "Pro Untertest ein Guide mit Strategie und typischen Fallen, dazu Serien zum Üben – erst ohne Zeitdruck, dann mit."
+      text: "Pro Untertest ein Guide mit Strategie und typischen Fallen, dazu Serien zum Üben – erst ohne Zeitdruck, dann mit. Nicht vergessen: Anmeldung zum EMS ab April, Frist 25. Mai."
       mittel:
         - titel: "Übungsaufgaben"
           url: "ems/uebungsaufgaben/"
         - titel: "Vorbereitungskurs"
           url: "ems/vorbereitungskurse/"
-    - wann: "Letzte 4 Wochen"
+    - wann: "Mai bis Anfang Juli"
       titel: "Generalprobe"
-      text: "Einmal den ganzen Testtag am Stück: 235 Minuten, elf Blöcke, keine Pause. Zu Hause mit Uhr und Ansagen, oder bei uns im Hörsaal."
+      text: "Einmal den ganzen Testtag am Stück: 235 Minuten, elf Blöcke, keine Pause. Zu Hause mit Uhr und Ansagen, oder Anfang Mai bei uns im Hörsaal."
       mittel:
         - titel: "Testsimulationen"
           url: "ems/testsimulationen/"
         - titel: "Prüfungsmodus"
           url: "ems/pruefungsmodus/"
-    - wann: "Am Testtag und danach"
+    - wann: "9. Juli bis August"
       titel: "Durchkommen"
-      text: "Was mitnehmen, wie einteilen, wie raten – und wie es anderen damit ergangen ist."
+      text: "Was mitnehmen, wie einteilen, wie raten. Ende Juli folgt die Zuteilung der Studienplätze, Anfang August bestätigst du deinen Platz."
       mittel:
         - titel: "EMS-Guide"
           url: "ems/"

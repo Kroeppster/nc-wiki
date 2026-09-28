@@ -1,6 +1,6 @@
 ---
 title: "Q&R"
-description: "Toutes les réponses importantes sur le test d'aptitudes en un coup d'œil. Découvre tout ce que tu dois savoir sur l'inscription, le déroulement du test et la répétition."
+description: "Toutes les réponses importantes sur l'EMS en un coup d'œil : inscription, déroulement du test, coûts et répétition, expliqués brièvement."
 menu:
   main:
     parent: ems

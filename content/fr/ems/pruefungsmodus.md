@@ -1,6 +1,6 @@
 ---
 title: "Mode examen"
-description: "Entraîne-toi dans les conditions réelles de l'examen : chronomètre, consignes lues à voix haute et annonce de fin – pour des sous-tests isolés ou pour toute la journée de test d'affilée."
+description: "Entraîne-toi dans les conditions de l'examen : chronomètre, consignes lues à voix haute et annonce de fin – pour un sous-test ou toute la journée de test."
 pruefungsmodus: true
 menu:
   main:

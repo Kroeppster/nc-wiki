@@ -1,6 +1,6 @@
 ---
 title: "Pagina iniziale"
-description: "Materiale di esercitazione gratuito, simulazioni del test e corsi di preparazione per il test attitudinale per gli studi di medicina (EMS) – da studenti per futuri studenti, in tutta la Svizzera, in tre lingue."
+description: "Preparazione gratuita all'EMS: serie di esercizi, simulazioni del test e corsi per il test attitudinale agli studi di medicina – da studenti di medicina."
 menu:
   main:
     identifier: home
@@ -23,33 +23,33 @@ weg:
   eyebrow: "Dall'iscrizione al risultato"
   heading: "Di cosa hai bisogno e quando"
   etappen:
-    - wann: "Entro il 15 febbraio"
-      titel: "Decidere e iscriversi"
-      text: "Quale università, quale priorità, quali scadenze – e che cosa il test chiede davvero."
+    - wann: "Settembre – 15 febbraio"
+      titel: "Informarsi e preiscriversi"
+      text: "Quale università, quale priorità – e che cosa il test chiede davvero. La preiscrizione presso swissuniversities è aperta fino al 15 febbraio."
       mittel:
         - titel: "Guida alle università"
           url: "ems/uniguide/"
         - titel: "Domande e risposte"
           url: "ems/qa/"
-    - wann: "3–6 mesi prima"
+    - wann: "Febbraio – maggio"
       titel: "Costruire la tecnica"
-      text: "Per ogni sottotest una guida con strategia e trappole tipiche, più serie per esercitarti – prima senza cronometro, poi con."
+      text: "Per ogni sottotest una guida con strategia e trappole tipiche, più serie per esercitarti – prima senza cronometro, poi con. Da non dimenticare: iscrizione all'EMS da aprile, termine il 25 maggio."
       mittel:
         - titel: "Esercizi"
           url: "ems/uebungsaufgaben/"
         - titel: "Corso di preparazione"
           url: "ems/vorbereitungskurse/"
-    - wann: "Ultime 4 settimane"
+    - wann: "Maggio – inizio luglio"
       titel: "Prova generale"
-      text: "Una volta l'intera giornata di fila: 235 minuti, undici blocchi, senza pause. A casa con orologio e annunci, oppure da noi in aula."
+      text: "Una volta l'intera giornata di fila: 235 minuti, undici blocchi, senza pause. A casa con orologio e annunci, oppure a inizio maggio da noi in aula."
       mittel:
         - titel: "Simulazioni del test"
           url: "ems/testsimulationen/"
         - titel: "Modalità esame"
           url: "ems/pruefungsmodus/"
-    - wann: "Il giorno del test e dopo"
+    - wann: "9 luglio – agosto"
       titel: "Arrivare in fondo"
-      text: "Cosa portare, come gestire il tempo, come tirare a indovinare – e com'è andata ad altri."
+      text: "Cosa portare, come gestire il tempo, come tirare a indovinare. A fine luglio arriva l'assegnazione dei posti di studio, a inizio agosto confermi il tuo posto."
       mittel:
         - titel: "Guida EMS"
           url: "ems/"

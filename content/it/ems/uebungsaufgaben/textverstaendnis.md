@@ -1,6 +1,6 @@
 ---
 title: "Comprensione del testo"
-description: "Comprensione del testo all'EMS: serie di esercizi gratuite e consigli per cogliere più in fretta testi specialistici complessi e valutare le affermazioni con sicurezza."
+description: "Comprensione del testo all'EMS: serie di esercizi gratuite e consigli per cogliere in fretta testi complessi e valutare le affermazioni."
 weight: 6
 ---
 

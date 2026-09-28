@@ -1,6 +1,6 @@
 ---
 title: "Conditions d'utilisation"
-description: "Conditions d'utilisation de NCWiki : à quelles fins nos contenus, exercices et la communauté Discord peuvent être utilisés, et ce qui est interdit à des fins commerciales."
+description: "Conditions d'utilisation de NCWiki : comment utiliser nos contenus, exercices et la communauté Discord, et ce qui est interdit à des fins commerciales."
 menu:
   legal:
     identifier: nutzungsbedingungen

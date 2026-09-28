@@ -1,6 +1,6 @@
 ---
 title: "Compréhension de texte"
-description: "Compréhension de texte à l'EMS : séries d'exercices gratuites et conseils pour saisir plus vite des textes spécialisés complexes et évaluer les affirmations avec assurance."
+description: "Compréhension de texte à l'EMS : séries d'exercices gratuites et conseils pour saisir vite des textes complexes et évaluer les affirmations."
 weight: 6
 ---
 

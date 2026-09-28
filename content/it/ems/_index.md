@@ -28,6 +28,17 @@ Le informazioni ufficiali sull'EMS le ricevi da swissuniversities in aprile, una
 
 Ricorda che devi **iscriverti entro il 15 febbraio** tramite [swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina). Pensa anche alle scadenze degli altri corsi di studio, se sono il tuo piano B.
 
+Il calendario di swissuniversities per l'inizio degli studi nell'autunno 2027:
+
+- **Settembre – novembre:** informarsi sull'offerta di studio, sull'ammissione e sul test attitudinale
+- **Dicembre – 15 febbraio 2027:** preiscrizione presso swissuniversities tramite la piattaforma MEDON (serve una SWITCH edu-ID). Controlla di aver ricevuto una conferma via e-mail, anche nella cartella spam.
+- **Gennaio – marzo:** verificare se devi iscriverti anche presso l'università desiderata
+- **Aprile – 25 maggio 2027:** iscrizione all'EMS tramite MEDON, valida solo con il pagamento entro i termini della tassa di 300 franchi
+- **Giugno:** al più tardi 10 giorni prima del test ricevi via e-mail l'orario d'ingresso e il numero del posto
+- **9 luglio 2027:** test attitudinale per gli studi di medicina – porta un documento d'identità ufficiale valido (carta d'identità o passaporto)
+- **Fine luglio:** assegnazione dei posti di studio per posta (in parte raccomandata) o via e-mail
+- **Inizio agosto:** confermare il posto di studio entro il termine dell'università, di solito 10 giorni
+
 ### 1.3 Scelta della sede universitaria al momento dell'iscrizione
 
 Al momento dell'iscrizione devi indicare in ordine di priorità in quale università vorresti studiare medicina umana, dentaria o veterinaria. Fai attenzione a due cose:
@@ -109,7 +120,7 @@ Se devi tirare a indovinare, uno schema fisso aumenta le tue probabilità – pe
 
 ## 4. Dopo il NC
 
-Hai terminato il test attitudinale – è un grande risultato, concediti qualcosa! Negli ultimi anni i risultati dell'EMS sono arrivati per posta all'inizio di agosto. La data esatta di invio varia a seconda del cantone e dell'università assegnata.
+Hai terminato il test attitudinale – è un grande risultato, concediti qualcosa! A fine luglio l'università desiderata ti informa per posta (in parte raccomandata) o via e-mail sull'assegnazione dei posti di studio – assicurati di poter ricevere la posta. Se hai ottenuto un posto, devi confermarlo a inizio agosto entro il termine dell'università, di solito entro 10 giorni.
 
 ## 5. Testimonianze
 

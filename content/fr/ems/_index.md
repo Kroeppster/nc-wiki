@@ -1,6 +1,6 @@
 ---
 title: "EMS"
-description: "Tout pour ta préparation à l'EMS : séries d'exercices gratuites, simulations de test, cours de préparation et un guide des universités. Par des étudiant·e·s, pour toi."
+description: "Tout pour ta préparation à l'EMS : séries d'exercices gratuites, simulations de test, cours de préparation et guide des universités. Par des étudiant·e·s."
 menu:
   main:
     identifier: ems
@@ -27,6 +27,17 @@ Tu reçois les informations officielles sur l'EMS de swissuniversities en avril,
 ### 1.2 Inscription à l'examen
 
 N'oublie pas que tu dois **t'inscrire** **avant le 15 février** via [swissuniversities](https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine). Pense aussi aux délais des autres filières, si c'est ton plan B.
+
+Le calendrier de swissuniversities pour une rentrée à l'automne 2027 :
+
+- **Septembre à novembre :** s'informer sur l'offre d'études, l'admission et le test d'aptitudes
+- **Décembre au 15 février 2027 :** préinscription auprès de swissuniversities via la plateforme MEDON (il te faut pour cela une SWITCH edu-ID). Vérifie que tu as reçu une confirmation par e-mail, y compris dans le dossier spam.
+- **Janvier à mars :** vérifier si tu dois aussi t'inscrire auprès de l'université souhaitée
+- **Avril au 25 mai 2027 :** inscription à l'EMS via MEDON, valable seulement avec le paiement dans les délais de la taxe de 300 francs
+- **Juin :** au plus tard 10 jours avant le test, tu reçois par e-mail l'heure d'entrée et ton numéro de place
+- **9 juillet 2027 :** test d'aptitudes pour les études de médecine – emporte une pièce d'identité officielle valable (carte d'identité ou passeport)
+- **Fin juillet :** attribution des places d'études par courrier (parfois recommandé) ou par e-mail
+- **Début août :** confirmer ta place d'études dans le délai fixé par l'université, en général 10 jours
 
 ### 1.3 Choix de l'université lors de l'inscription
 
@@ -113,7 +124,7 @@ Si tu dois deviner, un système fixe augmente tes chances – par exemple toujou
 
 ## 4. Après le NC
 
-Tu as terminé le test d'aptitudes – c'est une belle performance, fais-toi plaisir ! Ces dernières années, les résultats de l'EMS sont arrivés par la poste début août. La date d'envoi exacte varie selon le canton et l'université attribuée.
+Tu as terminé le test d'aptitudes – c'est une belle performance, fais-toi plaisir ! Fin juillet, l'université souhaitée t'informe par courrier (parfois recommandé) ou par e-mail de l'attribution des places d'études – assure-toi de pouvoir réceptionner ton courrier. Si tu as obtenu une place, tu dois la confirmer début août dans le délai fixé par l'université, en général dans les 10 jours.
 
 ## 5. Témoignages
 
