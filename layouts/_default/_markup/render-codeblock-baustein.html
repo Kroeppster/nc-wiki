@@ -9,7 +9,8 @@
       ```
 
   Beim Bauen wird daraus der jeweilige Teil aus layouts/partials/bausteine/.
-  Erlaubt sind: testablauf, team-leitung, fakten-generator, figuren-generator.
+  Erlaubt sind: testablauf, team-leitung, fakten-generator, figuren-generator,
+  sponsoring-kontakt.
 
   WARUM EIN CODE-BLOCK und nicht mehr {{< testablauf >}}: Der Web-Editor
   (Pages CMS) macht aus der Shortcode-Klammer beim Speichern {{&lt; ... &gt;}},
@@ -23,7 +24,7 @@
   ============================================================================
 */ -}}
 {{- $name := trim .Inner " \n\r\t" -}}
-{{- $erlaubt := slice "testablauf" "team-leitung" "fakten-generator" "figuren-generator" -}}
+{{- $erlaubt := slice "testablauf" "team-leitung" "fakten-generator" "figuren-generator" "sponsoring-kontakt" -}}
 {{- if in $erlaubt $name -}}
   {{- partial (printf "bausteine/%s.html" $name) .Page -}}
 {{- else -}}

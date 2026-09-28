@@ -1674,3 +1674,8 @@ body.pm-aktiv{overflow:hidden;}
 .ems-fl-zelle{position:absolute;width:80.2pt;text-align:center;}
 .ems-fl-zelle b{display:block;height:17.6pt;}
 .ems-fl-zelle .fig-svg{width:80.2pt;height:80.2pt;max-width:none;}
+
+/* Baustein "sponsoring-kontakt" (Seite Sponsoren): E-Mail-/Telefon-Knopf */
+.sponsoring-kontakt{margin:var(--space-5) 0 var(--space-8);}
+.sponsoring-kontakt-label{margin:var(--space-4) 0 var(--space-2);font-weight:600;color:var(--color-ink-soft);}
+.sponsoring-kontakt .btn{word-break:break-all;}

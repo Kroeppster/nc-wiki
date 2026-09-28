@@ -314,8 +314,9 @@ testablauf
 ```
 ````
 
-Erlaubt sind `testablauf`, `team-leitung`, `fakten-generator` und
-`figuren-generator`. Im Web-Editor erscheint so ein Baustein als grauer Kasten –
+Erlaubt sind `testablauf`, `team-leitung`, `fakten-generator`,
+`figuren-generator` und `sponsoring-kontakt` (E-Mail-/Telefon-Knopf auf
+„Sponsoren“, Angaben in `data/sponsoring.yaml`). Im Web-Editor erscheint so ein Baustein als grauer Kasten –
 den verschiebt man als Ganzes oder lässt ihn stehen, aber schreibt nicht hinein.
 Ein Tippfehler im Namen bricht den Build mit einer Meldung ab.
 

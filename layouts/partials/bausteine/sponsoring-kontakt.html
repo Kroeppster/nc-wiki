@@ -1,0 +1,25 @@
+{{- /*
+  ============================================================================
+  SPONSORING-KONTAKT: E-Mail- (und optional Telefon-) Knopf
+  ============================================================================
+  Auf der Seite "Sponsoren" als Code-Block:
+
+      ```baustein
+      sponsoring-kontakt
+      ```
+
+  Adresse/Nummer aus data/sponsoring.yaml, Beschriftungen aus i18n
+  (sponsoring_kontakt_*). Ohne Telefonnummer kein Telefon-Knopf.
+  ============================================================================
+*/ -}}
+{{- $d := site.Data.sponsoring -}}
+<div class="sponsoring-kontakt">
+  {{- with $d.email }}
+  <p class="sponsoring-kontakt-label">{{ i18n "sponsoring_kontakt_email" }}</p>
+  <a class="btn btn-ghost" href="mailto:{{ . }}">✉ {{ . }}</a>
+  {{- end }}
+  {{- with $d.telefon }}
+  <p class="sponsoring-kontakt-label">{{ i18n "sponsoring_kontakt_telefon" }}</p>
+  <a class="btn btn-ghost" href="tel:{{ replace . " " "" }}">☎ {{ . }}</a>
+  {{- end }}
+</div>

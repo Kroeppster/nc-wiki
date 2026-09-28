@@ -342,3 +342,7 @@ spenden_ueberweisung_knopf: "Spenden mit Überweisung"
 spenden_twint_alt: "TWINT-QR-Code für eine Spende an NCWiki"
 spenden_sponsoring_knopf: "Weitere Informationen"
 spenden_twint_hinweis: "Mit der TWINT-App scannen – den Betrag wählst du selbst."
+
+# Baustein "sponsoring-kontakt" (Seite Sponsoren)
+sponsoring_kontakt_email: "Gerne sind wir per E-Mail für Sie da"
+sponsoring_kontakt_telefon: "oder telefonisch für Sie erreichbar"
