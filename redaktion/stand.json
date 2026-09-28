@@ -2,7 +2,6 @@
  "hinweis": "Stand, Bemerkung und Zustaendig aus den Textmappen - gepflegt von .github/workflows/texte-einlesen.yml, siehe docs/WARTUNG-DETAILLIERT.md 3. Zeilen: [Datei, Pruefsumme des Textes, Stand, Bemerkung]. Seiten: [Datei, Zustaendig, Stand, Bemerkung].",
  "zeilen": [
   ["content/de/_index.md", "b660f83df4d6", "passt", null],
-  ["content/de/_index.md", "febdd4ac5641", "passt", "Nicht ändern"],
   ["content/de/alpha/_index.md", "0c2661c2a1da", "passt", null],
   ["content/de/alpha/_index.md", "11bf563476aa", "passt", null],
   ["content/de/alpha/_index.md", "3157a0e70654", "passt", null],
@@ -591,7 +590,6 @@
   ["content/de/kontakt.md", "e9401a5a7446", "fertig", null],
   ["content/de/kontakt.md", "ef531222cc02", "fertig", null],
   ["content/de/mitglieder/_index.md", "1c407d440eb7", "passt", null],
-  ["content/de/mitglieder/_index.md", "72af76a3e1a2", "passt", null],
   ["content/de/mitglieder/_index.md", "bf4f276e3bce", "passt", null],
   ["content/de/mitglieder/events.md", "ae2e4fc29367", "fertig", null],
   ["content/de/mitglieder/events.md", "b00ce92672ae", "fertig", null],

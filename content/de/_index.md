@@ -9,7 +9,7 @@ hero:
   eyebrow: "EMS 2027 · Kostenlose Vorbereitung"
   ticket_label: "EMS-Zulassung"
   title: "Wir machen die EMS-Vorbereitung gratis."
-  lede: "NCWiki ist ein Verein von über 110 Medizinstudierenden. Seit 2021 erstellen wir Übungsserien, Testsimulationen und Kursskripte für den Eignungstest – gemacht von Leuten, die ihn selbst geschrieben haben. In drei Sprachen, ohne Kosten."
+  lede: "Hinter NCWiki steht ein Verein aus mehr als 110 Medizinstudierenden. Seit 2021 entwickeln wir eigene Übungsserien, organisieren Testsimulationen und leiten Vorbereitungskurse. Unser gesamtes Angebot stammt von Leuten mit eigener Testerfahrung und ist in drei Sprachen komplett gratis."
   cta_primary: "Übungsaufgaben ansehen"
   cta_secondary: "Newsletter abonnieren"
   bild: "testsimulationen/testsimulation-2023.jpg"
@@ -84,13 +84,13 @@ mission:
   heading: "Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt."
   features:
     - title: "Seit 2021"
-      text: "Entstanden als studentische Initiative und bis heute ehrenamtlich getragen – ohne Firma dahinter, ohne Gebühren."
+      text: "Als studentische Initiative gestartet und heute ein gemeinnütziger Verein. Wir arbeiten zu 100 Prozent ehrenamtlich und bieten unser Material komplett kostenlos an."
     - title: "Über 110 Freiwillige"
-      text: "Medizinstudierende aus der ganzen Schweiz schreiben Aufgaben, übersetzen, halten Kurse und betreuen die Testsimulationen."
+      text: "Medizinstudierende aus der ganzen Schweiz schreiben Aufgaben, übersetzen, halten Kurse, betreuen die Testsimulationen."
     - title: "Drei Sprachen"
-      text: "Eigene Teams in der Deutschschweiz, der Romandie und im Tessin – das Material gibt es auf Deutsch, Französisch und Italienisch."
+      text: "Mit unseren Teams in der Deutschschweiz, der Romandie und im Tessin stellen wir das komplette Angebot in drei Sprachen zur Verfügung."
 support:
-  heading: "Ihr macht das möglich."
-  text: "Unser Material bleibt kostenlos – dank Spenden und Sponsoring."
+  heading: "Kostenlos dank euch."
+  text: "Nur durch Spenden und Sponsoring bleibt unser Material für alle gratis."
   cta: "Jetzt unterstützen"
 ---

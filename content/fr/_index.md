@@ -9,7 +9,7 @@ hero:
   eyebrow: "EMS 2027 · Préparation gratuite"
   ticket_label: "Admission EMS"
   title: "Nous rendons la préparation à l'EMS gratuite."
-  lede: "NCWiki est une association de plus de 110 étudiant·e·s en médecine. Depuis 2021, nous créons des séries d'exercices, des simulations de test et des supports de cours pour le test d'aptitudes – réalisés par des personnes qui l'ont passé elles-mêmes. En trois langues, sans frais."
+  lede: "Derrière NCWiki se trouve une association de plus de 110 étudiant·e·s en médecine. Depuis 2021, nous développons nos propres séries d'exercices, organisons des simulations de test et donnons des cours de préparation. Toute notre offre est conçue par des personnes qui ont elles-mêmes passé le test et est entièrement gratuite, en trois langues."
   cta_primary: "Voir les exercices"
   cta_secondary: "S'abonner à la newsletter"
   bild: "testsimulationen/testsimulation-2023.jpg"
@@ -84,13 +84,13 @@ mission:
   heading: "Nous nous engageons pour que la préparation à l'EMS ne dépende pas du porte-monnaie."
   features:
     - title: "Depuis 2021"
-      text: "Née d'une initiative étudiante et portée depuis lors par des bénévoles – sans entreprise derrière, sans frais."
+      text: "Lancée comme initiative étudiante, aujourd'hui une association à but non lucratif. Nous travaillons à 100 % bénévolement et proposons notre matériel entièrement gratuitement."
     - title: "Plus de 110 bénévoles"
-      text: "Des étudiant·e·s en médecine de toute la Suisse rédigent des exercices, traduisent, donnent des cours et encadrent les simulations."
+      text: "Des étudiant·e·s en médecine de toute la Suisse rédigent des exercices, traduisent, donnent des cours, encadrent les simulations."
     - title: "Trois langues"
-      text: "Des équipes propres en Suisse alémanique, en Romandie et au Tessin – le matériel existe en allemand, en français et en italien."
+      text: "Avec nos équipes en Suisse alémanique, en Romandie et au Tessin, nous mettons toute notre offre à disposition en trois langues."
 support:
-  heading: "C'est grâce à vous."
-  text: "Notre matériel reste gratuit – grâce aux dons et au sponsoring."
+  heading: "Gratuit grâce à vous."
+  text: "Ce n'est que grâce aux dons et au sponsoring que notre matériel reste gratuit pour tout le monde."
   cta: "Soutenir maintenant"
 ---

@@ -9,7 +9,7 @@ hero:
   eyebrow: "EMS 2027 · Preparazione gratuita"
   ticket_label: "Ammissione EMS"
   title: "Rendiamo gratuita la preparazione all'EMS."
-  lede: "NCWiki è un'associazione di oltre 110 studenti di medicina. Dal 2021 creiamo serie di esercizi, simulazioni del test e dispense per il test attitudinale – realizzati da chi l'ha sostenuto in prima persona. In tre lingue, senza costi."
+  lede: "Dietro NCWiki c'è un'associazione di oltre 110 studenti di medicina. Dal 2021 sviluppiamo serie di esercizi nostre, organizziamo simulazioni del test e teniamo corsi di preparazione. Tutta la nostra offerta nasce da persone che hanno sostenuto il test in prima persona ed è completamente gratuita, in tre lingue."
   cta_primary: "Vedi gli esercizi"
   cta_secondary: "Iscriviti alla newsletter"
   bild: "testsimulationen/testsimulation-2023.jpg"
@@ -84,13 +84,13 @@ mission:
   heading: "Ci impegniamo affinché la preparazione all'EMS non dipenda dal portafoglio."
   features:
     - title: "Dal 2021"
-      text: "Nata come iniziativa studentesca e portata avanti da volontari fino a oggi: nessuna azienda dietro, nessuna tassa."
+      text: "Partita come iniziativa studentesca, oggi è un'associazione senza scopo di lucro. Lavoriamo al 100 % come volontari e offriamo il nostro materiale in modo completamente gratuito."
     - title: "Oltre 110 volontari"
-      text: "Studenti di medicina di tutta la Svizzera scrivono esercizi, traducono, tengono corsi e seguono le simulazioni del test."
+      text: "Studenti di medicina di tutta la Svizzera scrivono esercizi, traducono, tengono corsi, seguono le simulazioni del test."
     - title: "Tre lingue"
-      text: "Team propri nella Svizzera tedesca, in Romandia e in Ticino: il materiale è disponibile in tedesco, francese e italiano."
+      text: "Con i nostri team nella Svizzera tedesca, in Romandia e in Ticino mettiamo a disposizione l'intera offerta in tre lingue."
 support:
-  heading: "Siete voi a renderlo possibile."
-  text: "Il nostro materiale resta gratuito – grazie a donazioni e sponsorizzazioni."
+  heading: "Gratuito grazie a voi."
+  text: "Solo grazie a donazioni e sponsorizzazioni il nostro materiale resta gratuito per tutti."
   cta: "Sostieni ora"
 ---
