@@ -360,7 +360,7 @@ def ganz_geloescht(seite):
         or z.get('nr') == 'v' for z in seite['zeilen'])
 
 
-def seite_anwenden(seite, projekt, meldungen):
+def seite_anwenden(seite, projekt, meldungen, weg_geplant=frozenset()):
     """Wendet die Zeilen einer Seite an. Gibt ein Ergebnis-dict zurueck:
     art: unveraendert | geaendert | neu | geloescht | uebersprungen | bereits
     inhalt: der neue Dateiinhalt (bei geaendert/neu), zaehler: dict."""
@@ -437,7 +437,7 @@ def seite_anwenden(seite, projekt, meldungen):
     if seite_weg:
         if implizit:
             melde('Titel und alle Texte mit !Löschen! markiert - als ganze Seite gelöscht.')
-        return seite_loeschen(projekt, pfad, datei, sprache, innen, melde)
+        return seite_loeschen(projekt, pfad, datei, sprache, innen, melde, weg_geplant)
 
     kopf, _, versatz = tb.kopf_trennen(roh)
     koerper_bausteine = [b for b in bausteine if b['typ'] not in KOPFTYPEN]
@@ -594,15 +594,24 @@ def soll_gleich_ist(seite, bausteine):
     return not (uebrig & weg)
 
 
-def seite_loeschen(projekt, pfad, datei, sprache, innen, melde):
+def seite_loeschen(projekt, pfad, datei, sprache, innen, melde, weg_geplant=frozenset()):
+    """weg_geplant: alle Seiten, die in DIESEM Durchgang geloescht werden -
+    eine Uebersichtsseite darf mit, wenn ihre Seiten darunter alle auch
+    gehen, und ein Link von einer Seite, die ebenfalls geht, stoert nicht."""
     ordner = os.path.dirname(pfad)
     if os.path.basename(pfad) == '_index.md':
-        rest = [n for n in os.listdir(ordner) if n != '_index.md']
+        def bleibt(n):
+            voll = os.path.join(ordner, n)
+            if os.path.isdir(voll):
+                return any(bleibt(os.path.join(n, m)) for m in os.listdir(voll))
+            rel = os.path.relpath(voll, projekt).replace(os.sep, '/')
+            return not (n.endswith('.md') and rel in weg_geplant)
+        rest = [n for n in os.listdir(ordner) if n != '_index.md' and bleibt(n)]
         if rest:
             melde(f'ist die Übersichtsseite eines Bereichs mit {len(rest)} weiteren Seiten - so nicht '
                   'löschbar (die Seiten darunter hängen daran). Übersprungen.')
             return dict(art='uebersprungen')
-    links = [p for p in verlinkt_von(projekt, sprache, innen) if p != datei]
+    links = [p for p in verlinkt_von(projekt, sprache, innen) if p != datei and p not in weg_geplant]
     if links:
         melde('wird gelöscht, aber diese Seiten verlinken noch darauf - dort den Link entfernen, sonst '
               'schlägt der Website-Bau fehl: ' + ', '.join(links))
@@ -693,6 +702,8 @@ def einlesen(pfade, projekt=PROJEKT, probe=False):
             fehler.append(str(e))
             continue
         meldungen += [f'{name}: {h}' for h in hinweise]
+        weg_geplant = {str(x['kopf']['datei']) for x in seiten
+                       if LOESCHEN.search(x['kopf']['text'] or '') or ganz_geloescht(x)}
         gefunden = set()
         for seite in seiten:
             datei = str(seite['kopf']['datei'])
@@ -701,7 +712,7 @@ def einlesen(pfade, projekt=PROJEKT, probe=False):
                                  'Vorkommen gilt.')
                 continue
             gefunden.add(datei)
-            erg = seite_anwenden(seite, projekt, meldungen)
+            erg = seite_anwenden(seite, projekt, meldungen, weg_geplant)
             ergebnisse.append((name, datei, erg))
             if probe:
                 continue
@@ -712,8 +723,12 @@ def einlesen(pfade, projekt=PROJEKT, probe=False):
                     f.write(erg['inhalt'])
             elif erg['art'] == 'geloescht':
                 os.remove(ziel)
-                if erg.get('ordner_leer') and not os.listdir(os.path.dirname(ziel)):
-                    os.rmdir(os.path.dirname(ziel))
+                # Leer gewordene Ordner mit weg - auch wenn die Uebersichtsseite
+                # vor ihren Unterseiten an der Reihe war
+                ordner = os.path.dirname(ziel)
+                while ordner != os.path.join(projekt, 'content') and not os.listdir(ordner):
+                    os.rmdir(ordner)
+                    ordner = os.path.dirname(ordner)
         for datei in verzeichnis:
             if datei not in gefunden:
                 meldungen.append(f'{datei}: fehlt in {name} (Zeilen oder Blatt gelöscht?) - die Seite '

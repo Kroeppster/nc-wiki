@@ -43,6 +43,7 @@ try:
     from openpyxl.styles import Font, PatternFill, Alignment
     from openpyxl.formatting.rule import FormulaRule
     from openpyxl.worksheet.datavalidation import DataValidation
+    from openpyxl.worksheet.table import Table, TableColumn, TableFormula
     from openpyxl.utils import get_column_letter
 except ImportError:
     sys.exit('Fehlendes Paket: openpyxl. Bitte "pip install openpyxl pyyaml".')
@@ -458,6 +459,50 @@ def loesch_bedingung(zelle):
     return 'OR(' + ','.join(f'ISNUMBER(SEARCH("{m}",{zelle}))' for m in LOESCHMARKEN) + ')'
 
 
+def aenderung_formel(r, sprache):
+    """Die Formel der Spalte "Änderung" - EINE fuer alle Zeilenarten, sie
+    entscheidet selbst nach den versteckten Spalten (art, nr, Vorlage).
+    Eine einzige Formel braucht es, weil die Spalte eine berechnete Spalte
+    einer Excel-Tabelle ist (siehe tabelle_anlegen): In eine neu eingefuegte
+    Zeile schreibt Excel dann dieselbe Formel von selbst - vorher blieb die
+    Spalte dort leer, obwohl die Zeile neu war."""
+    L = T[sprache]
+    B, C, G, H, K = (f'${SP[k]}{r}' for k in ('text', 'vorlage', 'original', 'nr', 'art'))
+    weg = loesch_bedingung(B)
+    gesperrt = 'OR(' + ','.join(f'{K}="{t}"' for t in tb.GESPERRT) + ')'
+    return (f'IF({K}="seite",IF({weg},"{L["seite_weg"]}",""),'
+            f'IF({gesperrt},IF(OR({H}="",EXACT({B},{G})),"","{L["gesperrt"]}"),'
+            f'IF({H}="",IF({C}<>"",IF({weg},"",IF({B}="","{L["fehlt"]}","{L["neu"]}")),'
+            f'IF(OR({B}="",{weg}),"","{L["neu"]}")),'
+            f'IF({weg},"{L["weg"]}",IF({B}="","{L["leer"]}",IF(EXACT({B},{G}),"","{L["geaendert"]}"))))))')
+
+
+def tabelle_anlegen(blatt, sprache, letzte, nummer):
+    """Die Zeilen eines Seitenblatts als Excel-Tabelle (Kopf in Zeile 5),
+    mit "Änderung" als berechneter Spalte - nur so fuellt Excel die Formel
+    in eingefuegte Zeilen nach. Nebenbei verschiebt Excel beim Einfuegen in
+    einer Tabelle immer die ganze Tabellenzeile samt versteckter Spalten.
+    Ohne Filterknoepfe (kein autoFilter): Sortieren wuerde die Seite
+    durcheinanderbringen. Andere Programme (LibreOffice, Numbers, Google)
+    kennen keine berechneten Spalten - dort bleibt "Änderung" in neuen
+    Zeilen leer, gruen wird die Zeile trotzdem (bedingte Formate)."""
+    namen = []
+    for i, k in enumerate(SPALTEN, start=1):
+        c = blatt.cell(row=5, column=i)
+        if not c.value:
+            c.value = k             # versteckte Spalten: der Schluessel als Name
+        name = str(c.value)
+        while name.casefold() in (n.casefold() for n in namen):
+            name += '_'
+        c.value = name
+        namen.append(name)
+    spalten = [TableColumn(id=i, name=n, calculatedColumnFormula=TableFormula(
+        attr_text=aenderung_formel(ERSTE_ZEILE, sprache)) if SPALTEN[i - 1] == 'aenderung' else None)
+        for i, n in enumerate(namen, start=1)]
+    blatt.add_table(Table(displayName=f'Seiten_{nummer}', ref=f'A5:{get_column_letter(len(SPALTEN))}{letzte}',
+                          tableColumns=spalten))
+
+
 def zeilen_schreiben(blatt, sprache, zeilen, start, stand_alt):
     L = T[sprache]
     normal = Font(name=SCHRIFT, size=10)
@@ -471,19 +516,7 @@ def zeilen_schreiben(blatt, sprache, zeilen, start, stand_alt):
         for k in SPALTEN:
             if k in z and not k.startswith('_'):
                 blatt.cell(row=r, column=SPALTEN.index(k) + 1, value=z[k])
-        B, G = f'${SP["text"]}{r}', f'${SP["original"]}{r}'
-        wegf = loesch_bedingung(B)
-        if z['art'] == 'seite':
-            formel = f'=IF({wegf},"{L["seite_weg"]}","")'
-        elif z.get('_gesperrt'):
-            formel = f'=IF(EXACT({B},{G}),"","{L["gesperrt"]}")' if z.get('nr') != '' else ''
-        elif z.get('nr') == '':
-            formel = f'=IF({wegf},"",IF({B}="","{L["fehlt"]}" ,"{L["neu"]}"))'.replace('" ,', '",') \
-                if z.get('vorlage') else f'=IF(OR({B}="",{wegf}),"","{L["neu"]}")'
-        else:
-            formel = f'=IF({wegf},"{L["weg"]}",IF({B}="","{L["leer"]}",IF(EXACT({B},{G}),"","{L["geaendert"]}")))'
-        if formel:
-            blatt.cell(row=r, column=SPALTEN.index('aenderung') + 1, value=formel)
+        blatt.cell(row=r, column=SPALTEN.index('aenderung') + 1, value='=' + aenderung_formel(r, sprache))
 
         # Stand und Bemerkung aus einer frueheren Mappe
         alt = stand_alt.get((z['seite'], schluessel_text(z.get('original') or z.get('text'))))
@@ -578,6 +611,7 @@ def seitenblatt(mappe, sprache, name, farbe, gruppen, stand_alt, basis_url, inha
         c = b.cell(row=rr, column=SPALTEN.index('text') + 1)
         c.number_format = '@'
         c.alignment = Alignment(wrap_text=True, vertical='top')
+    tabelle_anlegen(b, sprache, letzte, len(mappe.worksheets))
     bedingte_formate(b, ERSTE_ZEILE, letzte + 400)
     typen = DataValidation(type='list', formula1='"%s"' % ','.join(L['einfuegbar']), allow_blank=True)
     b.add_data_validation(typen)

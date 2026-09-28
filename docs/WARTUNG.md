@@ -135,7 +135,12 @@ Beschreibungen und Spalten zum Aufteilen der Arbeit (Zuständig, Stand, Bemerkun
 
    `!Löschen!` geht gross oder klein und in jeder Sprache (`!Supprimer!`,
    `!Eliminare!`). Die Spalte „Änderung" sagt zu jeder Zeile, was beim Einlesen
-   passiert.
+   passiert. Jedes Seitenblatt ist eine **Excel-Tabelle** mit „Änderung" als
+   berechneter Spalte: Fügt man in Excel eine Zeile ein, schreibt Excel die
+   Formel von selbst hinein, und dort steht dann „+ neu". (Vorher blieb die
+   Spalte in eingefügten Zeilen leer – Excel kopiert Formeln nur in Tabellen
+   mit.) LibreOffice, Numbers und Google Tabellen kennen das nicht; dort bleibt
+   „Änderung" in neuen Zeilen leer, grün wird der Text trotzdem.
 3. **In den Ordner [`redaktion/`](../redaktion/) hochladen** (*Add file → Upload
    files → Commit directly to the main branch*). Nach ein, zwei Minuten eröffnet
    `.github/workflows/texte-einlesen.yml` einen Pull Request: die geänderten Seiten,
@@ -193,9 +198,12 @@ Lieber eine Meldung im Bericht als ein falscher Text auf der Website. Deshalb:
 - **Titel und alle Texte einer Seite mit `!Löschen!`** heisst: die Seite soll weg
   – sie wird gelöscht (so wurde „Gedruckte Versionen" markiert).
 - **Seite löschen,** auf die noch verlinkt wird: wird gelöscht, aber der Bericht
-  nennt die Seiten mit dem Link – sonst baut die Website nicht. Eine
-  Übersichtsseite (`_index.md`) mit Seiten darunter wird nicht gelöscht. Die
-  Seite in den anderen Sprachen bleibt; dort in der jeweiligen Mappe löschen.
+  nennt die Seiten mit dem Link – sonst baut die Website nicht (Links von
+  Seiten, die im selben Durchgang mitgelöscht werden, zählen nicht). Eine
+  Übersichtsseite (`_index.md`) wird nur gelöscht, wenn alle Seiten darunter
+  in derselben Mappe ebenfalls mit `!Löschen!` markiert sind (so wurden
+  „Verein" und „Events" zusammen gelöscht). Die Seite in den anderen Sprachen
+  bleibt; dort in der jeweiligen Mappe löschen.
 
 **„Stand", „Bemerkung", „Zuständig"** gehen nicht auf die Website. Der
 Einlese-Workflow merkt sie sich in `redaktion/stand.json` (je Text nur eine

@@ -297,14 +297,16 @@ def mappen_pruefen(projekt, mappen):
                 if isinstance(f, str) and f.startswith('='):
                     formeln.append((b.ws.title, f))
                     refs = set(re.findall(r'\$([A-Z]+)(\d+)', f))
-                    if refs - {(tsp, str(r)), (osp, str(r))}:
+                    erlaubt = {(get_column_letter(b.sp[k]), str(r))
+                               for k in ('text', 'original', 'vorlage', 'nr', 'art')}
+                    if refs - erlaubt:
                         falsch_bezogen.append(f'{b.ws.title}!{r}: {sorted(refs)}')
             for cf in b.ws.conditional_formatting:
                 for regel in cf.rules:
                     formeln.append((b.ws.title, '=' + regel.formula[0]))
         pruef(f'{sprache}: Spalte "Text" ist Textformat (sonst macht Excel aus "- Punkt" eine Formel)',
               text_nicht_text == 0, f'{text_nicht_text} Zellen')
-        pruef(f'{sprache}: Formeln der Spalte "Aenderung" rechnen mit Text/Original der eigenen Zeile',
+        pruef(f'{sprache}: Formeln der Spalte "Aenderung" rechnen nur mit der eigenen Zeile',
               not falsch_bezogen, falsch_bezogen[:5])
         for ws in m.worksheets[:2]:
             for zeile in ws.iter_rows():
@@ -326,6 +328,39 @@ def mappen_pruefen(projekt, mappen):
         pruef(f'{sprache}: jeder Link im Inhalt fuehrt auf ein vorhandenes Blatt', ziele <= set(namen),
               ziele - set(namen))
         pruef(f'{sprache}: keine Formel mit Zeilenumbruch', not [w for _, w in formeln if '\n' in w])
+
+        # Jedes Seitenblatt ist eine Excel-Tabelle mit "Änderung" als
+        # berechneter Spalte: nur so schreibt Excel die Formel in eine neu
+        # eingefuegte Zeile (vorher blieb "Änderung" dort leer).
+        tab_fehler, neu_falsch = [], []
+        for b in seitenblaetter:
+            tabs = list(b.ws.tables.values())
+            letzte = max(r for r in b.zeilen() if b.wert(r, 'seite'))
+            if len(tabs) != 1:
+                tab_fehler.append(f'{b.ws.title}: {len(tabs)} Tabellen')
+                continue
+            t = tabs[0]
+            kopf = [b.ws.cell(row=5, column=c).value for c in range(1, len(t.tableColumns) + 1)]
+            berechnet = {c.name: c.calculatedColumnFormula.attr_text for c in t.tableColumns
+                         if c.calculatedColumnFormula is not None}
+            aend = b.ws.cell(row=5, column=b.sp['aenderung']).value
+            if t.ref != f'A5:{get_column_letter(b.ws.max_column)}{letzte}' or t.autoFilter is not None \
+                    or kopf != [c.name for c in t.tableColumns] \
+                    or list(berechnet) != [aend] or '=' + berechnet[aend] != b.wert(ERSTE_ZEILE, 'aenderung'):
+                tab_fehler.append(f'{b.ws.title}: {t.ref} {t.autoFilter} {list(berechnet)}')
+                continue
+            # So fuellt Excel eine eingefuegte Zeile: dieselbe Formel, auf
+            # die neue Zeile verschoben. Nur Text drin, alles andere leer.
+            r = letzte + 1
+            formel = '=' + re.sub(r'\$([A-Z]+)%d\b' % ERSTE_ZEILE, lambda m: f'${m.group(1)}{r}', berechnet[aend])
+            b.setze(r, 'text', 'Neu eingefügte Zeile')
+            if rechne(formel, b) not in ('+ neu', '+ nouveau', '+ nuovo'):
+                neu_falsch.append(f'{b.ws.title}: {rechne(formel, b)!r}')
+            b.setze(r, 'text', None)
+        pruef(f'{sprache}: jedes Seitenblatt ist eine Excel-Tabelle mit "Änderung" als berechneter Spalte, '
+              'ohne Filterknoepfe', not tab_fehler, tab_fehler[:5])
+        pruef(f'{sprache}: neu eingefuegte Zeile bekommt von Excel die Formel und zeigt "+ neu"',
+              not neu_falsch, neu_falsch[:5])
 
         # Unberuehrte Mappe: nichts als geaendert markiert, nichts gefaerbt
         markiert, gefaerbt, zaehler = [], [], []
