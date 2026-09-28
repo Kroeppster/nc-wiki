@@ -507,7 +507,8 @@ precede («9 subtest») è fissa nella FAQ.
 
 Un solo file alimenta la tabella `/ems/uniguide/`, ogni pagina di università e il
 confronto. Ogni università ha bisogno in più di una pagina quasi vuota
-`content/<lingua>/ems/uniguide/<slug>.md` con `title` e `uni_slug`.
+`content/<lingua>/ems/uniguide/<slug>.md` con `title` e `uni_slug`. `kanton`, `auswahlverfahren` e `besonderheiten` esistono per lingua
+(`de:`/`fr:`/`it:`); i nomi delle lingue d'insegnamento vengono da `i18n` (`sprache_…`).
 
 **Niente stime.** Campi come `website_medizin`, `anmeldefrist`, `studienbeginn`,
 `semestergebuehr`, `studienplaetze` restano `null` finché il valore non figura su una

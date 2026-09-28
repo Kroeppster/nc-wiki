@@ -19,13 +19,16 @@
 #   slug             - technischer Name für die Web-Adresse, z.B. "basel"
 #   name             - offizieller Name der Universität (wird NICHT übersetzt,
 #                       auch auf FR/IT-Seiten steht der echte, offizielle Name)
-#   kanton           - Standort-Kanton
+#   kanton           - Standort-Kanton, je Sprache ({ de: …, fr: …, it: … })
 #   sprache          - Liste der Unterrichtssprache(n)
 #   studiengaenge    - Liste, z.B. ["Bachelor", "Master"]
 #   ems_erforderlich - "ja", "nein" oder "teilweise"
-#   auswahlverfahren - Kurztext zum Zulassungsverfahren
+#   auswahlverfahren - Kurztext zum Zulassungsverfahren, je Sprache (de/fr/it)
 #   studienplaetze   - Zahl oder null (siehe Hinweis oben)
-#   besonderheiten   - Liste mit Stichpunkten zu Sonderfällen (optional, kann leer sein)
+#   besonderheiten   - Stichpunkte zu Sonderfällen, je Sprache eine Liste
+#                       (de/fr/it); [] wenn es keine gibt
+#   Texte je Sprache: Fehlt fr oder it, erscheint der deutsche Text
+#   (layouts/partials/uni-text.html).
 #   website          - offizielle Website der Universität
 #   stand            - Datum, an dem diese Angaben zuletzt geprüft wurden
 #   quelle           - Link zur Quelle dieser Angaben (Nachvollziehbarkeit)
@@ -48,13 +51,19 @@
 
 - slug: "basel"
   name: "Universität Basel"
-  kanton: "Basel-Stadt"
+  kanton: { de: "Basel-Stadt", fr: "Bâle-Ville", it: "Basilea Città" }
   sprache: ["Deutsch"]
   studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  auswahlverfahren:
+    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
+    it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   studienplaetze: null
-  besonderheiten: ["Bachelor-Studienplätze für USI Lugano werden vollständig in Basel absolviert"]
+  besonderheiten:
+    de: ["Bachelor-Studienplätze für USI Lugano werden vollständig in Basel absolviert"]
+    fr: ["Les places de bachelor pour l'USI Lugano se font entièrement à Bâle"]
+    it: ["I posti di bachelor per l'USI Lugano si svolgono interamente a Basilea"]
   website: "https://www.unibas.ch"
   stand: "2026-08-07"
   quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
@@ -72,11 +81,14 @@
 
 - slug: "bern"
   name: "Universität Bern"
-  kanton: "Bern"
+  kanton: { de: "Bern", fr: "Berne", it: "Berna" }
   sprache: ["Deutsch"]
   studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  auswahlverfahren:
+    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
+    it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   studienplaetze: null
   besonderheiten: []
   website: "https://www.unibe.ch"
@@ -96,13 +108,19 @@
 
 - slug: "zuerich"
   name: "Universität Zürich"
-  kanton: "Zürich"
+  kanton: { de: "Zürich", fr: "Zurich", it: "Zurigo" }
   sprache: ["Deutsch"]
   studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  auswahlverfahren:
+    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
+    it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   studienplaetze: null
-  besonderheiten: ["Klinische Ausbildung teils auch in Kooperation mit Luzern oder St. Gallen möglich"]
+  besonderheiten:
+    de: ["Klinische Ausbildung teils auch in Kooperation mit Luzern oder St. Gallen möglich"]
+    fr: ["Formation clinique possible en partie en coopération avec Lucerne ou Saint-Gall"]
+    it: ["Formazione clinica possibile in parte in collaborazione con Lucerna o San Gallo"]
   website: "https://www.uzh.ch"
   stand: "2026-08-07"
   quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
@@ -120,13 +138,19 @@
 
 - slug: "eth-zuerich"
   name: "ETH Zürich"
-  kanton: "Zürich"
+  kanton: { de: "Zürich", fr: "Zurich", it: "Zurigo" }
   sprache: ["Deutsch"]
   studiengaenge: ["Bachelor"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+  auswahlverfahren:
+    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
+    it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   studienplaetze: null
-  besonderheiten: ["Nur Bachelor an der ETH. Der Master wird an der Universität Zürich (20 Plätze), der Universität Basel oder der Università della Svizzera italiana (Lugano) fortgesetzt - die Zuteilung erfolgt durch die ETH Zürich zu Beginn des dritten Bachelor-Jahres, der Studienplatz für den Master ist dank Transferabkommen garantiert."]
+  besonderheiten:
+    de: ["Nur Bachelor an der ETH. Der Master wird an der Universität Zürich (20 Plätze), der Universität Basel oder der Università della Svizzera italiana (Lugano) fortgesetzt - die Zuteilung erfolgt durch die ETH Zürich zu Beginn des dritten Bachelor-Jahres, der Studienplatz für den Master ist dank Transferabkommen garantiert."]
+    fr: ["Seulement le bachelor à l'ETH. Le master se poursuit à l'Université de Zurich (20 places), à l'Université de Bâle ou à l'Università della Svizzera italiana (Lugano) – l'attribution est faite par l'ETH Zurich au début de la 3e année de bachelor ; la place en master est garantie par un accord de transfert."]
+    it: ["Solo bachelor all'ETH. Il master prosegue all'Università di Zurigo (20 posti), all'Università di Basilea o all'Università della Svizzera italiana (Lugano) – l'assegnazione è fatta dall'ETH Zurigo all'inizio del 3° anno di bachelor; il posto per il master è garantito da un accordo di trasferimento."]
   website: "https://www.ethz.ch"
   stand: "2026-08-08"
   quelle: "https://ethz.ch/en/studies/bachelor/application/bachelor-human-medicine.html"
@@ -144,13 +168,19 @@
 
 - slug: "freiburg"
   name: "Universität Freiburg"
-  kanton: "Freiburg/Fribourg"
+  kanton: { de: "Freiburg", fr: "Fribourg", it: "Friburgo" }
   sprache: ["Deutsch", "Français"]
   studiengaenge: ["Bachelor"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "Zulassung über den Eignungstest Medizinstudium (EMS); zweisprachiges Bachelor-Studium (Deutsch/Französisch)."
+  auswahlverfahren:
+    de: "Zulassung über den Eignungstest Medizinstudium (EMS); zweisprachiges Bachelor-Studium (Deutsch/Französisch)."
+    fr: "Admission via le test d'aptitudes pour les études de médecine (EMS) ; bachelor bilingue (allemand/français)."
+    it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS); bachelor bilingue (tedesco/francese)."
   studienplaetze: null
-  besonderheiten: ["Nur Bachelor; Wechsel an eine andere Universität für den Master nötig"]
+  besonderheiten:
+    de: ["Nur Bachelor; Wechsel an eine andere Universität für den Master nötig"]
+    fr: ["Seulement le bachelor ; changement d'université nécessaire pour le master"]
+    it: ["Solo bachelor; per il master è necessario cambiare università"]
   website: "https://www.unifr.ch"
   stand: "2026-08-07"
   quelle: "https://www.unifr.ch/med/fr/studies/bsc/med/admission.html"
@@ -168,11 +198,14 @@
 
 - slug: "genf"
   name: "Université de Genève"
-  kanton: "Genève"
+  kanton: { de: "Genf", fr: "Genève", it: "Ginevra" }
   sprache: ["Français"]
   studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "nein"
-  auswahlverfahren: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+  auswahlverfahren:
+    de: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+    fr: "Accès libre à la 1re année de bachelor, sans EMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
+    it: "Accesso libero al 1° anno di bachelor, senza EMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
   studienplaetze: null
   besonderheiten: []
   website: "https://www.unige.ch"
@@ -192,11 +225,14 @@
 
 - slug: "lausanne"
   name: "Université de Lausanne"
-  kanton: "Vaud"
+  kanton: { de: "Waadt", fr: "Vaud", it: "Vaud" }
   sprache: ["Français"]
   studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "nein"
-  auswahlverfahren: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+  auswahlverfahren:
+    de: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+    fr: "Accès libre à la 1re année de bachelor, sans EMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
+    it: "Accesso libero al 1° anno di bachelor, senza EMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
   studienplaetze: null
   besonderheiten: []
   website: "https://www.unil.ch"
@@ -216,13 +252,19 @@
 
 - slug: "lugano"
   name: "Università della Svizzera italiana (USI)"
-  kanton: "Ticino"
+  kanton: { de: "Tessin", fr: "Tessin", it: "Ticino" }
   sprache: ["Italiano"]
   studiengaenge: ["Master"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "EMS-Zulassung für die national geregelten Bachelor-Plätze; das Bachelor-Studium wird vollständig an der Universität Basel absolviert (dort auf Deutsch), der Master anschliessend an der USI in Lugano auf Italienisch."
+  auswahlverfahren:
+    de: "EMS-Zulassung für die national geregelten Bachelor-Plätze; das Bachelor-Studium wird vollständig an der Universität Basel absolviert (dort auf Deutsch), der Master anschliessend an der USI in Lugano auf Italienisch."
+    fr: "Admission via l'EMS pour les places de bachelor réglées au niveau national ; le bachelor se fait entièrement à l'Université de Bâle (en allemand), le master ensuite à l'USI à Lugano, en italien."
+    it: "Ammissione tramite l'EMS per i posti di bachelor regolati a livello nazionale; il bachelor si svolge interamente all'Università di Basilea (in tedesco), il master poi all'USI a Lugano, in italiano."
   studienplaetze: null
-  besonderheiten: ["Eigener Bachelor-Abschluss berechtigt zum Master an der USI"]
+  besonderheiten:
+    de: ["Eigener Bachelor-Abschluss berechtigt zum Master an der USI"]
+    fr: ["Le bachelor obtenu donne accès au master à l'USI"]
+    it: ["Il bachelor conseguito dà accesso al master all'USI"]
   website: "https://www.usi.ch"
   stand: "2026-08-07"
   quelle: "https://www.biomed.usi.ch/it/studiare/studiare-medicina/master-in-medicina/ammissione"
@@ -240,13 +282,19 @@
 
 - slug: "neuenburg"
   name: "Université de Neuchâtel"
-  kanton: "Neuchâtel"
+  kanton: { de: "Neuenburg", fr: "Neuchâtel", it: "Neuchâtel" }
   sprache: ["Français"]
   studiengaenge: ["Bachelor"]
   ems_erforderlich: "nein"
-  auswahlverfahren: "Bietet nur das 1. Bachelor-Jahr an, kein EMS. Übertritt ins 2. Jahr an der Uni Genf oder Lausanne erfordert das Bestehen von deren Eliminationsprüfung."
+  auswahlverfahren:
+    de: "Bietet nur das 1. Bachelor-Jahr an, kein EMS. Übertritt ins 2. Jahr an der Uni Genf oder Lausanne erfordert das Bestehen von deren Eliminationsprüfung."
+    fr: "Seule la 1re année de bachelor est proposée, sans EMS. Le passage en 2e année à Genève ou à Lausanne exige la réussite de leur examen éliminatoire."
+    it: "Offre solo il 1° anno di bachelor, senza EMS. Il passaggio al 2° anno a Ginevra o Losanna richiede il superamento del loro esame eliminatorio."
   studienplaetze: null
-  besonderheiten: ["Nur 1. Studienjahr; danach zwingender Wechsel nach Genf oder Lausanne"]
+  besonderheiten:
+    de: ["Nur 1. Studienjahr; danach zwingender Wechsel nach Genf oder Lausanne"]
+    fr: ["Seulement la 1re année ; ensuite changement obligatoire à Genève ou Lausanne"]
+    it: ["Solo il 1° anno; poi passaggio obbligatorio a Ginevra o Losanna"]
   website: "https://www.unine.ch"
   stand: "2026-08-09"
   quelle: "https://www.unine.ch/formation/bachelor-of-science-en-medecine-humaine"
@@ -264,13 +312,19 @@
 
 - slug: "luzern"
   name: "Universität Zürich - Luzerner Track"
-  kanton: "Luzern"
+  kanton: { de: "Luzern", fr: "Lucerne", it: "Lucerna" }
   sprache: ["Deutsch"]
   studiengaenge: ["Master"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'Luzerner Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in Luzern studiert."
+  auswahlverfahren:
+    de: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'Luzerner Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in Luzern studiert."
+    fr: "Pas de bachelor propre : l'admission se fait via l'EMS pour le « Luzerner Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Lucerne, conjointement avec l'Université de Zurich."
+    it: "Nessun bachelor proprio: l'ammissione avviene tramite l'EMS per il «Luzerner Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a Lucerna, insieme all'Università di Zurigo."
   studienplaetze: null
-  besonderheiten: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'Luzerner Track' an der Universität Zürich", "Schwerpunkt hausärztliche und psychiatrische Grundversorgung"]
+  besonderheiten:
+    de: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'Luzerner Track' an der Universität Zürich", "Schwerpunkt hausärztliche und psychiatrische Grundversorgung"]
+    fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « Luzerner Track » de l'Université de Zurich", "Accent sur la médecine de famille et les soins psychiatriques de base"]
+    it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite il «Luzerner Track» dell'Università di Zurigo", "Accento sulla medicina di famiglia e sulle cure psichiatriche di base"]
   website: "https://www.unilu.ch"
   stand: "2026-08-08"
   quelle: "https://www.unilu.ch/studium/studienangebot/master/gmf/medizin/"
@@ -288,13 +342,19 @@
 
 - slug: "st-gallen"
   name: "Universität Zürich - St. Galler Track"
-  kanton: "St. Gallen"
+  kanton: { de: "St. Gallen", fr: "Saint-Gall", it: "San Gallo" }
   sprache: ["Deutsch"]
   studiengaenge: ["Master"]
   ems_erforderlich: "ja"
-  auswahlverfahren: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'St.Galler Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in St.Gallen studiert."
+  auswahlverfahren:
+    de: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'St.Galler Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in St.Gallen studiert."
+    fr: "Pas de bachelor propre : l'admission se fait via l'EMS pour le « St.Galler Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Saint-Gall, conjointement avec l'Université de Zurich."
+    it: "Nessun bachelor proprio: l'ammissione avviene tramite l'EMS per lo «St.Galler Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a San Gallo, insieme all'Università di Zurigo."
   studienplaetze: null
-  besonderheiten: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'St.Galler Track' an der Universität Zürich"]
+  besonderheiten:
+    de: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'St.Galler Track' an der Universität Zürich"]
+    fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « St.Galler Track » de l'Université de Zurich"]
+    it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite lo «St.Galler Track» dell'Università di Zurigo"]
   website: "https://www.unisg.ch"
   stand: "2026-08-08"
   quelle: "https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium/zulassungsverfahren-mit-numerus-clausus"

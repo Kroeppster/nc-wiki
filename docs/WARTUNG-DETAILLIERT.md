@@ -505,7 +505,8 @@ Satz davor („9 Untertests“) steht fest in der FAQ.
 
 Eine Datei speist die Tabelle `/ems/uniguide/`, jede Uni-Seite und den Vergleich. Jede Uni
 braucht zusätzlich eine fast leere Seite `content/<sprache>/ems/uniguide/<slug>.md` mit
-`title` und `uni_slug`.
+`title` und `uni_slug`. `kanton`, `auswahlverfahren` und `besonderheiten` stehen je Sprache
+(`de:`/`fr:`/`it:`), die Namen der Unterrichtssprachen kommen aus `i18n` (`sprache_…`).
 
 **Nichts schätzen.** Felder wie `website_medizin`, `anmeldefrist`, `studienbeginn`,
 `semestergebuehr`, `studienplaetze` bleiben `null`, bis der Wert auf einer offiziellen

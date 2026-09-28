@@ -340,3 +340,8 @@ spenden_twint_hinweis: "Da scansionare con l'app TWINT – l'importo lo scegli t
 # Baustein "sponsoring-kontakt" (Seite Sponsoren)
 sponsoring_kontakt_email: "Siamo volentieri a vostra disposizione via e-mail"
 sponsoring_kontakt_telefon: "o raggiungibili per telefono"
+
+# Unterrichtssprachen im Uniguide (Schlüssel = Wert in data/unis.yaml, Feld "sprache")
+sprache_Deutsch: "tedesco"
+sprache_Français: "francese"
+sprache_Italiano: "italiano"

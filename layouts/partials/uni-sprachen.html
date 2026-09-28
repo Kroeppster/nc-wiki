@@ -1,0 +1,8 @@
+{{- /*
+  Unterrichtssprachen einer Uni (Feld "sprache" in data/unis.yaml) in der
+  Sprache der Seite, mit Komma getrennt. Übersetzung: i18n "sprache_<Wert>";
+  fehlt sie, erscheint der Wert aus der Datei.
+*/ -}}
+{{- $namen := slice -}}
+{{- range . -}}{{- $namen = $namen | append (or (i18n (printf "sprache_%s" .)) .) -}}{{- end -}}
+{{- return delimit $namen ", " -}}

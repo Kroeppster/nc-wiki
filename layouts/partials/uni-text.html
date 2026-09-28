@@ -1,0 +1,11 @@
+{{- /*
+  Ein Feld aus data/unis.yaml in der Sprache der Seite: Steht dort ein
+  Eintrag je Sprache (de/fr/it), kommt der passende zurück, sonst der
+  deutsche; ein einfacher Wert (Text oder Liste) kommt unverändert zurück.
+  Aufruf: partial "uni-text.html" .auswahlverfahren
+*/ -}}
+{{- $w := . -}}
+{{- if reflect.IsMap $w -}}
+  {{- $w = or (index $w site.Language.Lang) (index $w "de") -}}
+{{- end -}}
+{{- return $w -}}

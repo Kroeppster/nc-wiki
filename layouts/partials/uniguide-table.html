@@ -55,7 +55,7 @@
   <div class="report-filters" role="group" aria-label="{{ i18n "uniguide_table_filter_lang_label" }}">
     <button type="button" class="filter-pill is-active" data-filter-group="sprache" data-filter-value="all" aria-pressed="true">{{ i18n "uniguide_table_all" }}</button>
     {{ range $sprachen }}
-    <button type="button" class="filter-pill" data-filter-group="sprache" data-filter-value="{{ . }}" aria-pressed="false">{{ . }}</button>
+    <button type="button" class="filter-pill" data-filter-group="sprache" data-filter-value="{{ . }}" aria-pressed="false">{{ or (i18n (printf "sprache_%s" .)) . }}</button>
     {{ end }}
   </div>
   <div class="report-filters" role="group" aria-label="{{ i18n "uniguide_table_filter_ems_label" }}">
@@ -103,7 +103,7 @@
           </label>
         </td>
         <td><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></td>
-        <td>{{ delimit .sprache ", " }}</td>
+        <td>{{ partial "uni-sprachen.html" .sprache }}</td>
         <td><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>
         <td>{{ delimit .studiengaenge ", " }}</td>
         <td>{{ if .studienplaetze }}{{ .studienplaetze }}{{ else }}<span class="report-meta">{{ i18n "uniguide_table_places_unknown" }}</span>{{ end }}</td>
@@ -139,11 +139,11 @@
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_kanton" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ .kanton }}</td>{{ end }}
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ partial "uni-text.html" .kanton }}</td>{{ end }}
         </tr>
         <tr>
           <th scope="row">{{ i18n "label_sprache" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ delimit .sprache ", " }}</td>{{ end }}
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ partial "uni-sprachen.html" .sprache }}</td>{{ end }}
         </tr>
         <tr>
           <th scope="row">{{ i18n "label_studiengaenge" }}</th>
@@ -167,11 +167,11 @@
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_auswahlverfahren" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ .auswahlverfahren }}</td>{{ end }}
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ partial "uni-text.html" .auswahlverfahren }}</td>{{ end }}
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_besonderheiten" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ with .besonderheiten }}<ul class="detail-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ with partial "uni-text.html" .besonderheiten }}<ul class="detail-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_website" }}</th>

@@ -514,7 +514,8 @@ qui précède (« 9 sous-tests ») est fixe dans la FAQ.
 
 Un seul fichier alimente le tableau `/ems/uniguide/`, chaque page d'université et la
 comparaison. Chaque université a en plus besoin d'une page presque vide
-`content/<langue>/ems/uniguide/<slug>.md` avec `title` et `uni_slug`.
+`content/<langue>/ems/uniguide/<slug>.md` avec `title` et `uni_slug`. `kanton`, `auswahlverfahren` et `besonderheiten` existent par langue
+(`de:`/`fr:`/`it:`) ; les noms des langues d'enseignement viennent d'`i18n` (`sprache_…`).
 
 **Ne rien estimer.** Des champs comme `website_medizin`, `anmeldefrist`, `studienbeginn`,
 `semestergebuehr`, `studienplaetze` restent `null` jusqu'à ce que la valeur figure sur une

@@ -49,7 +49,7 @@
 <h2 class="uni-section-title">{{ i18n "uni_detail_section_zulassung" }}</h2>
 <dl class="uni-detail">
   <div><dt>{{ i18n "uni_detail_ems" }}</dt><dd><span class="badge badge-{{ $uni.ems_erforderlich }}">{{ index $emsLabels $uni.ems_erforderlich }}</span></dd></div>
-  <div><dt>{{ i18n "uni_detail_auswahlverfahren" }}</dt><dd>{{ $uni.auswahlverfahren }}</dd></div>
+  <div><dt>{{ i18n "uni_detail_auswahlverfahren" }}</dt><dd>{{ partial "uni-text.html" $uni.auswahlverfahren }}</dd></div>
   {{/* "Studienplätze" ist im Datensatz absichtlich (fast) immer leer/null,
        siehe data/unis.yaml - Fallback-Text "wird geprüft" statt einer
        nicht-recherchierten Zahl. */}}
@@ -63,14 +63,14 @@
 <div>
 <h2 class="uni-section-title">{{ i18n "uni_detail_section_studium" }}</h2>
 <dl class="uni-detail">
-  <div><dt>{{ i18n "uni_detail_kanton" }}</dt><dd>{{ $uni.kanton }}</dd></div>
-  <div><dt>{{ i18n "label_sprache" }}</dt><dd>{{ delimit $uni.sprache ", " }}</dd></div>
+  <div><dt>{{ i18n "uni_detail_kanton" }}</dt><dd>{{ partial "uni-text.html" $uni.kanton }}</dd></div>
+  <div><dt>{{ i18n "label_sprache" }}</dt><dd>{{ partial "uni-sprachen.html" $uni.sprache }}</dd></div>
   <div><dt>{{ i18n "label_studiengaenge" }}</dt><dd>{{ delimit $uni.studiengaenge ", " }}</dd></div>
   {{ with $uni.studienbeginn }}<div><dt>{{ i18n "uni_detail_studienbeginn" }}</dt><dd>{{ . }}</dd></div>{{ end }}
   {{ with $uni.semestergebuehr }}<div><dt>{{ i18n "uni_detail_semestergebuehr" }}</dt><dd>{{ . }}</dd></div>{{ end }}
   {{/* Besonderheiten-Feld ist optional (Liste kann auch leer sein) - dann
        wird dieser ganze Abschnitt einfach übersprungen. */}}
-  {{ with $uni.besonderheiten }}
+  {{ with partial "uni-text.html" $uni.besonderheiten }}
   {{/* Aufzaehlung statt "tag-pills": Besonderheiten sind teilweise ganze
        Saetze, und ein mehrzeiliges Element mit rundem Rahmen sieht aus wie
        ein verrutschter Fleck statt wie ein Schlagwort. */}}
