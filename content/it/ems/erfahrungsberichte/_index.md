@@ -1,5 +1,6 @@
 ---
 title: "Testimonianze"
+description: "Esperienze reali sull'EMS. Scopri come altri hanno vissuto il test attitudinale per gli studi di medicina e fai tesoro dei loro consigli migliori."
 menu:
   main:
     parent: ems

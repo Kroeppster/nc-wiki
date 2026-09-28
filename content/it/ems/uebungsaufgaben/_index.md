@@ -1,5 +1,6 @@
 ---
 title: "Esercizi"
+description: "Allenati per l'EMS con 120 serie di esercizi gratuite. Ti offriamo esercizi e soluzioni per tutti e otto i sottotest."
 menu:
   main:
     identifier: uebungsaufgaben

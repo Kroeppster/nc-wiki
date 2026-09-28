@@ -90,7 +90,7 @@ Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garanc
 
 Plus de 70 membres (incl. les responsables) ont contribué activement à NCWiki pendant la saison 2023/24 et ont rendu possible notre offre de séries d'exercices, de cours, de simulation et de traductions. Un grand merci à cette formidable équipe (et à ceux qui ne souhaitent pas être nommé·e·s) !
 
-**Responsables, Team Suisse alémanique :** Alessio Iseli, Abeelan Rasadurai, Elena Robinson, Alessia R., Anke Naedele, Stefania Huber, Aline Turpin, Julian Harbarth, Livia Biri, Diego Ryf, Francesca Serra, Olivia Schiess, Sabrina Zeller, Sarah Noman
+**Responsables, Teams germanophones :** Alessio Iseli (coordinateur), Abeelan Rasadurai (handover), Elena Robinson (relations publiques), Alessia R. (marketing), Anke Naedele (site web), Stefania Huber (coordinatrice Ticino), Aline Turpin (coordinatrice Romandie), Julian Harbarth (coordinateur Romandie), Livia Biri (finances), Diego Ryf (événements & contrôle qualité), Francesca Serra (cours de préparation), Olivia Schiess (simulation de test), Sabrina Zeller (simulation de test), Sarah Noman (séries d'exercices)
 
 **Créateur·rice·s de contenu, Team Romandie :** Aline Turpin, Antonin Becard, Audrey Stritt, Eliah Nicolet, Gökhan Akdag, Julian Harbarth, Julie Kern, Léa R., Mathieu Ribeaud
 

@@ -10,10 +10,8 @@ featured_image: "testsimulationen/testsimulation-2023.jpg"
 featured_image_alt: "Foglio di risposta EMS compilato in primo piano, sullo sfondo un'aula magna piena durante una simulazione del test NCWiki"
 ---
 
-Tutto quello che c'è da sapere sulle nostre simulazioni del test.
+Qui trovi tutte le informazioni sulle nostre simulazioni del test.
 
-**Iscrizione:** L'iscrizione avviene online non appena sono fissate le date del prossimo turno – chi prima arriva, meglio alloggia.
+**Iscrizione:** L'iscrizione avviene online. Non appena le date della prossima edizione sono fissate, le annunciamo sul nostro sito web e su Instagram.
 
 **Date:** Le nostre simulazioni del test si svolgono ogni anno all'inizio di maggio, circa due mesi prima dell'EMS. Hanno luogo in tutte le università che utilizzano l'EMS: a Basilea, Berna, Friburgo, Lugano e Zurigo.
-
-**Nota sul merch:** Sul posto potrete come sempre scoprire il nostro merch NCWiki allo stand informativo.

@@ -1,5 +1,6 @@
 ---
 title: "EMS"
+description: "Tutto per la tua preparazione all'EMS: serie di esercizi gratuite, simulazioni del test, corsi di preparazione e una guida alle università. Da studenti, per te."
 menu:
   main:
     identifier: ems
@@ -19,32 +20,32 @@ menu:
 
 ### 1.1 Informazioni ufficiali
 
-Riceverai le informazioni ufficiali sull'EMS da swissuniversities in aprile, una volta che ti sarai iscritt\*. Se trovi informazioni contraddittorie, fai riferimento all'opuscolo ufficiale "Test Info".
+Le informazioni ufficiali sull'EMS le ricevi da swissuniversities in aprile, una volta iscritto·a. Se trovi informazioni contraddittorie, attieniti al «Test Info» ufficiale.
 
-Ecco la [pagina ufficiale di swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina) per iscriverti agli studi di medicina, dove trovi anche le brochure informative sul test ed esempi di esercizi (sotto "documenti"). Vale la pena visitare anche la pagina del [Centro di sviluppo test (ZTD)](https://www.unifr.ch/ztd/de/ems).
+[Questo è il sito ufficiale di swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina), dove puoi iscriverti agli studi di medicina e trovare gli opuscoli informativi sul test e degli esempi di esercizi (sotto «Documenti»). Qui trovi il sito del [Centro per lo sviluppo di test ZTD](https://www.unifr.ch/ztd/de/ems), con altre informazioni ufficiali.
 
 ### 1.2 Iscrizione all'esame
 
-Ricorda che devi iscriverti entro il **15 febbraio**. Se hai un piano B, ricordati anche delle scadenze per le altre facoltà.
+Ricorda che devi **iscriverti entro il 15 febbraio** tramite [swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina). Pensa anche alle scadenze degli altri corsi di studio, se sono il tuo piano B.
 
 ### 1.3 Scelta della sede universitaria al momento dell'iscrizione
 
-Quando ti iscrivi, devi indicare in ordine di priorità in quale università vorresti studiare medicina umana, dentaria o veterinaria. Presta attenzione a due cose:
+Al momento dell'iscrizione devi indicare in ordine di priorità in quale università vorresti studiare medicina umana, dentaria o veterinaria. Fai attenzione a due cose:
 
-- Se superi l'EMS, il tuo domicilio fiscale ti garantisce un posto all'università del tuo cantone – ma solo se l'università del tuo cantone offre anche un corso di laurea in medicina. Basilea Campagna è considerato cantone universitario per l'Università di Basilea. Dettagli sulle singole università nel nostro [Uniguide](/ems/uniguide).
-- Alcune università sono più richieste e quindi serve un piazzamento migliore rispetto ad altre candidate e candidati. La tua prima scelta viene comunque sempre considerata per prima. Esempio: scegli il Politecnico di Zurigo (ETH) come prima scelta e l'Università di Zurigo (UZH) come seconda. L'ETH è generalmente meno richiesto per medicina rispetto all'UZH. Se sei tra il migliore 1%, verrai comunque assegnat\* alla tua prima scelta (ETH).
+- Se superi l'EMS, il tuo domicilio fiscale ti garantisce un posto di studio nel tuo cantone, purché lì sia offerta medicina. Per l'Università di Basilea entrambi i cantoni di Basilea valgono come cantone universitario e offrono questo vantaggio. In quanto politecnico federale, l'ETH è l'unica eccezione e non concede alcun vantaggio legato al domicilio cantonale. Trovi i dettagli sulle singole università nel nostro [Uniguide](/ems/uniguide).
+- Alcune università sono più richieste, per cui serve un rango migliore rispetto agli altri candidati. La tua prima priorità viene sempre considerata per prima. Esempio: scegli l'ETH come prima scelta e l'Università di Zurigo come seconda. Per medicina umana l'ETH è meno richiesta dell'Università di Zurigo. Dato che con il tuo risultato sei tra l'1 % migliore, vieni assegnato·a alla tua prima scelta (ETH).
 
 ### 1.4 Conoscere le consegne a memoria
 
-Risparmi tempo prezioso al NC se conosci già il tipo di domande, dato che non viene concesso tempo aggiuntivo per leggere le consegne – quel tempo potresti già usarlo per risolvere gli esercizi! Familiarizzati con le regole di compilazione delle risposte e con lo svolgimento generale del test.
+Risparmi tempo prezioso al NC se conosci già le consegne – per leggerle non è previsto tempo aggiuntivo, e quel tempo potresti già usarlo per risolvere gli esercizi! Familiarizzati con le regole per compilare le risposte, per girare pagina e con lo svolgimento del test.
 
-### 1.5 Tempo necessario per una preparazione seria
+### 1.5 Tempo indicativo per una preparazione seria
 
 - Tanto tempo: problemi quantitativi e formali, comprensione del testo, comprensione medico-scientifica, diagrammi e tabelle
-- Tempo medio: memorizzazione di figure e fatti, abbinamento di schemi, oggetti nello spazio
+- Tempo medio: memorizzazione di figure, memorizzazione di fatti, abbinamento di schemi, oggetti nello spazio
 - Poco tempo: lavoro concentrato e accurato
 
-| Sottotest | Quando iniziare [mesi prima] | Serie a settimana | Ripetizioni per serie |
+| Sottotest | Inizio [mesi prima del test] | Volte a settimana | Serie per volta |
 | --- | --- | --- | --- |
 | Abbinamento di schemi | 1.5–2 | 3–4 | 1 |
 | Comprensione medico-scientifica | 1–2 | 2–3 | 1 |
@@ -57,57 +58,58 @@ Risparmi tempo prezioso al NC se conosci già il tipo di domande, dato che non v
 
 ## 2. Il giorno del NC
 
-### 2.1 Alimentazione / pausa pranzo
+### 2.1 Alimentazione
 
-Fai una buona colazione il giorno del NC e bevi qualcosa – ma non troppo poco prima del test, per non dover andare in bagno durante la prova (il tempo continua a scorrere).
+Fai una buona colazione il giorno del NC e bevi qualcosa – ma non troppo, per non dover andare in bagno durante il test (nel frattempo il tempo continua a scorrere).
 
-Il NC dura a lungo, quindi è utile portare qualcosa da sgranocchiare – ad esempio noci, frutta secca, cioccolato o destrosio. Tutto ciò che porti nella sala d'esame deve essere in un contenitore trasparente (ad esempio un sacchetto di plastica con zip), possibilmente silenzioso.
+Il NC dura molto, quindi è utile portare qualcosa da sgranocchiare – ad esempio noci, frutta secca, cioccolato o destrosio. Tutto ciò che porti nella sala d'esame deve essere in un contenitore trasparente (per es. un sacchetto di plastica con chiusura zip) e possibilmente non fare rumore.
 
 ### 2.2 Arrivo
 
-Solo chi è puntuale può partecipare al NC – il motivo del ritardo non ha importanza, e non c'è una data di recupero. Vale la pena visitare il luogo del test qualche giorno prima e, il giorno stesso, prevedere un buon margine di tempo.
+Al NC può partecipare solo chi è puntuale – il motivo del ritardo non conta, e non c'è una data di recupero. Conviene visitare il luogo del test qualche giorno prima e il giorno stesso prevedere un buon margine di tempo.
 
 ### 2.3 Situazione d'esame
 
-A seconda del luogo, ci possono essere molte persone nella sala del test. Non lasciare che questo ti scoraggi, concentrati su te stess\*.
+A seconda della sede, nella sala del test possono esserci moltissime persone – all'Università di Zurigo, nel campus Irchel, per esempio fino a 400 persone nella stessa sala. Non lasciarti confondere.
 
-Le soluzioni vanno inserite nel foglio delle risposte separato – ciò che scrivi nel libretto degli esercizi non viene considerato nella valutazione. Ogni esercizio vale esattamente un punto, quindi quelli facili e quelli difficili contano allo stesso modo. Non aspettarti di completare tutti gli esercizi, è normale. **Non ci sono deduzioni per le risposte sbagliate**, quindi inserisci una soluzione anche per gli esercizi non completati.
+Le soluzioni vanno inserite nel foglio delle risposte separato – ciò che scrivi nel fascicolo degli esercizi non viene considerato nella valutazione. Ogni esercizio vale esattamente un punto, quindi esercizi facili e difficili contano allo stesso modo. Non aspettarti di riuscire a svolgerli tutti – è normale. **Le risposte sbagliate non vengono penalizzate**, inserisci quindi una soluzione anche per gli esercizi che non hai svolto.
 
-### 2.4 Lista di controllo – Cosa portare
+### 2.4 Checklist: cosa portare
 
-- Carta d'identità
+- Documento d'identità
 - Conferma d'iscrizione al test
-- Pennarello nero o blu spesso per il test di concentrazione
+- Fineliner nero o blu, spesso, per il test di concentrazione
 - Matite morbide (HB, 2 o 2B)
 - Evidenziatori
 - Gomma
-- Temperino
-- Spuntini
-- Bevande
-- Eventualmente tappi per le orecchie
-- Eventualmente un portafortuna
+- Temperamatite
+- Snack
+- Bevanda/e
+- Ev. tappi per le orecchie
+- Ev. portafortuna
+- Ev. medicamenti
 
 Tutto ciò che porti nella sala d'esame – comprese le bevande – deve essere in un contenitore trasparente. Cellulare e smartwatch restano nel guardaroba.
 
-## 3. Programma giornaliero
+## 3. Programma della giornata
 
-Non ci sono pause tra i sottotest, si passa sempre subito al successivo.
+Tra i sottotest non ci sono pause – si gira subito pagina.
 
 ```baustein
 testablauf
 ```
 
-Trovi le nostre guide per tutti i sottotest sotto [Esercizi](/ems/uebungsaufgaben).
+Trovi le guide per tutti i sottotest sotto [Esercizi](/ems/uebungsaufgaben).
 
-### 3.1 Completare il foglio delle risposte e tirare a indovinare strategicamente
+### 3.1 Completare il foglio delle risposte e tirare a indovinare con strategia
 
-È importante mettere un segno per **ogni** risposta, perché non ci sono deduzioni per le risposte sbagliate (eccetto nel test Lavoro concentrato e accurato). Prima di consegnare, prevedi del tempo per rivedere il foglio delle risposte e indovinare le domande lasciate vuote – senza tornare ai sottotest precedenti.
+Segna una risposta per **ogni** domanda – le risposte sbagliate non vengono penalizzate (eccezione: lavoro concentrato e accurato). Prima della consegna prevedi del tempo per controllare il foglio delle risposte e tirare a indovinare le domande rimaste aperte. Non puoi però tornare ai sottotest precedenti.
 
-Se devi indovinare, uno schema fisso aumenta le tue probabilità – ad esempio scegliere sempre la stessa lettera quando non hai idea della risposta. Consigliamo di iniziare da "A" invece che da "E", poiché "E" significa spesso "Nessuna/Tutte le precedenti", un'opzione più raramente esclusa con certezza.
+Se devi tirare a indovinare, uno schema fisso aumenta le tue probabilità – per esempio scegliere sempre «A», a meno che tu non possa escludere A, poi «B» e così via. Consigliamo di iniziare da A invece che da E, perché E significa spesso «Nessuna / Tutte sono corrette» e si può escludere più raramente.
 
 ## 4. Dopo il NC
 
-Hai terminato il test attitudinale – congratulazioni, è un grande traguardo! Concediti qualcosa. Negli ultimi anni i risultati sono stati inviati per posta all'inizio di agosto. La data esatta di invio varia a seconda del cantone e dell'università assegnata.
+Hai terminato il test attitudinale – è un grande risultato, concediti qualcosa! Negli ultimi anni i risultati dell'EMS sono arrivati per posta all'inizio di agosto. La data esatta di invio varia a seconda del cantone e dell'università assegnata.
 
 ## 5. Testimonianze
 

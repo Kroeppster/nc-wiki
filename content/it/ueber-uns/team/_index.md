@@ -90,7 +90,7 @@ Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garanc
 
 Oltre 70 membri (compresi i responsabili) hanno collaborato attivamente con NCWiki durante la stagione 2023/24 e hanno reso possibile la nostra gamma di serie di esercizi, corsi, simulazioni e traduzioni. Grazie di cuore al grande team (e a coloro che non vogliono essere nominati)!
 
-**I responsabili, team di lingua tedesca:** Alessio Iseli, Abeelan Rasadurai, Elena Robinson, Alessia R., Anke Naedele, Stefania Huber, Aline Turpin, Julian Harbarth, Livia Biri, Diego Ryf, Francesca Serra, Olivia Schiess, Sabrina Zeller, Sarah Noman
+**Responsabili, team di lingua tedesca:** Alessio Iseli (coordinatore), Abeelan Rasadurai (handover), Elena Robinson (relazioni pubbliche), Alessia R. (marketing), Anke Naedele (sito web), Stefania Huber (coordinatrice Ticino), Aline Turpin (coordinatrice Romandia), Julian Harbarth (coordinatore Romandia), Livia Biri (finanze), Diego Ryf (eventi e controllo qualità), Francesca Serra (corsi di preparazione), Olivia Schiess (simulazione del test), Sabrina Zeller (simulazione del test), Sarah Noman (serie di esercizi)
 
 **Content Creators, team italofono:** Chiara Pedrina, Eva van Gelder, Francesca Fasolini, Hanna Koch, Martina Gübeli, Mathias Adrian Baumberger, Raffaele Piazza, Silvia Miotti, Stefania Huber, Yasmin Rizzi
 

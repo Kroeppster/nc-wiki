@@ -1,6 +1,6 @@
 ---
 title: "Pagina iniziale"
-description: "Materiale di esercitazione gratuito, simulazioni del test e corsi di preparazione per il test attitudinale per gli studi di medicina (EMS) – da studenti per studenti, in tutta la Svizzera."
+description: "Materiale di esercitazione gratuito, simulazioni del test e corsi di preparazione per il test attitudinale per gli studi di medicina (EMS) – da studenti per futuri studenti, in tutta la Svizzera, in tre lingue."
 menu:
   main:
     identifier: home
