@@ -90,9 +90,6 @@ uebungsaufgaben_error_desc_label: "Beschreibung des Fehlers"
 uebungsaufgaben_error_submit: "Fehler senden"
 donation_note_text: "Unser Material bleibt kostenlos – dank Spenden."
 donation_note_link: "Jetzt unterstützen →"
-sponsoring_heading: "Sponsoring"
-sponsoring_text: "Möchtet ihr NCWiki als Organisation unterstützen? Wir freuen uns über den Austausch."
-sponsoring_cta_button: "Jetzt Kontakt aufnehmen"
 
 ems_year_label: "EMS-Jahr"
 ems_status_ja: "Ja"
@@ -343,4 +340,5 @@ fig_anl_a1: "Geben Sie nun bitte an, welcher Teil jeder Figur während der Einpr
 # Seite "Jetzt unterstützen" (layouts/_default/spenden.html)
 spenden_ueberweisung_knopf: "Spenden mit Überweisung"
 spenden_twint_alt: "TWINT-QR-Code für eine Spende an NCWiki"
+spenden_sponsoring_knopf: "Weitere Informationen"
 spenden_twint_hinweis: "Mit der TWINT-App scannen – den Betrag wählst du selbst."

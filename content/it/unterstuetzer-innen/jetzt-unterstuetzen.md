@@ -14,6 +14,6 @@ Siamo grati per ogni donazione. Con la tua donazione possiamo offrire gratuitame
 
 ## Diventa sponsor!
 
-Saremmo lieti di collaborare con la vostra organizzazione. Con il pulsante qui sotto potete contattarci – vi invieremo volentieri tutte le informazioni utili.
+Saremmo lieti di collaborare con la vostra organizzazione. Con il pulsante qui sotto trovate le informazioni utili e potete contattarci volentieri.
 
 Grazie mille per il vostro interesse!

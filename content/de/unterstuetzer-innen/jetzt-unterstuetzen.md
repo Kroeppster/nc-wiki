@@ -14,6 +14,6 @@ Wir sind dankbar für jede Spende. Mit deiner Spende können wir die kostenlosen
 
 ## Jetzt Sponsor:in werden!
 
-Gerne würden wir mit Ihrer Organisation zusammenarbeiten. Über den Knopf unten können Sie mit uns Kontakt aufnehmen – wir senden Ihnen gerne alle relevanten Informationen.
+Gerne würden wir mit Ihrer Organisation zusammenarbeiten. Über den Knopf unten finden Sie relevante Informationen und können gerne mit uns Kontakt aufnehmen.
 
 Vielen Dank für Ihr Interesse!

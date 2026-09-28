@@ -6,7 +6,7 @@
 
     1. Spenden: Text + Knopf "Spenden mit Überweisung" links, daneben gross
        der TWINT-Code (assets/images/unterstuetzen/twint-qr.png).
-    2. Sponsoring: Text + Knopf zum Kontaktformular.
+    2. Sponsoring: Text + Knopf "Weitere Informationen" (Seite Sponsoren).
 
   Die Texte bleiben normaler Seitentext (Excel-Mappe, Web-Editor): Die erste
   "##"-Überschrift samt Absätzen landet im Spenden-Teil, die zweite im
@@ -48,7 +48,7 @@
         <div class="spenden-text">
           {{ . | safeHTML }}
           <p class="spenden-knoepfe">
-            <a class="btn btn-ghost" href="{{ relLangURL "kontakt/" }}">{{ i18n "sponsoring_cta_button" }}</a>
+            <a class="btn btn-ghost" href="{{ relLangURL "unterstuetzer-innen/sponsoren/" }}">{{ i18n "spenden_sponsoring_knopf" }}</a>
           </p>
         </div>
       </div>

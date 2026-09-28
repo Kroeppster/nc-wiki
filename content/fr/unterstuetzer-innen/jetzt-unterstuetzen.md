@@ -14,6 +14,6 @@ Nous sommes reconnaissants pour chaque don. Grâce à ton don, nous pouvons prop
 
 ## Devenir sponsor !
 
-Nous serions ravis de collaborer avec votre organisation. Le bouton ci-dessous vous permet de nous contacter – nous vous transmettrons volontiers toutes les informations utiles.
+Nous serions ravis de collaborer avec votre organisation. Le bouton ci-dessous vous mène aux informations utiles, et vous pouvez volontiers nous contacter.
 
 Merci beaucoup de votre intérêt !

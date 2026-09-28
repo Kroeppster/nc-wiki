@@ -89,9 +89,6 @@ uebungsaufgaben_error_desc_label: "Descrizione dell'errore"
 uebungsaufgaben_error_submit: "Invia"
 donation_note_text: "Il nostro materiale resta gratuito – grazie alle donazioni."
 donation_note_link: "Sostieni ora →"
-sponsoring_heading: "Sponsorizzazione"
-sponsoring_text: "Volete sostenere NCWiki come organizzazione? Siamo felici di parlarne."
-sponsoring_cta_button: "Contattaci ora"
 
 ems_year_label: "Anno EMS"
 ems_status_ja: "Sì"
@@ -337,4 +334,5 @@ fig_anl_a1: "Indicate ora quale parte di ogni figura era annerita durante la fas
 # Seite "Jetzt unterstützen" (layouts/_default/spenden.html)
 spenden_ueberweisung_knopf: "Donare con bonifico"
 spenden_twint_alt: "Codice QR TWINT per una donazione a NCWiki"
+spenden_sponsoring_knopf: "Ulteriori informazioni"
 spenden_twint_hinweis: "Da scansionare con l'app TWINT – l'importo lo scegli tu."
