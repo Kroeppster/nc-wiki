@@ -36,6 +36,15 @@ KOPFFELDER = (('title', 'titel'), ('description', 'beschreibung'),
               ('featured_image_alt', 'bildtext'))
 
 
+# Verschachtelte Felder im Seitenkopf, die sichtbarer Text sind: die
+# Startseite (hero, weg, material ...) und das aktuelle Leitungsteam
+# (ressorts). Sie stehen in der Mappe als Zeilen vom Typ "Feld" mit ihrem
+# Pfad (z. B. "hero › title", "ressorts 2 › mitglieder 1 › rolle"). Nur
+# Text wird angeboten - Adressen, Bilder und Schluessel nicht.
+FELD_WURZELN = ('hero', 'news', 'weg', 'material', 'subtests', 'mission', 'support', 'ressorts')
+FELD_NICHT = ('url', 'bild', 'key', 'zahlen', 'identifier', 'weight')
+
+
 def pruefsumme(text):
     """Kurze Pruefsumme - erkennt beim Einlesen, ob sich eine Datei seit dem
     Ausgeben geaendert hat."""
@@ -97,6 +106,81 @@ def kopf_feld(kopf, feld):
         innen = wert[1:-1]
         wert = innen.replace('\\"', '"').replace('\\\\', '\\') if wert[0] == '"' else innen.replace("''", "'")
     return wert, m.start(), m.end()
+
+
+def _skalar(wert):
+    """Ein einzeiliger YAML-Wert, wie er dasteht, ohne Anfuehrungszeichen."""
+    wert = wert.strip()
+    if len(wert) >= 2 and wert[0] == wert[-1] and wert[0] in '"\'':
+        innen = wert[1:-1]
+        return innen.replace('\\"', '"').replace('\\\\', '\\') if wert[0] == '"' else innen.replace("''", "'")
+    return wert
+
+
+def kopf_felder(kopf):
+    """Alle Text-Blaetter unter FELD_WURZELN, in der Reihenfolge der Datei:
+    Liste von (pfad, wert, von, bis). pfad ist ein Tupel wie
+    ('ressorts', 1, 'mitglieder', 0, 'rolle'); von/bis umfassen die ganze
+    Zeile samt Umbruch. Die Struktur liest YAML, die Zeile dazu wird der
+    Reihe nach in der Datei gesucht - so bleibt jeder Wert zeichengenau, und
+    beim Zurueckschreiben aendert sich nur diese eine Zeile. Mehrzeilige
+    Werte werden nicht angeboten."""
+    import yaml
+    try:
+        daten = yaml.safe_load(kopf.strip().strip('-')) or {}
+    except Exception:
+        return []
+    if not isinstance(daten, dict):
+        return []
+    blaetter = []
+
+    def gehe(x, pfad):
+        if isinstance(x, dict):
+            for k, w in x.items():
+                gehe(w, pfad + (k,))
+        elif isinstance(x, list):
+            for i, w in enumerate(x):
+                gehe(w, pfad + (i,))
+        elif isinstance(x, str) and isinstance(pfad[-1], str) and pfad[-1] not in FELD_NICHT:
+            blaetter.append((pfad, x))
+
+    for k in FELD_WURZELN:
+        if k in daten:
+            gehe(daten[k], (k,))
+    raus, pos = [], 0
+    for pfad, wert in blaetter:
+        muster = re.compile(r'^[ \t]*(?:-[ \t]+)?%s:[ \t]*(.*)$\n?' % re.escape(pfad[-1]), re.MULTILINE)
+        m = muster.search(kopf, pos)
+        while m and _skalar(m.group(1)) != wert:
+            m = muster.search(kopf, m.end())
+        if not m:
+            continue
+        pos = m.end()
+        raus.append((pfad, wert, m.start(), m.end()))
+    return raus
+
+
+def pfad_text(pfad):
+    """Pfad lesbar: "ressorts 2 › mitglieder 1 › rolle" (Listen ab 1 gezaehlt)."""
+    teile = []
+    for t in pfad:
+        if isinstance(t, int) and teile:
+            teile[-1] += ' %d' % (t + 1)
+        else:
+            teile.append(str(t))
+    return ' › '.join(teile)
+
+
+def feld_setzen(kopf, pfad, wert):
+    """Ein Feld aus kopf_felder() neu setzen - nur diese Zeile aendert sich."""
+    for p, alt, von, bis in kopf_felder(kopf):
+        if p == tuple(pfad):
+            zeile = kopf[von:bis]
+            m = re.match(r'^([ \t]*(?:-[ \t]+)?%s:[ \t]*)' % re.escape(p[-1]), zeile)
+            ende = '\n' if zeile.endswith('\n') else ''
+            neu = m.group(1) + '"%s"' % wert.replace('\\', '\\\\').replace('"', '\\"') + ende
+            return kopf[:von] + neu + kopf[bis:]
+    return kopf
 
 
 def kopfzeile(feld, wert):
@@ -194,6 +278,9 @@ def bausteine_aus_text(roh):
         wert, von, bis = kopf_feld(kopf, feld)
         if wert is not None:
             dazu(typ, wert, von, bis, wert)
+    for pfad, wert, von, bis in kopf_felder(kopf):
+        dazu('feld', wert, von, bis, wert)
+        raus[-1]['pfad'] = pfad
 
     # von/bis: wo der Baustein in der Datei steht. Beim Einlesen werden
     # unveraenderte Bausteine samt den Leerzeilen dazwischen zeichengenau aus
@@ -358,8 +445,14 @@ def zuordnen(uebersetzung, vorlage):
     for _, typ in KOPFFELDER:
         if typ in kopf_u or typ in kopf_v:
             paare.append((kopf_u.get(typ), kopf_v.get(typ)))
-    u = [b for b in uebersetzung if b['typ'] not in dict(KOPFFELDER).values()]
-    v = [b for b in vorlage if b['typ'] not in dict(KOPFFELDER).values()]
+    # Felder (Startseite, Leitungsteam) nach ihrem Pfad paaren
+    feld_u = {b['pfad']: b for b in uebersetzung if b['typ'] == 'feld'}
+    feld_v = {b['pfad']: b for b in vorlage if b['typ'] == 'feld'}
+    for pfad in [b['pfad'] for b in vorlage if b['typ'] == 'feld'] + \
+            [p for p in feld_u if p not in feld_v]:
+        paare.append((feld_u.get(pfad), feld_v.get(pfad)))
+    u = [b for b in uebersetzung if b['typ'] not in dict(KOPFFELDER).values() and b['typ'] != 'feld']
+    v = [b for b in vorlage if b['typ'] not in dict(KOPFFELDER).values() and b['typ'] != 'feld']
 
     def punkte(a, b):
         if a['typ'] != b['typ']:

@@ -92,7 +92,7 @@ KOPF = PatternFill('solid', fgColor='1F3864')
 # ---------------------------------------------------------------------------
 T = {
     'de': dict(
-        typen=dict(seite='Seite', titel='Titel', beschreibung='Beschreibung', bildtext='Bildtext',
+        typen=dict(seite='Seite', titel='Titel', beschreibung='Beschreibung', bildtext='Bildtext', feld='Feld',
                    ueberschrift1='Hauptüberschrift', ueberschrift='Überschrift',
                    unterueberschrift='Unterüberschrift', absatz='Absatz', liste='Liste',
                    zitat='Zitat', tabelle='Tabelle', code='Code', baustein='Baustein', html='HTML'),
@@ -117,7 +117,7 @@ T = {
         titel='NCWiki – Texte (Deutsch)',
     ),
     'fr': dict(
-        typen=dict(seite='Page', titel='Titre', beschreibung='Description', bildtext='Texte d\'image',
+        typen=dict(seite='Page', titel='Titre', beschreibung='Description', bildtext='Texte d\'image', feld='Champ',
                    ueberschrift1='Titre principal', ueberschrift='Titre de section',
                    unterueberschrift='Sous-titre', absatz='Paragraphe', liste='Liste',
                    zitat='Citation', tabelle='Tableau', code='Code', baustein='Module', html='HTML'),
@@ -142,7 +142,7 @@ T = {
         titel='NCWiki – Textes (français)',
     ),
     'it': dict(
-        typen=dict(seite='Pagina', titel='Titolo', beschreibung='Descrizione', bildtext='Testo immagine',
+        typen=dict(seite='Pagina', titel='Titolo', beschreibung='Descrizione', bildtext='Testo immagine', feld='Campo',
                    ueberschrift1='Titolo principale', ueberschrift='Titolo di sezione',
                    unterueberschrift='Sottotitolo', absatz='Paragrafo', liste='Elenco',
                    zitat='Citazione', tabelle='Tabella', code='Codice', baustein='Modulo', html='HTML'),
@@ -404,6 +404,8 @@ def zeilen_fuer_seite(sprache, seite, de_seite, projekt):
         typ = b['typ'] if b else typ_leer
         eb = b['ebene'] if b else 0
         z = dict(typ=typ_label(sprache, typ, eb), art=typ)
+        if typ == 'feld':
+            z['typ'] += ': ' + tb.pfad_text(b['pfad'])
         if u:
             z.update(text=u['text'], original=u['text'], nr=u['nr'])
         else:
@@ -420,9 +422,9 @@ def zeilen_fuer_seite(sprache, seite, de_seite, projekt):
         z['_gesperrt'] = gesperrt
         return z
 
-    kopfpaare = [(u, v) for u, v in paare if (u or v)['typ'] in ('titel', 'beschreibung', 'bildtext')]
-    rumpfpaare = [(u, v) for u, v in paare if (u or v)['typ'] not in ('titel', 'beschreibung', 'bildtext')]
-    reihenfolge = {'titel': 0, 'beschreibung': 1, 'bildtext': 2}
+    kopfpaare = [(u, v) for u, v in paare if (u or v)['typ'] in ('titel', 'beschreibung', 'bildtext', 'feld')]
+    rumpfpaare = [(u, v) for u, v in paare if (u or v)['typ'] not in ('titel', 'beschreibung', 'bildtext', 'feld')]
+    reihenfolge = {'titel': 0, 'beschreibung': 1, 'bildtext': 2, 'feld': 3}
     kopfzeilen = [zeile_aus(u, v) for u, v in kopfpaare] + [zeile_aus(None, None, t) for _, _, t in einschub]
     kopfzeilen.sort(key=lambda z: reihenfolge[z['art']])
     zeilen += kopfzeilen

@@ -49,6 +49,10 @@ import texte_bausteine as tb
 PROJEKT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOESCHEN = re.compile(r'!\s*(l(ö|oe)schen|supprimer|eliminare)\s*!', re.IGNORECASE)
 KOPFTYPEN = {typ: feld for feld, typ in tb.KOPFFELDER}
+# Verschachtelte Felder im Seitenkopf (Startseite, Leitungsteam): wie die
+# Kopffelder nicht Teil des Seitentexts, gesetzt wird aber ueber ihren Pfad
+# (tb.feld_setzen) statt ueber einen Feldnamen.
+KOPFTYPEN['feld'] = None
 GEBRAUCHT = ('typ', 'text', 'original', 'nr', 'datei', 'summe', 'art', 'seite')
 
 # Die Beschriftungen der Spalte "Typ" in allen drei Sprachen -> (typ, ebene).
@@ -461,6 +465,16 @@ def seite_anwenden(seite, projekt, meldungen, weg_geplant=frozenset()):
             continue
         feld = KOPFTYPEN[art]
         wert = ' '.join(z['text'].split())      # im Seitenkopf: eine Zeile
+        if art == 'feld':
+            if b is None:
+                if wert:
+                    melde(f'{wo(z)}: Dieses Feld gibt es auf der Seite nicht - nicht übernommen.')
+            elif LOESCHEN.search(wert) or not wert:
+                melde(f'{wo(z)}: Ein Feld ({tb.pfad_text(b["pfad"])}) kann nicht gelöscht werden - bleibt.')
+            elif z['text'] != z['original']:
+                neuer_kopf = tb.feld_setzen(neuer_kopf, b['pfad'], wert)
+                zaehler['geaendert'] += 1
+            continue
         if b is None:
             # Feld, das es noch nicht gibt - meist eine fehlende Beschreibung
             if wert and not LOESCHEN.search(wert) and tb.kopf_feld(neuer_kopf, feld)[0] is None:
@@ -574,6 +588,8 @@ def soll_gleich_ist(seite, bausteine):
             weg.add(' '.join(z['original'].split()))
         if not t or LOESCHEN.search(t):
             continue
+        if art == 'feld':
+            continue
         if art in KOPFTYPEN:
             kopf += tb.kopfzeile(KOPFTYPEN[art], ' '.join(t.split()))
         elif art in tb.GESPERRT and ist_nummer(z.get('nr')):
@@ -582,7 +598,8 @@ def soll_gleich_ist(seite, bausteine):
             typ, ebene = gewollter_typ(z, None)
             stuecke.append(markdown_fuer(typ, ebene, t, art or None))
     soll = tb.bausteine_aus_text(kopf + '---\n\n' + '\n\n'.join(stuecke) + '\n')
-    kopf_von = lambda bs: sorted((b['typ'], ' '.join(b['text'].split())) for b in bs if b['typ'] in KOPFTYPEN)
+    kopf_von = lambda bs: sorted((b['typ'], ' '.join(b['text'].split())) for b in bs
+                                 if b['typ'] in KOPFTYPEN and b['typ'] != 'feld')
     text_von = lambda bs: [(b['typ'], ' '.join(b['text'].split())) for b in bs if b['typ'] not in KOPFTYPEN]
     if kopf_von(soll) != kopf_von(bausteine):
         return False
@@ -645,6 +662,8 @@ def neue_seite(seite, projekt, pfad, melde, zaehler):
         vorlage = f.read()
     kopf, _, _ = tb.kopf_trennen(vorlage)
     for art, feld in KOPFTYPEN.items():
+        if art == 'feld':
+            continue        # Felder bleiben vorerst die der deutschen Vorlage
         z = felder.get(art)
         wert = z['text'] if z else ''
         if wert and not LOESCHEN.search(wert):

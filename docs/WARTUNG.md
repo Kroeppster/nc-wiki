@@ -141,6 +141,17 @@ Beschreibungen und Spalten zum Aufteilen der Arbeit (Zuständig, Stand, Bemerkun
    Spalte in eingefügten Zeilen leer – Excel kopiert Formeln nur in Tabellen
    mit.) LibreOffice, Numbers und Google Tabellen kennen das nicht; dort bleibt
    „Änderung" in neuen Zeilen leer, grün wird der Text trotzdem.
+
+   **Startseite und aktuelles Leitungsteam:** Ihre Texte stehen nicht im
+   Seitentext, sondern in Feldern im Seitenkopf (`hero`, `weg`, `material` …
+   bzw. `ressorts`). In der Mappe erscheinen sie als Zeilen „Feld: …" mit
+   ihrem Pfad, z. B. „Feld: weg › etappen 2 › text" oder „Feld: ressorts 3 ›
+   mitglieder 1 › name". Text ändern geht wie überall; beim Einlesen ändert
+   sich genau diese eine Zeile im Seitenkopf. Felder lassen sich nicht löschen
+   oder neu anlegen – eine neue Person im Leitungsteam kommt über den
+   Web-Editor oder direkt in `content/<sprache>/ueber-uns/team/_index.md` dazu.
+   Welche Felder angeboten werden, steht in `scripts/texte_bausteine.py`
+   (`FELD_WURZELN`); Adressen, Bilder und Schlüssel bleiben draussen.
 3. **In den Ordner [`redaktion/`](../redaktion/) hochladen** (*Add file → Upload
    files → Commit directly to the main branch*). Nach ein, zwei Minuten eröffnet
    `.github/workflows/texte-einlesen.yml` einen Pull Request: die geänderten Seiten,

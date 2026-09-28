@@ -118,7 +118,7 @@ def lesen(projekt, rel):
 
 def koerper(roh):
     return [(b['typ'], b['roh']) for b in tb.bausteine_aus_text(roh) if b['typ'] not in
-            ('titel', 'beschreibung', 'bildtext')]
+            ('titel', 'beschreibung', 'bildtext', 'feld')]
 
 
 # ---------------------------------------------------------------------------
@@ -410,7 +410,7 @@ def deutsch_pruefen(projekt, mappen, ordner):
     print(f'  (Testseite: {datei}, Blatt "{b.ws.title}")')
     roh = lesen(projekt, datei)
     alle = tb.bausteine_aus_text(roh)
-    body = [x for x in alle if x['typ'] not in ('titel', 'beschreibung', 'bildtext')]
+    body = [x for x in alle if x['typ'] not in ('titel', 'beschreibung', 'bildtext', 'feld')]
     nach_typ = lambda t: [x for x in body if x['typ'] == t]
     absaetze = nach_typ('absatz')
     ueber = [x for x in nach_typ('ueberschrift') if x['ebene'] == 2][0]
@@ -576,11 +576,17 @@ def franzoesisch_pruefen(projekt, mappen, ordner, zweiter_versuch=False):
             for r in b.zeilen():
                 if b.wert(r, 'art') in ('absatz', 'ueberschrift', 'liste') and b.wert(r, 'nr') in (None, '') \
                         and b.wert(r, 'vorlage') \
-                        and r > r_seite + 1 and b.wert(r - 1, 'nr') not in (None, ''):
+                        and r > r_seite + 1 and b.wert(r - 1, 'nr') not in (None, '') \
+                        and b.wert(r - 1, 'art') not in ('titel', 'beschreibung', 'bildtext', 'feld'):
                     luecke = (b, r)
                     break
-    if luecke is None and neu_blatt is not None and not zweiter_versuch:
-        luecke_anlegen(projekt)
+    if (luecke is None or neu_blatt is None) and not zweiter_versuch:
+        if luecke is None:
+            luecke_anlegen(projekt)
+        if neu_blatt is None:
+            # Alle Seiten uebersetzt: in der KOPIE eine franzoesische Seite
+            # entfernen, damit es eine "neu anzulegende" gibt
+            os.remove(os.path.join(projekt, 'content/fr/news/neue-website.md'))
         return franzoesisch_pruefen(projekt, ausgeben(projekt, os.path.join(ordner, 'mit-luecke')),
                                     ordner, zweiter_versuch=True)
     pruef('eine Luecke und eine fehlende Seite gefunden', luecke and neu_blatt)
@@ -761,6 +767,49 @@ def fehlerfaelle_pruefen(projekt, ordner, de, fr):
     rc, aus = einlesen(projekt, p)
     pruef('Mappe im alten Format: abgelehnt, mit Hinweis auf eine frische Mappe',
           rc == 1 and 'alte Textliste' in aus, aus[-300:])
+
+
+def felder_pruefen(projekt, ordner):
+    """Startseite und Leitungsteam: Texte stehen in verschachtelten Feldern
+    des Seitenkopfs (hero, ressorts ...). Sie kommen als Zeilen "Feld: ..." in
+    die Mappe; beim Einlesen aendert sich genau die eine Zeile im Seitenkopf."""
+    print('\n=== Felder im Seitenkopf: Startseite und Leitungsteam ===')
+    mappen = ausgeben(projekt, os.path.join(ordner, 'felder'))
+    m = load_workbook(mappen['de'])
+    ziele = {'content/de/_index.md': 'hero › title',
+             'content/de/ueber-uns/team/_index.md': 'ressorts 1 › mitglieder 1 › rolle'}
+    gefunden = {}
+    for ws in m.worksheets:
+        if not ist_seitenblatt(ws):
+            continue
+        b = Blatt(ws)
+        for r in b.zeilen():
+            if b.wert(r, 'art') == 'feld' and b.wert(r, 'seite') in ziele \
+                    and str(b.wert(r, 'typ')).endswith(ziele[b.wert(r, 'seite')]):
+                gefunden[b.wert(r, 'seite')] = (b, r)
+    pruef('Startseite und Leitungsteam haben Feld-Zeilen in der Mappe', len(gefunden) == 2, list(gefunden))
+    if len(gefunden) != 2:
+        return
+    vorher = {d: lesen(projekt, d) for d in ziele}
+    for d, (b, r) in gefunden.items():
+        b.setze(r, 'text', b.wert(r, 'text') + ' – geändert "im" Test')
+    p = os.path.join(ordner, 'felder.xlsx')
+    m.save(p)
+    stand = zustand(projekt)
+    rc, aus = einlesen(projekt, p)
+    import yaml
+    for d in ziele:
+        neu = lesen(projekt, d)
+        anders = [(a, n) for a, n in zip(vorher[d].split('\n'), neu.split('\n')) if a != n]
+        daten = yaml.safe_load(tb.kopf_trennen(neu)[0].strip().strip('-'))
+        wert = daten['hero']['title'] if d.endswith('de/_index.md') else daten['ressorts'][0]['mitglieder'][0]['rolle']
+        pruef(f'{d}: genau eine Zeile geaendert, Wert richtig und gueltiges YAML',
+              len(anders) == 1 and wert.endswith(' – geändert "im" Test')
+              and len(vorher[d].split('\n')) == len(neu.split('\n')), anders[:2])
+        with open(os.path.join(projekt, d), 'w', encoding='utf-8') as f:
+            f.write(vorher[d])
+    pruef('Felder: keine anderen Dateien geaendert',
+          set(unterschiede(stand, zustand(projekt))) <= set(ziele), aus[-300:])
 
 
 def verrutscht_pruefen(projekt, ordner):
@@ -983,6 +1032,7 @@ def main():
             fehlerfaelle_pruefen(projekt, ordner, de, fr)
         editor_kopf_pruefen(projekt, ordner)
         verrutscht_pruefen(projekt, ordner)
+        felder_pruefen(projekt, ordner)
     finally:
         if a.behalten:
             print(f'\nArbeitsordner: {ordner}')
