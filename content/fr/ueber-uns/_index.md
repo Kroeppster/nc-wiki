@@ -1,6 +1,6 @@
 ---
 title: "À propos de nous"
-description: "À propos de NCWiki : depuis 2021, plus de 110 étudiant·e·s en médecine de toute la Suisse s'engagent pour que la préparation à l'EMS soit gratuite pour toutes et tous."
+description: "À propos de NCWiki : depuis 2021, plus de 110 étudiant·e·s en médecine de toute la Suisse s'engagent pour une préparation à l'EMS gratuite."
 menu:
   main:
     identifier: ueber-uns

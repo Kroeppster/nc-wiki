@@ -54,7 +54,7 @@
 
       {{/* Datum nur bei News-Beiträgen anzeigen, damit sofort klar ist, von
            wann eine Meldung ist - sprachabhängig formatiert. */}}
-      {{ if eq .Section "news" }}<p class="report-meta">{{ .Date | time.Format ":date_long" }}</p>{{ end }}
+      {{ if or (eq .Section "news") (and .Params.eyebrow (not .Date.IsZero)) }}<p class="report-meta">{{ .Date | time.Format ":date_long" }}</p>{{ end }}
 
       {{/* Lizenzhinweis bei Übungsaufgaben-Unterseiten (z.B. "muster-zuordnen")
            steht bewusst GANZ OBEN, direkt unter dem Titel, statt wie früher

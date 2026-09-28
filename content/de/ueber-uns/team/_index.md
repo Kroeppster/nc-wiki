@@ -46,7 +46,7 @@ ressorts:
         rolle: "Protokoll & Daten"
 ---
 
-Hinter NCWiki stehen über 110 Medizinstudierende aus der ganzen Schweiz, die sich ehrenamtlich engagieren. Hier stellen wir dir das aktuelle Leitungsteam, die Verantwortlichen in der Romandie und im Tessin sowie alle vor, die NCWiki in früheren Saisons mitgestaltet haben.
+Hinter NCWiki stehen über 110 Medizinstudierende aus der ganzen Schweiz, die sich ehrenamtlich engagieren. Hier stellen wir dir das aktuelle Leitungsteam und die Verantwortlichen dieser Saison vor. Wer NCWiki in früheren Saisons mitgestaltet hat, findest du im [Archiv](/ueber-uns/archiv).
 
 ## Aktuelles Leitungsteam
 
@@ -71,62 +71,6 @@ team-leitung
 ### Content Creators – Team Romandie
 
 Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garance Genier, Gökhan Akdag, Clarisse Gumy, Estelle Turpin, Juliette Nguyen, Talia Leu, Johanna Denz, Emilia Bargiel, Mathilde Berchier, Lucia Blarer, Selina Buchser, Julie Eschmann, Lucie Duperrex, Hadrien Dorsaz, Jef Osstyn, Pierre Lanners, Esaïe Konrad
-
-## Frühere Saisons
-
-### Team Saison 2024/25 – Verantwortliche, Team Romandie
-
-- Koordinierung: Aline Turpin
-- Öffentlichkeitsarbeit: Garance Genier
-- Übersetzungsmanagement: Clarisse Gumy
-- Vorbereitungskurs: Audrey Stritt und Fanny Vauthey
-- Testsimulation: Antonin Becard und Julie Kern
-- Kommunikation: Léa Reveney
-- Webseite: Mathieu Ribeaud
-- Abende: Garance Genier
-- Sponsoring: Julie Kern und Léa Reveney
-
-### Team Saison 2023/24
-
-Über 70 Mitglieder (inkl. Verantwortliche) haben während der Saison 2023/24 tatkräftig bei NCWiki mitgeholfen und unser Angebot an Übungsserien, Kursen, Simulation und Übersetzungen möglich gemacht. Vielen Dank an das grossartige Team (und diejenigen, die nicht namentlich genannt werden möchten)!
-
-**Verantwortliche, Deutschsprachige Teams:** Alessio Iseli (Koordinator), Abeelan Rasadurai (Handover), Elena Robinson (Public Relation), Alessia R. (Marketing), Anke Naedele (Website), Stefania Huber (Koordinatorin Ticino), Aline Turpin (Koordinatorin Romandie), Julian Harbarth (Koordinator Romandie), Livia Biri (Finanzen), Diego Ryf (Events & Qualitätskontrolle), Francesca Serra (Vorbereitungskurse), Olivia Schiess (Testsimulation), Sabrina Zeller (Testsimulation), Sarah Noman (Übungsserien)
-
-**Content Creators, Deutschsprachige Teams:** Abeelan Rasadurai, Alessia R., Alessio Iseli, Alma W., Anke Naedele, Anna Lüthi, Anne-Myriam Pampuch, Bilal K., Chantal B., Chiara Brechbühl, Constantin D., Cooper H., Dan W., Diego Ryf, Elena Robinson, Elin Cathomas, Florian Helbling, Francesca Serra, Isabel K., Jiu Lim, Kevin Zanon, Kilian Belohlavek, Kron Mustafa, Lara L., Lea E., Lea Meyer, Lisa Valiyaveettil, Livia Biri, Mahilan Sritharan, Marc Fluri, Margherita Bernasconi, Nathan Nicholas, Olivia Schiess, Pascale H., Priska B., Rahel Zingg, Ramona Huser, Randa S., Ravinder Kaur, Remo Zehnder, Romane Bauer, Sabrina Zeller, Sarah Noman, Shahad S., Stefanie Janz, Valentina Nocito
-
-**Content Creators, Team Romandie:** Aline Turpin, Antonin Becard, Audrey Stritt, Eliah Nicolet, Gökhan Akdag, Julian Harbarth, Julie Kern, Léa R., Mathieu Ribeaud
-
-**Content Creators, Team Ticino:** Chiara Pedrina, Eva van Gelder, Francesca Fasolini, Hanna Koch, Martina Gübeli, Mathias Adrian Baumberger, Raffaele Piazza, Silvia Miotti, Stefania Huber, Yasmin Rizzi
-
-## Ehemalige Verantwortliche
-
-Wir danken unseren ehemaligen Verantwortlichen für ihr besonderes Engagement in ihren Verantwortlichkeitsbereichen seit der Gründung von NCWiki im Jahr 2021.
-
-**Gründungsmitglieder (und ehemalige Verantwortliche):**
-
-- Abeelan Rasadurai (Gründer, Koordinator 2021–2023, Handover 2024)
-- Ramona Dötsch (Übungsserie)
-- Clemens Yang (Protokoll & Daten)
-- Thorald Stolte (Qualitätskontrolle & Events)
-- Chiara P. (Testsimulation)
-- Elena Robinson (Public Relation 2021–2024)
-- Stefania Huber (Koordinatorin Ticino 2021–2024)
-
-**Weitere ehemalige Verantwortliche:**
-
-- Sophie Somm (Testsimulation)
-- Florina Felber (Übungsserie)
-- Chiara Barbarossa (Sekretariat via VSAO)
-- Julian Harbarth (Koordinator Romandie 2021–2024)
-- Benedikt Reuthebuch (Vorbereitungskurs 2023)
-- Alessio Iseli (Vorbereitungskurs 2023)
-- Alexandra Migga (Funding)
-- Leon Guggenheim (Wissenschaft & Politik)
-- Anke Naedele (Website 2021–2024)
-- Livia Biri (Finanzen 2021–2024)
-- Alessia R. (Marketing 2021–2024)
-- Aline Turpin (Koordinatorin Romandie 2024–2025)
-- Diego Ryf (Events & Qualitätskontrolle)
 
 ## Mitmachen
 
