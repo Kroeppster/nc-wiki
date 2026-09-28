@@ -1,0 +1,67 @@
+# ==============================================================================
+# FRISCHE TEXTMAPPEN AUF GITHUB
+# ==============================================================================
+# Nach jeder Änderung auf "main" entstehen die drei Excel-Textmappen neu
+# (scripts/texte-ausgeben.py) und werden an das GitHub-Release "Textmappen"
+# gehängt - rechts auf der Repo-Startseite unter "Releases". Die Links bleiben
+# immer gleich:
+#   https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-de.xlsx
+#   (bzw. -fr, -it)
+# Bewusst NICHT auf der Website. Niemand muss sich darum kümmern; von Hand
+# anstossen geht über Actions -> "Textmappen aktualisieren" -> Run workflow.
+#
+# Stand, Bemerkungen und Zuständigkeiten kommen aus redaktion/stand.json.
+# Ohne Entwürfe und passwortgeschützte Seiten (--oeffentlich): Das Repo und
+# damit auch das Release sind öffentlich.
+#
+# Schlägt das fehl, ist die Website davon nicht betroffen - es bleiben dann
+# einfach die Mappen vom letzten erfolgreichen Lauf stehen.
+# ==============================================================================
+
+name: Textmappen aktualisieren
+
+on:
+  push:
+    branches: ["main"]
+    paths-ignore:
+      - "redaktion/*.xlsx"
+      - "redaktion/**/*.xlsx"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: textmappen
+  cancel-in-progress: true
+
+jobs:
+  mappen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Mappen erzeugen
+        run: |
+          pip install --quiet openpyxl pyyaml
+          python3 scripts/texte-ausgeben.py --oeffentlich --ziel "$RUNNER_TEMP/mappen" \
+            --uebernehmen redaktion/stand.json
+
+      - name: An das Release "Textmappen" hängen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NOTIZ="Immer die aktuellen Excel-Textmappen (eine je Sprache), automatisch neu nach jeder Änderung an der Website. Stand: $(date -u +'%d.%m.%Y %H:%M') UTC, Commit ${GITHUB_SHA::7}. Anleitung: redaktion/README.md"
+          if ! gh release view textmappen > /dev/null 2>&1; then
+            gh release create textmappen --title "Textmappen" --notes "$NOTIZ" --latest=false
+          else
+            gh release edit textmappen --notes "$NOTIZ"
+          fi
+          gh release upload textmappen "$RUNNER_TEMP"/mappen/ncwiki-texte-*.xlsx --clobber

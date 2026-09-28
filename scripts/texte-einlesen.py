@@ -150,7 +150,7 @@ def mappe_lesen(pfad):
         raise Mappenfehler(
             f'{os.path.basename(pfad)} ist noch die alte Textliste (eine Mappe für alles, Spalte '
             '"Text neu"). Dieses Skript liest nur das neue Format mit einer Mappe je Sprache. Bitte eine '
-            'frische Mappe nehmen (python3 scripts/texte-ausgeben.py oder <website>/redaktion/) und die '
+            'frische Mappe nehmen (python3 scripts/texte-ausgeben.py oder auf GitHub unter Releases → Textmappen) und die '
             'Änderungen dort eintragen.')
     try:
         formeln = load_workbook(pfad, data_only=False)

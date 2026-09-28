@@ -28,7 +28,7 @@ aus dem alten Format mit nur einer Mappe fuer alles.
 
 ZURUECK INS REPO: scripts/texte-einlesen.py. Die Mappen selbst gehoeren
 nicht ins Repo (.gitignore); frische gibt es nach jeder Veroeffentlichung
-unter <website>/redaktion/ (siehe .github/workflows/hugo.yml).
+auf GitHub unter Releases -> "Textmappen" (siehe .github/workflows/textmappen.yml).
 
 Gebraucht werden openpyxl und pyyaml (pip install openpyxl pyyaml).
 ================================================================================
@@ -713,10 +713,12 @@ def frueheren_stand_lesen(pfade):
 # ---------------------------------------------------------------------------
 # Die Adresse der Website fuer die Links "auf der Website ansehen". In
 # hugo.toml steht localhost (fuers Arbeiten am eigenen Rechner); die echte
-# Adresse gibt hugo.yml beim Veroeffentlichen mit --basis-url mit. Das hier
-# ist nur der Rueckfall, wenn die Mappe am eigenen Rechner entsteht.
+# Adresse kann man mit --basis-url mitgeben; sonst gilt LIVE_URL.
 LIVE_URL = 'https://kroeppster.github.io/nc-wiki/'
 REDAKTION_ORDNER = 'https://github.com/Kroeppster/nc-wiki/tree/main/redaktion'
+# Frische Mappen legt textmappen.yml nach jeder Veroeffentlichung an das
+# GitHub-Release "textmappen" - nur dort, nicht auf der Website.
+MAPPEN_URL = 'https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-{sprache}.xlsx'
 
 
 def basis_url_lesen(projekt):
@@ -732,8 +734,8 @@ def basis_url_lesen(projekt):
 def nicht_oeffentlich(seiten):
     """Pfade (innen) der Seiten, die nicht in eine veroeffentlichte Mappe
     gehoeren: Entwuerfe und passwortgeschuetzte Seiten samt allem darunter
-    (Mitgliederbereich, Alpha). Die Mappen liegen sonst frei lesbar auf der
-    Website - und die Texte hinter dem Passwort gleich mit."""
+    (Mitgliederbereich, Alpha). Das Release "textmappen" ist wie das Repo
+    oeffentlich - die Texte hinter dem Passwort gehoeren nicht hinein."""
     gesperrt = set()
     for s in seiten:
         k = s['kopf']
@@ -921,7 +923,7 @@ def anleitungsblatt(b, sprache, basis_url):
     b.column_dimensions['A'].width = 3
     b.column_dimensions['B'].width = 110
     r = 2
-    mappe = basis_url.rstrip('/') + f'/redaktion/ncwiki-texte-{sprache}.xlsx'
+    mappe = MAPPEN_URL.format(sprache=sprache)
     for art, text in ANLEITUNG[sprache]:
         text = text.replace('{mappe}', mappe).replace('{ordner}', REDAKTION_ORDNER)
         z = b.cell(row=r, column=2, value=text)

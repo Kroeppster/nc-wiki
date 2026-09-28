@@ -992,7 +992,7 @@ def stand_pruefen(projekt, ordner, mappen):
         pruef(f'{sprache}: Links auf die Website mit der angegebenen Adresse, nie localhost',
               links and all(l.startswith('https://beispiel.example/nc-wiki/') for l in links), links[:2])
         pruef(f'{sprache}: Anleitung nennt die Download-Adresse der Mappe',
-              f'https://beispiel.example/nc-wiki/redaktion/ncwiki-texte-{sprache}.xlsx' in anleitung)
+              f'https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-{sprache}.xlsx' in anleitung)
 
 
 def editor_kopf_pruefen(projekt, ordner):

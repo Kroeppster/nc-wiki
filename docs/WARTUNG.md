@@ -118,9 +118,12 @@ Beschreibungen und Spalten zum Aufteilen der Arbeit (Zuständig, Stand, Bemerkun
 
 ### Der Ablauf
 
-1. **Frische Mappe holen.** Nach jeder Veröffentlichung neu erzeugt:
-   `https://kroeppster.github.io/nc-wiki/redaktion/ncwiki-texte-de.xlsx` (bzw. `-fr`,
-   `-it`). Die Links stehen auch in [`redaktion/README.md`](../redaktion/README.md).
+1. **Frische Mappe holen.** Nach jeder Änderung auf `main` automatisch neu erzeugt
+   (`.github/workflows/textmappen.yml`) und auf GitHub abgelegt – Repo-Startseite,
+   rechts *Releases → Textmappen*, oder direkt
+   `https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-de.xlsx`
+   (bzw. `-fr`, `-it`). Bewusst nicht auf der Website. Die Links stehen auch in
+   [`redaktion/README.md`](../redaktion/README.md).
 2. **Direkt in den Zellen arbeiten:**
 
    | Was | Wie | Die Zelle wird |

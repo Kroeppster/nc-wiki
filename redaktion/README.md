@@ -1,10 +1,11 @@
 # Texte über Excel bearbeiten
 
-**1. Frische Mappe holen** – eine je Sprache, nach jeder Veröffentlichung neu:
+**1. Frische Mappe holen** – eine je Sprache, nach jeder Änderung automatisch neu,
+auf der Repo-Startseite rechts unter *Releases → Textmappen*:
 
-- Deutsch: <https://kroeppster.github.io/nc-wiki/redaktion/ncwiki-texte-de.xlsx>
-- Français : <https://kroeppster.github.io/nc-wiki/redaktion/ncwiki-texte-fr.xlsx>
-- Italiano: <https://kroeppster.github.io/nc-wiki/redaktion/ncwiki-texte-it.xlsx>
+- Deutsch: <https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-de.xlsx>
+- Français : <https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-fr.xlsx>
+- Italiano: <https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-it.xlsx>
 
 **2. Bearbeiten** – direkt in den Zellen. Wie, steht vorne in der Mappe im Blatt
 „Anleitung": Text überschreiben (wird gelb), neuer Absatz in derselben Zelle
