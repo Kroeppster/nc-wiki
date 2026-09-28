@@ -561,6 +561,16 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    Grundverstaendnis"), die damit auf schmalen Bildschirmen aus der Seite
    ragten. Umbrechen ist dort das kleinere Uebel als Ueberstehen. */
 .more{font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-signal);overflow-wrap:break-word;}
+/* Seitennavigation unter Kartenlisten (Hugo: _internal/pagination.html).
+   Gebraucht erst, seit ein Bereich mehr als eine Seite hat (News-Archiv) -
+   vorher stand sie als ungestaltete Aufzaehlung da. Runde Knoepfe wie die
+   Filter, aktuelle Seite gefuellt, gesperrte (erste/vorherige auf Seite 1)
+   blass. */
+.pagination{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-2);margin:var(--space-8) 0 0;padding:0;}
+.pagination .page-link{display:inline-flex;align-items:center;justify-content:center;min-width:2.5rem;height:2.5rem;padding:0 .75rem;border:1px solid var(--color-line);border-radius:var(--radius-full);background:var(--color-surface);color:var(--color-ink);font-family:var(--font-body);font-size:var(--text-sm);font-weight:600;text-decoration:none;transition:border-color .15s,background-color .15s,color .15s;}
+.pagination a.page-link[href]:hover{border-color:var(--color-signal);color:var(--color-signal);}
+.pagination .active .page-link{background:var(--color-btn-bg);border-color:var(--color-btn-bg);color:#fff;}
+.pagination .disabled .page-link{opacity:.4;cursor:default;}
 
 /* News-Karten */
 /* margin-top statt vorher 0: sorgt für einen verlässlichen Mindestabstand,
