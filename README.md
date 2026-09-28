@@ -14,13 +14,6 @@ alles läuft über die normale GitHub-Weboberfläche, nichts muss installiert we
 👉 **[docs/WARTUNG.md](docs/WARTUNG.md)** (Alltägliches) · für alles Seltenere (Navigation,
 Logo, Sponsor:innen, Design, ...) siehe [docs/WARTUNG-DETAILLIERT.md](docs/WARTUNG-DETAILLIERT.md)
 
-## Inhalte gegenlesen (6-Augen-Prinzip)
-
-Vor dem Livegang soll jede Seite von 3 Personen kontrolliert werden. Wer
-Zeit hat, trägt sich einfach in die Tabelle ein:
-
-👉 **[docs/INHALTS-REVIEW.md](docs/INHALTS-REVIEW.md)**
-
 ## Technisch
 
 Statische Website, gebaut mit [Hugo](https://gohugo.io/) und
