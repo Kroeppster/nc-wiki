@@ -1,7 +1,0 @@
-# Spendenangaben fuer den Baustein "spenden" (Seite "Jetzt unterstützen").
-# Den TWINT-Code als Bild austauschen: assets/images/twint-qr.png ersetzen
-# (quadratisch, am besten ohne Rand).
-kontoinhaber: "Verein NCWiki"
-bank: "Basellandschaftliche Kantonalbank"
-iban: "CH16 0076 9436 6089 3200 1"
-twint_bild: "images/twint-qr.png"

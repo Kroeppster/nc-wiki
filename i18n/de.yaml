@@ -339,17 +339,3 @@ fig_anl_e3: "Die Lage der schwarzen Fläche sollen Sie nun so erlernen, dass Sie
 fig_anl_beispiel_abfrage: "Ein Beispiel für die Art, in der Sie später abgefragt werden:"
 fig_anl_beispiel_loesung: "Die Lösung wäre dann ({x})."
 fig_anl_a1: "Geben Sie nun bitte an, welcher Teil jeder Figur während der Einprägephase geschwärzt war. Markieren Sie für jede Figur den richtigen Lösungsbuchstaben auf Ihrem Antwortbogen. (Beachten Sie bitte die <b>zeilenweise</b> Abfolge der Figuren!)"
-
-# Spenden-Baustein (layouts/partials/bausteine/spenden.html)
-spenden_twint_titel: "Spenden mit TWINT"
-spenden_twint_text: "Öffne die TWINT-App, tippe auf «Scannen» und halte die Kamera auf den Code. Den Betrag wählst du selbst."
-spenden_twint_alt: "TWINT-QR-Code für eine Spende an NCWiki"
-spenden_twint_download: "Code herunterladen"
-spenden_bank_eyebrow: "Banküberweisung"
-spenden_bank_titel: "Spenden mit Überweisung"
-spenden_bank_text: "Lieber per E-Banking? Überweise deine Spende auf unser Vereinskonto:"
-spenden_bank_inhaber: "Kontoinhaber"
-spenden_bank_bank: "Bank"
-spenden_kopieren: "Kopieren"
-spenden_kopiert: "Kopiert ✓"
-spenden_bank_hinweis: "Als Mitteilung genügt «Spende»."

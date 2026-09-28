@@ -9,8 +9,10 @@ menu:
 
 Unsere Angebote sind komplett kostenlos. Wenn du von ihnen profitierst und einen kleinen Betrag spenden möchtest, freuen wir uns sehr über deine Unterstützung, um Sachen wie Druckkosten zu decken.
 
-```baustein
-spenden
-```
+## Spendenkonto
 
-Vielen Dank für deine Unterstützung!
+Verein NCWiki  
+Basellandschaftliche Kantonalbank  
+IBAN: CH16 0076 9436 6089 3200 1
+
+Eine Spende ist auch per Twint möglich – melde dich über unser [Kontaktformular](/kontakt), falls du den QR-Code dafür möchtest.

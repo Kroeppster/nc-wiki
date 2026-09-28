@@ -9,8 +9,10 @@ menu:
 
 Le nostre offerte sono completamente gratuite. Se ne benefici e desideri fare una piccola donazione, saremo lieti di ricevere il tuo sostegno per coprire costi come quelli di stampa.
 
-```baustein
-spenden
-```
+## Conto di donazione
 
-Grazie mille per il tuo sostegno!
+Verein NCWiki  
+Basellandschaftliche Kantonalbank  
+IBAN: CH16 0076 9436 6089 3200 1
+
+Una donazione è possibile anche tramite Twint – contattaci tramite il nostro [modulo di contatto](/kontakt) per ricevere il codice QR.
