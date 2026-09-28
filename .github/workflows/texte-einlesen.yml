@@ -148,7 +148,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A content redaktion
+          git add -A content redaktion data/unis.yaml
           git commit -q -m "Texte aus $NAMEN einlesen"
           git push origin "HEAD:${GITHUB_REF_NAME}"
           NR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number -q '.[0].number')

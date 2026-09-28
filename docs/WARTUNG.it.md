@@ -54,6 +54,9 @@ pagina su un proprio foglio, all'inizio le istruzioni e un indice.
 3. **Pagina iniziale e team** hanno ciascuno un foglio «… – Vista» (linguetta arancione),
    costruito come il sito. Scrivere solo nelle caselle bianche. Team: compilare una
    scheda vuota = nuova persona, `!Eliminare!` nel nome = persona tolta.
+   **Uniguide – Vista** contiene l'intera tabella delle università: una riga per
+   università, una colonna per informazione. I testi (intestazioni verdi) valgono per la
+   lingua della cartella, il resto per tutte le lingue.
 4. **Nuova stagione:** in alto nel foglio del team compilare «Iniziare una nuova
    stagione» (p. es. 2027/28). Il team attuale passa allora nell'archivio, in tutte e tre
    le lingue.

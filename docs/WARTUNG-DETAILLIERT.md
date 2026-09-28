@@ -179,6 +179,28 @@ eine Reihe Karten. Nur die weissen Felder sind beschreibbar (Blattschutz ohne Pa
 
 Code: `scripts/texte_ansicht.py`.
 
+### Uniguide-Blatt
+
+„Uniguide – Ansicht“ zeigt die ganze Tabelle aus `data/unis.yaml`: je Uni eine Zeile,
+je Angabe eine Spalte (Name, Kanton, Sprachen, Studiengänge, EMS, Zulassungsverfahren,
+Besonderheiten, Studienplätze, Anmeldefrist, Studienbeginn, Semestergebühr, Links, Stand,
+Quelle).
+
+- **Grüne Spaltenköpfe** (Kanton, Zulassungsverfahren, Besonderheiten, Anmeldefrist,
+  Studienbeginn, Semestergebühr) sind Texte und gelten nur für die Sprache der Mappe.
+  Fehlt eine Übersetzung, zeigt die Website den deutschen Text.
+- **Dunkle Spaltenköpfe** gelten für alle Sprachen und lassen sich in jeder Mappe ändern.
+- Mehrere Besonderheiten: je eine pro Zeile in der Zelle. Sprachen mit Komma, in jeder
+  Schreibweise („deutsch, français“). EMS: ja / nein / teilweise. Studienplätze: nur die
+  Zahl. Links mit `https://`.
+- Leere Zelle löscht nichts, `!Löschen!` leert das Feld. Ungültige Eingaben (keine Zahl,
+  kein Link …) werden nicht übernommen und im Bericht genannt.
+- Beim Einlesen ändert sich in `data/unis.yaml` nur genau das Feld; die Kommentare bleiben.
+- Nur eintragen, was auf einer offiziellen Seite steht, und dann „Stand“ und „Quelle“
+  mitändern. Eine neue Uni anlegen geht nicht über die Mappe (siehe [9](#9-faq-uniguide-untertests-download-namen)).
+
+Code: `scripts/texte_uniguide.py`.
+
 ### Was beim Einlesen passiert
 
 `.github/workflows/texte-einlesen.yml` liest hochgeladene Mappen mit
@@ -505,7 +527,8 @@ Satz davor („9 Untertests“) steht fest in der FAQ.
 
 Eine Datei speist die Tabelle `/ems/uniguide/`, jede Uni-Seite und den Vergleich. Jede Uni
 braucht zusätzlich eine fast leere Seite `content/<sprache>/ems/uniguide/<slug>.md` mit
-`title` und `uni_slug`. `kanton`, `auswahlverfahren` und `besonderheiten` stehen je Sprache
+`title` und `uni_slug`. Bearbeiten am einfachsten über das Blatt „Uniguide – Ansicht“ der
+Textmappe ([3](#3-textmappen-excel-im-detail)). `kanton`, `auswahlverfahren` und `besonderheiten` stehen je Sprache
 (`de:`/`fr:`/`it:`), die Namen der Unterrichtssprachen kommen aus `i18n` (`sprache_…`).
 
 **Nichts schätzen.** Felder wie `website_medizin`, `anmeldefrist`, `studienbeginn`,

@@ -780,8 +780,8 @@ def ansicht_pruefen(projekt, ordner):
     mappen = ausgeben(projekt, os.path.join(ordner, 'ansicht'))
     m = load_workbook(mappen['de'])
     namen = [n for n in m.sheetnames if n.endswith('Ansicht')]
-    pruef('Startseite und Team haben je ein Ansichtsblatt, direkt hinter ihrem Seitenblatt',
-          len(namen) == 2 and all(n.startswith(m.sheetnames[m.sheetnames.index(n) - 1][:10]) for n in namen),
+    pruef('Startseite, Team und Uniguide haben je ein Ansichtsblatt, direkt hinter ihrem Seitenblatt',
+          len(namen) == 3 and all(n.startswith(m.sheetnames[m.sheetnames.index(n) - 1][:10]) for n in namen),
           namen)
     pruef('Ansichtsblaetter sind geschuetzt, die weissen Felder nicht',
           all(m[n].protection.sheet for n in namen))
@@ -850,6 +850,98 @@ def ansicht_pruefen(projekt, ordner):
     pruef('Neue Saison: Team-Seite zeigt 2099/00, Archiv hat die alte Saison samt Leitungsteam',
           '## Team Saison 2099/00' in t and re.search(r'^### Team Saison \d{4}/\d{2}\n\n\*\*Leitungsteam\*\*', a, re.M)
           is not None, aus[-300:])
+
+
+def uniguide_pruefen(projekt, ordner):
+    """Das Blatt "Uniguide - Ansicht" (scripts/texte_uniguide.py): die ganze
+    Uni-Tabelle, geschrieben wird gezielt in data/unis.yaml. Geprueft:
+    Sprachfelder je Sprache, gemeinsame Felder, Listen, Zahl, Datum, Loeschen,
+    ungueltige Eingabe, Konflikt - und dass die Kommentare der Datei bleiben."""
+    import datetime
+    import json
+    import yaml
+    print('\n=== Uniguide-Blatt: data/unis.yaml ===')
+    unis_pfad = os.path.join(projekt, 'data', 'unis.yaml')
+    roh = lesen(projekt, 'data/unis.yaml')
+    alt = {u['slug']: u for u in yaml.safe_load(roh)}
+    mappen = ausgeben(projekt, os.path.join(ordner, 'uni'))
+
+    def zellen(pfad):
+        m = load_workbook(pfad)
+        z = {}
+        for r in m['_ansicht'].iter_rows(min_row=2, values_only=True):
+            if r[0] == 'uni':
+                slug, feld, _ = json.loads(r[4])
+                z[(slug, feld)] = (m[r[1]], r[2])
+        return m, z
+
+    m, z = zellen(mappen['de'])
+    pruef('Uniguide-Blatt: je Uni eine Zeile, direkt hinter dem Uniguide-Blatt',
+          any(n.startswith('Uniguide') and n.endswith('Ansicht') for n in m.sheetnames)
+          and len({k[0] for k in z}) == len(alt), sorted({k[0] for k in z})[:3])
+    def setze(slug, feld, wert):
+        ws, c = z[(slug, feld)]
+        ws[c].value = wert
+    setze('basel', 'anmeldefrist', '15. Februar')
+    setze('bern', 'besonderheiten', 'Erste Besonderheit\nZweite Besonderheit')
+    setze('zuerich', 'studienplaetze', 123)
+    setze('genf', 'ems_erforderlich', 'vielleicht')
+    setze('basel', 'website_medizin', 'https://medizin.unibas.ch')
+    setze('eth-zuerich', 'besonderheiten', '!Löschen!')
+    setze('neuenburg', 'stand', datetime.datetime(2027, 1, 15))
+    setze('freiburg', 'sprache', 'deutsch, français')
+    p = os.path.join(ordner, 'uni-de.xlsx')
+    m.save(p)
+    vorher = zustand(projekt)
+    rc, aus = einlesen(projekt, p)
+    neu = {u['slug']: u for u in yaml.safe_load(lesen(projekt, 'data/unis.yaml'))}
+    pruef('Uniguide: nur data/unis.yaml geaendert, keine Seite', unterschiede(vorher, zustand(projekt)) == [])
+    pruef('Uniguide: Sprachfeld (Anmeldefrist) steht auf Deutsch', neu['basel']['anmeldefrist'] == {'de': '15. Februar'},
+          neu['basel']['anmeldefrist'])
+    pruef('Uniguide: zwei Besonderheiten aus zwei Zeilen, FR/IT unberuehrt',
+          neu['bern']['besonderheiten'] == {'de': ['Erste Besonderheit', 'Zweite Besonderheit']},
+          neu['bern']['besonderheiten'])
+    pruef('Uniguide: Studienplaetze als Zahl, Link, Datum als Text',
+          neu['zuerich']['studienplaetze'] == 123 and neu['basel']['website_medizin'] == 'https://medizin.unibas.ch'
+          and neu['neuenburg']['stand'] == '2027-01-15', (neu['zuerich']['studienplaetze'], neu['neuenburg']['stand']))
+    pruef('Uniguide: !Löschen! entfernt nur den deutschen Text, FR/IT bleiben',
+          'de' not in neu['eth-zuerich']['besonderheiten'] and neu['eth-zuerich']['besonderheiten'].get('fr')
+          == alt['eth-zuerich']['besonderheiten']['fr'], neu['eth-zuerich']['besonderheiten'])
+    pruef('Uniguide: Sprachen aus Namen in jeder Schreibweise', neu['freiburg']['sprache'] == ['Deutsch', 'Français'],
+          neu['freiburg']['sprache'])
+    pruef('Uniguide: ungueltiger EMS-Wert nicht uebernommen und gemeldet',
+          neu['genf']['ems_erforderlich'] == alt['genf']['ems_erforderlich'] and 'vielleicht' in aus, aus[-300:])
+    geaendert = {'basel', 'bern', 'zuerich', 'eth-zuerich', 'neuenburg', 'freiburg'}
+    pruef('Uniguide: alle anderen Unis unveraendert',
+          all(neu[s] == alt[s] for s in alt if s not in geaendert))
+    nach = lesen(projekt, 'data/unis.yaml')
+    kommentare = lambda t: [z for z in t.split('\n') if z.lstrip().startswith('#')]
+    pruef('Uniguide: alle Kommentare in data/unis.yaml bleiben', kommentare(nach) == kommentare(roh))
+
+    # Franzoesisch: eigener Text, der deutsche bleibt
+    m, z = zellen(ausgeben(projekt, os.path.join(ordner, 'uni-fr'))['fr'])
+    setze('basel', 'anmeldefrist', '15 février')
+    p = os.path.join(ordner, 'uni-fr.xlsx')
+    m.save(p)
+    einlesen(projekt, p)
+    neu = {u['slug']: u for u in yaml.safe_load(lesen(projekt, 'data/unis.yaml'))}
+    pruef('Uniguide FR: franzoesischer Text dazu, deutscher bleibt',
+          neu['basel']['anmeldefrist'] == {'de': '15. Februar', 'fr': '15 février'}, neu['basel']['anmeldefrist'])
+    bauen(projekt, ordner)
+
+    # Konflikt: dasselbe Feld inzwischen anderswo geaendert
+    m, z = zellen(ausgeben(projekt, os.path.join(ordner, 'uni-k'))['de'])
+    daneben = lesen(projekt, 'data/unis.yaml').replace('"15. Februar"', '"16. Februar"')
+    with open(unis_pfad, 'w', encoding='utf-8') as f:
+        f.write(daneben)
+    setze('basel', 'anmeldefrist', '1. März')
+    p = os.path.join(ordner, 'uni-k.xlsx')
+    m.save(p)
+    rc, aus = einlesen(projekt, p)
+    pruef('Uniguide: inzwischen anderswo geaendert - uebersprungen und gemeldet',
+          lesen(projekt, 'data/unis.yaml') == daneben and 'anderswo' in aus, aus[-300:])
+    with open(unis_pfad, 'w', encoding='utf-8') as f:
+        f.write(roh)
 
 
 def verrutscht_pruefen(projekt, ordner):
@@ -1077,6 +1169,7 @@ def main():
         editor_kopf_pruefen(projekt, ordner)
         verrutscht_pruefen(projekt, ordner)
         ansicht_pruefen(projekt, ordner)
+        uniguide_pruefen(projekt, ordner)
     finally:
         if a.behalten:
             print(f'\nArbeitsordner: {ordner}')

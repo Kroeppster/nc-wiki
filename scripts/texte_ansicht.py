@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-ANSICHT-BLAETTER: STARTSEITE UND TEAM, AUFGEBAUT WIE DIE WEBSITE
+ANSICHT-BLAETTER: STARTSEITE, TEAM UND UNIGUIDE, AUFGEBAUT WIE DIE WEBSITE
 ================================================================================
 Wird von scripts/texte-ausgeben.py (Blaetter erzeugen) und
 scripts/texte-einlesen.py (Blaetter einlesen) benutzt.
@@ -30,6 +30,9 @@ Ressort weg. Eine geleerte Zelle loescht nichts (wie ueberall in der Mappe).
 Oben ein Feld "Neue Saison": ausgefuellt (z. B. 2026/27), wird zuerst das
 bisherige Team ins Archiv verschoben (scripts/texte_saison.py), in allen drei
 Sprachen.
+
+UNIGUIDE: die ganze Uni-Tabelle aus data/unis.yaml, je Uni eine Zeile - siehe
+scripts/texte_uniguide.py.
 ================================================================================
 """
 import json
@@ -37,6 +40,7 @@ import os
 import re
 
 import texte_bausteine as tb
+import texte_uniguide
 
 try:
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side, Protection
@@ -44,7 +48,7 @@ try:
 except ImportError:      # das melden die aufrufenden Skripte
     pass
 
-SEITEN = {'_index.md': 'startseite', 'ueber-uns/team/_index.md': 'team'}
+SEITEN = {'_index.md': 'startseite', 'ueber-uns/team/_index.md': 'team', 'ems/uniguide/_index.md': 'uniguide'}
 VERSTECKT = '_ansicht'
 LOESCHEN = re.compile(r'!\s*(l(ö|oe)schen|supprimer|eliminare)\s*!', re.IGNORECASE)
 SCHRIFT = 'Arial'
@@ -373,7 +377,10 @@ def blaetter_anlegen(mappe, sprache, projekt, seiten_blaetter):
         idx = [ws.title for ws in mappe.worksheets].index(name) + 1
         ws = mappe.create_sheet(titel, idx)
         ws.sheet_properties.tabColor = ORANGE
-        (startseite if SEITEN[innen] == 'startseite' else team)(ws, sprache, datei, roh, merker, roh_de)
+        if SEITEN[innen] == 'uniguide':        # die ganze Uni-Tabelle, scripts/texte_uniguide.py
+            texte_uniguide.blatt(ws, sprache, projekt, merker)
+        else:
+            (startseite if SEITEN[innen] == 'startseite' else team)(ws, sprache, datei, roh, merker, roh_de)
     if merker:
         v = mappe.create_sheet(VERSTECKT)
         v.sheet_state = 'veryHidden'
@@ -401,7 +408,8 @@ def lesen(mappe):
         art, blatt, zelle, datei, pfad, original = (list(z) + [None] * 6)[:6]
         if blatt not in mappe.sheetnames:
             continue
-        neu = _text(mappe[blatt][zelle].value)
+        wert = mappe[blatt][zelle].value
+        neu = texte_uniguide.zelle_lesen(wert) if art == 'uni' else _text(wert)
         raus.setdefault(datei, []).append((art, json.loads(pfad), _text(original), neu, f'Blatt "{blatt}", {zelle}'))
     return raus
 
@@ -484,6 +492,8 @@ def team_aus_zellen(eintraege, melde):
 def anwenden(projekt, datei, eintraege, melde, probe=False):
     """Wendet die Aenderungen EINER Datei an. Gibt (Zahl der Aenderungen,
     durch einen Saisonwechsel geaenderte Dateien) zurueck."""
+    if datei == texte_uniguide.UNIS:
+        return texte_uniguide.anwenden(projekt, eintraege, melde, probe), []
     pfad = os.path.join(projekt, datei)
     if not os.path.isfile(pfad):
         melde(f'{datei}: gibt es nicht mehr - Ansichtsblatt übersprungen.')

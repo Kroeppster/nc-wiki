@@ -56,7 +56,7 @@
   <div><dt>{{ i18n "label_studienplaetze" }}</dt><dd>{{ if $uni.studienplaetze }}{{ $uni.studienplaetze }}{{ else }}{{ i18n "uni_detail_places_unknown" }}{{ end }}</dd></div>
   {{/* Die folgenden Felder erscheinen nur, wenn sie in data/unis.yaml auch
        wirklich gefüllt sind - sonst gäbe es hier lauter leere Zeilen. */}}
-  {{ with $uni.anmeldefrist }}<div><dt>{{ i18n "uni_detail_anmeldefrist" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+  {{ with partial "uni-text.html" $uni.anmeldefrist }}<div><dt>{{ i18n "uni_detail_anmeldefrist" }}</dt><dd>{{ . }}</dd></div>{{ end }}
 </dl>
 </div>
 
@@ -66,8 +66,8 @@
   <div><dt>{{ i18n "uni_detail_kanton" }}</dt><dd>{{ partial "uni-text.html" $uni.kanton }}</dd></div>
   <div><dt>{{ i18n "label_sprache" }}</dt><dd>{{ partial "uni-sprachen.html" $uni.sprache }}</dd></div>
   <div><dt>{{ i18n "label_studiengaenge" }}</dt><dd>{{ delimit $uni.studiengaenge ", " }}</dd></div>
-  {{ with $uni.studienbeginn }}<div><dt>{{ i18n "uni_detail_studienbeginn" }}</dt><dd>{{ . }}</dd></div>{{ end }}
-  {{ with $uni.semestergebuehr }}<div><dt>{{ i18n "uni_detail_semestergebuehr" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+  {{ with partial "uni-text.html" $uni.studienbeginn }}<div><dt>{{ i18n "uni_detail_studienbeginn" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+  {{ with partial "uni-text.html" $uni.semestergebuehr }}<div><dt>{{ i18n "uni_detail_semestergebuehr" }}</dt><dd>{{ . }}</dd></div>{{ end }}
   {{/* Besonderheiten-Feld ist optional (Liste kann auch leer sein) - dann
        wird dieser ganze Abschnitt einfach übersprungen. */}}
   {{ with partial "uni-text.html" $uni.besonderheiten }}
@@ -90,9 +90,9 @@
        --------------------------------------------------------------------- */ -}}
 {{- $fehlend := slice }}
 {{- if not $uni.studienplaetze }}{{ $fehlend = $fehlend | append (i18n "label_studienplaetze") }}{{ end }}
-{{- if not $uni.anmeldefrist }}{{ $fehlend = $fehlend | append (i18n "uni_detail_anmeldefrist") }}{{ end }}
-{{- if not $uni.studienbeginn }}{{ $fehlend = $fehlend | append (i18n "uni_detail_studienbeginn") }}{{ end }}
-{{- if not $uni.semestergebuehr }}{{ $fehlend = $fehlend | append (i18n "uni_detail_semestergebuehr") }}{{ end }}
+{{- if not (partial "uni-text.html" $uni.anmeldefrist) }}{{ $fehlend = $fehlend | append (i18n "uni_detail_anmeldefrist") }}{{ end }}
+{{- if not (partial "uni-text.html" $uni.studienbeginn) }}{{ $fehlend = $fehlend | append (i18n "uni_detail_studienbeginn") }}{{ end }}
+{{- if not (partial "uni-text.html" $uni.semestergebuehr) }}{{ $fehlend = $fehlend | append (i18n "uni_detail_semestergebuehr") }}{{ end }}
 {{- if not $uni.website_medizin }}{{ $fehlend = $fehlend | append (i18n "uni_detail_website_medizin") }}{{ end }}
 {{ with $fehlend }}
 <div class="uni-missing">

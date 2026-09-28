@@ -56,6 +56,9 @@ matières.
 3. **L'accueil et l'équipe** ont chacun une feuille « … – Vue » (onglet orange), construite
    comme le site. N'écrire que dans les cases blanches. Équipe : remplir une carte vide =
    nouvelle personne, `!Supprimer!` dans le nom = personne retirée.
+   **Uniguide – Vue** contient tout le tableau des universités : une ligne par université,
+   une colonne par information. Les textes (en-têtes verts) valent pour la langue du
+   classeur, le reste pour toutes les langues.
 4. **Nouvelle saison :** en haut de la feuille de l'équipe, remplir « Commencer une
    nouvelle saison » (p. ex. 2027/28). L'équipe actuelle passe alors dans les archives,
    dans les trois langues.

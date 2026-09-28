@@ -183,6 +183,29 @@ Solo le caselle bianche sono modificabili (protezione del foglio senza password)
 
 Codice: `scripts/texte_ansicht.py`.
 
+### Foglio Uniguide
+
+«Uniguide – Vista» mostra l'intera tabella di `data/unis.yaml`: una riga per università,
+una colonna per informazione (nome, cantone, lingue, corsi di laurea, EMS, procedura di
+selezione, particolarità, posti di studio, termine d'iscrizione, inizio degli studi, tassa
+semestrale, link, data della verifica, fonte).
+
+- **Intestazioni verdi** (cantone, procedura, particolarità, termine, inizio, tassa): sono
+  testi e valgono solo per la lingua della cartella. Se manca una traduzione, il sito
+  mostra il testo tedesco.
+- **Intestazioni scure**: valgono per tutte le lingue e si possono modificare in ogni
+  cartella.
+- Più particolarità: una per riga nella cella. Lingue separate da virgole, in qualsiasi
+  grafia («tedesco, francese»). EMS: ja / nein / teilweise (sì/no/in parte). Posti: solo
+  il numero. Link con `https://`.
+- Una casella vuota non elimina nulla, `!Eliminare!` svuota il campo. Le immissioni non
+  valide (non un numero, non un link …) non vengono riprese e sono segnalate nel rapporto.
+- Alla lettura in `data/unis.yaml` cambia solo quel campo; i commenti restano.
+- Inserire solo ciò che figura su una pagina ufficiale, e modificare allora anche «Stand»
+  e «Quelle». Una nuova università non si aggiunge tramite la cartella (vedi [9](#9-faq-uniguide-subtest-nomi-dei-download)).
+
+Codice: `scripts/texte_uniguide.py`.
+
 ### Cosa succede alla lettura
 
 `.github/workflows/texte-einlesen.yml` legge le cartelle caricate con
@@ -507,7 +530,8 @@ precede («9 subtest») è fissa nella FAQ.
 
 Un solo file alimenta la tabella `/ems/uniguide/`, ogni pagina di università e il
 confronto. Ogni università ha bisogno in più di una pagina quasi vuota
-`content/<lingua>/ems/uniguide/<slug>.md` con `title` e `uni_slug`. `kanton`, `auswahlverfahren` e `besonderheiten` esistono per lingua
+`content/<lingua>/ems/uniguide/<slug>.md` con `title` e `uni_slug`. Il modo più semplice per modificare: il foglio «Uniguide – Vista»
+della cartella Excel ([3](#3-cartelle-excel-nel-dettaglio)). `kanton`, `auswahlverfahren` e `besonderheiten` esistono per lingua
 (`de:`/`fr:`/`it:`); i nomi delle lingue d'insegnamento vengono da `i18n` (`sprache_…`).
 
 **Niente stime.** Campi come `website_medizin`, `anmeldefrist`, `studienbeginn`,

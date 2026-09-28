@@ -155,15 +155,15 @@
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_anmeldefrist" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with .anmeldefrist }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with partial "uni-text.html" .anmeldefrist }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_studienbeginn" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with .studienbeginn }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with partial "uni-text.html" .studienbeginn }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_semestergebuehr" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with .semestergebuehr }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with partial "uni-text.html" .semestergebuehr }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
         </tr>
         <tr>
           <th scope="row">{{ i18n "uni_detail_auswahlverfahren" }}</th>

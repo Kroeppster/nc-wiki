@@ -185,6 +185,28 @@ les cases blanches sont modifiables (protection de feuille sans mot de passe).
 
 Code : `scripts/texte_ansicht.py`.
 
+### Feuille Uniguide
+
+« Uniguide – Vue » montre tout le tableau de `data/unis.yaml` : une ligne par université,
+une colonne par information (nom, canton, langues, filières, EMS, procédure de sélection,
+particularités, places d'étude, délai d'inscription, début des études, taxe semestrielle,
+liens, date de vérification, source).
+
+- **En-têtes verts** (canton, procédure, particularités, délai, début des études, taxe)
+  : ce sont des textes, valables seulement pour la langue du classeur. S'il manque une
+  traduction, le site montre le texte allemand.
+- **En-têtes foncés** : valables pour toutes les langues, modifiables dans chaque classeur.
+- Plusieurs particularités : une par ligne dans la cellule. Langues séparées par des
+  virgules, dans n'importe quelle graphie (« allemand, français »). EMS : ja / nein /
+  teilweise (oui/non/partiel). Places : seulement le nombre. Liens avec `https://`.
+- Une case vide ne supprime rien, `!Supprimer!` vide le champ. Les saisies invalides (pas
+  un nombre, pas un lien …) ne sont pas reprises et sont signalées dans le rapport.
+- À la lecture, seul ce champ change dans `data/unis.yaml` ; les commentaires restent.
+- N'inscrire que ce qui figure sur une page officielle, et modifier alors aussi « Stand »
+  et « Quelle ». Une nouvelle université ne s'ajoute pas via le classeur (voir [9](#9-faq-uniguide-sous-tests-noms-de-téléchargement)).
+
+Code : `scripts/texte_uniguide.py`.
+
 ### Ce qui se passe à la lecture
 
 `.github/workflows/texte-einlesen.yml` lit les classeurs téléversés avec
@@ -514,7 +536,8 @@ qui précède (« 9 sous-tests ») est fixe dans la FAQ.
 
 Un seul fichier alimente le tableau `/ems/uniguide/`, chaque page d'université et la
 comparaison. Chaque université a en plus besoin d'une page presque vide
-`content/<langue>/ems/uniguide/<slug>.md` avec `title` et `uni_slug`. `kanton`, `auswahlverfahren` et `besonderheiten` existent par langue
+`content/<langue>/ems/uniguide/<slug>.md` avec `title` et `uni_slug`. Le plus simple pour modifier : la feuille « Uniguide – Vue » du
+classeur ([3](#3-classeurs-excel-en-détail)). `kanton`, `auswahlverfahren` et `besonderheiten` existent par langue
 (`de:`/`fr:`/`it:`) ; les noms des langues d'enseignement viennent d'`i18n` (`sprache_…`).
 
 **Ne rien estimer.** Des champs comme `website_medizin`, `anmeldefrist`, `studienbeginn`,

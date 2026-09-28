@@ -50,6 +50,8 @@ jede Seite auf einem eigenen Blatt, vorne eine Anleitung und ein Inhaltsverzeich
 3. **Startseite und Team** haben je ein Blatt „… – Ansicht“ (orange Lasche), aufgebaut
    wie die Website. Nur in die weissen Felder schreiben. Im Team: leere Karte ausfüllen =
    neue Person, `!Löschen!` im Namen = Person weg.
+   **Uniguide – Ansicht** enthält die ganze Uni-Tabelle: je Uni eine Zeile, je Angabe eine
+   Spalte. Texte (grüne Spaltenköpfe) gelten für die Sprache der Mappe, der Rest für alle.
 4. **Neue Saison:** im Team-Blatt oben „Neue Saison starten“ ausfüllen (z. B. 2027/28).
    Das bisherige Team kommt dann in allen drei Sprachen ins Archiv.
 5. **Hochladen:** auf GitHub in den Ordner [`redaktion/`](../redaktion/) → *Add file →

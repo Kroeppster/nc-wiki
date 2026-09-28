@@ -37,7 +37,7 @@ sonst fehl.
 | `.github/workflows/hugo.yml` | Build + interner Link-Check laufen bei jedem PR gegen `main` und bei Push; **Deploy läuft nur bei Push auf `main`**, nie bei PRs. |
 | `.github/workflows/textmappen.yml` | Legt nach jedem Push auf `main` frische Textmappen an das GitHub-Release `textmappen` (bewusst nicht auf die Website). |
 | `.pages.yml` | Web-Editor Pages CMS (app.pagescms.org). `settings.content.merge: true` nie entfernen (sonst verschwinden Menü & Co. beim Speichern). Nach Änderungen `node scripts/editor-rundlauf.mjs` (baut alles nach einem simulierten Speichern jeder Seite und vergleicht). Siehe `docs/WARTUNG-DETAILLIERT.md` 4. |
-| `redaktion/`, `.github/workflows/texte-einlesen.yml` | Textmappen (Excel, eine je Sprache, `scripts/texte-*.py`): hochgeladen in `redaktion/` → Workflow liest ein und eröffnet einen PR. `redaktion/stand.json` = Stand/Bemerkungen, vom Workflow gepflegt. Siehe `docs/WARTUNG-DETAILLIERT.md` 3; nach Änderungen an den Skripten `scripts/texte-mappe-pruefen.py`. |
+| `redaktion/`, `.github/workflows/texte-einlesen.yml` | Textmappen (Excel, eine je Sprache, `scripts/texte-*.py`): hochgeladen in `redaktion/` → Workflow liest ein und eröffnet einen PR. `redaktion/stand.json` = Stand/Bemerkungen, vom Workflow gepflegt. Ansicht-Blätter für Startseite, Team und Uniguide (`texte_ansicht.py`, `texte_uniguide.py` → schreibt gezielt in `data/unis.yaml`). Siehe `docs/WARTUNG-DETAILLIERT.md` 3; nach Änderungen an den Skripten `scripts/texte-mappe-pruefen.py`. |
 
 ## Konventionen
 
