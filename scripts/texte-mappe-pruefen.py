@@ -780,8 +780,8 @@ def ansicht_pruefen(projekt, ordner):
     mappen = ausgeben(projekt, os.path.join(ordner, 'ansicht'))
     m = load_workbook(mappen['de'])
     namen = [n for n in m.sheetnames if n.endswith('Ansicht')]
-    pruef('Startseite, Team und Uniguide haben je ein Ansichtsblatt, direkt hinter ihrem Seitenblatt',
-          len(namen) == 3 and all(n.startswith(m.sheetnames[m.sheetnames.index(n) - 1][:10]) for n in namen),
+    pruef('Startseite, Team, Uniguide und Q&A haben je ein Ansichtsblatt, direkt hinter ihrem Seitenblatt',
+          len(namen) == 4 and all(n.startswith(m.sheetnames[m.sheetnames.index(n) - 1][:10]) for n in namen),
           namen)
     pruef('Ansichtsblaetter sind geschuetzt, die weissen Felder nicht',
           all(m[n].protection.sheet for n in namen))
@@ -863,6 +863,7 @@ def uniguide_pruefen(projekt, ordner):
     print('\n=== Uniguide-Blatt: data/unis.yaml ===')
     unis_pfad = os.path.join(projekt, 'data', 'unis.yaml')
     roh = lesen(projekt, 'data/unis.yaml')
+    sp_roh = lesen(projekt, 'data/uniguide-spalten.yaml')
     alt = {u['slug']: u for u in yaml.safe_load(roh)}
     mappen = ausgeben(projekt, os.path.join(ordner, 'uni'))
 
@@ -873,18 +874,34 @@ def uniguide_pruefen(projekt, ordner):
             if r[0] == 'uni':
                 slug, feld, _ = json.loads(r[4])
                 z[(slug, feld)] = (m[r[1]], r[2])
+            elif r[0] in ('unikopf', 'unizeigen', 'unineu', 'unineuzeigen'):
+                z[(r[0], json.loads(r[4])[0])] = (m[r[1]], r[2])
+            elif r[0] == 'unineuwert':
+                n, slug, _ = json.loads(r[4])
+                z[('unineuwert', n, slug)] = (m[r[1]], r[2])
         return m, z
 
     m, z = zellen(mappen['de'])
     pruef('Uniguide-Blatt: je Uni eine Zeile, direkt hinter dem Uniguide-Blatt',
           any(n.startswith('Uniguide') and n.endswith('Ansicht') for n in m.sheetnames)
-          and len({k[0] for k in z}) == len(alt), sorted({k[0] for k in z})[:3])
-    def setze(slug, feld, wert):
-        ws, c = z[(slug, feld)]
+          and len({k[0] for k in z if k[0] in alt}) == len(alt), sorted({str(k[0]) for k in z})[:3])
+    def setze(*schluessel_wert):
+        *schluessel, wert = schluessel_wert
+        ws, c = z[tuple(schluessel)]
         ws[c].value = wert
     setze('basel', 'anmeldefrist', '15. Februar')
     setze('bern', 'besonderheiten', 'Erste Besonderheit\nZweite Besonderheit')
-    setze('zuerich', 'studienplaetze', 123)
+    setze('zuerich', 'plaetze_bachelor', 123)
+    setze('lausanne', 'semestergebuehr', 'CHF 600')
+    # Spalten: umbenennen, Anzeige, loeschen (auch eine feste), neue Spalte
+    setze('unikopf', 'studienort', 'Stadt\nHilfe')
+    setze('unizeigen', 'plaetze_master', 'Tabelle')
+    setze('unikopf', 'wohnsitzvorteil', '!Löschen!')
+    setze('unikopf', 'sprache', '!Löschen!')
+    setze('unineu', 0, 'Mentoring-Programm')
+    setze('unineuzeigen', 0, 'Tabelle')
+    setze('unineuwert', 0, 'basel', 'Ja, ab 1. Jahr')
+    setze('unineuwert', 1, 'bern', 'Wert ohne Spaltenname')
     setze('genf', 'ems_erforderlich', 'vielleicht')
     setze('basel', 'website_medizin', 'https://medizin.unibas.ch')
     setze('eth-zuerich', 'besonderheiten', '!Löschen!')
@@ -896,14 +913,34 @@ def uniguide_pruefen(projekt, ordner):
     rc, aus = einlesen(projekt, p)
     neu = {u['slug']: u for u in yaml.safe_load(lesen(projekt, 'data/unis.yaml'))}
     pruef('Uniguide: nur data/unis.yaml geaendert, keine Seite', unterschiede(vorher, zustand(projekt)) == [])
-    pruef('Uniguide: Sprachfeld (Anmeldefrist) steht auf Deutsch', neu['basel']['anmeldefrist'] == {'de': '15. Februar'},
+    pruef('Uniguide: Sprachfeld (Anmeldefrist) steht auf Deutsch', neu['basel']['anmeldefrist'] == {'de': '15. Februar', 'fr': '15.02.2027', 'it': '15.02.2027'},
           neu['basel']['anmeldefrist'])
     pruef('Uniguide: zwei Besonderheiten aus zwei Zeilen, FR/IT unberuehrt',
-          neu['bern']['besonderheiten'] == {'de': ['Erste Besonderheit', 'Zweite Besonderheit']},
+          neu['bern']['besonderheiten']['de'] == ['Erste Besonderheit', 'Zweite Besonderheit']
+          and neu['bern']['besonderheiten']['fr'] == alt['bern']['besonderheiten']['fr'],
           neu['bern']['besonderheiten'])
-    pruef('Uniguide: Studienplaetze als Zahl, Link, Datum als Text',
-          neu['zuerich']['studienplaetze'] == 123 and neu['basel']['website_medizin'] == 'https://medizin.unibas.ch'
-          and neu['neuenburg']['stand'] == '2027-01-15', (neu['zuerich']['studienplaetze'], neu['neuenburg']['stand']))
+    pruef('Uniguide: Zahl als Text (je Sprache), Link, Datum als Text',
+          neu['zuerich']['plaetze_bachelor'] == {'de': '123', 'fr': '280', 'it': '280'}
+          and neu['basel']['website_medizin'] == 'https://medizin.unibas.ch'
+          and neu['neuenburg']['stand'] == '2027-01-15', (neu['zuerich']['plaetze_bachelor'], neu['neuenburg']['stand']))
+    pruef('Uniguide: einfacher Wert (fuer alle Sprachen) auf Deutsch geaendert, FR/IT behalten den alten',
+          neu['lausanne']['semestergebuehr'] == {'de': 'CHF 600', 'fr': 'CHF 580', 'it': 'CHF 580'},
+          neu['lausanne']['semestergebuehr'])
+    sp = {s['feld']: s for s in yaml.safe_load(lesen(projekt, 'data/uniguide-spalten.yaml'))}
+    reihe = [s['feld'] for s in yaml.safe_load(lesen(projekt, 'data/uniguide-spalten.yaml'))]
+    pruef('Uniguide: Spalte umbenannt (nur DE, Hilfezeile ignoriert)',
+          sp['studienort']['titel'] == {'de': 'Stadt', 'fr': "Lieu d'études", 'it': 'Sede di studio'},
+          sp['studienort']['titel'])
+    pruef('Uniguide: Anzeige "Tabelle" gesetzt', sp['plaetze_master']['tabelle'] is True)
+    pruef('Uniguide: Spalte geloescht samt Werten',
+          'wohnsitzvorteil' not in sp and all('wohnsitzvorteil' not in u for u in neu.values()))
+    pruef('Uniguide: feste Spalte nicht geloescht, gemeldet', 'sprache' in sp and 'braucht die Website' in aus,
+          aus[-300:])
+    pruef('Uniguide: neue Spalte angelegt, vor den Quellen, mit Wert',
+          sp.get('mentoring_programm', {}).get('tabelle') is True
+          and reihe.index('mentoring_programm') < reihe.index('website')
+          and neu['basel'].get('mentoring_programm') == {'de': 'Ja, ab 1. Jahr'}, (reihe, neu['basel'].get('mentoring_programm')))
+    pruef('Uniguide: Werte ohne Spaltenname gemeldet', 'ohne Namen' in aus, aus[-300:])
     pruef('Uniguide: !Löschen! entfernt nur den deutschen Text, FR/IT bleiben',
           'de' not in neu['eth-zuerich']['besonderheiten'] and neu['eth-zuerich']['besonderheiten'].get('fr')
           == alt['eth-zuerich']['besonderheiten']['fr'], neu['eth-zuerich']['besonderheiten'])
@@ -911,9 +948,10 @@ def uniguide_pruefen(projekt, ordner):
           neu['freiburg']['sprache'])
     pruef('Uniguide: ungueltiger EMS-Wert nicht uebernommen und gemeldet',
           neu['genf']['ems_erforderlich'] == alt['genf']['ems_erforderlich'] and 'vielleicht' in aus, aus[-300:])
-    geaendert = {'basel', 'bern', 'zuerich', 'eth-zuerich', 'neuenburg', 'freiburg'}
+    geaendert = {'basel', 'bern', 'zuerich', 'eth-zuerich', 'neuenburg', 'freiburg', 'lausanne'}
+    ohne = lambda u: {k: v for k, v in u.items() if k != 'wohnsitzvorteil'}
     pruef('Uniguide: alle anderen Unis unveraendert',
-          all(neu[s] == alt[s] for s in alt if s not in geaendert))
+          all(neu[s] == ohne(alt[s]) for s in alt if s not in geaendert))
     nach = lesen(projekt, 'data/unis.yaml')
     kommentare = lambda t: [z for z in t.split('\n') if z.lstrip().startswith('#')]
     pruef('Uniguide: alle Kommentare in data/unis.yaml bleiben', kommentare(nach) == kommentare(roh))
@@ -926,7 +964,7 @@ def uniguide_pruefen(projekt, ordner):
     einlesen(projekt, p)
     neu = {u['slug']: u for u in yaml.safe_load(lesen(projekt, 'data/unis.yaml'))}
     pruef('Uniguide FR: franzoesischer Text dazu, deutscher bleibt',
-          neu['basel']['anmeldefrist'] == {'de': '15. Februar', 'fr': '15 février'}, neu['basel']['anmeldefrist'])
+          neu['basel']['anmeldefrist'] == {'de': '15. Februar', 'fr': '15 février', 'it': '15.02.2027'}, neu['basel']['anmeldefrist'])
     bauen(projekt, ordner)
 
     # Konflikt: dasselbe Feld inzwischen anderswo geaendert
@@ -941,6 +979,76 @@ def uniguide_pruefen(projekt, ordner):
     pruef('Uniguide: inzwischen anderswo geaendert - uebersprungen und gemeldet',
           lesen(projekt, 'data/unis.yaml') == daneben and 'anderswo' in aus, aus[-300:])
     with open(unis_pfad, 'w', encoding='utf-8') as f:
+        f.write(roh)
+    with open(os.path.join(projekt, 'data', 'uniguide-spalten.yaml'), 'w', encoding='utf-8') as f:
+        f.write(sp_roh)
+
+
+def faq_pruefen(projekt, ordner):
+    """Das Blatt "Q&A - Ansicht" (scripts/texte_faq.py): Fragen aendern,
+    loeschen, neu anlegen."""
+    import json
+    import yaml
+    print('\n=== Q&A-Blatt: data/faq.yaml ===')
+    faq_pfad = os.path.join(projekt, 'data', 'faq.yaml')
+    roh = lesen(projekt, 'data/faq.yaml')
+    alt = {e['id']: e for e in yaml.safe_load(roh)}
+    ids = list(alt)
+
+    def zellen(pfad):
+        m = load_workbook(pfad)
+        z = {}
+        for r in m['_ansicht'].iter_rows(min_row=2, values_only=True):
+            if r[0] in ('faq', 'faqneu'):
+                a, b, _ = json.loads(r[4])
+                z[(a, b)] = (m[r[1]], r[2])
+        return m, z
+
+    m, z = zellen(ausgeben(projekt, os.path.join(ordner, 'faq'))['de'])
+    pruef('Q&A-Blatt: je Frage eine Zeile plus leere Zeilen',
+          any(n.startswith('Q&A') and n.endswith('Ansicht') for n in m.sheetnames)
+          and len({k[0] for k in z if k[0] in alt}) == len(alt) and (4, 'question') in z)
+
+    def setze(a, b, wert):
+        ws, c = z[(a, b)]
+        ws[c].value = wert
+    kat_de = alt[ids[0]]['category']['de']
+    setze(ids[0], 'question', 'Neu formulierte Frage?')
+    setze(ids[1], 'question', '!Löschen!')
+    setze(ids[2], 'href', '/gibt/es/nicht')
+    setze(ids[3], 'href', '/ems/qa')
+    setze(0, 'category', kat_de)
+    setze(0, 'question', 'Darf ich den EMS wiederholen?')
+    setze(0, 'answer', 'Ja, einmal.')
+    setze(0, 'href', '/ems/uniguide')
+    setze(0, 'label', 'Zum Uniguide')
+    setze(1, 'question', 'Frage ohne Antwort?')
+    p = os.path.join(ordner, 'faq-de.xlsx')
+    m.save(p)
+    vorher = zustand(projekt)
+    rc, aus = einlesen(projekt, p)
+    neu_liste = yaml.safe_load(lesen(projekt, 'data/faq.yaml'))
+    neu = {e['id']: e for e in neu_liste}
+    pruef('Q&A: nur data/faq.yaml geaendert, keine Seite', unterschiede(vorher, zustand(projekt)) == [])
+    pruef('Q&A: Frage geaendert (DE), FR/IT bleiben',
+          neu[ids[0]]['question']['de'] == 'Neu formulierte Frage?'
+          and neu[ids[0]]['question']['fr'] == alt[ids[0]]['question']['fr'], neu[ids[0]]['question'])
+    pruef('Q&A: !Löschen! in "Frage" entfernt die ganze Frage', ids[1] not in neu)
+    pruef('Q&A: Link auf eine Seite, die es nicht gibt, nicht uebernommen und gemeldet',
+          neu[ids[2]].get('link') == alt[ids[2]].get('link') and 'gibt es nicht' in aus, aus[-300:])
+    pruef('Q&A: Link-Ziel als Pfad geschrieben', neu[ids[3]]['link']['href'] == 'ems/qa/', neu[ids[3]].get('link'))
+    frisch = [e for e in neu_liste if e['id'] not in alt]
+    pruef('Q&A: neue Frage mit Kategorie (alle Sprachen), Link, am Ende ihrer Kategorie',
+          len(frisch) == 1 and frisch[0]['category'] == alt[ids[0]]['category']
+          and frisch[0]['answer'] == {'de': 'Ja, einmal.'}
+          and frisch[0]['link'] == {'href': 'ems/uniguide/', 'label': {'de': 'Zum Uniguide'}}
+          and neu_liste.index(frisch[0]) <= max(i for i, e in enumerate(neu_liste)
+                                               if e['category'] == frisch[0]['category']), frisch)
+    pruef('Q&A: neue Frage ohne Antwort gemeldet, nicht angelegt', 'Frage und Antwort' in aus, aus[-300:])
+    kommentare = lambda t: [z for z in t.split('\n') if z.lstrip().startswith('#')]
+    pruef('Q&A: Kopfkommentar in data/faq.yaml bleibt', kommentare(lesen(projekt, 'data/faq.yaml')) == kommentare(roh))
+    bauen(projekt, ordner)
+    with open(faq_pfad, 'w', encoding='utf-8') as f:
         f.write(roh)
 
 
@@ -1170,6 +1278,7 @@ def main():
         verrutscht_pruefen(projekt, ordner)
         ansicht_pruefen(projekt, ordner)
         uniguide_pruefen(projekt, ordner)
+        faq_pruefen(projekt, ordner)
     finally:
         if a.behalten:
             print(f'\nArbeitsordner: {ordner}')

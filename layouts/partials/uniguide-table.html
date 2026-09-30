@@ -27,10 +27,19 @@
   Tabelle funktionieren wie bisher.
   ============================================================================
 */}}
-{{- $emsLabels := dict "ja" (i18n "ems_status_ja") "nein" (i18n "ems_status_nein") "teilweise" (i18n "ems_status_teilweise") }}
 {{- $leer := i18n "uniguide_compare_empty" }}
 
 {{- $unis := hugo.Data.unis }}
+{{- /* Welche Angaben als Spalte bzw. im Vergleich erscheinen, in welcher
+       Reihenfolge und unter welchem Namen: data/uniguide-spalten.yaml. */ -}}
+{{- $spalten := index hugo.Data "uniguide-spalten" }}
+{{- $tabelle := where $spalten "tabelle" true }}
+{{- $vergleich := slice }}
+{{- range $spalten }}{{ if not (in (slice "aus" "fuss") (.bereich | default "aus")) }}{{ $vergleich = $vergleich | append . }}{{ end }}{{ end }}
+{{- /* Quellenhinweise der Tabellenspalten, nummeriert (gleicher Text =
+       gleiche Nummer) */ -}}
+{{- $noten := slice }}
+{{- range $tabelle }}{{ with .hinweis }}{{ $h := partial "uni-titel.html" . }}{{ if not (in $noten $h) }}{{ $noten = $noten | append $h }}{{ end }}{{ end }}{{ end }}
 {{- $unis = sort $unis "name" }}
 
 <div class="uniguide-disclaimer" role="note">
@@ -74,11 +83,10 @@
     <thead>
       <tr>
         <th class="compare-col">{{ i18n "uniguide_compare_th" }}</th>
-        <th>{{ i18n "uniguide_table_th_uni" }}</th>
-        <th>{{ i18n "label_sprache" }}</th>
-        <th>{{ i18n "uniguide_table_th_ems" }}</th>
-        <th>{{ i18n "label_studiengaenge" }}</th>
-        <th>{{ i18n "label_studienplaetze" }}</th>
+        {{- range $tabelle }}
+        {{- $nr := 0 }}{{ with .hinweis }}{{ $h := partial "uni-titel.html" . }}{{ range $i, $n := $noten }}{{ if eq $n $h }}{{ $nr = add $i 1 }}{{ end }}{{ end }}{{ end }}
+        <th>{{ partial "uni-titel.html" . }}{{ with $nr }}<sup><a href="#uniguide-hinweis-{{ . }}">{{ . }}</a></sup>{{ end }}</th>
+        {{- end }}
       </tr>
     </thead>
     <tbody>
@@ -102,16 +110,21 @@
             <span class="visually-hidden-field">{{ i18n "uniguide_compare_add" }} {{ .name }}</span>
           </label>
         </td>
-        <td><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></td>
-        <td>{{ partial "uni-sprachen.html" .sprache }}</td>
-        <td><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>
-        <td>{{ delimit .studiengaenge ", " }}</td>
-        <td>{{ if .studienplaetze }}{{ .studienplaetze }}{{ else }}<span class="report-meta">{{ i18n "uniguide_table_places_unknown" }}</span>{{ end }}</td>
+        {{- $uni := . }}
+        {{- range $tabelle }}
+        <td{{ if ge (.breite | default 0) 18 }} class="zelle-umbruch"{{ end }}>{{ with partial "uni-wert.html" (dict "uni" $uni "spalte" .) }}{{ . | safeHTML }}{{ else }}<span class="report-meta">{{ if .fehlt }}{{ i18n "uniguide_table_places_unknown" }}{{ else }}{{ $leer }}{{ end }}</span>{{ end }}</td>
+        {{- end }}
       </tr>
       {{ end }}
     </tbody>
   </table>
 </div>
+{{ with $noten }}
+<ol class="uniguide-hinweise">
+  {{ range $i, $n := . }}<li id="uniguide-hinweis-{{ add $i 1 }}">{{ $n }}</li>{{ end }}
+</ol>
+{{ end }}
+
 
 {{/* ===================== VERGLEICHSANSICHT =====================
      Enthält ALLE Universitäten als Spalten; jede Zelle trägt "hidden" und ein
@@ -133,50 +146,13 @@
         </tr>
       </thead>
       <tbody>
+        {{- range $vergleich }}
+        {{- $spalte := . }}
         <tr>
-          <th scope="row">{{ i18n "uniguide_table_th_ems" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden><span class="badge badge-{{ .ems_erforderlich }}">{{ index $emsLabels .ems_erforderlich }}</span></td>{{ end }}
+          <th scope="row">{{ partial "uni-titel.html" . }}</th>
+          {{ range $unis }}<td data-uni="{{ .slug }}" hidden{{ if or (eq $spalte.art "punkte") (ge ($spalte.breite | default 0) 30) }} class="compare-cell-text"{{ end }}>{{ with partial "uni-wert.html" (dict "uni" . "spalte" $spalte) }}{{ . | safeHTML }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
         </tr>
-        <tr>
-          <th scope="row">{{ i18n "uni_detail_kanton" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ partial "uni-text.html" .kanton }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "label_sprache" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ partial "uni-sprachen.html" .sprache }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "label_studiengaenge" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ delimit .studiengaenge ", " }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "label_studienplaetze" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ if .studienplaetze }}{{ .studienplaetze }}{{ else }}<span class="report-meta">{{ i18n "uniguide_table_places_unknown" }}</span>{{ end }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "uni_detail_anmeldefrist" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with partial "uni-text.html" .anmeldefrist }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "uni_detail_studienbeginn" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with partial "uni-text.html" .studienbeginn }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "uni_detail_semestergebuehr" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden>{{ with partial "uni-text.html" .semestergebuehr }}{{ . }}{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "uni_detail_auswahlverfahren" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ partial "uni-text.html" .auswahlverfahren }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "uni_detail_besonderheiten" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden class="compare-cell-text">{{ with partial "uni-text.html" .besonderheiten }}<ul class="detail-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ else }}<span class="report-meta">{{ $leer }}</span>{{ end }}</td>{{ end }}
-        </tr>
-        <tr>
-          <th scope="row">{{ i18n "uni_detail_website" }}</th>
-          {{ range $unis }}<td data-uni="{{ .slug }}" hidden><a href="{{ .website }}" target="_blank" rel="noopener">{{ .website }}</a></td>{{ end }}
-        </tr>
+        {{- end }}
       </tbody>
     </table>
   </div>

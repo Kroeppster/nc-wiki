@@ -56,7 +56,11 @@ pagina su un proprio foglio, all'inizio le istruzioni e un indice.
    scheda vuota = nuova persona, `!Eliminare!` nel nome = persona tolta.
    **Uniguide – Vista** contiene l'intera tabella delle università: una riga per
    università, una colonna per informazione. I testi (intestazioni verdi) valgono per la
-   lingua della cartella, il resto per tutte le lingue.
+   lingua della cartella, il resto per tutte le lingue. I nomi delle colonne si
+   sovrascrivono alla riga 4, a destra ci sono colonne vuote per nuove informazioni, la
+   riga 5 stabilisce dove compare un'informazione.
+   **Q&A – Vista** contiene tutte le domande: compilare una riga vuota in basso = nuova
+   domanda, `!Eliminare!` in «Domanda» = domanda tolta (in tutte le lingue).
 4. **Nuova stagione:** in alto nel foglio del team compilare «Iniziare una nuova
    stagione» (p. es. 2027/28). Il team attuale passa allora nell'archivio, in tutte e tre
    le lingue.

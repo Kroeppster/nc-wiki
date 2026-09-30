@@ -188,24 +188,56 @@ Code : `scripts/texte_ansicht.py`.
 ### Feuille Uniguide
 
 « Uniguide – Vue » montre tout le tableau de `data/unis.yaml` : une ligne par université,
-une colonne par information (nom, canton, langues, filières, EMS, procédure de sélection,
-particularités, places d'étude, délai d'inscription, début des études, taxe semestrielle,
-liens, date de vérification, source).
+une colonne par information. Les colonnes existantes, leurs noms et l'endroit où elles
+apparaissent sont définis dans `data/uniguide-spalten.yaml` – et se modifient directement
+dans la feuille :
 
-- **En-têtes verts** (canton, procédure, particularités, délai, début des études, taxe)
-  : ce sont des textes, valables seulement pour la langue du classeur. S'il manque une
-  traduction, le site montre le texte allemand.
-- **En-têtes foncés** : valables pour toutes les langues, modifiables dans chaque classeur.
-- Plusieurs particularités : une par ligne dans la cellule. Langues séparées par des
-  virgules, dans n'importe quelle graphie (« allemand, français »). EMS : ja / nein /
-  teilweise (oui/non/partiel). Places : seulement le nombre. Liens avec `https://`.
-- Une case vide ne supprime rien, `!Supprimer!` vide le champ. Les saisies invalides (pas
-  un nombre, pas un lien …) ne sont pas reprises et sont signalées dans le rapport.
+- **Renommer une colonne :** écraser le nom à la ligne 4 (vaut pour la langue du
+  classeur ; la petite ligne d'aide en dessous peut rester ou disparaître).
+- **Supprimer une colonne :** `!Supprimer!` à la ligne 4 – la colonne disparaît avec toutes
+  ses valeurs. Les colonnes dont le site a besoin (nom, langue, EMS, filières, bachelor/master
+  à, site web, état, source) peuvent seulement être renommées ; le commentaire de l'en-tête
+  le signale.
+- **Affichage (ligne 5) :** *Tableau* = colonne dans le grand tableau, *Page* = seulement sur
+  la page de l'université et dans la comparaison, *masqué* = nulle part (reste dans le
+  classeur).
+- **Nouvelle colonne :** à droite, trois colonnes grises vides. Inscrire le nom à la ligne 4
+  et les valeurs en dessous – cela crée une nouvelle information (texte par langue, sur la
+  page de l'université sous « Études & site »). Des valeurs sans nom de colonne ne sont pas
+  reprises.
+- **En-têtes verts** : textes par langue, valables seulement pour la langue du classeur.
+  S'il manque une traduction, le site montre le texte allemand. **En-têtes foncés** :
+  valables pour toutes les langues.
+- Les valeurs sont du texte libre – aussi pour les places (« non limitées (env. 450
+  étudiant·e·s) » est possible). Plusieurs particularités : une par ligne. Listes
+  (filières, bachelor à, master à) séparées par des virgules. Langues dans n'importe quelle
+  graphie (« allemand, français »). EMS : ja / nein / teilweise (oui/non/partiel). Liens
+  avec `https://`.
+- Une case vide ne supprime rien, `!Supprimer!` vide le champ. Les saisies invalides ne
+  sont pas reprises et sont signalées dans le rapport.
 - À la lecture, seul ce champ change dans `data/unis.yaml` ; les commentaires restent.
-- N'inscrire que ce qui figure sur une page officielle, et modifier alors aussi « Stand »
-  et « Quelle ». Une nouvelle université ne s'ajoute pas via le classeur (voir [9](#9-faq-uniguide-sous-tests-noms-de-téléchargement)).
+- N'inscrire que ce qui figure sur une page officielle, et modifier alors aussi « État »
+  et « Source ». Une nouvelle université ne s'ajoute pas via le classeur (voir [9](#9-faq-uniguide-sous-tests-noms-de-téléchargement)).
 
 Code : `scripts/texte_uniguide.py`.
+
+### Feuille Q&R
+
+« Q&R – Vue » montre toutes les questions de `data/faq.yaml` : une ligne par question avec
+catégorie, question, réponse, cible du lien et texte du lien.
+
+- **Nouvelle question :** en bas, cinq lignes vides. Inscrire question et réponse, choisir
+  la catégorie dans la liste (ou en écrire une nouvelle). La question apparaît à la fin de sa
+  catégorie. Dans les autres langues, le texte allemand s'affiche jusqu'à la traduction –
+  dans le classeur FR/IT, la ligne est alors vide et peut être remplie.
+- **Supprimer une question :** `!Supprimer!` dans la case « Question » – elle disparaît dans
+  toutes les langues.
+- **Cible du lien :** chemin d'une de nos pages, p. ex. `/ems/uniguide`. Si la page n'existe
+  pas, le lien n'est pas repris et c'est signalé.
+- Les réponses sont du texte brut sans mise en forme (elles vont aussi dans le bloc de
+  données pour les moteurs de recherche).
+
+Code : `scripts/texte_faq.py`.
 
 ### Ce qui se passe à la lecture
 
@@ -522,34 +554,49 @@ sombres reçoivent automatiquement un fond clair (`.sponsor-logo`).
 
 ### FAQ (`data/faq.yaml`)
 
+Le plus simple : la feuille « Q&R – Vue » du classeur ([3](#3-classeurs-excel-en-détail)). Dans le fichier :
+
 ```yaml
 - id: "identifiant-unique"
-  frage:   { de: "…?", fr: "… ?", it: "…?" }
-  antwort: { de: "…",  fr: "…",   it: "…" }
+  category: { de: "…", fr: "…", it: "…" }
+  question:
+    de: "…?"
+  answer:
+    de: "…"
+  link:
+    href: "ems/uniguide/"
+    label:
+      de: "…"
 ```
 
-L'ordre dans le fichier = l'ordre sur la page. La question « Quels sont les sous-tests ? »
-ajoute automatiquement la liste de `data/subtests.yaml` (`dynamic: subtests`) ; la phrase
-qui précède (« 9 sous-tests ») est fixe dans la FAQ.
+La page regroupe par catégorie, dans l'ordre du fichier. La question « Quels sont les
+sous-tests ? » ajoute automatiquement la liste de `data/subtests.yaml`
+(`dynamic: subtests`) ; la phrase qui précède (« 9 sous-tests ») est fixe dans la FAQ.
 
-### Uniguide (`data/unis.yaml`)
+### Uniguide (`data/unis.yaml`, `data/uniguide-spalten.yaml`)
 
-Un seul fichier alimente le tableau `/ems/uniguide/`, chaque page d'université et la
-comparaison. Chaque université a en plus besoin d'une page presque vide
-`content/<langue>/ems/uniguide/<slug>.md` avec `title` et `uni_slug`. Le plus simple pour modifier : la feuille « Uniguide – Vue » du
-classeur ([3](#3-classeurs-excel-en-détail)). `kanton`, `auswahlverfahren` et `besonderheiten` existent par langue
-(`de:`/`fr:`/`it:`) ; les noms des langues d'enseignement viennent d'`i18n` (`sprache_…`).
+Les valeurs sont dans `data/unis.yaml` ; les informations existantes, leurs noms, si elles
+apparaissent comme colonne du tableau, seulement sur la page de l'université ou nulle part,
+et dans quelle section de la page, sont dans `data/uniguide-spalten.yaml` (description des
+champs en tête du fichier). Tableau, comparaison et page de l'université s'en construisent
+tout seuls – une nouvelle colonne ne demande pas de code. Chaque université a besoin en plus
+d'une page presque vide `content/<langue>/ems/uniguide/<slug>.md` avec `title` et
+`uni_slug`. Le plus simple : la feuille « Uniguide – Vue » du classeur ([3](#3-classeurs-excel-en-détail)).
 
-**Ne rien estimer.** Des champs comme `website_medizin`, `anmeldefrist`, `studienbeginn`,
-`semestergebuehr`, `studienplaetze` restent `null` jusqu'à ce que la valeur figure sur une
-page officielle – modifier alors aussi `stand` (date) et `quelle` (lien). Les champs vides
-n'apparaissent pas ; la page de l'université montre à la place l'encadré « Ces
-informations manquent encore ».
+Une valeur simple (`semestergebuehr: "CHF 850"`) vaut pour toutes les langues, sinon par
+langue (`de:`/`fr:`/`it:`). Les noms des langues d'enseignement viennent de `i18n`
+(`sprache_…`). « Lieu d'études » est la ville ; l'avantage du domicile a sa propre colonne ;
+« Bachelor à » et « Master à » indiquent où se font les deux niveaux.
 
-`berichte_ort` doit correspondre exactement au `ort:` des témoignages ; les trois plus
-récents apparaissent alors sur la page de l'université. La comparaison permet jusqu'à
-quatre universités côte à côte (`var MAX = 4` dans `layouts/partials/uniguide-table.html` ;
-lignes supplémentaires dans la section « VERGLEICHSANSICHT » – étape de développement).
+**Ne rien estimer.** Un champ reste `null` jusqu'à ce que la valeur figure sur une page
+officielle – alors modifier aussi `stand` (date) et `quelle` (lien). Les places proviennent
+des capacités d'accueil de swissuniversities (mention de source dans le champ `hinweis` de
+la colonne). Les champs vides n'apparaissent pas ; les colonnes avec `fehlt: true` figurent
+alors dans le cadre « Ces informations manquent encore » de la page de l'université.
+
+`berichte_ort` doit correspondre exactement à l'`ort:` des témoignages ; les trois plus
+récents apparaissent alors sur la page de l'université. La comparaison permet jusqu'à quatre
+universités côte à côte (`var MAX = 4` dans `layouts/partials/uniguide-table.html`).
 
 ### Sous-tests (`data/subtests.yaml`)
 

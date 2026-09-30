@@ -9,39 +9,26 @@
 # "uni_slug" - Beispiel: content/de/ems/uniguide/basel.md) - ohne diese
 # Seite würde der Link von der Tabelle zur Detailseite ins Leere führen.
 #
-# Recherchiert am 2026-08-07 anhand offizieller Quellen (swissuniversities.ch,
-# jeweilige Universitäts-Website). Zahlen (studienplaetze) absichtlich NICHT
-# recherchiert/eingetragen, siehe Projektvorgabe - bitte selbst auf den
-# offiziellen Seiten prüfen und eintragen. Wo etwas unsicher/nicht
-# bestätigt ist, steht statt eines erfundenen Werts "TODO: prüfen".
+# WELCHE Angaben es gibt, wie sie heissen und wo sie erscheinen, steht in
+# data/uniguide-spalten.yaml (dort auch die Bedeutung jedes Felds). Hier
+# stehen nur die Werte. Am einfachsten bearbeitet man beides im Blatt
+# "Uniguide – Ansicht" der Textmappen.
 #
-# Felder je Eintrag:
-#   slug             - technischer Name für die Web-Adresse, z.B. "basel"
-#   name             - offizieller Name der Universität (wird NICHT übersetzt,
-#                       auch auf FR/IT-Seiten steht der echte, offizielle Name)
-#   kanton           - Standort-Kanton, je Sprache ({ de: …, fr: …, it: … })
-#   sprache          - Liste der Unterrichtssprache(n)
-#   studiengaenge    - Liste, z.B. ["Bachelor", "Master"]
-#   ems_erforderlich - "ja", "nein" oder "teilweise"
-#   auswahlverfahren - Kurztext zum Zulassungsverfahren, je Sprache (de/fr/it)
-#   studienplaetze   - Zahl oder null (siehe Hinweis oben)
-#   besonderheiten   - Stichpunkte zu Sonderfällen, je Sprache eine Liste
-#                       (de/fr/it); [] wenn es keine gibt
-#   Texte je Sprache: Fehlt fr oder it, erscheint der deutsche Text
-#   (layouts/partials/uni-text.html).
-#   website          - offizielle Website der Universität
-#   stand            - Datum, an dem diese Angaben zuletzt geprüft wurden
-#   quelle           - Link zur Quelle dieser Angaben (Nachvollziehbarkeit)
-#   website_medizin  - direkter Link zur medizinischen Fakultät (nicht zur
-#                       allgemeinen Uni-Startseite) oder null
-#   anmeldefrist     - Frist für die Anmeldung, als Text ("15. Februar") oder null
-#   studienbeginn    - wann das Studium startet, als Text, oder null
-#   semestergebuehr  - Semestergebühr als Text inkl. Währung ("CHF 850") oder null
-#   berichte_ort     - technische Verknüpfung, KEINE Anzeige: der Wert, der in
-#                       den Erfahrungsberichten im Feld "ort" steht (z.B.
-#                       "Zürich"). Damit erscheinen auf der Uni-Seite automatisch
-#                       die passenden Erfahrungsberichte. Leer lassen ("") wenn
-#                       es zu diesem Ort keine Berichte gibt.
+# Schreibweise der Werte:
+#   - Ein einfacher Wert ("CHF 850") gilt für alle Sprachen.
+#   - Ein Wert je Sprache: { de: …, fr: …, it: … }. Fehlt fr oder it,
+#     erscheint der deutsche Text (layouts/partials/uni-text.html).
+#   - Listen in eckigen Klammern: ["Bachelor", "Master"].
+#   slug          - technischer Name für die Web-Adresse, z.B. "basel"
+#   berichte_ort  - technische Verknüpfung, KEINE Anzeige: der Wert, der in
+#                   den Erfahrungsberichten im Feld "ort" steht (z.B.
+#                   "Zürich"). Damit erscheinen auf der Uni-Seite automatisch
+#                   die passenden Erfahrungsberichte. Leer lassen ("") wenn
+#                   es zu diesem Ort keine Berichte gibt.
+#
+# Studienplätze: swissuniversities, Aufnahmekapazität 2026/27 (Stand
+# 18.08.2025). Semestergebühren, Studienbeginn: Websites der Universitäten,
+# geprüft am 2026-09-30.
 #
 # WICHTIG - KEINE ERFUNDENEN ANGABEN: Ein Feld, das nicht sicher recherchiert
 # ist, bleibt null. Es erscheint dann auf der Website gar nicht, und auf der
@@ -51,321 +38,460 @@
 
 - slug: "basel"
   name: "Universität Basel"
-  kanton: { de: "Basel-Stadt", fr: "Bâle-Ville", it: "Basilea Città" }
+  studienort:
+    de: "Basel"
+    fr: "Bâle"
+    it: "Basilea"
   sprache: ["Deutsch"]
-  studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Bachelor", "Master"]
+  plaetze_bachelor: "195"
+  plaetze_2_jahr: null
+  plaetze_master: "230"
+  wohnsitzvorteil:
+    de: "Ja – Wohnsitz in Basel-Stadt oder Basel-Landschaft"
+    fr: "Oui – domicile à Bâle-Ville ou Bâle-Campagne"
+    it: "Sì – domicilio a Basilea Città o Basilea Campagna"
+  bachelor_orte:
+    de: ["Basel"]
+    fr: ["Bâle"]
+    it: ["Basilea"]
+  master_orte:
+    de: ["Basel"]
+    fr: ["Bâle"]
+    it: ["Basilea"]
   auswahlverfahren:
     de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Bachelor-Studienplätze für USI Lugano werden vollständig in Basel absolviert"]
-    fr: ["Les places de bachelor pour l'USI Lugano se font entièrement à Bâle"]
-    it: ["I posti di bachelor per l'USI Lugano si svolgono interamente a Basilea"]
+    de: ["Im Bachelor 15 Plätze für Studierende der USI.", "Im Master jeweils 25 Plätze für Studierende der Universität Fribourg und der ETH Zürich."]
+    fr: ["En bachelor, 15 places pour les étudiant·e·s de l'USI.", "En master, 25 places chacune pour les étudiant·e·s de l'Université de Fribourg et de l'ETH Zurich."]
+    it: ["Nel bachelor 15 posti per studenti dell'USI.", "Nel master 25 posti ciascuno per studenti dell'Università di Friburgo e dell'ETH di Zurigo."]
+  studienbeginn: "20.09.2027"
+  semestergebuehr: "CHF 850"
   website: "https://www.unibas.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
   berichte_ort: "Basel"
 
 - slug: "bern"
   name: "Universität Bern"
-  kanton: { de: "Bern", fr: "Berne", it: "Berna" }
+  studienort:
+    de: "Bern"
+    fr: "Berne"
+    it: "Berna"
   sprache: ["Deutsch"]
-  studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Bachelor", "Master"]
+  plaetze_bachelor: "320"
+  plaetze_2_jahr: null
+  plaetze_master: "340"
+  wohnsitzvorteil:
+    de: "Ja – Wohnsitz im Kanton Bern"
+    fr: "Oui – domicile dans le canton de Berne"
+    it: "Sì – domicilio nel Cantone di Berna"
+  bachelor_orte:
+    de: ["Bern"]
+    fr: ["Berne"]
+    it: ["Berna"]
+  master_orte:
+    de: ["Bern"]
+    fr: ["Berne"]
+    it: ["Berna"]
   auswahlverfahren:
     de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
-  studienplaetze: null
-  besonderheiten: []
+  anmeldefrist: "15.02.2027"
+  besonderheiten:
+    de: ["Im Bachelor 15 Plätze für Studierende der USI."]
+    fr: ["En bachelor, 15 places pour les étudiant·e·s de l'USI."]
+    it: ["Nel bachelor 15 posti per studenti dell'USI."]
+  studienbeginn: "20.09.2027"
+  semestergebuehr: "CHF 850"
   website: "https://www.unibe.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
   berichte_ort: "Bern"
 
 - slug: "zuerich"
   name: "Universität Zürich"
-  kanton: { de: "Zürich", fr: "Zurich", it: "Zurigo" }
+  studienort:
+    de: "Zürich"
+    fr: "Zurich"
+    it: "Zurigo"
   sprache: ["Deutsch"]
-  studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Bachelor", "Master"]
+  plaetze_bachelor: "280"
+  plaetze_2_jahr: null
+  plaetze_master:
+    de: "385 (inkl. Luzerner und St. Galler Track sowie Chiropraktik)"
+    fr: "385 (y c. Luzerner et St. Galler Track ainsi que chiropratique)"
+    it: "385 (incl. Luzerner e St. Galler Track e chiropratica)"
+  wohnsitzvorteil:
+    de: "Ja – Wohnsitz im Kanton Zürich"
+    fr: "Oui – domicile dans le canton de Zurich"
+    it: "Sì – domicilio nel Cantone di Zurigo"
+  bachelor_orte:
+    de: ["Zürich"]
+    fr: ["Zurich"]
+    it: ["Zurigo"]
+  master_orte:
+    de: ["Zürich"]
+    fr: ["Zurich"]
+    it: ["Zurigo"]
   auswahlverfahren:
     de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten:
     de: ["Klinische Ausbildung teils auch in Kooperation mit Luzern oder St. Gallen möglich"]
     fr: ["Formation clinique possible en partie en coopération avec Lucerne ou Saint-Gall"]
     it: ["Formazione clinica possibile in parte in collaborazione con Lucerna o San Gallo"]
+  studienbeginn: "20.09.2027"
+  semestergebuehr: "CHF 720"
   website: "https://www.uzh.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus"
   berichte_ort: "Zürich"
 
 - slug: "eth-zuerich"
   name: "ETH Zürich"
-  kanton: { de: "Zürich", fr: "Zurich", it: "Zurigo" }
+  studienort:
+    de: "Zürich"
+    fr: "Zurich"
+    it: "Zurigo"
   sprache: ["Deutsch"]
-  studiengaenge: ["Bachelor"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Bachelor"]
+  plaetze_bachelor: "100"
+  plaetze_2_jahr: null
+  plaetze_master:
+    de: "0 (Master an einer anderen Universität)"
+    fr: "0 (master dans une autre université)"
+    it: "0 (master in un'altra università)"
+  wohnsitzvorteil:
+    de: "Nein – als eidgenössische Hochschule kein kantonaler Vorteil"
+    fr: "Non – en tant qu'école fédérale, pas d'avantage cantonal"
+    it: "No – in quanto politecnico federale, nessun vantaggio cantonale"
+  bachelor_orte:
+    de: ["Zürich (ETH)"]
+    fr: ["Zurich (ETH)"]
+    it: ["Zurigo (ETH)"]
+  master_orte:
+    de: ["Basel", "Zürich (UZH)", "Lugano (USI)"]
+    fr: ["Bâle", "Zurich (UZH)", "Lugano (USI)"]
+    it: ["Basilea", "Zurigo (UZH)", "Lugano (USI)"]
   auswahlverfahren:
     de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten:
     de: ["Nur Bachelor an der ETH. Der Master wird an der Universität Zürich (20 Plätze), der Universität Basel oder der Università della Svizzera italiana (Lugano) fortgesetzt - die Zuteilung erfolgt durch die ETH Zürich zu Beginn des dritten Bachelor-Jahres, der Studienplatz für den Master ist dank Transferabkommen garantiert."]
     fr: ["Seulement le bachelor à l'ETH. Le master se poursuit à l'Université de Zurich (20 places), à l'Université de Bâle ou à l'Università della Svizzera italiana (Lugano) – l'attribution est faite par l'ETH Zurich au début de la 3e année de bachelor ; la place en master est garantie par un accord de transfert."]
     it: ["Solo bachelor all'ETH. Il master prosegue all'Università di Zurigo (20 posti), all'Università di Basilea o all'Università della Svizzera italiana (Lugano) – l'assegnazione è fatta dall'ETH Zurigo all'inizio del 3° anno di bachelor; il posto per il master è garantito da un accordo di trasferimento."]
+  studienbeginn: "20.09.2027"
+  semestergebuehr: "CHF 730"
   website: "https://www.ethz.ch"
-  stand: "2026-08-08"
-  quelle: "https://ethz.ch/en/studies/bachelor/application/bachelor-human-medicine.html"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://ethz.ch/en/studies/bachelor/application/bachelor-human-medicine.html"
   berichte_ort: "Zürich"
 
 - slug: "freiburg"
   name: "Universität Freiburg"
-  kanton: { de: "Freiburg", fr: "Fribourg", it: "Friburgo" }
+  studienort:
+    de: "Freiburg"
+    fr: "Fribourg"
+    it: "Friburgo"
   sprache: ["Deutsch", "Français"]
-  studiengaenge: ["Bachelor"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Bachelor", "Master"]
+  plaetze_bachelor: "125"
+  plaetze_2_jahr: null
+  plaetze_master: "40"
+  wohnsitzvorteil:
+    de: "Ja – Wohnsitz im Kanton Freiburg"
+    fr: "Oui – domicile dans le canton de Fribourg"
+    it: "Sì – domicilio nel Cantone di Friburgo"
+  bachelor_orte:
+    de: ["Freiburg"]
+    fr: ["Fribourg"]
+    it: ["Friburgo"]
+  master_orte:
+    de: ["Freiburg", "Basel", "Bern", "Zürich"]
+    fr: ["Fribourg", "Bâle", "Berne", "Zurich"]
+    it: ["Friburgo", "Basilea", "Berna", "Zurigo"]
   auswahlverfahren:
     de: "Zulassung über den Eignungstest Medizinstudium (EMS); zweisprachiges Bachelor-Studium (Deutsch/Französisch)."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS) ; bachelor bilingue (allemand/français)."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS); bachelor bilingue (tedesco/francese)."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Nur Bachelor; Wechsel an eine andere Universität für den Master nötig"]
-    fr: ["Seulement le bachelor ; changement d'université nécessaire pour le master"]
-    it: ["Solo bachelor; per il master è necessario cambiare università"]
+    de: ["Master in Freiburg selbst (40 Plätze) oder an der Universität Basel, Bern oder Zürich."]
+    fr: ["Master à Fribourg même (40 places) ou à l'Université de Bâle, de Berne ou de Zurich."]
+    it: ["Master a Friburgo stessa (40 posti) o all'Università di Basilea, Berna o Zurigo."]
+  studienbeginn: "20.09.2027"
+  semestergebuehr: "CHF 720"
   website: "https://www.unifr.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.unifr.ch/med/fr/studies/bsc/med/admission.html"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.unifr.ch/med/fr/studies/bsc/med/admission.html"
   berichte_ort: "Freiburg"
 
 - slug: "genf"
   name: "Université de Genève"
-  kanton: { de: "Genf", fr: "Genève", it: "Ginevra" }
+  studienort:
+    de: "Genf"
+    fr: "Genève"
+    it: "Ginevra"
   sprache: ["Français"]
-  studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "nein"
+  studiengaenge: ["Bachelor", "Master"]
+  plaetze_bachelor:
+    de: "nicht beschränkt (ca. 450 Studierende)"
+    fr: "non limitées (env. 450 étudiant·e·s)"
+    it: "non limitati (ca. 450 studenti)"
+  plaetze_2_jahr: "158"
+  plaetze_master: "158"
+  wohnsitzvorteil:
+    de: "Entfällt – ohne Numerus clausus"
+    fr: "Sans objet – pas de numerus clausus"
+    it: "Non applicabile – nessun numerus clausus"
+  bachelor_orte:
+    de: ["Genf"]
+    fr: ["Genève"]
+    it: ["Ginevra"]
+  master_orte:
+    de: ["Genf"]
+    fr: ["Genève"]
+    it: ["Ginevra"]
   auswahlverfahren:
     de: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
     fr: "Accès libre à la 1re année de bachelor, sans EMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
     it: "Accesso libero al 1° anno di bachelor, senza EMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten: []
+  studienbeginn: "20.09.2027"
+  semestergebuehr: "CHF 500"
   website: "https://www.unige.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
   berichte_ort: ""
 
 - slug: "lausanne"
   name: "Université de Lausanne"
-  kanton: { de: "Waadt", fr: "Vaud", it: "Vaud" }
+  studienort:
+    de: "Lausanne"
+    fr: "Lausanne"
+    it: "Losanna"
   sprache: ["Français"]
-  studiengaenge: ["Bachelor", "Master"]
   ems_erforderlich: "nein"
+  studiengaenge: ["Bachelor", "Master"]
+  plaetze_bachelor:
+    de: "nicht beschränkt (ca. 500 Studierende)"
+    fr: "non limitées (env. 500 étudiant·e·s)"
+    it: "non limitati (ca. 500 studenti)"
+  plaetze_2_jahr: "270"
+  plaetze_master: "245"
+  wohnsitzvorteil:
+    de: "Entfällt – ohne Numerus clausus"
+    fr: "Sans objet – pas de numerus clausus"
+    it: "Non applicabile – nessun numerus clausus"
+  bachelor_orte:
+    de: ["Lausanne"]
+    fr: ["Lausanne"]
+    it: ["Losanna"]
+  master_orte:
+    de: ["Lausanne"]
+    fr: ["Lausanne"]
+    it: ["Losanna"]
   auswahlverfahren:
     de: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
     fr: "Accès libre à la 1re année de bachelor, sans EMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
     it: "Accesso libero al 1° anno di bachelor, senza EMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten: []
+  studienbeginn: "21.09.2027"
+  semestergebuehr: "CHF 580"
   website: "https://www.unil.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-sans-numerus-clausus"
   berichte_ort: ""
 
 - slug: "lugano"
   name: "Università della Svizzera italiana (USI)"
-  kanton: { de: "Tessin", fr: "Tessin", it: "Ticino" }
+  studienort: "Lugano"
   sprache: ["Italiano"]
-  studiengaenge: ["Master"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Master"]
+  plaetze_bachelor:
+    de: "30 (je 15 in Basel und Bern)"
+    fr: "30 (15 chacune à Bâle et à Berne)"
+    it: "30 (15 ciascuno a Basilea e Berna)"
+  plaetze_2_jahr: null
+  plaetze_master: null
+  wohnsitzvorteil: null
+  bachelor_orte:
+    de: ["Basel", "Bern"]
+    fr: ["Bâle", "Berne"]
+    it: ["Basilea", "Berna"]
+  master_orte: ["Lugano"]
   auswahlverfahren:
-    de: "EMS-Zulassung für die national geregelten Bachelor-Plätze; das Bachelor-Studium wird vollständig an der Universität Basel absolviert (dort auf Deutsch), der Master anschliessend an der USI in Lugano auf Italienisch."
-    fr: "Admission via l'EMS pour les places de bachelor réglées au niveau national ; le bachelor se fait entièrement à l'Université de Bâle (en allemand), le master ensuite à l'USI à Lugano, en italien."
-    it: "Ammissione tramite l'EMS per i posti di bachelor regolati a livello nazionale; il bachelor si svolge interamente all'Università di Basilea (in tedesco), il master poi all'USI a Lugano, in italiano."
-  studienplaetze: null
+    de: "EMS-Zulassung für die national geregelten Bachelor-Plätze; das Bachelor-Studium wird vollständig an der Universität Basel oder Universität Bern absolviert (dort auf Deutsch), der Master anschliessend an der USI in Lugano auf Italienisch."
+    fr: "Admission via l'EMS pour les places de bachelor réglées au niveau national ; le bachelor se fait entièrement à l'Université de Bâle ou de Berne (en allemand), le master ensuite à l'USI à Lugano, en italien."
+    it: "Ammissione tramite l'EMS per i posti di bachelor regolati a livello nazionale; il bachelor si svolge interamente all'Università di Basilea o di Berna (in tedesco), il master poi all'USI a Lugano, in italiano."
+  anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Eigener Bachelor-Abschluss berechtigt zum Master an der USI"]
-    fr: ["Le bachelor obtenu donne accès au master à l'USI"]
-    it: ["Il bachelor conseguito dà accesso al master all'USI"]
+    de: ["Der Bachelor-Abschluss berechtigt zum Master an der USI.", "Im Bachelor jeweils 15 Gaststudierende in Basel und Bern.", "Im Master zusätzlich 50 Plätze für Studierende der ETH."]
+    fr: ["Le bachelor obtenu donne accès au master à l'USI.", "En bachelor, 15 étudiant·e·s hôtes chacun à Bâle et à Berne.", "En master, 50 places supplémentaires pour les étudiant·e·s de l'ETH."]
+    it: ["Il bachelor conseguito dà accesso al master all'USI.", "Nel bachelor 15 studenti ospiti ciascuno a Basilea e a Berna.", "Nel master altri 50 posti per studenti dell'ETH."]
+  studienbeginn: "20.09.2027"
+  semestergebuehr:
+    de: "Bachelor CHF 850 (Basel oder Bern), Master CHF 2000 (USI)"
+    fr: "Bachelor CHF 850 (Bâle ou Berne), master CHF 2000 (USI)"
+    it: "Bachelor CHF 850 (Basilea o Berna), master CHF 2000 (USI)"
   website: "https://www.usi.ch"
-  stand: "2026-08-07"
-  quelle: "https://www.biomed.usi.ch/it/studiare/studiare-medicina/master-in-medicina/ammissione"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.biomed.usi.ch/it/studiare/studiare-medicina/master-in-medicina/ammissione"
   berichte_ort: ""
 
 - slug: "neuenburg"
   name: "Université de Neuchâtel"
-  kanton: { de: "Neuenburg", fr: "Neuchâtel", it: "Neuchâtel" }
+  studienort:
+    de: "Neuenburg"
+    fr: "Neuchâtel"
+    it: "Neuchâtel"
   sprache: ["Français"]
-  studiengaenge: ["Bachelor"]
   ems_erforderlich: "nein"
+  studiengaenge: ["Bachelor"]
+  plaetze_bachelor:
+    de: "nicht beschränkt (ca. 70 Studierende)"
+    fr: "non limitées (env. 70 étudiant·e·s)"
+    it: "non limitati (ca. 70 studenti)"
+  plaetze_2_jahr:
+    de: "0 (Wechsel nach Genf oder Lausanne)"
+    fr: "0 (passage à Genève ou Lausanne)"
+    it: "0 (passaggio a Ginevra o Losanna)"
+  plaetze_master: null
+  wohnsitzvorteil:
+    de: "Entfällt – ohne Numerus clausus"
+    fr: "Sans objet – pas de numerus clausus"
+    it: "Non applicabile – nessun numerus clausus"
+  bachelor_orte:
+    de: ["Neuenburg (1. Jahr)", "Genf oder Lausanne (ab 2. Jahr)"]
+    fr: ["Neuchâtel (1re année)", "Genève ou Lausanne (dès la 2e année)"]
+    it: ["Neuchâtel (1° anno)", "Ginevra o Losanna (dal 2° anno)"]
+  master_orte:
+    de: ["Genf", "Lausanne"]
+    fr: ["Genève", "Lausanne"]
+    it: ["Ginevra", "Losanna"]
   auswahlverfahren:
     de: "Bietet nur das 1. Bachelor-Jahr an, kein EMS. Übertritt ins 2. Jahr an der Uni Genf oder Lausanne erfordert das Bestehen von deren Eliminationsprüfung."
     fr: "Seule la 1re année de bachelor est proposée, sans EMS. Le passage en 2e année à Genève ou à Lausanne exige la réussite de leur examen éliminatoire."
     it: "Offre solo il 1° anno di bachelor, senza EMS. Il passaggio al 2° anno a Ginevra o Losanna richiede il superamento del loro esame eliminatorio."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten:
     de: ["Nur 1. Studienjahr; danach zwingender Wechsel nach Genf oder Lausanne"]
     fr: ["Seulement la 1re année ; ensuite changement obligatoire à Genève ou Lausanne"]
     it: ["Solo il 1° anno; poi passaggio obbligatorio a Ginevra o Losanna"]
+  studienbeginn: "21.09.2027"
+  semestergebuehr: "CHF 515"
   website: "https://www.unine.ch"
-  stand: "2026-08-09"
-  quelle: "https://www.unine.ch/formation/bachelor-of-science-en-medecine-humaine"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.unine.ch/formation/bachelor-of-science-en-medecine-humaine"
   berichte_ort: ""
 
 - slug: "luzern"
   name: "Universität Zürich - Luzerner Track"
-  kanton: { de: "Luzern", fr: "Lucerne", it: "Lucerna" }
+  studienort:
+    de: "Bachelor Zürich, Master Luzern"
+    fr: "Bachelor à Zurich, master à Lucerne"
+    it: "Bachelor a Zurigo, master a Lucerna"
   sprache: ["Deutsch"]
-  studiengaenge: ["Master"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Master"]
+  plaetze_bachelor: "40"
+  plaetze_2_jahr: null
+  plaetze_master: null
+  wohnsitzvorteil: null
+  bachelor_orte:
+    de: ["Zürich"]
+    fr: ["Zurich"]
+    it: ["Zurigo"]
+  master_orte:
+    de: ["Luzern (gemeinsam mit Zürich)"]
+    fr: ["Lucerne (avec Zurich)"]
+    it: ["Lucerna (con Zurigo)"]
   auswahlverfahren:
     de: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'Luzerner Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in Luzern studiert."
     fr: "Pas de bachelor propre : l'admission se fait via l'EMS pour le « Luzerner Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Lucerne, conjointement avec l'Université de Zurich."
     it: "Nessun bachelor proprio: l'ammissione avviene tramite l'EMS per il «Luzerner Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a Lucerna, insieme all'Università di Zurigo."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'Luzerner Track' an der Universität Zürich", "Schwerpunkt hausärztliche und psychiatrische Grundversorgung"]
+    de: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'Luzerner Track' an der Universität Zürich"]
     fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « Luzerner Track » de l'Université de Zurich", "Accent sur la médecine de famille et les soins psychiatriques de base"]
     it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite il «Luzerner Track» dell'Università di Zurigo", "Accento sulla medicina di famiglia e sulle cure psichiatriche di base"]
+  studienbeginn: "20.09.2027"
+  semestergebuehr:
+    de: "Bachelor CHF 720 (Universität Zürich)"
+    fr: "Bachelor CHF 720 (Université de Zurich)"
+    it: "Bachelor CHF 720 (Università di Zurigo)"
   website: "https://www.unilu.ch"
-  stand: "2026-08-08"
-  quelle: "https://www.unilu.ch/studium/studienangebot/master/gmf/medizin/"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.unilu.ch/studium/studienangebot/master/gmf/medizin/"
   berichte_ort: "Luzern"
 
 - slug: "st-gallen"
   name: "Universität Zürich - St. Galler Track"
-  kanton: { de: "St. Gallen", fr: "Saint-Gall", it: "San Gallo" }
+  studienort:
+    de: "Bachelor Zürich, Master St. Gallen"
+    fr: "Bachelor à Zurich, master à Saint-Gall"
+    it: "Bachelor a Zurigo, master a San Gallo"
   sprache: ["Deutsch"]
-  studiengaenge: ["Master"]
   ems_erforderlich: "ja"
+  studiengaenge: ["Master"]
+  plaetze_bachelor: "40"
+  plaetze_2_jahr: null
+  plaetze_master: null
+  wohnsitzvorteil: null
+  bachelor_orte:
+    de: ["Zürich"]
+    fr: ["Zurich"]
+    it: ["Zurigo"]
+  master_orte:
+    de: ["St. Gallen (gemeinsam mit Zürich)"]
+    fr: ["Saint-Gall (avec Zurich)"]
+    it: ["San Gallo (con Zurigo)"]
   auswahlverfahren:
     de: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'St.Galler Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in St.Gallen studiert."
     fr: "Pas de bachelor propre : l'admission se fait via l'EMS pour le « St.Galler Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Saint-Gall, conjointement avec l'Université de Zurich."
     it: "Nessun bachelor proprio: l'ammissione avviene tramite l'EMS per lo «St.Galler Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a San Gallo, insieme all'Università di Zurigo."
-  studienplaetze: null
+  anmeldefrist: "15.02.2027"
   besonderheiten:
     de: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'St.Galler Track' an der Universität Zürich"]
     fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « St.Galler Track » de l'Université de Zurich"]
     it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite lo «St.Galler Track» dell'Università di Zurigo"]
+  studienbeginn: "20.09.2027"
+  semestergebuehr:
+    de: "Bachelor CHF 720 (Universität Zürich)"
+    fr: "Bachelor CHF 720 (Université de Zurich)"
+    it: "Bachelor CHF 720 (Università di Zurigo)"
   website: "https://www.unisg.ch"
-  stand: "2026-08-08"
-  quelle: "https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium/zulassungsverfahren-mit-numerus-clausus"
-  # --- Felder unten am 2026-09-08 ergaenzt, absichtlich noch leer ---------
-  # Bitte auf den offiziellen Seiten nachschlagen und eintragen; solange ein
-  # Feld null ist, erscheint es auf der Website gar nicht (statt mit einem
-  # erfundenen Wert). Siehe Feldbeschreibung im Kopf dieser Datei.
   website_medizin: null
-  anmeldefrist: null
-  studienbeginn: null
-  semestergebuehr: null
-  # Verknuepfung zu den Erfahrungsberichten: der Wert, der in den Berichten im
-  # Feld "ort" steht. Leer lassen, wenn es zu diesem Ort keine Berichte gibt.
+  stand: "2026-09-30"
+  quelle: "https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium/zulassungsverfahren-mit-numerus-clausus"
   berichte_ort: ""

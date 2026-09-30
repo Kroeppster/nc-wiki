@@ -35,7 +35,7 @@
        in der Reihenfolge, in der sie in data/faq.yaml zum ersten Mal auftauchen. */ -}}
 {{- $categories := slice }}
 {{- range $faq }}
-  {{- $cat := index .category $lang }}
+  {{- $cat := partial "uni-text.html" .category }}
   {{- if not (in $categories $cat) }}{{ $categories = $categories | append $cat }}{{ end }}
 {{- end }}
 
@@ -46,11 +46,11 @@
     <h2>{{ $cat }}</h2>
     {{- /* Alle Fragen ausgeben, die zu dieser Kategorie gehören */ -}}
     {{- range $faq }}
-    {{- if eq (index .category $lang) $cat }}
+    {{- if eq (partial "uni-text.html" .category) $cat }}
     <details class="faq-item">
-      <summary>{{ index .question $lang }}</summary>
+      <summary>{{ partial "uni-text.html" .question }}</summary>
       <div class="faq-answer">
-        <p>{{ index .answer $lang }}</p>
+        <p>{{ partial "uni-text.html" .answer }}</p>
         {{- /* Nur bei der einen speziellen Frage: die Übungsaufgaben-Themen
                live aus data/subtests.yaml anhängen (siehe Erklärung oben) */ -}}
         {{- if eq .dynamic "subtests" }}
@@ -61,7 +61,10 @@
         </ol>
         {{- end }}
         {{- with .link }}
-        <a class="more" href="{{ relLangURL .href }}">{{ index .label $lang }}</a>
+        {{- $href := .href }}
+        {{- with partial "uni-text.html" .label }}
+        <a class="more" href="{{ relLangURL $href }}">{{ . }}</a>
+        {{- end }}
         {{- end }}
       </div>
     </details>
@@ -86,7 +89,7 @@
        angezeigt. */ -}}
 {{- $faqEntities := slice }}
 {{- range $faq }}
-  {{- $answerText := index .answer $lang }}
+  {{- $answerText := partial "uni-text.html" .answer }}
   {{- if eq .dynamic "subtests" }}
     {{- $names := slice }}
     {{- range $subtests }}{{ $names = $names | append (index . $lang) }}{{ end }}
@@ -94,7 +97,7 @@
   {{- end }}
   {{- $faqEntities = $faqEntities | append (dict
     "@type" "Question"
-    "name" (index .question $lang)
+    "name" (partial "uni-text.html" .question)
     "acceptedAnswer" (dict "@type" "Answer" "text" $answerText)
   ) }}
 {{- end }}

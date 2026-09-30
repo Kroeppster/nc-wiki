@@ -1,0 +1,30 @@
+{{- /*
+  Eine Angabe einer Uni als fertiges HTML (oder "" wenn leer), passend zur
+  "art" der Spalte in data/uniguide-spalten.yaml. Für Tabelle, Vergleich und
+  Uni-Seite gleich, damit eine neue Spalte überall gleich aussieht.
+  Aufruf: partial "uni-wert.html" (dict "uni" $uni "spalte" $spalte) | safeHTML
+*/ -}}
+{{- $s := .spalte -}}
+{{- $w := partial "uni-text.html" (index .uni $s.feld) -}}
+{{- $raus := "" -}}
+{{- if $w -}}
+  {{- $art := $s.art | default "text" -}}
+  {{- if eq $art "name" -}}
+    {{- $raus = printf "<a href=\"%s\">%s</a>" (printf "ems/uniguide/%s/" .uni.slug | relLangURL) (htmlEscape $w) -}}
+  {{- else if eq $art "ems" -}}
+    {{- $raus = printf "<span class=\"badge badge-%s\">%s</span>" (htmlEscape $w) (i18n (printf "ems_status_%s" $w)) -}}
+  {{- else if eq $art "sprachen" -}}
+    {{- $raus = htmlEscape (partial "uni-sprachen.html" $w) -}}
+  {{- else if eq $art "link" -}}
+    {{- $raus = printf "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">%s</a>" (htmlEscape $w) (htmlEscape $w) -}}
+  {{- else if and (eq $art "punkte") (reflect.IsSlice $w) -}}
+    {{- $li := "" -}}
+    {{- range $w }}{{ $li = printf "%s<li>%s</li>" $li (htmlEscape .) }}{{ end -}}
+    {{- $raus = printf "<ul class=\"detail-list\">%s</ul>" $li -}}
+  {{- else if reflect.IsSlice $w -}}
+    {{- $raus = htmlEscape (delimit $w ", ") -}}
+  {{- else -}}
+    {{- $raus = htmlEscape (string $w) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $raus -}}

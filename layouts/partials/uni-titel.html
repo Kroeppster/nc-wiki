@@ -1,0 +1,7 @@
+{{- /* Spaltenname aus data/uniguide-spalten.yaml in der Sprache der Seite
+       (sonst Deutsch, sonst der Feldname). Auch für "hinweis" nutzbar:
+       partial "uni-titel.html" $spalte.hinweis */ -}}
+{{- $t := . -}}
+{{- if reflect.IsMap $t }}{{ with index $t "titel" }}{{ $t = . }}{{ end }}{{ end -}}
+{{- if reflect.IsMap $t }}{{ $t = or (index $t site.Language.Lang) (index $t "de") "" }}{{ end -}}
+{{- return $t -}}

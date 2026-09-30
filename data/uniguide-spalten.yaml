@@ -1,0 +1,217 @@
+# ============================================================================
+# UNIGUIDE-SPALTEN: welche Angaben es zu jeder Universität gibt
+# ============================================================================
+# Die Werte selbst stehen in data/unis.yaml. Diese Datei legt fest, WELCHE
+# Angaben es gibt, wie sie heissen und wo sie erscheinen - in der Tabelle, im
+# Vergleich, auf der Uni-Seite und als Spalte im Blatt "Uniguide – Ansicht" der
+# Textmappen. Die Reihenfolge hier ist die Reihenfolge überall.
+#
+# Die Textmappe schreibt diese Datei selbst, wenn dort ein Spaltenname
+# geändert, eine Spalte angelegt oder gelöscht oder die Zeile "Anzeige"
+# geändert wird. Kommentare zwischen den Einträgen gehen dabei verloren - nur
+# dieser Kopf bleibt.
+#
+# Felder je Spalte:
+#   feld     - technischer Name in data/unis.yaml (nicht ändern, sonst sind
+#              die Werte weg)
+#   titel    - Spaltenname je Sprache
+#   art      - text (ein Satz), liste (mit Komma), punkte (je einer pro
+#              Zeile), link, ems (ja/nein/teilweise), sprachen (Deutsch,
+#              Français, Italiano), name (Name der Uni, mit Link)
+#   sprachabhaengig - true: Wert je Sprache ({de: …, fr: …, it: …})
+#   tabelle  - true: eigene Spalte in der grossen Tabelle
+#   bereich  - wo auf der Uni-Seite und im Vergleich: zulassung, studium,
+#              quellen, fuss (klein unten: Stand, Quelle) oder aus (nirgends
+#              auf der Website, nur in der Textmappe)
+#   fest     - true: wird von der Website gebraucht, lässt sich in der
+#              Textmappe nicht löschen
+#   fehlt    - true: ist der Wert leer, steht die Angabe auf der Uni-Seite
+#              unter "Diese Angaben fehlen noch"
+#   hinweis  - kleine Quellenangabe unter der Tabelle bzw. beim Wert, je
+#              Sprache
+#   breite   - Spaltenbreite in der Textmappe (Zeichen)
+# ============================================================================
+
+
+- feld: name
+  titel: {de: "Universität", fr: "Université", it: "Università"}
+  art: name
+  tabelle: true
+  bereich: aus
+  fest: true
+  breite: 24
+
+- feld: studienort
+  titel: {de: "Studienort", fr: "Lieu d'études", it: "Sede di studio"}
+  art: text
+  sprachabhaengig: true
+  tabelle: true
+  bereich: studium
+  breite: 18
+
+- feld: sprache
+  titel: {de: "Sprache", fr: "Langue", it: "Lingua"}
+  art: sprachen
+  tabelle: true
+  bereich: studium
+  fest: true
+  breite: 16
+
+- feld: ems_erforderlich
+  titel: {de: "EMS", fr: "EMS", it: "EMS"}
+  art: ems
+  tabelle: true
+  bereich: zulassung
+  fest: true
+  breite: 11
+
+- feld: studiengaenge
+  titel: {de: "Studiengänge", fr: "Filières", it: "Corsi di laurea"}
+  art: liste
+  tabelle: true
+  bereich: studium
+  fest: true
+  breite: 15
+
+- feld: plaetze_bachelor
+  titel: {de: "Plätze Bachelor (1. Jahr)", fr: "Places bachelor (1re année)", it: "Posti bachelor (1° anno)"}
+  art: text
+  sprachabhaengig: true
+  tabelle: true
+  bereich: zulassung
+  fehlt: true
+  hinweis:
+    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18.08.2025)"
+    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18.08.2025)"
+    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18.08.2025)"
+  breite: 18
+
+- feld: plaetze_2_jahr
+  titel: {de: "Plätze 2. Jahr", fr: "Places 2e année", it: "Posti 2° anno"}
+  art: text
+  sprachabhaengig: true
+  tabelle: false
+  bereich: zulassung
+  hinweis:
+    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18.08.2025)"
+    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18.08.2025)"
+    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18.08.2025)"
+  breite: 16
+
+- feld: plaetze_master
+  titel: {de: "Plätze Master (1. Jahr)", fr: "Places master (1re année)", it: "Posti master (1° anno)"}
+  art: text
+  sprachabhaengig: true
+  tabelle: false
+  bereich: zulassung
+  hinweis:
+    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18.08.2025)"
+    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18.08.2025)"
+    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18.08.2025)"
+  breite: 18
+
+- feld: wohnsitzvorteil
+  titel: {de: "Wohnsitzvorteil", fr: "Avantage du domicile", it: "Vantaggio del domicilio"}
+  art: text
+  sprachabhaengig: true
+  tabelle: false
+  bereich: zulassung
+  fehlt: true
+  breite: 26
+
+- feld: bachelor_orte
+  titel: {de: "Bachelor in", fr: "Bachelor à", it: "Bachelor a"}
+  art: liste
+  sprachabhaengig: true
+  tabelle: false
+  bereich: studium
+  fest: true
+  breite: 20
+
+- feld: master_orte
+  titel: {de: "Master in", fr: "Master à", it: "Master a"}
+  art: liste
+  sprachabhaengig: true
+  tabelle: false
+  bereich: studium
+  fest: true
+  breite: 20
+
+- feld: auswahlverfahren
+  titel: {de: "Auswahlverfahren", fr: "Procédure de sélection", it: "Procedura di selezione"}
+  art: text
+  sprachabhaengig: true
+  tabelle: false
+  bereich: zulassung
+  breite: 46
+
+- feld: anmeldefrist
+  titel: {de: "Anmeldefrist", fr: "Délai d'inscription", it: "Termine d'iscrizione"}
+  art: text
+  sprachabhaengig: true
+  tabelle: false
+  bereich: zulassung
+  fehlt: true
+  breite: 16
+
+- feld: besonderheiten
+  titel: {de: "Besonderheiten", fr: "Particularités", it: "Particolarità"}
+  art: punkte
+  sprachabhaengig: true
+  tabelle: false
+  bereich: studium
+  breite: 46
+
+- feld: studienbeginn
+  titel: {de: "Studienbeginn", fr: "Début des études", it: "Inizio degli studi"}
+  art: text
+  sprachabhaengig: true
+  tabelle: false
+  bereich: studium
+  fehlt: true
+  breite: 16
+
+- feld: semestergebuehr
+  titel: {de: "Semestergebühr", fr: "Taxe semestrielle", it: "Tassa semestrale"}
+  art: text
+  sprachabhaengig: true
+  tabelle: false
+  bereich: studium
+  fehlt: true
+  hinweis:
+    de: "pro Semester für Studierende mit Schweizer Vorbildung, ohne Pflichtbeiträge; Stand Studienjahr 2026/27"
+    fr: "par semestre pour les personnes avec formation préalable suisse, sans contributions obligatoires ; état année académique 2026/27"
+    it: "per semestre per chi ha una formazione preliminare svizzera, senza contributi obbligatori; stato anno accademico 2026/27"
+  breite: 18
+
+- feld: website
+  titel: {de: "Website der Universität", fr: "Site de l'université", it: "Sito dell'università"}
+  art: link
+  tabelle: false
+  bereich: quellen
+  fest: true
+  breite: 26
+
+- feld: website_medizin
+  titel: {de: "Medizinische Fakultät", fr: "Faculté de médecine", it: "Facoltà di medicina"}
+  art: link
+  tabelle: false
+  bereich: quellen
+  fehlt: true
+  breite: 26
+
+- feld: stand
+  titel: {de: "Stand", fr: "État", it: "Stato"}
+  art: text
+  tabelle: false
+  bereich: fuss
+  fest: true
+  breite: 12
+
+- feld: quelle
+  titel: {de: "Quelle", fr: "Source", it: "Fonte"}
+  art: link
+  tabelle: false
+  bereich: fuss
+  fest: true
+  breite: 30

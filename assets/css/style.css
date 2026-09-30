@@ -771,6 +771,12 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .uni-reports-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));}
 .uni-stand a{text-decoration:underline;}
 
+/* Uniguide: Quellenhinweise unter der Tabelle bzw. auf der Uni-Seite */
+.uniguide-hinweise{margin:var(--space-3) 0 0;padding-left:1.2rem;font-size:var(--text-xs);color:var(--color-ink-faint);}
+.uni-hinweise{list-style:none;padding:0;margin:0 0 var(--space-6);}
+.uniguide-table td.zelle-umbruch{white-space:normal;min-width:9rem;}
+.uniguide-table th sup a{text-decoration:none;color:inherit;}
+
 /* Q&A */
 .faq{margin-top:var(--space-6);max-width:44rem;}
 .faq-category{margin-bottom:var(--space-10);}

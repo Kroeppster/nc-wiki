@@ -182,24 +182,50 @@ Code: `scripts/texte_ansicht.py`.
 ### Uniguide-Blatt
 
 „Uniguide – Ansicht“ zeigt die ganze Tabelle aus `data/unis.yaml`: je Uni eine Zeile,
-je Angabe eine Spalte (Name, Kanton, Sprachen, Studiengänge, EMS, Zulassungsverfahren,
-Besonderheiten, Studienplätze, Anmeldefrist, Studienbeginn, Semestergebühr, Links, Stand,
-Quelle).
+je Angabe eine Spalte. Welche Spalten es gibt, wie sie heissen und wo sie erscheinen,
+steht in `data/uniguide-spalten.yaml` – und lässt sich direkt im Blatt ändern:
 
-- **Grüne Spaltenköpfe** (Kanton, Zulassungsverfahren, Besonderheiten, Anmeldefrist,
-  Studienbeginn, Semestergebühr) sind Texte und gelten nur für die Sprache der Mappe.
-  Fehlt eine Übersetzung, zeigt die Website den deutschen Text.
-- **Dunkle Spaltenköpfe** gelten für alle Sprachen und lassen sich in jeder Mappe ändern.
-- Mehrere Besonderheiten: je eine pro Zeile in der Zelle. Sprachen mit Komma, in jeder
-  Schreibweise („deutsch, français“). EMS: ja / nein / teilweise. Studienplätze: nur die
-  Zahl. Links mit `https://`.
-- Leere Zelle löscht nichts, `!Löschen!` leert das Feld. Ungültige Eingaben (keine Zahl,
-  kein Link …) werden nicht übernommen und im Bericht genannt.
+- **Spalte umbenennen:** den Namen in Zeile 4 überschreiben (gilt für die Sprache der
+  Mappe; die kleine Hilfezeile darunter darf stehen bleiben oder weg).
+- **Spalte löschen:** `!Löschen!` in Zeile 4 – die Spalte verschwindet samt allen Werten.
+  Spalten, die die Website braucht (Name, Sprache, EMS, Studiengänge, Bachelor/Master in,
+  Website, Stand, Quelle), lassen sich nur umbenennen; der Kommentar im Kopf sagt es.
+- **Anzeige (Zeile 5):** *Tabelle* = eigene Spalte in der grossen Tabelle, *Seite* = nur auf
+  der Uni-Seite und im Vergleich, *aus* = nirgends (bleibt nur in der Mappe).
+- **Neue Spalte:** rechts sind drei graue, leere Spalten. Namen in Zeile 4 eintragen, Werte
+  darunter – daraus wird eine neue Angabe (Text je Sprache, auf der Uni-Seite unter
+  „Studium & Standort“). Werte ohne Spaltennamen werden nicht übernommen.
+- **Grüne Spaltenköpfe** sind Texte je Sprache und gelten nur für die Sprache der Mappe.
+  Fehlt eine Übersetzung, zeigt die Website den deutschen Text. **Dunkle Spaltenköpfe**
+  gelten für alle Sprachen.
+- Werte sind freier Text – auch bei den Studienplätzen („nicht beschränkt (ca. 450
+  Studierende)“ geht). Mehrere Besonderheiten: je eine pro Zeile. Listen (Studiengänge,
+  Bachelor in, Master in) mit Komma. Sprachen in jeder Schreibweise („deutsch,
+  français“). EMS: ja / nein / teilweise. Links mit `https://`.
+- Leere Zelle löscht nichts, `!Löschen!` leert das Feld. Ungültige Eingaben werden nicht
+  übernommen und im Bericht genannt.
 - Beim Einlesen ändert sich in `data/unis.yaml` nur genau das Feld; die Kommentare bleiben.
 - Nur eintragen, was auf einer offiziellen Seite steht, und dann „Stand“ und „Quelle“
   mitändern. Eine neue Uni anlegen geht nicht über die Mappe (siehe [9](#9-faq-uniguide-untertests-download-namen)).
 
 Code: `scripts/texte_uniguide.py`.
+
+### Q&A-Blatt
+
+„Q&A – Ansicht“ zeigt alle Fragen aus `data/faq.yaml`: je Frage eine Zeile mit Kategorie,
+Frage, Antwort, Link-Ziel und Link-Text.
+
+- **Neue Frage:** unten stehen fünf leere Zeilen. Frage und Antwort eintragen, Kategorie aus
+  der Auswahlliste wählen (oder eine neue schreiben). Die Frage erscheint am Ende ihrer
+  Kategorie. In den anderen Sprachen steht bis zur Übersetzung der deutsche Text – in der
+  FR/IT-Mappe ist die Zeile dann leer und lässt sich ausfüllen.
+- **Frage löschen:** `!Löschen!` in die Zelle „Frage“ – die Frage verschwindet in allen
+  Sprachen.
+- **Link-Ziel:** Pfad einer eigenen Seite, z. B. `/ems/uniguide`. Gibt es die Seite nicht,
+  wird der Link nicht übernommen und gemeldet.
+- Antworten sind reiner Text ohne Formatierung (sie landen auch im Datenblock für
+  Suchmaschinen).
+
 
 ### Was beim Einlesen passiert
 
@@ -513,33 +539,49 @@ Logos bekommen automatisch einen hellen Hintergrund-Chip (`.sponsor-logo`).
 
 ### FAQ (`data/faq.yaml`)
 
+Am einfachsten über das Blatt „Q&A – Ansicht“ der Textmappe ([3](#3-textmappen-excel-im-detail)). In der Datei:
+
 ```yaml
 - id: "eindeutige-kurzbezeichnung"
-  frage:   { de: "…?", fr: "… ?", it: "…?" }
-  antwort: { de: "…",  fr: "…",   it: "…" }
+  category: { de: "…", fr: "…", it: "…" }
+  question:
+    de: "…?"
+  answer:
+    de: "…"
+  link:
+    href: "ems/uniguide/"
+    label:
+      de: "…"
 ```
 
-Reihenfolge in der Datei = Reihenfolge auf der Seite. Die Frage „Welche Untertests gibt
-es?“ hängt automatisch die Liste aus `data/subtests.yaml` an (`dynamic: subtests`); der
-Satz davor („9 Untertests“) steht fest in der FAQ.
+Die Seite gruppiert nach Kategorie, in der Reihenfolge der Datei. Die Frage „Welche
+Untertests gibt es?“ hängt automatisch die Liste aus `data/subtests.yaml` an
+(`dynamic: subtests`); der Satz davor („9 Untertests“) steht fest in der FAQ.
 
-### Uniguide (`data/unis.yaml`)
+### Uniguide (`data/unis.yaml`, `data/uniguide-spalten.yaml`)
 
-Eine Datei speist die Tabelle `/ems/uniguide/`, jede Uni-Seite und den Vergleich. Jede Uni
-braucht zusätzlich eine fast leere Seite `content/<sprache>/ems/uniguide/<slug>.md` mit
-`title` und `uni_slug`. Bearbeiten am einfachsten über das Blatt „Uniguide – Ansicht“ der
-Textmappe ([3](#3-textmappen-excel-im-detail)). `kanton`, `auswahlverfahren` und `besonderheiten` stehen je Sprache
-(`de:`/`fr:`/`it:`), die Namen der Unterrichtssprachen kommen aus `i18n` (`sprache_…`).
+Die Werte stehen in `data/unis.yaml`; welche Angaben es gibt, wie sie heissen, ob sie als
+Spalte in der Tabelle, nur auf der Uni-Seite oder gar nicht erscheinen und in welchem
+Abschnitt der Uni-Seite, steht in `data/uniguide-spalten.yaml` (Feldbeschreibung im Kopf
+der Datei). Tabelle, Vergleich und Uni-Seite bauen sich daraus von selbst – eine neue Spalte
+braucht keinen Code. Jede Uni braucht zusätzlich eine fast leere Seite
+`content/<sprache>/ems/uniguide/<slug>.md` mit `title` und `uni_slug`. Bearbeiten am
+einfachsten über das Blatt „Uniguide – Ansicht“ der Textmappe ([3](#3-textmappen-excel-im-detail)).
 
-**Nichts schätzen.** Felder wie `website_medizin`, `anmeldefrist`, `studienbeginn`,
-`semestergebuehr`, `studienplaetze` bleiben `null`, bis der Wert auf einer offiziellen
-Seite steht – dann `stand` (Datum) und `quelle` (Link) mitändern. Leere Felder erscheinen
-nicht; stattdessen zeigt die Uni-Seite den Kasten „Diese Angaben fehlen noch“.
+Ein einfacher Wert (`semestergebuehr: "CHF 850"`) gilt für alle Sprachen, sonst je Sprache
+(`de:`/`fr:`/`it:`). Die Namen der Unterrichtssprachen kommen aus `i18n` (`sprache_…`).
+„Studienort“ ist die Stadt; der Wohnsitzvorteil hat eine eigene Spalte; „Bachelor in“ und
+„Master in“ zeigen, wo die beiden Stufen studiert werden.
+
+**Nichts schätzen.** Ein Feld bleibt `null`, bis der Wert auf einer offiziellen Seite
+steht – dann `stand` (Datum) und `quelle` (Link) mitändern. Die Studienplätze stammen aus
+der Aufnahmekapazität von swissuniversities (Quellenhinweis in der Spalte `hinweis`).
+Leere Felder erscheinen nicht; Spalten mit `fehlt: true` stehen dann im Kasten „Diese
+Angaben fehlen noch“ auf der Uni-Seite.
 
 `berichte_ort` muss genau dem `ort:` der Erfahrungsberichte entsprechen; dann erscheinen
 die drei neuesten Berichte auf der Uni-Seite. Im Vergleich lassen sich bis zu vier Unis
-nebeneinander stellen (`var MAX = 4` in `layouts/partials/uniguide-table.html`; weitere
-Zeilen im Abschnitt „VERGLEICHSANSICHT“ – Entwickler-Schritt).
+nebeneinander stellen (`var MAX = 4` in `layouts/partials/uniguide-table.html`).
 
 ### Untertests (`data/subtests.yaml`)
 

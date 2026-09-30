@@ -24,8 +24,6 @@
       Zeilen angezeigt - sie tauchen nur in diesem Hinweis auf.
   ============================================================================
 */}}
-{{- /* "Ja"/"Nein"/"Teilweise" in der richtigen Sprache, für die EMS-Pflicht-Angabe unten */ -}}
-{{- $emsLabels := dict "ja" (i18n "ems_status_ja") "nein" (i18n "ems_status_nein") "teilweise" (i18n "ems_status_teilweise") }}
 
 {{- /* Die passende Universität aus data/unis.yaml heraussuchen, anhand des
        "slug" im Frontmatter dieser Seite (z.B. "basel"). */ -}}
@@ -40,66 +38,48 @@
 <p class="download-empty">{{ i18n "uni_detail_not_found" }}</p>
 {{ else }}
 
+{{- /* Welche Angaben in welchem Block stehen und wie sie heissen:
+       data/uniguide-spalten.yaml ("bereich"). Leere Angaben erscheinen nicht
+       als leere Zeile, sondern unten im Kasten "fehlen noch" (wenn die Spalte
+       dort "fehlt: true" hat). */ -}}
+{{- $spalten := index hugo.Data "uniguide-spalten" }}
+
 {{- /* Die beiden Angaben-Blöcke stehen auf breiten Bildschirmen
-       nebeneinander (siehe .uni-columns in style.css). Vorher lief die Seite
-       als eine schmale Spalte über die ganze Länge, die rechte Hälfte des
-       Bildschirms blieb dabei leer. */ -}}
+       nebeneinander (siehe .uni-columns in style.css). */ -}}
 <div class="uni-columns">
+{{ range slice "zulassung" "studium" }}
+{{- $bereich := . }}
 <div>
-<h2 class="uni-section-title">{{ i18n "uni_detail_section_zulassung" }}</h2>
+<h2 class="uni-section-title">{{ i18n (printf "uni_detail_section_%s" $bereich) }}</h2>
 <dl class="uni-detail">
-  <div><dt>{{ i18n "uni_detail_ems" }}</dt><dd><span class="badge badge-{{ $uni.ems_erforderlich }}">{{ index $emsLabels $uni.ems_erforderlich }}</span></dd></div>
-  <div><dt>{{ i18n "uni_detail_auswahlverfahren" }}</dt><dd>{{ partial "uni-text.html" $uni.auswahlverfahren }}</dd></div>
-  {{/* "Studienplätze" ist im Datensatz absichtlich (fast) immer leer/null,
-       siehe data/unis.yaml - Fallback-Text "wird geprüft" statt einer
-       nicht-recherchierten Zahl. */}}
-  <div><dt>{{ i18n "label_studienplaetze" }}</dt><dd>{{ if $uni.studienplaetze }}{{ $uni.studienplaetze }}{{ else }}{{ i18n "uni_detail_places_unknown" }}{{ end }}</dd></div>
-  {{/* Die folgenden Felder erscheinen nur, wenn sie in data/unis.yaml auch
-       wirklich gefüllt sind - sonst gäbe es hier lauter leere Zeilen. */}}
-  {{ with partial "uni-text.html" $uni.anmeldefrist }}<div><dt>{{ i18n "uni_detail_anmeldefrist" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+  {{- range where $spalten "bereich" $bereich }}
+  {{- $spalte := . }}
+  {{- with partial "uni-wert.html" (dict "uni" $uni "spalte" .) }}
+  <div><dt>{{ partial "uni-titel.html" $spalte }}</dt><dd>{{ . | safeHTML }}</dd></div>
+  {{- end }}
+  {{- end }}
 </dl>
 </div>
-
-<div>
-<h2 class="uni-section-title">{{ i18n "uni_detail_section_studium" }}</h2>
-<dl class="uni-detail">
-  <div><dt>{{ i18n "uni_detail_kanton" }}</dt><dd>{{ partial "uni-text.html" $uni.kanton }}</dd></div>
-  <div><dt>{{ i18n "label_sprache" }}</dt><dd>{{ partial "uni-sprachen.html" $uni.sprache }}</dd></div>
-  <div><dt>{{ i18n "label_studiengaenge" }}</dt><dd>{{ delimit $uni.studiengaenge ", " }}</dd></div>
-  {{ with partial "uni-text.html" $uni.studienbeginn }}<div><dt>{{ i18n "uni_detail_studienbeginn" }}</dt><dd>{{ . }}</dd></div>{{ end }}
-  {{ with partial "uni-text.html" $uni.semestergebuehr }}<div><dt>{{ i18n "uni_detail_semestergebuehr" }}</dt><dd>{{ . }}</dd></div>{{ end }}
-  {{/* Besonderheiten-Feld ist optional (Liste kann auch leer sein) - dann
-       wird dieser ganze Abschnitt einfach übersprungen. */}}
-  {{ with partial "uni-text.html" $uni.besonderheiten }}
-  {{/* Aufzaehlung statt "tag-pills": Besonderheiten sind teilweise ganze
-       Saetze, und ein mehrzeiliges Element mit rundem Rahmen sieht aus wie
-       ein verrutschter Fleck statt wie ein Schlagwort. */}}
-  <div><dt>{{ i18n "uni_detail_besonderheiten" }}</dt><dd>
-    <ul class="detail-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
-  </dd></div>
-  {{ end }}
-</dl>
-</div>
+{{ end }}
 </div>
 
-{{- /* ---------------------------------------------------------------------
-       Fehlende Angaben ehrlich benennen statt sie zu erfinden.
-       Gesammelt wird hier eine Liste der Beschriftungen jener Felder, die in
-       data/unis.yaml noch null sind. Ist die Liste leer, erscheint der ganze
-       Kasten nicht.
-       --------------------------------------------------------------------- */ -}}
 {{- $fehlend := slice }}
-{{- if not $uni.studienplaetze }}{{ $fehlend = $fehlend | append (i18n "label_studienplaetze") }}{{ end }}
-{{- if not (partial "uni-text.html" $uni.anmeldefrist) }}{{ $fehlend = $fehlend | append (i18n "uni_detail_anmeldefrist") }}{{ end }}
-{{- if not (partial "uni-text.html" $uni.studienbeginn) }}{{ $fehlend = $fehlend | append (i18n "uni_detail_studienbeginn") }}{{ end }}
-{{- if not (partial "uni-text.html" $uni.semestergebuehr) }}{{ $fehlend = $fehlend | append (i18n "uni_detail_semestergebuehr") }}{{ end }}
-{{- if not $uni.website_medizin }}{{ $fehlend = $fehlend | append (i18n "uni_detail_website_medizin") }}{{ end }}
+{{- range where $spalten "fehlt" true }}
+{{- if not (partial "uni-wert.html" (dict "uni" $uni "spalte" .)) }}{{ $fehlend = $fehlend | append (partial "uni-titel.html" .) }}{{ end }}
+{{- end }}
 {{ with $fehlend }}
 <div class="uni-missing">
   <h3>{{ i18n "uni_detail_missing_heading" }}</h3>
   <ul class="tag-pills">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
   <p>{{ i18n "uni_detail_missing_text" }} <a href="{{ relLangURL "kontakt/" }}">{{ i18n "uni_detail_missing_cta" }} →</a></p>
 </div>
+{{ end }}
+
+{{- /* Quellenhinweise der gezeigten Angaben (z. B. woher die Studienplätze stammen) */ -}}
+{{- $noten := slice }}
+{{- range $spalten }}{{ if and .hinweis (in (slice "zulassung" "studium") .bereich) (partial "uni-wert.html" (dict "uni" $uni "spalte" .)) }}{{ $noten = $noten | append (printf "%s: %s" (partial "uni-titel.html" .) (partial "uni-titel.html" .hinweis)) }}{{ end }}{{ end }}
+{{ with $noten }}
+<ul class="uniguide-hinweise uni-hinweise">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
 {{ end }}
 
 {{- /* ---------------------------------------------------------------------
@@ -155,14 +135,20 @@
 
 <h2 class="uni-section-title">{{ i18n "uni_detail_section_quellen" }}</h2>
 <dl class="uni-detail">
-  <div><dt>{{ i18n "uni_detail_website" }}</dt><dd><a href="{{ $uni.website }}" target="_blank" rel="noopener">{{ $uni.website }}</a></dd></div>
-  {{ with $uni.website_medizin }}<div><dt>{{ i18n "uni_detail_website_medizin" }}</dt><dd><a href="{{ . }}" target="_blank" rel="noopener">{{ . }}</a></dd></div>{{ end }}
+  {{- range where $spalten "bereich" "quellen" }}
+  {{- $spalte := . }}
+  {{- with partial "uni-wert.html" (dict "uni" $uni "spalte" .) }}
+  <div><dt>{{ partial "uni-titel.html" $spalte }}</dt><dd>{{ . | safeHTML }}</dd></div>
+  {{- end }}
+  {{- end }}
 </dl>
 
 <p class="uni-report"><a href="{{ relLangURL "kontakt/" }}">{{ i18n "uni_detail_report" }} →</a></p>
 
-{{/* "Stand" und "Quelle" zeigen, wann und woher diese Angaben recherchiert
-     wurden - wichtig, weil Zulassungsbedingungen sich ändern können und
-     diese Angaben "ohne Gewähr" sind (siehe Disclaimer in uniguide-table.html). */}}
-<p class="uni-stand">{{ i18n "uni_detail_stand" }}: {{ $uni.stand }} · {{ i18n "uni_detail_quelle" }}: <a href="{{ $uni.quelle }}" target="_blank" rel="noopener">{{ $uni.quelle }}</a></p>
+{{/* Kleingedrucktes unten (bereich "fuss": Stand, Quelle) - wann und woher
+     diese Angaben stammen; die Angaben sind "ohne Gewähr" (siehe Disclaimer
+     in uniguide-table.html). */}}
+{{- $fuss := slice }}
+{{- range where $spalten "bereich" "fuss" }}{{ $spalte := . }}{{ with partial "uni-wert.html" (dict "uni" $uni "spalte" .) }}{{ $fuss = $fuss | append (printf "%s: %s" (partial "uni-titel.html" $spalte) .) }}{{ end }}{{ end }}
+{{ with $fuss }}<p class="uni-stand">{{ delimit . " · " | safeHTML }}</p>{{ end }}
 {{ end }}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
-ANSICHT-BLAETTER: STARTSEITE, TEAM UND UNIGUIDE, AUFGEBAUT WIE DIE WEBSITE
+ANSICHT-BLAETTER: STARTSEITE, TEAM, UNIGUIDE UND Q&A
 ================================================================================
 Wird von scripts/texte-ausgeben.py (Blaetter erzeugen) und
 scripts/texte-einlesen.py (Blaetter einlesen) benutzt.
@@ -33,6 +33,8 @@ Sprachen.
 
 UNIGUIDE: die ganze Uni-Tabelle aus data/unis.yaml, je Uni eine Zeile - siehe
 scripts/texte_uniguide.py.
+Q&A: alle Fragen aus data/faq.yaml, je Frage eine Zeile, mit leeren Zeilen fuer
+neue Fragen - siehe scripts/texte_faq.py.
 ================================================================================
 """
 import json
@@ -40,6 +42,7 @@ import os
 import re
 
 import texte_bausteine as tb
+import texte_faq
 import texte_uniguide
 
 try:
@@ -48,7 +51,8 @@ try:
 except ImportError:      # das melden die aufrufenden Skripte
     pass
 
-SEITEN = {'_index.md': 'startseite', 'ueber-uns/team/_index.md': 'team', 'ems/uniguide/_index.md': 'uniguide'}
+SEITEN = {'_index.md': 'startseite', 'ueber-uns/team/_index.md': 'team', 'ems/uniguide/_index.md': 'uniguide',
+          'ems/qa/_index.md': 'faq'}
 VERSTECKT = '_ansicht'
 LOESCHEN = re.compile(r'!\s*(l(ö|oe)schen|supprimer|eliminare)\s*!', re.IGNORECASE)
 SCHRIFT = 'Arial'
@@ -379,6 +383,8 @@ def blaetter_anlegen(mappe, sprache, projekt, seiten_blaetter):
         ws.sheet_properties.tabColor = ORANGE
         if SEITEN[innen] == 'uniguide':        # die ganze Uni-Tabelle, scripts/texte_uniguide.py
             texte_uniguide.blatt(ws, sprache, projekt, merker)
+        elif SEITEN[innen] == 'faq':           # alle Fragen der Q&A-Seite, scripts/texte_faq.py
+            texte_faq.blatt(ws, sprache, projekt, merker)
         else:
             (startseite if SEITEN[innen] == 'startseite' else team)(ws, sprache, datei, roh, merker, roh_de)
     if merker:
@@ -409,7 +415,7 @@ def lesen(mappe):
         if blatt not in mappe.sheetnames:
             continue
         wert = mappe[blatt][zelle].value
-        neu = texte_uniguide.zelle_lesen(wert) if art == 'uni' else _text(wert)
+        neu = texte_uniguide.zelle_lesen(wert) if art.startswith(('uni', 'faq')) else _text(wert)
         raus.setdefault(datei, []).append((art, json.loads(pfad), _text(original), neu, f'Blatt "{blatt}", {zelle}'))
     return raus
 
@@ -494,6 +500,8 @@ def anwenden(projekt, datei, eintraege, melde, probe=False):
     durch einen Saisonwechsel geaenderte Dateien) zurueck."""
     if datei == texte_uniguide.UNIS:
         return texte_uniguide.anwenden(projekt, eintraege, melde, probe), []
+    if datei == texte_faq.FAQ:
+        return texte_faq.anwenden(projekt, eintraege, melde, probe), []
     pfad = os.path.join(projekt, datei)
     if not os.path.isfile(pfad):
         melde(f'{datei}: gibt es nicht mehr - Ansichtsblatt übersprungen.')

@@ -186,25 +186,53 @@ Codice: `scripts/texte_ansicht.py`.
 ### Foglio Uniguide
 
 «Uniguide – Vista» mostra l'intera tabella di `data/unis.yaml`: una riga per università,
-una colonna per informazione (nome, cantone, lingue, corsi di laurea, EMS, procedura di
-selezione, particolarità, posti di studio, termine d'iscrizione, inizio degli studi, tassa
-semestrale, link, data della verifica, fonte).
+una colonna per informazione. Quali colonne esistono, come si chiamano e dove compaiono è
+definito in `data/uniguide-spalten.yaml` – e si modifica direttamente nel foglio:
 
-- **Intestazioni verdi** (cantone, procedura, particolarità, termine, inizio, tassa): sono
-  testi e valgono solo per la lingua della cartella. Se manca una traduzione, il sito
-  mostra il testo tedesco.
-- **Intestazioni scure**: valgono per tutte le lingue e si possono modificare in ogni
-  cartella.
-- Più particolarità: una per riga nella cella. Lingue separate da virgole, in qualsiasi
-  grafia («tedesco, francese»). EMS: ja / nein / teilweise (sì/no/in parte). Posti: solo
-  il numero. Link con `https://`.
+- **Rinominare una colonna:** sovrascrivere il nome alla riga 4 (vale per la lingua della
+  cartella; la piccola riga d'aiuto sotto può restare o sparire).
+- **Eliminare una colonna:** `!Eliminare!` alla riga 4 – la colonna sparisce con tutti i
+  valori. Le colonne di cui il sito ha bisogno (nome, lingua, EMS, corsi di laurea,
+  bachelor/master a, sito, stato, fonte) si possono solo rinominare; lo dice il commento
+  nell'intestazione.
+- **Visualizzazione (riga 5):** *Tabella* = colonna nella grande tabella, *Pagina* = solo
+  sulla pagina dell'università e nel confronto, *nascosto* = da nessuna parte (resta nella
+  cartella).
+- **Nuova colonna:** a destra ci sono tre colonne grigie vuote. Scrivere il nome alla riga 4
+  e i valori sotto – ne nasce una nuova informazione (testo per lingua, sulla pagina
+  dell'università sotto «Studio & sede»). Valori senza nome di colonna non vengono ripresi.
+- **Intestazioni verdi**: testi per lingua, validi solo per la lingua della cartella. Se
+  manca una traduzione, il sito mostra il testo tedesco. **Intestazioni scure**: valide per
+  tutte le lingue.
+- I valori sono testo libero – anche per i posti («non limitati (ca. 450 studenti)» è
+  possibile). Più particolarità: una per riga. Elenchi (corsi di laurea, bachelor a, master
+  a) separati da virgole. Lingue in qualsiasi grafia («tedesco, français»). EMS: ja / nein /
+  teilweise (sì/no/in parte). Link con `https://`.
 - Una casella vuota non elimina nulla, `!Eliminare!` svuota il campo. Le immissioni non
-  valide (non un numero, non un link …) non vengono riprese e sono segnalate nel rapporto.
-- Alla lettura in `data/unis.yaml` cambia solo quel campo; i commenti restano.
-- Inserire solo ciò che figura su una pagina ufficiale, e modificare allora anche «Stand»
-  e «Quelle». Una nuova università non si aggiunge tramite la cartella (vedi [9](#9-faq-uniguide-subtest-nomi-dei-download)).
+  valide non vengono riprese e sono segnalate nel rapporto.
+- Alla lettura, in `data/unis.yaml` cambia solo quel campo; i commenti restano.
+- Inserire solo ciò che figura su una pagina ufficiale, e modificare allora anche «Stato» e
+  «Fonte». Una nuova università non si aggiunge tramite la cartella (vedi [9](#9-faq-uniguide-subtest-nomi-dei-download)).
 
 Codice: `scripts/texte_uniguide.py`.
+
+### Foglio Q&A
+
+«Q&A – Vista» mostra tutte le domande di `data/faq.yaml`: una riga per domanda con
+categoria, domanda, risposta, destinazione del link e testo del link.
+
+- **Nuova domanda:** in basso ci sono cinque righe vuote. Scrivere domanda e risposta,
+  scegliere la categoria dall'elenco (o scriverne una nuova). La domanda compare alla fine
+  della sua categoria. Nelle altre lingue compare il testo tedesco fino alla traduzione –
+  nella cartella FR/IT la riga è allora vuota e si può compilare.
+- **Eliminare una domanda:** `!Eliminare!` nella casella «Domanda» – sparisce in tutte le
+  lingue.
+- **Destinazione del link:** percorso di una nostra pagina, p. es. `/ems/uniguide`. Se la
+  pagina non esiste, il link non viene ripreso e lo si segnala.
+- Le risposte sono testo semplice senza formattazione (finiscono anche nel blocco di dati
+  per i motori di ricerca).
+
+Codice: `scripts/texte_faq.py`.
 
 ### Cosa succede alla lettura
 
@@ -516,34 +544,50 @@ automaticamente uno sfondo chiaro (`.sponsor-logo`).
 
 ### FAQ (`data/faq.yaml`)
 
+Il modo più semplice: il foglio «Q&A – Vista» della cartella Excel ([3](#3-cartelle-excel-nel-dettaglio)). Nel file:
+
 ```yaml
 - id: "identificativo-unico"
-  frage:   { de: "…?", fr: "… ?", it: "…?" }
-  antwort: { de: "…",  fr: "…",   it: "…" }
+  category: { de: "…", fr: "…", it: "…" }
+  question:
+    de: "…?"
+  answer:
+    de: "…"
+  link:
+    href: "ems/uniguide/"
+    label:
+      de: "…"
 ```
 
-Ordine nel file = ordine sulla pagina. La domanda «Quali subtest ci sono?» aggiunge
-automaticamente l'elenco di `data/subtests.yaml` (`dynamic: subtests`); la frase che
-precede («9 subtest») è fissa nella FAQ.
+La pagina raggruppa per categoria, nell'ordine del file. La domanda «Quali subtest ci
+sono?» aggiunge automaticamente l'elenco di `data/subtests.yaml` (`dynamic: subtests`); la
+frase che precede («9 subtest») è fissa nella FAQ.
 
-### Uniguide (`data/unis.yaml`)
+### Uniguide (`data/unis.yaml`, `data/uniguide-spalten.yaml`)
 
-Un solo file alimenta la tabella `/ems/uniguide/`, ogni pagina di università e il
-confronto. Ogni università ha bisogno in più di una pagina quasi vuota
-`content/<lingua>/ems/uniguide/<slug>.md` con `title` e `uni_slug`. Il modo più semplice per modificare: il foglio «Uniguide – Vista»
-della cartella Excel ([3](#3-cartelle-excel-nel-dettaglio)). `kanton`, `auswahlverfahren` e `besonderheiten` esistono per lingua
-(`de:`/`fr:`/`it:`); i nomi delle lingue d'insegnamento vengono da `i18n` (`sprache_…`).
+I valori stanno in `data/unis.yaml`; quali informazioni esistono, come si chiamano, se
+compaiono come colonna della tabella, solo sulla pagina dell'università o da nessuna parte,
+e in quale sezione della pagina, sta in `data/uniguide-spalten.yaml` (descrizione dei campi
+in testa al file). Tabella, confronto e pagina dell'università si costruiscono da soli – una
+nuova colonna non richiede codice. Ogni università ha bisogno in più di una pagina quasi
+vuota `content/<lingua>/ems/uniguide/<slug>.md` con `title` e `uni_slug`. Il modo più
+semplice per modificare: il foglio «Uniguide – Vista» della cartella Excel ([3](#3-cartelle-excel-nel-dettaglio)).
 
-**Niente stime.** Campi come `website_medizin`, `anmeldefrist`, `studienbeginn`,
-`semestergebuehr`, `studienplaetze` restano `null` finché il valore non figura su una
-pagina ufficiale – allora modificare anche `stand` (data) e `quelle` (link). I campi vuoti
-non compaiono; la pagina dell'università mostra invece il riquadro «Queste informazioni
-mancano ancora».
+Un valore semplice (`semestergebuehr: "CHF 850"`) vale per tutte le lingue, altrimenti per
+lingua (`de:`/`fr:`/`it:`). I nomi delle lingue d'insegnamento vengono da `i18n`
+(`sprache_…`). «Sede di studio» è la città; il vantaggio del domicilio ha una colonna
+propria; «Bachelor a» e «Master a» indicano dove si studiano i due livelli.
+
+**Niente stime.** Un campo resta `null` finché il valore non figura su una pagina
+ufficiale – allora modificare anche `stand` (data) e `quelle` (link). I posti provengono
+dalle capacità d'accoglienza di swissuniversities (indicazione della fonte nel campo
+`hinweis` della colonna). I campi vuoti non compaiono; le colonne con `fehlt: true`
+figurano allora nel riquadro «Queste informazioni mancano ancora» della pagina
+dell'università.
 
 `berichte_ort` deve corrispondere esattamente all'`ort:` dei resoconti; allora i tre più
 recenti compaiono sulla pagina dell'università. Il confronto permette fino a quattro
-università affiancate (`var MAX = 4` in `layouts/partials/uniguide-table.html`; righe in più
-nella sezione «VERGLEICHSANSICHT» – passo di sviluppo).
+università affiancate (`var MAX = 4` in `layouts/partials/uniguide-table.html`).
 
 ### Subtest (`data/subtests.yaml`)
 

@@ -28,6 +28,7 @@
 # Neue Frage hinzufügen: einfach einen neuen Eintrag nach demselben Muster
 # unten anhängen - erscheint automatisch auf der Q&A-Seite, kein Code nötig.
 
+
 - id: "was-ist-ems"
   category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }
   question:

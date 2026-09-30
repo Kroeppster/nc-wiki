@@ -52,6 +52,10 @@ jede Seite auf einem eigenen Blatt, vorne eine Anleitung und ein Inhaltsverzeich
    neue Person, `!Löschen!` im Namen = Person weg.
    **Uniguide – Ansicht** enthält die ganze Uni-Tabelle: je Uni eine Zeile, je Angabe eine
    Spalte. Texte (grüne Spaltenköpfe) gelten für die Sprache der Mappe, der Rest für alle.
+   Spaltennamen lassen sich in Zeile 4 überschreiben, rechts gibt es leere Spalten für neue
+   Angaben, Zeile 5 bestimmt, wo eine Angabe erscheint.
+   **Q&A – Ansicht** enthält alle Fragen: leere Zeile unten ausfüllen = neue Frage,
+   `!Löschen!` in „Frage“ = Frage weg (in allen Sprachen).
 4. **Neue Saison:** im Team-Blatt oben „Neue Saison starten“ ausfüllen (z. B. 2027/28).
    Das bisherige Team kommt dann in allen drei Sprachen ins Archiv.
 5. **Hochladen:** auf GitHub in den Ordner [`redaktion/`](../redaktion/) → *Add file →
