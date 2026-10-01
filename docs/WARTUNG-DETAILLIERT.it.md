@@ -431,7 +431,9 @@ cade la sua data** (`von`/`bis`). In alto le date ufficiali di swissuniversities
 nostra offerta; i testi che si sovrapporrebbero passano da soli su un'altra riga. Un selettore
 passa dalle date per le università con EMS a quelle senza (`fuer`). Nuova stagione: modificare
 `start`, `ende` e gli anni delle date, nelle tre lingue. Tutto si trova nella cartella Excel,
-foglio «Pagina iniziale – Vista» (righe «Inizio», «Fine», «Tipo», «Valido per»). Modificare le
+foglio «Pagina iniziale – Vista», come tabella (una riga per voce; **nuove voci**: compilare una
+delle righe vuote in basso, necessari titolo e inizio; eliminare con `!Eliminare!` nel titolo; link
+«Titolo | ems/uniguide/», una riga per link). Codice: `scripts/texte_zeitstrahl.py`. Modificare le
 date solo se così figurano presso swissuniversities. Su smartphone diventa un elenco verticale
 per data. Calcolo: `layouts/partials/weg-positionen.html`, visualizzazione `weg-grid.html`.
 

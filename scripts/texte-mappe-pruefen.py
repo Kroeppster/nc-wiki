@@ -1058,6 +1058,76 @@ def faq_pruefen(projekt, ordner):
         f.write(roh)
 
 
+def zeitstrahl_pruefen(projekt, ordner):
+    """Zeitstrahl-Tabelle im Startseiten-Blatt (scripts/texte_zeitstrahl.py):
+    Eintrag aendern, loeschen, neu anlegen."""
+    import datetime
+    import json
+    import yaml
+    print('\n=== Zeitstrahl-Tabelle: Startseite ===')
+    pfad = 'content/de/_index.md'
+    roh = lesen(projekt, pfad)
+
+    def liste():
+        k = lesen(projekt, pfad).split('---')[1]
+        return yaml.safe_load(k)['weg']['termine']
+    alt = liste()
+    m = load_workbook(ausgeben(projekt, os.path.join(ordner, 'zeit'))['de'])
+    z = {}
+    for r in m['_ansicht'].iter_rows(min_row=2, values_only=True):
+        if r[0] == 'zeit':
+            a, b = json.loads(r[4])
+            z[(a, b)] = (m[r[1]], r[2])
+    pruef('Zeitstrahl: je Eintrag eine Zeile plus leere Zeilen',
+          all((i, 'titel') in z for i in range(len(alt))) and ('n0', 'titel') in z and ('n5', 'titel') in z)
+
+    def setze(a, b, wert):
+        ws, c = z[(a, b)]
+        ws[c].value = wert
+    setze(0, 'wann', 'Geaenderter Zeitpunkt')
+    setze(1, 'von', datetime.datetime(2026, 12, 5))        # Excel macht gern ein Datum daraus
+    setze(2, 'titel', '!Löschen!')
+    setze(3, 'art', 'irgendwas')
+    setze('n0', 'titel', 'Neuer Termin')
+    setze('n0', 'von', '15.03.2027')
+    setze('n0', 'art', 'offiziell')
+    setze('n0', 'fuer', 'ohne')
+    setze('n1', 'titel', 'Neues Angebot')
+    setze('n1', 'von', '2027-03-01')
+    setze('n1', 'bis', '2027-03-20')
+    setze('n1', 'art', 'angebot')
+    setze('n1', 'mittel', 'Uniguide | /ems/uniguide\nDiscord | https://discord.com/invite/x')
+    setze('n2', 'titel', 'Ohne Beginn')
+    p = os.path.join(ordner, 'zeit-de.xlsx')
+    m.save(p)
+    vorher = zustand(projekt)
+    rc, aus = einlesen(projekt, p)
+    neu = liste()
+    pruef('Zeitstrahl: nur die Startseite geaendert', unterschiede(vorher, zustand(projekt)) == ['content/de/_index.md'])
+    pruef('Zeitstrahl: Anzeigetext geaendert', neu[0]['wann'] == 'Geaenderter Zeitpunkt', neu[0])
+    pruef('Zeitstrahl: Excel-Datum wird JJJJ-MM-TT', neu[1]['von'] == '2026-12-05', neu[1])
+    pruef('Zeitstrahl: !Löschen! entfernt den Eintrag', len(neu) == len(alt) - 1 + 2 and alt[2]['titel'] not in
+          [e['titel'] for e in neu], [e['titel'] for e in neu])
+    pruef('Zeitstrahl: ungueltige Art nicht uebernommen und gemeldet',
+          [e['art'] for e in neu if e['titel'] == alt[3]['titel']] == [alt[3]['art']] and 'irgendwas' in aus, aus[-300:])
+    n1 = [e for e in neu if e['titel'] == 'Neuer Termin']
+    pruef('Zeitstrahl: neuer Termin mit Datum aus TT.MM.JJJJ, Anzeigetext automatisch',
+          len(n1) == 1 and n1[0]['von'] == '2027-03-15' and n1[0]['fuer'] == 'ohne' and n1[0]['wann'] == '15.03.2027', n1)
+    n2 = [e for e in neu if e['titel'] == 'Neues Angebot']
+    pruef('Zeitstrahl: neues Angebot mit Ende, Links (intern und extern)',
+          len(n2) == 1 and n2[0]['bis'] == '2027-03-20' and n2[0]['mittel'] ==
+          [{'titel': 'Uniguide', 'url': 'ems/uniguide/'}, {'titel': 'Discord', 'url': 'https://discord.com/invite/x'}]
+          and n2[0]['wann'] == '01.03.2027 – 20.03.2027', n2)
+    pruef('Zeitstrahl: neuer Eintrag ohne Beginn gemeldet, nicht angelegt',
+          'Ohne Beginn' not in [e['titel'] for e in neu] and 'Titel und Beginn' in aus, aus[-300:])
+    pruef('Zeitstrahl: restliche Seite unveraendert',
+          lesen(projekt, pfad).split('weg:')[0] == roh.split('weg:')[0]
+          and lesen(projekt, pfad).split('material:')[1] == roh.split('material:')[1])
+    bauen(projekt, ordner)
+    with open(os.path.join(projekt, pfad), 'w', encoding='utf-8') as f:
+        f.write(roh)
+
+
 def verrutscht_pruefen(projekt, ordner):
     """Zellen statt ganzer Zeilen eingefuegt bzw. geloescht - so geschehen bei
     "Muster zuordnen": Der sichtbare Text rutscht, die versteckten Spalten
@@ -1285,6 +1355,7 @@ def main():
         ansicht_pruefen(projekt, ordner)
         uniguide_pruefen(projekt, ordner)
         faq_pruefen(projekt, ordner)
+        zeitstrahl_pruefen(projekt, ordner)
     finally:
         if a.behalten:
             print(f'\nArbeitsordner: {ordner}')

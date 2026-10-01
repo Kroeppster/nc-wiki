@@ -426,8 +426,10 @@ wo sein Datum liegt** (`von`/`bis`). Darüber die offiziellen Termine von swissu
 darunter unser Angebot; Texte, die sich überdecken würden, rutschen von selbst in eine
 eigene Zeile. Ein Umschalter wechselt zwischen den Terminen für Universitäten mit und ohne
 EMS (`fuer`). Neue Saison: `start`, `ende` und die Jahre bei den Daten ändern, in allen drei
-Sprachen. Alles steht in der Textmappe im Blatt „Startseite – Ansicht“ (Zeilen „Beginn“,
-„Ende“, „Art“, „Gilt für“). Die Termine nur ändern, wenn sie bei swissuniversities so
+Sprachen. Alles steht in der Textmappe im Blatt „Startseite – Ansicht“ als Tabelle (eine
+Zeile je Eintrag; **neue Einträge** in einer der leeren Zeilen unten ausfüllen, nötig sind Titel
+und Beginn; Löschen mit `!Löschen!` im Titel; Links als „Titel | ems/uniguide/“, eine Zeile je
+Link). Code: `scripts/texte_zeitstrahl.py`. Die Termine nur ändern, wenn sie bei swissuniversities so
 stehen. Auf dem Handy wird daraus eine senkrechte Liste nach Datum. Berechnung:
 `layouts/partials/weg-positionen.html`, Darstellung `weg-grid.html`.
 

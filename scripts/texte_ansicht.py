@@ -44,6 +44,7 @@ import re
 import texte_bausteine as tb
 import texte_faq
 import texte_uniguide
+import texte_zeitstrahl
 
 try:
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side, Protection
@@ -280,6 +281,8 @@ def startseite(ws, sprache, datei, roh, merker, roh_de=None):
                 b.etikett(b.r, L['felder'].get(k, k))
                 b.feld(b.r, 2, w, 'feld', [wurzel, k], k, breite=SPALTEN)
                 b.r += 1
+            elif wurzel == 'weg' and k == 'termine' and isinstance(w, list):
+                texte_zeitstrahl.tabelle(b, sprache, w)        # mit leeren Zeilen fuer neue Eintraege
             elif isinstance(w, list) and w and all(isinstance(x, dict) for x in w):
                 _nebeneinander(b, L, wurzel, k, w, vorhanden)
         b.luft(2)
@@ -563,6 +566,10 @@ def anwenden(projekt, datei, eintraege, melde, probe=False):
             continue
         neuer_kopf = tb.feld_setzen(neuer_kopf, p, ' '.join(wert.split()))
         zaehler += 1
+    if any(e[0] == 'zeit' for e in eintraege):
+        ist = (_daten(roh).get('weg') or {}).get('termine') or []
+        neuer_kopf, n = texte_zeitstrahl.anwenden(projekt, neuer_kopf, ist, eintraege, lambda t: melde(t))
+        zaehler += 1 if n else 0
     if any(e[0] == 'team' for e in eintraege):
         neu, alt = team_aus_zellen(eintraege, melde)
         if neu != alt:

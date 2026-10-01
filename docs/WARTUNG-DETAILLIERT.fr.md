@@ -437,8 +437,10 @@ se trouve sa date** (`von`/`bis`). En haut les dates officielles de swissunivers
 dessous notre offre ; les textes qui se chevaucheraient passent d'eux-mêmes sur une autre
 ligne. Un sélecteur bascule entre les dates pour les universités avec et sans EMS (`fuer`).
 Nouvelle saison : modifier `start`, `ende` et les années des dates, dans les trois langues.
-Tout se trouve dans le classeur, feuille « Accueil – Vue » (lignes « Début », « Fin », « Sorte »,
-« Valable pour »). Ne modifier les dates que si elles figurent ainsi chez swissuniversities.
+Tout se trouve dans le classeur, feuille « Accueil – Vue », sous forme de tableau (une ligne
+par entrée ; **nouvelles entrées** : remplir une des lignes vides en bas, titre et début requis ;
+suppression avec `!Supprimer!` dans le titre ; liens « Titre | ems/uniguide/ », une ligne par
+lien). Code : `scripts/texte_zeitstrahl.py`. Ne modifier les dates que si elles figurent ainsi chez swissuniversities.
 Sur mobile, cela devient une liste verticale par date. Calcul :
 `layouts/partials/weg-positionen.html`, affichage `weg-grid.html`.
 
