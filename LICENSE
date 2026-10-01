@@ -1,0 +1,61 @@
+Copyright (c) 2026 Verein NCWiki. Alle Rechte vorbehalten.
+
+LIZENZ FÜR DEN QUELLCODE DER NCWIKI-WEBSITE
+
+1. Geltungsbereich
+
+   Diese Lizenz gilt nur für den Quellcode der NCWiki-Website, das heisst für:
+   - die Vorlagen und Programmteile (Ordner layouts/, einschliesslich des darin
+     enthaltenen HTML, CSS und JavaScript),
+   - die Stylesheets (Ordner assets/css/),
+   - die Skripte und Werkzeuge (Ordner scripts/),
+   - die Workflows und Konfigurationsdateien (Ordner .github/, hugo.toml,
+     .pages.yml, package.json).
+
+2. Was erlaubt ist
+
+   Der Quellcode darf auf GitHub angesehen werden. Ohne vorherige schriftliche
+   Zustimmung des Vereins NCWiki darf er nicht kopiert, verändert, weitergegeben
+   oder in anderen Projekten verwendet werden. Die Nutzungsbedingungen von
+   GitHub (zum Beispiel das Anlegen einer Fork innerhalb von GitHub) bleiben
+   davon unberührt.
+
+   Anfragen an: info@nc-wiki.ch
+
+3. Was von dieser Lizenz nicht erfasst wird
+
+   a) Übungsaufgaben: Die Übungsaufgaben (content/*/ems/uebungsaufgaben/ und
+      assets/downloads/uebungsaufgaben/) stehen unter der Lizenz Creative
+      Commons BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/deed.de).
+      Sie dürfen unter Nennung von NCWiki für nicht kommerzielle Zwecke
+      weitergegeben und bearbeitet werden.
+
+   b) Texte, Bilder, Logo, Daten und übrige Inhalte (content/, data/, i18n/,
+      assets/images/, assets/downloads/ ausser a): Alle Rechte vorbehalten.
+      Namen, Fotos und weitere Angaben zu Personen sind zusätzlich durch das
+      Datenschutzrecht geschützt.
+
+   c) Software und Schriften Dritter: Sie stehen unter ihren eigenen
+      Lizenzen und gehören nicht zum Quellcode des Vereins:
+      - Hugo (Apache License 2.0), wird zum Erzeugen der Website verwendet
+        und ist nicht Teil dieses Repositorys,
+      - Pagefind (MIT-Lizenz) und StatiCrypt (MIT-Lizenz), als Werkzeuge beim
+        Erzeugen der Website verwendet,
+      - die Schriften Poppins und Inter (SIL Open Font License 1.1), enthalten
+        in static/fonts/.
+
+4. Keine Gewährleistung
+
+   Der Quellcode wird ohne jede Gewährleistung zur Verfügung gestellt. Der
+   Verein NCWiki haftet nicht für Schäden, die aus seiner Verwendung entstehen,
+   soweit das Gesetz dies zulässt.
+
+---
+
+Summary (English, for information only; the German text prevails):
+The source code of the NCWiki website (templates, stylesheets, scripts,
+workflows, configuration) may be viewed on GitHub but may not be copied,
+modified, redistributed or reused without prior written permission. This does
+not cover the practice exercises (CC BY-NC 4.0), the website content (all
+rights reserved) or third-party software and fonts, which keep their own
+licenses. Contact: info@nc-wiki.ch

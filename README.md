@@ -53,3 +53,9 @@ Weitergabe mit Namensnennung erlaubt, keine kommerzielle Nutzung. Siehe auch
 
 Für den Rest der Website (Code, Layouts, übrige Inhalte) gibt es aktuell keine
 gesonderte Lizenz.
+
+## Lizenz
+
+Der Quellcode der Website darf angesehen, aber ohne Zustimmung des Vereins nicht
+weiterverwendet werden; die Übungsaufgaben stehen unter CC BY-NC 4.0, Fremdsoftware
+und Schriften unter ihren eigenen Lizenzen. Details: [LICENSE](LICENSE).
