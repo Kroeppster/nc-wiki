@@ -406,15 +406,27 @@ weg:
     - wann: "Bis 15. Februar"
       titel: "Entscheiden und anmelden"
       text: "…"
+      offiziell:            # offizielle Termine, Unis mit EMS
+        - wann: "Dez. bis 15. Feb."
+          titel: "Voranmeldung bei swissuniversities"
+      offiziell_ohne:       # dasselbe für Unis ohne EMS (Genf, Lausanne, Neuenburg)
+        - wann: "Dez. bis 15. Feb."
+          titel: "Voranmeldung bei swissuniversities"
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
 ```
 
 Die Termine folgen dem offiziellen Zeitplan von swissuniversities. Im Zeitstrahl stehen
-keine Zahlen. Die vier Teile einer Etappe müssen im Template direkte Kinder von
+keine Zahlen. Die Teile einer Etappe müssen im Template direkte Kinder von
 `.weg-etappe` bleiben (CSS `subgrid` richtet sie über alle Spalten aus; ein zusätzliches
 `<div>` zerstört das lautlos).
+
+Zwei Ebenen: Oben stehen die **offiziellen Termine** (`offiziell`, für Universitäten mit EMS,
+und `offiziell_ohne` für Genf, Lausanne und Neuenburg), unter der Linie unser Angebot. Ein
+Umschalter über dem Zeitstrahl wechselt zwischen beiden Fassungen (ohne JavaScript bleibt
+„mit EMS“). Alle Termine und die Texte des Umschalters stehen in der Textmappe im Blatt
+„Startseite – Ansicht“. Die Termine nur ändern, wenn sie bei swissuniversities so stehen.
 
 ### Material-Kacheln (`material:`)
 

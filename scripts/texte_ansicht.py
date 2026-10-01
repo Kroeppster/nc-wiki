@@ -76,7 +76,11 @@ T = {
                         support='Spendenaufruf (unten)'),
         felder=dict(eyebrow='Kleine Zeile', ticket_label='Etikett', title='Titel', heading='Titel', titel='Titel',
                     lede='Einleitung', text='Text', cta='Knopf', cta_primary='Knopf 1', cta_secondary='Knopf 2',
-                    bild_alt='Bildbeschreibung', countdown_label='Countdown', wann='Zeitpunkt', mittel='Link')),
+                    bild_alt='Bildbeschreibung', countdown_label='Countdown', wann='Zeitpunkt', mittel='Link',
+                    offiziell='Offiziell (mit EMS)', offiziell_ohne='Offiziell (ohne EMS)',
+                    modus_label='Umschalter: Frage', modus_mit='Umschalter: mit EMS', modus_ohne='Umschalter: ohne EMS',
+                    legende_offiziell='Legende oben', legende_angebot='Legende unten', hinweis_mit='Hinweis (mit EMS)',
+                    hinweis_ohne='Hinweis (ohne EMS)', hinweis_link='Hinweis: Link')),
     'fr': dict(
         blatt='{name} – Vue', hinweis="Construit comme le site. N'écris que dans les cases blanches – le reste est "
         "verrouillé. Lors du téléversement, seul ce que tu as modifié ici est repris.",
@@ -92,7 +96,10 @@ T = {
         felder=dict(eyebrow='Petite ligne', ticket_label='Étiquette', title='Titre', heading='Titre', titel='Titre',
                     lede='Introduction', text='Texte', cta='Bouton', cta_primary='Bouton 1', cta_secondary='Bouton 2',
                     bild_alt="Description de l'image", countdown_label='Compte à rebours', wann='Moment',
-                    mittel='Lien')),
+                    mittel='Lien', offiziell='Officiel (avec EMS)', offiziell_ohne='Officiel (sans EMS)',
+                    modus_label='Sélecteur : question', modus_mit='Sélecteur : avec EMS', modus_ohne='Sélecteur : sans EMS',
+                    legende_offiziell='Légende en haut', legende_angebot='Légende en bas', hinweis_mit='Remarque (avec EMS)',
+                    hinweis_ohne='Remarque (sans EMS)', hinweis_link='Remarque : lien')),
     'it': dict(
         blatt='{name} – Vista', hinweis='Costruito come il sito. Scrivi solo nelle caselle bianche – il resto è '
         'bloccato. Al caricamento viene ripreso solo ciò che hai modificato qui.',
@@ -108,9 +115,14 @@ T = {
         felder=dict(eyebrow='Riga piccola', ticket_label='Etichetta', title='Titolo', heading='Titolo', titel='Titolo',
                     lede='Introduzione', text='Testo', cta='Pulsante', cta_primary='Pulsante 1',
                     cta_secondary='Pulsante 2', bild_alt="Descrizione dell'immagine", countdown_label='Conto alla rovescia',
-                    wann='Momento', mittel='Link')),
+                    wann='Momento', mittel='Link', offiziell='Ufficiale (con EMS)', offiziell_ohne='Ufficiale (senza EMS)',
+                    modus_label='Selettore: domanda', modus_mit='Selettore: con EMS', modus_ohne='Selettore: senza EMS',
+                    legende_offiziell='Legenda in alto', legende_angebot='Legenda in basso', hinweis_mit='Nota (con EMS)',
+                    hinweis_ohne='Nota (senza EMS)', hinweis_link='Nota: link')),
 }
 SPALTEN = 4          # Inhaltsspalten B..E
+# Unterlisten einer Etappe: welche Felder je Eintrag im Blatt stehen (der Rest, z. B. die Adresse, nicht)
+VERSCHACHTELT = {'mittel': ('titel',), 'offiziell': ('wann', 'titel'), 'offiziell_ohne': ('wann', 'titel')}
 BREITE = 34
 
 
@@ -280,22 +292,28 @@ def _nebeneinander(b, L, wurzel, liste, eintraege, vorhanden):
                     schluessel.append(k)
         for k in schluessel:
             tiefe = max((len(e.get(k)) for e in gruppe if isinstance(e.get(k), list)), default=0)
+            teile = VERSCHACHTELT.get(k, ('titel',))       # welche Felder je Eintrag der Unterliste
             for j in range(tiefe or 1):
-                zeile_benutzt = False
-                b.grund(b.r)
-                for i, e in enumerate(gruppe):
-                    idx = start + i
-                    w = e.get(k)
-                    if isinstance(w, str) and (wurzel, liste, idx, k) in vorhanden:
-                        b.feld(b.r, 2 + i, w, 'feld', [wurzel, liste, idx, k], k)
-                        zeile_benutzt = True
-                    elif isinstance(w, list) and j < len(w) and isinstance(w[j].get('titel'), str) \
-                            and (wurzel, liste, idx, k, j, 'titel') in vorhanden:
-                        b.feld(b.r, 2 + i, w[j]['titel'], 'feld', [wurzel, liste, idx, k, j, 'titel'], 'mittel')
-                        zeile_benutzt = True
-                if zeile_benutzt:
-                    b.etikett(b.r, L['felder'].get(k, k) + (f' {j + 1}' if tiefe > 1 else ''))
-                    b.r += 1
+                for teil in (teile if tiefe else ('',)):
+                    zeile_benutzt = False
+                    b.grund(b.r)
+                    for i, e in enumerate(gruppe):
+                        idx = start + i
+                        w = e.get(k)
+                        if isinstance(w, str) and (wurzel, liste, idx, k) in vorhanden:
+                            b.feld(b.r, 2 + i, w, 'feld', [wurzel, liste, idx, k], k)
+                            zeile_benutzt = True
+                        elif isinstance(w, list) and j < len(w) and isinstance(w[j].get(teil), str) \
+                                and (wurzel, liste, idx, k, j, teil) in vorhanden:
+                            b.feld(b.r, 2 + i, w[j][teil], 'feld', [wurzel, liste, idx, k, j, teil],
+                                   'mittel' if k == 'mittel' else teil)
+                            zeile_benutzt = True
+                    if zeile_benutzt:
+                        name = L['felder'].get(k, k) + (f' {j + 1}' if tiefe > 1 else '')
+                        if teil and teil != 'titel':
+                            name += f' – {L["felder"].get(teil, teil)}'
+                        b.etikett(b.r, name)
+                        b.r += 1
         b.luft()
 
 

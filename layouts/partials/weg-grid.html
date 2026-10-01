@@ -25,32 +25,92 @@
     - wann: "Bis 15. Februar"
       titel: "Entscheiden und anmelden"
       text: "..."
+      offiziell:            # offizielle Termine (swissuniversities), Unis MIT EMS
+        - wann: "Dez. bis 15. Feb."
+          titel: "Voranmeldung bei swissuniversities"
+      offiziell_ohne:       # dasselbe für Unis OHNE EMS (Genf, Lausanne, Neuenburg)
+        - wann: "Dez. bis 15. Feb."
+          titel: "Voranmeldung bei swissuniversities"
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
+
+  ZWEI EBENEN: Oben stehen die offiziellen Termine, unter der Linie unser
+  Angebot dazu. Ein Umschalter über dem Zeitstrahl wechselt zwischen den
+  Terminen für Universitäten mit und ohne EMS - ohne JavaScript bleibt die
+  Fassung "mit EMS" stehen und der Umschalter ist unsichtbar.
   ============================================================================
 */ -}}
-{{- $zahlen := partial "angebot-zahlen.html" . }}
-<ol class="weg">
-  {{- range .Params.weg.etappen }}
-  {{- /* Die vier Teile einer Etappe stehen BEWUSST direkt nebeneinander und
-         nicht in einem Zwischenbehälter: Nur so kann jede Etappe im Raster
-         der Liste mitlaufen (grid-template-rows:subgrid, siehe style.css) -
-         Zeitpunkt, Titel, Text und Links stehen dadurch in allen vier Spalten
-         auf derselben Höhe, auch wenn ein Titel zweizeilig wird. */ -}}
-  <li class="weg-etappe">
-    <p class="weg-wann">{{ .wann }}</p>
-    <h3>{{ .titel }}</h3>
-    <p class="weg-text">{{ .text }}</p>
-    {{- with .mittel }}
-    <ul class="weg-mittel">
-      {{- range . }}
-      <li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>
-      {{- end }}
-    </ul>
-    {{- else }}
-    <span></span>
-    {{- end }}
-  </li>
+{{- $w := .Params.weg }}
+<div class="weg-wrap" id="weg-wrap" data-modus="mit">
+  {{- if $w.modus_mit }}
+  <div class="weg-modus" id="weg-modus" hidden>
+    <span class="weg-modus-label">{{ $w.modus_label }}</span>
+    <div class="report-filters" role="group" aria-label="{{ $w.modus_label }}">
+      <button type="button" class="filter-pill is-active" data-modus="mit" aria-pressed="true">{{ $w.modus_mit }}</button>
+      <button type="button" class="filter-pill" data-modus="ohne" aria-pressed="false">{{ $w.modus_ohne }}</button>
+    </div>
+  </div>
   {{- end }}
-</ol>
+  <ul class="weg-legende" aria-hidden="true">
+    <li class="weg-legende-offiziell">{{ $w.legende_offiziell }}</li>
+    <li class="weg-legende-angebot">{{ $w.legende_angebot }}</li>
+  </ul>
+  <ol class="weg">
+    {{- range .Params.weg.etappen }}
+    {{- /* Die Teile einer Etappe stehen BEWUSST direkt nebeneinander und nicht
+           in einem Zwischenbehälter: Nur so läuft jede Etappe im Raster der
+           Liste mit (grid-template-rows:subgrid, siehe style.css) - Termine,
+           Linie, Zeitpunkt, Titel, Text und Links stehen dadurch in allen
+           vier Spalten auf derselben Höhe. */ -}}
+    <li class="weg-etappe">
+      <div class="weg-offiziell">
+        {{- with .offiziell }}
+        <ul class="weg-termine weg-mit">
+          {{- range . }}<li><span class="weg-datum">{{ .wann }}</span> {{ .titel }}</li>{{ end }}
+        </ul>
+        {{- end }}
+        {{- with .offiziell_ohne }}
+        <ul class="weg-termine weg-ohne">
+          {{- range . }}<li><span class="weg-datum">{{ .wann }}</span> {{ .titel }}</li>{{ end }}
+        </ul>
+        {{- end }}
+      </div>
+      <span class="weg-marke" aria-hidden="true"></span>
+      <p class="weg-wann">{{ .wann }}</p>
+      <h3>{{ .titel }}</h3>
+      <p class="weg-text">{{ .text }}</p>
+      {{- with .mittel }}
+      <ul class="weg-mittel">
+        {{- range . }}
+        <li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>
+        {{- end }}
+      </ul>
+      {{- else }}
+      <span></span>
+      {{- end }}
+    </li>
+    {{- end }}
+  </ol>
+  {{- if $w.hinweis_mit }}
+  <p class="weg-hinweis weg-mit">{{ $w.hinweis_mit }}</p>
+  <p class="weg-hinweis weg-ohne">{{ $w.hinweis_ohne }} <a href="{{ relLangURL "ems/uniguide/" }}">{{ $w.hinweis_link }}</a></p>
+  {{- end }}
+</div>
+<script>
+(function(){
+  var wrap = document.getElementById('weg-wrap'), modus = document.getElementById('weg-modus');
+  if(!wrap || !modus) return;
+  modus.hidden = false;
+  modus.querySelectorAll('.filter-pill').forEach(function(b){
+    b.addEventListener('click', function(){
+      wrap.setAttribute('data-modus', b.getAttribute('data-modus'));
+      modus.querySelectorAll('.filter-pill').forEach(function(x){
+        var an = x === b;
+        x.classList.toggle('is-active', an);
+        x.setAttribute('aria-pressed', an ? 'true' : 'false');
+      });
+    });
+  });
+})();
+</script>

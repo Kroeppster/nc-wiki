@@ -22,10 +22,28 @@ news:
 weg:
   eyebrow: "Von der Anmeldung bis zum Resultat"
   heading: "Was du wann brauchst"
+  modus_label: "Welche Universität?"
+  modus_mit: "Mit EMS"
+  modus_ohne: "Ohne EMS (Genf, Lausanne, Neuenburg)"
+  legende_offiziell: "Offizielle Termine"
+  legende_angebot: "Unser Angebot dazu"
+  hinweis_mit: "Termine nach swissuniversities, ohne Gewähr. Verbindlich sind die offiziellen Angaben von swissuniversities und der Universitäten."
+  hinweis_ohne: "Ohne EMS gibt es keinen Eignungstest: Das 1. Jahr beginnt offen, der Übertritt ins 2. Jahr läuft über eine Eliminationsprüfung. Fristen ohne Gewähr, verbindlich sind die Universitäten selbst."
+  hinweis_link: "Alle Universitäten im Uniguide →"
   etappen:
     - wann: "September bis 15. Februar"
       titel: "Informieren und voranmelden"
-      text: "Welche Universität, welche Priorität – und was der Test von dir will. Die Voranmeldung bei swissuniversities läuft bis 15. Februar."
+      text: "Welche Universität, welche Priorität – und was der Test von dir will."
+      offiziell:
+        - wann: "Sept. bis Nov."
+          titel: "Informationen zu Wunsch-Universität, Anmeldung und Eignungstest"
+        - wann: "Dez. bis 15. Feb."
+          titel: "Voranmeldung bei swissuniversities (MEDON)"
+      offiziell_ohne:
+        - wann: "Sept. bis Nov."
+          titel: "Informationen zu Studienangebot, Fristen und Zulassung der Wunsch-Universität"
+        - wann: "Dez. bis 15. Feb."
+          titel: "Voranmeldung bei swissuniversities (MEDON)"
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
@@ -33,7 +51,15 @@ weg:
           url: "ems/qa/"
     - wann: "Februar bis Mai"
       titel: "Technik aufbauen"
-      text: "Pro Untertest ein Guide mit Strategie und typischen Fallen, dazu Serien zum Üben – erst ohne Zeitdruck, dann mit. Nicht vergessen: Anmeldung zum EMS ab April, Frist 25. Mai."
+      text: "Pro Untertest ein Guide mit Strategie und typischen Fallen, dazu Serien zum Üben – erst ohne Zeitdruck, dann mit."
+      offiziell:
+        - wann: "Jan. bis März"
+          titel: "Anmeldung bei der Wunsch-Universität prüfen"
+        - wann: "April bis 25. Mai"
+          titel: "Anmeldung zum EMS (Frist 45 Tage vor dem Test, Gebühr CHF 300)"
+      offiziell_ohne:
+        - wann: "Jan. bis 30. April"
+          titel: "Immatrikulation bei der Wunsch-Universität (Genf: in gewissen Fällen schon bis 28. Feb.)"
       mittel:
         - titel: "Übungsaufgaben"
           url: "ems/uebungsaufgaben/"
@@ -42,6 +68,9 @@ weg:
     - wann: "Mai bis Anfang Juli"
       titel: "Generalprobe"
       text: "Einmal den ganzen Testtag am Stück: 235 Minuten, elf Blöcke, keine Pause. Zu Hause mit Uhr und Ansagen, oder Anfang Mai bei uns im Hörsaal."
+      offiziell:
+        - wann: "Juni"
+          titel: "Infos zum Testtag per E-Mail (spätestens 10 Tage vorher)"
       mittel:
         - titel: "Testsimulationen"
           url: "ems/testsimulationen/"
@@ -49,7 +78,14 @@ weg:
           url: "ems/pruefungsmodus/"
     - wann: "9. Juli bis August"
       titel: "Durchkommen"
-      text: "Was mitnehmen, wie einteilen, wie raten. Ende Juli folgt die Zuteilung der Studienplätze, Anfang August bestätigst du deinen Platz."
+      text: "Was mitnehmen, wie einteilen, wie raten."
+      offiziell:
+        - wann: "9. Juli"
+          titel: "Eignungstest (EMS)"
+        - wann: "Ende Juli"
+          titel: "Studienplatz- und Studienortzuteilung per Post"
+        - wann: "Anfang August"
+          titel: "Studienplatz bestätigen und immatrikulieren"
       mittel:
         - titel: "EMS-Guide"
           url: "ems/"

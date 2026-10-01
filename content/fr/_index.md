@@ -22,10 +22,28 @@ news:
 weg:
   eyebrow: "De l'inscription au résultat"
   heading: "Ce dont tu as besoin, et quand"
+  modus_label: "Quelle université ?"
+  modus_mit: "Avec EMS"
+  modus_ohne: "Sans EMS (Genève, Lausanne, Neuchâtel)"
+  legende_offiziell: "Dates officielles"
+  legende_angebot: "Notre offre pour cela"
+  hinweis_mit: "Dates selon swissuniversities, sans garantie. Seules font foi les informations officielles de swissuniversities et des universités."
+  hinweis_ohne: "Sans EMS, il n'y a pas de test d'aptitudes : la 1re année est ouverte, le passage en 2e année se fait par un examen éliminatoire. Délais sans garantie, seules les universités font foi."
+  hinweis_link: "Toutes les universités dans l'Uniguide →"
   etappen:
     - wann: "Septembre au 15 février"
       titel: "S'informer et se préinscrire"
-      text: "Quelle université, quelle priorité – et ce que le test attend de toi. La préinscription auprès de swissuniversities est ouverte jusqu'au 15 février."
+      text: "Quelle université, quelle priorité – et ce que le test attend de toi."
+      offiziell:
+        - wann: "Sept. à nov."
+          titel: "Informations sur l'université souhaitée, l'inscription et le test d'aptitudes"
+        - wann: "Déc. au 15 fév."
+          titel: "Préinscription auprès de swissuniversities (MEDON)"
+      offiziell_ohne:
+        - wann: "Sept. à nov."
+          titel: "Informations sur les filières, les délais et l'admission de l'université souhaitée"
+        - wann: "Déc. au 15 fév."
+          titel: "Préinscription auprès de swissuniversities (MEDON)"
       mittel:
         - titel: "Guide des universités"
           url: "ems/uniguide/"
@@ -33,7 +51,15 @@ weg:
           url: "ems/qa/"
     - wann: "Février à mai"
       titel: "Construire la technique"
-      text: "Pour chaque sous-test un guide avec la stratégie et les pièges classiques, et des séries pour t'entraîner – d'abord sans chrono, puis avec. À ne pas oublier : inscription à l'EMS dès avril, délai le 25 mai."
+      text: "Pour chaque sous-test un guide avec la stratégie et les pièges classiques, et des séries pour t'entraîner – d'abord sans chrono, puis avec."
+      offiziell:
+        - wann: "Janv. à mars"
+          titel: "Vérifier l'inscription auprès de l'université souhaitée"
+        - wann: "Avril au 25 mai"
+          titel: "Inscription à l'EMS (délai 45 jours avant le test, taxe CHF 300)"
+      offiziell_ohne:
+        - wann: "Janv. au 30 avril"
+          titel: "Immatriculation auprès de l'université souhaitée (Genève : dans certains cas déjà jusqu'au 28 fév.)"
       mittel:
         - titel: "Exercices"
           url: "ems/uebungsaufgaben/"
@@ -42,6 +68,9 @@ weg:
     - wann: "Mai à début juillet"
       titel: "Répétition générale"
       text: "Une fois la journée entière d'affilée : 235 minutes, onze blocs, sans pause. Chez toi avec l'horloge et les annonces, ou début mai chez nous en auditoire."
+      offiziell:
+        - wann: "Juin"
+          titel: "Infos sur le jour du test par e-mail (au plus tard 10 jours avant)"
       mittel:
         - titel: "Simulations de test"
           url: "ems/testsimulationen/"
@@ -49,7 +78,14 @@ weg:
           url: "ems/pruefungsmodus/"
     - wann: "9 juillet à août"
       titel: "Passer le cap"
-      text: "Quoi emporter, comment gérer le temps, comment deviner. Fin juillet vient l'attribution des places d'études, début août tu confirmes ta place."
+      text: "Quoi emporter, comment gérer le temps, comment deviner."
+      offiziell:
+        - wann: "9 juillet"
+          titel: "Test d'aptitudes (EMS)"
+        - wann: "Fin juillet"
+          titel: "Attribution de la place et du lieu d'études par courrier"
+        - wann: "Début août"
+          titel: "Confirmer la place d'études et s'immatriculer"
       mittel:
         - titel: "Guide EMS"
           url: "ems/"

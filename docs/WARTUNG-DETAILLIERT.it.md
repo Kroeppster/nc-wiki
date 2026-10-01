@@ -411,15 +411,27 @@ weg:
     - wann: "Entro il 15 febbraio"
       titel: "Decidere e iscriversi"
       text: "…"
+      offiziell:            # date ufficiali, università con EMS
+        - wann: "Dic. – 15 feb."
+          titel: "Preiscrizione presso swissuniversities"
+      offiziell_ohne:       # lo stesso per le università senza EMS (Ginevra, Losanna, Neuchâtel)
+        - wann: "Dic. – 15 feb."
+          titel: "Preiscrizione presso swissuniversities"
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
 ```
 
 Le date seguono il calendario ufficiale di swissuniversities. Niente numeri nella linea del
-tempo. Le quattro parti di una tappa devono restare figli diretti di `.weg-etappe` nel
+tempo. Le parti di una tappa devono restare figli diretti di `.weg-etappe` nel
 modello (il CSS `subgrid` le allinea su tutte le colonne; un `<div>` in più lo rompe senza
 avvisi).
+
+Due livelli: in alto le **date ufficiali** (`offiziell`, università con EMS, e `offiziell_ohne`
+per Ginevra, Losanna e Neuchâtel), sotto la linea la nostra offerta. Un selettore sopra la
+linea del tempo passa da una versione all'altra (senza JavaScript resta «con EMS»). Tutte le
+date e i testi del selettore si trovano nella cartella Excel, foglio «Pagina iniziale – Vista».
+Modificare le date solo se così figurano presso swissuniversities.
 
 ### Riquadri del materiale (`material:`)
 

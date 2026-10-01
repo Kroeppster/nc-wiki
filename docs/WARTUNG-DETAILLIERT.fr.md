@@ -417,15 +417,27 @@ weg:
     - wann: "Jusqu'au 15 février"
       titel: "Décider et s'inscrire"
       text: "…"
+      offiziell:            # dates officielles, universités avec EMS
+        - wann: "Déc. au 15 fév."
+          titel: "Préinscription auprès de swissuniversities"
+      offiziell_ohne:       # idem pour les universités sans EMS (Genève, Lausanne, Neuchâtel)
+        - wann: "Déc. au 15 fév."
+          titel: "Préinscription auprès de swissuniversities"
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
 ```
 
 Les dates suivent le calendrier officiel de swissuniversities. Pas de chiffres dans la
-frise. Les quatre parties d'une étape doivent rester des enfants directs de
+frise. Les parties d'une étape doivent rester des enfants directs de
 `.weg-etappe` dans le modèle (le CSS `subgrid` les aligne sur toutes les colonnes ; un
 `<div>` supplémentaire casse cela sans bruit).
+
+Deux niveaux : en haut les **dates officielles** (`offiziell`, universités avec EMS, et
+`offiziell_ohne` pour Genève, Lausanne et Neuchâtel), sous la ligne notre offre. Un
+sélecteur au-dessus de la frise bascule entre les deux versions (sans JavaScript, « avec EMS »
+reste affiché). Toutes les dates et les textes du sélecteur se trouvent dans le classeur,
+feuille « Accueil – Vue ». Ne modifier les dates que si elles figurent ainsi chez swissuniversities.
 
 ### Tuiles du matériel (`material:`)
 
