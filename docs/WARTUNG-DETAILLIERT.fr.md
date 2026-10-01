@@ -232,7 +232,7 @@ catégorie, question, réponse, cible du lien et texte du lien.
   dans le classeur FR/IT, la ligne est alors vide et peut être remplie.
 - **Supprimer une question :** `!Supprimer!` dans la case « Question » – elle disparaît dans
   toutes les langues.
-- **Cible du lien :** chemin d'une de nos pages, p. ex. `/ems/uniguide`. Si la page n'existe
+- **Cible du lien :** chemin d'une de nos pages, p. ex. `/ems/uniguide`, ou une adresse complète avec `https://` (p. ex. Discord). Si notre page n'existe
   pas, le lien n'est pas repris et c'est signalé.
 - Les réponses sont du texte brut sans mise en forme (elles vont aussi dans le bloc de
   données pour les moteurs de recherche).

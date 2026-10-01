@@ -17,7 +17,8 @@
 #              - dafür muss der Text ohne Formatierungs-Code auskommen.
 #   link     - optional: ein zusätzlicher "Mehr erfahren"-Link unter der
 #              Antwort. "href" ist das Ziel (wie bei relLangURL-Aufrufen in
-#              Templates: ohne führenden Schrägstrich, z.B. "ems/uniguide/"),
+#              Templates: ohne führenden Schrägstrich, z.B. "ems/uniguide/";
+#              fremde Seiten mit voller Adresse "https://…"),
 #              "label" der Linktext pro Sprache.
 #   dynamic  - optional: bei "dynamic: subtests" wird automatisch die
 #              aktuelle Liste aller 9 Untertests aus data/subtests.yaml als
@@ -27,6 +28,7 @@
 #
 # Neue Frage hinzufügen: einfach einen neuen Eintrag nach demselben Muster
 # unten anhängen - erscheint automatisch auf der Q&A-Seite, kein Code nötig.
+
 
 
 - id: "was-ist-ems"
@@ -104,9 +106,9 @@
     fr: "Où trouver des informations officielles et fiables sur l'admission ?"
     it: "Dove trovo informazioni ufficiali e affidabili sull'ammissione?"
   answer:
-    de: "Verbindlich sind ausschliesslich die Angaben von swissuniversities und der jeweiligen Universität direkt. Unser Uniguide gibt eine Übersicht zur Orientierung, ersetzt aber die offizielle Quelle nicht – dort steht das auch so."
-    fr: "Seules les informations de swissuniversities et de l'université concernée directement font foi. Notre Uniguide donne un aperçu à titre indicatif, mais ne remplace pas la source officielle – c'est d'ailleurs précisé sur cette page."
-    it: "Fanno fede esclusivamente le informazioni di swissuniversities e della rispettiva università. Il nostro Uniguide offre una panoramica orientativa, ma non sostituisce la fonte ufficiale – è indicato anche lì."
+    de: "Verbindlich sind ausschliesslich die Angaben von swissuniversities und der jeweiligen Universität. Unser Uniguide gibt dir einen Überblick zur Orientierung, ersetzt die offiziellen Quellen aber nicht."
+    fr: "Seules les informations de swissuniversities et de l'université concernée font foi. Notre Uniguide te donne une vue d'ensemble pour t'orienter, mais ne remplace pas les sources officielles."
+    it: "Fanno fede esclusivamente le informazioni di swissuniversities e dell'università interessata. Il nostro Uniguide ti offre una panoramica per orientarti, ma non sostituisce le fonti ufficiali."
   link:
     href: "ems/uniguide/"
     label:
@@ -159,19 +161,103 @@
       fr: "Vers les témoignages →"
       it: "Vai alle testimonianze →"
 
-- id: "fehler-melden"
+- id: "andere-angebote"
   category: { de: "Unser Angebot", fr: "Notre offre", it: "La nostra offerta" }
   question:
-    de: "Ich habe einen Fehler in eurem Material gefunden – was tun?"
-    fr: "J'ai trouvé une erreur dans votre matériel – que faire ?"
-    it: "Ho trovato un errore nel vostro materiale – cosa devo fare?"
+    de: "Könnt ihr mir weitere Hefte, kostenpflichtige Kurse oder Testsimulationen empfehlen?"
+    fr: "Pouvez-vous me recommander d'autres cahiers, des cours ou des simulations de test payants ?"
+    it: "Potete consigliarmi altri quaderni, corsi o simulazioni del test a pagamento?"
   answer:
-    de: "Meld dich einfach über unser Kontaktformular bei uns – wir sind dankbar für jeden Hinweis und korrigieren Fehler so schnell wie möglich."
-    fr: "Contacte-nous simplement via notre formulaire de contact – nous sommes reconnaissant·e·s pour chaque signalement et corrigeons les erreurs aussi vite que possible."
-    it: "Contattaci semplicemente tramite il nostro modulo di contatto – siamo grati per ogni segnalazione e correggiamo gli errori il più rapidamente possibile."
+    de: "Nein. Wir arbeiten ehrenamtlich und unabhängig von allen anderen Angeboten zur EMS-Vorbereitung. Deshalb können wir nicht beurteilen, ob und welche kostenpflichtigen Angebote sich für dich lohnen."
+    fr: "Non. Nous travaillons bénévolement et indépendamment de toutes les autres offres de préparation à l'EMS. C'est pourquoi nous ne pouvons pas juger si des offres payantes valent la peine pour toi, ni lesquelles."
+    it: "No. Lavoriamo su base volontaria e in modo indipendente da tutte le altre offerte di preparazione all'EMS. Per questo non possiamo valutare se e quali offerte a pagamento valgano la pena per te."
+
+- id: "bestaetigung-platz"
+  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  question:
+    de: "Ich habe keine Bestätigungsmail erhalten – habe ich trotzdem einen Platz?"
+    fr: "Je n'ai pas reçu d'e-mail de confirmation – ai-je quand même une place ?"
+    it: "Non ho ricevuto un'e-mail di conferma – ho comunque un posto?"
+  answer:
+    de: "Testsimulation: Ja – dein Platz am gewünschten Standort ist dir sicher, auch ohne separate Bestätigung. Vorbereitungskurs: Ein paar Tage nach Ablauf der Anmeldefrist erhältst du eine E-Mail mit der definitiven Zuteilung. Dieser Entscheid ist endgültig, auch was den zugeteilten Standort betrifft."
+    fr: "Simulation de test : oui – ta place sur le site souhaité t'est assurée, même sans confirmation séparée. Cours de préparation : quelques jours après la fin du délai d'inscription, tu reçois un e-mail avec l'attribution définitive. Cette décision est définitive, y compris pour le site attribué."
+    it: "Simulazione del test: sì – il tuo posto nella sede desiderata è assicurato, anche senza una conferma separata. Corso di preparazione: qualche giorno dopo la scadenza del termine d'iscrizione ricevi un'e-mail con l'assegnazione definitiva. Questa decisione è definitiva, anche per quanto riguarda la sede assegnata."
+
+- id: "auswertung-testsimulation"
+  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  question:
+    de: "Wann und wie erhalte ich die Auswertung der Testsimulation?"
+    fr: "Quand et comment vais-je recevoir l'évaluation de la simulation de test ?"
+    it: "Quando e come ricevo la valutazione della simulazione del test?"
+  answer:
+    de: "Per E-Mail, in den Wochen nach der Testsimulation."
+    fr: "Par e-mail, dans les semaines qui suivent la simulation de test."
+    it: "Per e-mail, nelle settimane successive alla simulazione del test."
+
+- id: "testsimulation-online"
+  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  question:
+    de: "Wird die Testsimulation mit Lösungen auch online gestellt?"
+    fr: "La simulation de test et ses solutions seront-elles aussi publiées en ligne ?"
+    it: "La simulazione del test con le soluzioni viene pubblicata anche online?"
+  answer:
+    de: "Ja. Einige Wochen nach der Testsimulation kannst du das Testheft samt Lösungen kostenlos herunterladen."
+    fr: "Oui. Quelques semaines après la simulation de test, tu peux télécharger gratuitement le cahier de test avec les solutions."
+    it: "Sì. Qualche settimana dopo la simulazione del test puoi scaricare gratuitamente il quaderno del test con le soluzioni."
   link:
-    href: "kontakt/"
+    href: "ems/testsimulationen/"
     label:
-      de: "Zum Kontaktformular →"
-      fr: "Vers le formulaire de contact →"
-      it: "Vai al modulo di contatto →"
+      de: "Zu den Testsimulationen →"
+      fr: "Vers les simulations de test →"
+      it: "Alle simulazioni del test →"
+
+- id: "kursskript-online"
+  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  question:
+    de: "Wird das aktuelle Kursskript auch online gestellt?"
+    fr: "Le script de cours actuel sera-t-il aussi publié en ligne ?"
+    it: "Il materiale del corso attuale viene pubblicato anche online?"
+  answer:
+    de: "Ja. Einige Wochen nach dem Kurs kannst du das Skript kostenlos herunterladen."
+    fr: "Oui. Quelques semaines après le cours, tu peux télécharger gratuitement le script."
+    it: "Sì. Qualche settimana dopo il corso puoi scaricare gratuitamente il materiale."
+  link:
+    href: "ems/vorbereitungskurse/"
+    label:
+      de: "Zu den Vorbereitungskursen →"
+      fr: "Vers les cours de préparation →"
+      it: "Ai corsi di preparazione →"
+
+- id: "loesung-verstehen"
+  category: { de: "Übungsmaterial", fr: "Matériel d'exercice", it: "Materiale di esercizio" }
+  question:
+    de: "Ich verstehe eine Lösung nicht oder hätte gern ausführlichere Lösungen – könnt ihr helfen?"
+    fr: "Je ne comprends pas une solution ou j'aimerais des solutions plus détaillées – pouvez-vous m'aider ?"
+    it: "Non capisco una soluzione o vorrei soluzioni più dettagliate – potete aiutarmi?"
+  answer:
+    de: "Einzelne Aufgaben können wir leider nicht persönlich erklären. Stell deine Frage am besten in unserer Discord-Community: Dort lernen viele andere mit denselben Materialien auf den EMS und helfen dir gern weiter."
+    fr: "Malheureusement, nous ne pouvons pas expliquer personnellement chaque exercice. Pose plutôt ta question dans notre communauté Discord : beaucoup d'autres s'y préparent à l'EMS avec le même matériel et t'aideront volontiers."
+    it: "Purtroppo non possiamo spiegare personalmente i singoli esercizi. Fai la tua domanda nella nostra community Discord: lì molte altre persone si preparano all'EMS con lo stesso materiale e ti aiutano volentieri."
+  link:
+    href: "https://discord.com/invite/DhgYpUGss9"
+    label:
+      de: "Zur Discord-Community →"
+      fr: "Vers la communauté Discord →"
+      it: "Alla community Discord →"
+
+- id: "fehler-melden"
+  category: { de: "Übungsmaterial", fr: "Matériel d'exercice", it: "Materiale di esercizio" }
+  question:
+    de: "Eine Aufgabe oder Lösung ist falsch – was tun?"
+    fr: "Un exercice ou une solution est faux – que faire ?"
+    it: "Un esercizio o una soluzione è sbagliato – cosa faccio?"
+  answer:
+    de: "Melde den Fehler bitte über unser Fehlerformular – du findest es auf der Übersicht der Übungsaufgaben und bei jedem Untertest direkt unter den Downloads. Wir prüfen jede Meldung und korrigieren das Material so schnell wie möglich."
+    fr: "Signale l'erreur via notre formulaire d'erreur – tu le trouves sur la page d'aperçu des exercices et, pour chaque sous-test, directement sous les téléchargements. Nous examinons chaque signalement et corrigeons le matériel au plus vite."
+    it: "Segnala l'errore tramite il nostro modulo per gli errori – lo trovi nella pagina panoramica degli esercizi e, per ogni sottotest, direttamente sotto i download. Esaminiamo ogni segnalazione e correggiamo il materiale il prima possibile."
+  link:
+    href: "ems/uebungsaufgaben/"
+    label:
+      de: "Zum Fehlerformular →"
+      fr: "Vers le formulaire d'erreur →"
+      it: "Al modulo per gli errori →"

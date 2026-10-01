@@ -221,7 +221,7 @@ Frage, Antwort, Link-Ziel und Link-Text.
   FR/IT-Mappe ist die Zeile dann leer und lässt sich ausfüllen.
 - **Frage löschen:** `!Löschen!` in die Zelle „Frage“ – die Frage verschwindet in allen
   Sprachen.
-- **Link-Ziel:** Pfad einer eigenen Seite, z. B. `/ems/uniguide`. Gibt es die Seite nicht,
+- **Link-Ziel:** Pfad einer eigenen Seite, z. B. `/ems/uniguide`, oder eine volle Adresse mit `https://` (z. B. Discord). Gibt es die eigene Seite nicht,
   wird der Link nicht übernommen und gemeldet.
 - Antworten sind reiner Text ohne Formatierung (sie landen auch im Datenblock für
   Suchmaschinen).

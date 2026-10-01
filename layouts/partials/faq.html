@@ -63,7 +63,11 @@
         {{- with .link }}
         {{- $href := .href }}
         {{- with partial "uni-text.html" .label }}
+        {{- if hasPrefix $href "http" }}
+        <a class="more" href="{{ $href }}" target="_blank" rel="noopener">{{ . }}</a>
+        {{- else }}
         <a class="more" href="{{ relLangURL $href }}">{{ . }}</a>
+        {{- end }}
         {{- end }}
         {{- end }}
       </div>

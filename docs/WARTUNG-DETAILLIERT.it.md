@@ -227,7 +227,7 @@ categoria, domanda, risposta, destinazione del link e testo del link.
   nella cartella FR/IT la riga è allora vuota e si può compilare.
 - **Eliminare una domanda:** `!Eliminare!` nella casella «Domanda» – sparisce in tutte le
   lingue.
-- **Destinazione del link:** percorso di una nostra pagina, p. es. `/ems/uniguide`. Se la
+- **Destinazione del link:** percorso di una nostra pagina, p. es. `/ems/uniguide`, o un indirizzo completo con `https://` (p. es. Discord). Se la nostra
   pagina non esiste, il link non viene ripreso e lo si segnala.
 - Le risposte sono testo semplice senza formattazione (finiscono anche nel blocco di dati
   per i motori di ricerca).

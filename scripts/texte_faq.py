@@ -50,7 +50,7 @@ T = {
         hinweis='Je Frage eine Zeile. Nur in die weissen Felder schreiben. Grüner Kopf = Text nur für diese Sprache. '
         'Neue Frage: in einer leeren Zeile unten Frage und Antwort eintragen, Kategorie aus der Liste wählen '
         '(oder eine neue schreiben). Frage löschen: !Löschen! in die Zelle „Frage“ – sie verschwindet dann in allen '
-        'Sprachen. Link-Ziel: Pfad einer eigenen Seite, z. B. /ems/uniguide. Antworten ohne Formatierung.',
+        'Sprachen. Link-Ziel: Pfad einer eigenen Seite, z. B. /ems/uniguide, oder eine volle Adresse mit https://. Antworten ohne Formatierung.',
         titel=dict(category='Kategorie', question='Frage', answer='Antwort', href='Link-Ziel (optional)',
                    label='Link-Text'),
         neu='neue Frage', deutsch='Deutsch:'),
@@ -58,7 +58,7 @@ T = {
         hinweis="Une ligne par question. N'écris que dans les cases blanches. En-tête vert = texte pour cette langue "
         "seulement. Nouvelle question : remplir question et réponse dans une ligne vide en bas, choisir la catégorie "
         "dans la liste (ou en écrire une nouvelle). Supprimer une question : !Supprimer! dans la case « Question » – "
-        "elle disparaît alors dans toutes les langues. Cible du lien : chemin d'une de nos pages, p. ex. /ems/uniguide. "
+        "elle disparaît alors dans toutes les langues. Cible du lien : chemin d'une de nos pages, p. ex. /ems/uniguide, ou une adresse complète avec https://. "
         "Réponses sans mise en forme.",
         titel=dict(category='Catégorie', question='Question', answer='Réponse', href='Cible du lien (facultatif)',
                    label='Texte du lien'),
@@ -67,7 +67,7 @@ T = {
         hinweis="Una riga per domanda. Scrivi solo nelle caselle bianche. Intestazione verde = testo solo per questa "
         "lingua. Nuova domanda: compilare domanda e risposta in una riga vuota in basso, scegliere la categoria "
         "dall'elenco (o scriverne una nuova). Eliminare una domanda: !Eliminare! nella casella «Domanda» – sparisce "
-        "allora in tutte le lingue. Destinazione del link: percorso di una nostra pagina, p. es. /ems/uniguide. "
+        "allora in tutte le lingue. Destinazione del link: percorso di una nostra pagina, p. es. /ems/uniguide, o un indirizzo completo con https://. "
         "Risposte senza formattazione.",
         titel=dict(category='Categoria', question='Domanda', answer='Risposta', href='Destinazione link (facoltativa)',
                    label='Testo del link'),
@@ -85,6 +85,8 @@ def _wert(eintrag, feld, sprache):
     """So steht ein Feld in der Zelle (ohne Rueckfall auf Deutsch)."""
     if feld == 'href':
         h = (eintrag.get('link') or {}).get('href')
+        if h and re.match(r'https?://', h):
+            return h
         return '/' + h.strip('/') if h else ''
     w = (eintrag.get('link') or {}).get('label') if feld == 'label' else eintrag.get(feld)
     if isinstance(w, dict):
@@ -238,8 +240,8 @@ def _seite_da(projekt, pfad):
 def _href(projekt, text):
     """Zelle "Link-Ziel" -> href wie in data/faq.yaml ("ems/uniguide/")."""
     t = text.strip()
-    if re.match(r'https?://', t):
-        raise ValueError(f'„{t}“ – hier nur eigene Seiten, als Pfad wie /ems/uniguide')
+    if re.match(r'https://\S+$', t):          # fremde Seite (z. B. Discord)
+        return t
     t = t.split('#')[0].strip().strip('/')
     if not _seite_da(projekt, t):
         raise ValueError(f'„{text}“ – diese Seite gibt es nicht')
