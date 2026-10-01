@@ -1,0 +1,88 @@
+{{- /*
+  Rechnet für den Zeitstrahl (weg-grid.html) aus den Daten jedes Eintrags die
+  Lage auf der Zeitachse aus. Aufruf: partial "weg-positionen.html" $weg.
+
+  Eingabe: weg.start / weg.ende (die Enden der Achse, z. B. 2026-10-01 und
+  2027-09-30) und je Eintrag von / bis (JJJJ-MM-TT; ohne "bis" ist es ein
+  einzelner Tag). Liegt ein Datum ausserhalb der Achse, wird es an den Rand
+  gesetzt.
+
+  Rückgabe: dict mit
+    items   - die Einträge mit zusätzlich: l (Beginn in %), w (Länge in %),
+              boxl (Beginn des Textfelds in %), boxw (Breite des Textfelds
+              in %), spur_mit / spur_ohne (Zeile bei den offiziellen Terminen,
+              je nach Umschalter) bzw. spur (bei unserem Angebot)
+    n_mit, n_ohne, n_angebot - wie viele Zeilen jede Ebene braucht
+    monate  - Monatsmarken der Achse (Name, Lage in %)
+
+  ZEILEN: Damit sich Texte nicht überdecken, werden die Einträge nach Beginn
+  sortiert und der Reihe nach in die erste Zeile gesetzt, in der noch Platz
+  ist (Platzbedarf = Textbreite, mindestens BREITE % der Achse).
+*/ -}}
+{{- $w := . -}}
+{{- $start := time.AsTime $w.start -}}
+{{- $ende := time.AsTime $w.ende -}}
+{{- $spanne := float (sub $ende.Unix $start.Unix) -}}
+{{- $breite := 14.0 -}}
+
+{{- /* Lage jedes Eintrags */ -}}
+{{- $alle := slice -}}
+{{- range $w.termine -}}
+  {{- $von := time.AsTime .von -}}
+  {{- $bis := $von -}}
+  {{- with .bis }}{{ $bis = time.AsTime . }}{{ end -}}
+  {{- $l := math.Max 0.0 (math.Min 100.0 (mul 100.0 (div (float (sub $von.Unix $start.Unix)) $spanne))) -}}
+  {{- $r := math.Max 0.0 (math.Min 100.0 (mul 100.0 (div (float (sub $bis.Unix $start.Unix)) $spanne))) -}}
+  {{- $breit := math.Max $breite (sub $r $l) -}}
+  {{- $boxl := math.Min $l (sub 100.0 $breit) -}}
+  {{- $alle = $alle | append (merge . (dict "l" $l "w" (math.Max 0.0 (sub $r $l)) "boxl" $boxl "boxw" $breit "ext" (add $boxl $breit))) -}}
+{{- end -}}
+{{- $alle = sort $alle "von" -}}
+
+{{- /* Zeilen vergeben: einmal für jede Fassung der offiziellen Termine, einmal für das Angebot */ -}}
+{{- $ergebnis := slice -}}
+{{- $zahlen := dict -}}
+{{- range slice (dict "name" "mit" "art" "offiziell" "fuer" "mit") (dict "name" "ohne" "art" "offiziell" "fuer" "ohne") (dict "name" "angebot" "art" "angebot" "fuer" "") -}}
+  {{- $gruppe := . -}}
+  {{- $enden := slice -}}
+  {{- $spuren := dict -}}
+  {{- $luecke := cond (eq $gruppe.art "angebot") 0.1 1.0 -}}
+  {{- range $i, $e := $alle -}}
+    {{- $gehoert := false -}}
+    {{- if eq $gruppe.art "angebot" -}}
+      {{- $gehoert = eq $e.art "angebot" -}}
+    {{- else -}}
+      {{- $gehoert = and (eq $e.art "offiziell") (in (slice $gruppe.fuer "beide") $e.fuer) -}}
+    {{- end -}}
+    {{- if $gehoert -}}
+      {{- $spur := -1 -}}
+      {{- range $k, $ende_k := $enden }}{{ if and (lt $spur 0) (le $ende_k $e.boxl) }}{{ $spur = $k }}{{ end }}{{ end -}}
+      {{- if lt $spur 0 -}}
+        {{- $spur = len $enden -}}
+        {{- $enden = $enden | append (add $e.ext $luecke) -}}
+      {{- else -}}
+        {{- $neu := slice -}}
+        {{- range $k, $ende_k := $enden }}{{ if eq $k $spur }}{{ $neu = $neu | append (add $e.ext $luecke) }}{{ else }}{{ $neu = $neu | append $ende_k }}{{ end }}{{ end -}}
+        {{- $enden = $neu -}}
+      {{- end -}}
+      {{- $spuren = merge $spuren (dict (printf "%d" $i) $spur) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $zahlen = merge $zahlen (dict $gruppe.name (len $enden)) -}}
+  {{- $neue := slice -}}
+  {{- range $i, $e := $alle -}}
+    {{- $s := index $spuren (printf "%d" $i) -}}
+    {{- $schluessel := printf "spur_%s" $gruppe.name -}}
+    {{- $neue = $neue | append (merge $e (dict $schluessel (cond (eq $s nil) -1 $s))) -}}
+  {{- end -}}
+  {{- $alle = $neue -}}
+{{- end -}}
+
+{{- /* Monatsmarken */ -}}
+{{- $monate := slice -}}
+{{- range seq 0 11 -}}
+  {{- $m := $start.AddDate 0 . 0 -}}
+  {{- $monate = $monate | append (dict "name" (time.Format "Jan" $m) "l" (mul 100.0 (div (float (sub $m.Unix $start.Unix)) $spanne))) -}}
+{{- end -}}
+
+{{- return (dict "items" $alle "n_mit" (index $zahlen "mit") "n_ohne" (index $zahlen "ohne") "n_angebot" (index $zahlen "angebot") "monate" $monate) -}}

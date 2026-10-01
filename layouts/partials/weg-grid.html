@@ -1,48 +1,42 @@
 {{- /*
   ============================================================================
-  "WAS DU WANN BRAUCHST" - das Angebot als Ablauf (Startseite)
+  "WAS DU WANN BRAUCHST" - ein Zeitstrahl von Oktober bis September
   ============================================================================
-  Statt aufzuzählen, WAS es gibt, ordnet dieser Baustein das Angebot danach,
-  WANN man es braucht: von der Anmeldung im Februar bis zum Resultat im
-  August. Jede Etappe nennt den Zeitpunkt, was dann ansteht, und die Mittel,
-  die wir dafür haben - mit ihrer Menge daneben.
+  Eine durchgehende Zeitachse (Oktober bis September). Jeder Eintrag steht
+  genau dort, wo sein Datum liegt - die Lage rechnet weg-positionen.html aus
+  "von" und "bis" aus. Über der Achse stehen die offiziellen Termine von
+  swissuniversities, darunter unser Angebot dazu. Ein Umschalter wechselt
+  zwischen den Terminen für Universitäten mit und ohne EMS (ohne JavaScript
+  bleibt "mit EMS" stehen).
 
-  Der Grund für diese Form: Wer neu auf der Seite landet, fragt sich nicht
-  "was habt ihr?", sondern "was muss ich jetzt tun?". Eine Kachelwand
-  beantwortet die erste Frage, dieser Ablauf die zweite - und nebenbei
-  erklärt er, wofür das Material überhaupt gut ist.
-
-  HIER STEHEN KEINE MENGENANGABEN. "120 Serien", "11 Universitäten" und so
-  weiter standen eine Zeitlang neben den Links und haben den Blick auf sich
-  gezogen, obwohl es an dieser Stelle nur darum geht, WAS man dafür braucht.
-  Die Zahlen stehen weiterhin im Abschnitt darunter ("Das Material selbst"),
-  wo sie hingehören.
+  Auf dem Handy wird daraus eine senkrechte Liste in der Reihenfolge der
+  Daten - eine waagrechte Achse mit Zeitbalken wäre dort unlesbar.
 
   GEPFLEGT WIRD ALLES IM FRONTMATTER der Startseite (content/de|fr|it/
-  _index.md, Block "weg:") - hier steht kein einziger übersetzbarer Satz.
-  Eine Etappe sieht so aus:
+  _index.md, Block "weg:"), auch in der Textmappe (Blatt "Startseite –
+  Ansicht"). Ein Eintrag:
 
-    - wann: "Bis 15. Februar"
-      titel: "Entscheiden und anmelden"
-      text: "..."
-      offiziell:            # offizielle Termine (swissuniversities), Unis MIT EMS
-        - wann: "Dez. bis 15. Feb."
-          titel: "Voranmeldung bei swissuniversities"
-      offiziell_ohne:       # dasselbe für Unis OHNE EMS (Genf, Lausanne, Neuenburg)
-        - wann: "Dez. bis 15. Feb."
-          titel: "Voranmeldung bei swissuniversities"
-      mittel:
+    - wann: "Dez. bis 15. Feb."         # Text, wie er angezeigt wird
+      titel: "Voranmeldung ..."
+      text: "..."                       # nur beim Angebot angezeigt
+      von: "2026-12-01"                 # Beginn: bestimmt die Lage
+      bis: "2027-02-15"                 # Ende (weglassen = einzelner Tag)
+      art: "offiziell"                  # offiziell | angebot
+      fuer: "mit"                       # mit | ohne | beide (EMS-Umschalter)
+      mittel:                           # Links, nur beim Angebot
         - titel: "Uniguide"
           url: "ems/uniguide/"
 
-  ZWEI EBENEN: Oben stehen die offiziellen Termine, unter der Linie unser
-  Angebot dazu. Ein Umschalter über dem Zeitstrahl wechselt zwischen den
-  Terminen für Universitäten mit und ohne EMS - ohne JavaScript bleibt die
-  Fassung "mit EMS" stehen und der Umschalter ist unsichtbar.
+  Die Achse reicht von weg.start bis weg.ende (z. B. 2026-10-01 bis
+  2027-09-30). Für eine neue Saison dort und bei den Daten das Jahr ändern.
+  Hier steht kein einziger übersetzbarer Satz.
   ============================================================================
 */ -}}
 {{- $w := .Params.weg }}
-<div class="weg-wrap" id="weg-wrap" data-modus="mit">
+{{- $p := partial "weg-positionen.html" $w }}
+{{- $oben := slice }}{{ $unten := slice }}
+{{- range $p.items }}{{ if eq .art "offiziell" }}{{ $oben = $oben | append . }}{{ else }}{{ $unten = $unten | append . }}{{ end }}{{ end }}
+<div class="weg-wrap" id="weg-wrap" data-modus="mit" style="--n-mit:{{ $p.n_mit }};--n-ohne:{{ $p.n_ohne }};--n-angebot:{{ $p.n_angebot }}">
   {{- if $w.modus_mit }}
   <div class="weg-modus" id="weg-modus" hidden>
     <span class="weg-modus-label">{{ $w.modus_label }}</span>
@@ -56,45 +50,62 @@
     <li class="weg-legende-offiziell">{{ $w.legende_offiziell }}</li>
     <li class="weg-legende-angebot">{{ $w.legende_angebot }}</li>
   </ul>
-  <ol class="weg">
-    {{- range .Params.weg.etappen }}
-    {{- /* Die Teile einer Etappe stehen BEWUSST direkt nebeneinander und nicht
-           in einem Zwischenbehälter: Nur so läuft jede Etappe im Raster der
-           Liste mit (grid-template-rows:subgrid, siehe style.css) - Termine,
-           Linie, Zeitpunkt, Titel, Text und Links stehen dadurch in allen
-           vier Spalten auf derselben Höhe. */ -}}
-    <li class="weg-etappe">
-      <div class="weg-offiziell">
-        {{- with .offiziell }}
-        <ul class="weg-termine weg-mit">
-          {{- range . }}<li><span class="weg-datum">{{ .wann }}</span> {{ .titel }}</li>{{ end }}
-        </ul>
-        {{- end }}
-        {{- with .offiziell_ohne }}
-        <ul class="weg-termine weg-ohne">
-          {{- range . }}<li><span class="weg-datum">{{ .wann }}</span> {{ .titel }}</li>{{ end }}
-        </ul>
-        {{- end }}
+
+  {{- /* ===== Breite Bildschirme: Zeitachse ===== */}}
+  <div class="weg-achse-wrap" aria-hidden="false">
+    <div class="weg-raster" aria-hidden="true">
+      {{- range $p.monate }}<span style="left:{{ printf "%.2f" .l }}%"></span>{{ end }}
+    </div>
+
+    <div class="weg-ebene weg-oben">
+      {{- range $oben }}
+      <div class="weg-eintrag weg-f-{{ .fuer }}" style="--s-mit:{{ .spur_mit }};--s-ohne:{{ .spur_ohne }}">
+        <span class="weg-balken" style="left:{{ printf "%.2f" .l }}%;width:{{ printf "%.2f" .w }}%"></span>
+        <p class="weg-label" style="left:{{ printf "%.2f" .boxl }}%;width:{{ printf "%.2f" .boxw }}%">
+          <span class="weg-datum">{{ .wann }}</span>{{ .titel }}
+        </p>
       </div>
-      <span class="weg-marke" aria-hidden="true"></span>
-      <p class="weg-wann">{{ .wann }}</p>
+      {{- end }}
+    </div>
+
+    <div class="weg-achse" aria-hidden="true">
+      {{- range $p.monate }}<span class="weg-monat" style="left:{{ printf "%.2f" .l }}%">{{ .name }}</span>{{ end }}
+    </div>
+
+    <div class="weg-ebene weg-unten">
+      {{- range $unten }}
+      <div class="weg-eintrag" style="--s:{{ .spur_angebot }}">
+        <span class="weg-balken weg-balken-angebot" style="left:{{ printf "%.2f" .l }}%;width:{{ printf "%.2f" .w }}%"></span>
+        <div class="weg-label weg-label-angebot" style="left:{{ printf "%.2f" .boxl }}%;width:{{ printf "%.2f" .boxw }}%">
+          <span class="weg-datum">{{ .wann }}</span>
+          <h3>{{ .titel }}</h3>
+          {{- with .text }}<p class="weg-text">{{ . }}</p>{{ end }}
+          {{- with .mittel }}
+          <ul class="weg-mittel">{{ range . }}<li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>{{ end }}</ul>
+          {{- end }}
+        </div>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+
+  {{- /* ===== Schmale Bildschirme: senkrechte Liste nach Datum ===== */}}
+  <ol class="weg-liste">
+    {{- range sort $p.items "von" }}
+    <li class="weg-punkt weg-f-{{ .fuer }} weg-art-{{ .art }}">
+      <span class="weg-datum">{{ .wann }}</span>
       <h3>{{ .titel }}</h3>
-      <p class="weg-text">{{ .text }}</p>
+      {{- with .text }}<p class="weg-text">{{ . }}</p>{{ end }}
       {{- with .mittel }}
-      <ul class="weg-mittel">
-        {{- range . }}
-        <li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>
-        {{- end }}
-      </ul>
-      {{- else }}
-      <span></span>
+      <ul class="weg-mittel">{{ range . }}<li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>{{ end }}</ul>
       {{- end }}
     </li>
     {{- end }}
   </ol>
+
   {{- if $w.hinweis_mit }}
-  <p class="weg-hinweis weg-mit">{{ $w.hinweis_mit }}</p>
-  <p class="weg-hinweis weg-ohne">{{ $w.hinweis_ohne }} <a href="{{ relLangURL "ems/uniguide/" }}">{{ $w.hinweis_link }}</a></p>
+  <p class="weg-hinweis weg-f-mit">{{ $w.hinweis_mit }}</p>
+  <p class="weg-hinweis weg-f-ohne">{{ $w.hinweis_ohne }} <a href="{{ relLangURL "ems/uniguide/" }}">{{ $w.hinweis_link }}</a></p>
   {{- end }}
 </div>
 <script>

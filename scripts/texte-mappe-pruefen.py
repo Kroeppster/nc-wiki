@@ -45,6 +45,7 @@ except ImportError:
 PROJEKT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJEKT, 'scripts'))
 import texte_bausteine as tb
+import texte_ansicht
 
 AUSGEBEN = os.path.join(PROJEKT, 'scripts', 'texte-ausgeben.py')
 EINLESEN = os.path.join(PROJEKT, 'scripts', 'texte-einlesen.py')
@@ -783,6 +784,11 @@ def ansicht_pruefen(projekt, ordner):
     pruef('Startseite, Team, Uniguide und Q&A haben je ein Ansichtsblatt, direkt hinter ihrem Seitenblatt',
           len(namen) == 4 and all(n.startswith(m.sheetnames[m.sheetnames.index(n) - 1][:10]) for n in namen),
           namen)
+    import datetime as _dt
+    pruef('Zeitstrahl: ein von Excel in ein Datum verwandelter Termin wird wieder JJJJ-MM-TT',
+          texte_ansicht._text(_dt.datetime(2027, 7, 10)) == '2027-07-10')
+    pruef('Zeitstrahl: Termine stehen mit Beginn/Ende im Startseiten-Blatt',
+          any(str(c.value) == '2027-07-09' for r in m[[n for n in namen if n.startswith('Startseite')][0]].iter_rows() for c in r))
     pruef('Ansichtsblaetter sind geschuetzt, die weissen Felder nicht',
           all(m[n].protection.sheet for n in namen))
     felder = {}

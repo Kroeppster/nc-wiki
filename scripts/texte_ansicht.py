@@ -77,7 +77,9 @@ T = {
         felder=dict(eyebrow='Kleine Zeile', ticket_label='Etikett', title='Titel', heading='Titel', titel='Titel',
                     lede='Einleitung', text='Text', cta='Knopf', cta_primary='Knopf 1', cta_secondary='Knopf 2',
                     bild_alt='Bildbeschreibung', countdown_label='Countdown', wann='Zeitpunkt', mittel='Link',
-                    offiziell='Offiziell (mit EMS)', offiziell_ohne='Offiziell (ohne EMS)',
+                    von='Beginn (JJJJ-MM-TT)', bis='Ende (JJJJ-MM-TT, leer = ein Tag)',
+                    art='Art (offiziell / angebot)', fuer='Gilt für (mit / ohne / beide)', start='Zeitachse: Beginn',
+                    ende='Zeitachse: Ende',
                     modus_label='Umschalter: Frage', modus_mit='Umschalter: mit EMS', modus_ohne='Umschalter: ohne EMS',
                     legende_offiziell='Legende oben', legende_angebot='Legende unten', hinweis_mit='Hinweis (mit EMS)',
                     hinweis_ohne='Hinweis (ohne EMS)', hinweis_link='Hinweis: Link')),
@@ -96,7 +98,9 @@ T = {
         felder=dict(eyebrow='Petite ligne', ticket_label='Étiquette', title='Titre', heading='Titre', titel='Titre',
                     lede='Introduction', text='Texte', cta='Bouton', cta_primary='Bouton 1', cta_secondary='Bouton 2',
                     bild_alt="Description de l'image", countdown_label='Compte à rebours', wann='Moment',
-                    mittel='Lien', offiziell='Officiel (avec EMS)', offiziell_ohne='Officiel (sans EMS)',
+                    mittel='Lien', von='Début (AAAA-MM-JJ)', bis='Fin (AAAA-MM-JJ, vide = un jour)',
+                    art='Sorte (offiziell / angebot)', fuer='Valable pour (mit / ohne / beide)', start='Axe : début',
+                    ende='Axe : fin',
                     modus_label='Sélecteur : question', modus_mit='Sélecteur : avec EMS', modus_ohne='Sélecteur : sans EMS',
                     legende_offiziell='Légende en haut', legende_angebot='Légende en bas', hinweis_mit='Remarque (avec EMS)',
                     hinweis_ohne='Remarque (sans EMS)', hinweis_link='Remarque : lien')),
@@ -115,14 +119,16 @@ T = {
         felder=dict(eyebrow='Riga piccola', ticket_label='Etichetta', title='Titolo', heading='Titolo', titel='Titolo',
                     lede='Introduzione', text='Testo', cta='Pulsante', cta_primary='Pulsante 1',
                     cta_secondary='Pulsante 2', bild_alt="Descrizione dell'immagine", countdown_label='Conto alla rovescia',
-                    wann='Momento', mittel='Link', offiziell='Ufficiale (con EMS)', offiziell_ohne='Ufficiale (senza EMS)',
+                    wann='Momento', mittel='Link', von='Inizio (AAAA-MM-GG)', bis='Fine (AAAA-MM-GG, vuoto = un giorno)',
+                    art='Tipo (offiziell / angebot)', fuer='Valido per (mit / ohne / beide)', start='Asse: inizio',
+                    ende='Asse: fine',
                     modus_label='Selettore: domanda', modus_mit='Selettore: con EMS', modus_ohne='Selettore: senza EMS',
                     legende_offiziell='Legenda in alto', legende_angebot='Legenda in basso', hinweis_mit='Nota (con EMS)',
                     hinweis_ohne='Nota (senza EMS)', hinweis_link='Nota: link')),
 }
 SPALTEN = 4          # Inhaltsspalten B..E
 # Unterlisten einer Etappe: welche Felder je Eintrag im Blatt stehen (der Rest, z. B. die Adresse, nicht)
-VERSCHACHTELT = {'mittel': ('titel',), 'offiziell': ('wann', 'titel'), 'offiziell_ohne': ('wann', 'titel')}
+VERSCHACHTELT = {'mittel': ('titel',)}
 BREITE = 34
 
 
@@ -417,6 +423,8 @@ def blaetter_anlegen(mappe, sprache, projekt, seiten_blaetter):
 # Einlesen
 # ---------------------------------------------------------------------------
 def _text(v):
+    if hasattr(v, 'strftime'):          # Excel macht aus 2027-07-10 gern ein Datum
+        return v.strftime('%Y-%m-%d')
     return '' if v is None else str(v).replace('\r\n', '\n').strip()
 
 

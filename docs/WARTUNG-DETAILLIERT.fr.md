@@ -411,33 +411,36 @@ symbolique.
 
 ```yaml
 weg:
-  eyebrow: "De l'inscription au résultat"
-  heading: "Ce dont tu as besoin, et quand"
-  etappen:
-    - wann: "Jusqu'au 15 février"
-      titel: "Décider et s'inscrire"
-      text: "…"
-      offiziell:            # dates officielles, universités avec EMS
-        - wann: "Déc. au 15 fév."
-          titel: "Préinscription auprès de swissuniversities"
-      offiziell_ohne:       # idem pour les universités sans EMS (Genève, Lausanne, Neuchâtel)
-        - wann: "Déc. au 15 fév."
-          titel: "Préinscription auprès de swissuniversities"
-      mittel:
+  start: "2026-10-01"            # début de l'axe
+  ende: "2027-09-30"             # fin de l'axe
+  termine:
+    - wann: "Dez. bis 15. Feb."  # texte tel qu'affiché
+      titel: "Voranmeldung bei swissuniversities"
+      von: "2026-12-01"          # détermine la position sur l'axe
+      bis: "2027-02-15"          # sans = un seul jour
+      art: "offiziell"           # offiziell | angebot
+      fuer: "mit"                # mit | ohne | beide (sélecteur avec/sans EMS)
+    - wann: "Februar bis Mai"
+      titel: "Technik aufbauen"
+      text: "…"                  # affiché seulement pour l'offre
+      von: "2027-02-16"
+      bis: "2027-04-30"
+      art: "angebot"
+      fuer: "beide"
+      mittel:                    # liens, seulement pour l'offre
         - titel: "Uniguide"
           url: "ems/uniguide/"
 ```
 
-Les dates suivent le calendrier officiel de swissuniversities. Pas de chiffres dans la
-frise. Les parties d'une étape doivent rester des enfants directs de
-`.weg-etappe` dans le modèle (le CSS `subgrid` les aligne sur toutes les colonnes ; un
-`<div>` supplémentaire casse cela sans bruit).
-
-Deux niveaux : en haut les **dates officielles** (`offiziell`, universités avec EMS, et
-`offiziell_ohne` pour Genève, Lausanne et Neuchâtel), sous la ligne notre offre. Un
-sélecteur au-dessus de la frise bascule entre les deux versions (sans JavaScript, « avec EMS »
-reste affiché). Toutes les dates et les textes du sélecteur se trouvent dans le classeur,
-feuille « Accueil – Vue ». Ne modifier les dates que si elles figurent ainsi chez swissuniversities.
+Un axe du temps continu d'octobre à septembre : **chaque entrée se place automatiquement là où
+se trouve sa date** (`von`/`bis`). En haut les dates officielles de swissuniversities, en
+dessous notre offre ; les textes qui se chevaucheraient passent d'eux-mêmes sur une autre
+ligne. Un sélecteur bascule entre les dates pour les universités avec et sans EMS (`fuer`).
+Nouvelle saison : modifier `start`, `ende` et les années des dates, dans les trois langues.
+Tout se trouve dans le classeur, feuille « Accueil – Vue » (lignes « Début », « Fin », « Sorte »,
+« Valable pour »). Ne modifier les dates que si elles figurent ainsi chez swissuniversities.
+Sur mobile, cela devient une liste verticale par date. Calcul :
+`layouts/partials/weg-positionen.html`, affichage `weg-grid.html`.
 
 ### Tuiles du matériel (`material:`)
 

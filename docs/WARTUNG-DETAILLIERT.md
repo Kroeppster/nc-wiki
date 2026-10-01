@@ -400,33 +400,36 @@ Symbolbild.
 
 ```yaml
 weg:
-  eyebrow: "Von der Anmeldung bis zum Resultat"
-  heading: "Was du wann brauchst"
-  etappen:
-    - wann: "Bis 15. Februar"
-      titel: "Entscheiden und anmelden"
-      text: "…"
-      offiziell:            # offizielle Termine, Unis mit EMS
-        - wann: "Dez. bis 15. Feb."
-          titel: "Voranmeldung bei swissuniversities"
-      offiziell_ohne:       # dasselbe für Unis ohne EMS (Genf, Lausanne, Neuenburg)
-        - wann: "Dez. bis 15. Feb."
-          titel: "Voranmeldung bei swissuniversities"
-      mittel:
+  start: "2026-10-01"            # Beginn der Zeitachse
+  ende: "2027-09-30"             # Ende der Zeitachse
+  termine:
+    - wann: "Dez. bis 15. Feb."  # Text, wie er angezeigt wird
+      titel: "Voranmeldung bei swissuniversities"
+      von: "2026-12-01"          # bestimmt die Lage auf der Achse
+      bis: "2027-02-15"          # weglassen = einzelner Tag
+      art: "offiziell"           # offiziell | angebot
+      fuer: "mit"                # mit | ohne | beide (Umschalter mit/ohne EMS)
+    - wann: "Februar bis Mai"
+      titel: "Technik aufbauen"
+      text: "…"                  # nur beim Angebot angezeigt
+      von: "2027-02-16"
+      bis: "2027-04-30"
+      art: "angebot"
+      fuer: "beide"
+      mittel:                    # Links, nur beim Angebot
         - titel: "Uniguide"
           url: "ems/uniguide/"
 ```
 
-Die Termine folgen dem offiziellen Zeitplan von swissuniversities. Im Zeitstrahl stehen
-keine Zahlen. Die Teile einer Etappe müssen im Template direkte Kinder von
-`.weg-etappe` bleiben (CSS `subgrid` richtet sie über alle Spalten aus; ein zusätzliches
-`<div>` zerstört das lautlos).
-
-Zwei Ebenen: Oben stehen die **offiziellen Termine** (`offiziell`, für Universitäten mit EMS,
-und `offiziell_ohne` für Genf, Lausanne und Neuenburg), unter der Linie unser Angebot. Ein
-Umschalter über dem Zeitstrahl wechselt zwischen beiden Fassungen (ohne JavaScript bleibt
-„mit EMS“). Alle Termine und die Texte des Umschalters stehen in der Textmappe im Blatt
-„Startseite – Ansicht“. Die Termine nur ändern, wenn sie bei swissuniversities so stehen.
+Eine durchgehende Zeitachse von Oktober bis September: **Jeder Eintrag steht automatisch dort,
+wo sein Datum liegt** (`von`/`bis`). Darüber die offiziellen Termine von swissuniversities,
+darunter unser Angebot; Texte, die sich überdecken würden, rutschen von selbst in eine
+eigene Zeile. Ein Umschalter wechselt zwischen den Terminen für Universitäten mit und ohne
+EMS (`fuer`). Neue Saison: `start`, `ende` und die Jahre bei den Daten ändern, in allen drei
+Sprachen. Alles steht in der Textmappe im Blatt „Startseite – Ansicht“ (Zeilen „Beginn“,
+„Ende“, „Art“, „Gilt für“). Die Termine nur ändern, wenn sie bei swissuniversities so
+stehen. Auf dem Handy wird daraus eine senkrechte Liste nach Datum. Berechnung:
+`layouts/partials/weg-positionen.html`, Darstellung `weg-grid.html`.
 
 ### Material-Kacheln (`material:`)
 
