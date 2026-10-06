@@ -73,7 +73,7 @@ overrides:
     fr: "Simulation de test 2025"
     it: "Simulazione del test 2025"
   2025_testsimulationen_Loesung-Auswertung-Konzentrationstest:
-    de: "Lösung & Auswertung Konzentrationstest 2025"
+    de: "Lösung und Auswertung Konzentrationstest 2025"
     fr: "Corrigé et évaluation du test de concentration 2025"
     it: "Soluzione e valutazione del test di concentrazione 2025"
   2025_testsimulationen_Vergleich-Testprozentrang:
@@ -89,7 +89,7 @@ overrides:
     fr: "Corrigé de la simulation de test 2024"
     it: "Soluzione della simulazione del test 2024"
   2024_testsimulationen_Punktezahl-Instruktionen-Konzentrationstest:
-    de: "Punktzahl & Instruktionen Konzentrationstest 2024"
+    de: "Punktzahl und Instruktionen Konzentrationstest 2024"
     fr: "Points et instructions du test de concentration 2024"
     it: "Punteggio e istruzioni del test di concentrazione 2024"
   2024_testsimulationen_Vergleich-Testprozentrang:

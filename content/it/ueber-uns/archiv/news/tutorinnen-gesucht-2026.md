@@ -1,5 +1,5 @@
 ---
-title: "Cerchiamo tutor per i corsi di preparazione!"
+title: "Cerchiamo tutor per i corsi di preparazione"
 date: 2026-02-02
 eyebrow: "Partecipare"
 draft: false

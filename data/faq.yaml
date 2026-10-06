@@ -1,5 +1,5 @@
 # ============================================================================
-# FRAGEN & ANTWORTEN für die Q&A-Seite (/ems/qa/)
+# HÄUFIGE FRAGEN für die Seite «Häufige Fragen» (/ems/qa/)
 # ============================================================================
 # Jede Frage ist ein Eintrag (beginnt mit "- id: ..."), mit folgenden Feldern:
 #   id       - interner technischer Name, muss innerhalb dieser Datei
@@ -27,7 +27,8 @@
 #              an einer Stelle im Projekt gepflegt werden muss).
 #
 # Neue Frage hinzufügen: einfach einen neuen Eintrag nach demselben Muster
-# unten anhängen - erscheint automatisch auf der Q&A-Seite, kein Code nötig.
+# unten anhängen - erscheint automatisch auf der Seite «Häufige Fragen», kein Code nötig.
+
 
 
 
@@ -38,9 +39,9 @@
     fr: "Qu'est-ce que l'EMS exactement ?"
     it: "Cos'è esattamente l'EMS?"
   answer:
-    de: "Der EMS (Eignungstest für das Medizinstudium) ist ein computerbasierter Test, den die Schweizer Universitäten mit Numerus clausus zur Zulassung fürs Medizinstudium einsetzen. Er findet einmal jährlich statt und prüft in mehreren Untertests kognitive Fähigkeiten und schulisches Wissen."
-    fr: "L'EMS (test d'aptitudes pour les études de médecine) est un test informatisé utilisé par les universités suisses appliquant un numerus clausus pour l'admission aux études de médecine. Il a lieu une fois par an et évalue, à travers plusieurs sous-tests, des capacités cognitives et des connaissances scolaires."
-    it: "L'EMS (test attitudinale per gli studi di medicina) è un test al computer utilizzato dalle università svizzere con numerus clausus per l'ammissione agli studi di medicina. Si svolge una volta all'anno e valuta, attraverso diversi sottotest, capacità cognitive e conoscenze scolastiche."
+    de: "Der EMS (Eignungstest für das Medizinstudium) ist ein schriftlicher Test. Die Schweizer Universitäten mit Numerus clausus setzen ihn ein, um Studienplätze für das Medizinstudium zu vergeben. Er findet einmal im Jahr statt und prüft in mehreren Untertests kognitive Fähigkeiten und schulisches Wissen."
+    fr: "L'EMS (test d'aptitudes pour les études de médecine) est un test écrit. Les universités suisses qui appliquent un numerus clausus l'utilisent pour attribuer les places en médecine. Il a lieu une fois par an et évalue, à travers plusieurs sous-tests, des capacités cognitives et des connaissances scolaires."
+    it: "L'EMS (test attitudinale per gli studi di medicina) è un test scritto. Le università svizzere con numerus clausus lo usano per assegnare i posti di medicina. Si svolge una volta all'anno e valuta, attraverso diversi sottotest, capacità cognitive e conoscenze scolastiche."
 
 - id: "wann-ems-2027"
   category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }
@@ -60,36 +61,36 @@
     fr: "Quels sont les sous-tests de l'EMS ?"
     it: "Quali sono i sottotest dell'EMS?"
   answer:
-    de: "Der EMS besteht aus 9 Untertests, die kognitive Fähigkeiten und schulisches Grundlagenwissen prüfen. Die genaue Liste findest du unten."
-    fr: "L'EMS comprend 9 sous-tests qui évaluent des capacités cognitives et des connaissances scolaires de base. La liste précise se trouve ci-dessous."
-    it: "L'EMS è composto da 9 sottotest che valutano capacità cognitive e conoscenze scolastiche di base. L'elenco preciso si trova qui sotto."
+    de: "Der EMS besteht aus neun Untertests, die kognitive Fähigkeiten und schulisches Grundlagenwissen prüfen. Auf unserer Website führen wir Figuren lernen und Fakten lernen zusammen auf, deshalb zeigt die Liste unten acht Einträge."
+    fr: "L'EMS comprend neuf sous-tests qui évaluent des capacités cognitives et des connaissances scolaires de base. Sur notre site, nous regroupons « Apprendre des figures » et « Apprendre des faits », c'est pourquoi la liste ci-dessous compte huit entrées."
+    it: "L'EMS è composto da nove sottotest che valutano capacità cognitive e conoscenze scolastiche di base. Sul nostro sito riuniamo «Imparare figure» e «Imparare fatti», per questo l'elenco qui sotto ha otto voci."
   dynamic: "subtests"
 
 - id: "punkte-noetig"
   category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }
   question:
-    de: "Wie viele Punkte braucht man beim EMS, um zugelassen zu werden?"
+    de: "Wie viele Punkte brauchst du beim EMS für die Zulassung?"
     fr: "Combien de points faut-il obtenir à l'EMS pour être admis·e ?"
     it: "Quanti punti servono all'EMS per essere ammessi?"
   answer:
-    de: "Es gibt keine feste Mindestpunktzahl. Die Zulassung erfolgt über ein Quotenverfahren (Numerus clausus): Zugelassen wird, wer im jeweiligen Jahrgang und an der jeweiligen Universität zu den Bestplatzierten gehört – wie viele Punkte dafür nötig sind, hängt von der Anzahl Studienplätze und der Konkurrenz im jeweiligen Jahr ab und variiert von Jahr zu Jahr und von Universität zu Universität. Verbindliche, aktuelle Angaben findest du nur bei den Universitäten und bei swissuniversities."
+    de: "Es gibt keine feste Mindestpunktzahl. Die Zulassung läuft über ein Quotenverfahren (Numerus clausus): Du wirst zugelassen, wenn du in deinem Jahrgang an der jeweiligen Universität zu den Bestplatzierten gehörst. Wie viele Punkte dafür nötig sind, hängt von der Zahl der Studienplätze und der Konkurrenz ab. Der Wert ändert sich von Jahr zu Jahr und von Universität zu Universität. Verbindliche, aktuelle Angaben findest du nur bei den Universitäten und bei swissuniversities."
     fr: "Il n'existe pas de score minimal fixe. L'admission se fait par un système de quota (numerus clausus) : sont admis·es les candidat·e·s les mieux classé·e·s de l'année et de l'université concernées – le score nécessaire dépend du nombre de places disponibles et de la concurrence de l'année en question, et varie donc d'une année et d'une université à l'autre. Seules les universités et swissuniversities peuvent fournir des informations actuelles et contraignantes."
     it: "Non esiste un punteggio minimo fisso. L'ammissione avviene tramite un sistema di quote (numerus clausus): vengono ammesse le persone meglio classificate di quell'anno e di quella università – il punteggio necessario dipende dal numero di posti disponibili e dalla concorrenza di quell'anno, e varia quindi di anno in anno e da università a università. Informazioni vincolanti e aggiornate sono disponibili solo presso le università e swissuniversities."
   link:
     href: "ems/uniguide/"
     label:
-      de: "Zulassungsverfahren der einzelnen Universitäten im Uniguide ansehen →"
-      fr: "Voir les procédures d'admission des universités dans l'Uniguide →"
-      it: "Vedi le procedure di ammissione delle università nell'Uniguide →"
+      de: "Zulassungsverfahren im Uniguide →"
+      fr: "Procédures d'admission dans l'Uniguide →"
+      it: "Procedure di ammissione nell'Uniguide →"
 
 - id: "ems-pflicht"
-  category: { de: "Zulassung & Universitäten", fr: "Admission et universités", it: "Ammissione e università" }
+  category: { de: "Zulassung und Universitäten", fr: "Admission et universités", it: "Ammissione e università" }
   question:
     de: "Brauche ich für jede Schweizer Universität den EMS?"
     fr: "L'EMS est-il nécessaire pour toutes les universités suisses ?"
     it: "L'EMS è necessario per tutte le università svizzere?"
   answer:
-    de: "Nein. Die meisten Deutschschweizer Universitäten sowie die USI Lugano setzen den EMS voraus. Genf, Lausanne und Neuenburg verwenden dagegen ein anderes Verfahren ohne EMS (offener Studienbeginn mit Eliminationsprüfung nach dem 1. Jahr)."
+    de: "Nein. Die meisten Deutschschweizer Universitäten und die USI Lugano setzen den EMS voraus. Genf, Lausanne und Neuenburg verwenden ein anderes Verfahren ohne EMS: Der Studienbeginn ist offen, nach dem 1. Jahr folgt eine Eliminationsprüfung."
     fr: "Non. La plupart des universités de Suisse alémanique ainsi que l'USI Lugano exigent l'EMS. Genève, Lausanne et Neuchâtel utilisent en revanche une autre procédure sans EMS (admission ouverte en 1ère année avec examen éliminatoire en fin d'année)."
     it: "No. La maggior parte delle università della Svizzera tedesca e l'USI Lugano richiedono l'EMS. Ginevra, Losanna e Neuchâtel utilizzano invece una procedura diversa senza EMS (iscrizione aperta al 1° anno con esame eliminatorio al termine dell'anno)."
   link:
@@ -100,7 +101,7 @@
       it: "Confronta tutte le università →"
 
 - id: "verlaessliche-quellen"
-  category: { de: "Zulassung & Universitäten", fr: "Admission et universités", it: "Ammissione e università" }
+  category: { de: "Zulassung und Universitäten", fr: "Admission et universités", it: "Ammissione e università" }
   question:
     de: "Wo finde ich verlässliche, offizielle Informationen zur Zulassung?"
     fr: "Où trouver des informations officielles et fiables sur l'admission ?"
@@ -123,26 +124,26 @@
     fr: "Le matériel de NCWiki est-il vraiment gratuit ?"
     it: "Il materiale di NCWiki è davvero gratuito?"
   answer:
-    de: "Ja, vollständig. Wir sind ein ehrenamtlich geführter Studierendenverein und stellen unser Übungsmaterial, unsere Testsimulationen und Vorbereitungskurse kostenlos zur Verfügung – finanziert durch Spenden und Sponsoring, nicht durch Gebühren von Teilnehmenden."
+    de: "Ja, vollständig. Wir sind ein ehrenamtlich geführter Studierendenverein. Wir bieten Übungsmaterial, Testsimulationen und Vorbereitungskurse kostenlos an und finanzieren uns durch Spenden und Sponsoring, nicht durch Gebühren von Teilnehmenden."
     fr: "Oui, entièrement. Nous sommes une association étudiante gérée bénévolement et mettons à disposition gratuitement notre matériel d'exercices, nos simulations de test et nos cours de préparation – financés par des dons et du sponsoring, pas par des frais de participation."
     it: "Sì, completamente. Siamo un'associazione studentesca gestita su base volontaria e mettiamo a disposizione gratuitamente il nostro materiale di esercitazione, le simulazioni di test e i corsi di preparazione – finanziati da donazioni e sponsorizzazioni, non da tasse a carico dei partecipanti."
 
 - id: "vorbereitung"
   category: { de: "Unser Angebot", fr: "Notre offre", it: "La nostra offerta" }
   question:
-    de: "Wie kann ich mich mit eurem Material auf den EMS vorbereiten?"
-    fr: "Comment puis-je me préparer à l'EMS avec votre matériel ?"
-    it: "Come posso prepararmi all'EMS con il vostro materiale?"
+    de: "Wie bereite ich mich mit dem Material von NCWiki auf den EMS vor?"
+    fr: "Comment me préparer à l'EMS avec le matériel de NCWiki ?"
+    it: "Come mi preparo all'EMS con il materiale di NCWiki?"
   answer:
-    de: "Am besten kombinierst du unsere Übungsaufgaben zu den einzelnen Untertests, unsere realitätsnahen Testsimulationen und – falls gewünscht – einen unserer Vorbereitungskurse."
+    de: "Am besten kombinierst du die Übungsserien zu den einzelnen Untertests, unsere realitätsnahen Testsimulationen und, falls gewünscht, einen unserer Vorbereitungskurse."
     fr: "L'idéal est de combiner nos exercices par sous-test, nos simulations de test proches de la réalité et, si tu le souhaites, l'un de nos cours de préparation."
     it: "Il modo migliore è combinare i nostri esercizi per singolo sottotest, le nostre simulazioni realistiche del test e, se lo desideri, uno dei nostri corsi di preparazione."
   link:
     href: "ems/uebungsaufgaben/"
     label:
-      de: "Zu den Übungsaufgaben →"
-      fr: "Vers les exercices →"
-      it: "Vai agli esercizi →"
+      de: "Zu den Übungsserien →"
+      fr: "Vers les séries d'exercices →"
+      it: "Alle serie di esercizi →"
 
 - id: "erfahrungsberichte"
   category: { de: "Unser Angebot", fr: "Notre offre", it: "La nostra offerta" }
@@ -164,16 +165,16 @@
 - id: "andere-angebote"
   category: { de: "Unser Angebot", fr: "Notre offre", it: "La nostra offerta" }
   question:
-    de: "Könnt ihr mir weitere Hefte, kostenpflichtige Kurse oder Testsimulationen empfehlen?"
-    fr: "Pouvez-vous me recommander d'autres cahiers, des cours ou des simulations de test payants ?"
-    it: "Potete consigliarmi altri quaderni, corsi o simulazioni del test a pagamento?"
+    de: "Gibt es Empfehlungen für weitere Hefte, kostenpflichtige Kurse oder Testsimulationen?"
+    fr: "Existe-t-il des recommandations pour d'autres cahiers, des cours ou des simulations de test payants ?"
+    it: "Ci sono consigli per altri quaderni, corsi o simulazioni del test a pagamento?"
   answer:
     de: "Nein. Wir arbeiten ehrenamtlich und unabhängig von allen anderen Angeboten zur EMS-Vorbereitung. Deshalb können wir nicht beurteilen, ob und welche kostenpflichtigen Angebote sich für dich lohnen."
     fr: "Non. Nous travaillons bénévolement et indépendamment de toutes les autres offres de préparation à l'EMS. C'est pourquoi nous ne pouvons pas juger si des offres payantes valent la peine pour toi, ni lesquelles."
     it: "No. Lavoriamo su base volontaria e in modo indipendente da tutte le altre offerte di preparazione all'EMS. Per questo non possiamo valutare se e quali offerte a pagamento valgano la pena per te."
 
 - id: "bestaetigung-platz"
-  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  category: { de: "Testsimulationen und Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
   question:
     de: "Ich habe keine Bestätigungsmail erhalten – habe ich trotzdem einen Platz?"
     fr: "Je n'ai pas reçu d'e-mail de confirmation – ai-je quand même une place ?"
@@ -184,7 +185,7 @@
     it: "Simulazione del test: sì – il tuo posto nella sede desiderata è assicurato, anche senza una conferma separata. Corso di preparazione: qualche giorno dopo la scadenza del termine d'iscrizione ricevi un'e-mail con l'assegnazione definitiva. Questa decisione è definitiva, anche per quanto riguarda la sede assegnata."
 
 - id: "auswertung-testsimulation"
-  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  category: { de: "Testsimulationen und Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
   question:
     de: "Wann und wie erhalte ich die Auswertung der Testsimulation?"
     fr: "Quand et comment vais-je recevoir l'évaluation de la simulation de test ?"
@@ -195,7 +196,7 @@
     it: "Per e-mail, nelle settimane successive alla simulazione del test."
 
 - id: "testsimulation-online"
-  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  category: { de: "Testsimulationen und Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
   question:
     de: "Wird die Testsimulation mit Lösungen auch online gestellt?"
     fr: "La simulation de test et ses solutions seront-elles aussi publiées en ligne ?"
@@ -212,7 +213,7 @@
       it: "Alle simulazioni del test →"
 
 - id: "kursskript-online"
-  category: { de: "Testsimulationen & Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
+  category: { de: "Testsimulationen und Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
   question:
     de: "Wird das aktuelle Kursskript auch online gestellt?"
     fr: "Le script de cours actuel sera-t-il aussi publié en ligne ?"
@@ -231,11 +232,11 @@
 - id: "loesung-verstehen"
   category: { de: "Übungsmaterial", fr: "Matériel d'exercice", it: "Materiale di esercizio" }
   question:
-    de: "Ich verstehe eine Lösung nicht oder hätte gern ausführlichere Lösungen – könnt ihr helfen?"
-    fr: "Je ne comprends pas une solution ou j'aimerais des solutions plus détaillées – pouvez-vous m'aider ?"
-    it: "Non capisco una soluzione o vorrei soluzioni più dettagliate – potete aiutarmi?"
+    de: "Ich verstehe eine Lösung nicht oder hätte gern ausführlichere Lösungen – wer hilft mir?"
+    fr: "Je ne comprends pas une solution ou j'aimerais des solutions plus détaillées – qui peut m'aider ?"
+    it: "Non capisco una soluzione o vorrei soluzioni più dettagliate – chi può aiutarmi?"
   answer:
-    de: "Einzelne Aufgaben können wir leider nicht persönlich erklären. Stell deine Frage am besten in unserer Discord-Community: Dort lernen viele andere mit denselben Materialien auf den EMS und helfen dir gern weiter."
+    de: "Wir können einzelne Aufgaben leider nicht persönlich erklären. Stell deine Frage am besten in unserer Discord-Community: Dort lernen viele andere mit denselben Materialien auf den EMS und helfen dir gern weiter."
     fr: "Malheureusement, nous ne pouvons pas expliquer personnellement chaque exercice. Pose plutôt ta question dans notre communauté Discord : beaucoup d'autres s'y préparent à l'EMS avec le même matériel et t'aideront volontiers."
     it: "Purtroppo non possiamo spiegare personalmente i singoli esercizi. Fai la tua domanda nella nostra community Discord: lì molte altre persone si preparano all'EMS con lo stesso materiale e ti aiutano volentieri."
   link:
@@ -252,7 +253,7 @@
     fr: "Un exercice ou une solution est faux – que faire ?"
     it: "Un esercizio o una soluzione è sbagliato – cosa faccio?"
   answer:
-    de: "Melde den Fehler bitte über unser Fehlerformular – du findest es auf der Übersicht der Übungsaufgaben und bei jedem Untertest direkt unter den Downloads. Wir prüfen jede Meldung und korrigieren das Material so schnell wie möglich."
+    de: "Melde den Fehler bitte über unser Fehlerformular. Du findest es auf der Übersicht der Übungsserien und bei jedem Untertest direkt unter den Downloads. Wir prüfen jede Meldung und korrigieren das Material so schnell wie möglich."
     fr: "Signale l'erreur via notre formulaire d'erreur – tu le trouves sur la page d'aperçu des exercices et, pour chaque sous-test, directement sous les téléchargements. Nous examinons chaque signalement et corrigeons le matériel au plus vite."
     it: "Segnala l'errore tramite il nostro modulo per gli errori – lo trovi nella pagina panoramica degli esercizi e, per ogni sottotest, direttamente sotto i download. Esaminiamo ogni segnalazione e correggiamo il materiale il prima possibile."
   link:

@@ -31,7 +31,7 @@ Im Studium und später im Beruf liest du laufend Studien, Laborwerte und Verlauf
 
 ## Wann und wie oft üben?
 
-Dieser Untertest lässt sich vergleichsweise spät noch gut lernen – ein Zeitraum von 1–1.5 Monaten vor dem NC reicht in der Regel. Übe ihn dafür intensiv, etwa 3 Mal pro Woche. Es lohnt sich, Diagramme und Tabellen jeweils am Ende einer längeren Übungssession zu bearbeiten – so simulierst du die Situation am NC, wo dieser Untertest ebenfalls ganz am Schluss kommt.
+Dieser Untertest lässt sich vergleichsweise spät noch gut lernen – ein Zeitraum von ein bis eineinhalb Monaten vor dem Eignungstest für das Medizinstudium (EMS) reicht in der Regel. Übe ihn dafür intensiv, etwa dreimal pro Woche. Es lohnt sich, Diagramme und Tabellen jeweils am Ende einer längeren Übungssession zu bearbeiten – so simulierst du die Situation am EMS, wo dieser Untertest ebenfalls ganz am Schluss kommt.
 
 ## Vorgehen beim Lösen
 
@@ -53,8 +53,8 @@ Dieser Untertest lässt sich vergleichsweise spät noch gut lernen – ein Zeitr
 
 ## Aus Erfahrungsberichten
 
-*„Wichtiger Tipp: Nach „Diagramme und Tabellen" müssen die Unterlagen abgegeben werden – zufällige Kreuze aufs Antwortblatt müsst ihr also spätestens dort gesetzt haben, danach geht es nicht mehr."*
+*«Wichtiger Tipp: Nach ‹Diagramme und Tabellen› müssen die Unterlagen abgegeben werden – zufällige Kreuze aufs Antwortblatt musst du also spätestens dort gesetzt haben, danach geht es nicht mehr.»*
 
-*„Diagramme und Tabellen lag mir gar nicht, und obwohl ich es regelmässig trainiert habe, habe ich fast keine Verbesserung bemerkt – im Rückblick hätte ich die Zeit besser in andere Untertests investiert."*
+*«Diagramme und Tabellen lag mir gar nicht, und obwohl ich es regelmässig trainiert habe, habe ich fast keine Verbesserung bemerkt – im Rückblick hätte ich die Zeit besser in andere Untertests investiert.»*
 
 Weitere Berichte findest du bei den [Erfahrungsberichten](/ems/erfahrungsberichte).

@@ -1,5 +1,5 @@
 ---
-title: "Apprendre figures & faits"
+title: "Apprendre figures et faits"
 description: "Apprendre figures et faits à l'EMS : séries d'exercices gratuites et techniques de mémorisation pour retenir 18 figures et 15 cas de patient·e·s."
 weight: 5
 ---

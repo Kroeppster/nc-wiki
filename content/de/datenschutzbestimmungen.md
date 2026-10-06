@@ -50,7 +50,7 @@ Im Rahmen unserer Verarbeitung von personenbezogenen Daten kommt es vor, dass di
 
 ## Datenschutzerklärung für SSL-/TLS-Verschlüsselung
 
-Diese Website nutzt aus Gründen der Sicherheit und zum Schutz der Übertragung vertraulicher Inhalte eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+Diese Website nutzt aus Gründen der Sicherheit und zum Schutz der Übertragung vertraulicher Inhalte eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von «http://» auf «https://» wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
 
 ## Datenschutzerklärung für Server-Log-Files
 
@@ -58,7 +58,7 @@ Der Provider dieser Website (GitHub Pages) erhebt und speichert automatisch Info
 
 ## Kontaktformular und Erfahrungsberichte
 
-Wenn Sie uns über ein Formular auf dieser Website (z.B. Kontaktformular, Erfahrungsbericht einreichen, Fehler melden) Angaben zukommen lassen, werden diese inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage bzw. Veröffentlichung des Berichts gespeichert. Diese Formulare werden über den Dienstleister Formspree verarbeitet, siehe Abschnitt „Dienste von Dritten" unten. Ohne Ihre Einwilligung geben wir Ihre Daten nicht an Dritte weiter. Für Erfahrungsberichte gilt zusätzlich das gesonderte Einverständnis zur Veröffentlichung, das beim Einreichen eingeholt wird.
+Wenn Sie uns über ein Formular auf dieser Website (z.B. Kontaktformular, Erfahrungsbericht einreichen, Fehler melden) Angaben zukommen lassen, werden diese inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage bzw. Veröffentlichung des Berichts gespeichert. Diese Formulare werden über den Dienstleister Formspree verarbeitet, siehe Abschnitt «Dienste von Dritten» unten. Ohne Ihre Einwilligung geben wir Ihre Daten nicht an Dritte weiter. Für Erfahrungsberichte gilt zusätzlich das gesonderte Einverständnis zur Veröffentlichung, das beim Einreichen eingeholt wird.
 
 ## Dienste von Dritten
 
@@ -66,7 +66,7 @@ Diese Website nutzt folgende externe Dienste:
 
 - **Formspree** (Formularversand für Kontaktformular, Erfahrungsberichte und Fehlermeldungen) – dabei werden die eingegebenen Daten an Formspree Inc. (USA) übermittelt.
 - **Pagefind** (Suchfunktion) und selbst gehostete Schriftarten – laufen vollständig im Browser bzw. werden von unserem eigenen Hosting ausgeliefert, es werden dabei keine Daten an Dritte übertragen.
-- **Google Analytics** (Reichweitenmessung) – wird ausschliesslich dann geladen, wenn Sie im Cookie-Banner aktiv "Akzeptieren" wählen (siehe Abschnitt „Cookies" unten). Ohne diese Einwilligung wird kein Google-Skript nachgeladen und kein entsprechendes Cookie gesetzt. Bei Einwilligung erhebt Google Analytics u.a. Angaben zu besuchten Seiten, Verweildauer und grober geografischer Herkunft (Land/Region, nicht der genaue Standort) und verarbeitet diese auf Servern von Google Ireland Limited bzw. Google LLC (USA). Die Einwilligung kann jederzeit durch Löschen der Browser-Daten dieser Website widerrufen werden, wonach der Cookie-Banner erneut erscheint.
+- **Google Analytics** (Reichweitenmessung) – wird ausschliesslich dann geladen, wenn Sie im Cookie-Banner aktiv "Akzeptieren" wählen (siehe Abschnitt «Cookies» unten). Ohne diese Einwilligung wird kein Google-Skript nachgeladen und kein entsprechendes Cookie gesetzt. Bei Einwilligung erhebt Google Analytics u.a. Angaben zu besuchten Seiten, Verweildauer und grober geografischer Herkunft (Land/Region, nicht der genaue Standort) und verarbeitet diese auf Servern von Google Ireland Limited bzw. Google LLC (USA). Die Einwilligung kann jederzeit durch Löschen der Browser-Daten dieser Website widerrufen werden, wonach der Cookie-Banner erneut erscheint.
 
 Weitere eingebundene Drittanbieter-Inhalte (z.B. Links zu Instagram) führen erst beim aktiven Anklicken zu einer Datenübertragung an den jeweiligen Anbieter.
 
@@ -92,4 +92,4 @@ Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail an in
 
 Technisch notwendig sind nur wenige Einträge im lokalen Speicher Ihres Browsers, kein echtes Cookie – etwa Ihre Farbschema-Einstellung und Ihre Cookie-Auswahl selbst.
 
-Zusätzlich bieten wir im Cookie-Banner die Möglichkeit, Google Analytics zur Reichweitenmessung zu aktivieren. Dieses wird nur bei aktiver Einwilligung geladen und setzt erst dann ein Cookie; ohne Einwilligung findet keinerlei Übermittlung an Google statt. Details siehe Abschnitt „Dienste von Dritten" oben.
+Zusätzlich bieten wir im Cookie-Banner die Möglichkeit, Google Analytics zur Reichweitenmessung zu aktivieren. Dieses wird nur bei aktiver Einwilligung geladen und setzt erst dann ein Cookie; ohne Einwilligung findet keinerlei Übermittlung an Google statt. Details siehe Abschnitt «Dienste von Dritten» oben.

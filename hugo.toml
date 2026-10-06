@@ -117,3 +117,9 @@ enableRobotsTXT = true
     weight = 3
     title = 'NCWiki'
     contentDir = 'content/it'
+
+# Anführungszeichen im Text: gerade Zeichen ("…") werden zu «Guillemets» (Styleguide,
+# docs/STYLEGUIDE.md). Einfache Zeichen bleiben unverändert (Apostroph in l'EMS usw.).
+[markup.goldmark.extensions.typographer]
+  leftDoubleQuote = '&laquo;'
+  rightDoubleQuote = '&raquo;'

@@ -27,7 +27,7 @@ Selon le type de partenariat, des mentions dans nos actualités, notre newslette
 
 N'hésitez pas à nous contacter : nous aménagerons volontiers la collaboration en fonction de vos objectifs.
 
-## Contactez-nous !
+## Contact
 
 Rejoignez notre réseau d'universités, d'organisations et d'entreprises qui s'engagent ensemble pour la relève médicale en Suisse. Contactez-nous – nous nous réjouissons d'échanger avec vous.
 

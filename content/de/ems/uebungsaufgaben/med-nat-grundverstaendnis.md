@@ -23,7 +23,7 @@ Die Zeit ist sehr knapp bemessen, und du musst auch nicht alle Aufgaben schaffen
 3. Die Linse ist fest mit der Iris verwachsen und bewegt mit ihr mit.
 4. Die beiden Muskeln M. sphincter pupillae und M. dilatator pupillae sind Antagonisten.
 
-Gefragt: welche Aussagen sind aus dem Text ableitbar? Richtig ist hier „Aussage 1 und 4" – zu Aussage 2 sagt der Text nichts, Aussage 3 wird bereits im ersten Satz widerlegt.
+Gefragt: welche Aussagen sind aus dem Text ableitbar? Richtig ist hier «Aussage 1 und 4» – zu Aussage 2 sagt der Text nichts, Aussage 3 wird bereits im ersten Satz widerlegt.
 
 ## Wieso ist dieser Untertest fürs Studium relevant?
 
@@ -31,12 +31,12 @@ In der Physiologie und vielen anderen Bereichen des Studiums geht es oft um das 
 
 ## Wann und wie oft üben?
 
-Diesen Untertest solltest du über eine längere Zeit üben, ein Start spätestens 1–2 Monate vor dem EMS ist empfehlenswert. Zwei Mal pro Woche ein bis zwei Stunden reichen meist schon, um schnell genauer zu werden, typische Fallen zu erkennen und das Tempo zu erhöhen.
+Diesen Untertest solltest du über eine längere Zeit üben. Starte spätestens ein bis zwei Monate vor dem Eignungstest für das Medizinstudium (EMS). Zweimal pro Woche ein bis zwei Stunden reichen meist, um schnell genauer zu werden, typische Fallen zu erkennen und das Tempo zu erhöhen.
 
 ## Vorgehen beim Lösen
 
 1. **Zuerst Fragen und Antworten lesen:** Lies die Fragen und Antwortmöglichkeiten, bevor du den Text im Detail liest. Fragen sind oft sehr spezifisch auf einen Textabschnitt bezogen, und Antwortmöglichkeiten lassen sich häufig schon gegenseitig ausschliessen – so kannst du gezielt nach den relevanten Informationen suchen.
-2. **Schlagwörter markieren und skizzieren:** Markiere die wichtigsten Schlagwörter mit Leuchtstift. Bei vielen Texten hilft eine bildliche Skizze – besonders bei anatomischen Texten. Geht es um Signalwege, stelle sie mit Pfeilen dar (z. B. rot für „hemmen", grün für „aktivieren/stimulieren") – so hast du den Text schnell und übersichtlich zusammengefasst.
+2. **Schlagwörter markieren und skizzieren:** Markiere die wichtigsten Schlagwörter mit Leuchtstift. Bei vielen Texten hilft eine bildliche Skizze – besonders bei anatomischen Texten. Geht es um Signalwege, stelle sie mit Pfeilen dar (z. B. rot für «hemmen», grün für «aktivieren/stimulieren») – so hast du den Text schnell und übersichtlich zusammengefasst.
 3. **Häufige Aussagen zuerst prüfen:** Prüfe bei Aussagen zuerst diejenigen, die im Text am häufigsten vorkommen – damit lassen sich oft schon Antworten ausschliessen, ohne alle Aussagen einzeln durchzugehen.
 
 ## Weitere Tipps
@@ -48,14 +48,14 @@ Diesen Untertest solltest du über eine längere Zeit üben, ein Start späteste
 
 - **Nicht erwähnt heisst nicht ableitbar:** Sagt der Text zu einer Aussage nichts, lässt sie sich auch nicht ableiten – selbst wenn sie fachlich stimmt (Aussage 2 im Beispiel).
 - **Vorwissen statt Text:** Vorwissen hilft beim Verstehen, beurteilt wird aber nur, was im Text steht.
-- **Verteilte Informationen:** Oft muss man Angaben aus verschiedenen Abschnitten zusammensetzen, um eine Aussage zu prüfen.
+- **Verteilte Informationen:** Oft musst du Angaben aus verschiedenen Abschnitten zusammensetzen, um eine Aussage zu prüfen.
 
 ## Aus Erfahrungsberichten
 
-*„Beim medizinisch-natürlichen Grundverständnis und Textverständnis hilft nur früh beginnen."*
+*«Beim medizinisch-natürlichen Grundverständnis und Textverständnis hilft nur früh beginnen.»*
 
-*„MedNat und Textverständnis fand ich trotzdem besonders schwierig, gerade weil die Antworten im Text so verstrickt waren, dass man Informationen aus verschiedenen Abschnitten zusammensuchen musste."*
+*«MedNat und Textverständnis fand ich trotzdem besonders schwierig, gerade weil die Antworten im Text so verstrickt waren, dass ich Informationen aus verschiedenen Abschnitten zusammensuchen musste.»*
 
-*„Ab Ende März habe ich fast ausschliesslich an meinen Schwächen (MedNat, Textverständnis) gearbeitet, 2-3x pro Woche, mit Fokus darauf zu verstehen, warum ich Fehler mache statt nur Punkte zu zählen."*
+*«Ab Ende März habe ich fast ausschliesslich an meinen Schwächen (MedNat, Textverständnis) gearbeitet, 2-3x pro Woche, mit Fokus darauf zu verstehen, warum ich Fehler mache statt nur Punkte zu zählen.»*
 
 Weitere Berichte findest du bei den [Erfahrungsberichten](/ems/erfahrungsberichte).

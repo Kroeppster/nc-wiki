@@ -86,7 +86,7 @@ bloecke:
     aufgaben: ""
     punkte: ""
     aufgaben_fest: true
-    de: "Figuren einprägen (Einprägephase)"
+    de: "Figuren lernen (Einprägephase)"
     fr: "Mémorisation de figures (phase d'apprentissage)"
     it: "Memorizzazione di figure (fase di apprendimento)"
 
@@ -96,7 +96,7 @@ bloecke:
     aufgaben: ""
     punkte: ""
     aufgaben_fest: true
-    de: "Fakten einprägen (Einprägephase)"
+    de: "Fakten lernen (Einprägephase)"
     fr: "Mémorisation de faits (phase d'apprentissage)"
     it: "Memorizzazione di fatti (fase di apprendimento)"
 
@@ -115,7 +115,7 @@ bloecke:
     aufgaben: "18"
     punkte: "18"
     aufgaben_fest: true
-    de: "Figuren einprägen (Reproduktion)"
+    de: "Figuren lernen (Reproduktion)"
     fr: "Mémorisation de figures (reproduction)"
     it: "Memorizzazione di figure (riproduzione)"
 
@@ -125,7 +125,7 @@ bloecke:
     aufgaben: "18"
     punkte: "18"
     aufgaben_fest: true
-    de: "Fakten einprägen (Reproduktion)"
+    de: "Fakten lernen (Reproduktion)"
     fr: "Mémorisation de faits (reproduction)"
     it: "Memorizzazione di fatti (riproduzione)"
 

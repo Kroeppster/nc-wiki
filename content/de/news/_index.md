@@ -1,10 +1,10 @@
 ---
 title: "News"
-description: "News zum EMS: Termine und Anmeldungen für unsere kostenlosen Testsimulationen und Vorbereitungskurse sowie Neuigkeiten rund um den Verein NCWiki."
+description: "Neuigkeiten vom Verein NCWiki: Termine und Anmeldungen für unsere kostenlosen Testsimulationen und Vorbereitungskurse."
 menu:
   main:
     identifier: news
     weight: 2
 ---
 
-Hier findest du laufend Neuigkeiten rund um den EMS, unseren Verein und unsere Veranstaltungen (Testsimulationen, Vorbereitungskurs, uvm.)
+Hier findest du laufend Neuigkeiten zum Eignungstest für das Medizinstudium (EMS), zu unserem Verein und zu unseren Veranstaltungen: Testsimulationen, Vorbereitungskurse und mehr.

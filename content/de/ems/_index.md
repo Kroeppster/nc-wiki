@@ -7,54 +7,56 @@ menu:
     weight: 3
 ---
 
+Diese Seite führt dich durch den Eignungstest für das Medizinstudium (EMS): von der Anmeldung über den Testtag bis zur Zuteilung der Studienplätze.
+
 ## Direkt zu den Bereichen
 
-- [Übungsaufgaben](/ems/uebungsaufgaben)
+- [Übungsserien](/ems/uebungsaufgaben)
 - [Testsimulationen](/ems/testsimulationen)
 - [Vorbereitungskurse](/ems/vorbereitungskurse)
 - [Uniguide](/ems/uniguide)
 - [Erfahrungsberichte](/ems/erfahrungsberichte)
-- [Q&A](/ems/qa)
+- [Häufige Fragen](/ems/qa)
 
-## 1. Vorbereitung auf den NC
+## Vorbereitung auf den EMS
 
-### 1.1 Offizielle Informationen
+### Offizielle Informationen
 
-Die offiziellen Informationen zum EMS erhältst du, wenn du angemeldet bist, im April von swissuniversities. Falls du widersprüchliche Infos findest, richte dich nach der offiziellen "Test Info".
+Die offiziellen Informationen zum EMS erhältst du im April von swissuniversities, sobald du angemeldet bist. Widersprechen sich Angaben, richte dich nach der offiziellen «Test Info».
 
-[Dies ist die offizielle Internetseite von swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium), auf der du dich für das Medizinstudium anmelden kannst und auch die Informationsbroschüren zum Test sowie Beispielaufgaben erhältst (unter „Dokumente"). Hier ist die Website des [Testentwicklungszentrums ZTD](https://www.unifr.ch/ztd/de/ems) mit weiteren offiziellen Informationen.
+Auf der [Website von swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) meldest du dich für das Medizinstudium an. Dort findest du auch die Informationsbroschüren zum Test und Beispielaufgaben (unter «Dokumente»). Weitere offizielle Informationen gibt es auf der Website des [Zentrums für Testentwicklung und Diagnostik (ZTD)](https://www.unifr.ch/ztd/de/ems).
 
-### 1.2 Anmeldung für die Prüfung
+### Anmeldung
 
-Bitte denk daran, dass du dich **bis zum 15. Februar** über [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) **anmelden** musst. Denk auch an die Deadlines für die anderen Studiengänge, falls das dein Plan B ist.
+Du musst dich **bis zum 15. Februar 2027** über [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) **anmelden**. Beachte auch die Fristen für andere Studiengänge, falls das dein Plan B ist.
 
 Der Zeitplan von swissuniversities für den Studienstart im Herbst 2027:
 
 - **September bis November:** über Studienangebot, Zulassung und den Eignungstest informieren
 - **Dezember bis 15. Februar 2027:** Voranmeldung bei swissuniversities über die Plattform MEDON (dafür brauchst du eine SWITCH-edu-ID). Prüfe, ob du eine Bestätigung per E-Mail erhalten hast, auch im Spam-Ordner.
 - **Januar bis März:** prüfen, ob du dich zusätzlich bei deiner Wunsch-Universität anmelden musst
-- **April bis 25. Mai 2027:** Anmeldung zum EMS über MEDON, gültig erst mit der fristgerechten Zahlung der Teilnahmegebühr von 300 Franken
-- **Juni:** spätestens 10 Tage vor dem Test kommen per E-Mail Einlasszeit und Platznummer
-- **9. Juli 2027:** Eignungstest für das Medizinstudium – gültigen amtlichen Ausweis (ID oder Pass) mitnehmen
+- **April bis 25. Mai 2027:** Anmeldung zum EMS über MEDON, gültig erst mit der fristgerechten Zahlung der Teilnahmegebühr von CHF 300
+- **Juni:** spätestens zehn Tage vor dem Test kommen per E-Mail Einlasszeit und Platznummer
+- **9. Juli 2027:** EMS, nimm einen gültigen amtlichen Ausweis (ID oder Pass) mit
 - **Ende Juli:** Zuteilung der Studienplätze per Post (teilweise eingeschrieben) oder E-Mail
-- **Anfang August:** Studienplatz innert der Frist der Universität bestätigen, meist 10 Tage
+- **Anfang August:** Studienplatz innert der Frist der Universität bestätigen, meist zehn Tage
 
-### 1.3 Wahl des Uni-Standortes bei der Anmeldung
+### Universität wählen
 
-Bei der Anmeldung musst du nach Priorität angeben, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Hierbei solltest du auf zwei Dinge achten:
+Bei der Anmeldung gibst du nach Priorität an, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Achte dabei auf zwei Dinge:
 
-- Dein steuerlicher Wohnsitz garantiert dir bei bestandenem EMS einen Studienplatz in deinem Kanton, sofern dort Medizin angeboten wird. Für die Universität Basel gelten beide Basel als Unikanton und bieten diesen Vorteil. Die ETH bildet als eidgenössische Hochschule die einzige Ausnahme und gewährt keinen kantonalen Wohnsitzvorteil. Details zu den einzelnen Universitäten findest du in unserem [Uniguide](/ems/uniguide).
-- Manche Universitäten sind beliebter, weshalb man einen höheren Rangplatz im Vergleich zu anderen Kandidierenden benötigt. Deine erste Priorität wird dabei immer zuerst berücksichtigt. Beispiel: Du wählst die ETH als erste Wahl und Uni Zürich als zweite Wahl. Die ETH ist für Humanmedizin weniger beliebt als die Uni Zürich. Da du bei deinem Testresultat unter den 1 % Besten warst, wirst du nun deiner Erstwahl (ETH) zugeteilt.
+- Dein steuerlicher Wohnsitz garantiert dir bei bestandenem EMS einen Studienplatz in deinem Kanton, sofern dort Medizin angeboten wird. Für die Universität Basel gelten beide Basel als Unikanton und bieten diesen Vorteil. Die ETH ist als eidgenössische Hochschule die einzige Ausnahme und gewährt keinen kantonalen Wohnsitzvorteil. Details zu den einzelnen Universitäten findest du in unserem [Uniguide](/ems/uniguide).
+- Manche Universitäten sind beliebter, deshalb brauchst du dort einen höheren Rangplatz als andere Kandidierende. Deine erste Priorität wird immer zuerst berücksichtigt. Beispiel: Du wählst die ETH als erste und die Uni Zürich als zweite Wahl. Die ETH ist für Humanmedizin weniger beliebt als die Uni Zürich. Weil du bei deinem Testresultat zu den besten 1 % gehörst, wirst du deiner Erstwahl (ETH) zugeteilt.
 
-### 1.4 Aufgabenstellungen auswendig kennen
+### Aufgabenstellungen kennen
 
-Du sparst dir wertvolle Zeit am NC, wenn du die Aufgabenstellungen schon kennst – dafür ist nämlich keine zusätzliche Zeit eingerechnet, diese Zeit könntest du also schon zum Lösen der Aufgaben nutzen! Mach dich mit den Regeln des Ausfüllens der Antworten, dem Weiterblättern und dem Testablauf vertraut.
+Du sparst am EMS wertvolle Zeit, wenn du die Aufgabenstellungen schon kennst. Dafür ist keine zusätzliche Zeit eingerechnet, du kannst sie also direkt zum Lösen nutzen. Mach dich mit den Regeln für das Ausfüllen der Antworten, das Weiterblättern und den Testablauf vertraut.
 
-### 1.5 Ungefähr benötigter Zeitaufwand für eine seriöse Vorbereitung
+### Zeitaufwand für eine seriöse Vorbereitung
 
-- Viel Zeit: Quantitative und formale Probleme, Textverständnis, Medizinisch-naturwissenschaftliches Grundverständnis, Diagramme und Tabellen
-- Mittel viel Zeit: Figuren einprägen, Fakten einprägen, Muster zuordnen, Objekte im Raum
-- Wenig Zeit: Konzentriertes und sorgfältiges Arbeiten
+- Hoher Aufwand: Quantitative und formale Probleme, Textverständnis, Medizinisch-naturwissenschaftliches Grundverständnis, Diagramme und Tabellen
+- Mittlerer Aufwand: Figuren und Fakten lernen, Muster zuordnen, Objekte im Raum
+- Geringer Aufwand: Konzentriertes und sorgfältiges Arbeiten
 
 | Untertest | Beginn [Monate vor Test] | Male pro Woche | Serien pro Mal |
 | --- | --- | --- | --- |
@@ -63,29 +65,29 @@ Du sparst dir wertvolle Zeit am NC, wenn du die Aufgabenstellungen schon kennst 
 | Objekte im Raum | 1–2 | 3–4 | 1 |
 | Quantitative und formale Probleme | 2–3 | 2–3 | 1 |
 | Konzentriertes und sorgfältiges Arbeiten | 1.5–2 | 5–6 | 1 |
-| Figuren & Fakten einprägen | 2–3 | 3–4 | 1 |
+| Figuren und Fakten lernen | 2–3 | 3–4 | 1 |
 | Textverständnis | 2–3 | 2–3 | 1 |
 | Diagramme und Tabellen | 1–1.5 | 2–3 | 1 |
 
-## 2. Am Tag des NC
+## Am Tag des EMS
 
-### 2.1 Verpflegung
+### Verpflegung
 
-Frühstücke am Tag des NC gut und trinke etwas – aber nicht zu viel, damit du während des Tests nicht auf die Toilette musst (die Zeit läuft währenddessen weiter).
+Frühstücke am Testtag gut und trinke etwas, aber nicht zu viel, damit du während des Tests nicht auf die Toilette musst (die Zeit läuft währenddessen weiter).
 
-Der NC dauert sehr lange, deshalb hilft es, etwas zum Snacken mitzunehmen – zum Beispiel Nüsse, Trockenfrüchte, Schokolade oder Traubenzucker. Alles, was in den Testsaal mitgenommen wird, muss in einem durchsichtigen Behälter sein (z. B. ein Plastik-Zip-Beutel), und möglichst nicht knistern.
+Der EMS dauert sehr lange, deshalb hilft es, etwas zum Snacken mitzunehmen, zum Beispiel Nüsse, Trockenfrüchte, Schokolade oder Traubenzucker. Alles, was du in den Testsaal mitnimmst, muss in einem durchsichtigen Behälter sein (z. B. ein Plastik-Zip-Beutel). Die Verpackung sollte möglichst nicht knistern.
 
-### 2.2 Anreise
+### Anreise
 
-Am NC kann nur teilnehmen, wer pünktlich ist – der Grund für eine Verspätung ist dabei egal, und einen Nachholtermin gibt es nicht. Es lohnt sich, den Durchführungsort einige Tage vorher zu besichtigen und am Testtag selbst genügend Puffer einzuplanen.
+Am EMS kann nur teilnehmen, wer pünktlich ist. Der Grund für eine Verspätung spielt keine Rolle, und einen Nachholtermin gibt es nicht. Sieh dir den Durchführungsort einige Tage vorher an und plane am Testtag genügend Puffer ein.
 
-### 2.3 Prüfungssituation
+### Prüfungssituation
 
-Je nach Testort kann es in der Testlokalität sehr viele Leute haben – an der Universität Zürich am Campus Irchel zum Beispiel bis zu 400 Personen im gleichen Raum. Lass dich davon nicht beirren.
+Je nach Testort sind sehr viele Leute im Raum. An der Universität Zürich am Campus Irchel sind es zum Beispiel bis zu 400 Personen. Lass dich davon nicht beirren.
 
-Die Lösungen müssen im separaten Lösungsblatt eingetragen werden – was im Aufgabenheft steht, wird bei der Bewertung ignoriert. Bei jeder Aufgabe kann genau ein Punkt geholt werden, leichtere und schwierigere Aufgaben zählen also gleich viel. Rechne nicht damit, alle Aufgaben zu schaffen – das ist normal. **Es gibt keinen Abzug für falsche Antworten**, trage also auch bei unbearbeiteten Aufgaben eine Lösung ein.
+Du trägst die Lösungen auf dem separaten Lösungsblatt ein. Was im Aufgabenheft steht, ignoriert die Bewertung. Bei jeder Aufgabe gibt es genau einen Punkt, leichte und schwierige Aufgaben zählen also gleich viel. Rechne nicht damit, alle Aufgaben zu schaffen – das ist normal. **Es gibt keinen Abzug für falsche Antworten**, trage also auch bei unbearbeiteten Aufgaben eine Lösung ein.
 
-### 2.4 Checkliste: Was mitnehmen
+### Checkliste
 
 - ID
 - Testanmeldung
@@ -100,28 +102,28 @@ Die Lösungen müssen im separaten Lösungsblatt eingetragen werden – was im A
 - Evtl. Glücksbringer
 - Evtl. Medikamente
 
-Alles, was in den Testsaal mitgenommen wird – auch die Getränke – muss in einem durchsichtigen Behälter sein. Handy und Smartwatch bleiben in der Garderobe.
+Alles, was du in den Testsaal mitnimmst, auch die Getränke, muss in einem durchsichtigen Behälter sein. Handy und Smartwatch bleiben in der Garderobe.
 
-## 3. Tagesablauf
+## Tagesablauf
 
-Zwischen den Untertests gibt es keine Pausen – es heisst immer gleich weiterblättern.
+Zwischen den Untertests gibt es keine Pause: Du blätterst sofort weiter.
 
 ```baustein
 testablauf
 ```
 
-Guides zu allen Untertests findest du unter [Übungsaufgaben](/ems/uebungsaufgaben).
+Guides zu allen Untertests findest du unter [Übungsserien](/ems/uebungsaufgaben).
 
-### 3.1 Antwortbogen vervollständigen und strategisches Raten
+### Antwortbogen vervollständigen und strategisch raten
 
-Setze bei **jeder** Antwort eine Markierung – für falsche Antworten gibt es keine Abzüge (Ausnahme: Konzentriertes und sorgfältiges Arbeiten). Plane dir vor Abgabe Zeit ein, um den Antwortbogen durchzusehen und offene Aufgaben zu raten. Du darfst dabei aber nicht zu früheren Untertests zurückblättern.
+Setze bei **jeder** Aufgabe eine Markierung – für falsche Antworten gibt es keinen Abzug (Ausnahme: Konzentriertes und sorgfältiges Arbeiten). Plane vor der Abgabe Zeit ein, um den Antwortbogen durchzusehen und offene Aufgaben zu raten. Zu früheren Untertests darfst du nicht zurückblättern.
 
-Wenn du raten musst, erhöht ein festes Schema deine Zufallschancen – zum Beispiel immer „A" wählen, ausser du kannst A ausschliessen, dann „B" usw. Wir empfehlen, bei A statt E zu beginnen, da E oft „Keines / Alles trifft zu" bedeutet und seltener auszuschliessen ist.
+Wenn du raten musst, erhöht ein festes Schema deine Chancen, zum Beispiel immer «A» wählen, ausser du kannst A ausschliessen, dann «B» usw. Wir empfehlen, bei A statt bei E zu beginnen, weil E oft «Keines / Alles trifft zu» bedeutet und seltener auszuschliessen ist.
 
-## 4. Nach dem NC
+## Nach dem EMS
 
-Du hast den Eignungstest hinter dir – das ist eine starke Leistung, gönn dir etwas! Ende Juli informiert dich deine Wunsch-Universität per Post (teilweise eingeschrieben) oder per E-Mail über die Zuteilung der Studienplätze – sorge dafür, dass du die Post entgegennehmen kannst. Wenn du einen Studienplatz erhalten hast, musst du ihn Anfang August innert der Frist der Universität bestätigen, in der Regel innerhalb von 10 Tagen.
+Du hast den Eignungstest hinter dir. Das ist eine starke Leistung, gönn dir etwas. Ende Juli informiert dich deine Wunsch-Universität per Post (teilweise eingeschrieben) oder per E-Mail über die Zuteilung der Studienplätze. Sorge dafür, dass du die Post entgegennehmen kannst. Hast du einen Studienplatz erhalten, bestätigst du ihn Anfang August innert der Frist der Universität, in der Regel innerhalb von zehn Tagen.
 
-## 5. Erfahrungsberichte
+## Erfahrungsberichte
 
-Schau bei den [Erfahrungsberichten](/ems/erfahrungsberichte) früherer Teilnehmender vorbei – oder [reiche selbst einen ein](/ems/erfahrungsberichte/bericht-einreichen).
+Lies die [Erfahrungsberichte](/ems/erfahrungsberichte) früherer Teilnehmender oder [reiche selbst einen ein](/ems/erfahrungsberichte/bericht-einreichen).

@@ -216,9 +216,9 @@ definito in `data/uniguide-spalten.yaml` – e si modifica direttamente nel fogl
 
 Codice: `scripts/texte_uniguide.py`.
 
-### Foglio Q&A
+### Foglio Domande frequenti
 
-«Q&A – Vista» mostra tutte le domande di `data/faq.yaml`: una riga per domanda con
+«Domande frequenti – Vista» mostra tutte le domande di `data/faq.yaml`: una riga per domanda con
 categoria, domanda, risposta, destinazione del link e testo del link.
 
 - **Nuova domanda:** in basso ci sono cinque righe vuote. Scrivere domanda e risposta,
@@ -560,7 +560,7 @@ automaticamente uno sfondo chiaro (`.sponsor-logo`).
 
 ### FAQ (`data/faq.yaml`)
 
-Il modo più semplice: il foglio «Q&A – Vista» della cartella Excel ([3](#3-cartelle-excel-nel-dettaglio)). Nel file:
+Il modo più semplice: il foglio «Domande frequenti – Vista» della cartella Excel ([3](#3-cartelle-excel-nel-dettaglio)). Nel file:
 
 ```yaml
 - id: "identificativo-unico"

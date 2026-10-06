@@ -68,9 +68,9 @@
   it: "Problemi quantitativi e formali"
 - number: "05"
   slug: figuren-fakten-lernen
-  de: "Figuren & Fakten lernen"
-  fr: "Apprendre figures & faits"
-  it: "Imparare figure & fatti"
+  de: "Figuren und Fakten lernen"
+  fr: "Apprendre figures et faits"
+  it: "Imparare figure e fatti"
 - number: "06"
   slug: textverstaendnis
   de: "Textverständnis"

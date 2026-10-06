@@ -61,7 +61,7 @@ matières.
    classeur, le reste pour toutes les langues. Les noms de colonnes s'écrasent à la ligne 4,
    à droite il y a des colonnes vides pour de nouvelles informations, la ligne 5 détermine
    où une information apparaît.
-   **Q&R – Vue** contient toutes les questions : remplir une ligne vide en bas = nouvelle
+   **Questions fréquentes – Vue** contient toutes les questions : remplir une ligne vide en bas = nouvelle
    question, `!Supprimer!` dans « Question » = question retirée (dans toutes les langues).
 4. **Nouvelle saison :** en haut de la feuille de l'équipe, remplir « Commencer une
    nouvelle saison » (p. ex. 2027/28). L'équipe actuelle passe alors dans les archives,

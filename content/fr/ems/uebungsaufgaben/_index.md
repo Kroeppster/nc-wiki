@@ -1,5 +1,5 @@
 ---
-title: "Exercices"
+title: "Séries d'exercices"
 description: "Entraîne-toi pour l'EMS avec 120 séries d'exercices gratuites. Nous te proposons des exercices et leurs solutions pour les huit sous-tests."
 menu:
   main:

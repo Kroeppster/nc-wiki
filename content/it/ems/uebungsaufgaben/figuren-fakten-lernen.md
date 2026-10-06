@@ -1,5 +1,5 @@
 ---
-title: "Imparare figure & fatti"
+title: "Imparare figure e fatti"
 description: "Imparare figure e fatti all'EMS: serie di esercizi gratuite e tecniche di memorizzazione per ricordare in modo affidabile 18 figure e 15 casi di pazienti."
 weight: 5
 ---

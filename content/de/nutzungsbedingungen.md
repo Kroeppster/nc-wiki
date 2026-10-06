@@ -11,7 +11,7 @@ Diese Nutzungsbedingungen gelten für die Website von NCWiki, alle darauf angebo
 
 ## Zweck unseres Angebots
 
-NCWiki ist ein gemeinnütziger Verein von Medizinstudierenden. Unser Angebot ist kostenlos und dient ausschliesslich der persönlichen Vorbereitung von Kandidierenden auf den Eignungstest für das Medizinstudium (EMS).
+Wir sind ein gemeinnütziger Verein von Medizinstudierenden. Unser Angebot ist kostenlos und dient ausschliesslich der persönlichen Vorbereitung von Kandidierenden auf den Eignungstest für das Medizinstudium (EMS).
 
 ## Urheberrecht
 
@@ -21,7 +21,7 @@ Die Übungsaufgaben stehen unter der Lizenz [Creative Commons BY-NC 4.0](https:/
 
 ## Kommerzielle Nutzung
 
-Als kommerzielle Anbieter gelten in diesen Bedingungen alle Personen und Unternehmen, die entgeltliche Angebote zur Vorbereitung auf den EMS, den TMS oder vergleichbare Eignungstests anbieten, etwa Kurse, Lernmaterialien, Nachhilfe, Apps oder Online-Plattformen. Dazu zählen auch deren Mitarbeitende, Tutor:innen und Beauftragte.
+Als kommerzielle Anbieter gelten in diesen Bedingungen alle Personen und Unternehmen, die entgeltliche Angebote zur Vorbereitung auf den EMS, den TMS oder vergleichbare Eignungstests anbieten, etwa Kurse, Lernmaterialien, Nachhilfe, Apps oder Online-Plattformen. Dazu zählen auch deren Mitarbeitende, Tutor*innen und Beauftragte.
 
 Ohne vorgängige schriftliche Zustimmung von NCWiki ist insbesondere untersagt:
 

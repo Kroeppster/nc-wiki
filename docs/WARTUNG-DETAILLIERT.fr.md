@@ -221,9 +221,9 @@ dans la feuille :
 
 Code : `scripts/texte_uniguide.py`.
 
-### Feuille Q&R
+### Feuille Questions fréquentes
 
-« Q&R – Vue » montre toutes les questions de `data/faq.yaml` : une ligne par question avec
+« Questions fréquentes – Vue » montre toutes les questions de `data/faq.yaml` : une ligne par question avec
 catégorie, question, réponse, cible du lien et texte du lien.
 
 - **Nouvelle question :** en bas, cinq lignes vides. Inscrire question et réponse, choisir
@@ -571,7 +571,7 @@ sombres reçoivent automatiquement un fond clair (`.sponsor-logo`).
 
 ### FAQ (`data/faq.yaml`)
 
-Le plus simple : la feuille « Q&R – Vue » du classeur ([3](#3-classeurs-excel-en-détail)). Dans le fichier :
+Le plus simple : la feuille « Questions fréquentes – Vue » du classeur ([3](#3-classeurs-excel-en-détail)). Dans le fichier :
 
 ```yaml
 - id: "identifiant-unique"

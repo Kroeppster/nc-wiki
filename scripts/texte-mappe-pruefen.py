@@ -1012,7 +1012,7 @@ def faq_pruefen(projekt, ordner):
 
     m, z = zellen(ausgeben(projekt, os.path.join(ordner, 'faq'))['de'])
     pruef('Q&A-Blatt: je Frage eine Zeile plus leere Zeilen',
-          any(n.startswith('Q&A') and n.endswith('Ansicht') for n in m.sheetnames)
+          any(n.startswith('Häufige Fragen') and n.endswith('Ansicht') for n in m.sheetnames)
           and len({k[0] for k in z if k[0] in alt}) == len(alt) and (4, 'question') in z)
 
     def setze(a, b, wert):

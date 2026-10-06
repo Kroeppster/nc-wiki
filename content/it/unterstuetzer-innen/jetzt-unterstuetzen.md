@@ -1,5 +1,5 @@
 ---
-title: "Sostienici ora!"
+title: "Sostienici ora"
 description: "Sostieni NCWiki con una donazione tramite bonifico o Twint e aiutaci a mantenere gratuita la preparazione all'EMS per tutti."
 menu:
   main:
@@ -8,12 +8,10 @@ menu:
 layout: spenden
 ---
 
-## Dona ora!
+## Dona ora
 
-Siamo grati per ogni donazione. Con la tua donazione possiamo offrire gratuitamente esercizi, simulazioni del test e corsi di preparazione. Senza donazioni e sponsor, l'intero progetto non sarebbe possibile.
+Siamo grati per ogni donazione. Finanzia le serie di esercizi, le simulazioni del test e i corsi di preparazione gratuiti. Senza donazioni e sponsorizzazioni, la nostra offerta non esisterebbe.
 
-## Diventa sponsor!
+## Diventa sponsor
 
-Saremmo lieti di collaborare con la vostra organizzazione. Con il pulsante qui sotto trovate le informazioni utili e potete contattarci volentieri.
-
-Grazie mille per il vostro interesse!
+Collaboriamo volentieri con le organizzazioni. Tutte le informazioni per sponsor e organizzazioni partner si trovano sulla pagina degli sponsor.

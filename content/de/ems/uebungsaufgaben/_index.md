@@ -1,6 +1,6 @@
 ---
-title: "Übungsaufgaben"
-description: "Trainiere für den EMS mit 120 kostenlosen Übungsserien. Wir bieten dir Aufgaben und Lösungen zu allen acht Untertests für deine Vorbereitung."
+title: "Übungsserien"
+description: "Trainiere für den EMS mit 120 kostenlosen Übungsserien: Aufgaben und Lösungen zu allen acht Untertests."
 menu:
   main:
     identifier: uebungsaufgaben
@@ -8,4 +8,4 @@ menu:
     weight: 1
 ---
 
-Hier findest du kostenlose Übungsserien mit Lösungen zu allen Untertests des EMS, zusammengestellt von Medizinstudierenden, die den Test selbst geschrieben haben. Zu jedem Untertest gibt es ausserdem eine kurze Einführung und bewährte Tipps für deine Vorbereitung.
+Hier findest du kostenlose Übungsserien mit Lösungen zu allen Untertests des Eignungstests Medizinstudium (EMS). Medizinstudierende, die den Test selbst geschrieben haben, haben sie zusammengestellt. Zu jedem Untertest gibt es eine kurze Einführung und Tipps für deine Vorbereitung.

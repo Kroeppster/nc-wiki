@@ -16,11 +16,11 @@ Objekte im Raum ist einer der kürzeren, aber intensiveren Untertests.
 
 ## Wieso ist dieser Untertest fürs Studium relevant?
 
-In der Anatomie ist die räumliche Vorstellung von Knochen und Organen sehr wichtig, um zu verstehen, wie diese zusammenhängen. Fachliteratur bildet Strukturen oft nur zweidimensional ab, obwohl man sich am Patienten dreidimensional orientieren muss.
+In der Anatomie ist die räumliche Vorstellung von Knochen und Organen sehr wichtig, um zu verstehen, wie diese zusammenhängen. Fachliteratur bildet Strukturen oft nur zweidimensional ab, obwohl du dich am Patienten dreidimensional orientieren musst.
 
 ## Wann und wie oft üben?
 
-Dieser Untertest gehört zu den einfacheren und lässt sich gut lernen – ein Start 1–1.5 Monate vorher reicht meist. Übe etwa 2–3 Mal pro Woche, um die Routine nicht zu verlieren und die für dich passende Technik zu finden. Da der Test mit 10 Minuten recht kurz ist, eignet er sich auch gut für kurze Übungseinheiten zwischendurch.
+Dieser Untertest gehört zu den einfacheren und lässt sich gut lernen – ein Start ein bis eineinhalb Monate vorher reicht meist. Übe etwa zwei- bis dreimal pro Woche, um die Routine nicht zu verlieren und die für dich passende Technik zu finden. Da der Test mit 10 Minuten recht kurz ist, eignet er sich auch gut für kurze Übungseinheiten zwischendurch.
 
 ## Vorgehen beim Lösen
 
@@ -29,7 +29,7 @@ Dieser Untertest gehört zu den einfacheren und lässt sich gut lernen – ein S
 1. **Art der Bewegung bestimmen:** Frage dich zuerst: Handelt es sich um ein Spiegelbild, eine Kippbewegung oder eine Drehung?
 2. **Markante Stellen suchen:** Achte auf markante Strukturen oder Enden, an denen du die Ausrichtung festmachen kannst.
 3. **Berührungspunkte nutzen:** Berührungspunkte mit dem Rand/Glas geben Aufschluss darüber, wie die Figur im Raum liegt – die Höhe gegenüberliegender Berührungspunkte verrät die Position der jeweiligen Struktur.
-4. **Schatten und Spiegelungen beachten:** Hilft dir das alles nicht weiter, können Schatten oder Spiegelungen zusätzliche Hinweise liefern – manchmal sieht man so verdeckte Strukturen, die sonst nicht sichtbar wären.
+4. **Schatten und Spiegelungen beachten:** Hilft dir das alles nicht weiter, können Schatten oder Spiegelungen zusätzliche Hinweise liefern – manchmal erkennst du so verdeckte Strukturen, die sonst nicht sichtbar wären.
 5. **Blickrichtung klären:** Siehst du die Figur direkt vor dir, oder schaust du quasi hindurch? Das hilft besonders bei symmetrischen Figuren, rechts von links zu unterscheiden.
 
 ## Weitere Tipps
@@ -46,8 +46,8 @@ Dieser Untertest gehört zu den einfacheren und lässt sich gut lernen – ein S
 
 ## Aus Erfahrungsberichten
 
-*„Bei Objekte im Raum: kurz die Drehung erkennen, sonst gleiche Objekte suchen, konsequent von A bis E durcharbeiten statt nach Einfachheit zu sortieren."*
+*«Bei Objekte im Raum: kurz die Drehung erkennen, sonst gleiche Objekte suchen, konsequent von A bis E durcharbeiten statt nach Einfachheit zu sortieren.»*
 
-*„Fakten, Figuren, Konzi und Objekte im Raum lohnen sich dagegen besonders, da man dort schnell Fortschritte macht."*
+*«Fakten, Figuren, Konzi und Objekte im Raum lohnen sich dagegen besonders, da du dort schnell Fortschritte machst.»*
 
 Weitere Berichte findest du bei den [Erfahrungsberichten](/ems/erfahrungsberichte).

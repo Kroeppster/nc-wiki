@@ -17,10 +17,10 @@ Hier findest du, was aus früheren Jahren von NCWiki bleibt: die Teams vergangen
 **Leitungsteam**
 
 - **Präsidium:** Alessio Iseli (Koordinator)
-- **Koordination Romandie & Ticino:** Selina Buchser (Koordinatorin Romandie), Margherita Bernasconi (Koordinatorin Ticino)
-- **Angebot:** Francesca Serra (Vorbereitungskurse), Matthias Schütz (Übungsserien), Olivia Schiess (Testsimulation), Sabrina Zeller (Testsimulation), Kron Mustafa (Events & Qualitätskontrolle)
-- **Kommunikation:** Valentina Nocito (Marketing), Isabel Kretschi (Public Relations), Johanna Denz (Social & Onboarding), Edgar Brändle (Website)
-- **Verein & Administration:** Lea Meyer (Finanzen), Kilian Belohlavek (Protokoll & Daten)
+- **Koordination Romandie und Ticino:** Selina Buchser (Koordinatorin Romandie), Margherita Bernasconi (Koordinatorin Ticino)
+- **Angebot:** Francesca Serra (Vorbereitungskurse), Matthias Schütz (Übungsserien), Olivia Schiess (Testsimulation), Sabrina Zeller (Testsimulation), Kron Mustafa (Events und Qualitätskontrolle)
+- **Kommunikation:** Valentina Nocito (Marketing), Isabel Kretschi (Public Relations), Johanna Denz (Social und Onboarding), Edgar Brändle (Website)
+- **Verein und Administration:** Lea Meyer (Finanzen), Kilian Belohlavek (Protokoll und Daten)
 
 #### Verantwortliche – Team Romandie
 
@@ -30,7 +30,7 @@ Hier findest du, was aus früheren Jahren von NCWiki bleibt: die Teams vergangen
 - Vorbereitungskurs: Jef Osstyn
 - Testsimulation: Hadrien Dorsaz und Pierre Lanners
 - Kommunikation: Jef Osstyn und Hadrien Dorsaz
-- Webseite: Mathieu Ribeaud
+- Website: Mathieu Ribeaud
 - Abende: Lucie Duperrex und Julie Eschmann
 - Sponsoring: Lucie Duperrex und Julie Eschmann
 
@@ -46,15 +46,15 @@ Julie Kern, Antonin Becard, Audrey Stritt, Mathieu Ribeaud, Aline Turpin, Garanc
 - Vorbereitungskurs: Audrey Stritt und Fanny Vauthey
 - Testsimulation: Antonin Becard und Julie Kern
 - Kommunikation: Léa Reveney
-- Webseite: Mathieu Ribeaud
+- Website: Mathieu Ribeaud
 - Abende: Garance Genier
 - Sponsoring: Julie Kern und Léa Reveney
 
 ### Team Saison 2023/24
 
-Über 70 Mitglieder (inkl. Verantwortliche) haben während der Saison 2023/24 tatkräftig bei NCWiki mitgeholfen und unser Angebot an Übungsserien, Kursen, Simulation und Übersetzungen möglich gemacht. Vielen Dank an das grossartige Team (und diejenigen, die nicht namentlich genannt werden möchten)!
+Über 70 Mitglieder (inkl. Verantwortliche) haben während der Saison 2023/24 tatkräftig bei NCWiki mitgeholfen und unser Angebot an Übungsserien, Kursen, Simulation und Übersetzungen möglich gemacht. Vielen Dank an das Team und an alle, die nicht namentlich genannt werden möchten.
 
-**Verantwortliche, Deutschsprachige Teams:** Alessio Iseli (Koordinator), Abeelan Rasadurai (Handover), Elena Robinson (Public Relation), Alessia R. (Marketing), Anke Naedele (Website), Stefania Huber (Koordinatorin Ticino), Aline Turpin (Koordinatorin Romandie), Julian Harbarth (Koordinator Romandie), Livia Biri (Finanzen), Diego Ryf (Events & Qualitätskontrolle), Francesca Serra (Vorbereitungskurse), Olivia Schiess (Testsimulation), Sabrina Zeller (Testsimulation), Sarah Noman (Übungsserien)
+**Verantwortliche, Deutschsprachige Teams:** Alessio Iseli (Koordinator), Abeelan Rasadurai (Handover), Elena Robinson (Public Relation), Alessia R. (Marketing), Anke Naedele (Website), Stefania Huber (Koordinatorin Ticino), Aline Turpin (Koordinatorin Romandie), Julian Harbarth (Koordinator Romandie), Livia Biri (Finanzen), Diego Ryf (Events und Qualitätskontrolle), Francesca Serra (Vorbereitungskurse), Olivia Schiess (Testsimulation), Sabrina Zeller (Testsimulation), Sarah Noman (Übungsserien)
 
 **Content Creators, Deutschsprachige Teams:** Abeelan Rasadurai, Alessia R., Alessio Iseli, Alma W., Anke Naedele, Anna Lüthi, Anne-Myriam Pampuch, Bilal K., Chantal B., Chiara Brechbühl, Constantin D., Cooper H., Dan W., Diego Ryf, Elena Robinson, Elin Cathomas, Florian Helbling, Francesca Serra, Isabel K., Jiu Lim, Kevin Zanon, Kilian Belohlavek, Kron Mustafa, Lara L., Lea E., Lea Meyer, Lisa Valiyaveettil, Livia Biri, Mahilan Sritharan, Marc Fluri, Margherita Bernasconi, Nathan Nicholas, Olivia Schiess, Pascale H., Priska B., Rahel Zingg, Ramona Huser, Randa S., Ravinder Kaur, Remo Zehnder, Romane Bauer, Sabrina Zeller, Sarah Noman, Shahad S., Stefanie Janz, Valentina Nocito
 
@@ -70,8 +70,8 @@ Wir danken unseren ehemaligen Verantwortlichen für ihr besonderes Engagement in
 
 - Abeelan Rasadurai (Gründer, Koordinator 2021–2023, Handover 2024)
 - Ramona Dötsch (Übungsserie)
-- Clemens Yang (Protokoll & Daten)
-- Thorald Stolte (Qualitätskontrolle & Events)
+- Clemens Yang (Protokoll und Daten)
+- Thorald Stolte (Qualitätskontrolle und Events)
 - Chiara P. (Testsimulation)
 - Elena Robinson (Public Relation 2021–2024)
 - Stefania Huber (Koordinatorin Ticino 2021–2024)
@@ -85,12 +85,12 @@ Wir danken unseren ehemaligen Verantwortlichen für ihr besonderes Engagement in
 - Benedikt Reuthebuch (Vorbereitungskurs 2023)
 - Alessio Iseli (Vorbereitungskurs 2023)
 - Alexandra Migga (Funding)
-- Leon Guggenheim (Wissenschaft & Politik)
+- Leon Guggenheim (Wissenschaft und Politik)
 - Anke Naedele (Website 2021–2024)
 - Livia Biri (Finanzen 2021–2024)
 - Alessia R. (Marketing 2021–2024)
 - Aline Turpin (Koordinatorin Romandie 2024–2025)
-- Diego Ryf (Events & Qualitätskontrolle)
+- Diego Ryf (Events und Qualitätskontrolle)
 
 ## Ältere Kursskripte
 

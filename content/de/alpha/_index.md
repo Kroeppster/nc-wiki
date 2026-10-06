@@ -15,7 +15,7 @@ gefunden. Suchmaschinen bekommen zusätzlich ein `noindex`.
 
 ## Figuren-Generator
 
-Würfelt 18 Figuren wie im Untertest „Figuren lernen". Zu beurteilen ist vor
+Würfelt 18 Figuren wie im Untertest «Figuren lernen». Zu beurteilen ist vor
 allem die **Schwierigkeit**: Sind die Formen unterscheidbar genug, um sie sich
 in vier Minuten zu merken – und nicht so ähnlich, dass es zum Ratespiel wird?
 Zum Vergleich liegen die echten Serien unter Übungsaufgaben.

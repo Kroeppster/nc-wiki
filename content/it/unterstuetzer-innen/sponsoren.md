@@ -27,7 +27,7 @@ A seconda del tipo di partnership sono inoltre possibili menzioni nelle nostre n
 
 Contattateci: organizziamo volentieri la collaborazione in base ai vostri obiettivi.
 
-## Contattateci!
+## Contatto
 
 Entrate a far parte della nostra rete di università, organizzazioni e aziende che si impegnano insieme per le nuove leve della medicina in Svizzera. Contattateci – saremo lieti di sentirvi.
 

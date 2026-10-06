@@ -1,5 +1,5 @@
 ---
-title: "Notre nouveau site est en ligne !"
+title: "Notre nouveau site est en ligne"
 date: 2026-08-23
 eyebrow: "Mise à jour"
 draft: false

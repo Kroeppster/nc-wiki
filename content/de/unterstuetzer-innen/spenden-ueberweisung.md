@@ -2,7 +2,7 @@
 title: "Spenden mit Überweisung"
 ---
 
-Du möchtest per Banküberweisung spenden? Nutze folgende Angaben:
+Du möchtest per Banküberweisung spenden? Das sind die Angaben:
 
 Verein NCWiki  
 Basellandschaftliche Kantonalbank  

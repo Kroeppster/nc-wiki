@@ -1,5 +1,5 @@
 ---
-title: "Tuteur·rice·s recherché·e·s pour les cours de préparation !"
+title: "Tuteur·rice·s recherché·e·s pour les cours de préparation"
 date: 2026-02-02
 eyebrow: "S'engager"
 draft: false

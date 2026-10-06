@@ -61,7 +61,7 @@
     fr: ["Bâle"]
     it: ["Basilea"]
   auswahlverfahren:
-    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    de: "Du wirst über den Eignungstest für das Medizinstudium (EMS) zugelassen, im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   anmeldefrist: "15.02.2027"
@@ -102,7 +102,7 @@
     fr: ["Berne"]
     it: ["Berna"]
   auswahlverfahren:
-    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    de: "Du wirst über den Eignungstest für das Medizinstudium (EMS) zugelassen, im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   anmeldefrist: "15.02.2027"
@@ -146,7 +146,7 @@
     fr: ["Zurich"]
     it: ["Zurigo"]
   auswahlverfahren:
-    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    de: "Du wirst über den Eignungstest für das Medizinstudium (EMS) zugelassen, im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   anmeldefrist: "15.02.2027"
@@ -190,12 +190,12 @@
     fr: ["Bâle", "Zurich (UZH)", "Lugano (USI)"]
     it: ["Basilea", "Zurigo (UZH)", "Lugano (USI)"]
   auswahlverfahren:
-    de: "Zulassung über den Eignungstest Medizinstudium (EMS) im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
+    de: "Du wirst über den Eignungstest für das Medizinstudium (EMS) zugelassen, im Rahmen des schweizweiten Numerus-clausus-Verfahrens."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS), dans le cadre de la procédure nationale de numerus clausus."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS), nell'ambito della procedura nazionale di numerus clausus."
   anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Nur Bachelor an der ETH. Der Master wird an der Universität Zürich (20 Plätze), der Universität Basel oder der Università della Svizzera italiana (Lugano) fortgesetzt - die Zuteilung erfolgt durch die ETH Zürich zu Beginn des dritten Bachelor-Jahres, der Studienplatz für den Master ist dank Transferabkommen garantiert."]
+    de: ["An der ETH studierst du nur den Bachelor. Den Master setzt du an der Universität Zürich (20 Plätze), der Universität Basel oder der Università della Svizzera italiana (Lugano) fort. Die ETH Zürich teilt dich zu Beginn des dritten Bachelor-Jahres zu. Der Masterplatz ist dank Transferabkommen garantiert."]
     fr: ["Seulement le bachelor à l'ETH. Le master se poursuit à l'Université de Zurich (20 places), à l'Université de Bâle ou à l'Università della Svizzera italiana (Lugano) – l'attribution est faite par l'ETH Zurich au début de la 3e année de bachelor ; la place en master est garantie par un accord de transfert."]
     it: ["Solo bachelor all'ETH. Il master prosegue all'Università di Zurigo (20 posti), all'Università di Basilea o all'Università della Svizzera italiana (Lugano) – l'assegnazione è fatta dall'ETH Zurigo all'inizio del 3° anno di bachelor; il posto per il master è garantito da un accordo di trasferimento."]
   studienbeginn: "20.09.2027"
@@ -231,7 +231,7 @@
     fr: ["Fribourg", "Bâle", "Berne", "Zurich"]
     it: ["Friburgo", "Basilea", "Berna", "Zurigo"]
   auswahlverfahren:
-    de: "Zulassung über den Eignungstest Medizinstudium (EMS); zweisprachiges Bachelor-Studium (Deutsch/Französisch)."
+    de: "Du wirst über den Eignungstest für das Medizinstudium (EMS) zugelassen. Das Bachelor-Studium ist zweisprachig (Deutsch und Französisch)."
     fr: "Admission via le test d'aptitudes pour les études de médecine (EMS) ; bachelor bilingue (allemand/français)."
     it: "Ammissione tramite il test attitudinale per lo studio della medicina (EMS); bachelor bilingue (tedesco/francese)."
   anmeldefrist: "15.02.2027"
@@ -275,7 +275,7 @@
     fr: ["Genève"]
     it: ["Ginevra"]
   auswahlverfahren:
-    de: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+    de: "Der Studienbeginn im 1. Bachelor-Jahr ist offen, du brauchst keinen EMS. Ins 2. Jahr kommst du nur, wenn du am Ende des 1. Jahres eine Eliminationsprüfung bestehst."
     fr: "Accès libre à la 1re année de bachelor, sans EMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
     it: "Accesso libero al 1° anno di bachelor, senza EMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
   anmeldefrist: "15.02.2027"
@@ -316,7 +316,7 @@
     fr: ["Lausanne"]
     it: ["Losanna"]
   auswahlverfahren:
-    de: "Offener Studienbeginn im 1. Bachelor-Jahr, kein EMS. Übertritt ins 2. Jahr nur nach Bestehen einer Eliminationsprüfung am Ende des 1. Jahres."
+    de: "Der Studienbeginn im 1. Bachelor-Jahr ist offen, du brauchst keinen EMS. Ins 2. Jahr kommst du nur, wenn du am Ende des 1. Jahres eine Eliminationsprüfung bestehst."
     fr: "Accès libre à la 1re année de bachelor, sans EMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
     it: "Accesso libero al 1° anno di bachelor, senza EMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
   anmeldefrist: "15.02.2027"
@@ -348,7 +348,7 @@
     it: ["Basilea", "Berna"]
   master_orte: ["Lugano"]
   auswahlverfahren:
-    de: "EMS-Zulassung für die national geregelten Bachelor-Plätze; das Bachelor-Studium wird vollständig an der Universität Basel oder Universität Bern absolviert (dort auf Deutsch), der Master anschliessend an der USI in Lugano auf Italienisch."
+    de: "Du wirst über den EMS für die national geregelten Bachelor-Plätze zugelassen. Das Bachelor-Studium absolvierst du vollständig an der Universität Basel oder Bern (dort auf Deutsch), den Master danach an der USI in Lugano auf Italienisch."
     fr: "Admission via l'EMS pour les places de bachelor réglées au niveau national ; le bachelor se fait entièrement à l'Université de Bâle ou de Berne (en allemand), le master ensuite à l'USI à Lugano, en italien."
     it: "Ammissione tramite l'EMS per i posti di bachelor regolati a livello nazionale; il bachelor si svolge interamente all'Università di Basilea o di Berna (in tedesco), il master poi all'USI a Lugano, in italiano."
   anmeldefrist: "15.02.2027"
@@ -398,12 +398,12 @@
     fr: ["Genève", "Lausanne"]
     it: ["Ginevra", "Losanna"]
   auswahlverfahren:
-    de: "Bietet nur das 1. Bachelor-Jahr an, kein EMS. Übertritt ins 2. Jahr an der Uni Genf oder Lausanne erfordert das Bestehen von deren Eliminationsprüfung."
+    de: "Neuenburg bietet nur das 1. Bachelor-Jahr an, du brauchst keinen EMS. Für das 2. Jahr an der Uni Genf oder Lausanne musst du deren Eliminationsprüfung bestehen."
     fr: "Seule la 1re année de bachelor est proposée, sans EMS. Le passage en 2e année à Genève ou à Lausanne exige la réussite de leur examen éliminatoire."
     it: "Offre solo il 1° anno di bachelor, senza EMS. Il passaggio al 2° anno a Ginevra o Losanna richiede il superamento del loro esame eliminatorio."
   anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Nur 1. Studienjahr; danach zwingender Wechsel nach Genf oder Lausanne"]
+    de: ["Nur 1. Studienjahr, danach musst du nach Genf oder Lausanne wechseln"]
     fr: ["Seulement la 1re année ; ensuite changement obligatoire à Genève ou Lausanne"]
     it: ["Solo il 1° anno; poi passaggio obbligatorio a Ginevra o Losanna"]
   studienbeginn: "21.09.2027"
@@ -436,12 +436,12 @@
     fr: ["Lucerne (avec Zurich)"]
     it: ["Lucerna (con Zurigo)"]
   auswahlverfahren:
-    de: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'Luzerner Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in Luzern studiert."
+    de: "Kein eigener Bachelor-Studiengang: Du wirst über den EMS für den «Luzerner Track» an der Universität Zürich zugelassen und absolvierst dort auch das komplette Bachelor-Studium. Den anschliessenden «Joint Medical Master» studierst du gemeinsam mit der Universität Zürich in Luzern."
     fr: "Pas de bachelor propre : l'admission se fait via l'EMS pour le « Luzerner Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Lucerne, conjointement avec l'Université de Zurich."
     it: "Nessun bachelor proprio: l'ammissione avviene tramite l'EMS per il «Luzerner Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a Lucerna, insieme all'Università di Zurigo."
   anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'Luzerner Track' an der Universität Zürich"]
+    de: ["Kein eigener Bachelor, das Bachelor-Studium läuft vollständig über den «Luzerner Track» an der Universität Zürich"]
     fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « Luzerner Track » de l'Université de Zurich", "Accent sur la médecine de famille et les soins psychiatriques de base"]
     it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite il «Luzerner Track» dell'Università di Zurigo", "Accento sulla medicina di famiglia e sulle cure psichiatriche di base"]
   studienbeginn: "20.09.2027"
@@ -477,12 +477,12 @@
     fr: ["Saint-Gall (avec Zurich)"]
     it: ["San Gallo (con Zurigo)"]
   auswahlverfahren:
-    de: "Kein eigener Bachelor-Studiengang: Zulassung erfolgt über den EMS für den 'St.Galler Track' an der Universität Zürich, an der auch das komplette Bachelor-Studium absolviert wird. Der anschliessende 'Joint Medical Master' wird gemeinsam mit der Universität Zürich in St.Gallen studiert."
+    de: "Kein eigener Bachelor-Studiengang: Du wirst über den EMS für den «St. Galler Track» an der Universität Zürich zugelassen und absolvierst dort auch das komplette Bachelor-Studium. Den anschliessenden «Joint Medical Master» studierst du gemeinsam mit der Universität Zürich in St. Gallen."
     fr: "Pas de bachelor propre : l'admission se fait via l'EMS pour le « St.Galler Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Saint-Gall, conjointement avec l'Université de Zurich."
     it: "Nessun bachelor proprio: l'ammissione avviene tramite l'EMS per lo «St.Galler Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a San Gallo, insieme all'Università di Zurigo."
   anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Kein eigener Bachelor; Bachelor-Studium läuft vollständig über den 'St.Galler Track' an der Universität Zürich"]
+    de: ["Kein eigener Bachelor, das Bachelor-Studium läuft vollständig über den «St. Galler Track» an der Universität Zürich"]
     fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « St.Galler Track » de l'Université de Zurich"]
     it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite lo «St.Galler Track» dell'Università di Zurigo"]
   studienbeginn: "20.09.2027"

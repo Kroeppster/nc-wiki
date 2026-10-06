@@ -6,15 +6,15 @@ menu:
     identifier: home
     weight: 1
 hero:
-  eyebrow: "EMS 2027 · Preparazione gratuita"
+  eyebrow: "Test attitudinale per gli studi di medicina (EMS) 2027"
   ticket_label: "Ammissione EMS"
-  title: "Rendiamo gratuita la preparazione all'EMS."
+  title: "Rendiamo gratuita la preparazione all'EMS"
   lede: "Dietro NCWiki c'è un'associazione di oltre 110 studenti di medicina. Dal 2021 sviluppiamo serie di esercizi nostre, organizziamo simulazioni del test e teniamo corsi di preparazione. Tutta la nostra offerta nasce da persone che hanno sostenuto il test in prima persona ed è completamente gratuita, in tre lingue."
-  cta_primary: "Vedi gli esercizi"
+  cta_primary: "Vedi le serie di esercizi"
   cta_secondary: "Iscriviti alla newsletter"
   bild: "testsimulationen/testsimulation-2023.jpg"
   bild_alt: "Aula magna piena durante una simulazione del test NCWiki, in primo piano un foglio delle risposte trilingue con il logo NCWiki"
-  countdown_label: "Ancora fino all'EMS 2027 (09.07.)"
+  countdown_label: "Ancora fino all'EMS, il 9 luglio 2027"
 news:
   eyebrow: "Attualità"
   heading: "News"
@@ -63,7 +63,7 @@ weg:
       bis: "2027-06-30"
       art: "offiziell"
       fuer: "mit"
-    - wann: "9 luglio"
+    - wann: "9 luglio 2027"
       titel: "Test attitudinale (EMS)"
       von: "2027-07-09"
       art: "offiziell"
@@ -107,7 +107,7 @@ weg:
       mittel:
         - titel: "Guida alle università"
           url: "ems/uniguide/"
-        - titel: "Domande e risposte"
+        - titel: "Domande frequenti"
           url: "ems/qa/"
     - wann: "Febbraio – maggio"
       titel: "Costruire la tecnica"
@@ -117,9 +117,9 @@ weg:
       art: "angebot"
       fuer: "beide"
       mittel:
-        - titel: "Esercizi"
+        - titel: "Serie di esercizi"
           url: "ems/uebungsaufgaben/"
-        - titel: "Corso di preparazione"
+        - titel: "Corsi di preparazione"
           url: "ems/vorbereitungskurse/"
     - wann: "Maggio – inizio luglio"
       titel: "Prova generale"
@@ -141,7 +141,7 @@ weg:
       art: "angebot"
       fuer: "beide"
       mittel:
-        - titel: "Guida EMS"
+        - titel: "EMS"
           url: "ems/"
         - titel: "Testimonianze"
           url: "ems/erfahrungsberichte/"
@@ -155,11 +155,11 @@ material:
       zahlen: ["uebungen"]
       text: "{1} serie su tutti e otto i sottotest, con le soluzioni."
     - key: testsimulationen
-      titel: "Fascicoli del test"
+      titel: "Simulazioni del test"
       zahlen: ["simulationen"]
       text: "{1} fascicoli completi di annate precedenti."
     - key: vorbereitungskurse
-      titel: "Corso di preparazione"
+      titel: "Corsi di preparazione"
       text: "Due giorni in aula, in piccoli gruppi – con dispensa stampata da portare a casa."
     - key: community
       titel: "Orientamento e scambio"
@@ -167,11 +167,11 @@ material:
       text: "{1} università a confronto, {2} testimonianze e il nostro Discord."
 
 subtests:
-  eyebrow: "Esercizi"
-  heading: "8 sottotest, un obiettivo"
+  eyebrow: "Serie di esercizi"
+  heading: "Otto sottotest, un obiettivo"
 mission:
   eyebrow: "Perché esistiamo"
-  heading: "Ci impegniamo affinché la preparazione all'EMS non dipenda dal portafoglio."
+  heading: "Ci impegniamo affinché la preparazione all'EMS non dipenda dal portafoglio"
   features:
     - title: "Dal 2021"
       text: "Partita come iniziativa studentesca, oggi è un'associazione senza scopo di lucro. Lavoriamo al 100 % come volontari e offriamo il nostro materiale in modo completamente gratuito."
@@ -180,7 +180,7 @@ mission:
     - title: "Tre lingue"
       text: "Con i nostri team nella Svizzera tedesca, in Romandia e in Ticino mettiamo a disposizione l'intera offerta in tre lingue."
 support:
-  heading: "Gratuito grazie a voi."
+  heading: "Gratuito grazie a te"
   text: "Solo grazie a donazioni e sponsorizzazioni il nostro materiale resta gratuito per tutti."
   cta: "Sostieni ora"
 ---

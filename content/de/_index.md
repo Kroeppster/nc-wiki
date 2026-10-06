@@ -6,15 +6,15 @@ menu:
     identifier: home
     weight: 1
 hero:
-  eyebrow: "EMS 2027 · Kostenlose Vorbereitung"
+  eyebrow: "Eignungstest für das Medizinstudium (EMS) 2027"
   ticket_label: "EMS-Zulassung"
-  title: "Wir machen die EMS-Vorbereitung gratis."
-  lede: "Hinter NCWiki steht ein Verein aus mehr als 110 Medizinstudierenden. Seit 2021 entwickeln wir eigene Übungsserien, organisieren Testsimulationen und leiten Vorbereitungskurse. Unser gesamtes Angebot stammt von Leuten mit eigener Testerfahrung und ist in drei Sprachen komplett gratis."
-  cta_primary: "Übungsaufgaben ansehen"
+  title: "Wir machen die EMS-Vorbereitung kostenlos"
+  lede: "Wir sind ein Verein aus mehr als 110 Medizinstudierenden. Seit 2021 entwickeln wir eigene Übungsserien, organisieren Testsimulationen und leiten Vorbereitungskurse. Alles stammt von Studierenden, die den Test selbst geschrieben haben, und ist in drei Sprachen kostenlos."
+  cta_primary: "Übungsserien ansehen"
   cta_secondary: "Newsletter abonnieren"
   bild: "testsimulationen/testsimulation-2023.jpg"
   bild_alt: "Voller Hörsaal während einer NCWiki-Testsimulation, im Vordergrund ein dreisprachiger Antwortbogen mit NCWiki-Logo"
-  countdown_label: "Noch bis zum EMS 2027 (09.07.)"
+  countdown_label: "Noch bis zum EMS am 9. Juli 2027"
 news:
   eyebrow: "Aktuell"
   heading: "News"
@@ -63,7 +63,7 @@ weg:
       bis: "2027-06-30"
       art: "offiziell"
       fuer: "mit"
-    - wann: "9. Juli"
+    - wann: "9. Juli 2027"
       titel: "Eignungstest (EMS)"
       von: "2027-07-09"
       art: "offiziell"
@@ -107,7 +107,7 @@ weg:
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
-        - titel: "Fragen & Antworten"
+        - titel: "Häufige Fragen"
           url: "ems/qa/"
     - wann: "Februar bis Mai"
       titel: "Technik aufbauen"
@@ -117,9 +117,9 @@ weg:
       art: "angebot"
       fuer: "beide"
       mittel:
-        - titel: "Übungsaufgaben"
+        - titel: "Übungsserien"
           url: "ems/uebungsaufgaben/"
-        - titel: "Vorbereitungskurs"
+        - titel: "Vorbereitungskurse"
           url: "ems/vorbereitungskurse/"
     - wann: "Mai bis Anfang Juli"
       titel: "Generalprobe"
@@ -141,7 +141,7 @@ weg:
       art: "angebot"
       fuer: "beide"
       mittel:
-        - titel: "EMS-Guide"
+        - titel: "EMS"
           url: "ems/"
         - titel: "Erfahrungsberichte"
           url: "ems/erfahrungsberichte/"
@@ -155,11 +155,11 @@ material:
       zahlen: ["uebungen"]
       text: "{1} Serien zu allen acht Untertests, mit Lösungen."
     - key: testsimulationen
-      titel: "Testhefte"
+      titel: "Testsimulationen"
       zahlen: ["simulationen"]
       text: "{1} komplette Testhefte früherer Jahrgänge."
     - key: vorbereitungskurse
-      titel: "Vorbereitungskurs"
+      titel: "Vorbereitungskurse"
       text: "Zwei Tage im Hörsaal, in Kleingruppen – mit gedrucktem Skript zum Mitnehmen."
     - key: community
       titel: "Orientierung und Austausch"
@@ -167,20 +167,20 @@ material:
       text: "{1} Universitäten im Vergleich, {2} Erfahrungsberichte und unser Discord."
 
 subtests:
-  eyebrow: "Übungsaufgaben"
-  heading: "8 Untertests, ein Ziel"
+  eyebrow: "Übungsserien"
+  heading: "Acht Untertests, ein Ziel"
 mission:
   eyebrow: "Wieso es uns gibt"
-  heading: "Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt."
+  heading: "Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt"
   features:
     - title: "Seit 2021"
       text: "Als studentische Initiative gestartet und heute ein gemeinnütziger Verein. Wir arbeiten zu 100 Prozent ehrenamtlich und bieten unser Material komplett kostenlos an."
     - title: "Über 110 Freiwillige"
       text: "Medizinstudierende aus der ganzen Schweiz schreiben Aufgaben, übersetzen, halten Kurse, betreuen die Testsimulationen."
     - title: "Drei Sprachen"
-      text: "Mit unseren Teams in der Deutschschweiz, der Romandie und im Tessin stellen wir das komplette Angebot in drei Sprachen zur Verfügung."
+      text: "Unsere Teams in der Deutschschweiz, der Romandie und im Tessin bieten das ganze Angebot in drei Sprachen an."
 support:
-  heading: "Kostenlos dank euch."
-  text: "Nur durch Spenden und Sponsoring bleibt unser Material für alle gratis."
+  heading: "Kostenlos dank dir"
+  text: "Unser Material bleibt nur dank Spenden und Sponsoring für alle kostenlos."
   cta: "Jetzt unterstützen"
 ---

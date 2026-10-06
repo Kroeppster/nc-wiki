@@ -5,7 +5,6 @@ menu:
   main:
     parent: ems
     weight: 7
-    name: "Guide des universités"
 ---
 
 Tu trouveras ici toutes les universités suisses proposant des études de médecine, avec la langue d'études, la procédure d'admission et les particularités de chaque site. Tu peux ainsi comparer quelle université te convient avant de fixer tes priorités lors de l'inscription, jusqu'au 15 février.

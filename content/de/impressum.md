@@ -14,7 +14,7 @@ E-Mail: info@nc-wiki.ch
 
 ## Hinweise zu unseren Inhalten
 
-Alle Tipps und Übungsaufgaben haben wir nach bestem Wissen und Gewissen zusammengestellt. Ein Bestehen des EMS (Eignungstest für das Medizinstudium) können wir jedoch nicht garantieren.
+Wir haben alle Tipps und Übungsaufgaben nach bestem Wissen und Gewissen zusammengestellt. Wir können jedoch nicht garantieren, dass Sie den Eignungstest für das Medizinstudium (EMS) bestehen.
 
 Wir legen grossen Wert darauf, dass unsere Informationen zum EMS korrekt sind. Verbindlich sind aber immer die offiziellen Angaben von [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) und vom [Zentrum für Testentwicklung und Diagnostik (ZTD)](https://www.unifr.ch/ztd/de/ems).
 

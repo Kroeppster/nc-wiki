@@ -6,7 +6,7 @@ weight: 1
 
 ## Kurze Zusammenfassung
 
-Muster zuordnen ist der erste Untertest des EMS und eröffnet den Testtag. Zu jeder Aufgabe erhältst du ein komplexes Muster sowie fünf Ausschnitte (A bis E). Die Muster stehen im oberen Bereich der Seite, die zugehörigen Ausschnitte weiter unten auf derselben Seite. Nur einer der fünf Ausschnitte lässt sich an einer beliebigen Stelle deckungsgleich und vollständig auf das Muster legen. Bei den übrigen vier wurde ein Detail hinzugefügt, weggelassen oder verändert. Die Ausschnitte sind weder vergrössert oder verkleinert noch gedreht oder gespiegelt. Die Abweichungen sind jeweils eindeutig, kleine Pünktchen oder Druckunreinheiten gelten nicht als Fehler.
+Muster zuordnen ist der erste Untertest des Eignungstests für das Medizinstudium (EMS) und eröffnet den Testtag. Zu jeder Aufgabe erhältst du ein komplexes Muster sowie fünf Ausschnitte (A bis E). Die Muster stehen im oberen Bereich der Seite, die zugehörigen Ausschnitte weiter unten auf derselben Seite. Nur einer der fünf Ausschnitte lässt sich an einer beliebigen Stelle deckungsgleich und vollständig auf das Muster legen. Bei den übrigen vier wurde ein Detail hinzugefügt, weggelassen oder verändert. Die Ausschnitte sind weder vergrössert oder verkleinert noch gedreht oder gespiegelt. Die Abweichungen sind jeweils eindeutig, kleine Pünktchen oder Druckunreinheiten gelten nicht als Fehler.
 
 - **Stellung im Testtag:** 1. Untertest, danach folgt Medizinisch-naturwissenschaftliches Grundverständnis
 - **Umfang:** 18 Aufgaben, 18 Punkte
@@ -20,7 +20,7 @@ Geprüft wird die Fähigkeit, Bilder und Strukturen genau zu vergleichen und kle
 
 ## Wann und wie oft üben?
 
-Muster zuordnen lässt sich gut und vergleichsweise schnell trainieren. Ein Start etwa 1.5 bis 2 Monate vor dem EMS reicht in der Regel aus. Wir empfehlen 3 bis 4 Serien pro Woche. Übe zu Beginn ohne Zeitdruck, bis du ein sicheres Gefühl für die Aufgaben und eine eigene Strategie entwickelt hast. Erst danach solltest du mit der echten Zeitvorgabe arbeiten.
+Muster zuordnen lässt sich gut und vergleichsweise schnell trainieren. Ein Start etwa eineinhalb bis zwei Monate vor dem EMS reicht in der Regel aus. Wir empfehlen drei bis vier Serien pro Woche. Übe zu Beginn ohne Zeitdruck, bis du ein sicheres Gefühl für die Aufgaben und eine eigene Strategie entwickelt hast. Erst danach solltest du mit der echten Zeitvorgabe arbeiten.
 
 Da Muster zuordnen am Testtag ganz am Anfang steht, lohnt es sich, auch Übungseinheiten damit zu beginnen. Unter realistischen Bedingungen mit Uhr und Anweisungen übst du im [Prüfungsmodus](/ems/pruefungsmodus).
 
@@ -48,10 +48,10 @@ Da Muster zuordnen am Testtag ganz am Anfang steht, lohnt es sich, auch Übungse
 
 ## Aus Erfahrungsberichten
 
-*„Vor Übungssessions habe ich jeweils ein paar Mustervergleiche gelöst, um mein Hirn auf die erste (und schwierigste) Aufgabe im echten NC vorzubereiten."*
+*«Vor Übungssessions habe ich jeweils ein paar Mustervergleiche gelöst, um mein Hirn auf die erste (und schwierigste) Aufgabe im echten EMS vorzubereiten.»*
 
-*„Die erste Aufgabe Mustervergleichen habe ich komplett verhauen, kam nicht mal zur Hälfte […] lasst euch davon nicht verunsichern, meist hängt nicht alles an einer einzelnen Aufgabe, und aufgeben dürft ihr innerlich nie vor der letzten Aufgabe."* Die Person bestand den EMS mit einem Testwert-Prozentrang von 97 und erhielt ihren Studienplatz an ihrer Erstwahl.
+*«Die erste Aufgabe Mustervergleichen habe ich komplett verhauen, kam nicht mal zur Hälfte […] lass dich davon nicht verunsichern, meist hängt nicht alles an einer einzelnen Aufgabe, und aufgeben darfst du innerlich nie vor der letzten Aufgabe.»* Die Person bestand den EMS mit einem Testwert-Prozentrang von 97 und erhielt ihren Studienplatz an ihrer Erstwahl.
 
-*„Muster mit Kreuzblick lohnt sich wirklich enorm, egal wie schwierig die Muster sind."* Eine andere Person hat den Kreuzblick hingegen nach zwei Stunden wieder aufgegeben. Welche Methode für dich funktioniert, zeigt sich nur beim Üben.
+*«Muster mit Kreuzblick lohnt sich wirklich enorm, egal wie schwierig die Muster sind.»* Eine andere Person hat den Kreuzblick hingegen nach zwei Stunden wieder aufgegeben. Welche Methode für dich funktioniert, zeigt sich nur beim Üben.
 
 Weitere Berichte findest du bei den [Erfahrungsberichten](/ems/erfahrungsberichte).

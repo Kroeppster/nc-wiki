@@ -20,7 +20,7 @@ Viele biologische Zusammenhänge im Körper folgen physikalischen Gesetzen (Str�
 
 ## Wann und wie oft üben?
 
-Da es hier vor allem um Übung geht, lohnt sich ein früher Start – idealerweise 2–3 Monate vorher, mit mindestens 2–3 Einheiten à 1 Stunde pro Woche. Zu Beginn lohnt sich ein Block, in dem du dich mehrere Tage am Stück nur mit diesem Untertest beschäftigst, um dich mit den wiederkehrenden Aufgabentypen vertraut zu machen. Danach kannst du gezielter an den Aufgabentypen arbeiten, die dir weniger gut liegen.
+Da es hier vor allem um Übung geht, lohnt sich ein früher Start – idealerweise zwei bis drei Monate vorher, mit mindestens zwei bis drei Einheiten à 1 Stunde pro Woche. Zu Beginn lohnt sich ein Block, in dem du dich mehrere Tage am Stück nur mit diesem Untertest beschäftigst, um dich mit den wiederkehrenden Aufgabentypen vertraut zu machen. Danach kannst du gezielter an den Aufgabentypen arbeiten, die dir weniger gut liegen.
 
 ## Vorgehen beim Lösen
 
@@ -31,7 +31,7 @@ Da es hier vor allem um Übung geht, lohnt sich ein früher Start – idealerwei
 
 ## Weitere Tipps
 
-- **Kopfrechnen/schriftliches Rechnen üben:** Da am Test kein Taschenrechner erlaubt ist, solltest du auch beim Üben darauf verzichten. Der Schwierigkeitsgrad bleibt bei „Basic-Mathe" – nie sind Integrale o. Ä. gefragt, aber Grundtechniken wie schriftliches Dividieren solltest du parat haben.
+- **Kopfrechnen/schriftliches Rechnen üben:** Da am Test kein Taschenrechner erlaubt ist, solltest du auch beim Üben darauf verzichten. Der Schwierigkeitsgrad bleibt bei «Basic-Mathe» – nie sind Integrale o. Ä. gefragt, aber Grundtechniken wie schriftliches Dividieren solltest du parat haben.
 - **Prozente-Trick:** Ein Prozentsatz eines Werts ist dasselbe wie der Wert als Prozentsatz des ursprünglichen Prozentsatzes – 7 % von 50 ist also gleich 50 % von 7, also 3.5. Das funktioniert immer und spart Zeit.
 - **Brüche kennen:** Wiederkehrende Dezimalzahlen wie 0.166 als Bruch (⅙) zu erkennen, macht manche Rechnung deutlich einfacher.
 - **Kommastellen beim Multiplizieren/Dividieren verschieben:** Beim Multiplizieren zählst du die Nachkommastellen beider Zahlen zusammen, rechnest ohne Komma und setzt es am Schluss wieder ein. Beim Dividieren machst du Divisor und Dividend gleichermassen kommafrei, bevor du rechnest.
@@ -45,8 +45,8 @@ Da es hier vor allem um Übung geht, lohnt sich ein früher Start – idealerwei
 
 ## Aus Erfahrungsberichten
 
-*„Bevor ich angefangen habe, Übungsaufgaben zu lösen, habe ich mir zuerst einen Überblick verschafft und geschaut, welche Aufgabentypen mir am schwersten fallen. Dort habe ich angefangen und versucht, eine Bearbeitungstechnik auszuarbeiten, bevor ich einen Trainingsplan erstellt habe. Während des NC würde ich empfehlen, Rechenschritte und Zwischenergebnisse aufzuschreiben, damit bei einem so langen Test kein Chaos entsteht – und sich nicht von der Zeit stressen zu lassen."*
+*«Bevor ich angefangen habe, Übungsaufgaben zu lösen, habe ich mir zuerst einen Überblick verschafft und geschaut, welche Aufgabentypen mir am schwersten fallen. Dort habe ich angefangen und versucht, eine Bearbeitungstechnik auszuarbeiten, bevor ich einen Trainingsplan erstellt habe. Während des EMS würde ich empfehlen, Rechenschritte und Zwischenergebnisse aufzuschreiben, damit bei einem so langen Test kein Chaos entsteht – und sich nicht von der Zeit stressen zu lassen.»*
 
-*„Bei Quantitativen und formalen Problemen immer ohne Taschenrechner üben und alles so stark wie möglich vereinfachen."*
+*«Bei Quantitativen und formalen Problemen immer ohne Taschenrechner üben und alles so stark wie möglich vereinfachen.»*
 
 Weitere Berichte findest du bei den [Erfahrungsberichten](/ems/erfahrungsberichte).

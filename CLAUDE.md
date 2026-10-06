@@ -33,6 +33,7 @@ sonst fehl.
 | `layouts/` | Templates: `_default/baseof.html` (Grundgerüst), `partials/` (header, footer, head, Formulare, Grids), `_default/list.html` + `single.html` (generisch für alle Bereiche), `index.html` (Startseite). |
 | `assets/css/style.css`, `static/css/style.css` | Design, unverändert aus der ursprünglichen HTML-Vorlage übernommen. |
 | `archetypes/`, `docs/vorlage-*.md` | Copy-Paste-Vorlagen für neue Seiten (News, Erfahrungsbericht, Jahresbericht). |
+| `docs/STYLEGUIDE.md` | Schreibregeln für alle Texte (Anrede, Ton, Titel, Begriffe, Schreibweisen). |
 | `docs/WARTUNG.md`, `docs/WARTUNG-DETAILLIERT.md` (+ `.fr.md`, `.it.md`) | Kurzanleitung (nur Alltag: Mappe, Web-Editor, News, PDF, Bild, Löschen) bzw. ausführliche Anleitung (alles andere) — dreisprachig; bei Änderungen an Navigation, Design, Formularen etc. alle Sprachfassungen mitpflegen. |
 | `.github/workflows/hugo.yml` | Build + interner Link-Check laufen bei jedem PR gegen `main` und bei Push; **Deploy läuft nur bei Push auf `main`**, nie bei PRs. |
 | `.github/workflows/textmappen.yml` | Legt nach jedem Push auf `main` frische Textmappen an das GitHub-Release `textmappen` (bewusst nicht auf die Website). |
@@ -43,6 +44,8 @@ sonst fehl.
 
 - Referenz-Design für neue Seiten/Komponenten: **ncwiki-new.ch** (Navigation, Team-Seite,
   Übungsaufgaben-Layout, Flip-Clock-Countdown wurden explizit danach nachgebaut).
+- Texte schreiben wir nach `docs/STYLEGUIDE.md` (du-Anrede, Begriffe wie «Uniguide», «Häufige Fragen»,
+  «Übungsserien», EMS statt NC, Genderstern, «Guillemets», Datum «9. Juli 2027»).
 - Neue sichtbare Texte immer dreisprachig anlegen (`content/de|fr|it/...` bzw.
   `i18n/de|fr|it.yaml`) — nie nur Deutsch.
 - Harte Links vermeiden, stattdessen Hugo-Funktionen: `relLangURL`, `.Site.Menus`,

@@ -1,11 +1,10 @@
 ---
-title: "Q&A"
-description: "Alle wichtigen Antworten zum Eignungstest auf einen Blick. Erfahre alles, was du über die Anmeldung, den Testablauf und die Wiederholung wissen musst."
+title: "Häufige Fragen"
+description: "Antworten auf häufige Fragen zum Eignungstest Medizinstudium: Anmeldung, Testablauf, Wiederholung und unser Angebot."
 menu:
   main:
     parent: ems
     weight: 5
-    name: "Häufige Fragen"
 ---
 
-Antworten auf häufig gestellte Fragen rund um den EMS, die Anmeldung und unser Angebot.
+Antworten auf häufige Fragen zum Eignungstest Medizinstudium (EMS), zur Anmeldung und zu unserem Angebot.

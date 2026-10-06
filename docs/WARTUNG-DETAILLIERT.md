@@ -194,7 +194,7 @@ steht in `data/uniguide-spalten.yaml` – und lässt sich direkt im Blatt änder
   der Uni-Seite und im Vergleich, *aus* = nirgends (bleibt nur in der Mappe).
 - **Neue Spalte:** rechts sind drei graue, leere Spalten. Namen in Zeile 4 eintragen, Werte
   darunter – daraus wird eine neue Angabe (Text je Sprache, auf der Uni-Seite unter
-  „Studium & Standort“). Werte ohne Spaltennamen werden nicht übernommen.
+  „Studium und Standort“). Werte ohne Spaltennamen werden nicht übernommen.
 - **Grüne Spaltenköpfe** sind Texte je Sprache und gelten nur für die Sprache der Mappe.
   Fehlt eine Übersetzung, zeigt die Website den deutschen Text. **Dunkle Spaltenköpfe**
   gelten für alle Sprachen.
@@ -210,9 +210,9 @@ steht in `data/uniguide-spalten.yaml` – und lässt sich direkt im Blatt änder
 
 Code: `scripts/texte_uniguide.py`.
 
-### Q&A-Blatt
+### Blatt «Häufige Fragen»
 
-„Q&A – Ansicht“ zeigt alle Fragen aus `data/faq.yaml`: je Frage eine Zeile mit Kategorie,
+„Häufige Fragen – Ansicht“ zeigt alle Fragen aus `data/faq.yaml`: je Frage eine Zeile mit Kategorie,
 Frage, Antwort, Link-Ziel und Link-Text.
 
 - **Neue Frage:** unten stehen fünf leere Zeilen. Frage und Antwort eintragen, Kategorie aus
@@ -556,7 +556,7 @@ Logos bekommen automatisch einen hellen Hintergrund-Chip (`.sponsor-logo`).
 
 ### FAQ (`data/faq.yaml`)
 
-Am einfachsten über das Blatt „Q&A – Ansicht“ der Textmappe ([3](#3-textmappen-excel-im-detail)). In der Datei:
+Am einfachsten über das Blatt „Häufige Fragen – Ansicht“ der Textmappe ([3](#3-textmappen-excel-im-detail)). In der Datei:
 
 ```yaml
 - id: "eindeutige-kurzbezeichnung"
