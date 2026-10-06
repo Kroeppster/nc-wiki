@@ -58,8 +58,8 @@ Risparmi tempo prezioso all'EMS se conosci già le consegne – per leggerle non
 - Impegno medio: imparare figure e fatti, abbinamento di schemi, oggetti nello spazio
 - Impegno basso: lavoro concentrato e accurato
 
-| Sottotest | Inizio [mesi prima del test] | Volte a settimana | Serie per volta |
-| --- | --- | --- | --- |
+| Sottotest | Inizio (mesi prima del test) | Volte a settimana | Serie per seduta |
+| :--- | :---: | :---: | :---: |
 | Abbinamento di schemi | 1.5–2 | 3–4 | 1 |
 | Comprensione medico-scientifica | 1–2 | 2–3 | 1 |
 | Oggetti nello spazio | 1–2 | 3–4 | 1 |

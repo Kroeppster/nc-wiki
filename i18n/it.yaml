@@ -348,3 +348,11 @@ sprache_Italiano: "italiano"
 
 # Schlagwort-Seiten (Titel der Übersicht, Zeile über dem Titel, Zurück-Link)
 schlagwoerter: "Parole chiave"
+downloads_serie: "Serie"
+downloads_aufgaben: "Esercizi"
+downloads_aufgaben_loesung: "Esercizi con soluzione"
+downloads_einpraegephase: "Fase di memorizzazione"
+downloads_reproduktionsphase: "Fase di riproduzione"
+downloads_figuren: "Figure"
+downloads_fakten: "Fatti"
+list_empty: "Qui non ci sono ancora contenuti. Appena viene pubblicato qualcosa, comparirà in questo punto."

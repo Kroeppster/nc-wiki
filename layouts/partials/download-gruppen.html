@@ -1,0 +1,129 @@
+{{- /*
+  ============================================================================
+  DOWNLOADS NACH JAHR GRUPPIERT (Übungsserien und Testsimulationen)
+  ============================================================================
+  Wird von download-list.html aufgerufen, wenn der Ordner unter
+  assets/downloads/uebungsaufgaben/ oder assets/downloads/testsimulationen
+  liegt. Statt einer langen Liste gibt es je Jahr einen aufklappbaren Block
+  (das neueste Jahr ist offen). Darin steht jede Serie mit einheitlicher
+  Beschriftung und gleich aufgebauten Knöpfen:
+
+    Serie 2     [Aufgaben] [Lösung]            Lösung als eigene Datei
+    Serie 3     [Aufgaben mit Lösung]          Lösung steckt im selben PDF
+    Figuren – Serie 1   [Einprägephase] [Reproduktionsphase] [Lösung]
+
+  Wie die Dateien erkannt werden (Dateiname ohne ".pdf"):
+    <Jahr>_<thema>_S<Nr>                    die Serie selbst
+    <Jahr>_<thema>_S<Nr>_Loesung            eigene Lösungsdatei
+    <Jahr>_<thema>_S<Nr>_Einpraegephase     Einprägephase (Figuren/Fakten)
+  Steckt die Lösung im selben PDF, steht der Dateiname in data/downloads.yaml
+  unter "mit_loesung". Alle anderen Dateien (Testhefte, Auswertungen, ...)
+  erscheinen als einzelner Knopf; ihr Name steht in data/downloads.yaml unter
+  "overrides" (ohne Jahreszahl - die steht in der Überschrift des Blocks).
+
+  Parameter: files (Liste der PDF-Ressourcen), page (aktuelle Seite).
+  ============================================================================
+*/ -}}
+{{- $page := .page }}
+{{- $lang := $page.Site.Language.Lang }}
+{{- $overrides := hugo.Data.downloads.overrides }}
+{{- $mitLoesung := hugo.Data.downloads.mit_loesung | default slice }}
+{{- $sc := newScratch }}
+
+{{- /* 1. Jede Datei einer Zeile zuordnen */ -}}
+{{- range .files }}
+  {{- $res := . }}
+  {{- $stem := strings.TrimSuffix ".pdf" (path.Base .Name) }}
+  {{- $m := findRESubmatch `^(\d{4})_([a-z-]+)_S(\d+)(_Einpraegephase|_Loesung)?$` $stem 1 }}
+  {{- if $m }}
+    {{- $g := index $m 0 }}
+    {{- $year := index $g 1 }}{{ $thema := index $g 2 }}{{ $nr := index $g 3 }}{{ $var := index $g 4 }}
+    {{- $prio := "3" }}
+    {{- if eq $thema "figuren-einpraegen" }}{{ $prio = "1" }}{{ else if eq $thema "fakten-einpraegen" }}{{ $prio = "2" }}{{ end }}
+    {{- $key := printf "%s|%s|%s|%s" $year $prio $thema $nr }}
+    {{- $feld := "main" }}
+    {{- if eq $var "_Loesung" }}{{ $feld = "loesung" }}{{ else if eq $var "_Einpraegephase" }}{{ $feld = "einp" }}{{ end }}
+    {{- $sc.Add "keys" (slice $key) }}
+    {{- $sc.SetInMap "res" (printf "%s#%s" $key $feld) $res }}
+    {{- if eq $feld "main" }}{{ $sc.SetInMap "stem" $key $stem }}{{ end }}
+  {{- else }}
+    {{- $year := "0000" }}
+    {{- with findRE `[0-9]{4}` $stem 1 }}{{ $year = index . 0 }}{{ end }}
+    {{- $prio := "9c" }}
+    {{- if or (strings.HasSuffix $stem "_Testsimulation") (strings.HasPrefix $stem "TESTHEFT") }}{{ $prio = "9a" }}{{ else if strings.HasSuffix $stem "_Loesung" }}{{ $prio = "9b" }}{{ end }}
+    {{- $key := printf "%s|%s|%s|" $year $prio $stem }}
+    {{- $sc.Add "keys" (slice $key) }}
+    {{- $sc.SetInMap "res" (printf "%s#main" $key) $res }}
+    {{- $sc.SetInMap "stem" $key $stem }}
+  {{- end }}
+{{- end }}
+
+{{- $keys := $sc.Get "keys" | uniq | sort }}
+{{- $res := $sc.Get "res" }}
+{{- $stems := $sc.Get "stem" }}
+{{- $jahre := slice }}
+{{- range $keys }}{{ $jahre = $jahre | append (substr . 0 4) }}{{ end }}
+{{- $jahre = sort ($jahre | uniq) "value" "desc" }}
+{{- $themaNamen := dict "figuren-einpraegen" (i18n "downloads_figuren") "fakten-einpraegen" (i18n "downloads_fakten") }}
+
+<div class="download-jahre">
+  {{- range $i, $jahr := $jahre }}
+  <details class="download-jahr"{{ if eq $i 0 }} open{{ end }}>
+    <summary>{{ if eq $jahr "0000" }}–{{ else }}{{ $jahr }}{{ end }}</summary>
+    <ul class="download-list">
+      {{- range $keys }}
+      {{- $key := . }}
+      {{- if hasPrefix $key (printf "%s|" $jahr) }}
+      {{- $teile := split $key "|" }}
+      {{- $thema := index $teile 2 }}
+      {{- $nr := index $teile 3 }}
+      {{- $main := index $res (printf "%s#main" $key) }}
+      {{- $einp := index $res (printf "%s#einp" $key) }}
+      {{- $loes := index $res (printf "%s#loesung" $key) }}
+      {{- $stem := index $stems $key }}
+      {{- if $main }}
+
+      {{- /* Dateigrösse in KB bzw. MB */ -}}
+      {{- $size := 0 }}
+      {{- with os.Stat (printf "assets/%s" $main.Name) }}{{ $size = .Size }}{{ end }}
+      {{- $sizeStr := printf "%d KB" (div $size 1024) }}
+      {{- if ge $size 1048576 }}{{ $t := div (mul $size 10) 1048576 }}{{ $sizeStr = printf "%d.%d MB" (div $t 10) (mod $t 10) }}{{ end }}
+
+      {{- if $nr }}
+      {{- /* Eine Serie: Titel + gleich aufgebaute Knöpfe */ -}}
+      {{- $titel := printf "%s %s" (i18n "downloads_serie") (strings.TrimLeft "0" $nr) }}
+      {{- with index $themaNamen $thema }}{{ $titel = printf "%s – %s" . $titel }}{{ end }}
+      <li class="download-item download-serie">
+        <span class="download-titel">{{ $titel }}</span>
+        <div class="download-buttons">
+          {{- if $einp }}
+          <a class="download-link" href="{{ $einp.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_einpraegephase" }}</span></a>
+          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_reproduktionsphase" }}</span></a>
+          {{- else if in $mitLoesung $stem }}
+          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_aufgaben_loesung" }}</span><span class="download-size">{{ $sizeStr }}</span></a>
+          {{- else }}
+          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_aufgaben" }}</span><span class="download-size">{{ $sizeStr }}</span></a>
+          {{- end }}
+          {{- with $loes }}
+          <a class="download-link download-link-solution" href="{{ .RelPermalink }}" download><span class="download-label">{{ i18n "downloads_solution_label" }}</span></a>
+          {{- end }}
+        </div>
+      </li>
+      {{- else }}
+      {{- /* Einzelne Datei (Testheft, Auswertung, ...): Name aus data/downloads.yaml */ -}}
+      {{- $name := "" }}
+      {{- with index $overrides $stem }}{{ $name = or (index . $lang) (index . "de") }}{{ end }}
+      {{- if not $name }}{{ $name = title (replaceRE "[_-]" " " $stem) }}{{ end }}
+      <li class="download-item">
+        <div class="download-buttons">
+          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ $name }}</span><span class="download-size">{{ $sizeStr }}</span></a>
+        </div>
+      </li>
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- end }}
+    </ul>
+  </details>
+  {{- end }}
+</div>

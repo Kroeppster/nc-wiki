@@ -58,8 +58,8 @@ Du sparst am EMS wertvolle Zeit, wenn du die Aufgabenstellungen schon kennst. Da
 - Mittlerer Aufwand: Figuren und Fakten lernen, Muster zuordnen, Objekte im Raum
 - Geringer Aufwand: Konzentriertes und sorgfältiges Arbeiten
 
-| Untertest | Beginn [Monate vor Test] | Male pro Woche | Serien pro Mal |
-| --- | --- | --- | --- |
+| Untertest | Beginn (Monate vor dem Test) | Mal pro Woche | Serien pro Einheit |
+| :--- | :---: | :---: | :---: |
 | Muster zuordnen | 1.5–2 | 3–4 | 1 |
 | Medizinisch-naturwissenschaftliches Grundverständnis | 1–2 | 2–3 | 1 |
 | Objekte im Raum | 1–2 | 3–4 | 1 |

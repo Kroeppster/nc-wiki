@@ -613,8 +613,12 @@ Ein zusätzlicher Hinweis bei den Downloads einer Übungsseite:
 
 ### Download-Namen (`data/downloads.yaml`)
 
-Überschreibt den automatisch aus dem Dateinamen gebauten Namen eines PDFs, mit
-Übersetzungen. Beispiele stehen in der Datei.
+Übungsserien und Testsimulationen erscheinen nach Jahr gruppiert (das neueste Jahr ist
+aufgeklappt). Bei Serien entsteht die Beschriftung („Serie 2“, Knöpfe „Aufgaben“ und
+„Lösung“) automatisch aus dem Dateinamen. Steckt die Lösung im selben PDF, steht der
+Dateiname unter `mit_loesung:` – der Knopf heisst dann „Aufgaben mit Lösung“. Alle anderen
+Dateien (Testhefte, Auswertungen, Kursskripte) bekommen unter `overrides:` einen Namen mit
+Übersetzungen, bei Testsimulationen ohne Jahreszahl. Das Format steht im Kopf der Datei.
 
 ---
 

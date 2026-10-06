@@ -354,3 +354,11 @@ sprache_Italiano: "Italienisch"
 
 # Schlagwort-Seiten (Titel der Übersicht, Zeile über dem Titel, Zurück-Link)
 schlagwoerter: "Schlagwörter"
+downloads_serie: "Serie"
+downloads_aufgaben: "Aufgaben"
+downloads_aufgaben_loesung: "Aufgaben mit Lösung"
+downloads_einpraegephase: "Einprägephase"
+downloads_reproduktionsphase: "Reproduktionsphase"
+downloads_figuren: "Figuren"
+downloads_fakten: "Fakten"
+list_empty: "Hier gibt es noch keine Beiträge. Sobald etwas veröffentlicht ist, erscheint es an dieser Stelle."

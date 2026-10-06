@@ -349,3 +349,11 @@ sprache_Italiano: "italien"
 
 # Schlagwort-Seiten (Titel der Übersicht, Zeile über dem Titel, Zurück-Link)
 schlagwoerter: "Mots-clés"
+downloads_serie: "Série"
+downloads_aufgaben: "Exercices"
+downloads_aufgaben_loesung: "Exercices avec corrigé"
+downloads_einpraegephase: "Phase de mémorisation"
+downloads_reproduktionsphase: "Phase de reproduction"
+downloads_figuren: "Figures"
+downloads_fakten: "Faits"
+list_empty: "Il n'y a pas encore de contenu ici. Dès que quelque chose est publié, cela apparaîtra à cet endroit."

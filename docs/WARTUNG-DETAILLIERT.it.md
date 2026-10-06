@@ -618,8 +618,12 @@ Un'indicazione in più accanto ai download di una pagina di esercizi:
 
 ### Nomi dei download (`data/downloads.yaml`)
 
-Sostituisce il nome di un PDF costruito automaticamente dal nome del file, con traduzioni.
-Esempi nel file.
+Le serie di esercizi e le simulazioni del test compaiono raggruppate per anno (il più
+recente è aperto). Per le serie la dicitura («Serie 2», pulsanti «Esercizi» e «Soluzione») nasce
+automaticamente dal nome del file. Se la soluzione è nello stesso PDF, il nome del file va
+sotto `mit_loesung:` – il pulsante si chiama allora «Esercizi con soluzione». Tutti gli altri
+file (fascicoli del test, valutazioni, dispense) ricevono sotto `overrides:` un nome con
+traduzioni, per le simulazioni del test senza l'anno. Il formato è spiegato in testa al file.
 
 ---
 

@@ -353,6 +353,10 @@
   var leute = [], fragen = [];
   function zeige(welche){
     ['fg-start','fg-lernen','fg-pause','fg-abfrage','fg-ergebnis'].forEach(function(id){ el(id).hidden = (id !== welche); });
+    // Wird der Abschnitt kuerzer, bleibt die Seite sonst weit unten stehen und
+    // der neue Abschnitt liegt ausserhalb des Bildschirms: dann nach oben holen.
+    var w = el('fg-wurzel');
+    if (w.getBoundingClientRect().top < 0) w.scrollIntoView({ block: 'start' });
   }
   el('fg-los').addEventListener('click', function(){
     leute = baueSet();

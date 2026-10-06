@@ -720,6 +720,9 @@
   function zeige(welche){
     ['fig-start','fig-lernen','fig-pause','fig-abfrage','fig-ergebnis'].forEach(function(id){
       el(id).hidden = (id!==welche); });
+    // Siehe fakten-generator.html: nach oben holen, wenn die Seite zu weit unten steht.
+    var w = el('fig-wurzel');
+    if (w.getBoundingClientRect().top < 0) w.scrollIntoView({ block: 'start' });
   }
   el('fig-los').addEventListener('click', function(){
     baueSet();

@@ -628,8 +628,13 @@ Une remarque supplémentaire près des téléchargements d'une page d'exercices 
 
 ### Noms de téléchargement (`data/downloads.yaml`)
 
-Remplace le nom d'un PDF construit automatiquement à partir du nom de fichier, avec
-traductions. Des exemples figurent dans le fichier.
+Les séries d'exercices et les simulations de test apparaissent regroupées par année (la plus
+récente est dépliée). Pour les séries, l'intitulé (« Série 2 », boutons « Exercices » et
+« Corrigé ») est créé automatiquement à partir du nom de fichier. Si le corrigé se trouve
+dans le même PDF, le nom du fichier va sous `mit_loesung:` – le bouton s'appelle alors
+« Exercices avec corrigé ». Tous les autres fichiers (cahiers de test, évaluations, scripts
+de cours) reçoivent sous `overrides:` un nom avec traductions, sans l'année pour les
+simulations de test. Le format est expliqué en tête du fichier.
 
 ---
 

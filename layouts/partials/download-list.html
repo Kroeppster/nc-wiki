@@ -21,7 +21,9 @@
   Gegenstück (z.B. weil Aufgabe und Lösung schon in einer einzigen PDF-Datei
   zusammen stecken) erscheint weiterhin ganz normal als einzelner Eintrag -
   in dem Fall am besten über data/downloads.yaml einen Anzeigenamen setzen,
-  der klarmacht, dass die Lösung schon enthalten ist (z.B. "... (inkl. Lösung)").
+  der klarmacht, dass die Lösung schon enthalten ist.
+  (Gilt für den einfachen Fall. Übungsserien und Testsimulationen laufen über
+  download-gruppen.html: nach Jahr gruppiert, Lösung steht in "mit_loesung".)
 
   Kein "Fehler melden"-Knopf mehr pro einzelnem Download: dafür gibt es
   stattdessen das eine allgemeine Fehlerformular auf der Übungsaufgaben-
@@ -44,6 +46,9 @@
 {{- if eq (len $files) 0 }}
   {{- /* Kein Fehler, wenn der Ordner leer ist - einfach ein freundlicher Hinweistext */}}
   <p class="download-empty">{{ i18n "downloads_empty" }}</p>
+{{- else if or (hasPrefix $folder "downloads/uebungsaufgaben/") (eq $folder "downloads/testsimulationen") }}
+  {{- /* Übungsserien und Testsimulationen: nach Jahr gruppiert, siehe download-gruppen.html */}}
+  {{ partial "download-gruppen.html" (dict "files" $files "page" $page) }}
 {{- else }}
   {{- /* Erster Durchgang: Dateien nach ihrem "Basisnamen" gruppieren (Endung
          "_Loesung" wird dafür abgeschnitten) - so landen Aufgabe und Lösung

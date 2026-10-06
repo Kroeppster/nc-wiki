@@ -58,8 +58,8 @@ Tu gagnes un temps précieux à l'EMS si tu connais déjà les consignes – auc
 - Effort moyen : apprendre figures et faits, association de motifs, objets dans l'espace
 - Effort faible : travail concentré et soigné
 
-| Sous-test | Début [mois avant le test] | Fois par semaine | Séries par séance |
-| --- | --- | --- | --- |
+| Sous-test | Début (mois avant le test) | Fois par semaine | Séries par séance |
+| :--- | :---: | :---: | :---: |
 | Association de motifs | 1.5–2 | 3–4 | 1 |
 | Compréhension médico-scientifique | 1–2 | 2–3 | 1 |
 | Objets dans l'espace | 1–2 | 3–4 | 1 |
