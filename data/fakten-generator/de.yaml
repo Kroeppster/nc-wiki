@@ -11,6 +11,12 @@
 # 2022 S02-S04) mit scripts/fakten-listen-auslesen.py. Es ist also eigenes
 # Material, keine fremde Quelle.
 #
+# BEARBEITEN: direkt hier oder bequemer in der eigenen Excel-Datei
+# ncwiki-wortliste-fakten-generator.xlsx (immer frisch unter Releases ->
+# Textmappen auf GitHub; Anleitung: redaktion/README.md). Die Excel ersetzt
+# nur die Wortlisten unten (namensgruppen bis dativ), dieser Kommentar, die
+# Altersgruppen und die Fragevorlagen bleiben.
+#
 # ------------------------------------------------------------------------------
 # WARUM DIE KATEGORIEN WICHTIG SIND - bitte vor dem Ändern lesen
 # ------------------------------------------------------------------------------

@@ -34,9 +34,13 @@ name: Textmappe einlesen
 
 on:
   push:
+    # Die Wortliste des Fakten-Generators (ncwiki-wortliste*.xlsx) ist eine
+    # andere Art Excel-Datei und läuft über wortliste-einlesen.yml.
     paths:
       - "redaktion/*.xlsx"
       - "redaktion/**/*.xlsx"
+      - "!redaktion/ncwiki-wortliste*.xlsx"
+      - "!redaktion/**/ncwiki-wortliste*.xlsx"
 
 permissions:
   contents: write
@@ -62,10 +66,12 @@ jobs:
         id: mappen
         run: |
           jq -r '.commits[] | (.added + .modified)[]' "$GITHUB_EVENT_PATH" \
-            | grep -E '^redaktion/.+\.xlsx$' | sort -u > "$RUNNER_TEMP/gemeldet.txt" || true
+            | grep -E '^redaktion/.+\.xlsx$' | grep -vE '(^|/)ncwiki-wortliste[^/]*\.xlsx$' \
+            | sort -u > "$RUNNER_TEMP/gemeldet.txt" || true
           # Beim Anlegen eines neuen Branchs kann die Liste leer sein - dann
           # alle Mappen im Ordner.
-          [ -s "$RUNNER_TEMP/gemeldet.txt" ] || git ls-files 'redaktion/*.xlsx' > "$RUNNER_TEMP/gemeldet.txt"
+          [ -s "$RUNNER_TEMP/gemeldet.txt" ] || git ls-files 'redaktion/*.xlsx' \
+            | grep -vE '(^|/)ncwiki-wortliste[^/]*\.xlsx$' > "$RUNNER_TEMP/gemeldet.txt" || true
           : > "$RUNNER_TEMP/mappen.txt"
           while IFS= read -r f; do
             [ -f "$f" ] && echo "$f" >> "$RUNNER_TEMP/mappen.txt"

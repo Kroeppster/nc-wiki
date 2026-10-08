@@ -7,6 +7,8 @@
 # immer gleich:
 #   https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-texte-de.xlsx
 #   (bzw. -fr, -it)
+# Dazu, als eigene Datei, die Wortliste des Fakten-Generators:
+#   https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-wortliste-fakten-generator.xlsx
 # Bewusst NICHT auf der Website. Niemand muss sich darum kümmern; von Hand
 # anstossen geht über Actions -> "Textmappen aktualisieren" -> Run workflow.
 #
@@ -53,15 +55,19 @@ jobs:
           pip install --quiet openpyxl pyyaml
           python3 scripts/texte-ausgeben.py --oeffentlich --ziel "$RUNNER_TEMP/mappen" \
             --uebernehmen redaktion/stand.json
+          # Die Wortliste des Fakten-Generators (scripts/wortliste.py): eine eigene
+          # Excel-Datei, getrennt von den Textmappen.
+          python3 scripts/wortliste.py ausgeben --ziel "$RUNNER_TEMP/mappen" \
+            --stand "Stand: $(date -u +'%d.%m.%Y'), Commit ${GITHUB_SHA::7}"
 
       - name: An das Release "Textmappen" hängen
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          NOTIZ="Immer die aktuellen Excel-Textmappen (eine je Sprache), automatisch neu nach jeder Änderung an der Website. Stand: $(date -u +'%d.%m.%Y %H:%M') UTC, Commit ${GITHUB_SHA::7}. Anleitung: redaktion/README.md"
+          NOTIZ="Immer die aktuellen Excel-Textmappen (eine je Sprache) und die Wortliste des Fakten-Generators, automatisch neu nach jeder Änderung an der Website. Stand: $(date -u +'%d.%m.%Y %H:%M') UTC, Commit ${GITHUB_SHA::7}. Anleitung: redaktion/README.md"
           if ! gh release view textmappen > /dev/null 2>&1; then
             gh release create textmappen --title "Textmappen" --notes "$NOTIZ" --latest=false
           else
             gh release edit textmappen --notes "$NOTIZ"
           fi
-          gh release upload textmappen "$RUNNER_TEMP"/mappen/ncwiki-texte-*.xlsx --clobber
+          gh release upload textmappen "$RUNNER_TEMP"/mappen/ncwiki-texte-*.xlsx "$RUNNER_TEMP"/mappen/ncwiki-wortliste-*.xlsx --clobber

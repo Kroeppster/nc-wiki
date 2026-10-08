@@ -704,6 +704,23 @@ echte Serie gibt jeder Altersgruppe drei Berufe aus **einem** Feld und drei Kran
 überschreibt die YAML aber nicht. Offen: Kategorien noch nicht menschlich freigegeben; ~40
 statt ~80 Einträge je Kategorie.
 
+**Pflege per Excel** (eigene Datei, nicht die Textmappen): `ncwiki-wortliste-fakten-generator.xlsx`,
+immer frisch unter *Releases → Textmappen* (https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-wortliste-fakten-generator.xlsx).
+Ein Blatt je Liste (Namensgruppen, Einzelne Namen, Berufe, Krankheiten, Merkmale, Dativ-Plural), dazu
+„Anleitung“ und „Übersicht“ (zählt per Formel mit, ob die Mindestmengen erreicht sind). Bearbeiten,
+speichern, in `redaktion/` hochladen (Dateiname beginnt mit `ncwiki-wortliste`): `wortliste-einlesen.yml`
+prüft die Datei mit `scripts/wortliste.py` und eröffnet einen Pull Request mit Bericht (neu / entfernt /
+Hinweise). **Bei einem Fehler** wird nichts übernommen und kein Pull Request eröffnet; der Lauf wird rot,
+seine Zusammenfassung nennt jeden Fehler mit Blatt und Zeile (zu wenige Wörter, Wort doppelt, Geschlecht
+nicht m/w, Zeichen `< > & { }`). Mindestmengen: 15 einzelne Namen; mindestens 5 Berufsfelder mit je
+mindestens 3 Berufen; mindestens 3 Krankheits-Arten und 15 Krankheiten; mindestens 15 klein geschriebene
+Merkmale. Die Excel ersetzt die **ganze** Liste (Schnappschuss); beruht sie auf einem älteren Stand der
+Liste, warnt der Bericht. Ersetzt werden nur die Wortlisten-Blöcke – Erklärkommentar, Altersgruppen und
+Fragevorlagen bleiben. Ein neues Berufsfeld oder eine neue Art entsteht, indem man einen neuen Namen
+einträgt (kurz, klein, ohne Leerzeichen; «Technik und Bau» wäre ein NEUES Feld `technik_und_bau`, darum
+die Auswahlliste benutzen). Lokal: `python3 scripts/wortliste.py ausgeben` bzw. `einlesen DATEI [--probe]`;
+nach Änderungen am Skript `python3 scripts/wortliste-pruefen.py`.
+
 ### Figuren-Generator
 
 Braucht keine Datendatei, Beschriftungen in `i18n` (Präfix `fig_`). Jede **Serie** würfelt
@@ -869,8 +886,9 @@ landen.
 | Workflow | Wann | Was |
 | --- | --- | --- |
 | `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, veröffentlichen (nur `main`) |
-| `textmappen.yml` | jede Änderung an `main` | frische Textmappen ans Release „Textmappen“ |
+| `textmappen.yml` | jede Änderung an `main` | frische Textmappen und Wortliste ans Release „Textmappen“ |
 | `texte-einlesen.yml` | Mappe in `redaktion/` hochgeladen | einlesen, probeweise bauen, Pull Request mit Bericht |
+| `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` in `redaktion/` hochgeladen | prüfen, einlesen, probeweise bauen, Pull Request mit Bericht; bei Fehlern kein Pull Request, Lauf rot |
 | `neue-saison.yml` | von Hand (*Run workflow*) | Saisonwechsel als Pull Request |
 | `erfahrungsbericht-intake.yml` | Formspree-Einsendung | neue Erfahrungsbericht-Datei als Pull Request |
 
@@ -893,6 +911,7 @@ npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # Bedienung
 node scripts/fakten-generator-pruefen.mjs                            # 150 Sets + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 Sets + PDF
 python3 scripts/texte-mappe-pruefen.py                               # Textmappen
+python3 scripts/wortliste-pruefen.py                                 # Wortliste (Excel)
 node scripts/editor-rundlauf.mjs                                     # Web-Editor
 ```
 

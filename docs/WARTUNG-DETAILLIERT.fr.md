@@ -724,6 +724,23 @@ domaine et trois maladies de **trois** sortes. Les questions naissent de modèle
 suspens : catégories pas encore validées par un humain ; ~40 au lieu de ~80 entrées par
 catégorie.
 
+**Gestion par Excel** (fichier propre, pas les classeurs de textes) : `ncwiki-wortliste-fakten-generator.xlsx`,
+toujours à jour sous *Releases → Textmappen* (https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-wortliste-fakten-generator.xlsx).
+Une feuille par liste (Namensgruppen, Einzelne Namen, Berufe, Krankheiten, Merkmale, Dativ-Plural), plus
+« Anleitung » et « Übersicht » (compte par formules si les quantités minimales sont atteintes). Modifier,
+enregistrer, téléverser dans `redaktion/` (le nom commence par `ncwiki-wortliste`) : `wortliste-einlesen.yml`
+vérifie le fichier avec `scripts/wortliste.py` et ouvre une pull request avec rapport (nouveau / supprimé /
+remarques). **En cas d'erreur**, rien n'est repris et aucune pull request n'est ouverte ; l'exécution devient
+rouge et son résumé nomme chaque erreur avec feuille et ligne (trop peu de mots, mot en double, sexe autre que
+m/w, caractères `< > & { }`). Quantités minimales : 15 noms isolés ; au moins 5 champs professionnels avec au
+moins 3 professions chacun ; au moins 3 types de maladies et 15 maladies ; au moins 15 caractéristiques en
+minuscules. L'Excel remplace la liste **entière** (instantané) ; si elle repose sur un état plus ancien, le
+rapport avertit. Seuls les blocs de mots sont remplacés – le commentaire explicatif, les groupes d'âge et les
+modèles de questions restent. Un nouveau champ ou type naît en saisissant un nouveau nom (court, minuscules,
+sans espace ; « Technik und Bau » donnerait un NOUVEAU champ `technik_und_bau`, donc utiliser la liste de
+choix). En local : `python3 scripts/wortliste.py ausgeben` ou `einlesen FICHIER [--probe]` ; après des
+modifications du script `python3 scripts/wortliste-pruefen.py`.
+
 ### Générateur de figures
 
 Pas de fichier de données, libellés dans `i18n` (préfixe `fig_`). Chaque **série** tire
@@ -895,6 +912,7 @@ l'en-tête.
 | `hugo.yml` | chaque modification de `main`, chaque pull request | construire, recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, publier (seulement `main`) |
 | `textmappen.yml` | chaque modification de `main` | classeurs récents dans la release « Textmappen » |
 | `texte-einlesen.yml` | classeur téléversé dans `redaktion/` | lire, construire à l'essai, pull request avec rapport |
+| `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` téléversé dans `redaktion/` | vérifier, lire, construire à l'essai, pull request avec rapport ; en cas d'erreur pas de pull request, exécution rouge |
 | `neue-saison.yml` | à la main (*Run workflow*) | changement de saison en pull request |
 | `erfahrungsbericht-intake.yml` | envoi Formspree | nouveau témoignage en pull request |
 
@@ -917,6 +935,7 @@ npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # utilisati
 node scripts/fakten-generator-pruefen.mjs                            # 150 sets + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 sets + PDF
 python3 scripts/texte-mappe-pruefen.py                               # classeurs
+python3 scripts/wortliste-pruefen.py                                 # liste de mots (Excel)
 node scripts/editor-rundlauf.mjs                                     # éditeur web
 ```
 

@@ -710,6 +710,22 @@ domande nascono da modelli di frase (`fragen`), più `namensgruppen`, `dativ`,
 sovrascrive lo YAML. In sospeso: categorie non ancora approvate da una persona; ~40 invece
 di ~80 voci per categoria.
 
+**Gestione con Excel** (file a sé, non le cartelle di testi): `ncwiki-wortliste-fakten-generator.xlsx`,
+sempre aggiornato sotto *Releases → Textmappen* (https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-wortliste-fakten-generator.xlsx).
+Un foglio per elenco (Namensgruppen, Einzelne Namen, Berufe, Krankheiten, Merkmale, Dativ-Plural), più
+«Anleitung» e «Übersicht» (conta con formule se le quantità minime sono raggiunte). Modificare, salvare,
+caricare in `redaktion/` (il nome inizia con `ncwiki-wortliste`): `wortliste-einlesen.yml` controlla il file con
+`scripts/wortliste.py` e apre una pull request con rapporto (nuovo / rimosso / avvisi). **In caso di errore**
+non viene accettato nulla e non si apre nessuna pull request; l'esecuzione diventa rossa e il suo riepilogo
+nomina ogni errore con foglio e riga (troppe poche parole, parola doppia, sesso diverso da m/w, caratteri
+`< > & { }`). Quantità minime: 15 nomi singoli; almeno 5 campi professionali con almeno 3 professioni
+ciascuno; almeno 3 tipi di malattia e 15 malattie; almeno 15 caratteristiche in minuscolo. L'Excel sostituisce
+l'elenco **intero** (istantanea); se si basa su uno stato più vecchio, il rapporto avvisa. Si sostituiscono solo
+i blocchi di parole – il commento esplicativo, i gruppi d'età e i modelli di domanda restano. Un nuovo campo o
+tipo nasce inserendo un nuovo nome (corto, minuscolo, senza spazi; «Technik und Bau» darebbe un NUOVO campo
+`technik_und_bau`, quindi usare l'elenco a tendina). In locale: `python3 scripts/wortliste.py ausgeben` oppure
+`einlesen FILE [--probe]`; dopo modifiche allo script `python3 scripts/wortliste-pruefen.py`.
+
 ### Generatore di figure
 
 Nessun file di dati, etichette in `i18n` (prefisso `fig_`). Ogni **serie** estrae prima il
@@ -878,6 +894,7 @@ modelli, prende spazio dal margine (`--rand-ausbruch`) e ha bisogno di
 | `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, pubblicare (solo `main`) |
 | `textmappen.yml` | ogni modifica a `main` | cartelle Excel recenti nella release «Textmappen» |
 | `texte-einlesen.yml` | cartella caricata in `redaktion/` | leggere, costruire di prova, pull request con rapporto |
+| `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` caricato in `redaktion/` | controllare, leggere, costruire di prova, pull request con rapporto; in caso di errore nessuna pull request, esecuzione rossa |
 | `neue-saison.yml` | a mano (*Run workflow*) | cambio di stagione come pull request |
 | `erfahrungsbericht-intake.yml` | invio Formspree | nuovo resoconto come pull request |
 
@@ -900,6 +917,7 @@ npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # uso, modu
 node scripts/fakten-generator-pruefen.mjs                            # 150 set + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 set + PDF
 python3 scripts/texte-mappe-pruefen.py                               # cartelle Excel
+python3 scripts/wortliste-pruefen.py                                 # elenco di parole (Excel)
 node scripts/editor-rundlauf.mjs                                     # editor web
 ```
 
