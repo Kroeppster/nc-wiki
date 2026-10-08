@@ -1,8 +1,8 @@
 # ==============================================================================
 # WORTLISTEN FÜR DEN FAKTEN-GENERATOR
 # ==============================================================================
-# Der Generator auf der Seite "Figuren & Fakten lernen" würfelt daraus immer
-# neue Einpräge-Sets. Übungsmaterial für diesen Untertest ist EINMALIG
+# Der Generator (aktuell nur auf der Alpha-Seite, content/de/alpha/) würfelt
+# daraus immer neue Einpräge-Sets. Übungsmaterial für diesen Untertest ist EINMALIG
 # verwendbar: Wer eine Serie einmal auswendig gelernt hat, kann sie nie wieder
 # zum Üben brauchen. Deshalb ein Generator statt weiterer PDFs.
 #
