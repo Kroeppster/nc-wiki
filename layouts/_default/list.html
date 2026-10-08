@@ -166,9 +166,12 @@
       {{/* Paginate = die Unterseiten in Päckchen aufteilen (z.B. 12 pro Seite,
            siehe pagerSize in hugo.toml), damit die Liste nicht endlos lang wird */}}
       {{ $paginator := .Paginate .Pages }}
-      {{- /* Noch keine Unterseiten (z. B. Jahresberichte): ehrlicher Hinweis statt
-             einer leeren Fläche */}}
-      {{ if eq (len .Pages) 0 }}<p class="download-empty">{{ i18n "list_empty" }}</p>{{ end }}
+      {{- /* Nur wenn die Seite im Seitenkopf "leer_hinweis: true" trägt (z. B.
+             Jahresberichte) und noch keine Unterseiten hat: ehrlicher Hinweis
+             statt einer leeren Fläche. Bewusst nicht für alle Übersichtsseiten -
+             Seiten wie Team, Testsimulationen oder Alpha haben ihren Inhalt im
+             Text und gar keine Unterseiten. */}}
+      {{ if and .Params.leer_hinweis (eq (len .Pages) 0) }}<p class="download-empty">{{ i18n "list_empty" }}</p>{{ end }}
       <ul class="card-grid">
         {{ range $paginator.Pages }}
         <li class="card">

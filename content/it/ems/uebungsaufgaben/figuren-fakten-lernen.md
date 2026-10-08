@@ -28,12 +28,6 @@ In entrambi i casi si tratta della tua memoria. Durante gli studi di medicina de
 
 Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare ogni giorno. Inizia presto, circa 3 mesi prima dell'EMS, con 3–4 sessioni a settimana. All'inizio concediti volutamente più tempo del previsto (per es. 10 invece di 6 minuti per i fatti), per provare diverse strategie, e riduci il tempo solo gradualmente, man mano che diventi più sicuro·a. Nell'ultimo mese esercitati nelle condizioni reali del NC: memorizzare le figure prima, comprensione del testo in mezzo, poi memorizzare i fatti. Interrompi l'esercizio mirato qualche giorno prima del NC, per avere la testa libera.
 
-### Generatore di fatti
-
-```baustein
-fakten-generator
-```
-
 ## Come procedere
 
 ### Figure
@@ -59,7 +53,7 @@ fakten-generator
 ## Tranelli tipici
 
 - **Figure molto simili:** quando le figure si somigliano molto, fai attenzione alle sottili differenze geometriche (per es. angoli retti) o concentrati, con contorni simili, soprattutto sulla forma e sulla posizione della superficie scura.
-- **Consumare troppo presto le serie di esercizi:** ripetere più volte la stessa serie falsa la percezione del tuo livello. Il generatore qui sopra ti fornisce nuovi set di fatti.
+- **Consumare troppo presto le serie di esercizi:** ripetere più volte la stessa serie falsa la percezione del tuo livello.
 - **Materiale di esercizio troppo facile:** in molto materiale in commercio le differenze tra le figure sono più evidenti che al vero EMS.
 
 ## Dai resoconti di esperienza

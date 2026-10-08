@@ -5,6 +5,7 @@ menu:
   main:
     parent: ueber-uns
     weight: 4
+leer_hinweis: true
 ---
 
 Tu trouveras ici tous les rapports annuels de NCWiki. Ils donnent un aperçu de nos offres, du développement de l'association et des personnes qui rendent NCWiki possible.

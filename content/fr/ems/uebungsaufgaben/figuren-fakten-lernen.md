@@ -28,12 +28,6 @@ Dans les deux cas, il s'agit de ta mémoire. Pendant les études de médecine, t
 
 Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile de faire tous les jours. Commence tôt, environ 3 mois avant l'EMS, avec 3 à 4 séances par semaine. Au début, accorde-toi volontairement plus de temps que prévu (par ex. 10 au lieu de 6 minutes pour les faits), afin d'essayer différentes stratégies, et ne réduis le temps que progressivement, à mesure que tu gagnes en assurance. Le dernier mois, entraîne-toi dans les conditions réelles du NC : mémoriser les figures avant, compréhension de texte entre les deux, puis mémoriser les faits. Arrête l'entraînement ciblé quelques jours avant le NC pour garder la tête libre.
 
-### Générateur de faits
-
-```baustein
-fakten-generator
-```
-
 ## Marche à suivre pour résoudre
 
 ### Figures
@@ -59,7 +53,7 @@ fakten-generator
 ## Pièges typiques
 
 - **Figures très semblables :** quand des figures se ressemblent fortement, fais attention aux fines différences géométriques (par ex. angles droits) ou concentre-toi, pour des contours semblables, surtout sur la forme et la position de la surface sombre.
-- **Épuiser trop tôt les séries d'exercices :** répéter plusieurs fois la même série fausse ton ressenti de ton propre niveau. Le générateur ci-dessus te fournit de nouveaux sets de faits.
+- **Épuiser trop tôt les séries d'exercices :** répéter plusieurs fois la même série fausse ton ressenti de ton propre niveau.
 - **Matériel d'entraînement trop facile :** dans beaucoup de matériel disponible dans le commerce, les différences entre les figures sont plus nettes qu'au vrai EMS.
 
 ## Extraits de rapports d'expérience

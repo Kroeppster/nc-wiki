@@ -5,6 +5,7 @@ menu:
   main:
     parent: ueber-uns
     weight: 4
+leer_hinweis: true
 ---
 
 Hier findest du alle Jahresberichte von NCWiki. Sie geben einen Einblick in unsere Angebote, die Entwicklung des Vereins und die Menschen, die NCWiki möglich machen.

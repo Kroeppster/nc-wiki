@@ -47,7 +47,7 @@ await ctx.addInitScript(() => { try { localStorage.setItem('alpha-notice-seen', 
 const p = await ctx.newPage(); const js = [];
 p.on('pageerror', e => { if (!/PagefindUI/.test(String(e.message))) js.push(String(e.message).slice(0, 110)); });
 await p.addInitScript(() => { window.__gedruckt = 0; window.print = function () { window.__gedruckt++; }; });
-await p.goto('http://127.0.0.1:8123/ems/uebungsaufgaben/figuren-fakten-lernen/', { waitUntil: 'networkidle' });
+await p.goto('http://127.0.0.1:8123/alpha/', { waitUntil: 'networkidle' });
 
 console.log('=== Ein Durchlauf ===');
 const W = await p.evaluate(() => JSON.parse(document.getElementById('fg-daten').textContent));

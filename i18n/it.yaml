@@ -263,7 +263,7 @@ pm_pause_ansage: "Pausa. {dauer}."
 pm_pause_vorbei: "La pausa è finita."
 pm_pause_label: "Pausa"
 
-# --- Fakten-Generator (Seite "Figuren & Fakten lernen") ---
+# --- Fakten-Generator (aktuell nur auf der Alpha-Seite) ---
 fg_keine_liste: "Per questa lingua non esistono ancora gli elenchi di parole – il generatore è per ora disponibile solo in tedesco."
 fg_intro: "Questo generatore crea ogni volta un nuovo gruppo di 15 persone. Il materiale di questo sottotest si usa una sola volta: ciò che hai già imparato a memoria non serve più per esercitarti."
 fg_zeit_einpraegen: "Memorizzazione"

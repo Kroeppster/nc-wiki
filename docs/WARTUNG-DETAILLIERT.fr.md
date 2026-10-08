@@ -86,6 +86,7 @@ http://localhost:1313/. `npm run build` construit comme sur GitHub.
 | `aliases` | anciennes adresses qui redirigent ici |
 | `downloads` | liste de PDF propre (rapports annuels) |
 | `download_ordner` | liste de PDF automatique à partir d'un dossier sous `assets/` |
+| `leer_hinweis: true` | la page de liste affiche une note tant qu'il n'y a pas encore de sous-pages (rapports annuels) |
 | `geschuetzt: true` | protection par mot de passe, voir [12](#12-espace-membres) |
 | `layout` | modèle particulier, p. ex. `spenden` |
 
@@ -697,6 +698,11 @@ cahier de six pages (consigne, page de mémorisation, questions, feuille de rép
 corrigé ; en-tête, numéro de page, logo CC-BY-NC). Durées et pause (le vrai intervalle le
 jour du test) viennent de `data/testablauf.yaml`.
 
+**État actuel :** les deux générateurs se trouvent pour l'instant seulement sur la
+[page Alpha](#page-alpha) (`content/de/alpha/_index.md`), pas sur la page publique
+« Figures & faits ». Pour les valider, remettre le bloc dans le texte de la page d'exercices
+(dans les trois langues, avec la mention du générateur dans « Pièges typiques »).
+
 ### Format du cahier
 
 Mesures tirées de l'**outil de formatage NCWiki** privé (`vorlage/ems.typ`). Cadre commun :
@@ -735,6 +741,7 @@ lettres au centre de gravité, logo mesuré comme figure).
 `content/de/alpha/` est l'établi des nouvelles fonctions : protégée par mot de passe, liée
 nulle part, **seulement en allemand**. Une section par fonction, qui dit ce qu'il faut
 évaluer. Une fois validée, le bloc passe sur la vraie page (alors en trois langues).
+Actuellement : générateur de figures et générateur de faits.
 
 ---
 

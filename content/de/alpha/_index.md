@@ -23,3 +23,16 @@ Zum Vergleich liegen die echten Serien unter Übungsaufgaben.
 ```baustein
 figuren-generator
 ```
+
+## Fakten-Generator
+
+Würfelt 15 Patient*innen und 18 Fragen dazu wie im Untertest «Fakten lernen».
+Zu beurteilen ist vor allem der **Realismus**: Klingen Namen, Berufe, Merkmale
+und Diagnosen so, wie sie im echten Testheft stehen? Sind die Fragen eindeutig
+zu beantworten, ohne dass zwei Antworten passen? Und: Reichen die Wortlisten,
+oder wiederholen sich die Sets zu schnell? Die Listen sind noch nicht
+freigegeben und haben erst etwa halb so viele Einträge wie geplant.
+
+```baustein
+fakten-generator
+```

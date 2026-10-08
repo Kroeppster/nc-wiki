@@ -83,6 +83,7 @@ die Seite läuft auf http://localhost:1313/. `npm run build` baut wie auf GitHub
 | `aliases` | alte Adressen, die hierher weiterleiten |
 | `downloads` | eigene PDF-Liste (Jahresberichte) |
 | `download_ordner` | automatische PDF-Liste aus einem Ordner unter `assets/` |
+| `leer_hinweis: true` | Übersichtsseite zeigt einen Hinweis, solange es noch keine Unterseiten gibt (Jahresberichte) |
 | `geschuetzt: true` | Passwortschutz, siehe [12](#12-mitgliederbereich) |
 | `layout` | besondere Vorlage, z. B. `spenden` |
 
@@ -679,6 +680,11 @@ sechsseitiges Testheft drucken (Anleitung, Einprägeseite, Fragen, Antwortbogen,
 Lösungsblatt; Kopfzeile, Seitenzahl, CC-BY-NC-Signet). Vorgabezeiten und die Pause (die
 echte Lücke am Testtag) kommen aus `data/testablauf.yaml`.
 
+**Stand:** Beide Generatoren stehen vorerst nur auf der [Alpha-Seite](#alpha-seite)
+(`content/de/alpha/_index.md`), nicht auf der öffentlichen Seite „Figuren & Fakten
+lernen“. Zum Freigeben den Baustein wieder in den Text der Übungsaufgaben-Seite setzen
+(in allen drei Sprachen, dazu den Verweis auf den Generator im Abschnitt „Typische Fallen“).
+
 ### Heftformat
 
 Masse aus dem privaten **NCWiki-Formatierungstool** (`vorlage/ems.typ`). Gemeinsamer Rahmen:
@@ -714,6 +720,7 @@ Buchstaben im Schwerpunkt, Logo als Figur mitgemessen).
 
 `content/de/alpha/` ist die Werkbank für neue Funktionen: passwortgeschützt, nirgends
 verlinkt, **nur Deutsch**. Pro Funktion ein Abschnitt, der sagt, was zu beurteilen ist.
+Aktuell dort: Figuren-Generator und Fakten-Generator.
 Ist sie freigegeben, wandert der Baustein auf die echte Seite (dann dreisprachig).
 
 ---

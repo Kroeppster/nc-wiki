@@ -28,12 +28,6 @@ Bei beiden geht es um deine Gedächtnisleistung. Im Medizinstudium musst du dir 
 
 Figuren und Fakten lernen sind beides Gedächtnisübungen, die nicht täglich sinnvoll sind. Starte frühzeitig, etwa drei Monate vor dem Eignungstest für das Medizinstudium (EMS), mit drei bis vier Einheiten pro Woche. Lass dir am Anfang bewusst mehr Zeit als vorgesehen (z. B. 10 statt 6 Minuten bei Fakten), um verschiedene Strategien auszuprobieren, und reduziere die Zeit erst allmählich, je sicherer du wirst. Im letzten Monat solltest du unter echten Testbedingungen üben: Figuren einprägen davor, Textverständnis dazwischen, dann Fakten einprägen. Stoppe das gezielte Üben einige Tage vor dem EMS, damit der Kopf frei bleibt.
 
-### Fakten-Generator
-
-```baustein
-fakten-generator
-```
-
 ## Vorgehen beim Lösen
 
 ### Figuren
@@ -59,7 +53,7 @@ fakten-generator
 ## Typische Fallen
 
 - **Sehr ähnliche Figuren:** Wenn sich Figuren stark ähneln, achte auf feine geometrische Unterschiede (z. B. rechte Winkel) oder konzentriere dich bei ähnlichen Aussenformen v. a. auf Form und Lage der dunklen Fläche.
-- **Übungsserien zu früh verbrauchen:** Mehrfaches Wiederholen derselben Serie verzerrt dein Gefühl für den eigenen Leistungsstand. Neue Fakten-Sets liefert dir der Generator oben.
+- **Übungsserien zu früh verbrauchen:** Mehrfaches Wiederholen derselben Serie verzerrt dein Gefühl für den eigenen Leistungsstand.
 - **Zu einfaches Übungsmaterial:** Bei viel kommerziell verfügbarem Material sind die Unterschiede zwischen den Figuren deutlicher als am echten EMS.
 
 ## Aus Erfahrungsberichten

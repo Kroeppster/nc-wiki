@@ -85,6 +85,7 @@ http://localhost:1313/. `npm run build` costruisce come su GitHub.
 | `aliases` | vecchi indirizzi che rimandano qui |
 | `downloads` | elenco di PDF proprio (rapporti annuali) |
 | `download_ordner` | elenco di PDF automatico da una cartella sotto `assets/` |
+| `leer_hinweis: true` | la pagina elenco mostra una nota finché non ci sono sottopagine (rapporti annuali) |
 | `geschuetzt: true` | protezione con password, vedi [12](#12-area-membri) |
 | `layout` | modello particolare, p. es. `spenden` |
 
@@ -684,6 +685,11 @@ di sei pagine (istruzioni, pagina da memorizzare, domande, foglio risposte, solu
 intestazione, numero di pagina, logo CC-BY-NC). Durate e pausa (il vero intervallo nel
 giorno del test) vengono da `data/testablauf.yaml`.
 
+**Stato attuale:** per ora i due generatori si trovano solo sulla
+[pagina Alpha](#pagina-alpha) (`content/de/alpha/_index.md`), non sulla pagina pubblica
+«Figure e fatti». Per approvarli, rimettere il blocco nel testo della pagina degli esercizi
+(nelle tre lingue, con il rimando al generatore in «Tranelli tipici»).
+
 ### Formato del fascicolo
 
 Misure prese dallo **strumento di formattazione NCWiki** privato (`vorlage/ems.typ`).
@@ -721,6 +727,7 @@ lettere nel baricentro, logo misurato come figura).
 `content/de/alpha/` è il banco di lavoro per le nuove funzioni: protetta da password, non
 collegata da nessuna parte, **solo in tedesco**. Una sezione per funzione, che dice cosa
 valutare. Una volta approvata, il blocco passa sulla pagina vera (allora in tre lingue).
+Attualmente: generatore di figure e generatore di fatti.
 
 ---
 
