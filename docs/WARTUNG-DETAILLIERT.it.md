@@ -757,7 +757,11 @@ Attualmente: generatore di figure, generatore di fatti e «Antwortbogen auswerte
 Una foto del foglio delle risposte compilato di una simulazione viene letta nel browser e
 confrontata con le soluzioni – la foto non lascia il dispositivo. Il procedimento è quello
 dello strumento di formattazione (`werkzeug/auswertung.py`), trasposto in JavaScript
-(`layouts/partials/bausteine/antwortbogen-auswertung.html`, leggere il commento in testa).
+(`layouts/partials/bausteine/antwortbogen-auswertung.html`, leggere il commento in testa; la
+parte comune – immagine, caricamento, PDF, fotocamera dal vivo – è in
+`bausteine/bild-lesen.html`). La **fotocamera dal vivo** cerca i quattro angoli neri già nel
+mirino e scatta da sola appena il foglio è fermo; altrimenti resta «Scatta una foto» (app
+fotocamera).
 Tutte le simulazioni dal 2022 hanno lo stesso foglio. Le soluzioni sono in
 `data/antwortbogen.yaml` e **non si modificano a mano**: per una nuova simulazione caricare
 come sempre il PDF delle soluzioni, inserirlo in `scripts/antwortbogen-loesungen.py` e

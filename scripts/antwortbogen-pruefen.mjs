@@ -116,6 +116,39 @@ console.log('\n=== Eigener Loesungsschluessel ===');
   await p.selectOption('#ab-testsim', '2026');
   pruef('zurueck auf 2026: Feld fuer den Schluessel weg', !(await p.isVisible('#ab-schluessel')));
 }
+// Live-Kamera: Chromium spielt ein Video als Kamera ab (erst leerer Tisch,
+// dann der Bogen). Erwartet: zuerst der Hinweis auf die fehlenden Ecken,
+// dann loest die Seite selbst aus und liest den Bogen richtig.
+console.log('\n=== Live-Kamera ===');
+if (erwartet._kamera) {
+  const kb = await chromium.launch({ args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream',
+    '--use-file-for-fake-video-capture=' + join(ORDNER, erwartet._kamera.datei)] });
+  const kc = await kb.newContext({ viewport: { width: 420, height: 900 }, permissions: ['camera'] });
+  await kc.addInitScript(() => { try { localStorage.setItem('alpha-notice-seen', '1'); localStorage.setItem('cookie-consent', 'accepted'); } catch (e) {} });
+  const kp = await kc.newPage();
+  kp.on('pageerror', e => { if (!/PagefindUI/.test(String(e.message))) js.push(String(e.message).slice(0, 120)); });
+  await kp.goto(ADRESSE, { waitUntil: 'networkidle' });
+  pruef('Knopf «Live-Kamera» sichtbar', await kp.isVisible('#ab-live'));
+  await kp.selectOption('#ab-testsim', '2026');
+  await kp.click('#ab-live');
+  const hinweise = new Set();
+  for (let i = 0; i < 150; i++) {
+    await kp.waitForTimeout(100);
+    const h = await kp.evaluate(() => { const e = document.querySelector('.bl-kamera-hinweis'); return e ? e.textContent : null; });
+    if (h) hinweise.add(h);
+    if (!(await kp.evaluate(() => document.getElementById('ab-ergebnis').hidden))) break;
+  }
+  const liste = [...hinweise].join(' | ');
+  pruef('Sucher meldet erst fehlende Ecken, dann «ruhig halten»', /0 von 4/.test(liste) && /ruhig/.test(liste), liste);
+  const gelesen = await kp.evaluate(() => [...document.querySelectorAll('#ab-zeilen select[data-nr]')].map(s => s.value || '.').join(''));
+  const unsicherNr = await kp.evaluate(() => [...document.querySelectorAll('#ab-zeilen tr.ab-unsicher select')].map(s => +s.dataset.nr));
+  const soll = erwartet._kamera.antworten;
+  const falsch = [];
+  for (let i = 0; i < 144; i++) if (gelesen[i] !== soll[i] && !unsicherNr.includes(i)) falsch.push((i + 1) + ':' + soll[i] + '->' + gelesen[i]);
+  pruef('selbst ausgeloest und richtig gelesen', gelesen.length === 144 && falsch.length === 0, gelesen.length + ' ' + falsch.join(' '));
+  pruef('Kamera danach wieder aus', await kp.evaluate(() => document.getElementById('ab-kamera-feld').hidden));
+  await kb.close();
+}
 pruef('keine JS-Fehler', js.length === 0, js.join(' | '));
 console.log(`\n==== ${ok} bestanden, ${fail} nicht ====`);
 await b.close();

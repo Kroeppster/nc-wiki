@@ -1,0 +1,359 @@
+{{- /*
+  ============================================================================
+  BILD-LESEN  -  das Gemeinsame der Auswertungen (Antwortbogen, Konztest)
+  ============================================================================
+  Kein eigener Baustein fuer den Seitentext: wird von
+  bausteine/antwortbogen-auswertung.html (und weiteren Auswertungen)
+  eingebunden, landet aber nur EINMAL auf der Seite (.Store, wie ems-heft).
+  Stellt window.NCWikiBild bereit:
+
+    Bild           ein Bild als Helligkeiten mit Papierkarte (Schwellen sind
+                   Anteile des Papiers in der Naehe - Schatten auf Fotos)
+    abbildung      Bogen (pt) -> Bild (px), projektiv aus 4 oder affin aus 3
+                   Punktpaaren; ausgleichend() aus vielen Paaren
+    laden, bildAus, quellen
+                   Datei -> Bild(er); PDFs Seite fuer Seite mit pdf.js
+                   (static/vendor/pdfjs/, erst bei Bedarf geladen)
+    kamera         Live-Kamera mit Sucher: prueft laufend ein verkleinertes
+                   Bild, zeigt, was gefunden ist, und loest selbst aus, wenn
+                   der Bogen ruhig im Bild liegt
+
+  Das Verfahren stammt aus dem Formatierungstool (werkzeug/auswertung.py).
+  ALLES LAEUFT IM BROWSER: kein Bild verlaesst das Geraet, auch nicht das
+  der Live-Kamera.
+  ============================================================================
+*/ -}}
+{{- if not (.Store.Get "bildLesen") }}
+{{- .Store.Set "bildLesen" true }}
+<script>
+window.NCWikiBild = (function(){
+  var T = {
+    fehlerBild: {{ i18n "bl_fehler_bild" | jsonify | safeJS }},
+    fehlerPdf: {{ i18n "bl_fehler_pdf" | jsonify | safeJS }},
+    startet: {{ i18n "bl_kamera_startet" | jsonify | safeJS }},
+    kameraFehler: {{ i18n "bl_kamera_fehler" | jsonify | safeJS }},
+    ruhig: {{ i18n "bl_kamera_ruhig" | jsonify | safeJS }},
+    naeher: {{ i18n "bl_kamera_naeher" | jsonify | safeJS }},
+    ausloesen: {{ i18n "bl_kamera_ausloesen" | jsonify | safeJS }},
+    abbrechen: {{ i18n "bl_kamera_abbrechen" | jsonify | safeJS }},
+    aufnahme: {{ i18n "bl_kamera_aufnahme" | jsonify | safeJS }}
+  };
+  var PDFJS = {{ "vendor/pdfjs/pdf.min.mjs" | relURL | jsonify | safeJS }};
+  var PDFJS_WORKER = {{ "vendor/pdfjs/pdf.worker.min.mjs" | relURL | jsonify | safeJS }};
+  var A4 = [595.2756, 841.8898];
+  var LANGE_SEITE = 1754;  // px - jedes Bild wird mindestens auf 150 dpi gebracht
+  // --- Lineare Algebra ------------------------------------------------------
+  function loesen(a, b){
+    var n = b.length, m = a.map(function(z, i){ return z.concat([b[i]]); });
+    for (var s = 0; s < n; s++){
+      var p = s;
+      for (var i = s + 1; i < n; i++) if (Math.abs(m[i][s]) > Math.abs(m[p][s])) p = i;
+      if (Math.abs(m[p][s]) < 1e-12) throw new Error('singulaer');
+      var t = m[s]; m[s] = m[p]; m[p] = t;
+      for (i = s + 1; i < n; i++){
+        var f = m[i][s] / m[s][s];
+        for (var j = s; j <= n; j++) m[i][j] -= f * m[s][j];
+      }
+    }
+    var x = new Array(n);
+    for (i = n - 1; i >= 0; i--){
+      var summe = 0;
+      for (j = i + 1; j < n; j++) summe += m[i][j] * x[j];
+      x[i] = (m[i][n] - summe) / m[i][i];
+    }
+    return x;
+  }
+  // Von Bogenkoordinaten (pt) auf Bildpunkte. Mit vier Passermarken
+  // projektiv (auch schraeg fotografiert), mit drei affin.
+  function abbildung(paare){
+    var a = [], b = [], k;
+    if (paare.length >= 4){
+      paare.slice(0, 4).forEach(function(p){
+        var x = p[0][0], y = p[0][1], u = p[1][0], v = p[1][1];
+        a.push([x, y, 1, 0, 0, 0, -x * u, -y * u]); b.push(u);
+        a.push([0, 0, 0, x, y, 1, -x * v, -y * v]); b.push(v);
+      });
+      k = loesen(a, b);
+    } else {
+      paare.slice(0, 3).forEach(function(p){
+        var x = p[0][0], y = p[0][1];
+        a.push([x, y, 1, 0, 0, 0]); b.push(p[1][0]);
+        a.push([0, 0, 0, x, y, 1]); b.push(p[1][1]);
+      });
+      k = loesen(a, b).concat([0, 0]);
+    }
+    var abb = function(x, y){
+      var n = k[6] * x + k[7] * y + 1;
+      return [(k[0] * x + k[1] * y + k[2]) / n, (k[3] * x + k[4] * y + k[5]) / n];
+    };
+    abb.gespiegelt = function(){
+      var mx = A4[0] / 2, my = A4[1] / 2, o = abb(mx, my), a1 = abb(mx + 10, my), b1 = abb(mx, my + 10);
+      return (a1[0] - o[0]) * (b1[1] - o[1]) - (a1[1] - o[1]) * (b1[0] - o[0]) <= 0;
+    };
+    abb.massstab = function(){
+      var mx = A4[0] / 2, my = A4[1] / 2, o = abb(mx, my), a1 = abb(mx + 100, my), b1 = abb(mx, my + 100);
+      return [Math.hypot(a1[0] - o[0], a1[1] - o[1]) / 100, Math.hypot(b1[0] - o[0], b1[1] - o[1]) / 100];
+    };
+    return abb;
+  }
+  // --- Das Bild ---------------------------------------------------------------
+  // Was Papier ist, gilt je Stelle: auf einem Handyfoto ist das Blatt in
+  // einer Ecke oft deutlich dunkler als in der anderen. Alle Schwellen sind
+  // deshalb Anteile der Papierhelligkeit in der Naehe.
+  function Bild(rgba, w, h){
+    this.w = w; this.h = h; this.rgba = rgba;
+    var lum = this.lum = new Uint8Array(w * h);
+    for (var i = 0, j = 0; i < lum.length; i++, j += 4)
+      lum[i] = Math.floor((299 * rgba[j] + 587 * rgba[j + 1] + 114 * rgba[j + 2]) / 1000);
+    this.vergroessert = 1;
+    this.papier = this.papierGesamt();
+    this.karteBauen();
+  }
+  Bild.prototype.hell = function(x, y){
+    x = Math.trunc(x); y = Math.trunc(y);
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return 255;
+    return this.lum[y * this.w + x];
+  };
+  Bild.prototype.papierBei = function(x, y){
+    var i = Math.min(Math.max(Math.floor(Math.trunc(x) / this.feld), 0), this.nx - 1);
+    var j = Math.min(Math.max(Math.floor(Math.trunc(y) / this.feld), 0), this.ny - 1);
+    return this.karte[j][i];
+  };
+  // Das Magenta der Kaestchen, auch im Schatten, wo alle drei Farben dunkler sind.
+  function magenta(r, g, b, papier){ return r - g > 0.31 * papier && b - g > 0.2 * papier; }
+  Bild.prototype.tinte = function(x, y){
+    x = Math.trunc(x); y = Math.trunc(y);
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return false;
+    var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
+    var p = this.papierBei(x, y);
+    if (magenta(r, g, b, p)) return false;
+    return (299 * r + 587 * g + 114 * b) / 1000 < 0.8 * p;
+  };
+  Bild.prototype.rahmen = function(x, y){
+    x = Math.trunc(x); y = Math.trunc(y);
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return false;
+    var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
+    var p = this.papierBei(x, y);
+    return magenta(r, g, b, p) || (299 * r + 587 * g + 114 * b) / 1000 < 0.62 * p;
+  };
+  Bild.prototype.dunkel = function(x, y){ return this.hell(x, y) < 0.62 * this.papierBei(x, y); };
+  Bild.prototype.papierGesamt = function(){
+    var werte = [];
+    for (var i = 0; i < 60; i++) for (var j = 0; j < 80; j++)
+      werte.push(this.hell(this.w * (0.1 + 0.8 * i / 59), this.h * (0.1 + 0.8 * j / 79)));
+    werte.sort(function(a, b){ return a - b; });
+    return Math.max(120, werte[Math.floor(werte.length * 0.85)]);
+  };
+  // Papierhelligkeit je Feld von etwa einem Vierzigstel der langen Seite:
+  // das Helle in jedem Feld, geglaettet ueber die Nachbarn.
+  Bild.prototype.karteBauen = function(){
+    var f = this.feld = Math.max(12, Math.floor(Math.max(this.w, this.h) / 40));
+    var nx = this.nx = Math.ceil(this.w / f), ny = this.ny = Math.ceil(this.h / f);
+    var schritt = Math.max(2, Math.floor(f / 10)), roh = [], i, j;
+    for (j = 0; j < ny; j++){
+      var zeile = [];
+      for (i = 0; i < nx; i++){
+        var werte = [];
+        for (var y = j * f; y < Math.min((j + 1) * f, this.h); y += schritt)
+          for (var x = i * f; x < Math.min((i + 1) * f, this.w); x += schritt) werte.push(this.lum[y * this.w + x]);
+        werte.sort(function(a, b){ return a - b; });
+        zeile.push(werte.length ? werte[Math.floor(werte.length * 0.9)] : this.papier);
+      }
+      roh.push(zeile);
+    }
+    function nachbarn(k, i, j, art){
+      var w = [];
+      for (var b = Math.max(0, j - 1); b < Math.min(ny, j + 2); b++)
+        for (var a = Math.max(0, i - 1); a < Math.min(nx, i + 2); a++) w.push(k[b][a]);
+      return art === 'max' ? Math.max.apply(null, w) : w.reduce(function(s, v){ return s + v; }, 0) / w.length;
+    }
+    var hoch = [], karte = [];
+    for (j = 0; j < ny; j++){ hoch.push([]); for (i = 0; i < nx; i++) hoch[j].push(nachbarn(roh, i, j, 'max')); }
+    for (j = 0; j < ny; j++){ karte.push([]); for (i = 0; i < nx; i++) karte[j].push(Math.max(60, nachbarn(hoch, i, j, 'mittel'))); }
+    this.karte = karte;
+  };
+  // Aus VIELEN Punktpaaren (etwa 1600 Zeichen eines Konztests): projektive
+  // Abbildung nach kleinsten Quadraten. Die Normalgleichungen sind 8 x 8;
+  // die Koordinaten werden vorher auf Groessenordnung 1 gebracht, sonst
+  // rechnet das schlecht.
+  function ausgleichend(paare){
+    var sx = 0, sy = 0, su = 0, sv = 0, n = paare.length;
+    paare.forEach(function(p){ sx += p[0][0]; sy += p[0][1]; su += p[1][0]; sv += p[1][1]; });
+    sx /= n; sy /= n; su /= n; sv /= n;
+    var ds = 0, dt = 0;
+    paare.forEach(function(p){ ds += Math.hypot(p[0][0] - sx, p[0][1] - sy); dt += Math.hypot(p[1][0] - su, p[1][1] - sv); });
+    ds = ds / n || 1; dt = dt / n || 1;
+    var ata = [], atb = [0, 0, 0, 0, 0, 0, 0, 0], i, j;
+    for (i = 0; i < 8; i++) ata.push([0, 0, 0, 0, 0, 0, 0, 0]);
+    function zeile(r, w){ for (var a = 0; a < 8; a++){ atb[a] += r[a] * w; for (var b = 0; b < 8; b++) ata[a][b] += r[a] * r[b]; } }
+    paare.forEach(function(p){
+      var x = (p[0][0] - sx) / ds, y = (p[0][1] - sy) / ds, u = (p[1][0] - su) / dt, v = (p[1][1] - sv) / dt;
+      zeile([x, y, 1, 0, 0, 0, -x * u, -y * u], u);
+      zeile([0, 0, 0, x, y, 1, -x * v, -y * v], v);
+    });
+    var k = loesen(ata, atb);
+    var abb = function(x, y){
+      x = (x - sx) / ds; y = (y - sy) / ds;
+      var nn = k[6] * x + k[7] * y + 1;
+      return [((k[0] * x + k[1] * y + k[2]) / nn) * dt + su, ((k[3] * x + k[4] * y + k[5]) / nn) * dt + sv];
+    };
+    return abb;
+  }
+  // --- Bild laden ------------------------------------------------------------------
+  // Ein Foto zeigt den Bogen oft nur auf einem Teil des Bilds: die
+  // Bildpunkte des Fotos bleiben (bis zum Doppelten eines Scans mit 150 dpi),
+  // ein kleines Bild wird auf Scangroesse vergroessert. Das <img> dreht ein
+  // Handyfoto selbst richtig (EXIF).
+  function laden(datei){
+    return new Promise(function(ok, fehler){
+      var url = URL.createObjectURL(datei), img = new Image();
+      img.onload = function(){ URL.revokeObjectURL(url); ok(img); };
+      img.onerror = function(){ URL.revokeObjectURL(url); fehler(T.fehlerBild); };
+      img.src = url;
+    });
+  }
+  // quelle: ein <img> oder eine Leinwand (gerenderte PDF-Seite)
+  function bildAus(quelle){
+    var qw = quelle.naturalWidth || quelle.width, qh = quelle.naturalHeight || quelle.height;
+    var lang = Math.max(qw, qh);
+    var ziel = Math.min(Math.max(LANGE_SEITE, lang), 2 * LANGE_SEITE), z = ziel / lang;
+    var c = document.createElement('canvas');
+    c.width = Math.round(qw * z); c.height = Math.round(qh * z);
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(quelle, 0, 0, c.width, c.height);
+    var b = new Bild(ctx.getImageData(0, 0, c.width, c.height).data, c.width, c.height);
+    b.vergroessert = Math.max(1, ziel / lang);
+    b.leinwand = c;
+    return b;
+  }
+  // Ein PDF Seite fuer Seite als Leinwand, wie ein Scan mit 150 dpi (die
+  // lange Seite 1754 Bildpunkte). Hoechstens zwoelf Seiten: ein Loesungs-PDF
+  // aus dem Tool hat den Schluessel nach den Tabellen, ein Scan ist kurz.
+  function pdfSeiten(datei){
+    return import(PDFJS).then(function(pdfjs){
+      pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      return datei.arrayBuffer().then(function(daten){ return pdfjs.getDocument({ data: daten }).promise; });
+    }).then(function(pdf){
+      var seiten = [], n = Math.min(pdf.numPages, 12), kette = Promise.resolve();
+      for (var i = 1; i <= n; i++) (function(i){
+        kette = kette.then(function(){ return pdf.getPage(i); }).then(function(seite){
+          var v = seite.getViewport({ scale: 1 });
+          var z = LANGE_SEITE / Math.max(v.width, v.height), vp = seite.getViewport({ scale: z });
+          var c = document.createElement('canvas');
+          c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+          var ctx = c.getContext('2d');
+          ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+          return seite.render({ canvasContext: ctx, viewport: vp }).promise.then(function(){ seiten.push(c); });
+        });
+      })(i);
+      return kette.then(function(){ return seiten; });
+    }, function(){ throw T.fehlerPdf; });
+  }
+  function istPdf(datei){ return datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name); }
+  // Eine Datei -> Liste von Quellen (eine bei einem Bild, je Seite bei einem PDF)
+  function quellen(datei){
+    return istPdf(datei) ? pdfSeiten(datei) : laden(datei).then(function(img){ return [img]; });
+  }
+  // --- Live-Kamera ----------------------------------------------------------------
+  // o.feld      Element, in das der Sucher kommt
+  // o.pruefen   function(bild) -> { ok, punkte: [[x, y]...] (px im Bild),
+  //             breite: Bogenbreite in px, hinweis } - auf einem
+  //             verkleinerten Bild (lange Seite o.analyse, sonst 960 px)
+  // o.fertig    function(quelle) mit dem Bild in voller Aufloesung
+  // o.minBreite so breit (px, volle Aufloesung) muss der Bogen sein
+  // Ausgeloest wird, wenn dreimal hintereinander alles gefunden ist und
+  // sich kaum bewegt hat - oder von Hand.
+  function kameraMoeglich(){
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && window.isSecureContext !== false;
+  }
+  function kamera(o){
+    var feld = o.feld, laeuft = true, strom = null, uhr = null, ruhig = 0, letzte = null;
+    feld.innerHTML = '<div class="bl-kamera"><div class="bl-sucher"><video playsinline muted autoplay></video><canvas></canvas></div>'
+      + '<p class="bl-kamera-hinweis" role="status" aria-live="polite">' + T.startet + '</p>'
+      + '<div class="bl-kamera-knoepfe"><button type="button" class="btn btn-primary">' + T.ausloesen + '</button>'
+      + '<button type="button" class="btn btn-ghost">' + T.abbrechen + '</button></div></div>';
+    feld.hidden = false;
+    var video = feld.querySelector('video'), ueber = feld.querySelector('canvas'), hinweis = feld.querySelector('.bl-kamera-hinweis');
+    var knoepfe = feld.querySelectorAll('button');
+    var klein = document.createElement('canvas'), analyse = o.analyse || 960;
+    function stopp(){
+      laeuft = false; clearTimeout(uhr);
+      if (strom) strom.getTracks().forEach(function(t){ t.stop(); });
+      feld.innerHTML = ''; feld.hidden = true;
+    }
+    knoepfe[1].addEventListener('click', function(){ stopp(); if (o.abbruch) o.abbruch(); });
+    knoepfe[0].addEventListener('click', ausloesen);
+    function zeichnen(r, z){
+      var w = video.clientWidth, h = video.clientHeight;
+      ueber.width = w; ueber.height = h;
+      var ctx = ueber.getContext('2d'), s = w / (video.videoWidth * z);
+      ctx.clearRect(0, 0, w, h);
+      if (!r) return;
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = ctx.fillStyle = r.ok ? '#1e9e4a' : '#e8710a';
+      (r.punkte || []).forEach(function(p){ ctx.beginPath(); ctx.arc(p[0] * s, p[1] * s, r.ok ? 9 : 7, 0, 2 * Math.PI); ctx.stroke(); });
+      if (r.umriss){
+        ctx.beginPath();
+        r.umriss.forEach(function(p, i){ ctx[i ? 'lineTo' : 'moveTo'](p[0] * s, p[1] * s); });
+        ctx.closePath(); ctx.stroke();
+      }
+    }
+    function pruefen(){
+      if (!laeuft) return;
+      if (video.readyState >= 2 && video.videoWidth){
+        var vw = video.videoWidth, vh = video.videoHeight, z = Math.min(1, analyse / Math.max(vw, vh));
+        klein.width = Math.round(vw * z); klein.height = Math.round(vh * z);
+        var ctx = klein.getContext('2d');
+        ctx.drawImage(video, 0, 0, klein.width, klein.height);
+        var r = o.pruefen(new Bild(ctx.getImageData(0, 0, klein.width, klein.height).data, klein.width, klein.height));
+        if (r.ok && o.minBreite && r.breite / z < o.minBreite){ r.ok = false; r.hinweis = T.naeher; }
+        if (r.ok){
+          var d = Math.hypot(klein.width, klein.height);
+          var still = letzte && r.punkte.length === letzte.length && r.punkte.every(function(p, i){
+            return Math.hypot(p[0] - letzte[i][0], p[1] - letzte[i][1]) < 0.012 * d; });
+          ruhig = still ? ruhig + 1 : 1;
+          letzte = r.punkte;
+        } else { ruhig = 0; letzte = null; }
+        zeichnen(r, z);
+        hinweis.textContent = r.ok ? T.ruhig : r.hinweis;
+        if (ruhig >= 3){ ausloesen(); return; }
+      }
+      uhr = setTimeout(pruefen, 250);
+    }
+    // Das Bild in voller Aufloesung: das Videobild sofort, und wo der Browser
+    // es kann (ImageCapture, Chrome auf Android) ein richtiges Foto mit
+    // Autofokus - das ist oft viermal so gross. Kommt es nicht in drei
+    // Sekunden, gilt das Videobild.
+    function ausloesen(){
+      if (!laeuft) return;
+      laeuft = false; clearTimeout(uhr);
+      hinweis.textContent = T.aufnahme;
+      var c = document.createElement('canvas');
+      c.width = video.videoWidth; c.height = video.videoHeight;
+      c.getContext('2d').drawImage(video, 0, 0);
+      var spur = strom && strom.getVideoTracks()[0];
+      var foto = (window.ImageCapture && spur) ? new Promise(function(ok, fehler){
+        var t = setTimeout(fehler, 3000);
+        new ImageCapture(spur).takePhoto().then(function(blob){ clearTimeout(t); return laden(blob); }).then(ok, fehler);
+      }) : Promise.reject();
+      foto.then(function(img){ stopp(); o.fertig(img); }, function(){ stopp(); o.fertig(c); });
+    }
+    navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' },
+      width: { ideal: 3840 }, height: { ideal: 2160 } } }).then(function(s){
+      if (!laeuft){ s.getTracks().forEach(function(t){ t.stop(); }); return; }
+      strom = s; video.srcObject = s;
+      var p = video.play(); if (p && p.catch) p.catch(function(){});
+      pruefen();
+    }, function(){
+      stopp();
+      if (o.fehler) o.fehler(T.kameraFehler);
+    });
+    return { stopp: stopp, ausloesen: ausloesen };
+  }
+  return { A4: A4, LANGE_SEITE: LANGE_SEITE, Bild: Bild, magenta: magenta, loesen: loesen, abbildung: abbildung,
+           ausgleichend: ausgleichend, laden: laden, bildAus: bildAus, istPdf: istPdf, quellen: quellen,
+           kameraMoeglich: kameraMoeglich, kamera: kamera };
+})();
+</script>
+{{- end }}

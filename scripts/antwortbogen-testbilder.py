@@ -127,6 +127,28 @@ def foto(scan, drehung, schraeg, rand, schatten, unschaerfe, breite_ziel):
     return gross.resize((int(gross.size[0] * z), int(gross.size[1] * z)), Image.LANCZOS)
 
 
+def video(bild, aus, w, h, leer=15, voll=15):
+    """y4m (YUV 4:2:0) für --use-file-for-fake-video-capture."""
+    def yuv(im):
+        a = np.asarray(im.convert('RGB'), dtype=np.float32)
+        y = 0.299 * a[..., 0] + 0.587 * a[..., 1] + 0.114 * a[..., 2]
+        u = (a[..., 2] - y) * 0.564 + 128
+        v = (a[..., 0] - y) * 0.713 + 128
+        halb = lambda c: c.reshape(h // 2, 2, w // 2, 2).mean(axis=(1, 3))
+        return b''.join(np.clip(c, 0, 255).astype(np.uint8).tobytes() for c in (y, halb(u), halb(v)))
+    foto = Image.open(bild)
+    foto.thumbnail((w, h))
+    tisch = Image.new('RGB', (w, h), (92, 84, 76))
+    mit = tisch.copy()
+    mit.paste(foto, ((w - foto.size[0]) // 2, (h - foto.size[1]) // 2))
+    a, b = yuv(tisch), yuv(mit)
+    with open(aus, 'wb') as f:
+        f.write(b'YUV4MPEG2 W%d H%d F10:1 Ip A1:1 C420jpeg\n' % (w, h))
+        for i in range(leer + voll):
+            f.write(b'FRAME\n')
+            f.write(a if i < leer else b)
+
+
 def main():
     ordner = sys.argv[1]
     os.makedirs(ordner, exist_ok=True)
@@ -207,6 +229,10 @@ def main():
     foto(schl, drehung=-3, schraeg=0.02, rand=0.07, schatten=0.3, unschaerfe=0.8, breite_ziel=2600).save(
         os.path.join(ordner, 'schluessel-foto.jpg'), quality=82)
     erwartet['_schluessel'] = {'dateien': ['schluessel.pdf', 'schluessel-foto.jpg'], 'loesungen': loes}
+    # Für die Live-Kamera: ein y4m-Video (Chromiums Fake-Kamera spielt es ab),
+    # erst eineinhalb Sekunden leerer Tisch, dann das schräge Foto
+    video(os.path.join(ordner, 'foto-schraeg.jpg'), os.path.join(ordner, 'kamera.y4m'), 1080, 1440)
+    erwartet['_kamera'] = {'datei': 'kamera.y4m', 'antworten': erwartet['foto-schraeg.jpg']['antworten']}
     with open(os.path.join(ordner, 'erwartet.json'), 'w') as f:
         json.dump(erwartet, f, indent=1)
     print('geschrieben:', ', '.join(erwartet))

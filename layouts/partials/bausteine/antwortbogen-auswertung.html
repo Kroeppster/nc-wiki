@@ -44,6 +44,7 @@
 */ -}}
 {{- $d := hugo.Data.antwortbogen }}
 {{- $lang := .Site.Language.Lang }}
+{{- partial "bausteine/bild-lesen.html" . }}
 <div class="ab" id="ab-wurzel" data-pagefind-ignore>
 <script type="application/json" id="ab-daten">{{ $d | jsonify | safeJS }}</script>
 <p class="ab-intro">{{ i18n "ab_intro" }}</p>
@@ -69,15 +70,19 @@
 <p class="ab-hinweis">{{ i18n "ab_schluessel_hinweis" }}</p>
 <p class="ab-status" id="ab-schluessel-status" role="status" aria-live="polite"></p>
 </div>
-{{- /* Zwei Knoepfe: "Foto aufnehmen" oeffnet auf dem Handy direkt die
-       Kamera-App (capture) - volle Aufloesung, Autofokus, Blitz. Der zweite
-       nimmt ein vorhandenes Bild oder PDF (Scan). Am Computer tun beide
-       dasselbe. */ -}}
+{{- /* Drei Knoepfe: "Live-Kamera" (nur wo der Browser sie kann) sucht die
+       vier schwarzen Ecken schon im Sucher und loest selbst aus, sobald der
+       Bogen ruhig liegt. "Foto aufnehmen" oeffnet auf dem Handy die
+       Kamera-App (capture) - volle Aufloesung, Autofokus, Blitz; der
+       Rueckweg, wenn die Live-Kamera nicht will. "Bild oder PDF waehlen"
+       nimmt ein vorhandenes Foto oder einen Scan. */ -}}
 <p class="ab-feld">{{ i18n "ab_foto" }}</p>
 <div class="ab-knoepfe">
-<label class="btn btn-primary ab-knopf">{{ i18n "ab_foto_aufnehmen" }}<input type="file" id="ab-kamera" accept="image/*" capture="environment"></label>
+<button type="button" class="btn btn-primary" id="ab-live" hidden>{{ i18n "ab_live_kamera" }}</button>
+<label class="btn btn-ghost ab-knopf">{{ i18n "ab_foto_aufnehmen" }}<input type="file" id="ab-kamera" accept="image/*" capture="environment"></label>
 <label class="btn btn-ghost ab-knopf">{{ i18n "ab_datei_waehlen" }}<input type="file" id="ab-datei" accept="image/*,application/pdf,.pdf"></label>
 </div>
+<div class="ab-kamera" id="ab-kamera-feld" hidden></div>
 <p class="ab-hinweis">{{ i18n "ab_tipps" }}</p>
 <p class="ab-status" id="ab-status" role="status" aria-live="polite"></p>
 <div class="ab-ergebnis" id="ab-ergebnis" hidden>
@@ -122,12 +127,10 @@
     schluesselKein: {{ i18n "ab_schluessel_kein" | jsonify | safeJS }},
     schluesselOk: {{ i18n "ab_schluessel_ok" | jsonify | safeJS }},
     schluesselUnsicher: {{ i18n "ab_schluessel_unsicher" | jsonify | safeJS }},
-    ohneLoesung: {{ i18n "ab_ohne_loesung" | jsonify | safeJS }}
+    ohneLoesung: {{ i18n "ab_ohne_loesung" | jsonify | safeJS }},
+    kameraEcken: {{ i18n "ab_kamera_ecken" | jsonify | safeJS }},
+    kameraKein: {{ i18n "ab_kamera_kein" | jsonify | safeJS }}
   };
-  // pdf.js liegt auf der Website selbst (static/vendor/pdfjs/) und wird erst
-  // geladen, wenn jemand ein PDF waehlt.
-  var PDFJS = {{ "vendor/pdfjs/pdf.min.mjs" | relURL | jsonify | safeJS }};
-  var PDFJS_WORKER = {{ "vendor/pdfjs/pdf.worker.min.mjs" | relURL | jsonify | safeJS }};
   // --- Der Bogen (pt, A4), wie ems.typ ihn setzt ---------------------------
   var A4 = [595.2756, 841.8898];
   // Linke obere Ecke des weissen Felds der Passermarken; der schwarze Kern
@@ -142,143 +145,15 @@
   var KREIS = ['ol', 'or', 'ur', 'ul'];
   var MARKEN = {};
   KREIS.forEach(function(e){ MARKEN[e] = [PASSER[e][0] + PASSER_RAND + PASSER_KERN / 2, PASSER[e][1] + PASSER_RAND + PASSER_KERN / 2]; });
-  var LANGE_SEITE = 1754;  // px - jedes Bild wird mindestens auf 150 dpi gebracht
   var EINZUG = 1.5;        // pt - so weit innerhalb des Kaestchenrands wird gemessen
   var MARKIERT = 0.06;     // Anteil Tinte, ab dem ein Kaestchen angekreuzt ist
   var UNSICHER = 0.025;    // dazwischen: bitte ansehen
   var VOLL = 0.30;         // sind alle fuenf so voll, ist die Zeile ungueltig
   var MIN_INHALT = 60;     // Helligkeitsunterschied, ab dem der Kopfkasten erkannt ist
   var GEDRUCKT = 0.25;     // Anteil Rahmen, ab dem eine Zeile als gedruckt gilt
-  // --- Lineare Algebra ------------------------------------------------------
-  function loesen(a, b){
-    var n = b.length, m = a.map(function(z, i){ return z.concat([b[i]]); });
-    for (var s = 0; s < n; s++){
-      var p = s;
-      for (var i = s + 1; i < n; i++) if (Math.abs(m[i][s]) > Math.abs(m[p][s])) p = i;
-      if (Math.abs(m[p][s]) < 1e-12) throw new Error('singulaer');
-      var t = m[s]; m[s] = m[p]; m[p] = t;
-      for (i = s + 1; i < n; i++){
-        var f = m[i][s] / m[s][s];
-        for (var j = s; j <= n; j++) m[i][j] -= f * m[s][j];
-      }
-    }
-    var x = new Array(n);
-    for (i = n - 1; i >= 0; i--){
-      var summe = 0;
-      for (j = i + 1; j < n; j++) summe += m[i][j] * x[j];
-      x[i] = (m[i][n] - summe) / m[i][i];
-    }
-    return x;
-  }
-  // Von Bogenkoordinaten (pt) auf Bildpunkte. Mit vier Passermarken
-  // projektiv (auch schraeg fotografiert), mit drei affin.
-  function abbildung(paare){
-    var a = [], b = [], k;
-    if (paare.length >= 4){
-      paare.slice(0, 4).forEach(function(p){
-        var x = p[0][0], y = p[0][1], u = p[1][0], v = p[1][1];
-        a.push([x, y, 1, 0, 0, 0, -x * u, -y * u]); b.push(u);
-        a.push([0, 0, 0, x, y, 1, -x * v, -y * v]); b.push(v);
-      });
-      k = loesen(a, b);
-    } else {
-      paare.slice(0, 3).forEach(function(p){
-        var x = p[0][0], y = p[0][1];
-        a.push([x, y, 1, 0, 0, 0]); b.push(p[1][0]);
-        a.push([0, 0, 0, x, y, 1]); b.push(p[1][1]);
-      });
-      k = loesen(a, b).concat([0, 0]);
-    }
-    var abb = function(x, y){
-      var n = k[6] * x + k[7] * y + 1;
-      return [(k[0] * x + k[1] * y + k[2]) / n, (k[3] * x + k[4] * y + k[5]) / n];
-    };
-    abb.gespiegelt = function(){
-      var mx = A4[0] / 2, my = A4[1] / 2, o = abb(mx, my), a1 = abb(mx + 10, my), b1 = abb(mx, my + 10);
-      return (a1[0] - o[0]) * (b1[1] - o[1]) - (a1[1] - o[1]) * (b1[0] - o[0]) <= 0;
-    };
-    abb.massstab = function(){
-      var mx = A4[0] / 2, my = A4[1] / 2, o = abb(mx, my), a1 = abb(mx + 100, my), b1 = abb(mx, my + 100);
-      return [Math.hypot(a1[0] - o[0], a1[1] - o[1]) / 100, Math.hypot(b1[0] - o[0], b1[1] - o[1]) / 100];
-    };
-    return abb;
-  }
-  // --- Das Bild ---------------------------------------------------------------
-  // Was Papier ist, gilt je Stelle: auf einem Handyfoto ist das Blatt in
-  // einer Ecke oft deutlich dunkler als in der anderen. Alle Schwellen sind
-  // deshalb Anteile der Papierhelligkeit in der Naehe.
-  function Bild(rgba, w, h){
-    this.w = w; this.h = h; this.rgba = rgba;
-    var lum = this.lum = new Uint8Array(w * h);
-    for (var i = 0, j = 0; i < lum.length; i++, j += 4)
-      lum[i] = Math.floor((299 * rgba[j] + 587 * rgba[j + 1] + 114 * rgba[j + 2]) / 1000);
-    this.vergroessert = 1;
-    this.papier = this.papierGesamt();
-    this.karteBauen();
-  }
-  Bild.prototype.hell = function(x, y){
-    x = Math.trunc(x); y = Math.trunc(y);
-    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return 255;
-    return this.lum[y * this.w + x];
-  };
-  Bild.prototype.papierBei = function(x, y){
-    var i = Math.min(Math.max(Math.floor(Math.trunc(x) / this.feld), 0), this.nx - 1);
-    var j = Math.min(Math.max(Math.floor(Math.trunc(y) / this.feld), 0), this.ny - 1);
-    return this.karte[j][i];
-  };
-  // Das Magenta der Kaestchen, auch im Schatten, wo alle drei Farben dunkler sind.
-  function magenta(r, g, b, papier){ return r - g > 0.31 * papier && b - g > 0.2 * papier; }
-  Bild.prototype.tinte = function(x, y){
-    x = Math.trunc(x); y = Math.trunc(y);
-    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return false;
-    var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
-    var p = this.papierBei(x, y);
-    if (magenta(r, g, b, p)) return false;
-    return (299 * r + 587 * g + 114 * b) / 1000 < 0.8 * p;
-  };
-  Bild.prototype.rahmen = function(x, y){
-    x = Math.trunc(x); y = Math.trunc(y);
-    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return false;
-    var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
-    var p = this.papierBei(x, y);
-    return magenta(r, g, b, p) || (299 * r + 587 * g + 114 * b) / 1000 < 0.62 * p;
-  };
-  Bild.prototype.dunkel = function(x, y){ return this.hell(x, y) < 0.62 * this.papierBei(x, y); };
-  Bild.prototype.papierGesamt = function(){
-    var werte = [];
-    for (var i = 0; i < 60; i++) for (var j = 0; j < 80; j++)
-      werte.push(this.hell(this.w * (0.1 + 0.8 * i / 59), this.h * (0.1 + 0.8 * j / 79)));
-    werte.sort(function(a, b){ return a - b; });
-    return Math.max(120, werte[Math.floor(werte.length * 0.85)]);
-  };
-  // Papierhelligkeit je Feld von etwa einem Vierzigstel der langen Seite:
-  // das Helle in jedem Feld, geglaettet ueber die Nachbarn.
-  Bild.prototype.karteBauen = function(){
-    var f = this.feld = Math.max(12, Math.floor(Math.max(this.w, this.h) / 40));
-    var nx = this.nx = Math.ceil(this.w / f), ny = this.ny = Math.ceil(this.h / f);
-    var schritt = Math.max(2, Math.floor(f / 10)), roh = [], i, j;
-    for (j = 0; j < ny; j++){
-      var zeile = [];
-      for (i = 0; i < nx; i++){
-        var werte = [];
-        for (var y = j * f; y < Math.min((j + 1) * f, this.h); y += schritt)
-          for (var x = i * f; x < Math.min((i + 1) * f, this.w); x += schritt) werte.push(this.lum[y * this.w + x]);
-        werte.sort(function(a, b){ return a - b; });
-        zeile.push(werte.length ? werte[Math.floor(werte.length * 0.9)] : this.papier);
-      }
-      roh.push(zeile);
-    }
-    function nachbarn(k, i, j, art){
-      var w = [];
-      for (var b = Math.max(0, j - 1); b < Math.min(ny, j + 2); b++)
-        for (var a = Math.max(0, i - 1); a < Math.min(nx, i + 2); a++) w.push(k[b][a]);
-      return art === 'max' ? Math.max.apply(null, w) : w.reduce(function(s, v){ return s + v; }, 0) / w.length;
-    }
-    var hoch = [], karte = [];
-    for (j = 0; j < ny; j++){ hoch.push([]); for (i = 0; i < nx; i++) hoch[j].push(nachbarn(roh, i, j, 'max')); }
-    for (j = 0; j < ny; j++){ karte.push([]); for (i = 0; i < nx; i++) karte[j].push(Math.max(60, nachbarn(hoch, i, j, 'mittel'))); }
-    this.karte = karte;
-  };
+  // Das Gemeinsame (Bild, Abbildung, Laden, PDF, Kamera): bausteine/bild-lesen.html
+  var B = window.NCWikiBild, Bild = B.Bild, abbildung = B.abbildung, bildAus = B.bildAus,
+      quellen = B.quellen, istPdf = B.istPdf, laden = B.laden;
   // --- Passermarken --------------------------------------------------------------
   // Die schwarzen Quadrate in den vier Ecken. Gesucht wird zuerst im
   // aeusseren Fuenftel; findet sich da nichts, weil der Bogen auf dem Foto
@@ -369,7 +244,7 @@
     }
     return (hell - dunkel) / n;
   }
-  function ausrichten(bild){
+  function ausrichten(bild, ohneGroesse){
     var marken = passermarken(bild), hinweise = [], kandidaten = [], k, anzahl = Object.keys(marken).length;
     for (k = 0; k < 4; k++){
       var paare = [];
@@ -397,7 +272,7 @@
     // war: Ein Handyfoto aus zwei Metern zeigt ihn, aber die Kaestchen sind
     // dann wenige Bildpunkte gross, und gelesen wuerde Unsinn.
     var breite = s[0] * A4[0] / bild.vergroessert;
-    if (breite < 600) return { fehler: T.fehlerKlein.replace('{n}', Math.round(breite)) };
+    if (!ohneGroesse && breite < 600) return { fehler: T.fehlerKlein.replace('{n}', Math.round(breite)) };
     if (Math.abs(s[0] / s[1] - 1) > 0.06) hinweise.push(T.verzerrt.replace('{n}', Math.round(Math.abs(s[0] / s[1] - 1) * 100)));
     return { abb: beste[1], hinweise: hinweise };
   }
@@ -467,62 +342,6 @@
     if (fehlend) r.hinweise.push(T.zeilen);
     r.antworten = antworten; r.unsicher = unsicher;
     return r;
-  }
-  // --- Bild laden ------------------------------------------------------------------
-  // Ein Foto zeigt den Bogen oft nur auf einem Teil des Bilds: die
-  // Bildpunkte des Fotos bleiben (bis zum Doppelten eines Scans mit 150 dpi),
-  // ein kleines Bild wird auf Scangroesse vergroessert. Das <img> dreht ein
-  // Handyfoto selbst richtig (EXIF).
-  function laden(datei){
-    return new Promise(function(ok, fehler){
-      var url = URL.createObjectURL(datei), img = new Image();
-      img.onload = function(){ URL.revokeObjectURL(url); ok(img); };
-      img.onerror = function(){ URL.revokeObjectURL(url); fehler(T.fehlerBild); };
-      img.src = url;
-    });
-  }
-  // quelle: ein <img> oder eine Leinwand (gerenderte PDF-Seite)
-  function bildAus(quelle){
-    var qw = quelle.naturalWidth || quelle.width, qh = quelle.naturalHeight || quelle.height;
-    var lang = Math.max(qw, qh);
-    var ziel = Math.min(Math.max(LANGE_SEITE, lang), 2 * LANGE_SEITE), z = ziel / lang;
-    var c = document.createElement('canvas');
-    c.width = Math.round(qw * z); c.height = Math.round(qh * z);
-    var ctx = c.getContext('2d');
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
-    ctx.drawImage(quelle, 0, 0, c.width, c.height);
-    var b = new Bild(ctx.getImageData(0, 0, c.width, c.height).data, c.width, c.height);
-    b.vergroessert = Math.max(1, ziel / lang);
-    b.leinwand = c;
-    return b;
-  }
-  // Ein PDF Seite fuer Seite als Leinwand, wie ein Scan mit 150 dpi (die
-  // lange Seite 1754 Bildpunkte). Hoechstens zwoelf Seiten: ein Loesungs-PDF
-  // aus dem Tool hat den Schluessel nach den Tabellen, ein Scan ist kurz.
-  function pdfSeiten(datei){
-    return import(PDFJS).then(function(pdfjs){
-      pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
-      return datei.arrayBuffer().then(function(daten){ return pdfjs.getDocument({ data: daten }).promise; });
-    }).then(function(pdf){
-      var seiten = [], n = Math.min(pdf.numPages, 12), kette = Promise.resolve();
-      for (var i = 1; i <= n; i++) (function(i){
-        kette = kette.then(function(){ return pdf.getPage(i); }).then(function(seite){
-          var v = seite.getViewport({ scale: 1 });
-          var z = LANGE_SEITE / Math.max(v.width, v.height), vp = seite.getViewport({ scale: z });
-          var c = document.createElement('canvas');
-          c.width = Math.round(vp.width); c.height = Math.round(vp.height);
-          var ctx = c.getContext('2d');
-          ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
-          return seite.render({ canvasContext: ctx, viewport: vp }).promise.then(function(){ seiten.push(c); });
-        });
-      })(i);
-      return kette.then(function(){ return seiten; });
-    }, function(){ throw T.fehlerPdf; });
-  }
-  function istPdf(datei){ return datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name); }
-  // Eine Datei -> Liste von Quellen (eine bei einem Bild, je Seite bei einem PDF)
-  function quellen(datei){
-    return istPdf(datei) ? pdfSeiten(datei) : laden(datei).then(function(img){ return [img]; });
   }
   // Die erste Seite, auf der ein Bogen zu lesen ist. Fehlt er ueberall,
   // die Meldung der ersten Seite.
@@ -643,15 +462,16 @@
     if (!datei) return;
     el('ab-ergebnis').hidden = true;
     melden('ab-status', istPdf(datei) ? T.pdfLaedt : T.liest);
-    return quellen(datei).then(function(liste){
-      melden('ab-status', T.liest);
-      return spaeter(function(){ return ersterBogen(liste); });
-    }).then(function(r){
+    return quellen(datei).then(bogenAus, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
+  }
+  function bogenAus(liste){
+    melden('ab-status', T.liest);
+    return spaeter(function(){ return ersterBogen(liste); }).then(function(r){
       if (r.fehler){ melden('ab-status', r.fehler, true); return; }
       stand = { bild: r.bild, abb: r.abb, antworten: r.antworten, unsicher: r.unsicher, hinweise: r.hinweise };
       zeigen();
       if (!el('ab-ergebnis').hidden) el('ab-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
-    }, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
+    });
   }
   function schluesselWaehlen(datei){
     if (!datei) return;
@@ -686,6 +506,26 @@
     el(id).addEventListener('change', function(){ bogenWaehlen(this.files && this.files[0]); this.value = ''; });
   });
   el('ab-schluessel-datei').addEventListener('change', function(){ schluesselWaehlen(this.files && this.files[0]); this.value = ''; });
+  // --- Live-Kamera ------------------------------------------------------------------
+  // Im Sucher: die gefundenen Passermarken als Kreise, gruen, sobald alle vier
+  // da sind und der Kopfkasten an der richtigen Stelle liegt. Ausgeloest
+  // wird erst, wenn der Bogen in voller Aufloesung breit genug ist (700 px:
+  // etwas mehr als die 600, die das Lesen mindestens braucht).
+  function livePruefen(bild){
+    var m = passermarken(bild), punkte = KREIS.filter(function(e){ return m[e]; }).map(function(e){ return m[e]; });
+    if (punkte.length < 4) return { ok: false, punkte: punkte, hinweis: T.kameraEcken.replace('{n}', punkte.length) };
+    var r = ausrichten(bild, true);
+    if (r.fehler) return { ok: false, punkte: punkte, hinweis: T.kameraKein };
+    return { ok: true, punkte: punkte, umriss: punkte, breite: r.abb.massstab()[0] * A4[0] };
+  }
+  if (B.kameraMoeglich()) el('ab-live').hidden = false;
+  el('ab-live').addEventListener('click', function(){
+    el('ab-ergebnis').hidden = true;
+    melden('ab-status', '');
+    B.kamera({ feld: el('ab-kamera-feld'), pruefen: livePruefen, minBreite: 700,
+      fertig: function(quelle){ bogenAus([quelle]); },
+      fehler: function(text){ melden('ab-status', text, true); } });
+  });
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
   window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden };
