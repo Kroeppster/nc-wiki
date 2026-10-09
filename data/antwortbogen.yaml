@@ -1,0 +1,96 @@
+# ============================================================================
+# LÖSUNGEN DER TESTSIMULATIONEN - für «Antwortbogen auswerten» (Alpha-Seite)
+# ============================================================================
+# AUTOMATISCH ERZEUGT von scripts/antwortbogen-loesungen.py aus den
+# Lösungs-PDFs unter assets/downloads/testsimulationen/. Nicht von Hand
+# ändern - eine falsche Lösung hier zählt bei allen, die ihren Bogen
+# auswerten, falsch. Ist ein PDF fehlerhaft, das PDF korrigieren und das
+# Skript neu laufen lassen.
+#
+# Je Testsimulation acht Zeilen zu 18 Buchstaben, eine je Untertest in der
+# Reihenfolge des Antwortbogens (siehe "bloecke"). Der Antwortbogen selbst
+# ist seit 2022 derselbe (Passermarken, Kästchen), deshalb gilt für alle
+# Jahre dieselbe Lage der Kästchen (layouts/partials/bausteine/
+# antwortbogen-auswertung.html).
+# ============================================================================
+bloecke:
+  - de: "Muster zuordnen"
+    fr: "Reconnaissance de fragments de figure"
+    it: "Associare le figure"
+  - de: "Med.-nat. Grundverständnis"
+    fr: "Compréhension de questions fond. de la médecine et des sc. nat."
+    it: "Comprensione di base di questioni medico-scientifiche"
+  - de: "Objekte im Raum"
+    fr: "Objets dans l'espace"
+    it: "Oggetti nello spazio"
+  - de: "Quantitative und formale Probleme"
+    fr: "Problèmes quantitatifs et formels"
+    it: "Problemi quantitativi e formali"
+  - de: "Textverständnis"
+    fr: "Compréhension de textes"
+    it: "Comprensione di testi"
+  - de: "Figuren lernen"
+    fr: "Apprendre des figures"
+    it: "Memorizzazione di figure"
+  - de: "Fakten lernen"
+    fr: "Apprendre des faits"
+    it: "Memorizzazione di fatti"
+  - de: "Diagramme und Tabellen"
+    fr: "Diagrammes et tableaux"
+    it: "Diagrammi e tabelle"
+testsimulationen:
+  - jahr: 2026
+    quelle: "2026_testsimulationen_Loesung.pdf"
+    loesungen:
+      - "BDACEDEDABCDCBAEEA"
+      - "DACBEDEDADEBBECADC"
+      - "DACDABCADAEBBADEEC"
+      - "ABCBBCADBECEADDCCA"
+      - "CBCCBECBBADCECBBEC"
+      - "CDABCEDDAAEBDEEDBE"
+      - "BCBEAEACDAACAEDCCD"
+      - "DEECBDDEBEEAEBCEAC"
+  - jahr: 2025
+    quelle: "2025_testsimulationen_Loesung-Auswertung-Konzentrationstest.pdf"
+    loesungen:
+      - "DECDBAEEACABAEDCBD"
+      - "DECDDAEDDDCECCCCAB"
+      - "BBEAEDACABBCEEADCD"
+      - "BECDDDDCAABBBDEECD"
+      - "DAEBBACEBDDEDBDEBB"
+      - "ADDBCCCCDEAEDEAEAB"
+      - "BCAEDADDBDBCCACCAB"
+      - "DBCEEDCDADDACECBAC"
+  - jahr: 2024
+    quelle: "2024_testsimulationen_Loesung.pdf"
+    loesungen:
+      - "ADBEDCADBACBABCEED"
+      - "DEEDEAECDACBDECBCA"
+      - "CBDAEDACDADEBADCEA"
+      - "CDBECABDACDCBBCAEE"
+      - "ECACDCDBADDBCDBEDC"
+      - "CECDDDDCDBDBEABAEA"
+      - "EBEDABDCAECADECBBB"
+      - "ADCCECEDDECDDCCADE"
+  - jahr: 2023
+    quelle: "2023_testsimulationen_Loesung.pdf"
+    loesungen:
+      - "ACADAEBCADAECCEADB"
+      - "DEABEAEBCBDCDECEDD"
+      - "BDAABCDEAABEEEBADE"
+      - "CABCCACBBDCEAEADBE"
+      - "CCDBEAEADEDDCDEDBC"
+      - "BBCEBABBACACCEDAEC"
+      - "ADDAECCBEBCDAEABBD"
+      - "ECDCABBEBABBEAAECE"
+  - jahr: 2022
+    quelle: "2022_testsimulationen_Loesung.pdf"
+    loesungen:
+      - "BAEEBBEABCBECBDECA"
+      - "CCBAACDCBDEBECECEC"
+      - "CBDEBCDEABBAEEDBCA"
+      - "CDDAEABCAEEADBACDB"
+      - "BCACADCCEBEADDACBC"
+      - "DDDADBABDDDAACDCAD"
+      - "DCBCCABCDEACAEBCED"
+      - "EEDCCCEBACBEDADEAD"

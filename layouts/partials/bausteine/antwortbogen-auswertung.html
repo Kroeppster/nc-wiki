@@ -1,0 +1,566 @@
+{{- /*
+  ============================================================================
+  ANTWORTBOGEN AUSWERTEN  -  ```baustein antwortbogen-auswertung ```
+  ============================================================================
+  Ein Foto (oder ein Scan) des ausgefuellten Antwortbogens einer
+  Testsimulation: die Kreuze werden gelesen und mit den Loesungen verglichen.
+  Heraus kommen die Punkte je Untertest und das Bild mit dem, was gelesen
+  wurde - gruen richtig, rot falsch, blau die Loesung, orange bitte ansehen.
+  Was nicht eindeutig war, laesst sich in der Liste darunter von Hand
+  korrigieren; die Punkte rechnen sich sofort neu.
+
+  ALLES LAEUFT IM BROWSER. Das Foto verlaesst das Geraet nicht: GitHub Pages
+  hat ohnehin keinen Server, und Fotos von Antwortboegen (mit Namen darauf)
+  haben auf einem fremden Server nichts verloren.
+
+  DAS VERFAHREN IST DAS DES FORMATIERUNGSTOOLS (werkzeug/auswertung.py),
+  Schritt fuer Schritt nach JavaScript uebertragen, mit denselben Zahlen:
+    1. Papierhelligkeit je Feld (ein Vierzigstel der langen Seite) - auf
+       einem Handyfoto ist das Blatt in einer Ecke oft viel dunkler als in
+       der anderen; alle Schwellen sind Anteile davon.
+    2. Die vier Passermarken (schwarze Quadrate in den Ecken) suchen, zuerst
+       im aeusseren Fuenftel, sonst weiter innen und kleiner.
+    3. Daraus eine projektive Abbildung Bogen (pt) -> Bild (px); auch schraeg
+       fotografierte Boegen. Von den vier Drehungen gewinnt die, bei der die
+       Oberkante des Kopfkastens dort liegt, wo sie liegen muss.
+    4. Je Kaestchen der Anteil Tinte im Innern (Magenta zaehlt nicht), je
+       Zeile die Antwort: ein Kreuz, leer, mehrere - oder unsicher.
+  Wer dort etwas aendert, zieht es hier nach (und umgekehrt).
+
+  DER BOGEN: Alle Testsimulationen seit 2022 haben denselben Antwortbogen
+  (gemessen an den PDFs unter assets/downloads/testsimulationen/: Passermarken
+  und Kaestchen innerhalb von 0.2 pt gleich), acht Bloecke zu 18 Zeilen. Die
+  Loesungen: data/antwortbogen.yaml, erzeugt von
+  scripts/antwortbogen-loesungen.py.
+
+  KEINE LEERZEILEN IN DER AUSGABE (siehe fakten-generator.html).
+  ============================================================================
+*/ -}}
+{{- $d := hugo.Data.antwortbogen }}
+{{- $lang := .Site.Language.Lang }}
+<div class="ab" id="ab-wurzel" data-pagefind-ignore>
+<script type="application/json" id="ab-daten">{{ $d | jsonify | safeJS }}</script>
+<p class="ab-intro">{{ i18n "ab_intro" }}</p>
+<p class="ab-privat">{{ i18n "ab_privat" }}</p>
+<div class="ab-eingabe">
+<label class="ab-feld">{{ i18n "ab_testsim" }}
+<select id="ab-testsim">
+{{- range $d.testsimulationen }}
+<option value="{{ .jahr }}">{{ replace (i18n "ab_testsim_jahr") "{jahr}" (string .jahr) }}</option>
+{{- end }}
+</select>
+</label>
+<label class="ab-feld">{{ i18n "ab_foto" }}
+<input type="file" id="ab-datei" accept="image/*">
+</label>
+</div>
+<p class="ab-hinweis">{{ i18n "ab_tipps" }}</p>
+<p class="ab-status" id="ab-status" role="status" aria-live="polite"></p>
+<div class="ab-ergebnis" id="ab-ergebnis" hidden>
+<p class="ab-summe" id="ab-summe"></p>
+<ul class="ab-meldungen" id="ab-meldungen"></ul>
+<table class="ab-punkte" id="ab-punkte"></table>
+<p class="ab-hinweis">{{ i18n "ab_regel" }} {{ i18n "ab_konz" }}</p>
+<p class="ab-legende">{{ i18n "ab_legende" }}</p>
+<canvas class="ab-bild" id="ab-bild"></canvas>
+<p class="ab-hinweis" id="ab-unsicher" hidden></p>
+<div class="ab-zeilen" id="ab-zeilen"></div>
+</div>
+</div>
+<script>
+(function(){
+  var el = function(id){ return document.getElementById(id); };
+  var D = JSON.parse(el('ab-daten').textContent);
+  var SPRACHE = {{ $lang | jsonify | safeJS }};
+  var T = {
+    liest: {{ i18n "ab_liest" | jsonify | safeJS }},
+    fehlerBild: {{ i18n "ab_fehler_bild" | jsonify | safeJS }},
+    fehlerKlein: {{ i18n "ab_fehler_klein" | jsonify | safeJS }},
+    fehlerKein: {{ i18n "ab_fehler_kein" | jsonify | safeJS }},
+    drei: {{ i18n "ab_hinweis_drei" | jsonify | safeJS }},
+    keine: {{ i18n "ab_hinweis_keine" | jsonify | safeJS }},
+    verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
+    zeilen: {{ i18n "ab_hinweis_zeilen" | jsonify | safeJS }},
+    summe: {{ i18n "ab_ergebnis" | jsonify | safeJS }},
+    untertest: {{ i18n "ab_untertest" | jsonify | safeJS }},
+    punkte: {{ i18n "ab_punkte" | jsonify | safeJS }},
+    total: {{ i18n "ab_total" | jsonify | safeJS }},
+    nr: {{ i18n "ab_nr" | jsonify | safeJS }},
+    deine: {{ i18n "ab_deine" | jsonify | safeJS }},
+    loesung: {{ i18n "ab_loesung" | jsonify | safeJS }},
+    leer: {{ i18n "ab_leer" | jsonify | safeJS }},
+    mehrfach: {{ i18n "ab_mehrfach" | jsonify | safeJS }},
+    pruefen: {{ i18n "ab_pruefen" | jsonify | safeJS }},
+    unsicher: {{ i18n "ab_unsicher" | jsonify | safeJS }}
+  };
+  // --- Der Bogen (pt, A4), wie ems.typ ihn setzt ---------------------------
+  var A4 = [595.2756, 841.8898];
+  // Linke obere Ecke des weissen Felds der Passermarken; der schwarze Kern
+  // (12.5 pt) sitzt 3.6 pt weiter innen.
+  var PASSER = { ol: [25.2, 23.5], or: [548.4, 21.6], ul: [21.4, 795.1], ur: [548.4, 795.1] };
+  var PASSER_RAND = 3.6, PASSER_KERN = 12.5;
+  var BLOCK_X = [50.88, 174.48, 298.32, 421.92], ZEILE_Y = [241.44, 537.36];
+  var ZEILE = 13.48, FELD_B = 9.12, FELD_H = 6.24, FELD_X = 26.4, SPALTE = 20.82;
+  var KOPF_Y = 36, BLOECKE = 8, ZEILEN = 18, BST = 'ABCDE';
+  // Die Ecken im Uhrzeigersinn: liegt ein Bogen gedreht, rueckt jede
+  // Passermarke um dieselbe Zahl Ecken weiter.
+  var KREIS = ['ol', 'or', 'ur', 'ul'];
+  var MARKEN = {};
+  KREIS.forEach(function(e){ MARKEN[e] = [PASSER[e][0] + PASSER_RAND + PASSER_KERN / 2, PASSER[e][1] + PASSER_RAND + PASSER_KERN / 2]; });
+  var LANGE_SEITE = 1754;  // px - jedes Bild wird mindestens auf 150 dpi gebracht
+  var EINZUG = 1.5;        // pt - so weit innerhalb des Kaestchenrands wird gemessen
+  var MARKIERT = 0.06;     // Anteil Tinte, ab dem ein Kaestchen angekreuzt ist
+  var UNSICHER = 0.025;    // dazwischen: bitte ansehen
+  var VOLL = 0.30;         // sind alle fuenf so voll, ist die Zeile ungueltig
+  var MIN_INHALT = 60;     // Helligkeitsunterschied, ab dem der Kopfkasten erkannt ist
+  var GEDRUCKT = 0.25;     // Anteil Rahmen, ab dem eine Zeile als gedruckt gilt
+  // --- Lineare Algebra ------------------------------------------------------
+  function loesen(a, b){
+    var n = b.length, m = a.map(function(z, i){ return z.concat([b[i]]); });
+    for (var s = 0; s < n; s++){
+      var p = s;
+      for (var i = s + 1; i < n; i++) if (Math.abs(m[i][s]) > Math.abs(m[p][s])) p = i;
+      if (Math.abs(m[p][s]) < 1e-12) throw new Error('singulaer');
+      var t = m[s]; m[s] = m[p]; m[p] = t;
+      for (i = s + 1; i < n; i++){
+        var f = m[i][s] / m[s][s];
+        for (var j = s; j <= n; j++) m[i][j] -= f * m[s][j];
+      }
+    }
+    var x = new Array(n);
+    for (i = n - 1; i >= 0; i--){
+      var summe = 0;
+      for (j = i + 1; j < n; j++) summe += m[i][j] * x[j];
+      x[i] = (m[i][n] - summe) / m[i][i];
+    }
+    return x;
+  }
+  // Von Bogenkoordinaten (pt) auf Bildpunkte. Mit vier Passermarken
+  // projektiv (auch schraeg fotografiert), mit drei affin.
+  function abbildung(paare){
+    var a = [], b = [], k;
+    if (paare.length >= 4){
+      paare.slice(0, 4).forEach(function(p){
+        var x = p[0][0], y = p[0][1], u = p[1][0], v = p[1][1];
+        a.push([x, y, 1, 0, 0, 0, -x * u, -y * u]); b.push(u);
+        a.push([0, 0, 0, x, y, 1, -x * v, -y * v]); b.push(v);
+      });
+      k = loesen(a, b);
+    } else {
+      paare.slice(0, 3).forEach(function(p){
+        var x = p[0][0], y = p[0][1];
+        a.push([x, y, 1, 0, 0, 0]); b.push(p[1][0]);
+        a.push([0, 0, 0, x, y, 1]); b.push(p[1][1]);
+      });
+      k = loesen(a, b).concat([0, 0]);
+    }
+    var abb = function(x, y){
+      var n = k[6] * x + k[7] * y + 1;
+      return [(k[0] * x + k[1] * y + k[2]) / n, (k[3] * x + k[4] * y + k[5]) / n];
+    };
+    abb.gespiegelt = function(){
+      var mx = A4[0] / 2, my = A4[1] / 2, o = abb(mx, my), a1 = abb(mx + 10, my), b1 = abb(mx, my + 10);
+      return (a1[0] - o[0]) * (b1[1] - o[1]) - (a1[1] - o[1]) * (b1[0] - o[0]) <= 0;
+    };
+    abb.massstab = function(){
+      var mx = A4[0] / 2, my = A4[1] / 2, o = abb(mx, my), a1 = abb(mx + 100, my), b1 = abb(mx, my + 100);
+      return [Math.hypot(a1[0] - o[0], a1[1] - o[1]) / 100, Math.hypot(b1[0] - o[0], b1[1] - o[1]) / 100];
+    };
+    return abb;
+  }
+  // --- Das Bild ---------------------------------------------------------------
+  // Was Papier ist, gilt je Stelle: auf einem Handyfoto ist das Blatt in
+  // einer Ecke oft deutlich dunkler als in der anderen. Alle Schwellen sind
+  // deshalb Anteile der Papierhelligkeit in der Naehe.
+  function Bild(rgba, w, h){
+    this.w = w; this.h = h; this.rgba = rgba;
+    var lum = this.lum = new Uint8Array(w * h);
+    for (var i = 0, j = 0; i < lum.length; i++, j += 4)
+      lum[i] = Math.floor((299 * rgba[j] + 587 * rgba[j + 1] + 114 * rgba[j + 2]) / 1000);
+    this.vergroessert = 1;
+    this.papier = this.papierGesamt();
+    this.karteBauen();
+  }
+  Bild.prototype.hell = function(x, y){
+    x = Math.trunc(x); y = Math.trunc(y);
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return 255;
+    return this.lum[y * this.w + x];
+  };
+  Bild.prototype.papierBei = function(x, y){
+    var i = Math.min(Math.max(Math.floor(Math.trunc(x) / this.feld), 0), this.nx - 1);
+    var j = Math.min(Math.max(Math.floor(Math.trunc(y) / this.feld), 0), this.ny - 1);
+    return this.karte[j][i];
+  };
+  // Das Magenta der Kaestchen, auch im Schatten, wo alle drei Farben dunkler sind.
+  function magenta(r, g, b, papier){ return r - g > 0.31 * papier && b - g > 0.2 * papier; }
+  Bild.prototype.tinte = function(x, y){
+    x = Math.trunc(x); y = Math.trunc(y);
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return false;
+    var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
+    var p = this.papierBei(x, y);
+    if (magenta(r, g, b, p)) return false;
+    return (299 * r + 587 * g + 114 * b) / 1000 < 0.8 * p;
+  };
+  Bild.prototype.rahmen = function(x, y){
+    x = Math.trunc(x); y = Math.trunc(y);
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return false;
+    var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
+    var p = this.papierBei(x, y);
+    return magenta(r, g, b, p) || (299 * r + 587 * g + 114 * b) / 1000 < 0.62 * p;
+  };
+  Bild.prototype.dunkel = function(x, y){ return this.hell(x, y) < 0.62 * this.papierBei(x, y); };
+  Bild.prototype.papierGesamt = function(){
+    var werte = [];
+    for (var i = 0; i < 60; i++) for (var j = 0; j < 80; j++)
+      werte.push(this.hell(this.w * (0.1 + 0.8 * i / 59), this.h * (0.1 + 0.8 * j / 79)));
+    werte.sort(function(a, b){ return a - b; });
+    return Math.max(120, werte[Math.floor(werte.length * 0.85)]);
+  };
+  // Papierhelligkeit je Feld von etwa einem Vierzigstel der langen Seite:
+  // das Helle in jedem Feld, geglaettet ueber die Nachbarn.
+  Bild.prototype.karteBauen = function(){
+    var f = this.feld = Math.max(12, Math.floor(Math.max(this.w, this.h) / 40));
+    var nx = this.nx = Math.ceil(this.w / f), ny = this.ny = Math.ceil(this.h / f);
+    var schritt = Math.max(2, Math.floor(f / 10)), roh = [], i, j;
+    for (j = 0; j < ny; j++){
+      var zeile = [];
+      for (i = 0; i < nx; i++){
+        var werte = [];
+        for (var y = j * f; y < Math.min((j + 1) * f, this.h); y += schritt)
+          for (var x = i * f; x < Math.min((i + 1) * f, this.w); x += schritt) werte.push(this.lum[y * this.w + x]);
+        werte.sort(function(a, b){ return a - b; });
+        zeile.push(werte.length ? werte[Math.floor(werte.length * 0.9)] : this.papier);
+      }
+      roh.push(zeile);
+    }
+    function nachbarn(k, i, j, art){
+      var w = [];
+      for (var b = Math.max(0, j - 1); b < Math.min(ny, j + 2); b++)
+        for (var a = Math.max(0, i - 1); a < Math.min(nx, i + 2); a++) w.push(k[b][a]);
+      return art === 'max' ? Math.max.apply(null, w) : w.reduce(function(s, v){ return s + v; }, 0) / w.length;
+    }
+    var hoch = [], karte = [];
+    for (j = 0; j < ny; j++){ hoch.push([]); for (i = 0; i < nx; i++) hoch[j].push(nachbarn(roh, i, j, 'max')); }
+    for (j = 0; j < ny; j++){ karte.push([]); for (i = 0; i < nx; i++) karte[j].push(Math.max(60, nachbarn(hoch, i, j, 'mittel'))); }
+    this.karte = karte;
+  };
+  // --- Passermarken --------------------------------------------------------------
+  // Die schwarzen Quadrate in den vier Ecken. Gesucht wird zuerst im
+  // aeusseren Fuenftel; findet sich da nichts, weil der Bogen auf dem Foto
+  // nur einen Teil fuellt, weiter innen und mit kleineren Marken.
+  function passermarken(bild){
+    var aus = {};
+    [[0.2, 0.6], [0.5, 0.3]].some(function(s){
+      var neu = passermarkenSuchen(bild, s[0], s[1]);
+      if (Object.keys(neu).length > Object.keys(aus).length) aus = neu;
+      return Object.keys(aus).length === 4;
+    });
+    return aus;
+  }
+  function passermarkenSuchen(bild, anteil, kleinste){
+    var w = bild.w, h = bild.h;
+    var px = Math.min(Math.max(w, h) / A4[1], Math.min(w, h) / A4[0]);   // px je pt, geschaetzt
+    var g = Math.max(1, Math.round(px * kleinste / 0.6));                 // ein Rasterpunkt ~ 1 pt
+    var kern = PASSER_KERN * px / g;
+    var rw = Math.floor(Math.trunc(w * anteil) / g), rh = Math.floor(Math.trunc(h * anteil) / g);
+    var ecken = { ol: [0, 0], or: [w - rw * g, 0], ul: [0, h - rh * g], ur: [w - rw * g, h - rh * g] };
+    var aus = {};
+    Object.keys(ecken).forEach(function(name){
+      var x0 = ecken[name][0], y0 = ecken[name][1];
+      var dunkel = new Uint8Array(rw * rh), gesehen = new Uint8Array(rw * rh), i, j;
+      for (j = 0; j < rh; j++) for (i = 0; i < rw; i++) dunkel[j * rw + i] = bild.dunkel(x0 + i * g, y0 + j * g) ? 1 : 0;
+      var beste = null;
+      for (j = 0; j < rh; j++) for (i = 0; i < rw; i++){
+        if (!dunkel[j * rw + i] || gesehen[j * rw + i]) continue;
+        var stapel = [i, j], n = 0, sx = 0, sy = 0, x1 = i, x2 = i, y1 = j, y2 = j;
+        gesehen[j * rw + i] = 1;
+        while (stapel.length){
+          var b = stapel.pop(), a = stapel.pop();
+          n++; sx += a; sy += b;
+          if (a < x1) x1 = a; if (a > x2) x2 = a; if (b < y1) y1 = b; if (b > y2) y2 = b;
+          [[a + 1, b], [a - 1, b], [a, b + 1], [a, b - 1]].forEach(function(q){
+            var c = q[0], d = q[1];
+            if (c >= 0 && c < rw && d >= 0 && d < rh && dunkel[d * rw + c] && !gesehen[d * rw + c]){
+              gesehen[d * rw + c] = 1; stapel.push(c, d);
+            }
+          });
+        }
+        var bw = x2 - x1 + 1, bh = y2 - y1 + 1;
+        if (!(kleinste * kern <= bw && bw <= 1.6 * kern && kleinste * kern <= bh && bh <= 1.6 * kern)) continue;
+        if (Math.abs(bw - bh) > 0.35 * Math.max(bw, bh) || n < 0.7 * bw * bh) continue;
+        var cx = x0 + (sx / n + 0.5) * g, cy = y0 + (sy / n + 0.5) * g;
+        if (!weissUmrandet(bild, cx, cy, bw * g, bh * g)) continue;
+        var ex = name[1] === 'l' ? 0 : w, ey = name[0] === 'o' ? 0 : h;
+        var abstand = (cx - ex) * (cx - ex) + (cy - ey) * (cy - ey);
+        if (!beste || abstand < beste[0]) beste = [abstand, cx, cy, bw * g, bh * g];
+      }
+      if (beste) aus[name] = verfeinern(bild, beste[1], beste[2], beste[3], beste[4]);
+    });
+    return aus;
+  }
+  // Eine Passermarke ist ein schwarzes Quadrat auf weissem Papier. Ein
+  // dunkles Stueck Tisch neben dem Blatt kann quadratisch aussehen, hat aber
+  // keinen hellen Rand.
+  function weissUmrandet(bild, cx, cy, bw, bh){
+    var innen = 0, a, b, t, hell = 0, alle = 0;
+    for (a = -1; a <= 1; a++) for (b = -1; b <= 1; b++) innen += bild.hell(cx + bw * a / 6, cy + bh * b / 6);
+    innen /= 9;
+    for (t = -4; t <= 4; t++){
+      [[t / 4, -1], [t / 4, 1], [-1, t / 4], [1, t / 4]].forEach(function(q){
+        alle++;
+        if (bild.hell(cx + q[0] * bw * 0.72, cy + q[1] * bh * 0.72) > innen + 0.3 * bild.papier) hell++;
+      });
+    }
+    return hell >= 0.85 * alle;
+  }
+  // Schwerpunkt der dunklen Punkte in voller Aufloesung.
+  function verfeinern(bild, cx, cy, bw, bh){
+    var sx = 0, sy = 0, n = 0;
+    for (var y = Math.trunc(cy - bh); y <= Math.trunc(cy + bh); y++)
+      for (var x = Math.trunc(cx - bw); x <= Math.trunc(cx + bw); x++)
+        if (bild.dunkel(x, y)){ sx += x; sy += y; n++; }
+    return n ? [sx / n + 0.5, sy / n + 0.5] : [cx, cy];
+  }
+  // Wie deutlich die Oberkante des Kopfkastens dort liegt, wo sie laut
+  // Abbildung liegen muss - so wird ein verkehrt herum liegender Bogen
+  // erkannt, denn die vier Passermarken sehen gleich aus.
+  function inhalt(bild, abb){
+    var dunkel = 0, hell = 0, n = 0;
+    for (var x = 70; x <= 530; x += 10){
+      var m = 255;
+      for (var d = -3; d <= 3; d++){ var p = abb(x, KOPF_Y + d / 2); m = Math.min(m, bild.hell(p[0], p[1])); }
+      var q = abb(x, KOPF_Y - 7);
+      dunkel += m; hell += bild.hell(q[0], q[1]); n++;
+    }
+    return (hell - dunkel) / n;
+  }
+  function ausrichten(bild){
+    var marken = passermarken(bild), hinweise = [], kandidaten = [], k, anzahl = Object.keys(marken).length;
+    for (k = 0; k < 4; k++){
+      var paare = [];
+      KREIS.forEach(function(e, i){ var m = marken[KREIS[(i + k) % 4]]; if (m) paare.push([MARKEN[e], m]); });
+      if (paare.length < 3) continue;
+      try { var abb = abbildung(paare); if (!abb.gespiegelt()) kandidaten.push(abb); } catch (e) {}
+    }
+    if (!kandidaten.length){
+      // Ohne Passermarken: das Bild zeigt hoffentlich das ganze Blatt.
+      hinweise.push(T.keine);
+      var ecken = { ol: [0, 0], or: [A4[0], 0], ur: A4, ul: [0, A4[1]] };
+      var bildEcken = { ol: [0, 0], or: [bild.w, 0], ur: [bild.w, bild.h], ul: [0, bild.h] };
+      for (k = 0; k < 4; k++)
+        kandidaten.push(abbildung(KREIS.map(function(e, i){ return [ecken[e], bildEcken[KREIS[(i + k) % 4]]]; })));
+    } else if (anzahl === 3) hinweise.push(T.drei);
+    var beste = null;
+    kandidaten.forEach(function(a){ var w = inhalt(bild, a); if (!beste || w > beste[0]) beste = [w, a]; });
+    if (beste[0] < MIN_INHALT){
+      var breite = beste[1].massstab()[0] * A4[0] / bild.vergroessert;
+      if (anzahl >= 3 && breite < 600) return { fehler: T.fehlerKlein.replace('{n}', Math.round(breite)) };
+      return { fehler: T.fehlerKein };
+    }
+    var s = beste[1].massstab();
+    // Anders als im Tool auch dann, wenn der Kopfkasten noch zu erkennen
+    // war: Ein Handyfoto aus zwei Metern zeigt ihn, aber die Kaestchen sind
+    // dann wenige Bildpunkte gross, und gelesen wuerde Unsinn.
+    var breite = s[0] * A4[0] / bild.vergroessert;
+    if (breite < 600) return { fehler: T.fehlerKlein.replace('{n}', Math.round(breite)) };
+    if (Math.abs(s[0] / s[1] - 1) > 0.06) hinweise.push(T.verzerrt.replace('{n}', Math.round(Math.abs(s[0] / s[1] - 1) * 100)));
+    return { abb: beste[1], hinweise: hinweise };
+  }
+  // --- Kaestchen lesen ---------------------------------------------------------
+  function feldEcke(block, zeile, spalte){
+    return [BLOCK_X[block % 4] + FELD_X + spalte * SPALTE, ZEILE_Y[Math.floor(block / 4)] + zeile * ZEILE];
+  }
+  // Wie deutlich ein Kaestchen angekreuzt ist (0 bis 1): der Anteil Tinte im
+  // Innern. Tinte, die nur einen schmalen Teil der Breite belegt (Staub,
+  // Kratzer), zaehlt weniger.
+  function fuellung(bild, abb, x0, y0){
+    var n = 0, t = 0, spalten = 0, belegt = 0;
+    for (var x = x0 + EINZUG; x <= x0 + FELD_B - EINZUG + 1e-6; x += 0.4){
+      var vorher = t;
+      for (var y = y0 + EINZUG; y <= y0 + FELD_H - EINZUG + 1e-6; y += 0.4){
+        var p = abb(x, y); n++; if (bild.tinte(p[0], p[1])) t++;
+      }
+      spalten++; if (t > vorher) belegt++;
+    }
+    var anteil = t / n, breite = belegt / spalten;
+    return breite >= 0.4 ? anteil : anteil * breite / 0.4;
+  }
+  function zeileGedruckt(bild, abb, block, zeile){
+    var n = 0, t = 0;
+    for (var s = 0; s < 5; s++){
+      var e = feldEcke(block, zeile, s);
+      [0.8, 2.5, 4.5, 6.5, 8.3].forEach(function(dx){
+        [e[1], e[1] + FELD_H].forEach(function(y){
+          n++;
+          if ([-0.7, 0, 0.7].some(function(d){ var p = abb(e[0] + dx, y + d); return bild.rahmen(p[0], p[1]); })) t++;
+        });
+      });
+    }
+    return t / n;
+  }
+  // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
+  // Buchstabe, '' fuer leer oder '*' fuer mehrere Kreuze.
+  function zeileLesen(werte){
+    var grund = Math.min.apply(null, werte);
+    if (grund >= VOLL) return ['*', true];
+    // Liegt das Bild eine Spur daneben, ragt in alle fuenf Kaestchen gleich
+    // viel Rahmen ins Messfeld - das zaehlt nicht als Kreuz.
+    var netto = werte.map(function(w){ return w - Math.min(grund, 0.08); });
+    var reihe = [0, 1, 2, 3, 4].sort(function(a, b){ return netto[b] - netto[a] || a - b; });
+    var erstes = netto[reihe[0]], zweites = netto[reihe[1]];
+    if (erstes < MARKIERT) return ['', erstes >= UNSICHER];
+    if (zweites < UNSICHER) return [BST[reihe[0]], false];
+    if (zweites >= MARKIERT && zweites >= 0.5 * erstes) return ['*', true];
+    // Neben einem deutlichen Kreuz etwas Schwaches: radiert, ein Fleck oder
+    // ein zaghaftes zweites Kreuz. Gezaehlt wird das deutliche.
+    return [BST[reihe[0]], true];
+  }
+  function bogenLesen(bild){
+    var r = ausrichten(bild);
+    if (r.fehler) return r;
+    var antworten = [], unsicher = [], fehlend = false;
+    for (var k = 0; k < BLOECKE; k++){
+      var gedruckt = 0;
+      for (var i = 0; i < ZEILEN; i++){
+        if (zeileGedruckt(bild, r.abb, k, i) >= GEDRUCKT) gedruckt++;
+        var w = [0, 1, 2, 3, 4].map(function(s){ var e = feldEcke(k, i, s); return fuellung(bild, r.abb, e[0], e[1]); });
+        var a = zeileLesen(w);
+        antworten.push(a[0]); unsicher.push(a[1]);
+      }
+      if (gedruckt < ZEILEN) fehlend = true;
+    }
+    if (fehlend) r.hinweise.push(T.zeilen);
+    r.antworten = antworten; r.unsicher = unsicher;
+    return r;
+  }
+  // --- Bild laden ------------------------------------------------------------------
+  // Ein Foto zeigt den Bogen oft nur auf einem Teil des Bilds: die
+  // Bildpunkte des Fotos bleiben (bis zum Doppelten eines Scans mit 150 dpi),
+  // ein kleines Bild wird auf Scangroesse vergroessert. Das <img> dreht ein
+  // Handyfoto selbst richtig (EXIF).
+  function laden(datei){
+    return new Promise(function(ok, fehler){
+      var url = URL.createObjectURL(datei), img = new Image();
+      img.onload = function(){ URL.revokeObjectURL(url); ok(img); };
+      img.onerror = function(){ URL.revokeObjectURL(url); fehler(); };
+      img.src = url;
+    });
+  }
+  function bildAus(img){
+    var lang = Math.max(img.naturalWidth, img.naturalHeight);
+    var ziel = Math.min(Math.max(LANGE_SEITE, lang), 2 * LANGE_SEITE), z = ziel / lang;
+    var c = document.createElement('canvas');
+    c.width = Math.round(img.naturalWidth * z); c.height = Math.round(img.naturalHeight * z);
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    var b = new Bild(ctx.getImageData(0, 0, c.width, c.height).data, c.width, c.height);
+    b.vergroessert = Math.max(1, ziel / lang);
+    b.leinwand = c;
+    return b;
+  }
+  // --- Auswerten und zeigen ---------------------------------------------------------
+  var stand = null;
+  function loesungen(){
+    var jahr = +el('ab-testsim').value;
+    var t = D.testsimulationen.filter(function(x){ return x.jahr === jahr; })[0];
+    return t.loesungen.join('').split('');
+  }
+  function name(b){ return b[SPRACHE] || b.de; }
+  function zeigen(){
+    var l = loesungen(), richtig = 0, zeilen = '', tabelle = '';
+    D.bloecke.forEach(function(b, k){
+      var r = 0, h = '';
+      for (var i = 0; i < ZEILEN; i++){
+        var n = k * ZEILEN + i, a = stand.antworten[n], ok = a === l[n];
+        if (ok) r++;
+        var wahl = ['', 'A', 'B', 'C', 'D', 'E', '*'].map(function(o){
+          return '<option value="' + o + '"' + (o === a ? ' selected' : '') + '>' + (o === '' ? T.leer : o === '*' ? T.mehrfach : o) + '</option>';
+        }).join('');
+        h += '<tr class="' + (ok ? 'ab-richtig' : 'ab-falsch') + (stand.unsicher[n] ? ' ab-unsicher' : '') + '">'
+          + '<td>' + (n + 1) + '</td><td><select data-nr="' + n + '" aria-label="' + T.deine + ' ' + (n + 1) + '">' + wahl + '</select></td>'
+          + '<td>' + l[n] + '</td><td>' + (ok ? '✓' : '✗') + (stand.unsicher[n] ? ' <span class="ab-pruefen">' + T.pruefen + '</span>' : '') + '</td></tr>';
+      }
+      richtig += r;
+      tabelle += '<tr><td>' + name(b) + '</td><td>' + r + ' / ' + ZEILEN + '</td></tr>';
+      zeilen += '<details class="ab-block"' + (stand.unsicher.slice(k * ZEILEN, (k + 1) * ZEILEN).some(Boolean) ? ' open' : '') + '><summary>'
+        + name(b) + ' <span>' + r + ' / ' + ZEILEN + '</span></summary><table><thead><tr><th>' + T.nr + '</th><th>' + T.deine
+        + '</th><th>' + T.loesung + '</th><th></th></tr></thead><tbody>' + h + '</tbody></table></details>';
+    });
+    var von = D.bloecke.length * ZEILEN;
+    el('ab-summe').textContent = T.summe.replace('{n}', richtig).replace('{von}', von);
+    el('ab-punkte').innerHTML = '<thead><tr><th>' + T.untertest + '</th><th>' + T.punkte + '</th></tr></thead><tbody>' + tabelle
+      + '<tr class="ab-total"><td>' + T.total + '</td><td>' + richtig + ' / ' + von + '</td></tr></tbody>';
+    el('ab-zeilen').innerHTML = zeilen;
+    var offen = stand.unsicher.filter(Boolean).length;
+    el('ab-unsicher').hidden = !offen;
+    el('ab-unsicher').textContent = T.unsicher.replace('{n}', offen);
+    el('ab-meldungen').innerHTML = stand.hinweise.map(function(h){ return '<li>' + h + '</li>'; }).join('');
+    zeichnen(l);
+  }
+  // Das Bild mit dem, was gelesen wurde: gruen richtig, rot falsch, blau
+  // die Loesung, orange um eine Zeile, die bitte angesehen werden soll.
+  function zeichnen(l){
+    var c = el('ab-bild'), q = stand.bild.leinwand, s = Math.min(1, 1100 / q.width);
+    c.width = Math.round(q.width * s); c.height = Math.round(q.height * s);
+    var ctx = c.getContext('2d');
+    ctx.drawImage(q, 0, 0, c.width, c.height);
+    function viereck(x, y, b, h, farbe, breite, fuellen){
+      ctx.beginPath();
+      [[x, y], [x + b, y], [x + b, y + h], [x, y + h]].forEach(function(p, i){
+        var u = stand.abb(p[0], p[1]); ctx[i ? 'lineTo' : 'moveTo'](u[0] * s, u[1] * s); });
+      ctx.closePath();
+      if (fuellen){ ctx.fillStyle = farbe; ctx.fill(); }
+      ctx.strokeStyle = farbe; ctx.lineWidth = breite; ctx.stroke();
+    }
+    for (var n = 0; n < stand.antworten.length; n++){
+      var k = Math.floor(n / ZEILEN), i = n % ZEILEN, a = stand.antworten[n];
+      for (var sp = 0; sp < 5; sp++){
+        var e = feldEcke(k, i, sp), b = BST[sp];
+        if (b === a) viereck(e[0] - 1, e[1] - 1, FELD_B + 2, FELD_H + 2, b === l[n] ? 'rgba(19,115,51,.45)' : 'rgba(197,34,31,.45)', 2, true);
+        if (b === l[n] && a !== l[n]) viereck(e[0] - 1.5, e[1] - 1.5, FELD_B + 3, FELD_H + 3, '#1a56db', 2.5, false);
+      }
+      if (stand.unsicher[n]){
+        var e0 = feldEcke(k, i, 0);
+        viereck(e0[0] - 22, e0[1] - 3, 5 * SPALTE + 22, FELD_H + 6, '#e8710a', 3, false);
+      }
+    }
+  }
+  el('ab-zeilen').addEventListener('change', function(ev){
+    var w = ev.target;
+    if (!w.matches('select[data-nr]')) return;
+    stand.antworten[+w.getAttribute('data-nr')] = w.value;
+    zeigen();
+  });
+  el('ab-testsim').addEventListener('change', function(){ if (stand) zeigen(); });
+  el('ab-datei').addEventListener('change', function(){
+    var datei = this.files && this.files[0];
+    if (!datei) return;
+    el('ab-ergebnis').hidden = true;
+    el('ab-status').textContent = T.liest;
+    el('ab-status').className = 'ab-status';
+    laden(datei).then(function(img){
+      // Erst die Meldung zeigen lassen, dann rechnen (das dauert einen Moment)
+      setTimeout(function(){
+        var bild = bildAus(img), r = bogenLesen(bild);
+        if (r.fehler){
+          el('ab-status').textContent = r.fehler;
+          el('ab-status').className = 'ab-status ab-fehler';
+          return;
+        }
+        stand = { bild: bild, abb: r.abb, antworten: r.antworten, unsicher: r.unsicher, hinweise: r.hinweise };
+        el('ab-status').textContent = '';
+        el('ab-ergebnis').hidden = false;
+        zeigen();
+        el('ab-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }, 30);
+    }, function(){
+      el('ab-status').textContent = T.fehlerBild;
+      el('ab-status').className = 'ab-status ab-fehler';
+    });
+  });
+  // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
+  // ohne Oberflaeche.
+  window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden };
+})();
+</script>

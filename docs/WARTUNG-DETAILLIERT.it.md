@@ -358,6 +358,7 @@ Blocco di codice con la lingua `baustein` (`layouts/_default/_markup/render-code
 | `fakten-generator` | generatore di fatti | `data/fakten-generator/` |
 | `figuren-generator` | generatore di figure | – |
 | `sponsoring-kontakt` | pulsante e-mail/telefono | `data/sponsoring.yaml` |
+| `antwortbogen-auswertung` | valutare il foglio delle risposte da foto (Alpha) | `data/antwortbogen.yaml` |
 
 Un errore di battitura nel nome interrompe la costruzione. Nuovi blocchi: creare un partial
 sotto `layouts/partials/bausteine/` e aggiungere il nome alla lista `$erlaubt` dell'hook.
@@ -699,6 +700,12 @@ Cornice comune: `layouts/partials/bausteine/ems-heft.html`, stili in `assets/css
 Prima di toccare le regole di stampa, leggere il commento presso `@media print` (le pagine
 del fascicolo vanno in un contenitore a parte sotto `<body>`; regole legate a
 `body.fg-druckt`).
+Stato: `ems.typ` dopo l'allineamento ai file InDesign del Probelauf 2026 (margini 15 mm,
+prima linea di base 98.66, riquadro, freccia e STOP, griglia delle figure, domande sui fatti
+su due colonne in posti fissi, chiave di correzione). Le istruzioni seguono il testo del
+fascicolo ufficiale in `i18n` (`fg_anl_*`, `fig_anl_*`, `ems_*`). Per verificare: stampare
+un set («Salva come PDF») e confrontare la posizione di testi e linee con il foglio dello
+strumento (p. es. con `pymupdf`); scarti tollerati sotto 1 pt (il browser arrotonda ai pixel).
 
 ### Generatore di fatti
 
@@ -743,7 +750,21 @@ lettere nel baricentro, logo misurato come figura).
 `content/de/alpha/` è il banco di lavoro per le nuove funzioni: protetta da password, non
 collegata da nessuna parte, **solo in tedesco**. Una sezione per funzione, che dice cosa
 valutare. Una volta approvata, il blocco passa sulla pagina vera (allora in tre lingue).
-Attualmente: generatore di figure e generatore di fatti.
+Attualmente: generatore di figure, generatore di fatti e «Antwortbogen auswerten».
+
+### Valutare il foglio delle risposte (Alpha)
+
+Una foto del foglio delle risposte compilato di una simulazione viene letta nel browser e
+confrontata con le soluzioni – la foto non lascia il dispositivo. Il procedimento è quello
+dello strumento di formattazione (`werkzeug/auswertung.py`), trasposto in JavaScript
+(`layouts/partials/bausteine/antwortbogen-auswertung.html`, leggere il commento in testa).
+Tutte le simulazioni dal 2022 hanno lo stesso foglio. Le soluzioni sono in
+`data/antwortbogen.yaml` e **non si modificano a mano**: per una nuova simulazione caricare
+come sempre il PDF delle soluzioni, inserirlo in `scripts/antwortbogen-loesungen.py` e
+lanciare `python3 scripts/antwortbogen-loesungen.py --schreiben` (si interrompe se non trova
+esattamente 144 soluzioni). Dopo modifiche alla lettura: `python3
+scripts/antwortbogen-testbilder.py /tmp/ab` (foto di prova con crocette note) e
+`node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 
 ---
 
@@ -916,6 +937,7 @@ python3 scripts/struktur-pruefen.py                                  # doppioni,
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # uso, moduli (Formspree intercettato)
 node scripts/fakten-generator-pruefen.mjs                            # 150 set + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 set + PDF
+python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # foto di fogli
 python3 scripts/texte-mappe-pruefen.py                               # cartelle Excel
 python3 scripts/wortliste-pruefen.py                                 # elenco di parole (Excel)
 node scripts/editor-rundlauf.mjs                                     # editor web

@@ -352,6 +352,7 @@ Als Code-Block mit der Sprache `baustein` (`layouts/_default/_markup/render-code
 | `fakten-generator` | Fakten-Generator | `data/fakten-generator/` |
 | `figuren-generator` | Figuren-Generator | – |
 | `sponsoring-kontakt` | E-Mail-/Telefon-Knopf | `data/sponsoring.yaml` |
+| `antwortbogen-auswertung` | Antwortbogen per Foto auswerten (Alpha) | `data/antwortbogen.yaml` |
 
 Ein Tippfehler im Namen bricht den Bau ab. Neue Bausteine: Partial unter
 `layouts/partials/bausteine/` anlegen und den Namen in die Liste `$erlaubt` im Render-Hook
@@ -693,6 +694,13 @@ Masse aus dem privaten **NCWiki-Formatierungstool** (`vorlage/ems.typ`). Gemeins
 Format übernehmen, nie Inhalte** – das Tool ist privat, die Website öffentlich. Vor
 Änderungen an den Druckregeln den Kommentar bei `@media print` lesen (Heftseiten kommen
 in einen eigenen Behälter unter `<body>`; Regeln hängen an `body.fg-druckt`).
+Stand: `ems.typ` nach dem Abgleich mit den InDesign-Dateien des Probelaufs 2026 (Ränder
+15 mm, erste Grundlinie 98.66, Kasten, Pfeil und STOPP, Figuren-Raster, zweispaltige
+Fakten-Fragen auf festen Plätzen, Lösungsschlüssel). Die Anleitungstexte stehen im Wortlaut
+des offiziellen Hefts in `i18n` (`fg_anl_*`, `fig_anl_*`, `ems_*`). Nachmessen: ein Set
+drucken («Als PDF sichern») und Lage von Text und Linien mit dem Aufgabenblatt aus dem Tool
+vergleichen (z. B. mit `pymupdf`); erlaubt sind Abweichungen unter 1 pt (der Browser rundet
+auf Bildpunkte).
 
 ### Fakten-Generator
 
@@ -737,8 +745,22 @@ Buchstaben im Schwerpunkt, Logo als Figur mitgemessen).
 
 `content/de/alpha/` ist die Werkbank für neue Funktionen: passwortgeschützt, nirgends
 verlinkt, **nur Deutsch**. Pro Funktion ein Abschnitt, der sagt, was zu beurteilen ist.
-Aktuell dort: Figuren-Generator und Fakten-Generator.
+Aktuell dort: Figuren-Generator, Fakten-Generator und «Antwortbogen auswerten».
 Ist sie freigegeben, wandert der Baustein auf die echte Seite (dann dreisprachig).
+
+### Antwortbogen auswerten
+
+Ein Foto des ausgefüllten Antwortbogens einer Testsimulation wird im Browser gelesen und mit
+den Lösungen verglichen – das Foto verlässt das Gerät nicht. Das Verfahren ist das des
+Formatierungstools (`werkzeug/auswertung.py`), nach JavaScript übertragen
+(`layouts/partials/bausteine/antwortbogen-auswertung.html`, Kommentarkopf lesen). Alle
+Testsimulationen seit 2022 haben denselben Bogen. Die Lösungen stehen in
+`data/antwortbogen.yaml` und werden **nicht von Hand** gepflegt: Für eine neue
+Testsimulation das Lösungs-PDF wie gewohnt hochladen, in `scripts/antwortbogen-loesungen.py`
+eintragen und `python3 scripts/antwortbogen-loesungen.py --schreiben` laufen lassen (bricht
+ab, wenn nicht genau 144 Lösungen gefunden werden). Nach Änderungen am Lesen:
+`python3 scripts/antwortbogen-testbilder.py /tmp/ab` (Testfotos mit bekannten Kreuzen) und
+`node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 
 ---
 
@@ -910,6 +932,7 @@ python3 scripts/struktur-pruefen.py                                  # Duplikate
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # Bedienung, Formulare (Formspree abgefangen)
 node scripts/fakten-generator-pruefen.mjs                            # 150 Sets + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 Sets + PDF
+python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # Antwortbogen-Fotos
 python3 scripts/texte-mappe-pruefen.py                               # Textmappen
 python3 scripts/wortliste-pruefen.py                                 # Wortliste (Excel)
 node scripts/editor-rundlauf.mjs                                     # Web-Editor

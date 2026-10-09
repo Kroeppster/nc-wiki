@@ -36,3 +36,21 @@ freigegeben und haben erst etwa halb so viele Einträge wie geplant.
 ```baustein
 fakten-generator
 ```
+
+## Antwortbogen auswerten
+
+Wer eine Testsimulation zu Hause auf Papier gelöst hat, fotografiert den
+Antwortbogen und bekommt seine Punkte je Untertest – ohne die 144 Lösungen
+von Hand abzugleichen. Gelesen wird wie im Formatierungstool (Auswertung),
+aber direkt im Browser: Das Foto verlässt das Gerät nicht. Geht für die
+Testsimulationen 2022 bis 2026, alle haben denselben Antwortbogen.
+
+Zu beurteilen ist vor allem, **ob es mit echten Handyfotos klappt**: schräg,
+im Schatten, mit Bleistift, Kugelschreiber, radierten oder durchgestrichenen
+Kreuzen. Stimmen die gelesenen Kreuze? Werden unsichere Zeilen (orange)
+sinnvoll markiert, und lassen sie sich leicht korrigieren? Und: Sind die
+Hinweise verständlich, wenn ein Foto nicht taugt?
+
+```baustein
+antwortbogen-auswertung
+```

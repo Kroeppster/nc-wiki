@@ -1643,6 +1643,12 @@ body.pm-aktiv{overflow:hidden;}
   body.fg-druckt > *:not(.fg-druck){display:none !important;}
   body.fg-druckt > .fg-druck{display:block !important;}
   body.fg-druckt{background:#fff !important;}
+  /* Solange der Cookie-Hinweis offen ist, gibt footer.html dem <body> unten
+     so viel Innenabstand, wie der Hinweis hoch ist - im Druck hing das als
+     leere siebte Seite hinten dran. Der Hintergrund-Schmuck (ein fixiertes
+     body::before) kaeme sonst auf jeder Seite mit. */
+  body.fg-druckt{padding:0 !important;}
+  body.fg-druckt::before,body.fg-druckt::after{display:none !important;}
 }
 
 /* ==========================================================================
@@ -1664,17 +1670,29 @@ body.pm-aktiv{overflow:hidden;}
 /* ==========================================================================
    EMS-Heft: Fakten- und Figuren-Generator im Format des Testhefts
    ==========================================================================
-   Masse aus dem NCWiki-Formatierungstool (vorlage/ems.typ), dort am
-   Original gemessen - deshalb hier in pt und mit denselben Zahlen:
-     Satzspiegel links 42.5, rechts 42, oben 88.1; Einzug 28.4 (10 mm)
-     Schrift 10 pt, Durchschuss 12 pt, Absatzabstand 12 pt
-     Ueberschrift 12 pt fett, danach 31 pt; Kasten 1 pt, Innenrand 5/3.9
-     Einpraegeliste: Spalten bei 42.5 / 127.6 / 240.9, Zeilen 17.65 pt,
-                     zwischen zwei Altersgruppen zwei Leerzeilen mehr
+   Masse aus dem NCWiki-Formatierungstool (vorlage/ems.typ), dort an den
+   InDesign-Dateien des Probelaufs 2026 gemessen - deshalb hier in pt und mit
+   denselben Zahlen. Die Zahlen unten sind daraus GERECHNET, nicht geschaetzt:
+   ems.typ gibt Grundlinien an, CSS setzt Zeilenkaesten. In einer 12-pt-Zeile
+   mit 10-pt-Arial liegt die Grundlinie 9.465 pt unter der Oberkante (halber
+   Durchschuss 0.415 + Oberlaenge 9.05), in der 14.4-pt-Zeile des 12-pt-Titels
+   11.358 pt. Ein Rahmen in ems.typ liegt MITTIG auf der Kante, in CSS innen.
+     Raender links/rechts 42.52 (15 mm); erste Grundlinie 98.66 (fr 92.32)
+     Kopfzeile Grundlinie 50.58; Seitenzahl 819.51; Signet ab y 803.89
+     Schrift 10 pt, Durchschuss 12 pt, Absatz 12 pt, Laufweite 2 %, keine
+       Silbentrennung
+     Titel 12 pt fett, Grundlinie 98.66 (fr 94.0)
+     Kasten: Kante 14.5 unter der Titel-Grundlinie (fr 20.17), erste
+       Grundlinie 15.1 unter der Kante (fr 13.45), letzte 7.85 ueber der
+       unteren Kante (fr 7.0), Text 3.33 neben der Linie (fr 6.17), rechte
+       Kante 553.26 (fr 552.26); erste Grundlinie danach 24.5 tiefer
+     Einpraegeliste: erste Grundlinie 91.77, Spalten 42.52 / 120.47 / 223.93,
+       Zeilen 17.67, Gruppen 53.01 (Grundlinie zu Grundlinie)
    Am Bildschirm steht das Ganze auf einem weissen Blatt (.ems-blatt) - wie
    die Figuren folgt es nicht dem Dunkelmodus: Es ist eine Testheft-Seite.
    Im Druck ist jede .ems-seite genau eine A4-Seite. */
-.ems-blatt,.ems-seite{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;color:#000;background:#fff;color-scheme:light;}
+.ems-blatt,.ems-seite{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;color:#000;background:#fff;color-scheme:light;
+  letter-spacing:.02em;hyphens:manual;-webkit-hyphens:manual;}
 .ems-blatt{font-size:11pt;line-height:1.2;padding:24pt 28pt;margin:0 0 var(--space-5);
   border:1px solid var(--color-line);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);overflow-x:auto;}
 .ems-blatt:empty{display:none;}
@@ -1682,28 +1700,43 @@ body.pm-aktiv{overflow:hidden;}
    gegen diese Grundregel ankommen. Mit ".ems-seite p" stand der Kasten im
    Druck ohne jeden Absatzabstand da. */
 :where(.ems-blatt,.ems-seite) p{margin:0;}
-.ems-kopf{display:flex;justify-content:space-between;gap:1em;flex-wrap:wrap;font-weight:700;font-size:1.2em;margin:0 0 31pt;}
-.ems-kasten{border:1pt solid #000;padding:5pt 3.9pt;margin:0 0 14pt;}
+.ems-kopf{display:grid;grid-template-columns:1fr auto;column-gap:10pt;font-weight:700;font-size:1.2em;margin:0 0 10.958pt;}
+.ems-kopf > :last-child{text-align:right;}
+.ems-kasten{border:1pt solid #000;padding:5.135pt 2.83pt 4.815pt;margin:0 -1pt 0 0;}
 .ems-kasten > * + *{margin-top:12pt;}
-.ems-einzug{padding-left:28.4pt;}
-.ems-beispielbild{display:block;}
-.ems-beispielbild .fig-svg{width:110pt;max-width:110pt;}
+.ems-kasten + *{margin-top:14.535pt;}
+:lang(fr) .ems-kopf{margin-bottom:16.628pt;}
+:lang(fr) .ems-kasten{padding:3.485pt 5.67pt 3.965pt;margin-right:0;}
+/* Beispielzeilen der Anleitung (ems.typ: beispiel-einzug = 33.2 pt),
+   (A) bis (E) darunter in einer Spalte von 36 pt */
+.ems-einzug{padding-left:33.2pt;}
+.ems-beispiel-optionen{display:grid;grid-template-columns:36pt 1fr;}
+/* Die zwei Beispielfiguren der Anleitung: sichtbar 87.5 pt, mittig, mit
+   den Abstaenden des Originals (ems.typ: fl-beispiel, vor/nach je
+   Grundlinie: 2.6/29.9 und 37.6/42.9) */
+.ems-beispielbild{display:block;width:87.5pt;height:87.5pt;margin-left:auto;margin-right:auto;}
+.ems-beispielbild .fig-svg{display:block;width:87.5pt;height:87.5pt;max-width:none;overflow:visible;}
+.ems-kasten > .ems-beispielbild-1{margin-top:.065pt;}
+.ems-kasten > .ems-beispielbild-1 + *{margin-top:20.435pt;}
+.ems-kasten > .ems-beispielbild-2{margin-top:35.065pt;}
+.ems-kasten > .ems-beispielbild-2 + *{margin-top:33.435pt;}
 /* Einpraegeliste: drei Spalten, fuenf Gruppen */
-.ems-lernliste{margin-top:6pt;}
-.ems-zeile{display:grid;grid-template-columns:85.1pt 113.3pt 1fr;}
-.ems-zeile + .ems-zeile{margin-top:5.65pt;}
-.ems-gruppe + .ems-gruppe{margin-top:35.7pt;}
+.ems-zeile{display:grid;grid-template-columns:77.95pt 103.46pt 1fr;}
+.ems-zeile + .ems-zeile{margin-top:5.67pt;}
+.ems-gruppe + .ems-gruppe{margin-top:41.01pt;}
+.ems-seite .ems-lernliste{margin-top:-6.89pt;}
+:lang(fr) .ems-seite .ems-lernliste{margin-top:-.55pt;}
 @media (max-width:560px){
   .ems-blatt{padding:16pt 12pt;font-size:10.5pt;}
   .ems-zeile{grid-template-columns:auto 1fr;column-gap:.6em;}
   .ems-zeile > :nth-child(3){grid-column:1 / -1;padding-left:1.2em;}
 }
-/* Fragen: Nummer "1)" fett in der Einzugsspalte, (A) bis (E) darunter mit
-   einfachem Zeilenabstand, zweispaltig mit Trennlinie wie im Testheft 2026
-   ("spaltenweise Abfolge"). Mit dem weiteren Abstand der Med-Nat-Aufgaben
-   laufen 18 Fakten-Fragen ueber die Seite - im Tool deshalb noch ein TODO. */
+/* Fragen am Bildschirm: Nummer "1)" fett in der Einzugsspalte, (A) bis (E)
+   darunter mit einfachem Zeilenabstand, zweispaltig mit Trennlinie und
+   "spaltenweiser Abfolge" wie im Heft. Gedruckt stehen sie auf festen
+   Plaetzen (.ems-fl-fragen weiter unten). */
 .ems-fragen{list-style:none;margin:0;padding:0;}
-.ems-zweispaltig{columns:2;column-gap:28pt;column-rule:.5pt solid #000;}
+.ems-zweispaltig{columns:2;column-gap:28pt;column-rule:1pt solid #000;}
 .ems-frage{break-inside:avoid;display:grid;grid-template-columns:28.4pt 1fr;margin:0 0 20pt;}
 .ems-nr{font-weight:700;}
 .ems-optionen{grid-column:2;display:block;margin-top:12pt;}
@@ -1711,24 +1744,30 @@ body.pm-aktiv{overflow:hidden;}
 .ems-option-wahl{grid-template-columns:auto 28.4pt 1fr;column-gap:.4em;cursor:pointer;margin-left:-1.6em;}
 .ems-option-wahl input{margin:0;align-self:center;}
 @media (max-width:700px){ .ems-zweispaltig{columns:1;} }
-/* Die Fussmarken, Masse aus ems.typ (pfeil-weiter, stopp-marke) */
-.ems-marke{position:relative;font-size:8pt;line-height:1.15;margin:20pt 0 0 auto;}
-.ems-marke-kasten{position:absolute;left:0;box-sizing:border-box;border:1pt solid #000;background:#fff;
+/* Die Fussmarken, Masse aus ems.typ (pfeil-weiter, stopp-marke). Der
+   Kasten ist 1 pt groesser als dort gemessen: CSS legt den Rahmen innen
+   an, ems.typ mittig auf die Kante. Text 8 pt, Zeilen 9.6 pt, der Block
+   mittig und 0.16 pt tiefer (so steht er im Probelauf). */
+.ems-marke{position:relative;font-size:8pt;line-height:9.6pt;margin:20pt 0 0 auto;}
+.ems-marke-kasten{position:absolute;left:-.5pt;box-sizing:border-box;border:1pt solid #000;background:#fff;
   display:flex;align-items:center;justify-content:center;text-align:center;}
+.ems-marke-kasten span{position:relative;top:.16pt;}
 .ems-marke-zeichen{position:absolute;top:0;overflow:visible;}
-.ems-marke-zeichen text{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;}
-.ems-marke-weiter{width:201.3pt;height:52.3pt;}
-.ems-marke-weiter .ems-marke-kasten{top:8.95pt;width:147.9pt;height:34.4pt;}
-.ems-marke-weiter .ems-marke-zeichen{left:148.4pt;width:52.9pt;height:52.3pt;}
-.ems-marke-stopp{width:200.6pt;height:62.17pt;}
-.ems-marke-stopp .ems-marke-kasten{top:13pt;width:148.2pt;height:35.6pt;}
-.ems-marke-stopp .ems-marke-zeichen{left:129.8pt;width:71.23pt;height:63.17pt;}
+.ems-marke-zeichen text{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;letter-spacing:0;}
+.ems-marke-weiter{width:201.29pt;height:52.25pt;}
+.ems-marke-weiter .ems-marke-kasten{top:8.4pt;width:148.82pt;height:35.44pt;}
+.ems-marke-weiter .ems-marke-zeichen{left:148.35pt;width:52.94pt;height:52.25pt;}
+.ems-marke-stopp{width:200.5pt;height:58.04pt;}
+/* Sichtbar ist der Kasten nur bis zur Spitze des Sechsecks: ein langer
+   Text (franzoesisch, italienisch) bricht deshalb im sichtbaren Teil um */
+.ems-marke-stopp .ems-marke-kasten{top:11.65pt;width:149.11pt;height:34.3pt;padding-right:19pt;}
+.ems-marke-stopp .ems-marke-zeichen{left:130.3pt;width:70.2pt;height:58.04pt;}
 .ems-blatt .ems-marke{margin-top:24pt;}
 /* Antwortbogen: Zeilen wie auf dem echten Bogen (ems.typ: bogen-zeile) */
 .ems-bogen-name{margin:0 0 6pt;}
 .ems-bogen-name span{display:inline-block;width:200pt;border-bottom:.5pt solid #000;margin-left:6pt;}
 .ems-bogen-hinweis{font-size:8pt;margin:0 0 18pt;}
-.ems-bogen{width:122.2pt;}
+.ems-bogen{width:122.2pt;letter-spacing:0;}
 .ems-bogen-titel{box-sizing:border-box;width:121.92pt;height:32.4pt;border:.24pt solid #000;padding:1pt 3pt;
   font-size:7pt;line-height:8.04pt;overflow:hidden;margin-bottom:4.8pt;}
 .ems-bogen-zeile{display:flex;align-items:center;height:13.48pt;}
@@ -1737,31 +1776,94 @@ body.pm-aktiv{overflow:hidden;}
 .ems-bogen-feld{display:flex;align-items:center;width:20.82pt;font-size:8pt;}
 .ems-bogen-feld span{width:7.92pt;}
 .ems-bogen-feld i{display:block;box-sizing:border-box;width:9.12pt;height:6.24pt;border:1.07pt solid #ff00ff;background:#fff;}
-/* Loesungsblatt wie vorlage/loesungsblatt.typ */
-.ems-loesung-titel{font-weight:700;margin:0 0 5.65pt;}
-.ems-loesung{border-collapse:collapse;margin:0 0 12pt;}
-.ems-loesung td{width:36pt;border:.5pt solid #000;padding:5pt;text-align:center;font-size:10pt;}
+.ems-bogen-feld i.ems-bogen-richtig{border-color:#000;background:#000;}
+/* Loesungsblatt wie vorlage/loesungsblatt.typ: eine Tabelle, je zehn
+   Aufgaben ein Zeilenpaar, die Nummernzeile grau (luma 235) */
+.ems-loesung-titel{font-weight:700;margin:0;}
+.ems-kopf + .ems-loesung-titel{margin-top:17.345pt;}
+.ems-loesung{border-collapse:collapse;margin:4.985pt 0 0;letter-spacing:0;}
+.ems-loesung td{box-sizing:border-box;width:36pt;height:19.39pt;border:.5pt solid #000;padding:0;text-align:center;font-size:10pt;}
+.ems-loesung-nr td{background:#ebebeb;}
+.ems-loesung-titel.ems-loesung-schluessel{margin:24pt 0 5.67pt;}
 
 /* Die gedruckte Heftseite: A4, alles in pt ab der Blattecke. Etwas weniger
-   hoch als A4 (841.9 pt), sonst erzeugt Rundung eine leere Seite dazwischen. */
-.ems-druck .ems-seite{position:relative;width:595.3pt;height:841pt;overflow:hidden;font-size:10pt;line-height:12pt;
+   hoch als A4 (841.89 pt), sonst erzeugt Rundung eine leere Seite dazwischen. */
+.ems-druck .ems-seite{position:relative;width:595.28pt;height:841pt;overflow:hidden;font-size:10pt;line-height:12pt;
   break-after:page;page-break-after:always;}
 .ems-druck .ems-seite:last-child{break-after:auto;page-break-after:auto;}
-.ems-kopfzeile{position:absolute;left:42.5pt;right:42pt;top:38pt;display:grid;grid-template-columns:1fr 1fr 1fr;}
+.ems-kopfzeile{position:absolute;left:42.52pt;right:42.52pt;top:41.115pt;display:grid;grid-template-columns:1fr 1fr 1fr;}
 .ems-kopfzeile span:nth-child(2){text-align:center;}
 .ems-kopfzeile span:nth-child(3){text-align:right;}
-.ems-satz{position:absolute;left:42.5pt;right:42pt;top:88.1pt;bottom:70pt;}
-.ems-seite .ems-kopf{font-size:12pt;}
+/* Der Satzspiegel reicht bis 799.1 hinunter - so weit laeuft die Linie
+   zwischen den Fakten-Fragen; im Fluss steht sonst nie etwas so tief. */
+.ems-satz{position:absolute;left:42.52pt;right:42.52pt;top:89.195pt;bottom:41.9pt;display:flex;flex-direction:column;}
+:lang(fr) .ems-satz{top:82.855pt;}
+.ems-seite .ems-kopf{font-size:12pt;line-height:14.4pt;margin-top:-1.893pt;}
+:lang(fr) .ems-seite .ems-kopf{margin-top:-.213pt;}
 .ems-seite .ems-marke{margin:0;}
-.ems-fussmarke{position:absolute;right:42pt;top:776pt;}
-.ems-seitenzahl{position:absolute;left:0;right:0;top:804pt;text-align:center;}
-/* CC-BY-NC-Signet: Lage und Breite wie im Testheft 2026 (x 38.85, y 789.15). */
-.ems-druck .ems-signet{position:absolute;left:38.85pt;top:789.15pt;width:74.5pt;height:auto;}
-.ems-seite .ems-frage{margin-bottom:16pt;}
-/* Figuren auf festen Plaetzen (ems.typ: FL-X, FL-Y, FL-SPALTE, FL-ZEILE) */
-.ems-fl-zelle{position:absolute;width:80.2pt;text-align:center;}
-.ems-fl-zelle b{display:block;height:17.6pt;}
-.ems-fl-zelle .fig-svg{width:80.2pt;height:80.2pt;max-width:none;}
+.ems-fussmarke{position:absolute;}
+.ems-fussmarke-weiter{left:350.34pt;top:773.25pt;}
+.ems-fussmarke-stopp{left:351.64pt;top:770.35pt;}
+.ems-seitenzahl{position:absolute;left:0;right:0;top:810.045pt;text-align:center;}
+/* CC-BY-NC-Signet: links am Satzspiegel, auf der Hoehe der Seitenzahl
+   (ems.typ: fusszeile) */
+.ems-druck .ems-signet{position:absolute;left:42.52pt;top:803.89pt;width:74.5pt;height:auto;}
+/* Fakten lernen, Reproduktionsphase (ems.typ: fakten-seite): zwei Spalten,
+   spaltenweise nummeriert, jede Frage auf einem festen Platz von 144 pt.
+   Erste Frage 50 pt unter dem Kasten, auf Folgeseiten auf der ersten
+   Grundlinie. Rechte Spalte ab 311.82, Linie 1 pt bei x = 297.4, auf der
+   ersten Seite ab 33.5 ueber der ersten Frage, sonst ab 85.04, bis 799.1. */
+.ems-fl-fragen{position:relative;flex:1 1 auto;}
+.ems-kasten + .ems-fl-fragen{margin-top:40.035pt;}
+.ems-fl-fragen::before{content:"";position:absolute;left:254.38pt;width:1pt;top:-24.035pt;bottom:0;background:#000;}
+.ems-fl-fragen.ems-fl-folge::before{top:-4.155pt;}
+:lang(fr) .ems-fl-fragen.ems-fl-folge::before{top:2.185pt;}
+.ems-fl-frage{position:absolute;display:grid;grid-template-columns:28.4pt 1fr;width:241.88pt;}
+.ems-fl-frage.ems-fl-rechts{left:269.3pt;width:240.94pt;}
+/* Figuren lernen (ems.typ: figuren-raster): Felder von 94 pt, sichtbar gut
+   90, auf festen Mitten; in der Abfrage die Nummer fett darueber */
+.ems-fl-nr{position:absolute;width:60pt;text-align:center;font-weight:700;}
+.ems-fl-figur{position:absolute;width:94pt;height:94pt;max-width:none;overflow:visible;}
+.ems-fl-figur .fig-svg{width:94pt;height:94pt;max-width:none;overflow:visible;background:none;}
+
+/* ==========================================================================
+   Antwortbogen auswerten (Alpha): Foto des Bogens lesen, Punkte zeigen
+   ========================================================================== */
+.ab{margin:var(--space-8) 0;border:1px solid var(--color-line);border-radius:var(--radius-md);
+  padding:var(--space-6);background:var(--color-surface);scroll-margin-top:5.5rem;}
+.ab-intro{margin:0 0 var(--space-3);max-width:44rem;}
+.ab-privat{margin:0 0 var(--space-5);font-size:var(--text-sm);color:var(--color-ink-soft);max-width:44rem;}
+.ab-eingabe{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-3);}
+.ab-feld{display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-sm);font-weight:600;color:var(--color-ink-soft);}
+.ab-feld input,.ab-feld select{font-weight:400;max-width:100%;}
+.ab-hinweis{margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);max-width:44rem;}
+.ab-status{margin:var(--space-4) 0 0;font-weight:600;}
+.ab-status:empty{display:none;}
+.ab-fehler{color:var(--color-fehler,#c5221f);}
+.ab-ergebnis{margin-top:var(--space-6);scroll-margin-top:5.5rem;}
+.ab-summe{margin:0 0 var(--space-3);font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);}
+.ab-meldungen{margin:0 0 var(--space-4);padding-left:1.2em;color:var(--color-fehler,#c5221f);}
+.ab-meldungen:empty{display:none;}
+.ab-punkte{border-collapse:collapse;margin:0 0 var(--space-3);font-size:var(--text-sm);}
+.ab-punkte th,.ab-punkte td{text-align:left;padding:.3rem .8rem .3rem 0;border-bottom:1px solid var(--color-line);}
+.ab-punkte td:last-child,.ab-punkte th:last-child{text-align:right;white-space:nowrap;}
+.ab-total td{font-weight:700;border-bottom:0;}
+.ab-legende{margin:var(--space-4) 0 var(--space-2);font-size:var(--text-sm);color:var(--color-ink-soft);}
+/* Das Foto: immer hell, wie die Testheft-Seiten der Generatoren */
+.ab-bild{display:block;max-width:100%;height:auto;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:#fff;}
+.ab-zeilen{margin-top:var(--space-4);display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:var(--space-3);align-items:start;}
+.ab-block{border:1px solid var(--color-line);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);}
+.ab-block summary{cursor:pointer;font-weight:600;font-size:var(--text-sm);}
+.ab-block summary span{font-weight:400;color:var(--color-ink-soft);}
+.ab-block table{border-collapse:collapse;width:100%;margin-top:var(--space-2);font-size:var(--text-sm);}
+.ab-block th{text-align:left;font-weight:600;font-size:var(--text-xs);color:var(--color-ink-soft);}
+.ab-block td,.ab-block th{padding:.15rem .4rem .15rem 0;}
+.ab-block select{font-size:var(--text-sm);padding:0 .2rem;}
+.ab-richtig td:last-child{color:var(--color-erfolg,#137333);}
+.ab-falsch td:last-child{color:var(--color-fehler,#c5221f);}
+.ab-unsicher{background:rgba(232,113,10,.12);}
+.ab-pruefen{font-size:var(--text-xs);color:#b45309;white-space:nowrap;}
+@media (max-width:560px){ .ab{padding:var(--space-4);} }
 
 /* Baustein "sponsoring-kontakt" (Seite Sponsoren): E-Mail-/Telefon-Knopf */
 .sponsoring-kontakt{margin:var(--space-5) 0 var(--space-8);}

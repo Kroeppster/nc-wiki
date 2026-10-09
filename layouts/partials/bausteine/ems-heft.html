@@ -7,9 +7,11 @@
   dem NCWiki-Formatierungstool (github.com/Kroeppster/NCWiki-Formatierungstool,
   vorlage/ems.typ): Masse am Original gemessen, dort als benannte Konstanten
   - hier dieselben Zahlen, in pt, damit ein gedrucktes Set genauso aussieht
-  wie eine Seite aus dem Heft. Wo das Tool noch nichts festlegt (die
-  zweispaltigen Fakten-Fragen), gilt unser veroeffentlichtes Testheft 2026
-  (assets/downloads/testsimulationen/TESTHEFT_2026_DE_V6_...pdf).
+  wie eine Seite aus dem Heft. Stand: ems.typ nach dem Abgleich mit den
+  InDesign-Dateien des Probelaufs 2026 (Raender 15 mm, erste Grundlinie,
+  Kasten, Fussmarken, Figuren- und Fakten-Seiten). Wer dort etwas aendert,
+  zieht es hier und in style.css ("EMS-Heft") nach und vergleicht ein
+  gedrucktes Set mit dem Aufgabenblatt aus dem Tool.
 
   Wird von beiden Generatoren eingebunden, landet aber nur EINMAL auf der
   Seite (.Store merkt sich, ob er schon da ist) - auf der Alpha-Seite
@@ -35,7 +37,8 @@ window.EMSHeft = (function(){
     antwortbogen: {{ i18n "ems_antwortbogen" | jsonify | safeJS }},
     antwortbogenHinweis: {{ i18n "ems_antwortbogen_hinweis" | jsonify | safeJS }},
     name: {{ i18n "ems_name" | jsonify | safeJS }},
-    loesungen: {{ i18n "ems_loesungen" | jsonify | safeJS }}
+    loesungen: {{ i18n "ems_loesungen" | jsonify | safeJS }},
+    loesungsschluessel: {{ i18n "ems_loesungsschluessel" | jsonify | safeJS }}
   };
   var BST = 'ABCDE';
   function zeit(art, minuten){
@@ -43,38 +46,45 @@ window.EMSHeft = (function(){
     return (art === 'lern' ? T.lernzeit : T.bearbeitungszeit).replace('{n}', minuten);
   }
   // Ueberschrift eines Untertests: Name links, Zeit rechts, beides fett
-  // 12 pt (ems.typ: untertest).
+  // 12 pt, zweite Zeile 14.4 pt tiefer (ems.typ: untertest).
   function kopf(titel, zeitText){
     return '<div class="ems-kopf"><span>' + titel + '</span><span>' + zeitText + '</span></div>';
   }
   // Der Kasten unter der Ueberschrift (ems.typ: anleitung) - 1 pt Rahmen.
+  // Leere Absaetze fallen weg (eine Sprache braucht nicht jeden Absatz).
   function kasten(absaetze){
-    return '<div class="ems-kasten">' + absaetze.map(function(a){
+    return '<div class="ems-kasten">' + absaetze.filter(function(a){ return a; }).map(function(a){
       return a.charAt(0) === '<' ? a : '<p>' + a + '</p>'; }).join('') + '</div>';
   }
   // --- Die Fussmarken, nachgezeichnet wie im Tool, nicht als Bild --------
-  //   Pfeil:  Kasten 147.9 x 34.4, Dreieck 52.9 x 52.3 ab x = 148.4
-  //   STOPP:  Kasten 148.2 x 35.6 (13 pt tiefer), Sechseck 70.23 x 62.17 ab
-  //           x = 130.3, weiss gefuellt - es ueberdeckt den Kasten um knapp
-  //           18 pt, genau wie im Original. Sechs Ecken, KEIN Achteck.
+  // Masse aus ems.typ (pfeil-weiter, stopp-marke), dort nach den
+  // Musterseiten des Probelaufs 2026:
+  //   Pfeil:  Kasten 147.82 x 34.44 (8.9 tiefer), Dreieck 52.94 x 52.25 ab
+  //           x = 148.35
+  //   STOPP:  Kasten 148.11 x 33.3 (12.15 tiefer), Sechseck 70.2 x 58.04 ab
+  //           x = 130.3, Strich 1.05, weiss gefuellt - es ueberdeckt den
+  //           Kasten. Darin zwei Linien (1.2 pt) und "STOPP" 18.7 pt NICHT
+  //           fett, schmal (93.1 %), Grundlinie 36.08. Sechs Ecken.
   function weiter(){
-    return '<div class="ems-marke ems-marke-weiter"><div class="ems-marke-kasten">' + T.weiter + '</div>'
-      + '<svg class="ems-marke-zeichen" viewBox="0 0 52.9 52.3" aria-hidden="true">'
-      + '<polygon points="0.5,0.5 52.4,26.15 0.5,51.8" fill="#fff" stroke="#000" stroke-width="1"/></svg></div>';
+    return '<div class="ems-marke ems-marke-weiter"><div class="ems-marke-kasten"><span>' + T.weiter + '</span></div>'
+      + '<svg class="ems-marke-zeichen" viewBox="0 0 52.94 52.25" aria-hidden="true">'
+      + '<polygon points="0,0 52.94,26.125 0,52.25" fill="#fff" stroke="#000" stroke-width="1"/></svg></div>';
   }
   function stopp(){
-    var w = 70.23, h = 62.17, e = 17.55;
-    return '<div class="ems-marke ems-marke-stopp"><div class="ems-marke-kasten">' + T.stopp + '</div>'
-      + '<svg class="ems-marke-zeichen" viewBox="-0.5 -0.5 ' + (w + 1) + ' ' + (h + 1) + '" aria-hidden="true">'
-      + '<polygon points="' + [e,0, w-e,0, w,h/2, w-e,h, e,h, 0,h/2].join(',') + '" fill="#fff" stroke="#000" stroke-width="1"/>'
-      + '<text x="' + (w/2) + '" y="' + (h/2 + 6.5) + '" text-anchor="middle" font-size="18.7" font-weight="700">' + T.stoppWort + '</text></svg></div>';
+    var w = 70.2, h = 58.04, e = 17.55;
+    return '<div class="ems-marke ems-marke-stopp"><div class="ems-marke-kasten"><span>' + T.stopp + '</span></div>'
+      + '<svg class="ems-marke-zeichen" viewBox="0 0 ' + w + ' ' + h + '" aria-hidden="true">'
+      + '<polygon points="' + [e,0, w-e,0, w,h/2, w-e,h, e,h, 0,h/2].join(',') + '" fill="#fff" stroke="#000" stroke-width="1.05"/>'
+      + '<path d="M8.52 16.27H60.52M6.52 38.88H62.52" stroke="#000" stroke-width="1.2"/>'
+      + '<text transform="translate(' + (w/2) + ' 36.08) scale(0.931 1)" text-anchor="middle" font-size="18.7">' + T.stoppWort + '</text></svg></div>';
   }
   function marke(art){ return art === 'stopp' ? stopp() : art === 'weiter' ? weiter() : ''; }
   // --- Eine gedruckte Heftseite -------------------------------------------
-  // A4 in pt, Satzspiegel wie ems.typ: links 42.5, rechts 42, oben 88.1.
-  // Kopfzeile in drei Spalten (Set | Testteil | nc-wiki.ch), Seitenzahl
-  // mittig am Fuss, CC-BY-NC-Signet unten links (74.5 pt breit, wie im
-  // Testheft und in ems.typ: fusszeile), Fussmarke fest bei y = 776. "frei" ist Inhalt, der auf
+  // A4 in pt wie ems.typ: Raender links und rechts 15 mm (42.52), erste
+  // Grundlinie 98.66 (franzoesisch 92.32), Kopfzeile in drei Spalten
+  // (Set | Testteil | nc-wiki.ch) auf der Grundlinie 50.58, Seitenzahl
+  // mittig auf 819.51, CC-BY-NC-Signet unten links (74.5 pt breit, ab
+  // y = 803.89), Fussmarke an fester Stelle. "frei" ist Inhalt, der auf
   // festen Plaetzen steht (das Figuren-Raster), gerechnet von der Blattecke.
   var signet = {{ "images/cc-by-nc.png" | relURL | jsonify | safeJS }};
   var datum = new Date().toLocaleDateString(document.documentElement.lang || 'de');
@@ -84,7 +94,7 @@ window.EMSHeft = (function(){
       + (o.teil ? T.testteil + ' ' + o.teil : '') + '</span><span>nc-wiki.ch</span></div>'
       + '<div class="ems-satz">' + (o.inhalt || '') + '</div>'
       + (o.frei || '')
-      + (o.marke ? '<div class="ems-fussmarke">' + marke(o.marke) + '</div>' : '')
+      + (o.marke ? '<div class="ems-fussmarke ems-fussmarke-' + o.marke + '">' + marke(o.marke) + '</div>' : '')
       + '<img class="ems-signet" src="' + signet + '" alt="CC BY-NC 4.0">'
       + '<div class="ems-seitenzahl">' + o.nr + '</div></section>';
   }
@@ -93,32 +103,39 @@ window.EMSHeft = (function(){
   // hoch, Nummer rechtsbuendig, Buchstabe und Kaestchen 9.12 x 6.24 mit
   // Magenta-Rahmen, jede zweite Zeile hell hinterlegt. Den Bogen selbst
   // (Passermarken, Strichcode) braucht ein Uebungsset nicht.
-  function antwortbogen(titel, anzahl){
+  // Mit "loesungen" (Buchstaben je Zeile) wird daraus der Loesungsschluessel
+  // wie im Tool: die richtigen Kaestchen schwarz (ems.typ: antwortbogen mit
+  // loesungen, Probelauf S. 89).
+  function bogen(titel, anzahl, loesungen){
     var z = '';
     for (var i = 0; i < anzahl; i++){
       z += '<div class="ems-bogen-zeile' + (i % 2 === 0 ? ' ems-bogen-hell' : '') + '"><span class="ems-bogen-nr">' + (i + 1) + '</span>';
-      for (var k = 0; k < 5; k++) z += '<span class="ems-bogen-feld"><span>' + BST[k] + '</span><i></i></span>';
+      for (var k = 0; k < 5; k++) z += '<span class="ems-bogen-feld"><span>' + BST[k] + '</span><i'
+        + (loesungen && loesungen[i] === BST[k] ? ' class="ems-bogen-richtig"' : '') + '></i></span>';
       z += '</div>';
     }
+    return '<div class="ems-bogen"><div class="ems-bogen-titel">' + titel + '</div>' + z + '</div>';
+  }
+  function antwortbogen(titel, anzahl){
     return kopf(T.antwortbogen, titel)
       + '<p class="ems-bogen-name">' + T.name + '<span></span></p>'
       + '<p class="ems-bogen-hinweis">' + T.antwortbogenHinweis + '</p>'
-      + '<div class="ems-bogen"><div class="ems-bogen-titel">' + titel + '</div>' + z + '</div>';
+      + bogen(titel, anzahl);
   }
   // --- Loesungsblatt ---------------------------------------------------------
-  // Wie vorlage/loesungsblatt.typ: Nummern und fette Loesungsbuchstaben in
-  // einer Tabelle mit zehn Spalten - aber je ZEHN in einem eigenen
-  // Zeilenpaar. Die Vorlage im Tool legt alle Nummern hintereinander und
-  // danach alle Loesungen; ab elf Aufgaben stehen die Buchstaben dort unter
-  // den falschen Nummern.
+  // Wie vorlage/loesungsblatt.typ: Ueberschrift "Loesungen" mit dem Titel
+  // rechts, darunter der Untertest fett und eine Tabelle mit zehn Spalten -
+  // je zehn Aufgaben ein Zeilenpaar, die Nummernzeile grau hinterlegt.
+  // Danach der Loesungsschluessel (Antwortbogen, richtige Kaestchen schwarz).
   function loesungsblatt(titel, loesungen){
-    var h = kopf(T.loesungen, '') + '<p class="ems-loesung-titel">' + titel + '</p>';
+    var h = kopf(T.loesungen, titel) + '<p class="ems-loesung-titel">' + titel + '</p><table class="ems-loesung">';
     for (var s = 0; s < loesungen.length; s += 10){
-      var teil = loesungen.slice(s, s + 10);
-      h += '<table class="ems-loesung"><tr>' + teil.map(function(_, i){ return '<td>' + (s + i + 1) + '</td>'; }).join('')
-        + '</tr><tr>' + teil.map(function(l){ return '<td><b>' + l + '</b></td>'; }).join('') + '</tr></table>';
+      var teil = loesungen.slice(s, s + 10), leer = new Array(11 - teil.length).join('<td></td>');
+      h += '<tr class="ems-loesung-nr">' + teil.map(function(_, i){ return '<td>' + (s + i + 1) + '</td>'; }).join('') + leer
+        + '</tr><tr>' + teil.map(function(l){ return '<td><b>' + l + '</b></td>'; }).join('') + leer + '</tr>';
     }
-    return h;
+    return h + '</table><p class="ems-loesung-titel ems-loesung-schluessel">' + T.loesungsschluessel + '</p>'
+      + bogen(titel, loesungen.length, loesungen);
   }
   // --- Drucken ----------------------------------------------------------------
   // Die Seiten kommen in einen eigenen Behaelter direkt unter <body>; die
@@ -127,7 +144,9 @@ window.EMSHeft = (function(){
   // eingefuegt und danach wieder entfernt): Die Heftseiten bringen ihre
   // Raender selbst mit, und jede andere Seite der Website soll beim Drucken
   // ihre normalen Raender behalten.
-  function drucken(seiten){
+  // "vorher" bekommt den Behaelter, bevor gedruckt wird - fuer alles, was
+  // erst im Dokument gemessen werden kann (die Figuren).
+  function drucken(seiten, vorher){
     aufraeumen();
     var behaelter = document.createElement('div');
     behaelter.className = 'fg-druck ems-druck';
@@ -135,6 +154,7 @@ window.EMSHeft = (function(){
     behaelter.setAttribute('aria-hidden', 'true');
     behaelter.innerHTML = seiten.join('');
     document.body.appendChild(behaelter);
+    if (vorher) vorher(behaelter);
     var stil = document.createElement('style');
     stil.id = 'ems-druck-seite';
     stil.textContent = '@media print{@page{size:A4;margin:0}}';

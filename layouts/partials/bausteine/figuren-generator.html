@@ -121,7 +121,10 @@
     e3: {{ i18n "fig_anl_e3" | jsonify | safeJS }},
     beispielAbfrage: {{ i18n "fig_anl_beispiel_abfrage" | jsonify | safeJS }},
     beispielLoesung: {{ i18n "fig_anl_beispiel_loesung" | jsonify | safeJS }},
-    a1: {{ i18n "fig_anl_a1" | jsonify | safeJS }}
+    // Die Anleitung der Abfrage hat je nach Sprache einen oder zwei
+    // Absaetze (italienisch zwei, wie im offiziellen Heft): getrennt durch
+    // einen Zeilenumbruch in i18n/*.yaml.
+    a1: {{ i18n "fig_anl_a1" | jsonify | safeJS }}.split('\n')
   };
   var Z=function(a,b){return a+Math.random()*(b-a);};
   function misch(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -633,9 +636,10 @@
   // ACHTUNG, CLIP-KENNUNGEN MUESSEN EINDEUTIG SEIN: Dieselbe Figur erscheint
   // zweimal auf der Seite (Einpraegen und Abfrage). Bei gleicher id greift der
   // Clip der einen auf die andere zu und die Trennlinien ragen aus der Form.
-  function svg(f,schwarz,mitBuchstaben,klasse){
+  // "sicht" ersetzt den Ausschnitt der Figur (fuer den Druck, siehe unten).
+  function svg(f,schwarz,mitBuchstaben,klasse,sicht){
     var k='figclip'+(lauf++);
-    var s='<svg class="fig-svg '+(klasse||'')+'" viewBox="'+f.sicht+'" role="img">';
+    var s='<svg class="fig-svg '+(klasse||'')+'" viewBox="'+(sicht||f.sicht)+'" role="img">';
     s+='<defs><clipPath id="'+k+'"><path d="'+f.form+'"/></clipPath></defs>';
     s+='<g clip-path="url(#'+k+')">';
     f.felder.forEach(function(d,i){ s+='<path d="'+d+'" fill="'+(i===schwarz?'#000':'#fff')+'"/>'; });
@@ -680,12 +684,42 @@
     // Abfrage in ANDERER Reihenfolge - so ist es im echten Test auch.
     reihenfolge=misch(figuren.map(function(_,i){ return i; }));
   }
+  // --- Wie gross eine Figur sichtbar ist ------------------------------------
+  // Der Ausschnitt einer Figur (f.sicht) ist grosszuegig, die Figur fuellt ihn
+  // nur zu etwa vier Fuenfteln. Im Heft zaehlt aber die SICHTBARE Groesse
+  // (ems.typ: Figuren gut 90 pt, Beispielfiguren 87.5 pt). Gemessen wird am
+  // Umriss im Browser selbst (getBBox) - die Kontrollpunkte der Boegen im
+  // Pfad wuerden die Figur sonst zu gross erscheinen lassen.
+  var messer=null;
+  function umriss(f){
+    if(f.umriss) return f.umriss;
+    if(!messer){
+      messer=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      messer.setAttribute('aria-hidden','true');
+      messer.style.cssText='position:absolute;width:0;height:0;overflow:hidden;visibility:hidden';
+      document.body.appendChild(messer);
+    }
+    var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',f.form); messer.appendChild(p);
+    var b=p.getBBox(); messer.removeChild(p);
+    // Die Kontur liegt zur Haelfte ausserhalb des Pfads
+    var r=f.kontur/2;
+    return f.umriss={x:b.x-r, y:b.y-r, w:b.width+2*r, h:b.height+2*r};
+  }
+  // Ein quadratischer Ausschnitt der Seitenlaenge l, mittig um die Figur.
+  function ausschnitt(f, l){
+    var u=umriss(f), cx=u.x+u.w/2, cy=u.y+u.h/2;
+    return [cx-l/2, cy-l/2, l, l].map(function(v){ return v.toFixed(2); }).join(' ');
+  }
   // --- Das Blatt wie im Heft ------------------------------------------------
+  // Die Beispielfigur steht so gross wie im Heft (sichtbar 87.5 pt) und mit
+  // seinen Abstaenden (style.css: ems-beispielbild-1/-2).
   function anleitungEinpraegen(){
     var k = [T.e1, T.e2];
     if (beispiel){
-      k.push(T.beispiel, '<div class="ems-beispielbild">'+svg(beispiel,beispielSchwarz,false)+'</div>',
-             T.e3, T.beispielAbfrage, '<div class="ems-beispielbild">'+svg(beispiel,-1,true)+'</div>',
+      var u=umriss(beispiel), l=Math.max(u.w, u.h);
+      k.push(T.beispiel, '<div class="ems-beispielbild ems-beispielbild-1">'+svg(beispiel,beispielSchwarz,false,'',ausschnitt(beispiel,l))+'</div>',
+             T.e3, T.beispielAbfrage, '<div class="ems-beispielbild ems-beispielbild-2">'+svg(beispiel,-1,true,'',ausschnitt(beispiel,l))+'</div>',
              T.beispielLoesung.replace('{x}', BST[beispielSchwarz]));
     } else k.push(T.e3);
     return k;
@@ -740,7 +774,7 @@
   function zurAbfrage(){
     clearInterval(laufend);
     el('fig-blatt-abfrage').innerHTML = H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fig-min-abfrage', {{ $abfrage }})))
-      + H.kasten([T.a1]) + raster('wahl') + H.marke('stopp');
+      + H.kasten(T.a1) + raster('wahl') + H.marke('stopp');
     zeige('fig-abfrage');
     uhr(el('fig-uhr-abfrage'), minuten('fig-min-abfrage', {{ $abfrage }})*60, auswerten);
   }
@@ -761,15 +795,29 @@
   el('fig-nochmal').addEventListener('click', function(){ clearInterval(laufend); zeige('fig-start'); });
   // --- Drucken: ein kleines Testheft ------------------------------------------
   // Die Figuren stehen auf festen Plaetzen wie im Tool (ems.typ:
-  // figuren-raster): vier Spalten ab x = 49 im Abstand 124.5, Zeilen ab
-  // y = 83 im Abstand 135.6, Figur 80.2 pt gross, 17.6 pt unter der Nummer.
+  // figuren-raster, Probelauf S. 43 und S. 61), gerechnet ab der Blattecke:
+  //   Einpraegen: Mitten ab x = 105.75 im Abstand 125.8, ab y = 135.5 im
+  //               Abstand 145
+  //   Abfrage:    Nummer auf der Grundlinie 93.2 (Abstand 143.5), Mitten ab
+  //               x = 117 im Abstand 119.8, 57.3 unter der Grundlinie
+  // Jede Figur in einem Feld von 94 pt, sichtbar im Mittel 90 pt wie im
+  // Heft. Der Massstab gilt fuer die ganze Serie, damit die kleinen
+  // Groessenunterschiede zwischen den Figuren erhalten bleiben.
   function druckRaster(nummern){
     var liste = nummern ? reihenfolge : figuren.map(function(_,i){ return i; });
+    var mittel = figuren.reduce(function(s,f){ var u=umriss(f); return s+Math.max(u.w,u.h); },0) / figuren.length;
+    var l = mittel * 94 / 90;
     return liste.map(function(idx,n){
-      var x = 49 + (n % 4) * 124.5, y = 83 + Math.floor(n / 4) * 135.6;
-      return '<div class="ems-fl-zelle" style="left:'+x+'pt;top:'+y+'pt">'
-        + (nummern ? '<b>'+(n+1)+')</b>' : '')
-        + svg(figuren[idx], nummern ? -1 : schwarz[idx], nummern) + '</div>';
+      var sp = n % 4, ze = Math.floor(n / 4), cx, cy, h = '';
+      if (nummern){
+        var gl = 93.2 + ze * 143.5;
+        cx = 117 + sp * 119.8; cy = gl + 57.3;
+        h = '<div class="ems-fl-nr" style="left:'+(cx-30).toFixed(2)+'pt;top:'+(gl-9.465).toFixed(2)+'pt">'+(n+1)+')</div>';
+      } else {
+        cx = 105.75 + sp * 125.8; cy = 135.5 + ze * 145;
+      }
+      return h + '<div class="ems-fl-figur" style="left:'+(cx-47).toFixed(2)+'pt;top:'+(cy-47).toFixed(2)+'pt">'
+        + svg(figuren[idx], nummern ? -1 : schwarz[idx], nummern, 'ems-fl-figur-svg', ausschnitt(figuren[idx], l)) + '</div>';
     }).join('');
   }
   function drucken(){
@@ -777,7 +825,7 @@
     H.drucken([
       H.seite({ teil: 'A', nr: 1, inhalt: H.kopf(T.heftEinpraegen, H.zeit('lern', minuten('fig-min-lernen', {{ $lern }}))) + H.kasten(anleitungEinpraegen()) }),
       H.seite({ teil: 'A', nr: 2, frei: druckRaster(false), marke: 'stopp' }),
-      H.seite({ teil: 'B', nr: 3, inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fig-min-abfrage', {{ $abfrage }}))) + H.kasten([T.a1]), marke: 'weiter' }),
+      H.seite({ teil: 'B', nr: 3, inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fig-min-abfrage', {{ $abfrage }}))) + H.kasten(T.a1), marke: 'weiter' }),
       H.seite({ teil: 'B', nr: 4, frei: druckRaster(true), marke: 'stopp' }),
       H.seite({ nr: 5, inhalt: H.antwortbogen(T.heftAbfrage, 18) }),
       H.seite({ nr: 6, inhalt: H.loesungsblatt(T.heftAbfrage, reihenfolge.map(function(idx){ return BST[schwarz[idx]]; })) })

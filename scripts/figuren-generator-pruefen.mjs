@@ -109,12 +109,17 @@ pruef('genau 18 Loesungen markiert', erg.richtig === 18, String(erg.richtig));
 await p.click('#fig-drucken-ende'); await p.waitForTimeout(600);
 const dr = await p.evaluate(() => { const d = document.getElementById('ems-druck');
   return { seiten: d.querySelectorAll('.ems-seite').length, svgs: d.querySelectorAll('.fig-svg').length,
-    zellen: d.querySelectorAll('.ems-fl-zelle').length, bogen: d.querySelectorAll('.ems-bogen-zeile').length,
-    loesungen: [...d.querySelectorAll('.ems-loesung b')].map(e => e.textContent).join('') }; });
+    zellen: d.querySelectorAll('.ems-fl-figur').length, nummern: d.querySelectorAll('.ems-fl-nr').length,
+    bogen: d.querySelectorAll('.ems-seite:nth-child(5) .ems-bogen-zeile').length,
+    loesungen: [...d.querySelectorAll('.ems-loesung b')].map(e => e.textContent).join(''),
+    // Loesungsschluessel: je Zeile das schwarze Kaestchen (ems.typ: antwortbogen mit loesungen)
+    schluessel: [...d.querySelectorAll('.ems-seite:nth-child(6) .ems-bogen-zeile')].map(z =>
+      'ABCDE'[[...z.querySelectorAll('i')].findIndex(i => i.classList.contains('ems-bogen-richtig'))] || '?').join('') }; });
 pruef('Druck: sechs Heftseiten', dr.seiten === 6, String(dr.seiten));
-pruef('Druck: 38 Figuren (2 Beispiele + 18 + 18) auf festen Plaetzen', dr.svgs === 38 && dr.zellen === 36, JSON.stringify(dr));
+pruef('Druck: 38 Figuren (2 Beispiele + 18 + 18) auf festen Plaetzen', dr.svgs === 38 && dr.zellen === 36 && dr.nummern === 18, JSON.stringify(dr));
 pruef('Druck: Antwortbogen mit 18 Zeilen', dr.bogen === 18, String(dr.bogen));
 pruef('Druck: Loesungsblatt = Auswertung am Bildschirm', dr.loesungen === erg.buchstaben, dr.loesungen + ' / ' + erg.buchstaben);
+pruef('Druck: Loesungsschluessel = Loesungsblatt', dr.schluessel === dr.loesungen, dr.schluessel + ' / ' + dr.loesungen);
 await p.emulateMedia({ media: 'print' });
 await p.pdf({ path: (process.env.ABLAGE || '/tmp') + '/figuren-set.pdf', preferCSSPageSize: true, printBackground: true });
 await p.emulateMedia({ media: 'screen' });

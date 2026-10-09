@@ -334,10 +334,26 @@
         }).join('') + '</span></li>';
     }).join('') + '</ol>';
   }
+  // Die Anleitung wie ems.typ (anleitungs-absatz "einzug"): Beispielzeilen
+  // eingerueckt, darunter (A) bis (E) in einer eigenen Spalte.
   function anleitungEinpraegen(){
-    var opt = T.beispielOptionen.split('|').map(function(o, k){ return '(' + BST[k] + ') ' + o; }).join('<br>');
+    var opt = T.beispielOptionen.split('|').map(function(o, k){ return '<span>(' + BST[k] + ')</span><span>' + o + '</span>'; }).join('');
     return [T.e1, T.e2, T.e3, '<p class="ems-einzug">' + T.beispiel + '</p>', T.e4,
-            '<p class="ems-einzug">' + T.beispielFrage + '</p><p class="ems-einzug">' + opt + '</p>', T.beispielLoesung];
+            '<p class="ems-einzug">' + T.beispielFrage + '</p>', '<div class="ems-einzug ems-beispiel-optionen">' + opt + '</div>', T.beispielLoesung];
+  }
+  // --- Fragen fuer den Druck (ems.typ: fakten-seite) --------------------------
+  // Jede Frage auf einem festen Platz von 144 pt, zwei Spalten, spaltenweise
+  // nummeriert: erst links von oben nach unten, dann rechts. Die Linie
+  // dazwischen und die Lage der Spalten stehen in style.css (.ems-fl-fragen).
+  function druckFragen(fragen, start, folgeseite){
+    var links = Math.ceil(fragen.length / 2);
+    return '<div class="ems-fl-fragen' + (folgeseite ? ' ems-fl-folge' : '') + '">' + fragen.map(function(f, i){
+      var rechts = i >= links, zeile = rechts ? i - links : i;
+      return '<div class="ems-fl-frage' + (rechts ? ' ems-fl-rechts' : '') + '" style="top:' + (zeile * 144) + 'pt">'
+        + '<span class="ems-nr">' + (start + i + 1) + ')</span><span>' + f.text + '</span>'
+        + '<span class="ems-optionen">' + f.optionen.map(function(o, k){
+          return '<span class="ems-option"><span>(' + BST[k] + ')</span><span>' + o + '</span></span>'; }).join('') + '</span></div>';
+    }).join('') + '</div>';
   }
   function minuten(id, vorgabe){ return +el(id).value || vorgabe; }
   // --- Uhren ---------------------------------------------------------------
@@ -395,16 +411,16 @@
   // --- Drucken: ein kleines Testheft ------------------------------------------
   // Wie im echten Heft: Teil A mit Anleitung und Einpraegeliste (STOPP),
   // Teil B mit den Fragen - 8 unter dem Anleitungskasten, 10 auf der
-  // naechsten Seite, je zweispaltig wie im Testheft 2026 -, dann ein
-  // Antwortbogen und die Loesungen. Gedruckt wird ueber window.print(); der
+  // naechsten Seite, je zweispaltig (ems.typ: FL-ERSTE-SEITE, PRO-SEITE) -,
+  // dann ein Antwortbogen und die Loesungen mit dem Loesungsschluessel. Gedruckt wird ueber window.print(); der
   // Browser bietet dort selbst "Als PDF sichern" an.
   function drucken(l, f){
     if (!l || !l.length){ l = baueSet(); f = baueFragen(l); }
     H.drucken([
       H.seite({ teil: 'A', nr: 1, inhalt: H.kopf(T.heftEinpraegen, H.zeit('lern', minuten('fg-min-lernen', {{ $lern }}))) + H.kasten(anleitungEinpraegen()) }),
       H.seite({ teil: 'A', nr: 2, inhalt: lernliste(l), marke: 'stopp' }),
-      H.seite({ teil: 'B', nr: 3, inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fg-min-abfrage', {{ $abfrage }}))) + H.kasten([T.a1, T.a2]) + fragenHtml(f.slice(0, 8), 0, 'druck'), marke: 'weiter' }),
-      H.seite({ teil: 'B', nr: 4, inhalt: fragenHtml(f.slice(8), 8, 'druck'), marke: 'stopp' }),
+      H.seite({ teil: 'B', nr: 3, inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', minuten('fg-min-abfrage', {{ $abfrage }}))) + H.kasten([T.a1, T.a2]) + druckFragen(f.slice(0, 8), 0, false), marke: 'weiter' }),
+      H.seite({ teil: 'B', nr: 4, inhalt: druckFragen(f.slice(8), 8, true), marke: 'stopp' }),
       H.seite({ nr: 5, inhalt: H.antwortbogen(T.heftAbfrage, f.length) }),
       H.seite({ nr: 6, inhalt: H.loesungsblatt(T.heftAbfrage, f.map(function(x){ return BST[x.richtig]; })) })
     ]);

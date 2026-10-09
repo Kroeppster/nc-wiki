@@ -175,8 +175,10 @@ await p.click('#fg-drucken-ende'); await p.waitForTimeout(300);
 pruef('print() aufgerufen', (await p.evaluate(() => window.__gedruckt)) === 1);
 const dr = await p.evaluate(() => { const d = document.getElementById('ems-druck');
   return { seiten: d.querySelectorAll('.ems-seite').length, amBody: d.parentElement === document.body,
-           fragen: d.querySelectorAll('.ems-frage').length, zeilen: d.querySelectorAll('.ems-zeile').length,
-           bogen: d.querySelectorAll('.ems-bogen-zeile').length, rand: !!document.getElementById('ems-druck-seite') }; });
+           fragen: d.querySelectorAll('.ems-fl-frage').length, zeilen: d.querySelectorAll('.ems-zeile').length,
+           bogen: d.querySelectorAll('.ems-seite:nth-child(5) .ems-bogen-zeile').length, rand: !!document.getElementById('ems-druck-seite'),
+           schluessel: [...d.querySelectorAll('.ems-seite:nth-child(6) .ems-bogen-zeile')].map(z =>
+             'ABCDE'[[...z.querySelectorAll('i')].findIndex(i => i.classList.contains('ems-bogen-richtig'))] || '?').join('') }; });
 pruef('sechs Heftseiten', dr.seiten === 6, String(dr.seiten));
 pruef('15 Personen, 18 Fragen, 18 Zeilen Antwortbogen', dr.zeilen === 15 && dr.fragen === 18 && dr.bogen === 18, JSON.stringify(dr));
 pruef('Druckbehaelter direkt unter <body>, Seitenrand nur fuer diesen Druck', dr.amBody && dr.rand);
@@ -200,8 +202,10 @@ pruef('S. 2: Liste mit 15 Personen und STOPP', (t[1].match(/ca\. \d+ Jahre\n/g) 
 pruef('S. 3: Reproduktionsphase, Testteil B, Fragen 1-8, Pfeil', /Testteil B/.test(t[2]) && /Reproduktionsphase/.test(t[2]) && /\n8\)/.test(t[2]) && !/\n9\)/.test(t[2]) && /umblättern und/.test(t[2]));
 pruef('S. 4: Fragen 9-18 und STOPP', /\n9\)/.test(t[3]) && /\n18\)/.test(t[3]) && /STOPP/.test(t[3]));
 pruef('S. 5: Antwortbogen', /Antwortbogen/.test(t[4]));
-const loes = (t[5].match(/^[A-E]$/gm) || []).join('');
+// Nur die Tabelle - darunter folgt der Loesungsschluessel mit A bis E in jeder Zeile
+const loes = (t[5].split('Lösungsschlüssel')[0].match(/^[A-E]$/gm) || []).join('');
 pruef('S. 6: Loesungen stimmen mit der Auswertung ueberein', loes === erwartet, loes + ' / ' + erwartet);
+pruef('S. 6: Loesungsschluessel (schwarze Kaestchen) = Loesungen', dr.schluessel === erwartet, dr.schluessel + ' / ' + erwartet);
 pruef('PDF ohne Navigation und Artikeltext', !t.join(' ').includes('Wieso ist dieser Untertest') && !/Unterstützer:innen/.test(t.join(' ')));
 
 await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
