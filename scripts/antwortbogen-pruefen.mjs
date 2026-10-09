@@ -42,6 +42,7 @@ const loesung = await p.evaluate(() => JSON.parse(document.getElementById('ab-da
   .testsimulationen.filter(t => t.jahr === 2026)[0].loesungen.join(''));
 
 for (const [name, e] of Object.entries(erwartet)) {
+  if (name.startsWith('_')) continue;
   console.log('\n=== ' + name + ' ===');
   await p.evaluate(() => { document.getElementById('ab-status').textContent = ''; document.getElementById('ab-ergebnis').hidden = true; });
   const t0 = Date.now();
@@ -84,6 +85,36 @@ console.log('\n=== Korrigieren ===');
   await p.selectOption(`#ab-zeilen select[data-nr="${nr}"]`, loesung[nr]);
   const nachher = +(await p.textContent('#ab-summe')).match(/\d+/)[0];
   pruef('Antwort korrigiert -> ein Punkt mehr', nachher === vorher + 1, vorher + ' -> ' + nachher);
+}
+// Eigener Loesungsschluessel (wie aus dem Tool): erst der Bogen, dann der
+// Schluessel; Aufgaben ohne Loesung zaehlen nicht mit.
+console.log('\n=== Eigener Loesungsschluessel ===');
+{
+  const sch = erwartet._schluessel, scan = erwartet['scan.png'].antworten;
+  const mit = [...sch.loesungen].filter(l => l !== '.').length;
+  const soll = [...scan].filter((a, i) => a === sch.loesungen[i]).length;
+  await p.selectOption('#ab-testsim', 'eigen');
+  pruef('Feld fuer den Schluessel erscheint', await p.isVisible('#ab-schluessel'));
+  await p.setInputFiles('#ab-datei', join(ORDNER, 'scan.png'));
+  await p.waitForFunction(() => /Lösungsschlüssel/.test(document.getElementById('ab-status').textContent), null, { timeout: 60000 });
+  pruef('ohne Schluessel: Bogen gelesen, Hinweis statt Ergebnis', await p.evaluate(() => document.getElementById('ab-ergebnis').hidden));
+  for (const datei of sch.dateien) {
+    await p.evaluate(() => { document.getElementById('ab-schluessel-status').textContent = ''; });
+    await p.setInputFiles('#ab-schluessel-datei', join(ORDNER, datei));
+    await p.waitForFunction(() => /\d/.test(document.getElementById('ab-schluessel-status').textContent)
+      || document.getElementById('ab-schluessel-status').classList.contains('ab-fehler'), null, { timeout: 60000 });
+    const st = await p.textContent('#ab-schluessel-status');
+    pruef(datei + ': ' + mit + ' Aufgaben mit Loesung erkannt', st.includes(String(mit)) && !/nicht eindeutig/.test(st), st);
+    const summe = await p.textContent('#ab-summe');
+    pruef(datei + ': Punkte ' + soll + ' von ' + mit, summe.startsWith(soll + ' ') && summe.includes(' ' + mit + ' '), summe);
+  }
+  const ohne = await p.$$eval('#ab-zeilen tr.ab-ohne', z => z.length);
+  pruef('Aufgaben ohne Loesung als solche markiert (' + (144 - mit) + ')', ohne === 144 - mit, String(ohne));
+  await p.setInputFiles('#ab-schluessel-datei', join(ORDNER, 'kein-bogen.png'));
+  await p.waitForFunction(() => document.getElementById('ab-schluessel-status').classList.contains('ab-fehler'), null, { timeout: 60000 });
+  pruef('kein Schluessel im Bild -> Meldung', true);
+  await p.selectOption('#ab-testsim', '2026');
+  pruef('zurueck auf 2026: Feld fuer den Schluessel weg', !(await p.isVisible('#ab-schluessel')));
 }
 pruef('keine JS-Fehler', js.length === 0, js.join(' | '));
 console.log(`\n==== ${ok} bestanden, ${fail} nicht ====`);

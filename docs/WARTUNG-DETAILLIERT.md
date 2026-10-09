@@ -758,7 +758,12 @@ Testsimulationen seit 2022 haben denselben Bogen. Die Lösungen stehen in
 `data/antwortbogen.yaml` und werden **nicht von Hand** gepflegt: Für eine neue
 Testsimulation das Lösungs-PDF wie gewohnt hochladen, in `scripts/antwortbogen-loesungen.py`
 eintragen und `python3 scripts/antwortbogen-loesungen.py --schreiben` laufen lassen (bricht
-ab, wenn nicht genau 144 Lösungen gefunden werden). Nach Änderungen am Lesen:
+ab, wenn nicht genau 144 Lösungen gefunden werden). Für Simulationen, die nicht auf der Website
+stehen, gibt es «Eigener Lösungsschlüssel»: das Lösungs-PDF aus dem Tool (oder ein Foto der
+Lösungsschlüssel-Seite) wird wie ein ausgefüllter Bogen gelesen, die schwarzen Kästchen sind
+die Lösungen; Zeilen ohne Kästchen zählen nicht. PDFs öffnet pdf.js aus
+`static/vendor/pdfjs/` (bewusst nicht von einem CDN: nichts soll das Gerät verlassen; beim
+Aktualisieren beide `.mjs` aus dem npm-Paket `pdfjs-dist` ersetzen). Nach Änderungen am Lesen:
 `python3 scripts/antwortbogen-testbilder.py /tmp/ab` (Testfotos mit bekannten Kreuzen) und
 `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 

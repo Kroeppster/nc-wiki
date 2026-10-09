@@ -762,7 +762,12 @@ Tutte le simulazioni dal 2022 hanno lo stesso foglio. Le soluzioni sono in
 `data/antwortbogen.yaml` e **non si modificano a mano**: per una nuova simulazione caricare
 come sempre il PDF delle soluzioni, inserirlo in `scripts/antwortbogen-loesungen.py` e
 lanciare `python3 scripts/antwortbogen-loesungen.py --schreiben` (si interrompe se non trova
-esattamente 144 soluzioni). Dopo modifiche alla lettura: `python3
+esattamente 144 soluzioni). Per le simulazioni che non sono sul sito c'è «Eigener
+Lösungsschlüssel»: il PDF delle soluzioni dello strumento (o una foto della pagina con la chiave
+di correzione) viene letto come un foglio compilato, le caselle nere sono le soluzioni; le
+righe senza casella non contano. I PDF vengono aperti da pdf.js in `static/vendor/pdfjs/`
+(volutamente non da una CDN: nulla deve lasciare il dispositivo; per aggiornarlo sostituire i
+due `.mjs` del pacchetto npm `pdfjs-dist`). Dopo modifiche alla lettura: `python3
 scripts/antwortbogen-testbilder.py /tmp/ab` (foto di prova con crocette note) e
 `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 

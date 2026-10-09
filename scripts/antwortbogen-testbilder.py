@@ -12,9 +12,17 @@ scripts/antwortbogen-pruefen.mjs liest sie im Browser und vergleicht.
     pip install pymupdf pillow numpy
     python3 scripts/antwortbogen-testbilder.py ORDNER
 
-Schreibt ORDNER/*.jpg|png und ORDNER/erwartet.json:
-  {"bild.jpg": {"antworten": "A.B*..", "fehler": false}, ...}
-  Je Aufgabe ein Zeichen: A-E ein Kreuz, "." leer, "*" mehrere.
+Schreibt ORDNER/*.jpg|png|pdf und ORDNER/erwartet.json:
+  {"bild.jpg": {"antworten": "A.B*..", "fehler": false}, ...,
+   "_schluessel": {"dateien": [...], "loesungen": "AB.C.."}}
+  Je Aufgabe ein Zeichen: A-E ein Kreuz, "." leer, "*" mehrere; im
+  Schlüssel "." = Aufgabe ohne Lösung.
+
+Dazu ein eigener Lösungsschlüssel, wie ihn das Formatierungstool ausgibt
+(vorlage/loesungsblatt.typ): ein PDF mit einer Tabellenseite und danach dem
+Antwortbogen, die richtigen Kästchen schwarz - hier die Lösungen 2026, aber
+Muster zuordnen 3-18 ohne Lösung (wie im Tool, wo diese Serie keine hat).
+Und derselbe Schlüssel als Foto, und der Scan als PDF.
 
 Die Kreuze sitzen dort, wo die Kästchen im PDF wirklich stehen (aus den
 Zeichnungen des PDFs gelesen, nicht aus den Zahlen der Auswertung) - sonst
@@ -169,6 +177,36 @@ def main():
     pix = pymupdf.open(HEFT)[10].get_pixmap(dpi=DPI)
     Image.frombytes('RGB', (pix.width, pix.height), pix.samples).save(os.path.join(ordner, 'kein-bogen.png'))
     erwartet['kein-bogen.png'] = {'antworten': None, 'fehler': True}
+    # Der Scan noch einmal als PDF (eine Seite, Bild darin)
+    pdf = pymupdf.open()
+    seite = pdf.new_page(width=595.2, height=842.16)
+    seite.insert_image(seite.rect, filename=os.path.join(ordner, 'scan.png'))
+    pdf.save(os.path.join(ordner, 'scan.pdf'))
+    erwartet['scan.pdf'] = dict(erwartet['scan.png'])
+    # Der eigene Lösungsschlüssel
+    import yaml
+    daten = yaml.safe_load(open('data/antwortbogen.yaml', encoding='utf-8'))
+    loes = ''.join([t for t in daten['testsimulationen'] if t['jahr'] == 2026][0]['loesungen'])
+    loes = loes[:2] + '.' * 16 + loes[18:]
+    heft = pymupdf.open(HEFT)
+    pdf = pymupdf.open()
+    tabelle = pdf.new_page(width=595.28, height=841.89)
+    tabelle.insert_text((42.5, 98.7), 'Lösungen   Testsimulation (Probe)', fontsize=12)
+    for i, l in enumerate(loes):
+        if l != '.':
+            tabelle.insert_text((42.5 + (i % 10) * 36, 140 + (i // 10) * 20), '%d %s' % (i + 1, l), fontsize=8)
+    pdf.insert_pdf(heft, from_page=0, to_page=0)
+    bogen = pdf[1]
+    for nr, l in enumerate(loes):
+        if l != '.':
+            bogen.draw_rect(pymupdf.Rect(felder[nr][BST.index(l)]), color=(0, 0, 0), fill=(0, 0, 0), width=1.07)
+    pdf.save(os.path.join(ordner, 'schluessel.pdf'))
+    pix = pdf[1].get_pixmap(dpi=DPI)
+    schl = Image.frombytes('RGB', (pix.width, pix.height), pix.samples)
+    random.seed(7)
+    foto(schl, drehung=-3, schraeg=0.02, rand=0.07, schatten=0.3, unschaerfe=0.8, breite_ziel=2600).save(
+        os.path.join(ordner, 'schluessel-foto.jpg'), quality=82)
+    erwartet['_schluessel'] = {'dateien': ['schluessel.pdf', 'schluessel-foto.jpg'], 'loesungen': loes}
     with open(os.path.join(ordner, 'erwartet.json'), 'w') as f:
         json.dump(erwartet, f, indent=1)
     print('geschrieben:', ', '.join(erwartet))

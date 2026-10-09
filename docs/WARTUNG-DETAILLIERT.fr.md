@@ -778,7 +778,13 @@ Toutes les simulations depuis 2022 ont la même feuille. Les solutions sont dans
 `data/antwortbogen.yaml` et ne se modifient **pas à la main** : pour une nouvelle
 simulation, téléverser le PDF des solutions comme d'habitude, l'inscrire dans
 `scripts/antwortbogen-loesungen.py` et lancer `python3 scripts/antwortbogen-loesungen.py
---schreiben` (s'arrête s'il ne trouve pas exactement 144 solutions). Après une modification
+--schreiben` (s'arrête s'il ne trouve pas exactement 144 solutions). Pour les simulations qui
+ne sont pas sur le site, il y a « Eigener Lösungsschlüssel » : le PDF des solutions de l'outil
+(ou une photo de la page de la grille de correction) est lu comme une feuille remplie, les
+cases noires sont les solutions ; les lignes sans case ne comptent pas. Les PDF sont ouverts
+par pdf.js depuis `static/vendor/pdfjs/` (volontairement pas depuis un CDN : rien ne doit
+quitter l'appareil ; pour mettre à jour, remplacer les deux `.mjs` du paquet npm
+`pdfjs-dist`). Après une modification
 de la lecture : `python3 scripts/antwortbogen-testbilder.py /tmp/ab` (photos de test aux
 croix connues) puis `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 

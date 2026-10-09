@@ -1,0 +1,4 @@
+pdf.js 4.10.38 (pdfjs-dist, Mozilla, Apache-2.0), unveraendert aus dem npm-Paket.
+Gebraucht von layouts/partials/bausteine/antwortbogen-auswertung.html, um
+PDFs im Browser zu oeffnen. Bewusst hier abgelegt statt von einem CDN geladen:
+Die Seite verspricht, dass nichts das Geraet verlaesst.

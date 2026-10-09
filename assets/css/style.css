@@ -1836,6 +1836,19 @@ body.pm-aktiv{overflow:hidden;}
 .ab-eingabe{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-3);}
 .ab-feld{display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-sm);font-weight:600;color:var(--color-ink-soft);}
 .ab-feld input,.ab-feld select{font-weight:400;max-width:100%;}
+.ab-eingabe > .ab-feld{flex:0 1 32rem;min-width:0;}
+.ab-feld select{width:100%;text-overflow:ellipsis;}
+.ab-schluessel .ab-status{font-size:var(--text-sm);}
+.ab-knoepfe{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-2);}
+/* Die Datei-Felder stecken unsichtbar in den Knoepfen (label): so oeffnet ein
+   Tippen auf den Knopf die Auswahl bzw. die Kamera, und die Tastatur
+   erreicht das Feld trotzdem. */
+.ab-knopf{position:relative;cursor:pointer;}
+.ab-knopf input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;}
+.ab-knopf:focus-within{outline:2px solid var(--color-signal,#1a56db);outline-offset:2px;}
+.ab-schluessel{margin:0 0 var(--space-4);padding:var(--space-4);border:1px dashed var(--color-line);border-radius:var(--radius-sm);}
+.ab-schluessel > .ab-feld,.ab > .ab-feld{margin:0 0 var(--space-2);}
+.ab-ohne td{color:var(--color-ink-faint);}
 .ab-hinweis{margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);max-width:44rem;}
 .ab-status{margin:var(--space-4) 0 0;font-weight:600;}
 .ab-status:empty{display:none;}

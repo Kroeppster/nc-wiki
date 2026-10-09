@@ -27,6 +27,12 @@
        Zeile die Antwort: ein Kreuz, leer, mehrere - oder unsicher.
   Wer dort etwas aendert, zieht es hier nach (und umgekehrt).
 
+  QUELLEN: ein Foto (der Knopf "Foto aufnehmen" oeffnet auf dem Handy die
+  Kamera-App), ein Bild oder ein PDF (pdf.js, auf der Website selbst unter
+  static/vendor/pdfjs/, erst bei Bedarf geladen). Als Loesung dient eine
+  Testsimulation aus data/antwortbogen.yaml oder ein eigener
+  Loesungsschluessel aus dem Tool (Antwortbogen mit schwarzen Kaestchen).
+
   DER BOGEN: Alle Testsimulationen seit 2022 haben denselben Antwortbogen
   (gemessen an den PDFs unter assets/downloads/testsimulationen/: Passermarken
   und Kaestchen innerhalb von 0.2 pt gleich), acht Bloecke zu 18 Zeilen. Die
@@ -48,11 +54,29 @@
 {{- range $d.testsimulationen }}
 <option value="{{ .jahr }}">{{ replace (i18n "ab_testsim_jahr") "{jahr}" (string .jahr) }}</option>
 {{- end }}
+<option value="eigen">{{ i18n "ab_testsim_eigener" }}</option>
 </select>
 </label>
-<label class="ab-feld">{{ i18n "ab_foto" }}
-<input type="file" id="ab-datei" accept="image/*">
-</label>
+</div>
+{{- /* Ein eigener Loesungsschluessel: das Loesungs-PDF einer Testsimulation
+       aus dem Formatierungstool. Darin steht der Antwortbogen mit den
+       richtigen Kaestchen schwarz - gelesen wird er wie ein ausgefuellter
+       Bogen. So laesst sich auch eine Simulation auswerten, die (noch) nicht
+       auf der Website steht. */ -}}
+<div class="ab-schluessel" id="ab-schluessel" hidden>
+<p class="ab-feld">{{ i18n "ab_schluessel" }}</p>
+<label class="btn btn-ghost ab-knopf">{{ i18n "ab_datei_waehlen" }}<input type="file" id="ab-schluessel-datei" accept="image/*,application/pdf,.pdf"></label>
+<p class="ab-hinweis">{{ i18n "ab_schluessel_hinweis" }}</p>
+<p class="ab-status" id="ab-schluessel-status" role="status" aria-live="polite"></p>
+</div>
+{{- /* Zwei Knoepfe: "Foto aufnehmen" oeffnet auf dem Handy direkt die
+       Kamera-App (capture) - volle Aufloesung, Autofokus, Blitz. Der zweite
+       nimmt ein vorhandenes Bild oder PDF (Scan). Am Computer tun beide
+       dasselbe. */ -}}
+<p class="ab-feld">{{ i18n "ab_foto" }}</p>
+<div class="ab-knoepfe">
+<label class="btn btn-primary ab-knopf">{{ i18n "ab_foto_aufnehmen" }}<input type="file" id="ab-kamera" accept="image/*" capture="environment"></label>
+<label class="btn btn-ghost ab-knopf">{{ i18n "ab_datei_waehlen" }}<input type="file" id="ab-datei" accept="image/*,application/pdf,.pdf"></label>
 </div>
 <p class="ab-hinweis">{{ i18n "ab_tipps" }}</p>
 <p class="ab-status" id="ab-status" role="status" aria-live="polite"></p>
@@ -91,8 +115,19 @@
     leer: {{ i18n "ab_leer" | jsonify | safeJS }},
     mehrfach: {{ i18n "ab_mehrfach" | jsonify | safeJS }},
     pruefen: {{ i18n "ab_pruefen" | jsonify | safeJS }},
-    unsicher: {{ i18n "ab_unsicher" | jsonify | safeJS }}
+    unsicher: {{ i18n "ab_unsicher" | jsonify | safeJS }},
+    pdfLaedt: {{ i18n "ab_pdf_laedt" | jsonify | safeJS }},
+    fehlerPdf: {{ i18n "ab_fehler_pdf" | jsonify | safeJS }},
+    schluesselFehlt: {{ i18n "ab_schluessel_fehlt" | jsonify | safeJS }},
+    schluesselKein: {{ i18n "ab_schluessel_kein" | jsonify | safeJS }},
+    schluesselOk: {{ i18n "ab_schluessel_ok" | jsonify | safeJS }},
+    schluesselUnsicher: {{ i18n "ab_schluessel_unsicher" | jsonify | safeJS }},
+    ohneLoesung: {{ i18n "ab_ohne_loesung" | jsonify | safeJS }}
   };
+  // pdf.js liegt auf der Website selbst (static/vendor/pdfjs/) und wird erst
+  // geladen, wenn jemand ein PDF waehlt.
+  var PDFJS = {{ "vendor/pdfjs/pdf.min.mjs" | relURL | jsonify | safeJS }};
+  var PDFJS_WORKER = {{ "vendor/pdfjs/pdf.worker.min.mjs" | relURL | jsonify | safeJS }};
   // --- Der Bogen (pt, A4), wie ems.typ ihn setzt ---------------------------
   var A4 = [595.2756, 841.8898];
   // Linke obere Ecke des weissen Felds der Passermarken; der schwarze Kern
@@ -442,52 +477,123 @@
     return new Promise(function(ok, fehler){
       var url = URL.createObjectURL(datei), img = new Image();
       img.onload = function(){ URL.revokeObjectURL(url); ok(img); };
-      img.onerror = function(){ URL.revokeObjectURL(url); fehler(); };
+      img.onerror = function(){ URL.revokeObjectURL(url); fehler(T.fehlerBild); };
       img.src = url;
     });
   }
-  function bildAus(img){
-    var lang = Math.max(img.naturalWidth, img.naturalHeight);
+  // quelle: ein <img> oder eine Leinwand (gerenderte PDF-Seite)
+  function bildAus(quelle){
+    var qw = quelle.naturalWidth || quelle.width, qh = quelle.naturalHeight || quelle.height;
+    var lang = Math.max(qw, qh);
     var ziel = Math.min(Math.max(LANGE_SEITE, lang), 2 * LANGE_SEITE), z = ziel / lang;
     var c = document.createElement('canvas');
-    c.width = Math.round(img.naturalWidth * z); c.height = Math.round(img.naturalHeight * z);
+    c.width = Math.round(qw * z); c.height = Math.round(qh * z);
     var ctx = c.getContext('2d');
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
-    ctx.drawImage(img, 0, 0, c.width, c.height);
+    ctx.drawImage(quelle, 0, 0, c.width, c.height);
     var b = new Bild(ctx.getImageData(0, 0, c.width, c.height).data, c.width, c.height);
     b.vergroessert = Math.max(1, ziel / lang);
     b.leinwand = c;
     return b;
   }
+  // Ein PDF Seite fuer Seite als Leinwand, wie ein Scan mit 150 dpi (die
+  // lange Seite 1754 Bildpunkte). Hoechstens zwoelf Seiten: ein Loesungs-PDF
+  // aus dem Tool hat den Schluessel nach den Tabellen, ein Scan ist kurz.
+  function pdfSeiten(datei){
+    return import(PDFJS).then(function(pdfjs){
+      pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      return datei.arrayBuffer().then(function(daten){ return pdfjs.getDocument({ data: daten }).promise; });
+    }).then(function(pdf){
+      var seiten = [], n = Math.min(pdf.numPages, 12), kette = Promise.resolve();
+      for (var i = 1; i <= n; i++) (function(i){
+        kette = kette.then(function(){ return pdf.getPage(i); }).then(function(seite){
+          var v = seite.getViewport({ scale: 1 });
+          var z = LANGE_SEITE / Math.max(v.width, v.height), vp = seite.getViewport({ scale: z });
+          var c = document.createElement('canvas');
+          c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+          var ctx = c.getContext('2d');
+          ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+          return seite.render({ canvasContext: ctx, viewport: vp }).promise.then(function(){ seiten.push(c); });
+        });
+      })(i);
+      return kette.then(function(){ return seiten; });
+    }, function(){ throw T.fehlerPdf; });
+  }
+  function istPdf(datei){ return datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name); }
+  // Eine Datei -> Liste von Quellen (eine bei einem Bild, je Seite bei einem PDF)
+  function quellen(datei){
+    return istPdf(datei) ? pdfSeiten(datei) : laden(datei).then(function(img){ return [img]; });
+  }
+  // Die erste Seite, auf der ein Bogen zu lesen ist. Fehlt er ueberall,
+  // die Meldung der ersten Seite.
+  function ersterBogen(liste, pruefen){
+    var erster = null;
+    for (var i = 0; i < liste.length; i++){
+      var bild = bildAus(liste[i]), r = bogenLesen(bild);
+      r.bild = bild;
+      if (!r.fehler && (!pruefen || pruefen(r))) return r;
+      if (!erster) erster = r.fehler ? r : { fehler: T.schluesselKein };
+    }
+    return erster || { fehler: T.fehlerBild };
+  }
+  // --- Eigener Loesungsschluessel --------------------------------------------------
+  // Der Antwortbogen mit den richtigen Kaestchen schwarz (ems.typ:
+  // antwortbogen mit loesungen). Gelesen wie ein ausgefuellter Bogen; eine
+  // Zeile ohne Kaestchen (die Aufgabe hat im Tool keine Loesung, oder der
+  // Block ist kuerzer) zaehlt spaeter nicht mit. Eine unklare Zeile auch
+  // nicht - lieber eine Aufgabe weniger als eine falsche Loesung.
+  var schluessel = null;
+  function schluesselAus(r){
+    var nr = [];
+    var l = r.antworten.map(function(a, n){
+      if (r.unsicher[n] && a !== ''){ nr.push(n + 1); return ''; }
+      return a === '*' ? '' : a;
+    });
+    return { loesungen: l, unklar: nr };
+  }
   // --- Auswerten und zeigen ---------------------------------------------------------
   var stand = null;
+  function eigen(){ return el('ab-testsim').value === 'eigen'; }
   function loesungen(){
+    if (eigen()) return schluessel;
     var jahr = +el('ab-testsim').value;
     var t = D.testsimulationen.filter(function(x){ return x.jahr === jahr; })[0];
     return t.loesungen.join('').split('');
   }
   function name(b){ return b[SPRACHE] || b.de; }
   function zeigen(){
-    var l = loesungen(), richtig = 0, zeilen = '', tabelle = '';
+    var l = loesungen();
+    if (!stand) return;
+    if (!l){
+      el('ab-ergebnis').hidden = true;
+      el('ab-status').textContent = T.schluesselFehlt;
+      el('ab-status').className = 'ab-status';
+      return;
+    }
+    el('ab-status').textContent = '';
+    el('ab-ergebnis').hidden = false;
+    var richtig = 0, von = 0, zeilen = '', tabelle = '';
     D.bloecke.forEach(function(b, k){
-      var r = 0, h = '';
+      var r = 0, m = 0, h = '';
       for (var i = 0; i < ZEILEN; i++){
-        var n = k * ZEILEN + i, a = stand.antworten[n], ok = a === l[n];
+        var n = k * ZEILEN + i, a = stand.antworten[n], mit = !!l[n], ok = mit && a === l[n];
+        if (mit) m++;
         if (ok) r++;
         var wahl = ['', 'A', 'B', 'C', 'D', 'E', '*'].map(function(o){
           return '<option value="' + o + '"' + (o === a ? ' selected' : '') + '>' + (o === '' ? T.leer : o === '*' ? T.mehrfach : o) + '</option>';
         }).join('');
-        h += '<tr class="' + (ok ? 'ab-richtig' : 'ab-falsch') + (stand.unsicher[n] ? ' ab-unsicher' : '') + '">'
+        h += '<tr class="' + (!mit ? 'ab-ohne' : ok ? 'ab-richtig' : 'ab-falsch') + (stand.unsicher[n] ? ' ab-unsicher' : '') + '">'
           + '<td>' + (n + 1) + '</td><td><select data-nr="' + n + '" aria-label="' + T.deine + ' ' + (n + 1) + '">' + wahl + '</select></td>'
-          + '<td>' + l[n] + '</td><td>' + (ok ? '✓' : '✗') + (stand.unsicher[n] ? ' <span class="ab-pruefen">' + T.pruefen + '</span>' : '') + '</td></tr>';
+          + '<td>' + (mit ? l[n] : '–') + '</td><td>' + (!mit ? T.ohneLoesung : ok ? '✓' : '✗')
+          + (stand.unsicher[n] ? ' <span class="ab-pruefen">' + T.pruefen + '</span>' : '') + '</td></tr>';
       }
-      richtig += r;
-      tabelle += '<tr><td>' + name(b) + '</td><td>' + r + ' / ' + ZEILEN + '</td></tr>';
+      richtig += r; von += m;
+      if (!m) return;   // ein Block ohne jede Loesung (eigener Schluessel) faellt weg
+      tabelle += '<tr><td>' + name(b) + '</td><td>' + r + ' / ' + m + '</td></tr>';
       zeilen += '<details class="ab-block"' + (stand.unsicher.slice(k * ZEILEN, (k + 1) * ZEILEN).some(Boolean) ? ' open' : '') + '><summary>'
-        + name(b) + ' <span>' + r + ' / ' + ZEILEN + '</span></summary><table><thead><tr><th>' + T.nr + '</th><th>' + T.deine
+        + name(b) + ' <span>' + r + ' / ' + m + '</span></summary><table><thead><tr><th>' + T.nr + '</th><th>' + T.deine
         + '</th><th>' + T.loesung + '</th><th></th></tr></thead><tbody>' + h + '</tbody></table></details>';
     });
-    var von = D.bloecke.length * ZEILEN;
     el('ab-summe').textContent = T.summe.replace('{n}', richtig).replace('{von}', von);
     el('ab-punkte').innerHTML = '<thead><tr><th>' + T.untertest + '</th><th>' + T.punkte + '</th></tr></thead><tbody>' + tabelle
       + '<tr class="ab-total"><td>' + T.total + '</td><td>' + richtig + ' / ' + von + '</td></tr></tbody>';
@@ -515,6 +621,7 @@
     }
     for (var n = 0; n < stand.antworten.length; n++){
       var k = Math.floor(n / ZEILEN), i = n % ZEILEN, a = stand.antworten[n];
+      if (!l[n]) continue;
       for (var sp = 0; sp < 5; sp++){
         var e = feldEcke(k, i, sp), b = BST[sp];
         if (b === a) viereck(e[0] - 1, e[1] - 1, FELD_B + 2, FELD_H + 2, b === l[n] ? 'rgba(19,115,51,.45)' : 'rgba(197,34,31,.45)', 2, true);
@@ -526,39 +633,59 @@
       }
     }
   }
+  function melden(id, text, fehler){
+    el(id).textContent = text;
+    el(id).className = 'ab-status' + (fehler ? ' ab-fehler' : '');
+  }
+  // Erst die Meldung zeigen lassen, dann rechnen (das dauert einen Moment)
+  function spaeter(f){ return new Promise(function(ok){ setTimeout(function(){ ok(f()); }, 30); }); }
+  function bogenWaehlen(datei){
+    if (!datei) return;
+    el('ab-ergebnis').hidden = true;
+    melden('ab-status', istPdf(datei) ? T.pdfLaedt : T.liest);
+    return quellen(datei).then(function(liste){
+      melden('ab-status', T.liest);
+      return spaeter(function(){ return ersterBogen(liste); });
+    }).then(function(r){
+      if (r.fehler){ melden('ab-status', r.fehler, true); return; }
+      stand = { bild: r.bild, abb: r.abb, antworten: r.antworten, unsicher: r.unsicher, hinweise: r.hinweise };
+      zeigen();
+      if (!el('ab-ergebnis').hidden) el('ab-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
+  }
+  function schluesselWaehlen(datei){
+    if (!datei) return;
+    schluessel = null;
+    melden('ab-schluessel-status', istPdf(datei) ? T.pdfLaedt : T.liest);
+    return quellen(datei).then(function(liste){
+      // Ein Schluessel hat in den meisten Zeilen genau ein schwarzes Kaestchen;
+      // eine Tabellenseite davor hat gar keinen Bogen.
+      return spaeter(function(){ return ersterBogen(liste, function(r){
+        return r.antworten.filter(function(a){ return /^[A-E]$/.test(a); }).length >= 18; }); });
+    }).then(function(r){
+      if (r.fehler){ melden('ab-schluessel-status', r.fehler === T.fehlerKein ? T.schluesselKein : r.fehler, true); zeigen(); return; }
+      var k = schluesselAus(r);
+      schluessel = k.loesungen;
+      var n = schluessel.filter(Boolean).length;
+      melden('ab-schluessel-status', T.schluesselOk.replace('{n}', n)
+        + (k.unklar.length ? ' ' + T.schluesselUnsicher.replace('{n}', k.unklar.length).replace('{liste}', k.unklar.join(', ')) : ''));
+      zeigen();
+    }, function(fehler){ melden('ab-schluessel-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
+  }
   el('ab-zeilen').addEventListener('change', function(ev){
     var w = ev.target;
     if (!w.matches('select[data-nr]')) return;
     stand.antworten[+w.getAttribute('data-nr')] = w.value;
     zeigen();
   });
-  el('ab-testsim').addEventListener('change', function(){ if (stand) zeigen(); });
-  el('ab-datei').addEventListener('change', function(){
-    var datei = this.files && this.files[0];
-    if (!datei) return;
-    el('ab-ergebnis').hidden = true;
-    el('ab-status').textContent = T.liest;
-    el('ab-status').className = 'ab-status';
-    laden(datei).then(function(img){
-      // Erst die Meldung zeigen lassen, dann rechnen (das dauert einen Moment)
-      setTimeout(function(){
-        var bild = bildAus(img), r = bogenLesen(bild);
-        if (r.fehler){
-          el('ab-status').textContent = r.fehler;
-          el('ab-status').className = 'ab-status ab-fehler';
-          return;
-        }
-        stand = { bild: bild, abb: r.abb, antworten: r.antworten, unsicher: r.unsicher, hinweise: r.hinweise };
-        el('ab-status').textContent = '';
-        el('ab-ergebnis').hidden = false;
-        zeigen();
-        el('ab-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
-      }, 30);
-    }, function(){
-      el('ab-status').textContent = T.fehlerBild;
-      el('ab-status').className = 'ab-status ab-fehler';
-    });
+  el('ab-testsim').addEventListener('change', function(){
+    el('ab-schluessel').hidden = !eigen();
+    if (stand) zeigen();
   });
+  ['ab-kamera', 'ab-datei'].forEach(function(id){
+    el(id).addEventListener('change', function(){ bogenWaehlen(this.files && this.files[0]); this.value = ''; });
+  });
+  el('ab-schluessel-datei').addEventListener('change', function(){ schluesselWaehlen(this.files && this.files[0]); this.value = ''; });
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
   window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden };
