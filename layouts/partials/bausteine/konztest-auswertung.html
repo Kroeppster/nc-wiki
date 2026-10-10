@@ -805,7 +805,11 @@
     var unten = alle.filter(function(v){ return v < t; }), t2 = otsu(unten, MARKIERT, t);
     if (t2 && t2 < t){
       var gruppe = unten.filter(function(v){ return v >= t2; }), rest = unten.filter(function(v){ return v < t2; });
-      if (gruppe.length >= 10 && quantil(gruppe, 0.5) >= 2 * Math.max(quantil(rest, 0.99), 0.004)) t = t2;
+      // (und nicht bloss Rauschen: im Schatten bilden die leeren Zeichen
+      // eine «Gruppe» knapp ueber null - ein echter schwacher Strich hat
+      // mindestens ein Fuenftel der Tinte eines ueblichen)
+      var ueblich = quantil(alle.filter(function(v){ return v >= t; }), 0.5);
+      if (gruppe.length >= 10 && quantil(gruppe, 0.5) >= 2 * Math.max(quantil(rest, 0.99), 0.004) && quantil(gruppe, 0.5) >= 0.2 * ueblich) t = t2;
     }
     var leer = alle.filter(function(v){ return v < t; }), voll = alle.filter(function(v){ return v >= t; });
     // Bitte ansehen: was ueber dem Rauschen der leeren Zeichen, aber unter dem
