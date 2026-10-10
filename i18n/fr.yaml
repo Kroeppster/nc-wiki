@@ -436,6 +436,7 @@ kt_passt_nicht: "La feuille ne correspond pas à ce test de concentration : les 
 kt_zu_klein: "La feuille est trop petite sur l’image. Merci de photographier de plus près."
 kt_unklar: "Les traits ne ressortent pas assez nettement sur cette image. Prends une nouvelle photo : plus près, nette, éclairée de manière égale, sans ombre ni reflet."
 kt_verdeckt: "Une partie de la feuille est masquée ou hors de l’image (doigt, objet, reflet, bord). Photographie toute la feuille, dégagée et sans reflet."
+kt_unplausibel: "Attention : jusqu’au dernier signe marqué, il manque un nombre inhabituel de signes cibles ({n} sur {m}). Vérifie l’image – des traits fins ou clairs n’ont peut-être pas été reconnus. Avec un stylo foncé, un trait net et une nouvelle photo, cela fonctionne généralement."
 kt_grau: "L’image est en noir et blanc. Le crayon ou un stylo clair s’y distinguent mal des signes – merci de vérifier les marques ci-dessous."
 kt_summe: "Valeur brute : {n} points"
 kt_richtig: "Marqués juste"

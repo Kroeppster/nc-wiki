@@ -441,6 +441,7 @@ kt_passt_nicht: "Das Blatt passt nicht zu diesem Konztest: Die Zeichen stehen an
 kt_zu_klein: "Das Blatt ist auf dem Bild zu klein. Bitte näher heran fotografieren."
 kt_unklar: "Die Striche heben sich auf diesem Bild nicht klar genug ab. Mach ein neues Foto: näher heran, scharf, gleichmässig hell, ohne Schatten und Spiegelung."
 kt_verdeckt: "Ein Teil des Blatts ist verdeckt oder nicht im Bild (Finger, Gegenstand, Spiegelung, Rand). Fotografiere das ganze Blatt frei und ohne Glanz."
+kt_unplausibel: "Achtung: Bis zum letzten markierten Zeichen fehlen auffällig viele Zielzeichen ({n} von {m}). Prüfe das Bild – vielleicht wurden feine oder helle Striche nicht erkannt. Mit kräftigem, dunklem Stift und einem neuen Foto klappt es meist."
 kt_grau: "Das Bild ist schwarz-weiss. Bleistift oder heller Stift lassen sich darin kaum von den Zeichen unterscheiden – bitte die Markierungen unten prüfen."
 kt_summe: "Rohwert: {n} Punkte"
 kt_richtig: "Richtig markiert"

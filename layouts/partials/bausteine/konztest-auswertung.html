@@ -104,6 +104,7 @@
     zuKlein: {{ i18n "kt_zu_klein" | jsonify | safeJS }},
     unklar: {{ i18n "kt_unklar" | jsonify | safeJS }},
     verdeckt: {{ i18n "kt_verdeckt" | jsonify | safeJS }},
+    unplausibel: {{ i18n "kt_unplausibel" | jsonify | safeJS }},
     grau: {{ i18n "kt_grau" | jsonify | safeJS }},
     verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
     summe: {{ i18n "kt_summe" | jsonify | safeJS }},
@@ -588,13 +589,16 @@
     // als 30 %, oder ist fast nichts markiert, hat das Lesen die Striche
     // nicht gesehen (zu fein, zu unscharf) - lieber ein neues Foto als ein
     // falscher Rohwert ohne Warnung.
-    // Einzelne «Striche» hinter dem Ende der Bearbeitung (bearbeitetBis):
-    // nicht als markiert zaehlen, sondern zum Ansehen zeigen - sonst gaelte
-    // alles davor als ausgelassen
-    var letzt = bearbeitetBis(e.markiert), vorher = 0, aus = 0, verirrt = [];
-    for (i = letzt + 1; i < N * N; i++) if (e.markiert[i]){ e.markiert[i] = false; e.unsicher[i] = true; verirrt.push(i); }
+    // Einzelne Striche hinter dem dicht bearbeiteten Teil (bearbeitetBis)
+    // zaehlen wie jeder Strich (auch ein versehentlicher in der letzten
+    // Zeile ist die letzte Markierung), werden aber zum Ansehen gezeigt
+    var dicht = bearbeitetBis(e.markiert), letzt = -1, vorher = 0, aus = 0;
+    for (i = 0; i < N * N; i++) if (e.markiert[i]){ letzt = i; if (i > dicht) e.unsicher[i] = true; }
     for (i = 0; i < letzt; i++) if (K.ziele[Math.floor(i / N)][i % N] === '1'){ vorher++; if (!e.markiert[i]) aus++; }
-    if (e.anzahl < 10 || (vorher >= 20 && aus > 0.3 * vorher)) return { fehler: T.unklar };
+    // Unplausibel (fast nichts markiert, oder mehr als 30 % der Zielzeichen
+    // bis zum letzten Strich ausgelassen): Ergebnis zeigen, aber warnen -
+    // vielleicht wurden feine Striche nicht erkannt
+    var warnung = e.anzahl < 10 || (vorher >= 20 && aus > 0.3 * vorher);
     // Je Zeichenart: Fehlen bei einer Art auffaellig viele Zielzeichen (der
     // Strich ist auf diesem Zeichen schlecht zu sehen), bitte ansehen
     var zArt = {};
@@ -615,6 +619,7 @@
     for (i = 0; i < N * N; i++) if (verblasst[i] === 2) verdeckt++;
     if (verdeckt >= 3) return { fehler: T.verdeckt };
     r.markiert = []; r.unsicher = []; r.roh = roh;
+    if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
     for (R = 0; R < N; R++){
       var zeile = [];
       for (C = 0; C < N; C++){

@@ -435,6 +435,7 @@ kt_passt_nicht: "Il foglio non corrisponde a questo test di concentrazione: i si
 kt_zu_klein: "Il foglio è troppo piccolo nell’immagine. Fotografa più da vicino."
 kt_unklar: "I tratti non si distinguono abbastanza chiaramente in questa immagine. Scatta una nuova foto: più da vicino, nitida, illuminata in modo uniforme, senza ombre né riflessi."
 kt_verdeckt: "Una parte del foglio è coperta o fuori dall’immagine (dito, oggetto, riflesso, bordo). Fotografa tutto il foglio, libero e senza riflessi."
+kt_unplausibel: "Attenzione: fino all’ultimo simbolo segnato mancano molti simboli bersaglio ({n} su {m}). Controlla l’immagine – forse tratti sottili o chiari non sono stati riconosciuti. Con una penna scura, un tratto marcato e una nuova foto di solito funziona."
 kt_grau: "L’immagine è in bianco e nero. La matita o una penna chiara si distinguono a fatica dai simboli: controlla i segni qui sotto."
 kt_summe: "Valore grezzo: {n} punti"
 kt_richtig: "Segnati giusti"
