@@ -620,6 +620,11 @@
     // bis zum letzten Strich ausgelassen): Ergebnis zeigen, aber warnen -
     // vielleicht wurden feine Striche nicht erkannt
     var warnung = e.anzahl < 10 || (vorher >= 20 && aus > 0.3 * vorher);
+    // Mehr als ein Viertel der Nicht-Zielzeichen markiert: so markiert
+    // niemand - das Raster liegt daneben oder die Striche sind nicht zu trennen
+    var nicht = 0, nichtM = 0;
+    for (i = 0; i < letzt; i++) if (K.ziele[Math.floor(i / N)][i % N] !== '1'){ nicht++; if (e.markiert[i]) nichtM++; }
+    if (nicht >= 50 && nichtM > 0.25 * nicht) return { fehler: T.unklar };
     // Je Zeichenart: Fehlen bei einer Art auffaellig viele Zielzeichen (der
     // Strich ist auf diesem Zeichen schlecht zu sehen), bitte ansehen
     var zArt = {};
@@ -637,9 +642,12 @@
     // Verdeckt (Finger, Gegenstand, Rand des Fotos): dort laesst sich nichts
     // lesen - lieber melden als raten
     var verdeckt = 0;
-    // (ein markiertes Zeichen ist nicht verdeckt: ein dicker Strich ueber
-    // einem kleinen Zeichen deckt dessen Magenta selbst zu)
-    for (i = 0; i < N * N; i++) if (verblasst[i] === 2 && !e.markiert[i]) verdeckt++;
+    // (ein markiertes Zeichen gilt erst ab einigen als verdeckt: ein dicker
+    // Strich ueber einem kleinen Zeichen deckt dessen Magenta selbst zu -
+    // liegt aber das ganze Raster daneben, sind es viele)
+    var verdecktMarkiert = 0;
+    for (i = 0; i < N * N; i++) if (verblasst[i] === 2){ if (e.markiert[i]) verdecktMarkiert++; else verdeckt++; }
+    if (verdecktMarkiert >= 8) verdeckt += verdecktMarkiert;
     if (verdeckt >= 3) return { fehler: T.verdeckt };
     r.markiert = []; r.unsicher = []; r.roh = roh;
     if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
