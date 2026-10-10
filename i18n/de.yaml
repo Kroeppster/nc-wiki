@@ -370,7 +370,7 @@ ab_privat: "Das Foto verlässt dein Gerät nicht: Gelesen und ausgewertet wird d
 ab_testsim: "Testsimulation"
 ab_testsim_jahr: "Testsimulation {jahr}"
 ab_foto: "Foto oder Scan des Antwortbogens"
-ab_tipps: "So klappt es am besten: Bogen flach hinlegen, alle vier schwarzen Ecken im Bild, gleichmässiges Licht ohne starken Schatten, möglichst gerade von oben. Ein Scan geht auch, als Bild oder PDF."
+ab_tipps: "So klappt es am besten: Kreuze ins Kästchen setzen (nicht einkreisen), Bogen flach hinlegen, alle vier schwarzen Ecken im Bild, gleichmässiges Licht ohne starken Schatten, möglichst gerade von oben. Ein Scan geht auch, als Bild oder PDF."
 ab_liest: "Der Bogen wird gelesen …"
 ab_fehler_bild: "Das Bild lässt sich nicht öffnen. Bitte ein Foto oder einen Scan als JPG, PNG oder PDF wählen."
 ab_fehler_klein: "Der Bogen ist auf dem Bild zu klein (etwa {n} Bildpunkte breit, nötig sind gut 600). Bitte näher heran fotografieren."

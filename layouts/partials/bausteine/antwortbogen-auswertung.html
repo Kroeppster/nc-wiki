@@ -151,6 +151,7 @@
   var VOLL = 0.30;         // sind alle fuenf so voll, ist die Zeile ungueltig
   var MIN_INHALT = 60;     // Helligkeitsunterschied, ab dem der Kopfkasten erkannt ist
   var GEDRUCKT = 0.25;     // Anteil Rahmen, ab dem eine Zeile als gedruckt gilt
+  var PASSUNG_MIN = 0.7;   // so viel Rahmen muss genau auf den Kanten liegen
   // Das Gemeinsame (Bild, Abbildung, Laden, PDF, Kamera): bausteine/bild-lesen.html
   var B = window.NCWikiBild, Bild = B.Bild, abbildung = B.abbildung, bildAus = B.bildAus,
       quellen = B.quellen, istPdf = B.istPdf, laden = B.laden;
@@ -246,11 +247,18 @@
   }
   function ausrichten(bild, ohneGroesse){
     var marken = passermarken(bild), hinweise = [], kandidaten = [], k, anzahl = Object.keys(marken).length;
+    // Mit vier Marken auch je drei: Verdeckt ein Finger eine Ecke, kann
+    // ein anderes dunkles Quadrat als vierte Marke durchgehen - dann passen
+    // die gedruckten Kaestchen nicht, mit den drei richtigen schon.
     for (k = 0; k < 4; k++){
       var paare = [];
       KREIS.forEach(function(e, i){ var m = marken[KREIS[(i + k) % 4]]; if (m) paare.push([MARKEN[e], m]); });
       if (paare.length < 3) continue;
-      try { var abb = abbildung(paare); if (!abb.gespiegelt()) kandidaten.push(abb); } catch (e) {}
+      var gruppen = [paare];
+      if (paare.length === 4) for (var ohne = 0; ohne < 4; ohne++) gruppen.push(paare.filter(function(q, j){ return j !== ohne; }));
+      gruppen.forEach(function(g){
+        try { var abb = abbildung(g); if (!abb.gespiegelt()){ abb.drei = g.length === 3; abb.paare = g; kandidaten.push(abb); } } catch (e) {}
+      });
     }
     if (!kandidaten.length){
       // Ohne Passermarken: das Bild zeigt hoffentlich das ganze Blatt.
@@ -262,11 +270,23 @@
     } else if (anzahl === 3) hinweise.push(T.drei);
     var beste = null;
     kandidaten.forEach(function(a){ var w = inhalt(bild, a); if (!beste || w > beste[0]) beste = [w, a]; });
+    // Unter den Lagen mit erkanntem Kopfkasten die, bei der die Kaestchen
+    // am besten auf den gedruckten liegen (vier Marken bei Gleichstand).
+    if (beste[0] >= MIN_INHALT && kandidaten.length > 1){
+      var passt = null;
+      kandidaten.forEach(function(a){
+        if (inhalt(bild, a) < MIN_INHALT) return;
+        var q = passung(bild, a) - (a.drei ? 0.03 : 0);
+        if (!passt || q > passt[0]) passt = [q, a];
+      });
+      if (passt){ beste = [beste[0], passt[1]]; if (passt[1].drei && anzahl === 4) hinweise.push(T.drei); }
+    }
     if (beste[0] < MIN_INHALT){
       var breite = beste[1].massstab()[0] * A4[0] / bild.vergroessert;
       if (anzahl >= 3 && breite < 600) return { fehler: T.fehlerKlein.replace('{n}', Math.round(breite)) };
       return { fehler: T.fehlerKein };
     }
+    if (beste[1].drei) beste[1] = vierteEcke(bild, beste[1]);
     var s = beste[1].massstab();
     // Anders als im Tool auch dann, wenn der Kopfkasten noch zu erkennen
     // war: Ein Handyfoto aus zwei Metern zeigt ihn, aber die Kaestchen sind
@@ -308,6 +328,100 @@
     }
     return t / n;
   }
+  // Wie gut die gedruckten Kaestchen dort liegen, wo die Abbildung sie
+  // erwartet: Mittel ueber drei Zeilen je Block.
+  function passung(bild, abb){
+    var summe = 0, n = 0;
+    for (var k = 0; k < BLOECKE; k++) [0, 9, 17].forEach(function(i){ summe += zeileGedruckt(bild, abb, k, i); n++; });
+    return summe / n;
+  }
+  // Feinausrichtung je Block: Ist das Blatt gewellt oder die Abbildung
+  // ungenau, liegen die Kaestchen sonst bis zu einigen pt daneben. Gesucht
+  // wird die Verschiebung, bei der am meisten gedruckter Rahmen genau auf
+  // den Kanten der Kaestchen liegt - je fuer die obere und die untere
+  // Haelfte des Blocks, dazwischen gleitend.
+  var FEIN_OBEN = [0, 1, 2, 4, 6, 8], FEIN_UNTEN = [9, 11, 13, 15, 16, 17];
+  function rahmenTreffer(bild, abb, k, zeilen, dx, dy){
+    var t = 0;
+    zeilen.forEach(function(i){
+      for (var sp = 0; sp < 5; sp++){
+        var e = feldEcke(k, i, sp), x = e[0] + dx, y = e[1] + dy, p;
+        [1.5, 4.5, 7.5].forEach(function(a){
+          p = abb(x + a, y); if (bild.rahmen(p[0], p[1])) t++;
+          p = abb(x + a, y + FELD_H); if (bild.rahmen(p[0], p[1])) t++;
+        });
+        [1.5, 3.1, 4.7].forEach(function(b){
+          p = abb(x, y + b); if (bild.rahmen(p[0], p[1])) t++;
+          p = abb(x + FELD_B, y + b); if (bild.rahmen(p[0], p[1])) t++;
+        });
+      }
+    });
+    return t / (zeilen.length * 5 * 12);
+  }
+  // grob im Raster von 1 pt um mitte, dann fein um den besten Punkt
+  function versatzSuchen(bild, abb, k, zeilen, mitte, weit){
+    var beste = null;
+    [[1, mitte, weit], [0.25, null, 1]].forEach(function(stufe){
+      var m = stufe[1] || [beste[1], beste[2]], w = stufe[2];
+      for (var dy = -w; dy <= w + 1e-9; dy += stufe[0]) for (var dx = -w; dx <= w + 1e-9; dx += stufe[0]){
+        var x = m[0] + dx, y = m[1] + dy;
+        var q = rahmenTreffer(bild, abb, k, zeilen, x, y) - 0.002 * (Math.abs(x) + Math.abs(y));
+        if (!beste || q > beste[0]) beste = [q, x, y];
+      }
+    });
+    return [beste[1], beste[2]];
+  }
+  // Mit drei Ecken ist die Abbildung nur affin; ein schraeg fotografierter
+  // Bogen braucht aber die perspektivische. Gesucht wird darum die vierte
+  // Ecke im Bild so, dass die gedruckten Kaestchen ueber den ganzen Bogen am
+  // besten passen (das bindet alle Bloecke zusammen - anders als je Block
+  // kann so nichts um eine Zeile oder Spalte verrutschen).
+  function passungScharf(bild, abb){
+    var t = 0;
+    for (var k = 0; k < BLOECKE; k++) t += rahmenTreffer(bild, abb, k, [0, 9, 17], 0, 0);
+    return t / BLOECKE;
+  }
+  function vierteEcke(bild, abb){
+    var da = abb.paare.map(function(q){ return q[0]; });
+    var fehlt = KREIS.map(function(e){ return MARKEN[e]; }).filter(function(m){ return da.indexOf(m) < 0; })[0];
+    var p0 = abb(fehlt[0], fehlt[1]), pt = abb.massstab()[0], beste = [passungScharf(bild, abb), abb, 0, 0];
+    [[2, 30, 0, 0], [0.5, 2, null, null]].forEach(function(stufe){
+      var mu = stufe[2] === null ? beste[2] : 0, mv = stufe[3] === null ? beste[3] : 0;
+      for (var dv = -stufe[1]; dv <= stufe[1] + 1e-9; dv += stufe[0]) for (var du = -stufe[1]; du <= stufe[1] + 1e-9; du += stufe[0]){
+        var u = mu + du, v = mv + dv, neu;
+        try { neu = abbildung(abb.paare.concat([[fehlt, [p0[0] + u * pt, p0[1] + v * pt]]])); } catch (e) { continue; }
+        if (neu.gespiegelt()) continue;
+        var q = passungScharf(bild, neu);
+        if (q > beste[0]) beste = [q, neu, u, v];
+      }
+    });
+    beste[1].drei = true;
+    return beste[1];
+  }
+  function blockBei(x, y){
+    if (y < ZEILE_Y[0] - 12) return -1;
+    var z = y < ZEILE_Y[1] - 12 ? 0 : 1, sp = 0;
+    for (var c = 1; c < 4; c++) if (x >= BLOCK_X[c] - 6) sp = c;
+    return z * 4 + sp;
+  }
+  function feinAusrichten(bild, abb){
+    var versatz = [];
+    for (var k = 0; k < BLOECKE; k++){
+      // Erst der ganze Block, dann jede Haelfte fuer sich - nur wenige pt,
+      // sonst passt der um eine Zeile oder Spalte verrutschte Block ebenso.
+      var ganz = versatzSuchen(bild, abb, k, FEIN_OBEN.concat(FEIN_UNTEN), [0, 0], 3);
+      versatz.push([versatzSuchen(bild, abb, k, FEIN_OBEN, ganz, 3), versatzSuchen(bild, abb, k, FEIN_UNTEN, ganz, 3)]);
+    }
+    var fein = function(x, y){
+      var k = blockBei(x, y);
+      if (k < 0) return abb(x, y);
+      var v = versatz[k], t = ((y - ZEILE_Y[Math.floor(k / 4)]) / ZEILE - 4) / 9;
+      t = Math.min(Math.max(t, -0.5), 1.5);
+      return abb(x + v[0][0] + t * (v[1][0] - v[0][0]), y + v[0][1] + t * (v[1][1] - v[0][1]));
+    };
+    fein.massstab = abb.massstab; fein.gespiegelt = abb.gespiegelt; fein.versatz = versatz;
+    return fein;
+  }
   // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
   // Buchstabe, '' fuer leer oder '*' fuer mehrere Kreuze.
   function zeileLesen(werte){
@@ -328,17 +442,26 @@
   function bogenLesen(bild){
     var r = ausrichten(bild);
     if (r.fehler) return r;
-    var antworten = [], unsicher = [], fehlend = false;
+    r.abb = feinAusrichten(bild, r.abb);
+    // Liegen die gedruckten Kaestchen auch danach nicht deutlich auf den
+    // erwarteten (stark gewellt, verzerrt, falsche Ecke), waeren die Kreuze
+    // geraten - lieber neu fotografieren lassen.
+    r.passung = passungScharf(bild, r.abb);
+    if (r.passung < PASSUNG_MIN) return { fehler: T.fehlerKein };
+    var antworten = [], unsicher = [], fehlend = 0;
     for (var k = 0; k < BLOECKE; k++){
-      var gedruckt = 0;
       for (var i = 0; i < ZEILEN; i++){
-        if (zeileGedruckt(bild, r.abb, k, i) >= GEDRUCKT) gedruckt++;
+        // Wo die gedruckten Kaestchen nicht zu sehen sind (verdeckt, Falte,
+        // Bogen verrutscht), ist auch ein gelesenes Kreuz nicht sicher.
+        var da = zeileGedruckt(bild, r.abb, k, i) >= GEDRUCKT;
+        if (!da) fehlend++;
         var w = [0, 1, 2, 3, 4].map(function(s){ var e = feldEcke(k, i, s); return fuellung(bild, r.abb, e[0], e[1]); });
         var a = zeileLesen(w);
-        antworten.push(a[0]); unsicher.push(a[1]);
+        antworten.push(a[0]); unsicher.push(a[1] || !da);
       }
-      if (gedruckt < ZEILEN) fehlend = true;
     }
+    // Fehlt ein Viertel, lag der Bogen falsch - lieber neu fotografieren.
+    if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: T.fehlerKein };
     if (fehlend) r.hinweise.push(T.zeilen);
     r.antworten = antworten; r.unsicher = unsicher;
     return r;
@@ -528,6 +651,7 @@
   });
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
-  window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden };
+  window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden,
+    intern: { passungScharf: passungScharf, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung } };
 })();
 </script>

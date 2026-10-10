@@ -364,7 +364,7 @@ ab_privat: "La foto non lascia il tuo dispositivo: la lettura e la valutazione a
 ab_testsim: "Simulazione del test"
 ab_testsim_jahr: "Simulazione del test {jahr}"
 ab_foto: "Foto o scansione del foglio delle risposte"
-ab_tipps: "Per un buon risultato: foglio steso in piano, tutti e quattro gli angoli neri nell’immagine, luce uniforme senza ombre forti, foto il più possibile dall’alto. Va bene anche una scansione, come immagine o PDF."
+ab_tipps: "Per un buon risultato: croci dentro la casella (senza cerchiarla), foglio steso in piano, tutti e quattro gli angoli neri nell’immagine, luce uniforme senza ombre forti, foto il più possibile dall’alto. Va bene anche una scansione, come immagine o PDF."
 ab_liest: "Lettura del foglio …"
 ab_fehler_bild: "Impossibile aprire l’immagine. Scegli una foto o una scansione in JPG, PNG o PDF."
 ab_fehler_klein: "Il foglio è troppo piccolo nell’immagine (circa {n} pixel di larghezza, ne servono almeno 600). Fotografa più da vicino."

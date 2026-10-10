@@ -365,7 +365,7 @@ ab_privat: "La photo ne quitte pas ton appareil : la lecture et l’évaluation 
 ab_testsim: "Simulation de test"
 ab_testsim_jahr: "Simulation de test {jahr}"
 ab_foto: "Photo ou scan de la feuille de réponses"
-ab_tipps: "Pour un bon résultat : feuille posée à plat, les quatre coins noirs visibles, lumière uniforme sans ombre marquée, photo prise bien d’en haut. Un scan fonctionne aussi, en image ou en PDF."
+ab_tipps: "Pour un bon résultat : croix dans la case (sans l’entourer), feuille posée à plat, les quatre coins noirs visibles, lumière uniforme sans ombre marquée, photo prise bien d’en haut. Un scan fonctionne aussi, en image ou en PDF."
 ab_liest: "Lecture de la feuille …"
 ab_fehler_bild: "Impossible d’ouvrir l’image. Merci de choisir une photo ou un scan en JPG, PNG ou PDF."
 ab_fehler_klein: "La feuille est trop petite sur l’image (environ {n} pixels de large, il en faut au moins 600). Merci de photographier de plus près."

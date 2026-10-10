@@ -129,7 +129,27 @@ window.NCWikiBild = (function(){
     var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
     var p = this.papierBei(x, y);
     if (magenta(r, g, b, p)) return false;
-    return (299 * r + 587 * g + 114 * b) / 1000 < 0.8 * p;
+    return (299 * r + 587 * g + 114 * b) / 1000 < 0.8 * this.papierFein(x, y, p);
+  };
+  // Feiner als die Karte (etwa 8 pt je Feld, ohne Ausweiten): Faellt ein
+  // harter Schatten mitten durch eine Zeile Kaestchen, gilt sonst der
+  // Schatten am Rand als Tinte. Nie heller als die grobe Karte und nie unter
+  // 60 % davon (ein Feld voller Tinte ist kein dunkles Papier).
+  Bild.prototype.papierFein = function(x, y, grob){
+    if (!this.fein){
+      var f = this.feinFeld = Math.max(6, Math.floor(Math.max(this.w, this.h) / 110));
+      var nx = this.feinNx = Math.ceil(this.w / f), ny = Math.ceil(this.h / f), k = this.fein = new Float32Array(nx * ny);
+      var schritt = Math.max(1, Math.floor(f / 6));
+      for (var j = 0; j < ny; j++) for (var i = 0; i < nx; i++){
+        var werte = [];
+        for (var yy = j * f; yy < Math.min((j + 1) * f, this.h); yy += schritt)
+          for (var xx = i * f; xx < Math.min((i + 1) * f, this.w); xx += schritt) werte.push(this.lum[yy * this.w + xx]);
+        werte.sort(function(a, b){ return a - b; });
+        k[j * nx + i] = werte.length ? werte[Math.floor(werte.length * 0.9)] : 255;
+      }
+    }
+    var v = this.fein[Math.floor(y / this.feinFeld) * this.feinNx + Math.floor(x / this.feinFeld)];
+    return Math.min(grob, Math.max(v, 0.6 * grob));
   };
   Bild.prototype.rahmen = function(x, y){
     x = Math.trunc(x); y = Math.trunc(y);
