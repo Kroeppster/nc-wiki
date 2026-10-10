@@ -625,6 +625,9 @@
     var nicht = 0, nichtM = 0;
     for (i = 0; i < letzt; i++) if (K.ziele[Math.floor(i / N)][i % N] !== '1'){ nicht++; if (e.markiert[i]) nichtM++; }
     if (nicht >= 50 && nichtM > 0.25 * nicht) return { fehler: T.unklar };
+    // Fehlen mehr als 70 % der Zielzeichen, hat das Lesen versagt (nicht der
+    // Kandidat) - dann keine Zahl, sondern ein neues Foto
+    if (vorher >= 40 && aus > 0.7 * vorher) return { fehler: T.unklar };
     // Je Zeichenart: Fehlen bei einer Art auffaellig viele Zielzeichen (der
     // Strich ist auf diesem Zeichen schlecht zu sehen), bitte ansehen
     var zArt = {};
