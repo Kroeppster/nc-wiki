@@ -435,8 +435,8 @@
   }
   function ausrichten(bild){
     // farbe: Zeichen in Magenta und das Foto farbig - dann trennt die Farbe
-    // Zeichen und Striche. Schwarz gedruckte Konztests (2022) wie ein
-    // Graustufenbild; bunt: blaue Striche sind trotzdem klar Stift.
+    // Zeichen und Striche (ein Konztest hat sie immer in Farbe; K.farbe ist
+    // nur der Vollstaendigkeit halber da). Bunt: blaue Striche sind klar Stift.
     var hinweise = [], bunt = istFarbig(bild), farbe = K.farbe && bunt;
     if (K.farbe && !bunt) hinweise.push(T.grau);
     var such = rasterSuchen(bild, farbe), punkte = such.punkte, g = such.g;

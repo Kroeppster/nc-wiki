@@ -93,8 +93,10 @@ window.NCWikiKonztestLesen = (function(){
     var w = s.w, h = s.h, i, n = w * h, zahl = 0;
     var farbig = new Uint8Array(n);
     for (i = 0; i < n; i++) if (s.farbig[i] > 40){ farbig[i] = 1; zahl++; }
-    var farbe = zahl > 20000, m = farbig;
-    if (!farbe){ m = new Uint8Array(n); for (i = 0; i < n; i++) m[i] = s.lum[i] < 140 ? 1 : 0; }
+    // Die Zeichen eines Konztests sind immer farbig (Magenta) gedruckt -
+    // markiert wird schwarz oder blau; schwarz gedruckte gelten nicht
+    if (zahl <= 20000) throw new Fehler('raster');
+    var farbe = true, m = farbig;
     var f = flecken(m, w, h).filter(function(b){ var gr = Math.max(b[2] - b[0], b[3] - b[1]); return gr >= 2 && gr <= 16; });
     var ys0 = vierzig(f.map(function(b){ return (b[1] + b[3]) / 2; })), xs0 = vierzig(f.map(function(b){ return (b[0] + b[2]) / 2; }));
     var px = (xs0[N - 1] - xs0[0]) / (N - 1), py = (ys0[N - 1] - ys0[0]) / (N - 1), R, C, x, y;
@@ -219,15 +221,14 @@ window.NCWikiKonztestLesen = (function(){
   // Erst jede Seite grob (1 Bildpunkt je pt): viel Magenta -> Aufgabe?, viele
   // ganz gefuellte Stellen -> Loesung? Dann nur diese Seiten fein lesen.
   function grob(c){
-    var s = seite(c), w = s.w, h = s.h, mag = 0, dunkel = 0, voll = 0, x, y;
+    var s = seite(c), w = s.w, h = s.h, mag = 0, voll = 0, x, y;
     var tinte = function(i){ return s.lum[i] < 160 || s.farbig[i] > 100; };
     for (y = 1; y < h - 1; y++) for (x = 1; x < w - 1; x++){
       var i = y * w + x;
       if (s.farbig[i] > 40) mag++;
-      if (s.lum[i] < 140) dunkel++;
       if (tinte(i) && tinte(i - 1) && tinte(i + 1) && tinte(i - w) && tinte(i + w) && tinte(i - w - 1) && tinte(i - w + 1) && tinte(i + w - 1) && tinte(i + w + 1)) voll++;
     }
-    return { mag: mag, dunkel: dunkel, voll: voll };
+    return { mag: mag, voll: voll };
   }
   function ausPdfs(dateien, fortschritt){
     var seiten = [];
@@ -247,9 +248,8 @@ window.NCWikiKonztestLesen = (function(){
       });
       return k2;
     }).then(function(){
-      // Aufgabe: Seiten mit viel Magenta (sonst viel Dunklem) und wenig Gefuelltem
+      // Aufgabe: Seiten mit viel Magenta und wenig Gefuelltem
       var kand = seiten.filter(function(sx){ return sx.grob.mag > 4000 && sx.grob.voll < 1500; });
-      if (!kand.length) kand = seiten.filter(function(sx){ return sx.grob.dunkel > 10000 && sx.grob.voll < 1500; }).slice(0, 10);
       var aufg = null, k3 = Promise.resolve();
       kand.forEach(function(sx){
         k3 = k3.then(function(){

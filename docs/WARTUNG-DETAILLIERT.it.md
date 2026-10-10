@@ -794,7 +794,9 @@ uguali in classi; nel foglio delle soluzioni cercare le caselle riempite e posar
 griglia. Controlli: 40 × 40 trovati, soluzione univoca, «10 per riga» dove previsto, e la prova
 della regola (ogni regola dipende solo dal simbolo e da un vicino). Un nuovo test va nella lista
 `KONZTESTS` dello script. Esclusi: simulazioni 2024 e 2025 e serie 2025 S18/S19 (nessun
-foglio delle soluzioni sul sito), 2021 S03 (caselle messe a mano, non univoche). **Test
+foglio delle soluzioni sul sito), 2021 S03 (caselle messe a mano, non univoche), 2022 S02
+(simboli stampati in nero – un test di concentrazione ha sempre i simboli a colori; la pagina
+rifiuta i test caricati stampati in nero). **Test
 proprio:** nella scelta «Test di concentrazione proprio» caricare compito e foglio delle
 soluzioni in PDF (uno o due file); il blocco `konztest-lesen.html` li legge con lo stesso
 procedimento nel browser e li memorizza. Se il procedimento cambia, adattare entrambi –

@@ -137,7 +137,7 @@ console.log('\n=== Eigener Konztest aus PDF (wie das Skript?) ===');
   const faelle = [
     ['s2025-07', [UE + '2025_konzentriertes-arbeiten_S07.pdf']],
     ['s2024-02', [UE + '2024_konzentriertes-arbeiten_S02.pdf']],
-    ['s2022-02', [UE + '2022_konzentriertes-arbeiten_S02.pdf', UE + '2022_konzentriertes-arbeiten_S02_Loesung.pdf']],
+    ['s2025-04', [UE + '2025_konzentriertes-arbeiten_S04.pdf']],
     ['s2025-12', [UE + '2025_konzentriertes-arbeiten_S12.pdf']],
     ['ts2026', [TS + '2026_testsimulationen_Testsimulation.pdf', TS + '2026_testsimulationen_Loesung.pdf']],
   ];

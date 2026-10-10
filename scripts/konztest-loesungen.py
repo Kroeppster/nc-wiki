@@ -40,7 +40,8 @@ vorgibt, genau 10 je Zeile; für 2026 zusätzlich die Regel der Anleitung
 
 Nicht dabei, weil auf der Webseite kein lesbares Lösungsblatt liegt:
 Testsimulation 2024 und 2025, Serien 2025 S18 und S19; 2021 S03 hat eines,
-aber die Kästchen sitzen nicht eindeutig (siehe docs/WARTUNG-DETAILLIERT.md 11).
+aber die Kästchen sitzen nicht eindeutig; 2022 S02 hat die Zeichen schwarz
+gedruckt (ein Konztest hat sie immer in Farbe). Siehe docs/WARTUNG-DETAILLIERT.md 11.
 ================================================================================
 """
 import sys
@@ -70,8 +71,8 @@ KONZTESTS = [
     ('s2024-%02d' % n, 'serie', 2024, 'S%02d' % n, (UE + '2024_konzentriertes-arbeiten_S%02d.pdf' % n, 0), (UE + '2024_konzentriertes-arbeiten_S%02d.pdf' % n, 1), False)
     for n in (2, 3)
 ] + [
-    ('s2022-02', 'serie', 2022, 'S02', (UE + '2022_konzentriertes-arbeiten_S02.pdf', 0), (UE + '2022_konzentriertes-arbeiten_S02_Loesung.pdf', 0), False),
-] + [
+    # 2022 S02 nicht: Zeichen schwarz gedruckt (ein Konztest hat sie immer in
+    # Farbe, markiert wird schwarz oder blau)
     ('s2021-02', 'serie', 2021, 'S02', (UE + '2021_konzentriertes-arbeiten_S02.pdf', 0), (UE + '2021_konzentriertes-arbeiten_S02_Loesung.pdf', 0), False),
     # 2021 S03 nicht: die Kästchen im Lösungsblatt sitzen teils zwischen zwei
     # Ziffern (von Hand gesetzt), 25 Widersprüche in der Regelprobe
@@ -145,8 +146,9 @@ def kastensumme(m, r):
 def aufgabe(datei, seite):
     a = zeichnen(datei, seite)
     farbig = np.minimum(a[..., 0], a[..., 2]) - a[..., 1] > 40
-    farbe = bool(farbig.sum() > 20000)
-    m = farbig if farbe else helligkeit(a) < 140
+    if farbig.sum() <= 20000:
+        raise Fehler('Zeichen nicht farbig gedruckt - ein Konztest hat sie immer in Magenta')
+    farbe, m = True, farbig
     f = [z for z in flecken(m) if 2 <= z[2] <= 16]
     ys0, xs0 = vierzig([z[1] for z in f]), vierzig([z[0] for z in f])
     px, py = (xs0[-1] - xs0[0]) / (N - 1), (ys0[-1] - ys0[0]) / (N - 1)
@@ -299,7 +301,7 @@ def main():
 # AUTOMATISCH ERZEUGT von scripts/konztest-loesungen.py aus den Testseiten
 # und Lösungsblättern unter assets/downloads/. Nicht von Hand ändern.
 #   id        Kennung; art testsimulation oder serie (Übungsserie)
-#   farbe     true: Zeichen in Blindfarbe (Magenta), false: schwarz gedruckt
+#   farbe     immer true: die Zeichen stehen in Blindfarbe (Magenta)
 #   x, y      Mitte jeder Spalte bzw. Zeile auf der Seite (pt, von oben links)
 #   zeichen   je Zeile 40 Kennungen: gleiche Kennung = gleiches Zeichen
 #   ziele     je Zeile 40 Ziffern: 1 = zu markieren

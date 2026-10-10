@@ -790,7 +790,8 @@ ausgefüllten Kästchen suchen und aufs Raster legen. Prüfungen: 40 × 40 gefun
 eindeutig, «10 je Zeile» wo vorgegeben, und die Regelprobe (jede Regel hängt nur vom Zeichen
 und einem Nachbarn ab). Ein neuer Konztest kommt in die Liste `KONZTESTS` im Skript. Nicht
 dabei: Testsimulation 2024 und 2025 und Serien 2025 S18/S19 (kein Lösungsblatt auf der
-Webseite), 2021 S03 (Kästchen von Hand, nicht eindeutig). **Eigener Konztest:** In der Auswahl
+Webseite), 2021 S03 (Kästchen von Hand, nicht eindeutig), 2022 S02 (Zeichen schwarz gedruckt – ein
+Konztest hat die Zeichen immer in Farbe; hochgeladene schwarz gedruckte lehnt die Seite ab). **Eigener Konztest:** In der Auswahl
 «Eigener Konztest» Aufgabe und Lösungsblatt als PDF hochladen (eine Datei oder zwei); der
 Baustein `konztest-lesen.html` liest sie mit demselben Verfahren im Browser und merkt sie sich
 im Browser. Ändert sich das Verfahren, beide anpassen – `scripts/konztest-pruefen.mjs`

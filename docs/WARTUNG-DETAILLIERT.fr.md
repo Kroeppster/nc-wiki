@@ -811,7 +811,9 @@ solutions, chercher les cases remplies et les poser sur la grille. Contrôles : 
 solution univoque, « 10 par ligne » là où c'est prescrit, et l'épreuve de la règle (chaque
 règle ne dépend que du signe et d'un voisin). Un nouveau test va dans la liste `KONZTESTS` du
 script. Absents : simulations 2024 et 2025 et séries 2025 S18/S19 (pas de feuille de solutions
-sur le site), 2021 S03 (cases posées à la main, pas univoques). **Propre test :** dans la
+sur le site), 2021 S03 (cases posées à la main, pas univoques), 2022 S02 (signes imprimés en
+noir – un test de concentration a toujours les signes en couleur ; la page refuse les tests
+chargés imprimés en noir). **Propre test :** dans la
 liste, « Propre test de concentration », charger l'énoncé et la feuille de solutions en PDF (un
 ou deux fichiers) ; le bloc `konztest-lesen.html` les lit avec le même procédé dans le
 navigateur et les garde en mémoire. Si le procédé change, adapter les deux –
