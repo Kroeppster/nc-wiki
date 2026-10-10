@@ -642,12 +642,10 @@
     // Verdeckt (Finger, Gegenstand, Rand des Fotos): dort laesst sich nichts
     // lesen - lieber melden als raten
     var verdeckt = 0;
-    // (ein markiertes Zeichen gilt erst ab einigen als verdeckt: ein dicker
-    // Strich ueber einem kleinen Zeichen deckt dessen Magenta selbst zu -
-    // liegt aber das ganze Raster daneben, sind es viele)
-    var verdecktMarkiert = 0;
-    for (i = 0; i < N * N; i++) if (verblasst[i] === 2){ if (e.markiert[i]) verdecktMarkiert++; else verdeckt++; }
-    if (verdecktMarkiert >= 8) verdeckt += verdecktMarkiert;
+    // (ein markiertes Zeichen ist nicht verdeckt: ein dicker Strich ueber
+    // einem kleinen Zeichen deckt dessen Magenta selbst zu. Liegt das ganze
+    // Raster daneben, faengt das die Probe auf Nicht-Zielzeichen oben ab.)
+    for (i = 0; i < N * N; i++) if (verblasst[i] === 2 && !e.markiert[i]) verdeckt++;
     if (verdeckt >= 3) return { fehler: T.verdeckt };
     r.markiert = []; r.unsicher = []; r.roh = roh;
     if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
