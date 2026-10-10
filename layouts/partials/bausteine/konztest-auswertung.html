@@ -103,6 +103,7 @@
     passtNicht: {{ i18n "kt_passt_nicht" | jsonify | safeJS }},
     zuKlein: {{ i18n "kt_zu_klein" | jsonify | safeJS }},
     unklar: {{ i18n "kt_unklar" | jsonify | safeJS }},
+    verdeckt: {{ i18n "kt_verdeckt" | jsonify | safeJS }},
     grau: {{ i18n "kt_grau" | jsonify | safeJS }},
     verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
     summe: {{ i18n "kt_summe" | jsonify | safeJS }},
@@ -593,6 +594,11 @@
     // Wo das Magenta eines Zeichens viel blasser ist als sonst (Spiegelung,
     // Rand des Fotos), ist auch ein Strich kaum zu sehen: bitte ansehen
     var verblasst = blasseZeichen(r, art);
+    // Verdeckt (Finger, Gegenstand, Rand des Fotos): dort laesst sich nichts
+    // lesen - lieber melden als raten
+    var verdeckt = 0;
+    for (i = 0; i < N * N; i++) if (verblasst[i] === 2) verdeckt++;
+    if (verdeckt >= 3) return { fehler: T.verdeckt };
     r.markiert = []; r.unsicher = []; r.roh = roh;
     for (R = 0; R < N; R++){
       var zeile = [];
@@ -615,10 +621,11 @@
   function blasseZeichen(r, art){
     var aus = new Uint8Array(N * N);
     if (!r.farbe) return aus;
-    var NP = NX * NY, n = [], je = {}, R, C, i;
+    var NP = NX * NY, n = [], je = {}, rand = [], R, C, i;
     for (i = 0; i < N * N; i++){
-      var k = 0;
-      for (var q = i * NP; q < (i + 1) * NP; q++) if (art[q] === 1) k++;
+      var k = 0, aussen = 0;
+      for (var q = i * NP; q < (i + 1) * NP; q++){ if (art[q] === 1) k++; if (art[q] === 3) aussen++; }
+      rand.push(aussen);
       n.push(k);
       var z = K.zeichen[Math.floor(i / N)][i % N];
       (je[z] = je[z] || []).push(k);
@@ -627,7 +634,7 @@
     Object.keys(je).forEach(function(z){ mitte_[z] = median(je[z]); });
     // (nur wo das Magenta sonst deutlich zu sehen ist: bei blassem Druck
     // schwankt es von Zeichen zu Zeichen)
-    for (R = 0; R < N; R++) for (C = 0; C < N; C++){ i = R * N + C; var m_ = mitte_[K.zeichen[R][C]]; aus[i] = m_ >= 25 && n[i] < 0.3 * m_ ? 1 : 0; }
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){ i = R * N + C; var m_ = mitte_[K.zeichen[R][C]]; aus[i] = m_ >= 25 && n[i] < 0.3 * m_ ? (n[i] < 0.1 * m_ || rand[i] > 0.3 * NP ? 2 : 1) : 0; }
     return aus;
   }
   // Tinte je Zeichen (0 bis 1): je Messpunkt, wie viel dunkler als das Papier
