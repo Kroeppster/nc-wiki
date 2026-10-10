@@ -798,7 +798,11 @@ Comme la feuille de réponses, mais selon le procédé de `werkzeug/konztest_aus
 feuille n'a pas de marques de repérage, la grille des 1600 signes sert elle-même de repère
 (taches magenta → grille → position par la ressemblance des signes identiques → transformation
 → encre par signe). Comptage selon la consigne : justes moins faux moins signes cibles omis
-avant le dernier signe marqué (valeur brute). Toucher l'image inverse une marque. Partial
+avant le dernier signe marqué (valeur brute) ; une barre violette montre ce dernier. Toucher l'image inverse une marque.
+Encre par signe : de combien c'est plus sombre que le papier juste à côté (les ombres ne gênent donc
+pas), moins ce que le même signe sans marque a au même endroit. Le seuil « marqué » se déduit de chaque
+image ; si les traits ne ressortent pas nettement (trop de cas douteux, reflet), la page demande une
+nouvelle photo au lieu d'un résultat incertain. Partial
 `layouts/partials/bausteine/konztest-auswertung.html`. Grille, position et solution dans
 `data/konztest.yaml`, généré par `python3 scripts/konztest-loesungen.py --schreiben` à partir
 du cahier (signes en police 0–F) et du PDF des solutions (cases noires) – avec contre-épreuve

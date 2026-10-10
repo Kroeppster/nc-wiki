@@ -782,8 +782,11 @@ Come il foglio delle risposte, ma con il procedimento di `werkzeug/konztest_ausw
 foglio non ha marche di riferimento, la griglia dei 1600 simboli fa essa stessa da riferimento
 (macchie magenta → griglia → posizione dalla somiglianza dei simboli uguali → trasformazione
 → inchiostro per simbolo). Conteggio secondo le istruzioni: giusti meno sbagliati meno simboli
-bersaglio omessi prima dell'ultimo segnato (valore grezzo). Toccare l'immagine inverte un
-segno. Partial `layouts/partials/bausteine/konztest-auswertung.html`. Griglia, posizione e
+bersaglio omessi prima dell'ultimo segnato (valore grezzo); una barra viola indica quest'ultimo.
+Toccare l'immagine inverte un segno. Inchiostro per simbolo: quanto è più scuro della carta subito
+accanto (così le ombre non disturbano), meno ciò che lo stesso simbolo senza segno ha nello stesso
+punto. La soglia «segnato» si ricava da ogni immagine; se i tratti non si distinguono chiaramente
+(troppi casi dubbi, riflessi), la pagina chiede una nuova foto invece di un risultato incerto. Partial `layouts/partials/bausteine/konztest-auswertung.html`. Griglia, posizione e
 soluzione in `data/konztest.yaml`, generato da `python3 scripts/konztest-loesungen.py
 --schreiben` dal fascicolo (simboli come carattere 0–F) e dal PDF delle soluzioni (caselle
 nere), con controprova sulla regola delle istruzioni. **Per ora solo 2026**: il 2022 ha cifre

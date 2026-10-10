@@ -777,7 +777,11 @@ Wie der Antwortbogen, aber nach dem Verfahren von `werkzeug/konztest_auswertung.
 hat keine Passermarken, das Raster der 1600 Zeichen selbst dient als Marke (Flecken in
 Magenta → Gitter → Lage über die Ähnlichkeit gleicher Zeichen → Abbildung → Tinte je Zeichen).
 Gezählt wird nach der Anleitung: richtig minus falsch markiert minus ausgelassene Zielzeichen
-vor dem letzten markierten (Rohwert). Ein Tippen aufs Bild schaltet eine Markierung um.
+vor dem letzten markierten (Rohwert); ein violetter Balken zeigt dieses letzte. Ein Tippen aufs Bild schaltet eine Markierung um.
+Tinte je Zeichen: wie viel dunkler als das Papier gleich daneben (so stören Schatten nicht), minus
+was dasselbe Zeichen ohne Markierung an derselben Stelle hat. Die Schwelle «markiert» ergibt sich je
+Bild aus den Werten selbst; heben sich die Striche nicht klar ab (zu viele Zweifelsfälle, Spiegelung),
+kommt die Bitte um ein neues Foto statt eines unsicheren Ergebnisses.
 Partial `layouts/partials/bausteine/konztest-auswertung.html`. Raster, Lage und Lösung stehen
 in `data/konztest.yaml`, erzeugt von `python3 scripts/konztest-loesungen.py --schreiben` aus
 Testheft (Zeichen als Schrift 0–F) und Lösungs-PDF (schwarze Kästchen) – mit Gegenprobe gegen
