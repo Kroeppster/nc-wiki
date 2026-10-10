@@ -41,18 +41,35 @@
 */ -}}
 {{- $d := hugo.Data.konztest }}
 {{- partial "bausteine/bild-lesen.html" . }}
+{{- partial "bausteine/konztest-lesen.html" . }}
 <div class="ab kt" id="kt-wurzel" data-pagefind-ignore>
 <script type="application/json" id="kt-daten">{{ $d | jsonify | safeJS }}</script>
 <p class="ab-intro">{{ i18n "kt_intro" }}</p>
 <p class="ab-privat">{{ i18n "ab_privat" }}</p>
 <div class="ab-eingabe">
-<label class="ab-feld">{{ i18n "ab_testsim" }}
+<label class="ab-feld">{{ i18n "kt_konztest" }}
 <select id="kt-testsim">
-{{- range $d.testsimulationen }}
-<option value="{{ .jahr }}">{{ replace (i18n "ab_testsim_jahr") "{jahr}" (string .jahr) }}</option>
+<optgroup label="{{ i18n "kt_gruppe_testsim" }}">
+{{- range where $d.konztests "art" "testsimulation" }}
+<option value="{{ .id }}">{{ replace (i18n "ab_testsim_jahr") "{jahr}" (string .jahr) }}</option>
 {{- end }}
+</optgroup>
+<optgroup label="{{ i18n "kt_gruppe_serien" }}">
+{{- range where $d.konztests "art" "serie" }}
+<option value="{{ .id }}">{{ replace (replace (i18n "kt_serie") "{jahr}" (string .jahr)) "{nr}" (strings.TrimLeft "S0" .serie) }}</option>
+{{- end }}
+</optgroup>
+<option value="eigen">{{ i18n "kt_eigen" }}</option>
 </select>
 </label>
+</div>
+{{- /* Eigener Konztest: Aufgabe und Loesungsblatt als PDF (eine Datei mit
+       beiden Seiten oder zwei Dateien), gelesen von konztest-lesen.html. */ -}}
+<div class="ab-schluessel" id="kt-eigen" hidden>
+<p class="ab-feld">{{ i18n "kt_eigen_feld" }}</p>
+<label class="btn btn-ghost ab-knopf">{{ i18n "ab_datei_waehlen" }}<input type="file" id="kt-eigen-datei" accept="application/pdf,.pdf" multiple></label>
+<p class="ab-hinweis">{{ i18n "kt_eigen_hinweis" }}</p>
+<p class="ab-status" id="kt-eigen-status" role="status" aria-live="polite"></p>
 </div>
 <p class="ab-feld">{{ i18n "kt_foto" }}</p>
 <div class="ab-knoepfe">
@@ -95,24 +112,36 @@
     bis: {{ i18n "kt_bis" | jsonify | safeJS }},
     nichts: {{ i18n "kt_nichts" | jsonify | safeJS }},
     unsicher: {{ i18n "kt_unsicher" | jsonify | safeJS }},
-    live: {{ i18n "kt_kamera_raster" | jsonify | safeJS }}
+    live: {{ i18n "kt_kamera_raster" | jsonify | safeJS }},
+    eigenLiest: {{ i18n "kt_eigen_liest" | jsonify | safeJS }},
+    eigenOk: {{ i18n "kt_eigen_ok" | jsonify | safeJS }},
+    eigenKeineAufgabe: {{ i18n "kt_eigen_keine_aufgabe" | jsonify | safeJS }},
+    eigenKeineLoesung: {{ i18n "kt_eigen_keine_loesung" | jsonify | safeJS }},
+    eigenFehlt: {{ i18n "kt_eigen_fehlt" | jsonify | safeJS }}
   };
   var N = 40;
-  var FELD_X = 5.2, FELD_Y = 6.4;  // Messfeld je Zeichen um seine Mitte (pt)
+  var FELD_X = 5.2, FELD_Y = 6.4;  // Messfeld je Zeichen um seine Mitte (pt), aus dem Abstand der Zeichen
   var SCHRITT = 0.5;               // pt zwischen zwei Messpunkten
   var MARKIERT = 0.02;             // Anteil Tinte im Messfeld: mindestens so viel ist markiert
   var MAX_UNSICHER = 30;           // mehr Zweifelsfaelle: lieber ein neues Foto
   var MIN_GITTER = 0.6;            // so viel des Rasters muss gefunden sein
   var MIN_GLEICH = 0.035;          // wie deutlich gleiche Zeichen einander gleichen muessen,
   var VORSPRUNG = 2.5;             // und das Mehrfache gegenueber dem naechstbesten Platz
-  var K = null;                    // die gewaehlte Testsimulation aus data/konztest.yaml
+  var K = null;                    // der gewaehlte Konztest aus data/konztest.yaml (oder ein eigener)
+  var EIGEN = null;                // ein eigener Konztest, aus PDF gelesen (konztest-lesen.html)
+  try { EIGEN = JSON.parse(localStorage.getItem('ncwiki-kt-eigen')); } catch (e) {}
   function waehlen(){
-    var jahr = +el('kt-testsim').value;
-    K = D.testsimulationen.filter(function(t){ return t.jahr === jahr; })[0];
+    var id = el('kt-testsim').value;
+    el('kt-eigen').hidden = id !== 'eigen';
+    K = id === 'eigen' ? EIGEN : D.konztests.filter(function(t){ return t.id === id; })[0];
+    if (!K) return;
     K.schrittX = (K.x[N - 1] - K.x[0]) / (N - 1);
     K.schrittY = (K.y[N - 1] - K.y[0]) / (N - 1);
+    // Messfeld je Zeichen: 2026 (13.5 x 15.2 pt Abstand) 5.2 x 6.4 pt um die Mitte
+    FELD_X = 0.385 * K.schrittX; FELD_Y = 0.42 * K.schrittY;
+    NX = Math.floor(2 * FELD_X / SCHRITT) + 1; NY = Math.floor(2 * FELD_Y / SCHRITT) + 1;
+    PR = new Uint8Array(NX * NY); PG = new Uint8Array(NX * NY); PB = new Uint8Array(NX * NY); TMP = new Uint8Array(NX * NY);
   }
-  waehlen();
   function mitte(R, C){ return [K.x[C], K.y[R]]; }
   function median(a){ a = a.slice().sort(function(x, y){ return x - y; }); return a[Math.floor(a.length / 2)]; }
   // --- Farben ------------------------------------------------------------------
@@ -169,7 +198,8 @@
   // stimmt nur, wenn das Blatt das Bild fuellt. Liegt es klein oder gedreht
   // im Bild, wird danach mit dem Massstab des gefundenen Rasters neu gesucht
   // (sonst zerfielen die Zeichen: «Raster nicht gefunden» bei gueltigen Fotos).
-  function flecken(bild, farbe, nFest){
+  function flecken(bild, farbe, nFest, art){
+    art = art || FLECKEN[0];
     var px = Math.min(Math.max(bild.w, bild.h) / A4[1], Math.min(bild.w, bild.h) / A4[0]);
     var n = 0;
     if (nFest !== undefined) n = nFest; else while (px / Math.pow(2, n + 1) >= 1.4) n++;
@@ -193,7 +223,7 @@
       for (var x = 0; x < w; x++){
         var pz = zeile[Math.min(Math.floor(x * f / bild.feld), bild.nx - 1)], i = (y * w + x) * 4;
         var r = d[i], g = d[i + 1], b = d[i + 2];
-        if (farbe ? Math.min(r, b) - g > 0.06 * pz : 299 * r + 587 * g + 114 * b < 720 * pz) an.push(y * w + x);
+        if (farbe ? Math.min(r, b) - g > art[1] * pz : 299 * r + 587 * g + 114 * b < 720 * pz) an.push(y * w + x);
       }
     }
     if (an.length < 1000) return [];
@@ -205,9 +235,9 @@
     var pxk = Math.max(0.3, Math.hypot(xs[hi] - xs[lo], ys[hi] - ys[lo]) / soll);
     if (nFest === undefined && n > 0){
       var besser = Math.max(0, Math.floor(Math.log2(pxk * f / 1.4)));
-      if (besser < n) return flecken(bild, farbe, besser);
+      if (besser < n) return flecken(bild, farbe, besser, art);
     }
-    var q = Math.max(1, Math.ceil(1.6 * pxk));
+    var q = Math.max(1, Math.ceil(art[0] * pxk));
     // Felder von q x q Bildpunkten mit den Summen fuer Schwerpunkt und Form
     var felder = new Map(), BREIT = 100000;
     an.forEach(function(k){
@@ -232,8 +262,9 @@
       }
       stuecke.push([summe, [x0, y0, x1, y1]]);
     });
-    // Stuecke desselben Zeichens: Mitten hoechstens 4.5 pt auseinander
-    var nah = 4.5 * pxk, eimer = new Map(), zeichen = [];
+    // Stuecke desselben Zeichens: Mitten hoechstens 4.5 pt auseinander (bei
+    // 13.5 pt Zeichenabstand; die Groessen unten ebenso im Verhaeltnis)
+    var z_ = K.schrittX / 13.5, nah = 4.5 * z_ * pxk, eimer = new Map(), zeichen = [];
     stuecke.sort(function(a, b){ return b[0][0] - a[0][0]; });
     stuecke.forEach(function(st){
       var summe = st[0], box = st[1], mx = summe[1] / summe[0], my = summe[2] / summe[0];
@@ -256,10 +287,24 @@
     var aus = [];
     zeichen.forEach(function(z){
       var s = z[0], bx = z[1], gross = Math.max(bx[2] - bx[0] + 1, bx[3] - bx[1] + 1) * q / pxk;
-      if (gross >= 3.5 && gross <= 15 && s[0] >= 4)
+      if (gross >= 3.5 * z_ && gross <= 15 * z_ && s[0] >= 4)
         aus.push({ x: (s[1] / s[0] + 0.5) * f, y: (s[2] / s[0] + 0.5) * f, m: merkmale(s[0], s.slice(1)) });
     });
     return aus;
+  }
+  // Wie fein gesucht wird: [Feld in pt, Magenta ab Anteil des Papiers].
+  // Je nach Zeichen verschmelzen Nachbarn (eng gesetzte Bildzeichen 2023/24)
+  // oder ein Zeichen zerfaellt (2025 S13, S17) - deshalb nacheinander, bis
+  // das Raster fast ganz gefunden ist; sonst das vollstaendigste.
+  var FLECKEN = [[1.6, 0.06], [1.0, 0.1], [1.0, 0.06]];
+  function rasterSuchen(bild, farbe, arten){
+    var beste = null;
+    for (var i = 0; i < (arten || FLECKEN.length); i++){
+      var punkte = flecken(bild, farbe, undefined, FLECKEN[i]), g = gitter(punkte);
+      if (g && (!beste || g.platz.size > beste.g.platz.size)) beste = { punkte: punkte, g: g };
+      if (beste && beste.g.platz.size >= 0.97 * N * N) break;
+    }
+    return beste || { punkte: [], g: null };
   }
   // --- Das Gitter -------------------------------------------------------------------
   function eimerVon(punkte, g){
@@ -389,9 +434,12 @@
     return [Math.hypot(a[0] - o[0], a[1] - o[1]), Math.hypot(b[0] - o[0], b[1] - o[1])];
   }
   function ausrichten(bild){
-    var hinweise = [], farbe = istFarbig(bild);
-    if (!farbe) hinweise.push(T.grau);
-    var punkte = flecken(bild, farbe), g = gitter(punkte);
+    // farbe: Zeichen in Magenta und das Foto farbig - dann trennt die Farbe
+    // Zeichen und Striche. Schwarz gedruckte Konztests (2022) wie ein
+    // Graustufenbild; bunt: blaue Striche sind trotzdem klar Stift.
+    var hinweise = [], bunt = istFarbig(bild), farbe = K.farbe && bunt;
+    if (K.farbe && !bunt) hinweise.push(T.grau);
+    var such = rasterSuchen(bild, farbe), punkte = such.punkte, g = such.g;
     if (!g || g.platz.size < MIN_GITTER * N * N) return { fehler: T.keinRaster.replace('{n}', g ? g.platz.size : 0) };
     var k = zuordnen(punkte, g.platz);
     if (!k.length || k[0][0] < MIN_GLEICH || (k[1] && k[0][0] < VORSPRUNG * Math.max(k[1][0], 0.01))) return { fehler: T.passtNicht };
@@ -423,7 +471,7 @@
     }
     var s = massstab(abb);
     if (Math.abs(s[0] / s[1] - 1) > 0.06) hinweise.push(T.verzerrt.replace('{n}', Math.round(Math.abs(s[0] / s[1] - 1) * 100)));
-    return { abb: abb, korrektur: korrektur, hinweise: hinweise, farbe: farbe, pxpt: s[0] };
+    return { abb: abb, korrektur: korrektur, hinweise: hinweise, farbe: farbe, bunt: bunt, pxpt: s[0] };
   }
   // Wo die Mitte eines Zeichens im Bild liegt (mit der Korrektur je Zelle)
   function imBild(r, R, C){
@@ -432,10 +480,8 @@
   }
   // Messpunkte eines Zeichens: Helligkeit und Art (0 Papier/Tinte, 1 Magenta
   // der Zeichen, 2 klar blau = Stift), Zeile fuer Zeile ueber das Messfeld.
-  var NX = Math.floor(2 * FELD_X / SCHRITT) + 1, NY = Math.floor(2 * FELD_Y / SCHRITT) + 1;
-  var PR = new Uint8Array(NX * NY), PG = new Uint8Array(NX * NY), PB = new Uint8Array(NX * NY);
+  var NX, NY, PR, PG, PB, TMP;     // Messpunkte je Zeichen (waehlen())
   var RAD = 5;                      // Messpunkte (je 0.5 pt) im Umkreis fuer das Papier
-  var TMP = new Uint8Array(NX * NY);
   function proben(bild, r, R, C, lum, art, o0, pap){
     var m = mitte(R, C), c = imBild(r, R, C), o = r.abb(m[0], m[1]), a = r.abb(m[0] + 1, m[1]), b = r.abb(m[0], m[1] + 1);
     var ex = [a[0] - o[0], a[1] - o[1]], ey = [b[0] - o[0], b[1] - o[1]];
@@ -457,10 +503,10 @@
     // auf wenigen Millimetern, und im Schatten ist auch das Magenta dunkler.
     var ziel = 0.9 * n, s = 0, p = 255;
     for (var v = 0; v < 256; v++){ s += hist[v]; if (s >= ziel){ p = v; break; } }
-    if (r.farbe) for (q = 0; q < NX * NY; q++){
+    if (r.bunt) for (q = 0; q < NX * NY; q++){
       if (art[o0 + q] === 3) continue;
       // Magenta (Zeichen): Rot und Blau ueber Gruen; klar blau: Stift
-      art[o0 + q] = PR[q] - PG[q] > 0.12 * p && PB[q] - PG[q] > 0.04 * p ? 1 : (PB[q] - Math.max(PR[q], PG[q]) > 0.06 * p ? 2 : 0);
+      art[o0 + q] = r.farbe && PR[q] - PG[q] > 0.12 * p && PB[q] - PG[q] > 0.04 * p ? 1 : (PB[q] - Math.max(PR[q], PG[q]) > 0.06 * p ? 2 : 0);
     }
     // Papier je Messpunkt: das Hellste im Umkreis von 2.5 pt (ohne Magenta).
     // Ein Strich ist schmaler und faellt so heraus; die Kante eines Schattens
@@ -492,11 +538,21 @@
     if (r.pxpt / (bild.vergroessert || 1) < 1.1) return { fehler: T.zuKlein };
     var NP = NX * NY, lum = new Uint8Array(N * N * NP), art = new Uint8Array(N * N * NP), pap = new Uint8Array(N * N * NP), hell = [], R, C, i;
     for (R = 0; R < N; R++){ hell.push([]); for (C = 0; C < N; C++) hell[R].push(proben(bild, r, R, C, lum, art, (R * N + C) * NP, pap)); }
-    var roh = tintenwerte(r, lum, art, hell, pap, NORMAL), e = entscheiden(roh);
+    // Zweimal: Im ersten Durchgang kennt die Vorlage je Zeichen alle
+    // Stellen. Haengt die Regel nur vom Zeichen ab (2025 S07-S12), ist ein
+    // Zeichen fast ueberall markiert - dann enthielte die Vorlage den Strich
+    // und zoege ihn wieder ab. Im zweiten nur noch die nicht markierten.
+    var zweimal = function(stufe){
+      var roh = tintenwerte(r, lum, art, hell, pap, stufe), e = entscheiden(roh);
+      var ohne = e ? e.markiert.map(function(m, i){ return m || e.unsicher[i]; }) : roh.map(function(v){ return v >= 2 * MARKIERT; });
+      roh = tintenwerte(r, lum, art, hell, pap, stufe, ohne);
+      return { roh: roh, e: entscheiden(roh) };
+    };
+    var x1 = zweimal(NORMAL), roh = x1.roh, e = x1.e;
     if (e && e.anzahl < 10){
       // fast nichts markiert? Mit feinem, blassem Stift sieht es so aus
-      var roh2 = tintenwerte(r, lum, art, hell, pap, EMPFINDLICH), e2 = entscheiden(roh2);
-      if (!e2 || e2.anzahl >= 10){ roh = roh2; e = e2; }
+      var x2 = zweimal(EMPFINDLICH);
+      if (!x2.e || x2.e.anzahl >= 10){ roh = x2.roh; e = x2.e; }
     }
     if (!e) return { fehler: T.unklar };
     // Wo das Magenta eines Zeichens viel blasser ist als sonst (Spiegelung,
@@ -544,7 +600,7 @@
   // Punkt hat (Median ueber alle Stellen mit diesem Zeichen). So bleibt nur,
   // was jemand dazugeschrieben hat - auch in einer Schwarz-Weiss-Kopie, wo die
   // Zeichen selbst grau sind.
-  function tintenwerte(r, lum, art, hell, pap, stufe){
+  function tintenwerte(r, lum, art, hell, pap, stufe, ohne){
     var NP = NX * NY, R, C, i, a, b, st = r.farbe ? stufe.farbe : stufe.grau, hellF = st[0], spanneF = st[1];
     // Papier je Zeichen: Median der Nachbarn (eine dicke Markierung macht ein
     // einzelnes Messfeld dunkler); je Messpunkt hoechstens wenig heller
@@ -560,21 +616,44 @@
     }
     // Was das Zeichen selbst mitbringt, je Messpunkt
     var je = {};
-    for (R = 0; R < N; R++) for (C = 0; C < N; C++) (je[K.zeichen[R][C]] = je[K.zeichen[R][C]] || []).push((R * N + C) * NP);
+    // (ohne: diese Stellen nicht - sie sind markiert; bleiben von einem
+    // Zeichen keine drei, dann doch alle, aber das untere Zehntel statt der Mitte)
+    var alle = {};
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var z = K.zeichen[R][C];
+      (alle[z] = alle[z] || []).push((R * N + C) * NP);
+      if (!ohne || !ohne[R * N + C]) (je[z] = je[z] || []).push((R * N + C) * NP);
+    }
+    Object.keys(alle).forEach(function(z){ if (!je[z] || je[z].length < 3){ je[z] = alle[z]; je[z].unten = true; } });
     var vorlage = {};
     Object.keys(je).forEach(function(z){
       var v = new Float32Array(NP), liste = je[z], tmp = new Float32Array(liste.length);
       for (i = 0; i < NP; i++){
         for (var k = 0; k < liste.length; k++) tmp[k] = wert[liste[k] + i];
-        tmp.sort(); v[i] = tmp[Math.floor(tmp.length / 2)];
+        tmp.sort(); v[i] = tmp[Math.floor(tmp.length * (liste.unten ? 0.1 : 0.5))];
+      }
+      // Ohne Magenta (schwarz gedruckt, Graustufen) zaehlen die Zeichen selbst
+      // als Tinte: dann das Hoechste der Vorlage im Umkreis eines Messpunkts,
+      // sonst bleibt an jeder Kante ein Rest, wenn das Zeichen um einen
+      // Bruchteil verschoben ist
+      if (!r.farbe){
+        var d = new Float32Array(NP);
+        for (i = 0; i < NP; i++){
+          var ci = i % NX, cj = (i - ci) / NX, m = 0;
+          for (var vj = Math.max(0, cj - 1); vj <= Math.min(NY - 1, cj + 1); vj++)
+            for (var vi = Math.max(0, ci - 1); vi <= Math.min(NX - 1, ci + 1); vi++) m = Math.max(m, v[vj * NX + vi]);
+          d[i] = m;
+        }
+        v = d;
       }
       vorlage[z] = v;
     });
     var aus = [];
     for (R = 0; R < N; R++) for (C = 0; C < N; C++){
-      var o2 = (R * N + C) * NP, vl = vorlage[K.zeichen[R][C]], sum = 0;
+      var o2 = (R * N + C) * NP, vl = vorlage[K.zeichen[R][C]], sum = 0, frei = 0;
       var spalten = new Uint8Array(NX), zeilen = new Uint8Array(NY);
       for (i = 0; i < NP; i++){
+        if (art[o2 + i] !== 1 && art[o2 + i] !== 3) frei++;
         var x = wert[o2 + i] - vl[i];
         if (x > 0){ sum += x; if (x > 0.2){ spalten[i % NX] = 1; zeilen[Math.floor(i / NX)] = 1; } }
       }
@@ -582,7 +661,10 @@
       for (i = 0; i < NX; i++) ns += spalten[i];
       for (i = 0; i < NY; i++) nz += zeilen[i];
       // ein Staubkorn belegt nur wenige Spalten und Zeilen und zaehlt weniger
-      aus.push(sum / NP * Math.min(1, ns / NX / 0.4) * Math.min(1, nz / NY / 0.4));
+      // je Flaeche, die nicht vom Magenta des Zeichens bedeckt ist: auf einem
+      // grossen Zeichen (2025 S05, S08) liegt ein Teil jedes Strichs unsichtbar
+      // auf dem Zeichen
+      aus.push(sum / Math.max(frei, 0.4 * NP) * Math.min(1, ns / NX / 0.4) * Math.min(1, nz / NY / 0.4));
     }
     return aus;
   }
@@ -612,14 +694,17 @@
     var alle = Array.prototype.slice.call(werte).sort(function(a, b){ return a - b; });
     var t = Math.max(otsu(alle, MARKIERT, 0.6) || MARKIERT, MARKIERT);
     var unten = alle.filter(function(v){ return v < t; }), t2 = otsu(unten, MARKIERT, t);
-    if (t2 && t2 > MARKIERT){
+    if (t2 && t2 < t){
       var gruppe = unten.filter(function(v){ return v >= t2; }), rest = unten.filter(function(v){ return v < t2; });
       if (gruppe.length >= 10 && quantil(gruppe, 0.5) >= 3 * Math.max(quantil(rest, 0.995), 0.004)) t = t2;
     }
     var leer = alle.filter(function(v){ return v < t; }), voll = alle.filter(function(v){ return v >= t; });
     // Bitte ansehen: was ueber dem Rauschen der leeren Zeichen, aber unter dem
     // Ueblichen der markierten liegt
-    var a = 1.5 * quantil(leer, 0.995), b = voll.length >= 3 ? 0.5 * quantil(voll, 0.5) : t;
+    // (b: die Haelfte des Ueblichen - aber nicht hoeher, als das Rauschen
+    // es verlangt: auf einem sauberen Scan ist ein schwacher Strich eindeutig)
+    var rausch = quantil(leer, 0.995), a = 1.5 * rausch;
+    var b = voll.length >= 3 ? Math.min(0.5 * quantil(voll, 0.5), Math.max(t, 3 * rausch)) : t;
     var lo = Math.max(Math.min(a, b, t), 0.5 * MARKIERT), hi = Math.max(a, b, t);
     var e = { markiert: [], unsicher: [], anzahl: voll.length, schwelle: t }, n = 0;
     for (var i = 0; i < werte.length; i++){
@@ -728,6 +813,7 @@
   }
   function datei(d){
     if (!d) return;
+    if (!K){ melden(T.eigenFehlt, true); return; }
     el('kt-ergebnis').hidden = true;
     melden(B.istPdf(d) ? T.pdfLaedt : T.liest);
     B.quellen(d).then(auswerten, function(f){ melden(typeof f === 'string' ? f : T.fehlerBild, true); });
@@ -735,14 +821,36 @@
   ['kt-kamera', 'kt-datei'].forEach(function(id){
     el(id).addEventListener('change', function(){ datei(this.files && this.files[0]); this.value = ''; });
   });
+  waehlen();
   el('kt-testsim').addEventListener('change', function(){ waehlen(); if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); } });
+  // Eigener Konztest: Aufgabe und Loesung als PDF
+  function eigenMelden(text, fehler){ el('kt-eigen-status').textContent = text; el('kt-eigen-status').className = 'ab-status' + (fehler ? ' ab-fehler' : ''); }
+  function eigenZeigen(){
+    if (EIGEN) eigenMelden(T.eigenOk.replace('{z}', EIGEN.ziele.join('').split('1').length - 1)
+      .replace('{k}', new Set(EIGEN.zeichen.join('')).size).replace('{quelle}', EIGEN.quelle));
+  }
+  eigenZeigen();
+  el('kt-eigen-datei').addEventListener('change', function(){
+    var dateien = Array.prototype.slice.call(this.files || []);
+    this.value = '';
+    if (!dateien.length) return;
+    eigenMelden(T.eigenLiest.replace('{n}', 0).replace('{m}', '…'));
+    window.NCWikiKonztestLesen.ausPdfs(dateien, function(n, m){ eigenMelden(T.eigenLiest.replace('{n}', n).replace('{m}', m)); }).then(function(k){
+      EIGEN = k;
+      try { localStorage.setItem('ncwiki-kt-eigen', JSON.stringify(k)); } catch (e) {}
+      waehlen(); eigenZeigen();
+      if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); }
+    }, function(f){
+      eigenMelden(f === 'keineAufgabe' ? T.eigenKeineAufgabe : f === 'keineLoesung' ? T.eigenKeineLoesung : typeof f === 'string' ? f : T.fehlerBild, true);
+    });
+  });
   // --- Live-Kamera: das Raster im Sucher -------------------------------------------
   // Gruen, sobald fast das ganze Raster (85 %) als Gitter gefunden ist; die
   // vier Eckzeichen dienen als Merkpunkte, ob der Bogen ruhig liegt.
   // Ausgeloest wird ab 850 px Blattbreite (gut 1.4 px je pt: so fein
   // braucht das Suchen der Flecken das Bild, flecken()).
   function livePruefen(bild){
-    var g = gitter(flecken(bild, true));
+    var g = rasterSuchen(bild, K.farbe).g;
     var anteil = g ? g.platz.size / (N * N) : 0;
     if (!g || anteil < 0.85) return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) };
     // Eckzeichen: oben links, unten links, unten rechts, oben rechts
@@ -759,12 +867,15 @@
   el('kt-live').addEventListener('click', function(){
     el('kt-ergebnis').hidden = true;
     melden('');
+    if (!K){ melden(T.eigenFehlt, true); return; }
     B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1400, minBreite: 850,
-      fertig: function(q){ auswerten([q]); }, fehler: function(t){ melden(t, true); } });
+      fertig: function(q, ersatz){ auswerten([q].concat(ersatz || [])); }, fehler: function(t){ melden(t, true); } });
   });
   // Fuer die Pruefung (scripts/konztest-pruefen.mjs): der gelesene Zustand
   // und wo ein Zeichen im angezeigten Bild steht (Anteil der Breite/Hoehe)
   window.NCWikiKonztestStand = function(){ return stand; };
+  // Fuer die Fehlersuche an neuen Konztests (scripts/konztest-pruefen.mjs)
+  window.NCWikiKonztestIntern = { flecken: flecken, gitter: gitter, istFarbig: istFarbig, weissabgleich: weissabgleich, bogenLesen: bogenLesen, K: function(){ return K; } };
   window.NCWikiKonztestPunkt = function(R, C){
     var p = imBild(stand, R, C), q = stand.bild.leinwand;
     return [p[0] / q.width, p[1] / q.height];

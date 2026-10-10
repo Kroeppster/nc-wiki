@@ -10,7 +10,10 @@
  * gelesenen Markierungen mit denen, die konztest-testbilder.py gesetzt hat
  * (Scan, schraeg, kopfueber, quer, Bleistift), dazu ein Bild ohne Konztest
  * (muss eine Meldung ergeben), die Live-Kamera (Chromiums Fake-Kamera) und
- * das Korrigieren durch Tippen.
+ * das Korrigieren durch Tippen; dazu ein eigener Konztest aus PDF (Aufgabe
+ * und Loesung hochladen): Der Browser muss dasselbe lesen wie
+ * scripts/konztest-loesungen.py. Aus dem Repo-Ordner starten (liest die PDFs
+ * unter assets/downloads/).
  *
  * Gezaehlt wird streng: Ein falsch gelesenes Zeichen, das NICHT als unsicher
  * markiert ist, ist ein Fehler. Unsichere Zeichen sind erlaubt (sie stehen
@@ -51,7 +54,7 @@ await vorbereiten(ctx);
 const p = await ctx.newPage(); fehlerSammeln(p);
 await p.goto(ADRESSE, { waitUntil: 'networkidle' });
 pruef('Baustein vorhanden', !!(await p.$('#kt-wurzel')));
-const ziele = await p.evaluate(() => JSON.parse(document.getElementById('kt-daten').textContent).testsimulationen[0].ziele.join(''));
+const ziele = await p.evaluate(() => JSON.parse(document.getElementById('kt-daten').textContent).konztests[0].ziele.join(''));
 pruef('Loesung: 400 Zielzeichen, 10 je Zeile', ziele.split('').filter(c => c === '1').length === 400);
 
 for (const [name, e] of Object.entries(erwartet)) {
@@ -123,8 +126,60 @@ if (erwartet._kamera) {
   const r = await lesen(kp);
   const soll = erwartet._kamera.markiert;
   const falsch = r ? [...Array(1600).keys()].filter(i => r.markiert[i] !== soll[i] && !r.unsicher.includes(i)) : null;
-  pruef('selbst ausgeloest und richtig gelesen', r && falsch.length === 0, r ? falsch.length + ' falsch' : 'kein Ergebnis');
+  pruef('selbst ausgeloest und richtig gelesen', r && falsch.length === 0, r ? falsch.length + ' falsch' : 'kein Ergebnis: ' + await kp.evaluate(() => document.getElementById('kt-status').textContent));
   await kb.close();
+}
+// Eigener Konztest: Aufgabe und Loesung als PDF hochladen. Der Browser muss
+// dasselbe lesen wie scripts/konztest-loesungen.py (data/konztest.yaml).
+console.log('\n=== Eigener Konztest aus PDF (wie das Skript?) ===');
+{
+  const UE = 'assets/downloads/uebungsaufgaben/konzentriertes-arbeiten/', TS = 'assets/downloads/testsimulationen/';
+  const faelle = [
+    ['s2025-07', [UE + '2025_konzentriertes-arbeiten_S07.pdf']],
+    ['s2024-02', [UE + '2024_konzentriertes-arbeiten_S02.pdf']],
+    ['s2022-02', [UE + '2022_konzentriertes-arbeiten_S02.pdf', UE + '2022_konzentriertes-arbeiten_S02_Loesung.pdf']],
+    ['s2025-12', [UE + '2025_konzentriertes-arbeiten_S12.pdf']],
+    ['ts2026', [TS + '2026_testsimulationen_Testsimulation.pdf', TS + '2026_testsimulationen_Loesung.pdf']],
+  ];
+  const eb = await chromium.launch();
+  const ec = await eb.newContext({ viewport: { width: 1200, height: 1000 } });
+  await vorbereiten(ec);
+  const ep = await ec.newPage(); fehlerSammeln(ep);
+  await ep.goto(ADRESSE, { waitUntil: 'networkidle' });
+  // was das Skript gelesen hat: data/konztest.yaml, so wie es in der Seite steht
+  const daten = await ep.evaluate(() => JSON.parse(document.getElementById('kt-daten').textContent));
+  await ep.selectOption('#kt-testsim', 'eigen');
+  pruef('Feld fuer eigenen Konztest sichtbar', await ep.isVisible('#kt-eigen-datei') || !(await ep.evaluate(() => document.getElementById('kt-eigen').hidden)));
+  for (const [id, dateien] of faelle) {
+    const soll = daten.konztests.find(k => k.id === id);
+    await ep.evaluate(() => { localStorage.removeItem('ncwiki-kt-eigen'); document.getElementById('kt-eigen-status').textContent = ''; });
+    const t0 = Date.now();
+    await ep.setInputFiles('#kt-eigen-datei', dateien);
+    await ep.waitForFunction(() => /\(/.test(document.getElementById('kt-eigen-status').textContent) && !/…/.test(document.getElementById('kt-eigen-status').textContent)
+      || document.getElementById('kt-eigen-status').classList.contains('ab-fehler'), null, { timeout: 300000 });
+    const k = await ep.evaluate(() => JSON.parse(localStorage.getItem('ncwiki-kt-eigen')));
+    if (!k) { pruef(id + ': gelesen', false, await ep.evaluate(() => document.getElementById('kt-eigen-status').textContent)); continue; }
+    const lage = Math.max(...k.x.map((v, i) => Math.abs(v - soll.x[i])), ...k.y.map((v, i) => Math.abs(v - soll.y[i])));
+    // Die Klassen muessen nicht gleich heissen und nicht gleich fein sein
+    // (pdf.js zeichnet anders als MuPDF). Pruefstein ist die Regel: Alle
+    // Regeln haengen nur vom Zeichen und seinem Nachbarn ab - fasst der
+    // Browser zwei verschiedene Zeichen zusammen, widersprechen sich Paare.
+    const regel = (Z, ziele) => Math.min(...[1, -1, 0].map(nb => { const je = new Map();
+      for (let R = 0; R < 40; R++) for (let C = 0; C < 40; C++) { const n = C + nb >= 0 && C + nb < 40 ? Z[R][C + nb] : '-', key = Z[R][C] + n;
+        if (!je.has(key)) je.set(key, [0, 0]); je.get(key)[+ziele[R][C]]++; }
+      let w = 0; for (const v of je.values()) w += Math.min(...v); return w; }));
+    const wJs = regel(k.zeichen, k.ziele), wPy = regel(soll.zeichen, soll.ziele), arten = new Set(k.zeichen.join('')).size;
+    const zf = [...Array(1600).keys()].filter(i => k.ziele.join('')[i] !== soll.ziele.join('')[i]).length;
+    pruef(id + ': wie das Skript (Lage ' + lage.toFixed(2) + ' pt, ' + arten + ' Zeichenarten, Regelprobe ' + wJs + ' (Skript ' + wPy + '), '
+      + zf + ' Ziele anders, ' + ((Date.now() - t0) / 1000).toFixed(1) + ' s)', lage < 1 && zf === 0 && wJs <= wPy + 5);
+  }
+  // Mit dem zuletzt gelesenen eigenen Konztest (2026 aus dem PDF) ein Foto auswerten
+  await ep.setInputFiles('#kt-datei', join(ORDNER, 'foto-schraeg.jpg'));
+  await ep.waitForFunction(() => !document.getElementById('kt-ergebnis').hidden || document.getElementById('kt-status').classList.contains('ab-fehler'), null, { timeout: 120000 });
+  const re = await lesen(ep), se = erwartet['foto-schraeg.jpg'].markiert;
+  const fe = re ? [...Array(1600).keys()].filter(i => re.markiert[i] !== se[i] && !re.unsicher.includes(i)).length : -1;
+  pruef('eigener Konztest: Foto richtig gelesen', fe === 0, re ? fe + ' falsch' : await ep.evaluate(() => document.getElementById('kt-status').textContent));
+  await eb.close();
 }
 pruef('keine JS-Fehler', js.length === 0, js.join(' | '));
 console.log(`\n==== ${ok} bestanden, ${fail} nicht ====`);

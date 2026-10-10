@@ -523,7 +523,7 @@
     el('ab-ergebnis').hidden = true;
     melden('ab-status', '');
     B.kamera({ feld: el('ab-kamera-feld'), pruefen: livePruefen, minBreite: 700,
-      fertig: function(quelle){ bogenAus([quelle]); },
+      fertig: function(quelle, ersatz){ bogenAus([quelle].concat(ersatz || [])); },
       fehler: function(text){ melden('ab-status', text, true); } });
   });
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte

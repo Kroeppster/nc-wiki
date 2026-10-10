@@ -787,12 +787,20 @@ Toccare l'immagine inverte un segno. Inchiostro per simbolo: quanto è più scur
 accanto (così le ombre non disturbano), meno ciò che lo stesso simbolo senza segno ha nello stesso
 punto. La soglia «segnato» si ricava da ogni immagine; se i tratti non si distinguono chiaramente
 (troppi casi dubbi, riflessi), la pagina chiede una nuova foto invece di un risultato incerto. Partial `layouts/partials/bausteine/konztest-auswertung.html`. Griglia, posizione e
-soluzione in `data/konztest.yaml`, generato da `python3 scripts/konztest-loesungen.py
---schreiben` dal fascicolo (simboli come carattere 0–F) e dal PDF delle soluzioni (caselle
-nere), con controprova sulla regola delle istruzioni. **Per ora solo 2026**: il 2022 ha cifre
-come testo (soluzione deducibile dalla regola), il 2023 immagini con una mappa delle soluzioni
-leggibile, il 2024/2025 solo immagini senza mappa. Verificare: `python3
-scripts/konztest-testbilder.py /tmp/kt` e `node scripts/konztest-pruefen.mjs /tmp/kt`.
+soluzione di tutti i test di concentrazione del sito con foglio delle soluzioni in
+`data/konztest.yaml`, generato da `python3 scripts/konztest-loesungen.py --schreiben`:
+disegnare la pagina del test, trovare i 40 × 40 simboli come macchie, raggruppare i simboli
+uguali in classi; nel foglio delle soluzioni cercare le caselle riempite e posarle sulla
+griglia. Controlli: 40 × 40 trovati, soluzione univoca, «10 per riga» dove previsto, e la prova
+della regola (ogni regola dipende solo dal simbolo e da un vicino). Un nuovo test va nella lista
+`KONZTESTS` dello script. Esclusi: simulazioni 2024 e 2025 e serie 2025 S18/S19 (nessun
+foglio delle soluzioni sul sito), 2021 S03 (caselle messe a mano, non univoche). **Test
+proprio:** nella scelta «Test di concentrazione proprio» caricare compito e foglio delle
+soluzioni in PDF (uno o due file); il blocco `konztest-lesen.html` li legge con lo stesso
+procedimento nel browser e li memorizza. Se il procedimento cambia, adattare entrambi –
+`scripts/konztest-pruefen.mjs` confronta browser e script su PDF del sito. Verificare: `python3
+scripts/konztest-testbilder.py /tmp/kt` e `node scripts/konztest-pruefen.mjs /tmp/kt` (dalla
+cartella del repository).
 
 ---
 

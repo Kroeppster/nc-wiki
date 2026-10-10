@@ -1,0 +1,283 @@
+{{- /*
+  ============================================================================
+  KONZTEST-LESEN  -  einen eigenen Konztest aus PDF lesen (Aufgabe + Loesung)
+  ============================================================================
+  Fuer «Konztest auswerten» (bausteine/konztest-auswertung.html): Wer einen
+  Konztest auswerten will, der nicht in data/konztest.yaml steht (z. B. aus
+  dem Formatierungstool), laedt ihn als PDF hoch - Aufgabe und Loesungsblatt
+  in einer Datei oder in zweien. Heraus kommt dasselbe wie ein Eintrag in
+  data/konztest.yaml: x, y (Mitte jeder Spalte/Zeile, pt), zeichen (gleiche
+  Kennung = gleiches Zeichen), ziele.
+
+  DASSELBE VERFAHREN WIE scripts/konztest-loesungen.py (dort ausfuehrlich
+  beschrieben) - aendert sich eines, das andere mitaendern; die Pruefung
+  scripts/konztest-pruefen.mjs vergleicht beide an den PDFs der Webseite.
+  Kurz: Testseite mit 4 Bildpunkten je pt zeichnen, Flecken zu 40 Zeilen und
+  40 Spalten gruppieren, je Zeichen Schwerpunkt und ein 16 x 16-Bild (gleiche
+  Bilder = gleiche Klasse); im Loesungsblatt die ausgefuellten Kaestchen
+  suchen und auf das Raster legen.
+
+  Stellt window.NCWikiKonztestLesen.ausPdfs(dateien, fortschritt) bereit:
+  -> Promise mit dem Konztest, oder abgelehnt mit 'keineAufgabe' /
+  'keineLoesung' / einer Meldung von pdf.js.
+  ALLES LAEUFT IM BROWSER.
+  ============================================================================
+*/ -}}
+<script>
+window.NCWikiKonztestLesen = (function(){
+  var B = window.NCWikiBild, N = 40, S = 4;
+  var KLASSEN = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  function median(a){
+    var s = Array.prototype.slice.call(a).sort(function(x, y){ return x - y; }), n = s.length;
+    return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2;
+  }
+  function Fehler(text){ this.text = text; }
+  // --- Bild der Seite ---------------------------------------------------------------
+  function seite(c){
+    var w = c.width, h = c.height, d = c.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, w, h).data;
+    var lum = new Uint8Array(w * h), farbig = new Int16Array(w * h);
+    for (var i = 0, k = 0; i < w * h; i++, k += 4){
+      lum[i] = Math.floor((299 * d[k] + 587 * d[k + 1] + 114 * d[k + 2]) / 1000);
+      farbig[i] = Math.min(d[k], d[k + 2]) - d[k + 1];
+    }
+    return { w: w, h: h, lum: lum, farbig: farbig };
+  }
+  // Stuecke auf einem Raster von 1 pt (eine Zelle zaehlt, wenn darin etwas
+  // bedruckt ist), 8er-Nachbarschaft -> [x0, y0, x1, y1] in pt
+  function flecken(m, w, h){
+    var W = Math.floor(w / S), H = Math.floor(h / S), g = new Uint8Array(W * H), x, y;
+    for (y = 0; y < H * S; y++) for (x = 0; x < W * S; x++) if (m[y * w + x]) g[Math.floor(y / S) * W + Math.floor(x / S)] = 1;
+    var gesehen = new Uint8Array(W * H), stapel = new Int32Array(W * H), aus = [];
+    for (var start = 0; start < W * H; start++){
+      if (!g[start] || gesehen[start]) continue;
+      gesehen[start] = 1;
+      var oben = 0, x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
+      stapel[oben++] = start;
+      while (oben){
+        var z = stapel[--oben], zx = z % W, zy = (z - zx) / W;
+        if (zx < x0) x0 = zx; if (zx > x1) x1 = zx; if (zy < y0) y0 = zy; if (zy > y1) y1 = zy;
+        for (var yy = zy - 1; yy <= zy + 1; yy++) for (var xx = zx - 1; xx <= zx + 1; xx++){
+          if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue;
+          var q = yy * W + xx;
+          if (g[q] && !gesehen[q]){ gesehen[q] = 1; stapel[oben++] = q; }
+        }
+      }
+      aus.push([x0, y0, x1 + 1, y1 + 1]);
+    }
+    return aus;
+  }
+  // Werte zu Gruppen (Luecke > 2.5 pt trennt), Gruppen mit >= 25 Flecken,
+  // davon die 40 aufeinanderfolgenden mit dem gleichmaessigsten Abstand
+  function vierzig(werte){
+    werte = werte.slice().sort(function(a, b){ return a - b; });
+    var gruppen = [], g = [werte[0]];
+    for (var i = 1; i < werte.length; i++){
+      if (werte[i] - werte[i - 1] > 2.5){ gruppen.push(g); g = []; }
+      g.push(werte[i]);
+    }
+    gruppen.push(g);
+    var mitten = gruppen.filter(function(x){ return x.length >= 25; }).map(median);
+    if (mitten.length < N) throw new Fehler('raster');
+    var cv = function(i){
+      var d = []; for (var k = i; k < i + N - 1; k++) d.push(mitten[k + 1] - mitten[k]);
+      var m = d.reduce(function(s, v){ return s + v; }, 0) / d.length;
+      return Math.sqrt(d.reduce(function(s, v){ return s + (v - m) * (v - m); }, 0) / d.length) / m;
+    };
+    var beste = 0;
+    for (i = 1; i <= mitten.length - N; i++) if (cv(i) < cv(beste)) beste = i;
+    if (cv(beste) > 0.1) throw new Fehler('raster');
+    return mitten.slice(beste, beste + N);
+  }
+  // --- Testseite ---------------------------------------------------------------------
+  function aufgabe(s){
+    var w = s.w, h = s.h, i, n = w * h, zahl = 0;
+    var farbig = new Uint8Array(n);
+    for (i = 0; i < n; i++) if (s.farbig[i] > 40){ farbig[i] = 1; zahl++; }
+    var farbe = zahl > 20000, m = farbig;
+    if (!farbe){ m = new Uint8Array(n); for (i = 0; i < n; i++) m[i] = s.lum[i] < 140 ? 1 : 0; }
+    var f = flecken(m, w, h).filter(function(b){ var gr = Math.max(b[2] - b[0], b[3] - b[1]); return gr >= 2 && gr <= 16; });
+    var ys0 = vierzig(f.map(function(b){ return (b[1] + b[3]) / 2; })), xs0 = vierzig(f.map(function(b){ return (b[0] + b[2]) / 2; }));
+    var px = (xs0[N - 1] - xs0[0]) / (N - 1), py = (ys0[N - 1] - ys0[0]) / (N - 1), R, C, x, y;
+    // Schwerpunkt je Zeichen im Fenster von einem halben Abstand um die Mitte
+    var sx = [], sy = [];
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var y0 = Math.trunc((ys0[R] - py / 2) * S), y1 = Math.trunc((ys0[R] + py / 2) * S);
+      var x0 = Math.trunc((xs0[C] - px / 2) * S), x1 = Math.trunc((xs0[C] + px / 2) * S), z = 0, ax = 0, ay = 0;
+      for (y = y0; y < y1; y++) for (x = x0; x < x1; x++) if (m[y * w + x]){ z++; ax += x - x0; ay += y - y0; }
+      if (z < 4) throw new Fehler('raster');
+      sx.push((x0 + ax / z + 0.5) / S); sy.push((y0 + ay / z + 0.5) / S);
+    }
+    var xs = [], ys = [];
+    for (C = 0; C < N; C++){ var sp = []; for (R = 0; R < N; R++) sp.push(sx[R * N + C]); xs.push(median(sp)); }
+    for (R = 0; R < N; R++) ys.push(median(sy.slice(R * N, R * N + N)));
+    // Bild je Zeichen: 16 x 16 Felder mit der mittleren Druckstaerke, um den
+    // Schwerpunkt der Druckstaerke
+    var staerke = function(k){ return farbe ? Math.max(0, Math.min(1, s.farbig[k] / 150)) : Math.max(0, Math.min(1, (255 - s.lum[k]) / 200)); };
+    var hx = Math.trunc(0.45 * px * S), hy = Math.trunc(0.45 * py * S), bw = Math.floor(2 * hx / 16), bh = Math.floor(2 * hy / 16), bilder = [];
+    // zwischen Bildpunkten linear (so liegen gleiche Zeichen auch dann
+    // deckungsgleich, wenn sie um Bruchteile eines Bildpunkts verschoben sind)
+    var fein = function(fx, fy){
+      var x0 = Math.floor(fx), y0 = Math.floor(fy), ax = fx - x0, ay = fy - y0, k = y0 * w + x0;
+      return (1 - ay) * ((1 - ax) * staerke(k) + ax * staerke(k + 1)) + ay * ((1 - ax) * staerke(k + w) + ax * staerke(k + w + 1));
+    };
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var cx = Math.round(xs[C] * S), cy = Math.round(ys[R] * S), sum = 0, mx = 0, my = 0, v;
+      for (y = 0; y < 2 * hy; y++) for (x = 0; x < 2 * hx; x++){ v = staerke((cy - hy + y) * w + cx - hx + x); sum += v; mx += v * x; my += v * y; }
+      var ox = cx - hx + (sum > 0 ? mx / sum - hx : 0), oy = cy - hy + (sum > 0 ? my / sum - hy : 0);
+      var b = new Float32Array(256);
+      for (var by = 0; by < 16; by++) for (var bx = 0; bx < 16; bx++){
+        var t = 0;
+        for (y = 0; y < bh; y++) for (x = 0; x < bw; x++) t += fein(ox + bx * bw + x, oy + by * bh + y);
+        b[by * 16 + bx] = t / (bw * bh);
+      }
+      bilder.push(b);
+    }
+    return { farbe: farbe, x: xs, y: ys, zeichen: klassen(bilder) };
+  }
+  // Gleiche Bilder -> gleiche Klasse (Grenze anheben, bis hoechstens 40)
+  function klassen(bilder){
+    var abw = function(a, b){ var s = 0; for (var i = 0; i < 256; i++) s += Math.abs(a[i] - b[i]); return s / 256; };
+    for (var grenze = 0.003; ; grenze *= 1.5){
+      var vertreter = [], aus = [];
+      for (var i = 0; i < bilder.length; i++){
+        var beste = -1, bd = Infinity;
+        for (var k = 0; k < vertreter.length; k++){ var d = abw(bilder[i], vertreter[k]); if (d < bd){ bd = d; beste = k; } }
+        if (beste >= 0 && bd < grenze) aus.push(beste); else { vertreter.push(bilder[i]); aus.push(vertreter.length - 1); }
+        if (vertreter.length > 40) break;
+      }
+      if (vertreter.length <= 40){
+        var zeilen = [];
+        for (var R = 0; R < N; R++){ var z = ''; for (var C = 0; C < N; C++) z += KLASSEN[aus[R * N + C]]; zeilen.push(z); }
+        return zeilen;
+      }
+    }
+  }
+  // --- Loesungsblatt -----------------------------------------------------------------
+  function loesung(s, xs, ys){
+    var w = s.w, h = s.h, n = w * h, i, x, y;
+    // Ausgefuellt: auch 0.75 pt (3 Bildpunkte) nach innen noch ganz bedruckt
+    var k = new Int32Array((w + 1) * (h + 1));
+    for (y = 0; y < h; y++){
+      var zeile = 0;
+      for (x = 0; x < w; x++){
+        i = y * w + x;
+        zeile += (s.lum[i] < 160 || s.farbig[i] > 100) ? 1 : 0;
+        k[(y + 1) * (w + 1) + x + 1] = k[y * (w + 1) + x + 1] + zeile;
+      }
+    }
+    var voll = new Uint8Array(n), r = 3;
+    for (y = 0; y < h; y++) for (x = 0; x < w; x++){
+      var ya = Math.max(0, y - r), yb = Math.min(h, y + r + 1), xa = Math.max(0, x - r), xb = Math.min(w, x + r + 1);
+      var sum = k[yb * (w + 1) + xb] - k[ya * (w + 1) + xb] - k[yb * (w + 1) + xa] + k[ya * (w + 1) + xa];
+      voll[y * w + x] = sum === (yb - ya) * (xb - xa) ? 1 : 0;
+    }
+    var px = (xs[N - 1] - xs[0]) / (N - 1), py = (ys[N - 1] - ys[0]) / (N - 1), P = [];
+    flecken(voll, w, h).forEach(function(b){
+      var bb = b[2] - b[0] + 1.5, hh = b[3] - b[1] + 1.5;
+      if (bb < 2 || hh < 2 || bb > 4.5 * px || hh > 1.6 * py) return;
+      var m = Math.max(1, Math.round(bb / px));
+      for (var j = 0; j < m; j++) P.push([b[0] - 0.75 + (j + 0.5) * bb / m, (b[1] + b[3]) / 2]);
+    });
+    if (P.length < 40) throw new Fehler('loesung');
+    var X = anpassen(P.map(function(p){ return p[0]; }), xs, px), Y = anpassen(P.map(function(p){ return p[1]; }), ys, py);
+    var ziele = [], anzahl = 0;
+    for (i = 0; i < N * N; i++) ziele.push(0);
+    var naechst = function(v, raster){ var b = 0; for (var q = 1; q < N; q++) if (Math.abs(raster[q] - v) < Math.abs(raster[b] - v)) b = q; return b; };
+    for (i = 0; i < P.length; i++){
+      var C = naechst(X[i], xs), R = naechst(Y[i], ys);
+      if (Math.abs(xs[C] - X[i]) > 0.3 * px || Math.abs(ys[R] - Y[i]) > 0.3 * py) continue;
+      if (ziele[R * N + C]) throw new Fehler('loesung');
+      ziele[R * N + C] = 1; anzahl++;
+    }
+    if (anzahl < 40 || anzahl > 1200) throw new Fehler('loesung');
+    var aus = [];
+    for (var RR = 0; RR < N; RR++) aus.push(ziele.slice(RR * N, RR * N + N).join(''));
+    return aus;
+  }
+  // Loesungsblatt -> Raster der Aufgabe: Verschiebung gesucht, Massstab ausgeglichen
+  function anpassen(werte, raster, schritt){
+    var abstand = function(v){ var b = Infinity; for (var q = 0; q < N; q++) b = Math.min(b, Math.abs(v - raster[q])); return b; };
+    var versch = 0, bt = -1;
+    for (var d = -0.5 * schritt; d < 0.5 * schritt; d += 0.25){
+      var t = 0; for (var i = 0; i < werte.length; i++) if (abstand(werte[i] - d) < 0.2 * schritt) t++;
+      if (t > bt){ bt = t; versch = d; }
+    }
+    var f = 1, o = versch;
+    for (var runde = 0; runde < 3; runde++){
+      var sx = 0, sy = 0, sxx = 0, sxy = 0, n = 0;
+      werte.forEach(function(v){
+        var u = (v - o) / f, b = 0;
+        for (var q = 1; q < N; q++) if (Math.abs(raster[q] - u) < Math.abs(raster[b] - u)) b = q;
+        if (Math.abs(u - raster[b]) < 0.3 * schritt){ sx += raster[b]; sy += v; sxx += raster[b] * raster[b]; sxy += raster[b] * v; n++; }
+      });
+      if (n < 2) break;
+      f = (n * sxy - sx * sy) / (n * sxx - sx * sx); o = (sy - f * sx) / n;
+    }
+    return werte.map(function(v){ return (v - o) / f; });
+  }
+  // --- Seiten finden -----------------------------------------------------------------
+  // Erst jede Seite grob (1 Bildpunkt je pt): viel Magenta -> Aufgabe?, viele
+  // ganz gefuellte Stellen -> Loesung? Dann nur diese Seiten fein lesen.
+  function grob(c){
+    var s = seite(c), w = s.w, h = s.h, mag = 0, dunkel = 0, voll = 0, x, y;
+    var tinte = function(i){ return s.lum[i] < 160 || s.farbig[i] > 100; };
+    for (y = 1; y < h - 1; y++) for (x = 1; x < w - 1; x++){
+      var i = y * w + x;
+      if (s.farbig[i] > 40) mag++;
+      if (s.lum[i] < 140) dunkel++;
+      if (tinte(i) && tinte(i - 1) && tinte(i + 1) && tinte(i - w) && tinte(i + w) && tinte(i - w - 1) && tinte(i - w + 1) && tinte(i + w - 1) && tinte(i + w + 1)) voll++;
+    }
+    return { mag: mag, dunkel: dunkel, voll: voll };
+  }
+  function ausPdfs(dateien, fortschritt){
+    var seiten = [];
+    var kette = Promise.resolve();
+    dateien.forEach(function(datei){
+      kette = kette.then(function(){ return B.pdfOeffnen(datei); }).then(function(pdf){
+        for (var nr = 1; nr <= Math.min(pdf.numPages, 200); nr++) seiten.push({ pdf: pdf, nr: nr, datei: datei.name });
+      });
+    });
+    var gesamt = 0;
+    return kette.then(function(){
+      gesamt = seiten.length;
+      var k2 = Promise.resolve();
+      seiten.forEach(function(sx, i){
+        k2 = k2.then(function(){ if (fortschritt) fortschritt(i + 1, gesamt); return B.pdfSeite(sx.pdf, sx.nr, 1); })
+          .then(function(c){ sx.grob = grob(c); });
+      });
+      return k2;
+    }).then(function(){
+      // Aufgabe: Seiten mit viel Magenta (sonst viel Dunklem) und wenig Gefuelltem
+      var kand = seiten.filter(function(sx){ return sx.grob.mag > 4000 && sx.grob.voll < 1500; });
+      if (!kand.length) kand = seiten.filter(function(sx){ return sx.grob.dunkel > 10000 && sx.grob.voll < 1500; }).slice(0, 10);
+      var aufg = null, k3 = Promise.resolve();
+      kand.forEach(function(sx){
+        k3 = k3.then(function(){
+          if (aufg) return;
+          return B.pdfSeite(sx.pdf, sx.nr, S).then(function(c){
+            try { aufg = aufgabe(seite(c)); aufg.seite = sx; } catch (e){ if (!(e instanceof Fehler)) throw e; }
+          });
+        });
+      });
+      return k3.then(function(){
+        if (!aufg) throw 'keineAufgabe';
+        var lk = seiten.filter(function(sx){ return sx.grob.voll >= 1500; }), ziele = null, k4 = Promise.resolve();
+        lk.forEach(function(sx){
+          k4 = k4.then(function(){
+            if (ziele) return;
+            return B.pdfSeite(sx.pdf, sx.nr, S).then(function(c){
+              try { ziele = loesung(seite(c), aufg.x, aufg.y); aufg.loesungSeite = sx; } catch (e){ if (!(e instanceof Fehler)) throw e; }
+            });
+          });
+        });
+        return k4.then(function(){
+          if (!ziele) throw 'keineLoesung';
+          return { id: 'eigen', art: 'eigen', farbe: aufg.farbe, x: aufg.x, y: aufg.y, zeichen: aufg.zeichen, ziele: ziele,
+            quelle: aufg.seite.datei + ', S. ' + aufg.seite.nr + ' / ' + aufg.loesungSeite.datei + ', S. ' + aufg.loesungSeite.nr };
+        });
+      });
+    });
+  }
+  return { ausPdfs: ausPdfs, aufgabe: aufgabe, loesung: loesung, seite: seite };
+})();
+</script>

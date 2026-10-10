@@ -803,13 +803,21 @@ Encre par signe : de combien c'est plus sombre que le papier juste à côté (le
 pas), moins ce que le même signe sans marque a au même endroit. Le seuil « marqué » se déduit de chaque
 image ; si les traits ne ressortent pas nettement (trop de cas douteux, reflet), la page demande une
 nouvelle photo au lieu d'un résultat incertain. Partial
-`layouts/partials/bausteine/konztest-auswertung.html`. Grille, position et solution dans
-`data/konztest.yaml`, généré par `python3 scripts/konztest-loesungen.py --schreiben` à partir
-du cahier (signes en police 0–F) et du PDF des solutions (cases noires) – avec contre-épreuve
-par la règle de la consigne. **Pour l'instant seulement 2026** : 2022 a des chiffres en texte
-(solution déductible de la règle), 2023 des images avec une carte de solution lisible,
-2024/2025 seulement des images sans carte. Vérifier : `python3 scripts/konztest-testbilder.py
-/tmp/kt` puis `node scripts/konztest-pruefen.mjs /tmp/kt`.
+`layouts/partials/bausteine/konztest-auswertung.html`. Grille, position et solution de tous les
+tests de concentration du site avec feuille de solutions dans `data/konztest.yaml`, généré par
+`python3 scripts/konztest-loesungen.py --schreiben` : dessiner la page du test, trouver les
+40 × 40 signes comme taches, regrouper les signes identiques en classes ; dans la feuille de
+solutions, chercher les cases remplies et les poser sur la grille. Contrôles : 40 × 40 trouvés,
+solution univoque, « 10 par ligne » là où c'est prescrit, et l'épreuve de la règle (chaque
+règle ne dépend que du signe et d'un voisin). Un nouveau test va dans la liste `KONZTESTS` du
+script. Absents : simulations 2024 et 2025 et séries 2025 S18/S19 (pas de feuille de solutions
+sur le site), 2021 S03 (cases posées à la main, pas univoques). **Propre test :** dans la
+liste, « Propre test de concentration », charger l'énoncé et la feuille de solutions en PDF (un
+ou deux fichiers) ; le bloc `konztest-lesen.html` les lit avec le même procédé dans le
+navigateur et les garde en mémoire. Si le procédé change, adapter les deux –
+`scripts/konztest-pruefen.mjs` compare navigateur et script sur des PDF du site. Vérifier :
+`python3 scripts/konztest-testbilder.py /tmp/kt` puis `node scripts/konztest-pruefen.mjs /tmp/kt`
+(depuis le dossier du dépôt).
 
 ---
 

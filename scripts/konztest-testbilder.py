@@ -73,7 +73,7 @@ def main():
     os.makedirs(ordner, exist_ok=True)
     random.seed(40)
     np.random.seed(40)
-    k = [t for t in yaml.safe_load(open('data/konztest.yaml', encoding='utf-8'))['testsimulationen'] if t['jahr'] == 2026][0]
+    k = [t for t in yaml.safe_load(open('data/konztest.yaml', encoding='utf-8'))['konztests'] if t['id'] == 'ts2026'][0]
     s = DPI / 72
     pix = pymupdf.open(HEFT)[SEITE].get_pixmap(dpi=DPI)
     leer = Image.frombytes('RGB', (pix.width, pix.height), pix.samples)

@@ -54,7 +54,7 @@ vorhandenes Foto oder einen Scan.
 Zu beurteilen ist vor allem, **ob es mit echten Handyfotos klappt**: schräg,
 im Schatten, mit Bleistift, Kugelschreiber, radierten oder durchgestrichenen
 Kreuzen. Stimmen die gelesenen Kreuze? Werden unsichere Zeilen (orange)
-sinnvoll markiert, und lassen sie sich leicht korrigieren? Und: Sind die
+sinnvoll markiert, und lassen sie sich leicht korrigieren? Liest die Seite einen eigenen Konztest aus dem Tool richtig ein? Und: Sind die
 Hinweise verständlich, wenn ein Foto nicht taugt?
 
 ```baustein
@@ -67,9 +67,10 @@ Dasselbe für den Konzentrationstest: Foto (oder Live-Kamera, Scan, PDF) des
 bearbeiteten Blatts, gezählt nach der Regel der Anleitung – richtig markiert
 minus falsch markiert minus ausgelassene Zielzeichen vor dem letzten
 markierten Zeichen. Der Bogen hat keine schwarzen Ecken; das Raster der 1600
-Zeichen selbst dient als Marke (Verfahren aus dem Formatierungstool). Vorerst
-nur für die Testsimulation 2026, bei der Zeichen und Lösung sauber im PDF
-stehen.
+Zeichen selbst dient als Marke (Verfahren aus dem Formatierungstool). Zur Wahl
+stehen alle Konztests der Webseite mit Lösungsblatt (Testsimulationen 2022,
+2023, 2026 und die Übungsserien) – oder ein eigener: Aufgabe und Lösungsblatt
+als PDF hochladen, etwa aus dem Formatierungstool.
 
 Zu beurteilen: **Klappt es mit echten Fotos und verschiedenen Stiften?**
 Werden durchgestrichene, eingekreiste oder nur angetippte Zeichen richtig

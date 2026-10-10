@@ -782,13 +782,21 @@ Tinte je Zeichen: wie viel dunkler als das Papier gleich daneben (so stören Sch
 was dasselbe Zeichen ohne Markierung an derselben Stelle hat. Die Schwelle «markiert» ergibt sich je
 Bild aus den Werten selbst; heben sich die Striche nicht klar ab (zu viele Zweifelsfälle, Spiegelung),
 kommt die Bitte um ein neues Foto statt eines unsicheren Ergebnisses.
-Partial `layouts/partials/bausteine/konztest-auswertung.html`. Raster, Lage und Lösung stehen
-in `data/konztest.yaml`, erzeugt von `python3 scripts/konztest-loesungen.py --schreiben` aus
-Testheft (Zeichen als Schrift 0–F) und Lösungs-PDF (schwarze Kästchen) – mit Gegenprobe gegen
-die Regel der Anleitung. **Vorerst nur 2026:** 2022 hat Ziffern als Text (Lösung aus der Regel
-ableitbar), 2023 Bilder mit einer ablesbaren Lösungskarte, 2024/2025 nur Bilder ohne
-Lösungskarte. Prüfen: `python3 scripts/konztest-testbilder.py /tmp/kt` und
-`node scripts/konztest-pruefen.mjs /tmp/kt`.
+Partial `layouts/partials/bausteine/konztest-auswertung.html`. Raster, Lage und Lösung aller
+Konztests der Webseite mit Lösungsblatt stehen in `data/konztest.yaml`, erzeugt von
+`python3 scripts/konztest-loesungen.py --schreiben`: Testseite zeichnen, die 40 × 40 Zeichen
+als Flecken finden, gleiche Zeichen zu Klassen zusammenfassen; im Lösungsblatt die
+ausgefüllten Kästchen suchen und aufs Raster legen. Prüfungen: 40 × 40 gefunden, Lösung
+eindeutig, «10 je Zeile» wo vorgegeben, und die Regelprobe (jede Regel hängt nur vom Zeichen
+und einem Nachbarn ab). Ein neuer Konztest kommt in die Liste `KONZTESTS` im Skript. Nicht
+dabei: Testsimulation 2024 und 2025 und Serien 2025 S18/S19 (kein Lösungsblatt auf der
+Webseite), 2021 S03 (Kästchen von Hand, nicht eindeutig). **Eigener Konztest:** In der Auswahl
+«Eigener Konztest» Aufgabe und Lösungsblatt als PDF hochladen (eine Datei oder zwei); der
+Baustein `konztest-lesen.html` liest sie mit demselben Verfahren im Browser und merkt sie sich
+im Browser. Ändert sich das Verfahren, beide anpassen – `scripts/konztest-pruefen.mjs`
+vergleicht Browser und Skript an PDFs der Webseite. Prüfen: `python3
+scripts/konztest-testbilder.py /tmp/kt` und `node scripts/konztest-pruefen.mjs /tmp/kt`
+(aus dem Repo-Ordner).
 
 ---
 

@@ -14,6 +14,8 @@
     laden, bildAus, quellen
                    Datei -> Bild(er); PDFs Seite fuer Seite mit pdf.js
                    (static/vendor/pdfjs/, erst bei Bedarf geladen)
+    pdfOeffnen, pdfSeite
+                   ein PDF selbst Seite fuer Seite zeichnen (Massstab frei)
     kamera         Live-Kamera mit Sucher: prueft laufend ein verkleinertes
                    Bild, zeigt, was gefunden ist, und loest selbst aus, wenn
                    der Bogen ruhig im Bild liegt
@@ -250,6 +252,23 @@ window.NCWikiBild = (function(){
       return kette.then(function(){ return seiten; });
     }, function(){ throw T.fehlerPdf; });
   }
+  // Ein PDF fuer eigene Zwecke (Konztest aus Aufgabe und Loesung lesen):
+  // pdfOeffnen(datei) -> pdf; pdfSeite(pdf, nr ab 1, Bildpunkte je pt) -> Leinwand
+  function pdfOeffnen(datei){
+    return import(PDFJS).then(function(pdfjs){
+      pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      return datei.arrayBuffer().then(function(daten){ return pdfjs.getDocument({ data: daten }).promise; });
+    }).then(null, function(){ throw T.fehlerPdf; });
+  }
+  function pdfSeite(pdf, nr, massstab){
+    return pdf.getPage(nr).then(function(seite){
+      var vp = seite.getViewport({ scale: massstab }), c = document.createElement('canvas');
+      c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+      var ctx = c.getContext('2d', { willReadFrequently: true });
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+      return seite.render({ canvasContext: ctx, viewport: vp }).promise.then(function(){ return c; });
+    });
+  }
   function istPdf(datei){ return datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name); }
   // Eine Datei -> Liste von Quellen (eine bei einem Bild, je Seite bei einem PDF)
   function quellen(datei){
@@ -260,7 +279,9 @@ window.NCWikiBild = (function(){
   // o.pruefen   function(bild) -> { ok, punkte: [[x, y]...] (px im Bild),
   //             breite: Bogenbreite in px, hinweis } - auf einem
   //             verkleinerten Bild (lange Seite o.analyse, sonst 960 px)
-  // o.fertig    function(quelle) mit dem Bild in voller Aufloesung
+  // o.fertig    function(quelle, ersatz) mit dem Bild in voller Aufloesung
+  //             und einer Liste von Ersatzbildern (Videobild, das zuletzt
+  //             gepruefte Bild), falls sich quelle nicht lesen laesst
   // o.minBreite so breit (px, volle Aufloesung) muss der Bogen sein
   // Ausgeloest wird, wenn dreimal hintereinander alles gefunden ist und
   // sich kaum bewegt hat - oder von Hand.
@@ -276,7 +297,7 @@ window.NCWikiBild = (function(){
     feld.hidden = false;
     var video = feld.querySelector('video'), ueber = feld.querySelector('canvas'), hinweis = feld.querySelector('.bl-kamera-hinweis');
     var knoepfe = feld.querySelectorAll('button');
-    var klein = document.createElement('canvas'), analyse = o.analyse || 960;
+    var klein = document.createElement('canvas'), gut = document.createElement('canvas'), analyse = o.analyse || 960;
     function stopp(){
       laeuft = false; clearTimeout(uhr);
       if (strom) strom.getTracks().forEach(function(t){ t.stop(); });
@@ -304,8 +325,11 @@ window.NCWikiBild = (function(){
       if (video.readyState >= 2 && video.videoWidth){
         var vw = video.videoWidth, vh = video.videoHeight, z = Math.min(1, analyse / Math.max(vw, vh));
         klein.width = Math.round(vw * z); klein.height = Math.round(vh * z);
+        // erst das ganze Videobild, daraus das kleine: so ist es dasselbe Bild
+        // (Ersatz beim Ausloesen, falls in dem Moment etwas durchs Bild faehrt)
+        gut.width = vw; gut.height = vh; gut.getContext('2d').drawImage(video, 0, 0);
         var ctx = klein.getContext('2d');
-        ctx.drawImage(video, 0, 0, klein.width, klein.height);
+        ctx.drawImage(gut, 0, 0, klein.width, klein.height);
         var r = o.pruefen(new Bild(ctx.getImageData(0, 0, klein.width, klein.height).data, klein.width, klein.height));
         if (r.ok && o.minBreite && r.breite / z < o.minBreite){ r.ok = false; r.hinweis = T.naeher; }
         if (r.ok){
@@ -337,7 +361,9 @@ window.NCWikiBild = (function(){
         var t = setTimeout(fehler, 3000);
         new ImageCapture(spur).takePhoto().then(function(blob){ clearTimeout(t); return laden(blob); }).then(ok, fehler);
       }) : Promise.reject();
-      foto.then(function(img){ stopp(); o.fertig(img); }, function(){ stopp(); o.fertig(c); });
+      // Mit dem Foto auch das Videobild: laesst sich das Foto nicht lesen,
+      // nimmt die Auswertung das Videobild
+      foto.then(function(img){ stopp(); o.fertig(img, [c, gut]); }, function(){ stopp(); o.fertig(c, [gut]); });
     }
     navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' },
       width: { ideal: 3840 }, height: { ideal: 2160 } } }).then(function(s){
@@ -353,6 +379,7 @@ window.NCWikiBild = (function(){
   }
   return { A4: A4, LANGE_SEITE: LANGE_SEITE, Bild: Bild, magenta: magenta, loesen: loesen, abbildung: abbildung,
            ausgleichend: ausgleichend, laden: laden, bildAus: bildAus, istPdf: istPdf, quellen: quellen,
+           pdfOeffnen: pdfOeffnen, pdfSeite: pdfSeite,
            kameraMoeglich: kameraMoeglich, kamera: kamera };
 })();
 </script>
