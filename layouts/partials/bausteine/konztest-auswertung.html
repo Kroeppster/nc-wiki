@@ -128,6 +128,7 @@
   var MAX_UNSICHER = 30;           // mehr Zweifelsfaelle: lieber ein neues Foto
   var MIN_GITTER = 0.6;            // so viel des Rasters muss gefunden sein
   var MIN_GLEICH = 0.035;          // wie deutlich gleiche Zeichen einander gleichen muessen,
+  var MIN_GLEICH_VOLL = 0.01;      // ebenso, wenn das Gitter genau N x N gross ist (zuordnen)
   var VORSPRUNG = 2.5;             // und das Mehrfache gegenueber dem naechstbesten Platz
   var K = null;                    // der gewaehlte Konztest aus data/konztest.yaml (oder ein eigener)
   var EIGEN = null;                // ein eigener Konztest, aus PDF gelesen (konztest-lesen.html)
@@ -424,10 +425,16 @@
           if (i !== undefined){ zuordnung.push([R, C, i]); merk.push(merkVon.get(i)); gruppen.push(K.zeichen[R][C]); }
         }
         if (zuordnung.length < MIN_GITTER * N * N) continue;
-        kandidaten.push([gleichheit(merk, gruppen), zuordnung]);
+        var kand = [gleichheit(merk, gruppen), zuordnung];
+        kand.genau = r0 === rmin && c0 === cmin;
+        kandidaten.push(kand);
       }
     });
     kandidaten.sort(function(a, b){ return b[0] - a[0]; });
+    // Ist das gefundene Gitter genau N x N gross, passt es nur an einem Platz
+    // ganz hinein (gerade oder kopfueber) - alle anderen lassen eine Zeile
+    // oder Spalte draussen
+    kandidaten.voll = rmax - rmin + 1 === N && cmax - cmin + 1 === N;
     return kandidaten;
   }
   // --- Ausrichten -------------------------------------------------------------------
@@ -440,11 +447,23 @@
     // Zeichen und Striche (ein Konztest hat sie immer in Farbe; K.farbe ist
     // nur der Vollstaendigkeit halber da). Bunt: blaue Striche sind klar Stift.
     var hinweise = [], bunt = istFarbig(bild), farbe = K.farbe && bunt;
-    if (K.farbe && !bunt) hinweise.push(T.grau);
+    // Schwarz-weiss (Kopie, Graustufen-Scan): ohne das Magenta sind Striche
+    // und Zeichen nicht sicher zu trennen - in den Tests oft still falsch
+    if (K.farbe && !bunt) return { fehler: T.grau };
     var such = rasterSuchen(bild, farbe), punkte = such.punkte, g = such.g;
     if (!g || g.platz.size < MIN_GITTER * N * N) return { fehler: T.keinRaster.replace('{n}', g ? g.platz.size : 0) };
     var k = zuordnen(punkte, g.platz);
-    if (!k.length || k[0][0] < MIN_GLEICH || (k[1] && k[0][0] < VORSPRUNG * Math.max(k[1][0], 0.01))) return { fehler: T.passtNicht };
+    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ gleich: k.slice(0, 3).map(function(x){ var t = x[1][0], q = x[1][x[1].length - 1]; return [x[0], t[0], t[1], g.platz.get(t[2]), q[0], q[1], g.platz.get(q[2])]; }), platz: g.platz.size });
+    // Bei Zeichen, die sich auf dem Foto wenig unterscheiden (Pfeile, Linien,
+    // Wuerfel), ist die Gleichheit klein - dann genuegt, wenn das Gitter
+    // genau N x N ist, ein klarer Vorsprung vor dem kopfueber liegenden Platz
+    var gilt = k.length && k[0][0] >= MIN_GLEICH && (!k[1] || k[0][0] >= VORSPRUNG * Math.max(k[1][0], 0.01));
+    if (!gilt && k.voll && k.length && k[0].genau){
+      var anders = k.filter(function(x){ return x.genau && x !== k[0]; })[0], weiter = k[1];
+      gilt = k[0][0] >= MIN_GLEICH_VOLL && (!anders || k[0][0] >= VORSPRUNG * Math.max(anders[0], 0.003))
+        && (!weiter || k[0][0] >= 1.3 * weiter[0]);
+    }
+    if (!gilt) return { fehler: T.passtNicht };
     var zuordnung = k[0][1];
     var paare = zuordnung.map(function(t){ return [mitte(t[0], t[1]), [punkte[t[2]].x, punkte[t[2]].y]]; });
     var abb = B.ausgleichend(paare);
@@ -578,6 +597,8 @@
       return { roh: roh, e: entscheiden(roh) };
     };
     var x1 = zweimal(NORMAL), roh = x1.roh, e = x1.e;
+    // fuer scripts/konztest-pruefen.mjs und Fehlersuche
+    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ roh: Array.prototype.slice.call(roh), e: e, ziele: K.ziele });
     if (e && e.anzahl < 10){
       // fast nichts markiert? Mit feinem, blassem Stift sieht es so aus
       var x2 = zweimal(EMPFINDLICH);
@@ -616,7 +637,9 @@
     // Verdeckt (Finger, Gegenstand, Rand des Fotos): dort laesst sich nichts
     // lesen - lieber melden als raten
     var verdeckt = 0;
-    for (i = 0; i < N * N; i++) if (verblasst[i] === 2) verdeckt++;
+    // (ein markiertes Zeichen ist nicht verdeckt: ein dicker Strich ueber
+    // einem kleinen Zeichen deckt dessen Magenta selbst zu)
+    for (i = 0; i < N * N; i++) if (verblasst[i] === 2 && !e.markiert[i]) verdeckt++;
     if (verdeckt >= 3) return { fehler: T.verdeckt };
     r.markiert = []; r.unsicher = []; r.roh = roh;
     if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
@@ -789,9 +812,13 @@
     // Ueblichen der markierten liegt
     // (b: die Haelfte des Ueblichen - aber nicht hoeher, als das Rauschen
     // es verlangt: auf einem sauberen Scan ist ein schwacher Strich eindeutig)
-    var rausch = quantil(leer, 0.995), a = 1.5 * rausch;
+    // (a: so weit ueber dem Rauschen, wie dieses ueber dem Ueblichen liegt -
+    // nicht das 1.5-fache: sonst ragt bei hohem Grundwert (viel Schatten,
+    // ungenaue Vorlage) die Zone bis in die markierten hinein. Darunter ist
+    // nichts zu unterscheiden, unsicher erst ab dem Rauschen.)
+    var rausch = quantil(leer, 0.995), mitte = quantil(leer, 0.5), a = Math.max(rausch + 0.5 * (rausch - mitte), rausch + 0.5 * MARKIERT);
     var b = voll.length >= 3 ? Math.min(0.5 * quantil(voll, 0.5), Math.max(t, 3 * rausch)) : t;
-    var lo = Math.max(Math.min(a, b, t), 0.5 * MARKIERT), hi = Math.max(a, b, t);
+    var lo = Math.max(Math.min(a, b, t), rausch, 0.5 * MARKIERT), hi = Math.max(a, b, t);
     var e = { markiert: [], unsicher: [], anzahl: voll.length, schwelle: t }, n = 0;
     for (var i = 0; i < werte.length; i++){
       e.markiert.push(werte[i] >= t);
