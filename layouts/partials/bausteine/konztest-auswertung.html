@@ -428,7 +428,7 @@
     // an allen Stellen mit diesem Zeichen
     var grund = {};
     Object.keys(je).forEach(function(z){ var w = je[z].slice().sort(function(a, b){ return a - b; }); grund[z] = w[Math.floor(w.length / 4)]; });
-    r.markiert = []; r.unsicher = [];
+    r.markiert = []; r.unsicher = []; r.roh = roh; r.grund = grund;
     for (R = 0; R < N; R++){
       var zeile = [];
       for (C = 0; C < N; C++){
