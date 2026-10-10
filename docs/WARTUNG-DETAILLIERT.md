@@ -353,6 +353,7 @@ Als Code-Block mit der Sprache `baustein` (`layouts/_default/_markup/render-code
 | `figuren-generator` | Figuren-Generator | – |
 | `sponsoring-kontakt` | E-Mail-/Telefon-Knopf | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | Antwortbogen per Foto auswerten (Alpha) | `data/antwortbogen.yaml` |
+| `konztest-auswertung` | Konzentrationstest per Foto auswerten (Alpha) | `data/konztest.yaml` |
 
 Ein Tippfehler im Namen bricht den Bau ab. Neue Bausteine: Partial unter
 `layouts/partials/bausteine/` anlegen und den Namen in die Liste `$erlaubt` im Render-Hook
@@ -745,7 +746,7 @@ Buchstaben im Schwerpunkt, Logo als Figur mitgemessen).
 
 `content/de/alpha/` ist die Werkbank für neue Funktionen: passwortgeschützt, nirgends
 verlinkt, **nur Deutsch**. Pro Funktion ein Abschnitt, der sagt, was zu beurteilen ist.
-Aktuell dort: Figuren-Generator, Fakten-Generator und «Antwortbogen auswerten».
+Aktuell dort: Figuren-Generator, Fakten-Generator, «Antwortbogen auswerten» und «Konzentrationstest auswerten».
 Ist sie freigegeben, wandert der Baustein auf die echte Seite (dann dreisprachig).
 
 ### Antwortbogen auswerten
@@ -769,6 +770,21 @@ die Lösungen; Zeilen ohne Kästchen zählen nicht. PDFs öffnet pdf.js aus
 Aktualisieren beide `.mjs` aus dem npm-Paket `pdfjs-dist` ersetzen). Nach Änderungen am Lesen:
 `python3 scripts/antwortbogen-testbilder.py /tmp/ab` (Testfotos mit bekannten Kreuzen) und
 `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
+
+### Konzentrationstest auswerten
+
+Wie der Antwortbogen, aber nach dem Verfahren von `werkzeug/konztest_auswertung.py`: Der Bogen
+hat keine Passermarken, das Raster der 1600 Zeichen selbst dient als Marke (Flecken in
+Magenta → Gitter → Lage über die Ähnlichkeit gleicher Zeichen → Abbildung → Tinte je Zeichen).
+Gezählt wird nach der Anleitung: richtig minus falsch markiert minus ausgelassene Zielzeichen
+vor dem letzten markierten (Rohwert). Ein Tippen aufs Bild schaltet eine Markierung um.
+Partial `layouts/partials/bausteine/konztest-auswertung.html`. Raster, Lage und Lösung stehen
+in `data/konztest.yaml`, erzeugt von `python3 scripts/konztest-loesungen.py --schreiben` aus
+Testheft (Zeichen als Schrift 0–F) und Lösungs-PDF (schwarze Kästchen) – mit Gegenprobe gegen
+die Regel der Anleitung. **Vorerst nur 2026:** 2022 hat Ziffern als Text (Lösung aus der Regel
+ableitbar), 2023 Bilder mit einer ablesbaren Lösungskarte, 2024/2025 nur Bilder ohne
+Lösungskarte. Prüfen: `python3 scripts/konztest-testbilder.py /tmp/kt` und
+`node scripts/konztest-pruefen.mjs /tmp/kt`.
 
 ---
 
@@ -941,6 +957,7 @@ npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # Bedienung
 node scripts/fakten-generator-pruefen.mjs                            # 150 Sets + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 Sets + PDF
 python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # Antwortbogen-Fotos
+python3 scripts/konztest-testbilder.py /tmp/kt && node scripts/konztest-pruefen.mjs /tmp/kt              # Konztest-Fotos
 python3 scripts/texte-mappe-pruefen.py                               # Textmappen
 python3 scripts/wortliste-pruefen.py                                 # Wortliste (Excel)
 node scripts/editor-rundlauf.mjs                                     # Web-Editor

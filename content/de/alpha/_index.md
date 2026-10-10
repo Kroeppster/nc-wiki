@@ -60,3 +60,22 @@ Hinweise verständlich, wenn ein Foto nicht taugt?
 ```baustein
 antwortbogen-auswertung
 ```
+
+## Konzentrationstest auswerten
+
+Dasselbe für den Konzentrationstest: Foto (oder Live-Kamera, Scan, PDF) des
+bearbeiteten Blatts, gezählt nach der Regel der Anleitung – richtig markiert
+minus falsch markiert minus ausgelassene Zielzeichen vor dem letzten
+markierten Zeichen. Der Bogen hat keine schwarzen Ecken; das Raster der 1600
+Zeichen selbst dient als Marke (Verfahren aus dem Formatierungstool). Vorerst
+nur für die Testsimulation 2026, bei der Zeichen und Lösung sauber im PDF
+stehen.
+
+Zu beurteilen: **Klappt es mit echten Fotos und verschiedenen Stiften?**
+Werden durchgestrichene, eingekreiste oder nur angetippte Zeichen richtig
+erkannt? Lässt sich eine falsch gelesene Markierung leicht durch Tippen
+korrigieren?
+
+```baustein
+konztest-auswertung
+```

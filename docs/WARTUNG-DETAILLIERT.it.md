@@ -359,6 +359,7 @@ Blocco di codice con la lingua `baustein` (`layouts/_default/_markup/render-code
 | `figuren-generator` | generatore di figure | – |
 | `sponsoring-kontakt` | pulsante e-mail/telefono | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | valutare il foglio delle risposte da foto (Alpha) | `data/antwortbogen.yaml` |
+| `konztest-auswertung` | valutare il test di concentrazione da foto (Alpha) | `data/konztest.yaml` |
 
 Un errore di battitura nel nome interrompe la costruzione. Nuovi blocchi: creare un partial
 sotto `layouts/partials/bausteine/` e aggiungere il nome alla lista `$erlaubt` dell'hook.
@@ -750,7 +751,7 @@ lettere nel baricentro, logo misurato come figura).
 `content/de/alpha/` è il banco di lavoro per le nuove funzioni: protetta da password, non
 collegata da nessuna parte, **solo in tedesco**. Una sezione per funzione, che dice cosa
 valutare. Una volta approvata, il blocco passa sulla pagina vera (allora in tre lingue).
-Attualmente: generatore di figure, generatore di fatti e «Antwortbogen auswerten».
+Attualmente: generatore di figure, generatore di fatti, «Antwortbogen auswerten» e «Konzentrationstest auswerten».
 
 ### Valutare il foglio delle risposte (Alpha)
 
@@ -774,6 +775,21 @@ righe senza casella non contano. I PDF vengono aperti da pdf.js in `static/vendo
 due `.mjs` del pacchetto npm `pdfjs-dist`). Dopo modifiche alla lettura: `python3
 scripts/antwortbogen-testbilder.py /tmp/ab` (foto di prova con crocette note) e
 `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
+
+### Valutare il test di concentrazione (Alpha)
+
+Come il foglio delle risposte, ma con il procedimento di `werkzeug/konztest_auswertung.py`: il
+foglio non ha marche di riferimento, la griglia dei 1600 simboli fa essa stessa da riferimento
+(macchie magenta → griglia → posizione dalla somiglianza dei simboli uguali → trasformazione
+→ inchiostro per simbolo). Conteggio secondo le istruzioni: giusti meno sbagliati meno simboli
+bersaglio omessi prima dell'ultimo segnato (valore grezzo). Toccare l'immagine inverte un
+segno. Partial `layouts/partials/bausteine/konztest-auswertung.html`. Griglia, posizione e
+soluzione in `data/konztest.yaml`, generato da `python3 scripts/konztest-loesungen.py
+--schreiben` dal fascicolo (simboli come carattere 0–F) e dal PDF delle soluzioni (caselle
+nere), con controprova sulla regola delle istruzioni. **Per ora solo 2026**: il 2022 ha cifre
+come testo (soluzione deducibile dalla regola), il 2023 immagini con una mappa delle soluzioni
+leggibile, il 2024/2025 solo immagini senza mappa. Verificare: `python3
+scripts/konztest-testbilder.py /tmp/kt` e `node scripts/konztest-pruefen.mjs /tmp/kt`.
 
 ---
 
@@ -947,6 +963,7 @@ npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # uso, modu
 node scripts/fakten-generator-pruefen.mjs                            # 150 set + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 set + PDF
 python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # foto di fogli
+python3 scripts/konztest-testbilder.py /tmp/kt && node scripts/konztest-pruefen.mjs /tmp/kt              # foto del test di concentrazione
 python3 scripts/texte-mappe-pruefen.py                               # cartelle Excel
 python3 scripts/wortliste-pruefen.py                                 # elenco di parole (Excel)
 node scripts/editor-rundlauf.mjs                                     # editor web

@@ -1,0 +1,570 @@
+{{- /*
+  ============================================================================
+  KONZTEST AUSWERTEN  -  ```baustein konztest-auswertung ```
+  ============================================================================
+  Ein Foto (oder Scan, PDF, Live-Kamera) des bearbeiteten Konzentrationstests
+  einer Testsimulation: Die Markierungen werden gelesen und nach der Regel
+  der Anleitung gezaehlt:
+
+      Punkte = richtig markierte Zeichen
+               - falsch markierte Zeichen
+               - ausgelassene Zielzeichen vor dem letzten markierten Zeichen
+
+  Heraus kommen die Punkte und das Bild mit dem, was gelesen wurde (gruen
+  richtig, rot falsch markiert, blau ausgelassen, orange bitte ansehen).
+  Ein Tippen auf ein Zeichen im Bild schaltet seine Markierung um.
+
+  ALLES LAEUFT IM BROWSER, das Bild verlaesst das Geraet nicht.
+
+  DAS VERFAHREN IST DAS DES FORMATIERUNGSTOOLS (werkzeug/konztest_auswertung.py),
+  nach JavaScript uebertragen, mit denselben Zahlen:
+    1. Flecken in Blindfarbe (Magenta) suchen - je Zeichen einer; Stuecke
+       eines Zeichens, die im Foto zerfallen, werden zusammengelegt.
+    2. Die Flecken zu einem Gitter verbinden, Nachbar fuer Nachbar (so folgt
+       es auch einem schraeg fotografierten Bogen). Die kuerzere Richtung
+       ist die Zeile (13.5 pt gegenueber 15.2 pt).
+    3. Welcher Gitterplatz Zeile 1, Zeichen 1 ist und ob der Bogen verkehrt
+       lag: die Lage, bei der gleiche Zeichen einander am meisten gleichen
+       (Flaeche und Formmomente der Flecken, ortsbereinigt).
+    4. Daraus die Abbildung Bogen -> Bild nach kleinsten Quadraten, je Zelle
+       eine kleine Korrektur (gewelltes Papier).
+    5. Je Zeichen der Anteil dunkler Tinte, die nicht Magenta ist, minus das,
+       was das Zeichen selbst mitbringt.
+  Kein Passermarken-Bogen: das Raster aus 1600 Zeichen ist selbst die Marke.
+
+  DATEN: data/konztest.yaml (Raster, Lage, Loesung), erzeugt von
+  scripts/konztest-loesungen.py - mit Gegenprobe gegen die Regel.
+  Das Gemeinsame (Bild, Laden, PDF, Live-Kamera): bausteine/bild-lesen.html.
+
+  KEINE LEERZEILEN IN DER AUSGABE (siehe fakten-generator.html).
+  ============================================================================
+*/ -}}
+{{- $d := hugo.Data.konztest }}
+{{- partial "bausteine/bild-lesen.html" . }}
+<div class="ab kt" id="kt-wurzel" data-pagefind-ignore>
+<script type="application/json" id="kt-daten">{{ $d | jsonify | safeJS }}</script>
+<p class="ab-intro">{{ i18n "kt_intro" }}</p>
+<p class="ab-privat">{{ i18n "ab_privat" }}</p>
+<div class="ab-eingabe">
+<label class="ab-feld">{{ i18n "ab_testsim" }}
+<select id="kt-testsim">
+{{- range $d.testsimulationen }}
+<option value="{{ .jahr }}">{{ replace (i18n "ab_testsim_jahr") "{jahr}" (string .jahr) }}</option>
+{{- end }}
+</select>
+</label>
+</div>
+<p class="ab-feld">{{ i18n "kt_foto" }}</p>
+<div class="ab-knoepfe">
+<button type="button" class="btn btn-primary" id="kt-live" hidden>{{ i18n "ab_live_kamera" }}</button>
+<label class="btn btn-ghost ab-knopf">{{ i18n "ab_foto_aufnehmen" }}<input type="file" id="kt-kamera" accept="image/*" capture="environment"></label>
+<label class="btn btn-ghost ab-knopf">{{ i18n "ab_datei_waehlen" }}<input type="file" id="kt-datei" accept="image/*,application/pdf,.pdf"></label>
+</div>
+<div class="ab-kamera" id="kt-kamera-feld" hidden></div>
+<p class="ab-hinweis">{{ i18n "kt_tipps" }}</p>
+<p class="ab-status" id="kt-status" role="status" aria-live="polite"></p>
+<div class="ab-ergebnis" id="kt-ergebnis" hidden>
+<p class="ab-summe" id="kt-summe"></p>
+<ul class="ab-meldungen" id="kt-meldungen"></ul>
+<table class="ab-punkte" id="kt-punkte"></table>
+<p class="ab-hinweis">{{ i18n "kt_regel" }}</p>
+<p class="ab-legende">{{ i18n "kt_legende" }}</p>
+<canvas class="ab-bild kt-bild" id="kt-bild"></canvas>
+<p class="ab-hinweis" id="kt-unsicher" hidden></p>
+</div>
+</div>
+<script>
+(function(){
+  var el = function(id){ return document.getElementById(id); };
+  var B = window.NCWikiBild, A4 = B.A4;
+  var D = JSON.parse(el('kt-daten').textContent);
+  var T = {
+    liest: {{ i18n "ab_liest" | jsonify | safeJS }},
+    pdfLaedt: {{ i18n "ab_pdf_laedt" | jsonify | safeJS }},
+    fehlerBild: {{ i18n "bl_fehler_bild" | jsonify | safeJS }},
+    keinRaster: {{ i18n "kt_kein_raster" | jsonify | safeJS }},
+    passtNicht: {{ i18n "kt_passt_nicht" | jsonify | safeJS }},
+    zuKlein: {{ i18n "kt_zu_klein" | jsonify | safeJS }},
+    grau: {{ i18n "kt_grau" | jsonify | safeJS }},
+    verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
+    summe: {{ i18n "kt_summe" | jsonify | safeJS }},
+    richtig: {{ i18n "kt_richtig" | jsonify | safeJS }},
+    falsch: {{ i18n "kt_falsch" | jsonify | safeJS }},
+    ausgelassen: {{ i18n "kt_ausgelassen" | jsonify | safeJS }},
+    bis: {{ i18n "kt_bis" | jsonify | safeJS }},
+    nichts: {{ i18n "kt_nichts" | jsonify | safeJS }},
+    unsicher: {{ i18n "kt_unsicher" | jsonify | safeJS }},
+    live: {{ i18n "kt_kamera_raster" | jsonify | safeJS }}
+  };
+  var N = 40;
+  var FELD_X = 5.2, FELD_Y = 6.4;  // Messfeld je Zeichen um seine Mitte (pt)
+  var SCHRITT = 0.5;               // pt zwischen zwei Messpunkten
+  var MARKIERT = 0.03;             // Anteil Tinte im Messfeld: markiert
+  var UNSICHER = 0.012;            // dazwischen: bitte ansehen
+  var MIN_GITTER = 0.6;            // so viel des Rasters muss gefunden sein
+  var MIN_GLEICH = 0.035;          // wie deutlich gleiche Zeichen einander gleichen muessen,
+  var VORSPRUNG = 2.5;             // und das Mehrfache gegenueber dem naechstbesten Platz
+  var K = null;                    // die gewaehlte Testsimulation aus data/konztest.yaml
+  function waehlen(){
+    var jahr = +el('kt-testsim').value;
+    K = D.testsimulationen.filter(function(t){ return t.jahr === jahr; })[0];
+    K.schrittX = (K.x[N - 1] - K.x[0]) / (N - 1);
+    K.schrittY = (K.y[N - 1] - K.y[0]) / (N - 1);
+  }
+  waehlen();
+  function mitte(R, C){ return [K.x[C], K.y[R]]; }
+  function median(a){ a = a.slice().sort(function(x, y){ return x - y; }); return a[Math.floor(a.length / 2)]; }
+  // --- Farben ------------------------------------------------------------------
+  // Ein Farbscan hat viele Bildpunkte in Blindfarbe, auch blass auf einem
+  // unscharfen Foto; ein Graustufenscan keinen einzigen.
+  function istFarbig(bild){
+    var farbig = 0, bedruckt = 0;
+    for (var j = 0; j < 80; j++) for (var i = 0; i < 80; i++){
+      var x = Math.trunc(bild.w * (0.15 + 0.7 * i / 79)), y = Math.trunc(bild.h * (0.25 + 0.6 * j / 79));
+      var k = (y * bild.w + x) * 4, r = bild.rgba[k], g = bild.rgba[k + 1], b = bild.rgba[k + 2], p = bild.papierBei(x, y);
+      var blass = Math.min(r, b) - g > 0.06 * p;
+      if ((299 * r + 587 * g + 114 * b) / 1000 < 0.85 * p || blass){ bedruckt++; if (blass) farbig++; }
+    }
+    return bedruckt > 0 && farbig >= 0.1 * bedruckt;
+  }
+  // --- Flecken: ein Fleck je Zeichen ----------------------------------------------
+  function merkmale(n, s){
+    var mx = s[0] / n, my = s[1] / n;
+    var mu20 = s[2] / n - mx * mx, mu02 = s[3] / n - my * my, mu11 = s[4] / n - mx * my;
+    var mu30 = s[5] / n - 3 * mx * s[2] / n + 2 * mx * mx * mx;
+    var mu03 = s[6] / n - 3 * my * s[3] / n + 2 * my * my * my;
+    var g = Math.max(mu20 + mu02, 1e-6);
+    return [Math.log(n), (mu20 - mu02) / g, mu11 / g, mu30 / Math.pow(g, 1.5), mu03 / Math.pow(g, 1.5)];
+  }
+  function flecken(bild, farbe){
+    var px = Math.min(Math.max(bild.w, bild.h) / A4[1], Math.min(bild.w, bild.h) / A4[0]);
+    var n = 0;
+    while (px / Math.pow(2, n + 1) >= 1.4) n++;
+    var f = Math.pow(2, n), w = Math.round(bild.w / f), h = Math.round(bild.h / f), d;
+    if (f === 1) d = bild.rgba;
+    else {
+      // verkleinern mit Mittelung (drawImage), wie pymupdf.shrink im Tool
+      var quelle = bild.leinwand;
+      if (!quelle){
+        quelle = document.createElement('canvas'); quelle.width = bild.w; quelle.height = bild.h;
+        quelle.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(bild.rgba), bild.w, bild.h), 0, 0);
+      }
+      var c = document.createElement('canvas'); c.width = w; c.height = h;
+      var cx = c.getContext('2d'); cx.imageSmoothingQuality = 'high';
+      cx.drawImage(quelle, 0, 0, w, h);
+      d = cx.getImageData(0, 0, w, h).data;
+    }
+    var an = [];
+    for (var y = 0; y < h; y++){
+      var zeile = bild.karte[Math.min(Math.floor(y * f / bild.feld), bild.ny - 1)];
+      for (var x = 0; x < w; x++){
+        var pz = zeile[Math.min(Math.floor(x * f / bild.feld), bild.nx - 1)], i = (y * w + x) * 4;
+        var r = d[i], g = d[i + 1], b = d[i + 2];
+        if (farbe ? Math.min(r, b) - g > 0.06 * pz : 299 * r + 587 * g + 114 * b < 720 * pz) an.push(y * w + x);
+      }
+    }
+    if (an.length < 1000) return [];
+    // Wie gross das Raster im Bild ist (die Diagonale): Bildpunkte je pt
+    var xs = an.map(function(k){ return k % w; }).sort(function(a, b){ return a - b; });
+    var ys = an.map(function(k){ return Math.floor(k / w); }).sort(function(a, b){ return a - b; });
+    var lo = Math.floor(an.length * 0.02), hi = Math.floor(an.length * 0.98);
+    var soll = Math.hypot((N - 1) * K.schrittX, (N - 1) * K.schrittY);
+    var pxk = Math.max(0.3, Math.hypot(xs[hi] - xs[lo], ys[hi] - ys[lo]) / soll);
+    var q = Math.max(1, Math.ceil(1.6 * pxk));
+    // Felder von q x q Bildpunkten mit den Summen fuer Schwerpunkt und Form
+    var felder = new Map(), BREIT = 100000;
+    an.forEach(function(k){
+      var yy = Math.floor(k / w), xx = k % w, key = Math.floor(xx / q) * BREIT + Math.floor(yy / q);
+      var z = felder.get(key);
+      if (!z){ z = [0, 0, 0, 0, 0, 0, 0, 0]; felder.set(key, z); }
+      z[0]++; z[1] += xx; z[2] += yy; z[3] += xx * xx; z[4] += yy * yy; z[5] += xx * yy; z[6] += xx * xx * xx; z[7] += yy * yy * yy;
+    });
+    var gesehen = new Set(), stuecke = [];
+    felder.forEach(function(_, start){
+      if (gesehen.has(start)) return;
+      gesehen.add(start);
+      var stapel = [start], summe = [0, 0, 0, 0, 0, 0, 0, 0], x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
+      while (stapel.length){
+        var c = stapel.pop(), z = felder.get(c), fx = Math.floor(c / BREIT), fy = c % BREIT;
+        for (var t = 0; t < 8; t++) summe[t] += z[t];
+        if (fx < x0) x0 = fx; if (fx > x1) x1 = fx; if (fy < y0) y0 = fy; if (fy > y1) y1 = fy;
+        for (var dx = -1; dx <= 1; dx++) for (var dy = -1; dy <= 1; dy++){
+          var nb = (fx + dx) * BREIT + fy + dy;
+          if (felder.has(nb) && !gesehen.has(nb)){ gesehen.add(nb); stapel.push(nb); }
+        }
+      }
+      stuecke.push([summe, [x0, y0, x1, y1]]);
+    });
+    // Stuecke desselben Zeichens: Mitten hoechstens 4.5 pt auseinander
+    var nah = 4.5 * pxk, eimer = new Map(), zeichen = [];
+    stuecke.sort(function(a, b){ return b[0][0] - a[0][0]; });
+    stuecke.forEach(function(st){
+      var summe = st[0], box = st[1], mx = summe[1] / summe[0], my = summe[2] / summe[0];
+      var ex = Math.floor(mx / nah), ey = Math.floor(my / nah), ziel = null;
+      for (var a = ex - 1; a <= ex + 1; a++) for (var b = ey - 1; b <= ey + 1; b++)
+        (eimer.get(a * BREIT + b) || []).forEach(function(z){
+          var dd = Math.hypot(z[2] - mx, z[3] - my);
+          if (dd < nah && (!ziel || dd < ziel[0])) ziel = [dd, z];
+        });
+      if (ziel){
+        var z = ziel[1];
+        for (var t = 0; t < 8; t++) z[0][t] += summe[t];
+        z[1] = [Math.min(z[1][0], box[0]), Math.min(z[1][1], box[1]), Math.max(z[1][2], box[2]), Math.max(z[1][3], box[3])];
+      } else {
+        var neu = [summe.slice(), box.slice(), mx, my], key = ex * BREIT + ey;
+        if (!eimer.has(key)) eimer.set(key, []);
+        eimer.get(key).push(neu); zeichen.push(neu);
+      }
+    });
+    var aus = [];
+    zeichen.forEach(function(z){
+      var s = z[0], bx = z[1], gross = Math.max(bx[2] - bx[0] + 1, bx[3] - bx[1] + 1) * q / pxk;
+      if (gross >= 3.5 && gross <= 15 && s[0] >= 4)
+        aus.push({ x: (s[1] / s[0] + 0.5) * f, y: (s[2] / s[0] + 0.5) * f, m: merkmale(s[0], s.slice(1)) });
+    });
+    return aus;
+  }
+  // --- Das Gitter -------------------------------------------------------------------
+  function eimerVon(punkte, g){
+    var e = new Map();
+    punkte.forEach(function(p, i){
+      var k = Math.floor(p.x / g) * 100000 + Math.floor(p.y / g);
+      if (!e.has(k)) e.set(k, []);
+      e.get(k).push(i);
+    });
+    return e;
+  }
+  function inRadius(punkte, e, g, x, y, radius, f){
+    var ex = Math.floor(x / g), ey = Math.floor(y / g), weit = Math.floor(radius / g) + 1;
+    for (var a = ex - weit; a <= ex + weit; a++) for (var b = ey - weit; b <= ey + weit; b++)
+      (e.get(a * 100000 + b) || []).forEach(function(j){
+        var d = Math.hypot(punkte[j].x - x, punkte[j].y - y);
+        if (d <= radius) f(j, d);
+      });
+  }
+  function gitter(punkte){
+    if (punkte.length < 50) return null;
+    // Abstand zum naechsten Nachbarn: meist der waagrechte Schritt
+    var xs = punkte.map(function(p){ return p.x; }), ys = punkte.map(function(p){ return p.y; });
+    var flaeche = Math.max(1, (Math.max.apply(null, xs) - Math.min.apply(null, xs)) * (Math.max.apply(null, ys) - Math.min.apply(null, ys)));
+    var gr = Math.max(4, Math.sqrt(flaeche / punkte.length) * 1.5), eg = eimerVon(punkte, gr), nn = [];
+    punkte.forEach(function(p, i){
+      var beste = null;
+      inRadius(punkte, eg, gr, p.x, p.y, gr, function(j, d){ if (j !== i && d > 0 && (beste === null || d < beste)) beste = d; });
+      if (beste) nn.push(beste);
+    });
+    if (!nn.length) return null;
+    var d0 = median(nn), e = eimerVon(punkte, d0);
+    // Richtung des Gitters aus den Nachbarvektoren (Winkel mal vier)
+    var vek = [];
+    punkte.forEach(function(p, i){
+      inRadius(punkte, e, d0, p.x, p.y, 1.35 * d0, function(j){ if (j !== i) vek.push([punkte[j].x - p.x, punkte[j].y - p.y]); });
+    });
+    if (!vek.length) return null;
+    var cs = 0, sn = 0;
+    vek.forEach(function(v){ var a = 4 * Math.atan2(v[1], v[0]); cs += Math.cos(a); sn += Math.sin(a); });
+    var winkel = Math.atan2(sn, cs) / 4, ux = Math.cos(winkel), uy = Math.sin(winkel), laengs = [], quer = [];
+    vek.forEach(function(v){
+      var a = v[0] * ux + v[1] * uy, b = -v[0] * uy + v[1] * ux;
+      (Math.abs(a) > Math.abs(b) ? laengs : quer).push(Math.hypot(v[0], v[1]));
+    });
+    var la = laengs.length ? median(laengs) : d0, qu = quer.length ? median(quer) : d0 * 1.13;
+    // Die kuerzere Richtung ist die Zeile des Bogens
+    var hh, vl;
+    if (la <= qu){ hh = [ux * la, uy * la]; vl = qu; } else { hh = [-uy * qu, ux * qu]; vl = la; }
+    if (hh[0] < -1e-9 || (Math.abs(hh[0]) <= 1e-9 && hh[1] < 0)) hh = [-hh[0], -hh[1]];
+    var hl = Math.hypot(hh[0], hh[1]), vv = [-hh[1] / hl * vl, hh[0] / hl * vl];
+    // Von der Mitte aus Nachbar fuer Nachbar
+    var mx = median(xs), my = median(ys), start = 0, bd = Infinity;
+    punkte.forEach(function(p, i){ var dd = Math.hypot(p.x - mx, p.y - my); if (dd < bd){ bd = dd; start = i; } });
+    var platz = new Map([[start, [0, 0]]]), besetzt = new Map([['0,0', start]]), schlange = [[start, hh, vv]], kopf = 0;
+    while (kopf < schlange.length){
+      var item = schlange[kopf++], i = item[0], lh = item[1], lv = item[2], rc = platz.get(i), p = punkte[i];
+      [[0, 1, lh], [0, -1, [-lh[0], -lh[1]]], [1, 0, lv], [-1, 0, [-lv[0], -lv[1]]]].forEach(function(t){
+        var dr = t[0], dc = t[1], sx = t[2][0], sy = t[2][1], key = (rc[0] + dr) + ',' + (rc[1] + dc);
+        if (besetzt.has(key)) return;
+        var j = null, jd = Infinity;
+        inRadius(punkte, e, d0, p.x + sx, p.y + sy, 0.3 * Math.hypot(sx, sy), function(k, dd){ if (dd < jd){ jd = dd; j = k; } });
+        if (j === null || platz.has(j)) return;
+        platz.set(j, [rc[0] + dr, rc[1] + dc]); besetzt.set(key, j);
+        var sch = [punkte[j].x - p.x, punkte[j].y - p.y];
+        if (dr === 0){ var nh = [sch[0] * dc, sch[1] * dc]; schlange.push([j, [(lh[0] + nh[0]) / 2, (lh[1] + nh[1]) / 2], lv]); }
+        else { var nv = [sch[0] * dr, sch[1] * dr]; schlange.push([j, lh, [(lv[0] + nv[0]) / 2, (lv[1] + nv[1]) / 2]]); }
+      });
+    }
+    return { platz: platz, schritt: hl, punkte: punkte };
+  }
+  // --- Welcher Gitterplatz welches Zeichen ist -----------------------------------------
+  function gleichheit(merk, gruppen){
+    if (merk.length < 20) return 0;
+    var werte = [];
+    for (var d = 0; d < merk[0].length; d++){
+      var alle = merk.map(function(m){ return m[d]; });
+      var mittel = alle.reduce(function(s, x){ return s + x; }, 0) / alle.length;
+      var gesamt = alle.reduce(function(s, x){ return s + (x - mittel) * (x - mittel); }, 0);
+      if (gesamt <= 1e-12) continue;
+      var je = {};
+      alle.forEach(function(x, k){ (je[gruppen[k]] = je[gruppen[k]] || []).push(x); });
+      var innen = 0, kk = 0;
+      Object.keys(je).forEach(function(g){
+        kk++;
+        var xs = je[g], m = xs.reduce(function(s, x){ return s + x; }, 0) / xs.length;
+        innen += xs.reduce(function(s, x){ return s + (x - m) * (x - m); }, 0);
+      });
+      var n = alle.length;
+      if (n - kk <= 0) continue;
+      werte.push(1 - (innen / (n - kk)) / (gesamt / (n - 1)));
+    }
+    return werte.length ? Math.max(0, werte.reduce(function(s, x){ return s + x; }, 0) / werte.length) : 0;
+  }
+  function zuordnen(punkte, platz){
+    var rs = [], cs = [], nachPlatz = new Map();
+    platz.forEach(function(rc, i){ rs.push(rc[0]); cs.push(rc[1]); nachPlatz.set(rc[0] + ',' + rc[1], i); });
+    var rmin = Math.min.apply(null, rs), rmax = Math.max.apply(null, rs), cmin = Math.min.apply(null, cs), cmax = Math.max.apply(null, cs);
+    // Merkmale abzueglich des Ueblichen in der Nachbarschaft (5 x 5)
+    var merkVon = new Map();
+    platz.forEach(function(rc, i){
+      var nb = [];
+      for (var a = rc[0] - 2; a <= rc[0] + 2; a++) for (var b = rc[1] - 2; b <= rc[1] + 2; b++){
+        var j = nachPlatz.get(a + ',' + b); if (j !== undefined) nb.push(punkte[j].m);
+      }
+      merkVon.set(i, punkte[i].m.map(function(x, d){ return x - median(nb.map(function(m){ return m[d]; })); }));
+    });
+    var kandidaten = [];
+    [false, true].forEach(function(verkehrt){
+      for (var r0 = rmin - 3; r0 < rmax - N + 5; r0++) for (var c0 = cmin - 3; c0 < cmax - N + 5; c0++){
+        var zuordnung = [], merk = [], gruppen = [];
+        for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+          var key = verkehrt ? (r0 + N - 1 - R) + ',' + (c0 + N - 1 - C) : (r0 + R) + ',' + (c0 + C);
+          var i = nachPlatz.get(key);
+          if (i !== undefined){ zuordnung.push([R, C, i]); merk.push(merkVon.get(i)); gruppen.push(K.zeichen[R][C]); }
+        }
+        if (zuordnung.length < MIN_GITTER * N * N) continue;
+        kandidaten.push([gleichheit(merk, gruppen), zuordnung]);
+      }
+    });
+    kandidaten.sort(function(a, b){ return b[0] - a[0]; });
+    return kandidaten;
+  }
+  // --- Ausrichten -------------------------------------------------------------------
+  function massstab(abb){
+    var m = mitte(N / 2, N / 2), o = abb(m[0], m[1]), a = abb(m[0] + 1, m[1]), b = abb(m[0], m[1] + 1);
+    return [Math.hypot(a[0] - o[0], a[1] - o[1]), Math.hypot(b[0] - o[0], b[1] - o[1])];
+  }
+  function ausrichten(bild){
+    var hinweise = [], farbe = istFarbig(bild);
+    if (!farbe) hinweise.push(T.grau);
+    var punkte = flecken(bild, farbe), g = gitter(punkte);
+    if (!g || g.platz.size < MIN_GITTER * N * N) return { fehler: T.keinRaster.replace('{n}', g ? g.platz.size : 0) };
+    var k = zuordnen(punkte, g.platz);
+    if (!k.length || k[0][0] < MIN_GLEICH || (k[1] && k[0][0] < VORSPRUNG * Math.max(k[1][0], 0.01))) return { fehler: T.passtNicht };
+    var zuordnung = k[0][1];
+    var paare = zuordnung.map(function(t){ return [mitte(t[0], t[1]), [punkte[t[2]].x, punkte[t[2]].y]]; });
+    var abb = B.ausgleichend(paare);
+    // Ausreisser (falsch zugeordnete Flecken) weglassen und neu rechnen
+    for (var runde = 0; runde < 2; runde++){
+      var rest = paare.map(function(p){ var u = abb(p[0][0], p[0][1]); return Math.hypot(p[1][0] - u[0], p[1][1] - u[1]); });
+      var grenze = Math.max(3 * median(rest), 0.15 * K.schrittX * massstab(abb)[0]);
+      var gut = paare.filter(function(_, i){ return rest[i] <= grenze; });
+      if (gut.length === paare.length || gut.length < 0.5 * paare.length) break;
+      paare = gut; abb = B.ausgleichend(paare);
+    }
+    // Verschiebung je Zelle: Median der Abweichungen in der Nachbarschaft
+    var abw = {};
+    zuordnung.forEach(function(t){ var m = mitte(t[0], t[1]), u = abb(m[0], m[1]); abw[t[0] + ',' + t[1]] = [punkte[t[2]].x - u[0], punkte[t[2]].y - u[1]]; });
+    var gk = 0.25 * K.schrittX * massstab(abb)[0], korrektur = [];
+    for (var R = 0; R < N; R++){
+      var zeile = [];
+      for (var C = 0; C < N; C++){
+        var dx = [], dy = [];
+        for (var a = R - 2; a <= R + 2; a++) for (var b = C - 2; b <= C + 2; b++){
+          var w = abw[a + ',' + b]; if (w){ dx.push(w[0]); dy.push(w[1]); }
+        }
+        zeile.push(dx.length >= 5 ? [Math.max(-gk, Math.min(gk, median(dx))), Math.max(-gk, Math.min(gk, median(dy)))] : [0, 0]);
+      }
+      korrektur.push(zeile);
+    }
+    var s = massstab(abb);
+    if (Math.abs(s[0] / s[1] - 1) > 0.06) hinweise.push(T.verzerrt.replace('{n}', Math.round(Math.abs(s[0] / s[1] - 1) * 100)));
+    return { abb: abb, korrektur: korrektur, hinweise: hinweise, farbe: farbe, pxpt: s[0] };
+  }
+  // Wo die Mitte eines Zeichens im Bild liegt (mit der Korrektur je Zelle)
+  function imBild(r, R, C){
+    var m = mitte(R, C), u = r.abb(m[0], m[1]), k = r.korrektur[R][C];
+    return [u[0] + k[0], u[1] + k[1]];
+  }
+  // Anteil Tinte im Messfeld eines Zeichens (0 bis 1); ein Staubkorn belegt
+  // nur wenige Spalten und Zeilen und zaehlt entsprechend weniger.
+  function tinte(bild, r, R, C){
+    var m = mitte(R, C), c = imBild(r, R, C), o = r.abb(m[0], m[1]), a = r.abb(m[0] + 1, m[1]), b = r.abb(m[0], m[1] + 1);
+    var ex = [a[0] - o[0], a[1] - o[1]], ey = [b[0] - o[0], b[1] - o[1]];
+    var p = bild.papierBei(c[0], c[1]), dunkel = (r.farbe ? 0.62 : 0.33) * p, rot = 0.12 * p, blau = 0.04 * p;
+    var nx = Math.floor(2 * FELD_X / SCHRITT) + 1, ny = Math.floor(2 * FELD_Y / SCHRITT) + 1;
+    var spalten = new Uint8Array(nx), zeilen = new Uint8Array(ny), t = 0, d = bild.rgba, w = bild.w, h = bild.h;
+    for (var j = 0; j < ny; j++){
+      var bb = -FELD_Y + j * SCHRITT;
+      for (var i = 0; i < nx; i++){
+        var aa = -FELD_X + i * SCHRITT;
+        var x = Math.trunc(c[0] + aa * ex[0] + bb * ey[0]), y = Math.trunc(c[1] + aa * ex[1] + bb * ey[1]);
+        if (x < 0 || y < 0 || x >= w || y >= h) continue;
+        var k = (y * w + x) * 4, rr = d[k], gg = d[k + 1], bl = d[k + 2];
+        // Blindfarbe ist, wo Rot und Blau ueber Gruen liegen
+        if ((299 * rr + 587 * gg + 114 * bl) / 1000 < dunkel && !(r.farbe && rr - gg > rot && bl - gg > blau)){
+          t++; spalten[i] = 1; zeilen[j] = 1;
+        }
+      }
+    }
+    var sum = function(a){ var s = 0; for (var q = 0; q < a.length; q++) s += a[q]; return s; };
+    return t / (nx * ny) * Math.min(1, sum(spalten) / nx / 0.4) * Math.min(1, sum(zeilen) / ny / 0.4);
+  }
+  function bogenLesen(bild){
+    var r = ausrichten(bild);
+    if (r.fehler) return r;
+    // Bildpunkte je pt: zu klein gelesen gibt Unsinn
+    if (r.pxpt / (bild.vergroessert || 1) < 1.1) return { fehler: T.zuKlein };
+    var roh = [], je = {}, R, C;
+    for (R = 0; R < N; R++){ roh.push([]); for (C = 0; C < N; C++){ var v = tinte(bild, r, R, C); roh[R].push(v); (je[K.zeichen[R][C]] = je[K.zeichen[R][C]] || []).push(v); } }
+    // Was ein Zeichen ohne Markierung mitbringt: das untere Viertel der Werte
+    // an allen Stellen mit diesem Zeichen
+    var grund = {};
+    Object.keys(je).forEach(function(z){ var w = je[z].slice().sort(function(a, b){ return a - b; }); grund[z] = w[Math.floor(w.length / 4)]; });
+    r.markiert = []; r.unsicher = [];
+    for (R = 0; R < N; R++){
+      var zeile = [];
+      for (C = 0; C < N; C++){
+        var wert = Math.max(0, roh[R][C] - grund[K.zeichen[R][C]]);
+        zeile.push(wert >= MARKIERT);
+        r.unsicher.push(wert >= UNSICHER && wert < MARKIERT);
+      }
+      r.markiert.push(zeile);
+    }
+    return r;
+  }
+  // --- Zaehlen (nach der Anleitung) --------------------------------------------------
+  function wertung(markiert){
+    var letztes = -1, R, C;
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++) if (markiert[R][C]) letztes = R * N + C;
+    var w = { richtig: 0, falsch: 0, ausgelassen: 0, letztes: letztes };
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var m = markiert[R][C], z = K.ziele[R][C] === '1';
+      if (m && z) w.richtig++; else if (m) w.falsch++; else if (z && R * N + C < letztes) w.ausgelassen++;
+    }
+    w.punkte = w.richtig - w.falsch - w.ausgelassen;
+    return w;
+  }
+  // --- Zeigen -------------------------------------------------------------------------
+  var stand = null;
+  function melden(text, fehler){ el('kt-status').textContent = text; el('kt-status').className = 'ab-status' + (fehler ? ' ab-fehler' : ''); }
+  function zeigen(){
+    var w = wertung(stand.markiert);
+    el('kt-summe').textContent = T.summe.replace('{n}', w.punkte);
+    el('kt-punkte').innerHTML = '<tbody>'
+      + '<tr><td>' + T.richtig + '</td><td>' + w.richtig + '</td></tr>'
+      + '<tr><td>' + T.falsch + '</td><td>− ' + w.falsch + '</td></tr>'
+      + '<tr><td>' + T.ausgelassen + '</td><td>− ' + w.ausgelassen + '</td></tr>'
+      + '<tr class="ab-total"><td>' + (w.letztes < 0 ? T.nichts : T.bis.replace('{z}', Math.floor(w.letztes / N) + 1).replace('{s}', w.letztes % N + 1))
+      + '</td><td>' + w.punkte + '</td></tr></tbody>';
+    var offen = stand.unsicher.filter(Boolean).length;
+    el('kt-unsicher').hidden = !offen;
+    el('kt-unsicher').textContent = T.unsicher.replace('{n}', offen);
+    el('kt-meldungen').innerHTML = stand.hinweise.map(function(h){ return '<li>' + h + '</li>'; }).join('');
+    zeichnen(w);
+  }
+  // Gruen richtig markiert, rot falsch markiert, blau ausgelassen (vor dem
+  // letzten markierten Zeichen), orange bitte ansehen.
+  var anzeige = 1;
+  function zeichnen(w){
+    var c = el('kt-bild'), q = stand.bild.leinwand, s = anzeige = Math.min(1, 1100 / q.width);
+    c.width = Math.round(q.width * s); c.height = Math.round(q.height * s);
+    var ctx = c.getContext('2d');
+    ctx.drawImage(q, 0, 0, c.width, c.height);
+    var rad = 0.42 * K.schrittX * stand.pxpt * s;
+    for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+      var m = stand.markiert[R][C], z = K.ziele[R][C] === '1', farbe = null;
+      if (m && z) farbe = '#1e9e4a'; else if (m) farbe = '#c5221f'; else if (z && R * N + C < w.letztes) farbe = '#1a56db';
+      var p = imBild(stand, R, C);
+      if (farbe){ ctx.beginPath(); ctx.arc(p[0] * s, p[1] * s, rad, 0, 2 * Math.PI); ctx.strokeStyle = farbe; ctx.lineWidth = 2; ctx.stroke(); }
+      if (stand.unsicher[R * N + C]){ ctx.strokeStyle = '#e8710a'; ctx.lineWidth = 2; ctx.strokeRect(p[0] * s - rad * 1.2, p[1] * s - rad * 1.2, rad * 2.4, rad * 2.4); }
+    }
+  }
+  // Tippen auf ein Zeichen schaltet seine Markierung um
+  el('kt-bild').addEventListener('click', function(ev){
+    if (!stand) return;
+    var c = this, b = c.getBoundingClientRect();
+    var x = (ev.clientX - b.left) * c.width / b.width / anzeige, y = (ev.clientY - b.top) * c.height / b.height / anzeige;
+    var beste = null;
+    for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+      var p = imBild(stand, R, C), d = Math.hypot(p[0] - x, p[1] - y);
+      if (!beste || d < beste[0]) beste = [d, R, C];
+    }
+    if (!beste || beste[0] > 0.6 * K.schrittX * stand.pxpt) return;
+    stand.markiert[beste[1]][beste[2]] = !stand.markiert[beste[1]][beste[2]];
+    stand.unsicher[beste[1] * N + beste[2]] = false;
+    zeigen();
+  });
+  function spaeter(f){ return new Promise(function(ok){ setTimeout(function(){ ok(f()); }, 30); }); }
+  function auswerten(liste){
+    melden(T.liest);
+    return spaeter(function(){
+      var erster = null;
+      for (var i = 0; i < liste.length; i++){
+        var bild = B.bildAus(liste[i]), r = bogenLesen(bild);
+        r.bild = bild;
+        if (!r.fehler) return r;
+        if (!erster) erster = r;
+      }
+      return erster || { fehler: T.fehlerBild };
+    }).then(function(r){
+      if (r.fehler){ melden(r.fehler, true); return; }
+      stand = r;
+      melden('');
+      el('kt-ergebnis').hidden = false;
+      zeigen();
+      el('kt-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+  }
+  function datei(d){
+    if (!d) return;
+    el('kt-ergebnis').hidden = true;
+    melden(B.istPdf(d) ? T.pdfLaedt : T.liest);
+    B.quellen(d).then(auswerten, function(f){ melden(typeof f === 'string' ? f : T.fehlerBild, true); });
+  }
+  ['kt-kamera', 'kt-datei'].forEach(function(id){
+    el(id).addEventListener('change', function(){ datei(this.files && this.files[0]); this.value = ''; });
+  });
+  el('kt-testsim').addEventListener('change', function(){ waehlen(); if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); } });
+  // --- Live-Kamera: das Raster im Sucher -------------------------------------------
+  // Gruen, sobald fast das ganze Raster (85 %) als Gitter gefunden ist; die
+  // vier Eckzeichen dienen als Merkpunkte, ob der Bogen ruhig liegt.
+  // Ausgeloest wird ab 850 px Blattbreite (gut 1.4 px je pt: so fein
+  // braucht das Suchen der Flecken das Bild, flecken()).
+  function livePruefen(bild){
+    var g = gitter(flecken(bild, true));
+    var anteil = g ? g.platz.size / (N * N) : 0;
+    if (!g || anteil < 0.85) return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) };
+    // Eckzeichen: oben links, unten links, unten rechts, oben rechts
+    var ecken = [null, null, null, null];
+    g.platz.forEach(function(rc, i){
+      var w = [rc[0] + rc[1], rc[1] - rc[0], -rc[0] - rc[1], rc[0] - rc[1]];
+      for (var k = 0; k < 4; k++) if (!ecken[k] || w[k] < ecken[k][0]) ecken[k] = [w[k], i];
+    });
+    var pts = ecken.map(function(e){ return [g.punkte[e[1]].x, g.punkte[e[1]].y]; });
+    var breite = Math.hypot(pts[0][0] - pts[3][0], pts[0][1] - pts[3][1]);   // eine Zeile lang
+    return { ok: true, punkte: pts, umriss: [pts[0], pts[3], pts[2], pts[1]], breite: breite * A4[0] / ((N - 1) * K.schrittX) };
+  }
+  if (B.kameraMoeglich()) el('kt-live').hidden = false;
+  el('kt-live').addEventListener('click', function(){
+    el('kt-ergebnis').hidden = true;
+    melden('');
+    B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1400, minBreite: 850,
+      fertig: function(q){ auswerten([q]); }, fehler: function(t){ melden(t, true); } });
+  });
+  // Fuer die Pruefung (scripts/konztest-pruefen.mjs): der gelesene Zustand
+  // und wo ein Zeichen im angezeigten Bild steht (Anteil der Breite/Hoehe)
+  window.NCWikiKonztestStand = function(){ return stand; };
+  window.NCWikiKonztestPunkt = function(R, C){
+    var p = imBild(stand, R, C), q = stand.bild.leinwand;
+    return [p[0] / q.width, p[1] / q.height];
+  };
+})();
+</script>

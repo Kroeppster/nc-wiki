@@ -28,7 +28,7 @@ sonst fehl.
 | Ordner | Inhalt |
 | --- | --- |
 | `content/de\|fr\|it/` | Seiteninhalte, parallele Struktur pro Sprache. `_index.md` = Übersichtsseite eines Ordners, alle anderen `.md` = Einzelseiten. |
-| `data/*.yaml` | Tabellarische Daten statt Hardcoding: `subtests.yaml` (Untertest-Liste), `unis.yaml`, `faq.yaml`, `sponsors.yaml`, `downloads.yaml`, `antwortbogen.yaml` (Lösungen der Testsimulationen für «Antwortbogen auswerten», erzeugt von `scripts/antwortbogen-loesungen.py`, nie von Hand). |
+| `data/*.yaml` | Tabellarische Daten statt Hardcoding: `subtests.yaml` (Untertest-Liste), `unis.yaml`, `faq.yaml`, `sponsors.yaml`, `downloads.yaml`, `antwortbogen.yaml` (Lösungen der Testsimulationen für «Antwortbogen auswerten», erzeugt von `scripts/antwortbogen-loesungen.py`, nie von Hand), `konztest.yaml` (Raster und Lösung des Konzentrationstests, erzeugt von `scripts/konztest-loesungen.py`). |
 | `i18n/de\|fr\|it.yaml` | Feste UI-Texte (Buttons, Menüs, Labels) — jede neue UI-Zeichenkette in allen drei Dateien ergänzen. |
 | `layouts/` | Templates: `_default/baseof.html` (Grundgerüst), `partials/` (header, footer, head, Formulare, Grids), `_default/list.html` + `single.html` (generisch für alle Bereiche), `index.html` (Startseite). |
 | `assets/css/style.css`, `static/css/style.css` | Design, unverändert aus der ursprünglichen HTML-Vorlage übernommen. |

@@ -365,6 +365,7 @@ Bloc de code avec la langue `baustein` (`layouts/_default/_markup/render-codeblo
 | `figuren-generator` | générateur de figures | – |
 | `sponsoring-kontakt` | bouton e-mail/téléphone | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | évaluer la feuille de réponses par photo (Alpha) | `data/antwortbogen.yaml` |
+| `konztest-auswertung` | évaluer le test de concentration par photo (Alpha) | `data/konztest.yaml` |
 
 Une faute de frappe dans le nom arrête la construction. Nouveaux blocs : créer un partial
 sous `layouts/partials/bausteine/` et ajouter le nom à la liste `$erlaubt` du hook.
@@ -766,7 +767,7 @@ lettres au centre de gravité, logo mesuré comme figure).
 `content/de/alpha/` est l'établi des nouvelles fonctions : protégée par mot de passe, liée
 nulle part, **seulement en allemand**. Une section par fonction, qui dit ce qu'il faut
 évaluer. Une fois validée, le bloc passe sur la vraie page (alors en trois langues).
-Actuellement : générateur de figures, générateur de faits et « Antwortbogen auswerten ».
+Actuellement : générateur de figures, générateur de faits, « Antwortbogen auswerten » et « Konzentrationstest auswerten ».
 
 ### Évaluer la feuille de réponses (Alpha)
 
@@ -790,6 +791,21 @@ quitter l'appareil ; pour mettre à jour, remplacer les deux `.mjs` du paquet np
 `pdfjs-dist`). Après une modification
 de la lecture : `python3 scripts/antwortbogen-testbilder.py /tmp/ab` (photos de test aux
 croix connues) puis `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
+
+### Évaluer le test de concentration (Alpha)
+
+Comme la feuille de réponses, mais selon le procédé de `werkzeug/konztest_auswertung.py` : la
+feuille n'a pas de marques de repérage, la grille des 1600 signes sert elle-même de repère
+(taches magenta → grille → position par la ressemblance des signes identiques → transformation
+→ encre par signe). Comptage selon la consigne : justes moins faux moins signes cibles omis
+avant le dernier signe marqué (valeur brute). Toucher l'image inverse une marque. Partial
+`layouts/partials/bausteine/konztest-auswertung.html`. Grille, position et solution dans
+`data/konztest.yaml`, généré par `python3 scripts/konztest-loesungen.py --schreiben` à partir
+du cahier (signes en police 0–F) et du PDF des solutions (cases noires) – avec contre-épreuve
+par la règle de la consigne. **Pour l'instant seulement 2026** : 2022 a des chiffres en texte
+(solution déductible de la règle), 2023 des images avec une carte de solution lisible,
+2024/2025 seulement des images sans carte. Vérifier : `python3 scripts/konztest-testbilder.py
+/tmp/kt` puis `node scripts/konztest-pruefen.mjs /tmp/kt`.
 
 ---
 
@@ -966,6 +982,7 @@ npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # utilisati
 node scripts/fakten-generator-pruefen.mjs                            # 150 sets + PDF
 node scripts/figuren-generator-pruefen.mjs                           # 12 sets + PDF
 python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # photos de feuilles
+python3 scripts/konztest-testbilder.py /tmp/kt && node scripts/konztest-pruefen.mjs /tmp/kt              # photos du test de concentration
 python3 scripts/texte-mappe-pruefen.py                               # classeurs
 python3 scripts/wortliste-pruefen.py                                 # liste de mots (Excel)
 node scripts/editor-rundlauf.mjs                                     # éditeur web
