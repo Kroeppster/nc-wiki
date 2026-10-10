@@ -545,7 +545,9 @@
     var zweimal = function(stufe){
       var roh = tintenwerte(r, lum, art, hell, pap, stufe), e = entscheiden(roh);
       var ohne = e ? e.markiert.map(function(m, i){ return m || e.unsicher[i]; }) : roh.map(function(v){ return v >= 2 * MARKIERT; });
-      roh = tintenwerte(r, lum, art, hell, pap, stufe, ohne);
+      var letzt = -1;
+      for (var q = 0; q < N * N; q++) if (ohne[q]) letzt = q;
+      roh = tintenwerte(r, lum, art, hell, pap, stufe, ohne, letzt);
       return { roh: roh, e: entscheiden(roh) };
     };
     var x1 = zweimal(NORMAL), roh = x1.roh, e = x1.e;
@@ -573,7 +575,7 @@
       for (C = 0; C < N; C++){
         i = R * N + C;
         zeile.push(e.markiert[i]);
-        r.unsicher.push(e.unsicher[i] || (verblasst[i] && !e.markiert[i]));
+        r.unsicher.push(e.unsicher[i] || (verblasst[i] && !e.markiert[i]) || (!e.markiert[i] && i < letzt && !!(roh.verdacht && roh.verdacht[K.zeichen[R][C]])));
       }
       r.markiert.push(zeile);
     }
@@ -609,7 +611,7 @@
   // Punkt hat (Median ueber alle Stellen mit diesem Zeichen). So bleibt nur,
   // was jemand dazugeschrieben hat - auch in einer Schwarz-Weiss-Kopie, wo die
   // Zeichen selbst grau sind.
-  function tintenwerte(r, lum, art, hell, pap, stufe, ohne){
+  function tintenwerte(r, lum, art, hell, pap, stufe, ohne, letzt){
     var NP = NX * NY, R, C, i, a, b, st = r.farbe ? stufe.farbe : stufe.grau, hellF = st[0], spanneF = st[1];
     // Papier je Zeichen: Median der Nachbarn (eine dicke Markierung macht ein
     // einzelnes Messfeld dunkler); je Messpunkt hoechstens wenig heller
@@ -634,6 +636,17 @@
       if (!ohne || !ohne[R * N + C]) (je[z] = je[z] || []).push((R * N + C) * NP);
     }
     Object.keys(alle).forEach(function(z){ if (!je[z] || je[z].length < 3){ je[z] = alle[z]; je[z].unten = true; } });
+    // Zeichen, die meist Ziele sind (Regel nur nach dem Zeichen): bei einem
+    // guten Kandidaten fast ueberall markiert. Ihre Vorlage dann aus den
+    // Stellen hinter dem letzten markierten Zeichen - dort hat niemand markiert.
+    var ziel = {}, zahl = {};
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){ var zz = K.zeichen[R][C]; zahl[zz] = (zahl[zz] || 0) + 1; if (K.ziele[R][C] === '1') ziel[zz] = (ziel[zz] || 0) + 1; }
+    var meistZiel = {};
+    if (letzt !== undefined) Object.keys(alle).forEach(function(z){
+      if ((ziel[z] || 0) < 0.5 * zahl[z]) return;
+      var dahinter = alle[z].filter(function(o){ return o / NP > letzt; });
+      if (dahinter.length >= 3) je[z] = dahinter; else meistZiel[z] = true;
+    });
     var vorlage = {};
     Object.keys(je).forEach(function(z){
       var v = new Float32Array(NP), liste = je[z], tmp = new Float32Array(liste.length);
@@ -661,18 +674,24 @@
     // jemand hat alle gefunden), enthaelt seine Vorlage den Strich. Solche
     // Vorlagen tragen viel mehr «Tinte» als die anderen - im Farbbild dann
     // ohne Vorlage (das Magenta zaehlt ohnehin nicht).
-    if (r.farbe){
-      var energie = {}, liste2 = [];
-      Object.keys(vorlage).forEach(function(z){ var e = 0; for (i = 0; i < NP; i++) e += vorlage[z][i]; energie[z] = e / NP; liste2.push(e / NP); });
-      var em = median(liste2);
-      Object.keys(vorlage).forEach(function(z){ if (energie[z] > 3 * em + 0.01) vorlage[z] = new Float32Array(NP); });
-    }
+    // Im Graubild geht das nicht (das Zeichen selbst ist dunkel): dort sind
+    // diese Zeichen verdaechtig und werden, wo nicht markiert, zum Ansehen
+    // markiert (bogenLesen).
+    var verdacht = {}, energie = {}, liste2 = [];
+    Object.keys(vorlage).forEach(function(z){ var e = 0; for (i = 0; i < NP; i++) e += vorlage[z][i]; energie[z] = e / NP; liste2.push(e / NP); });
+    var em = median(liste2);
+    Object.keys(vorlage).forEach(function(z){
+      if (energie[z] > 3 * em + 0.01 || meistZiel[z]){ if (r.farbe) vorlage[z] = new Float32Array(NP); else verdacht[z] = true; }
+    });
     var aus = [];
     for (R = 0; R < N; R++) for (C = 0; C < N; C++){
       var o2 = (R * N + C) * NP, vl = vorlage[K.zeichen[R][C]], sum = 0, frei = 0;
       var spalten = new Uint8Array(NX), zeilen = new Uint8Array(NY);
       for (i = 0; i < NP; i++){
-        if (art[o2 + i] !== 1 && art[o2 + i] !== 3) frei++;
+        // Ohne Farbe (Graustufen): wo das Zeichen selbst dunkel ist, ist ein
+        // Strich nicht zu sehen - wie das Magenta im Farbbild nicht zaehlen
+        if (art[o2 + i] === 1 || art[o2 + i] === 3 || (!r.farbe && vl[i] > 0.5)) continue;
+        frei++;
         var x = wert[o2 + i] - vl[i];
         if (x > 0){ sum += x; if (x > 0.2){ spalten[i % NX] = 1; zeilen[Math.floor(i / NX)] = 1; } }
       }
@@ -685,6 +704,7 @@
       // auf dem Zeichen
       aus.push(sum / Math.max(frei, 0.4 * NP) * Math.min(1, ns / NX / 0.4) * Math.min(1, nz / NY / 0.4));
     }
+    aus.verdacht = verdacht;
     return aus;
   }
   // --- Markiert oder nicht ------------------------------------------------------------
