@@ -249,7 +249,9 @@ window.NCWikiKonztestLesen = (function(){
       return k2;
     }).then(function(){
       // Aufgabe: Seiten mit viel Magenta und wenig Gefuelltem
-      var kand = seiten.filter(function(sx){ return sx.grob.mag > 4000 && sx.grob.voll < 1500; });
+      // (gefuellte Zeichen - Formen, Viertel - sehen grob aus wie Loesungskaestchen:
+      // deshalb nicht ausschliessen, sondern die mit wenig Gefuelltem zuerst)
+      var kand = seiten.filter(function(sx){ return sx.grob.mag > 4000; }).sort(function(a, b){ return a.grob.voll - b.grob.voll; });
       var aufg = null, k3 = Promise.resolve();
       kand.forEach(function(sx){
         k3 = k3.then(function(){
@@ -261,7 +263,7 @@ window.NCWikiKonztestLesen = (function(){
       });
       return k3.then(function(){
         if (!aufg) throw 'keineAufgabe';
-        var lk = seiten.filter(function(sx){ return sx.grob.voll >= 1500; }), ziele = null, k4 = Promise.resolve();
+        var lk = seiten.filter(function(sx){ return sx.grob.voll >= 1500 && sx !== aufg.seite; }).sort(function(a, b){ return b.grob.voll - a.grob.voll; }), ziele = null, k4 = Promise.resolve();
         lk.forEach(function(sx){
           k4 = k4.then(function(){
             if (ziele) return;
