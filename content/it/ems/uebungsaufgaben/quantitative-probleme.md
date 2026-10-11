@@ -4,7 +4,7 @@ description: "Problemi quantitativi e formali all'EMS: serie di esercizi gratuit
 weight: 4
 ---
 
-## Breve riassunto
+## Panoramica
 
 In questo sottotest risolvi problemi matematici legati alla medicina o alle scienze naturali. Si tratta in particolare di proporzioni, calcolo con potenze, conversioni di unità e trasformazione di formule. Si presuppongono le conoscenze della scuola secondaria. Calcolo differenziale e integrale, trigonometria e calcolo delle probabilità non fanno parte del test; le formule geometriche necessarie vengono fornite.
 
@@ -14,11 +14,11 @@ In questo sottotest risolvi problemi matematici legati alla medicina o alle scie
 
 Con 2.5 minuti per domanda, questo sottotest non è pensato tanto per la pressione del tempo.
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 Molti nessi biologici nel corpo seguono leggi fisiche (velocità di flusso, diffusione – la fisiologia ti saluta). Chi capisce come la variazione di una grandezza si ripercuote su un'altra ha poi vita più facile e si risparmia parecchio studio a memoria.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 Siccome qui conta soprattutto l'esercizio, conviene iniziare presto – idealmente 2–3 mesi prima, con almeno 2–3 sessioni da un'ora a settimana. All'inizio è utile un blocco di più giorni dedicati solo a questo sottotest, per familiarizzare con i tipi di domande ricorrenti. Dopo puoi lavorare in modo più mirato sui tipi che ti riescono meno.
 
@@ -37,7 +37,7 @@ Siccome qui conta soprattutto l'esercizio, conviene iniziare presto – idealmen
 - **Spostare la virgola nelle moltiplicazioni e divisioni:** per moltiplicare conti i decimali di entrambi i numeri, calcoli senza virgola e la rimetti alla fine. Per dividere rendi divisore e dividendo allo stesso modo interi prima di calcolare.
 - **Esercitarsi a trasformare le formule:** alcune domande chiedono di risolvere una formula rispetto a una certa grandezza o unità – con le formule di fisica si allena bene.
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Unità:** le conversioni, per esempio tra cm³ e m³ o altre unità comuni, sono una fonte di errore frequente – ripassale prima.
 - **Indicazioni nascoste:** l'informazione decisiva a volte compare solo nell'ultima frase, e altre indicazioni non ti servono affatto.

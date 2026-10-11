@@ -4,7 +4,7 @@ description: "Objekte im Raum im EMS: Kostenlose Übungsserien und Tipps, mit de
 weight: 2
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 Dieser Untertest prüft dein räumliches Vorstellungsvermögen. Du siehst einen durchsichtigen Würfel mit Objekten, links in der Ausgangsposition und rechts nach zwei aufeinanderfolgenden Bewegungen. Möglich sind Drehungen um 90° nach links oder rechts sowie Kippbewegungen um 90° nach oben oder unten. Deine Aufgabe ist es, die Kombination zu bestimmen, die zur rechten Ansicht führt. Dabei ist auch die Reihenfolge der Bewegungen entscheidend.
 
@@ -14,11 +14,11 @@ Dieser Untertest prüft dein räumliches Vorstellungsvermögen. Du siehst einen 
 
 Objekte im Raum ist einer der kürzeren, aber intensiveren Untertests.
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 In der Anatomie ist die räumliche Vorstellung von Knochen und Organen sehr wichtig, um zu verstehen, wie diese zusammenhängen. Fachliteratur bildet Strukturen oft nur zweidimensional ab, obwohl du dich am Patienten dreidimensional orientieren musst.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Dieser Untertest gehört zu den einfacheren und lässt sich gut lernen – ein Start ein bis eineinhalb Monate vorher reicht meist. Übe etwa zwei- bis dreimal pro Woche, um die Routine nicht zu verlieren und die für dich passende Technik zu finden. Da der Test mit 10 Minuten recht kurz ist, eignet er sich auch gut für kurze Übungseinheiten zwischendurch.
 
@@ -37,7 +37,7 @@ Dieser Untertest gehört zu den einfacheren und lässt sich gut lernen – ein S
 - **Erst Routine, dann Zeitdruck:** Arbeite erst unter Zeitdruck, wenn dir dein Vorgehen zur Routine geworden ist.
 - **Mut zur Lücke:** Tendenziell sind die einfacheren Aufgaben am Anfang und die schwereren gegen Schluss platziert. Lass eine schwierige Aufgabe stehen und komm später darauf zurück, statt dich zu verzetteln.
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Schwere Aufgabe am Anfang:** Es kann vorkommen, dass bewusst eine schwere Aufgabe an den Anfang gesetzt wird, um zu verunsichern.
 - **Fallen suchen, wo keine sind:** Lass dich von einfachen Aufgaben am Schluss nicht irritieren.

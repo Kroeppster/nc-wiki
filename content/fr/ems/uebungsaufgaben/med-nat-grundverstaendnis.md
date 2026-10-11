@@ -4,7 +4,7 @@ description: "Compréhension médico-scientifique à l'EMS : séries d'exercices
 weight: 3
 ---
 
-## Bref résumé
+## Aperçu
 
 Chaque question décrit en quelques phrases un fait médical ou scientifique. Tu évalues ensuite trois ou cinq affirmations : peut-on les déduire des informations données ? Souvent, les affirmations sont numérotées (I, II, III) et les options de réponse A à E proposent des combinaisons possibles. Aucune connaissance spécialisée n'est nécessaire, car tous les termes techniques sont expliqués dans le texte.
 
@@ -25,11 +25,11 @@ Le temps est très serré, et tu n'as pas besoin de traiter toutes les questions
 
 Question : quelles affirmations peut-on déduire du texte ? La bonne réponse est ici « affirmations 1 et 4 » – le texte ne dit rien sur l'affirmation 2, et l'affirmation 3 est déjà réfutée dans la première phrase.
 
-## Pourquoi ce sous-test est-il pertinent pour tes études ?
+## Importance pour les études
 
 En physiologie et dans de nombreux autres domaines des études, il s'agit souvent de comprendre des relations. Apprendre par cœur représente une grande partie des études de médecine, mais comprendre les interactions est indispensable – c'est exactement ce qui est entraîné ici.
 
-## Quand et à quelle fréquence s'entraîner ?
+## Moment et fréquence de l'entraînement
 
 Ce sous-test devrait être entraîné sur une assez longue période ; il est recommandé de commencer au plus tard 1 à 2 mois avant l'EMS. Deux fois par semaine une à deux heures suffisent généralement pour devenir rapidement plus précis·e, reconnaître les pièges typiques et gagner en vitesse.
 
@@ -44,7 +44,7 @@ Ce sous-test devrait être entraîné sur une assez longue période ; il est rec
 - **Ne pas s'acharner sur une question :** chaque question rapporte exactement un point. Si tu bloques, coche une réponse et continue. Les réponses fausses ne sont pas pénalisées.
 - **Comprendre ses erreurs plutôt que compter les points :** après chaque série d'exercices, regarde pourquoi tu as mal évalué une affirmation – as-tu survolé quelque chose, utilisé tes connaissances préalables ou interprété une affirmation trop largement ?
 
-## Pièges typiques
+## Erreurs fréquentes
 
 - **Non mentionné veut dire non déductible :** si le texte ne dit rien sur une affirmation, on ne peut pas la déduire – même si elle est juste sur le plan scientifique (affirmation 2 de l'exemple).
 - **Connaissances préalables au lieu du texte :** tes connaissances aident à comprendre, mais seul ce qui figure dans le texte est évalué.

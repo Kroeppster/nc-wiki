@@ -8,7 +8,7 @@ menu:
 hero:
   eyebrow: "Test attitudinale per gli studi di medicina (EMS) 2027"
   ticket_label: "Ammissione EMS"
-  title: "Rendiamo gratuita la preparazione all'EMS"
+  title: "Preparazione gratuita all'EMS"
   lede: "Dietro NCWiki c'è un'associazione di oltre 110 studenti di medicina. Dal 2021 sviluppiamo serie di esercizi nostre, organizziamo simulazioni del test e teniamo corsi di preparazione. Tutta la nostra offerta nasce da persone che hanno sostenuto il test in prima persona ed è completamente gratuita, in tre lingue."
   cta_primary: "Vedi le serie di esercizi"
   cta_secondary: "Iscriviti alla newsletter"
@@ -21,7 +21,7 @@ news:
   cta: "Tutte le news →"
 weg:
   eyebrow: "Dall'iscrizione al risultato"
-  heading: "Di cosa hai bisogno e quando"
+  heading: "Calendario fino all'inizio degli studi"
   start: "2026-10-01"
   ende: "2027-09-30"
   modus_label: "Quale università?"
@@ -110,7 +110,7 @@ weg:
         - titel: "Domande frequenti"
           url: "ems/qa/"
     - wann: "Febbraio – maggio"
-      titel: "Costruire la tecnica"
+      titel: "Imparare le tecniche di risoluzione"
       text: "Per ogni sottotest una guida con strategia e trappole tipiche, più serie per esercitarti – prima senza cronometro, poi con."
       von: "2027-02-16"
       bis: "2027-04-30"
@@ -122,7 +122,7 @@ weg:
         - titel: "Corsi di preparazione"
           url: "ems/vorbereitungskurse/"
     - wann: "Maggio – inizio luglio"
-      titel: "Prova generale"
+      titel: "Esercitarsi in condizioni d'esame"
       text: "Una volta l'intera giornata di fila: 235 minuti, undici blocchi, senza pause. A casa con orologio e annunci, oppure a inizio maggio da noi in aula."
       von: "2027-05-01"
       bis: "2027-07-08"
@@ -134,7 +134,7 @@ weg:
         - titel: "Modalità esame"
           url: "ems/pruefungsmodus/"
     - wann: "9 luglio – agosto"
-      titel: "Arrivare in fondo"
+      titel: "Il giorno del test"
       text: "Cosa portare, come gestire il tempo, come tirare a indovinare."
       von: "2027-07-09"
       bis: "2027-08-31"
@@ -148,7 +148,7 @@ weg:
 
 material:
   eyebrow: "Cosa trovi qui"
-  heading: "Tutto gratuito, tutto fatto da studenti"
+  heading: "Un'offerta gratuita di studenti"
   items:
     - key: uebungsaufgaben
       titel: "Serie di esercizi"
@@ -168,10 +168,10 @@ material:
 
 subtests:
   eyebrow: "Serie di esercizi"
-  heading: "Otto sottotest, un obiettivo"
+  heading: "Materiale di esercizio per tutti gli otto sottotest"
 mission:
   eyebrow: "Perché esistiamo"
-  heading: "Ci impegniamo affinché la preparazione all'EMS non dipenda dal portafoglio"
+  heading: "Pari opportunità nella preparazione all'EMS"
   features:
     - title: "Dal 2021"
       text: "Partita come iniziativa studentesca, oggi è un'associazione senza scopo di lucro. Lavoriamo al 100 % come volontari e offriamo il nostro materiale in modo completamente gratuito."
@@ -180,7 +180,7 @@ mission:
     - title: "Tre lingue"
       text: "Con i nostri team nella Svizzera tedesca, in Romandia e in Ticino mettiamo a disposizione l'intera offerta in tre lingue."
 support:
-  heading: "Gratuito grazie a te"
+  heading: "Gratuito grazie a donazioni e sponsorizzazioni"
   text: "Solo grazie a donazioni e sponsorizzazioni il nostro materiale resta gratuito per tutti."
   cta: "Sostieni ora"
 ---

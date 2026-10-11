@@ -4,7 +4,7 @@ description: "Quantitative und formale Probleme im EMS: Kostenlose Übungsserien
 weight: 4
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 In diesem Untertest löst du mathematische Sachaufgaben mit medizinischem oder naturwissenschaftlichem Bezug. Gefordert sind insbesondere Dreisatz, Proportionalitäten, Potenzrechnung, Einheitenumrechnungen sowie das Umformen von Formeln. Vorausgesetzt werden Kenntnisse der Sekundarstufe. Differential- und Integralrechnung, Trigonometrie und Wahrscheinlichkeitsrechnung sind nicht Teil des Tests, benötigte geometrische Formeln werden angegeben.
 
@@ -14,11 +14,11 @@ In diesem Untertest löst du mathematische Sachaufgaben mit medizinischem oder n
 
 Mit 2.5 Minuten pro Aufgabe ist dieser Untertest eher nicht auf Zeitdruck ausgelegt.
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 Viele biologische Zusammenhänge im Körper folgen physikalischen Gesetzen (Strömungsgeschwindigkeiten, Diffusion – das Fach Physiologie lässt grüssen). Wer versteht, wie sich die Änderung einer Variablen auf eine andere auswirkt, tut sich später leichter und erspart sich einiges an reinem Auswendiglernen.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Da es hier vor allem um Übung geht, lohnt sich ein früher Start – idealerweise zwei bis drei Monate vorher, mit mindestens zwei bis drei Einheiten à 1 Stunde pro Woche. Zu Beginn lohnt sich ein Block, in dem du dich mehrere Tage am Stück nur mit diesem Untertest beschäftigst, um dich mit den wiederkehrenden Aufgabentypen vertraut zu machen. Danach kannst du gezielter an den Aufgabentypen arbeiten, die dir weniger gut liegen.
 
@@ -37,7 +37,7 @@ Da es hier vor allem um Übung geht, lohnt sich ein früher Start – idealerwei
 - **Kommastellen beim Multiplizieren/Dividieren verschieben:** Beim Multiplizieren zählst du die Nachkommastellen beider Zahlen zusammen, rechnest ohne Komma und setzt es am Schluss wieder ein. Beim Dividieren machst du Divisor und Dividend gleichermassen kommafrei, bevor du rechnest.
 - **Formeln umstellen üben:** Manche Aufgaben verlangen, eine Formel nach einer bestimmten Grösse oder Einheit aufzulösen – das lässt sich mit physikalischen Formeln gut trainieren.
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Einheiten:** Umrechnungen zwischen z. B. cm³ und m³ oder anderen gängigen Einheiten sind eine häufige Fehlerquelle – frische sie vorher auf.
 - **Versteckte Angaben:** Die entscheidende Information steht manchmal erst im letzten Satz, andere Angaben brauchst du gar nicht.

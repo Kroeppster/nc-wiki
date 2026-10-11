@@ -4,7 +4,7 @@ description: "Diagrammi e tabelle all'EMS: serie di esercizi gratuite e consigli
 weight: 7
 ---
 
-## Breve riassunto
+## Panoramica
 
 Per ogni domanda ricevi un diagramma o una tabella, di solito con un breve testo di accompagnamento. Si tratta di stabilire quale di cinque affermazioni si può dedurre dalle informazioni, oppure quale non si può dedurre. In alcune domande scegli al contrario il diagramma che rappresenta correttamente un fatto descritto. Non servono conoscenze specialistiche, tutte le informazioni necessarie sono contenute nella domanda.
 
@@ -25,11 +25,11 @@ Esiste solo un numero limitato di tipi di domande ricorrenti:
 - **Diagrammi a ragnatela** (leggere i valori dall'interno verso l'esterno – il numero più interno è di solito lo zero)
 - **Diagrammi a dispersione** (rari – come un diagramma a linee, ma con valori singoli non collegati)
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 Durante gli studi e poi nella professione leggi di continuo studi, valori di laboratorio e curve di andamento. Chi analizza diagrammi e tabelle in modo rapido e preciso riconosce che cosa un grafico dice davvero, e che cosa no.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 Questo sottotest si impara bene anche relativamente tardi – di solito basta un periodo di 1–1.5 mesi prima del NC. Allenalo però in modo intenso, circa 3 volte a settimana. Conviene svolgere diagrammi e tabelle alla fine di una lunga sessione di esercizio – così simuli la situazione al NC, dove anche questo sottotest arriva proprio alla fine.
 
@@ -44,7 +44,7 @@ Questo sottotest si impara bene anche relativamente tardi – di solito basta un
 - **Allenare in modo mirato i tipi difficili:** durante l'esercizio osserva con quali tipi di diagrammi hai più difficoltà e allenali in modo mirato.
 - **Più tabelle:** leggi prima il testo, poi guarda le tabelle una per una, e solo dopo il loro legame.
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Assoluto e relativo:** non confondere valori assoluti (numero) e valori relativi (percentuale).
 - **Punti percentuali ≠ percentuale:** un aumento del 50 % di 2 punti percentuali dà 52 %, un aumento del 2 per cento dà 51 %.

@@ -4,7 +4,7 @@ description: "Oggetti nello spazio all'EMS: serie di esercizi gratuite e consigl
 weight: 2
 ---
 
-## Breve riassunto
+## Panoramica
 
 Questo sottotest verifica la tua capacità di rappresentazione spaziale. Vedi un cubo trasparente con degli oggetti, a sinistra nella posizione di partenza e a destra dopo due movimenti consecutivi. Sono possibili rotazioni di 90° verso sinistra o destra e ribaltamenti di 90° verso l'alto o il basso. Il tuo compito è determinare la combinazione che porta alla vista di destra. Anche l'ordine dei movimenti è decisivo.
 
@@ -14,11 +14,11 @@ Questo sottotest verifica la tua capacità di rappresentazione spaziale. Vedi un
 
 Gli oggetti nello spazio sono uno dei sottotest più brevi, ma anche più intensi.
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 In anatomia la rappresentazione spaziale di ossa e organi è molto importante per capire come sono collegati. La letteratura specialistica rappresenta spesso le strutture solo in due dimensioni, mentre sul paziente bisogna orientarsi in tre.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 Questo sottotest è tra i più facili e si impara bene – di solito basta iniziare 1–1.5 mesi prima. Esercitati circa 2–3 volte a settimana per non perdere la routine e trovare la tecnica adatta a te. Visto che con 10 minuti il test è piuttosto breve, si presta bene anche a brevi sessioni di esercizio nei momenti liberi.
 
@@ -37,7 +37,7 @@ Definisci un procedimento fisso con cui affrontare tutte le domande allo stesso 
 - **Prima la routine, poi la pressione del tempo:** lavora sotto pressione del tempo solo quando il tuo procedimento è diventato routine.
 - **Coraggio di lasciare una lacuna:** di solito le domande facili sono all'inizio e quelle difficili verso la fine. Lascia da parte una domanda difficile e tornaci più tardi, invece di perderti.
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Domanda difficile all'inizio:** può capitare che una domanda difficile venga messa apposta all'inizio per destabilizzare.
 - **Cercare tranelli dove non ce ne sono:** non lasciarti confondere dalle domande facili alla fine.

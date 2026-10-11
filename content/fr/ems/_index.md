@@ -9,7 +9,7 @@ menu:
 
 Cette page te guide à travers le test d'aptitudes pour les études de médecine (EMS) : de l'inscription au jour du test jusqu'à l'attribution des places d'études.
 
-## Accès direct aux rubriques
+## Aperçu
 
 - [Séries d'exercices](/ems/uebungsaufgaben)
 - [Simulations de test](/ems/testsimulationen)

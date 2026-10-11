@@ -4,7 +4,7 @@ description: "Comprensione medico-scientifica all'EMS: serie di esercizi gratuit
 weight: 3
 ---
 
-## Breve riassunto
+## Panoramica
 
 Ogni domanda descrive in poche frasi un fatto medico o scientifico. Poi valuti tre o cinque affermazioni: si possono dedurre dalle informazioni date? Spesso le affermazioni sono numerate (I, II, III) e le opzioni di risposta da A a E propongono possibili combinazioni. Non servono conoscenze specialistiche, perché tutti i termini tecnici sono spiegati nel testo.
 
@@ -25,11 +25,11 @@ Il tempo è molto stretto e non devi per forza svolgere tutte le domande. Conta 
 
 Domanda: quali affermazioni si possono dedurre dal testo? La risposta giusta è qui «affermazioni 1 e 4» – sull'affermazione 2 il testo non dice nulla, e l'affermazione 3 è già smentita nella prima frase.
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 In fisiologia e in molti altri ambiti degli studi si tratta spesso di capire dei nessi. Imparare a memoria è una gran parte degli studi di medicina, ma capire le interazioni è indispensabile – ed è proprio ciò che si allena qui.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile iniziare al più tardi 1–2 mesi prima dell'EMS. Due volte a settimana per una o due ore bastano di solito per diventare in fretta più precisi, riconoscere i tranelli tipici e aumentare il ritmo.
 
@@ -44,7 +44,7 @@ Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile ini
 - **Non intestardirsi su una domanda:** ogni domanda vale esattamente un punto. Se ti blocchi, segna una risposta e prosegui. Le risposte sbagliate non vengono penalizzate.
 - **Capire gli errori invece di contare i punti:** dopo ogni serie di esercizi guarda perché hai valutato male un'affermazione – hai letto troppo in fretta, usato le tue conoscenze o interpretato un'affermazione in modo troppo largo?
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Non menzionato significa non deducibile:** se il testo non dice nulla su un'affermazione, non la si può dedurre – anche se è giusta dal punto di vista scientifico (affermazione 2 dell'esempio).
 - **Conoscenze al posto del testo:** le conoscenze aiutano a capire, ma si valuta solo ciò che c'è nel testo.

@@ -9,7 +9,7 @@ menu:
 
 Diese Seite führt dich durch den Eignungstest für das Medizinstudium (EMS): von der Anmeldung über den Testtag bis zur Zuteilung der Studienplätze.
 
-## Direkt zu den Bereichen
+## Übersicht
 
 - [Übungsserien](/ems/uebungsaufgaben)
 - [Testsimulationen](/ems/testsimulationen)

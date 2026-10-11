@@ -4,7 +4,7 @@ description: "Imparare figure e fatti all'EMS: serie di esercizi gratuite e tecn
 weight: 5
 ---
 
-## Breve riassunto
+## Panoramica
 
 ### Figure
 
@@ -20,11 +20,11 @@ Esempio (abbreviato): *Maier, 20 anni, mugnaio, sposato, Covid-19* – *Keller, 
 - **Volume:** figure 18 domande, 18 punti; fatti 18 domande, 18 punti
 - **Tempo:** figure 4 minuti di apprendimento e 5 minuti di riproduzione; fatti 6 minuti ciascuna
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 In entrambi i casi si tratta della tua memoria. Durante gli studi di medicina devi ricordare non solo fatti, ma soprattutto in anatomia e istopatologia anche molte strutture visive – e più tardi presenti pazienti ad altri professionisti in modo breve e preciso, con le caratteristiche principali, la diagnosi e la procedura. Una buona tecnica di memorizzazione ti aiuta moltissimo in entrambi i casi.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare ogni giorno. Inizia presto, circa 3 mesi prima dell'EMS, con 3–4 sessioni a settimana. All'inizio concediti volutamente più tempo del previsto (per es. 10 invece di 6 minuti per i fatti), per provare diverse strategie, e riduci il tempo solo gradualmente, man mano che diventi più sicuro·a. Nell'ultimo mese esercitati nelle condizioni reali del NC: memorizzare le figure prima, comprensione del testo in mezzo, poi memorizzare i fatti. Interrompi l'esercizio mirato qualche giorno prima del NC, per avere la testa libera.
 
@@ -50,7 +50,7 @@ Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare 
 - **Provare strategie diverse:** non esiste un unico metodo giusto per tutti. Non lasciarti scoraggiare se una strategia funziona meglio per altri che per te – conta ciò che funziona per te.
 - **Raccogliere punti in modo mirato:** imparare figure e fatti e il test di concentrazione si possono allenare bene fino a 16–20 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi piuttosto il tempo necessario per questi sottotest ben allenabili, invece di affrettare nei sottotest più lunghi (per es. comprensione del testo) l'ultimo testo, che comunque porta pochi punti – il NC è pura gestione dei punti.
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Figure molto simili:** quando le figure si somigliano molto, fai attenzione alle sottili differenze geometriche (per es. angoli retti) o concentrati, con contorni simili, soprattutto sulla forma e sulla posizione della superficie scura.
 - **Consumare troppo presto le serie di esercizi:** ripetere più volte la stessa serie falsa la percezione del tuo livello.

@@ -8,7 +8,7 @@ menu:
 hero:
   eyebrow: "Eignungstest für das Medizinstudium (EMS) 2027"
   ticket_label: "EMS-Zulassung"
-  title: "Wir machen die EMS-Vorbereitung kostenlos"
+  title: "Kostenlose Vorbereitung auf den EMS"
   lede: "Wir sind ein Verein aus mehr als 110 Medizinstudierenden. Seit 2021 entwickeln wir eigene Übungsserien, organisieren Testsimulationen und leiten Vorbereitungskurse. Alles stammt von Studierenden, die den Test selbst geschrieben haben, und ist in drei Sprachen kostenlos."
   cta_primary: "Übungsserien ansehen"
   cta_secondary: "Newsletter abonnieren"
@@ -21,7 +21,7 @@ news:
   cta: "Alle News →"
 weg:
   eyebrow: "Von der Anmeldung bis zum Resultat"
-  heading: "Was du wann brauchst"
+  heading: "Zeitplan bis zum Studienbeginn"
   start: "2026-10-01"
   ende: "2027-09-30"
   modus_label: "Welche Universität?"
@@ -110,7 +110,7 @@ weg:
         - titel: "Häufige Fragen"
           url: "ems/qa/"
     - wann: "Februar bis Mai"
-      titel: "Technik aufbauen"
+      titel: "Lösungstechniken lernen"
       text: "Pro Untertest ein Guide mit Strategie und typischen Fallen, dazu Serien zum Üben – erst ohne Zeitdruck, dann mit."
       von: "2027-02-16"
       bis: "2027-04-30"
@@ -122,7 +122,7 @@ weg:
         - titel: "Vorbereitungskurse"
           url: "ems/vorbereitungskurse/"
     - wann: "Mai bis Anfang Juli"
-      titel: "Generalprobe"
+      titel: "Unter Testbedingungen üben"
       text: "Einmal den ganzen Testtag am Stück: 235 Minuten, elf Blöcke, keine Pause. Zu Hause mit Uhr und Ansagen, oder Anfang Mai bei uns im Hörsaal."
       von: "2027-05-01"
       bis: "2027-07-08"
@@ -134,7 +134,7 @@ weg:
         - titel: "Prüfungsmodus"
           url: "ems/pruefungsmodus/"
     - wann: "9. Juli bis August"
-      titel: "Durchkommen"
+      titel: "Am Testtag"
       text: "Was mitnehmen, wie einteilen, wie raten."
       von: "2027-07-09"
       bis: "2027-08-31"
@@ -148,7 +148,7 @@ weg:
 
 material:
   eyebrow: "Was du hier findest"
-  heading: "Alles kostenlos, alles von Studierenden gemacht"
+  heading: "Kostenloses Angebot von Studierenden"
   items:
     - key: uebungsaufgaben
       titel: "Übungsserien"
@@ -168,10 +168,10 @@ material:
 
 subtests:
   eyebrow: "Übungsserien"
-  heading: "Acht Untertests, ein Ziel"
+  heading: "Übungsmaterial zu allen acht Untertests"
 mission:
   eyebrow: "Wieso es uns gibt"
-  heading: "Wir setzen uns dafür ein, dass die EMS-Vorbereitung nicht vom Portemonnaie abhängt"
+  heading: "Chancengleichheit bei der EMS-Vorbereitung"
   features:
     - title: "Seit 2021"
       text: "Als studentische Initiative gestartet und heute ein gemeinnütziger Verein. Wir arbeiten zu 100 Prozent ehrenamtlich und bieten unser Material komplett kostenlos an."
@@ -180,7 +180,7 @@ mission:
     - title: "Drei Sprachen"
       text: "Unsere Teams in der Deutschschweiz, der Romandie und im Tessin bieten das ganze Angebot in drei Sprachen an."
 support:
-  heading: "Kostenlos dank dir"
+  heading: "Kostenlos dank Spenden und Sponsoring"
   text: "Unser Material bleibt nur dank Spenden und Sponsoring für alle kostenlos."
   cta: "Jetzt unterstützen"
 ---

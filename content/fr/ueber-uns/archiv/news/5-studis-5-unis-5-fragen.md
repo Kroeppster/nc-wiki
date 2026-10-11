@@ -1,5 +1,5 @@
 ---
-title: "5 étudiant·e·s, 5 universités, 5 questions (interview études de médecine)"
+title: "Interview : cinq étudiant·e·s, cinq universités, cinq questions"
 date: 2022-12-05
 eyebrow: "Interview"
 draft: false

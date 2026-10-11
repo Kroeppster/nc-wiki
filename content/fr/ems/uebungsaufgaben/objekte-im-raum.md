@@ -4,7 +4,7 @@ description: "Objets dans l'espace à l'EMS : séries d'exercices gratuites et c
 weight: 2
 ---
 
-## Bref résumé
+## Aperçu
 
 Ce sous-test évalue ta capacité de représentation spatiale. Tu vois un cube transparent contenant des objets, à gauche dans sa position de départ et à droite après deux mouvements successifs. Sont possibles des rotations de 90° vers la gauche ou la droite ainsi que des basculements de 90° vers le haut ou le bas. Ta tâche est de déterminer la combinaison qui mène à la vue de droite. L'ordre des mouvements est lui aussi déterminant.
 
@@ -14,11 +14,11 @@ Ce sous-test évalue ta capacité de représentation spatiale. Tu vois un cube t
 
 Les objets dans l'espace font partie des sous-tests les plus courts, mais aussi les plus intenses.
 
-## Pourquoi ce sous-test est-il pertinent pour tes études ?
+## Importance pour les études
 
 En anatomie, la représentation spatiale des os et des organes est très importante pour comprendre comment ils sont reliés. La littérature spécialisée ne représente souvent les structures qu'en deux dimensions, alors qu'il faut s'orienter en trois dimensions sur le patient.
 
-## Quand et à quelle fréquence s'entraîner ?
+## Moment et fréquence de l'entraînement
 
 Ce sous-test fait partie des plus faciles et s'apprend bien – commencer 1 à 1.5 mois avant suffit généralement. Entraîne-toi environ 2 à 3 fois par semaine pour ne pas perdre la routine et trouver la technique qui te convient. Comme le test est assez court avec 10 minutes, il se prête aussi bien à de courtes séances d'entraînement entre deux.
 
@@ -37,7 +37,7 @@ Définis une démarche fixe avec laquelle tu abordes toutes les questions de la 
 - **D'abord la routine, puis la pression du temps :** ne travaille sous pression temporelle que lorsque ta démarche est devenue une routine.
 - **Oser laisser un trou :** en général, les questions faciles sont placées au début et les plus difficiles vers la fin. Laisse une question difficile de côté et reviens-y plus tard, plutôt que de t'y perdre.
 
-## Pièges typiques
+## Erreurs fréquentes
 
 - **Question difficile au début :** il peut arriver qu'une question difficile soit placée volontairement au début pour déstabiliser.
 - **Chercher des pièges là où il n'y en a pas :** ne te laisse pas troubler par des questions faciles à la fin.

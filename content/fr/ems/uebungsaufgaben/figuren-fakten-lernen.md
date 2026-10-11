@@ -4,7 +4,7 @@ description: "Apprendre figures et faits à l'EMS : séries d'exercices gratuite
 weight: 5
 ---
 
-## Bref résumé
+## Aperçu
 
 ### Figures
 
@@ -20,11 +20,11 @@ Exemple (abrégé) : *Maier, 20 ans, meunier, marié, Covid-19* – *Keller, 30 
 - **Volume :** figures 18 questions, 18 points ; faits 18 questions, 18 points
 - **Temps :** figures 4 minutes d'apprentissage et 5 minutes de reproduction ; faits 6 minutes chacune
 
-## Pourquoi ce sous-test est-il pertinent pour tes études ?
+## Importance pour les études
 
 Dans les deux cas, il s'agit de ta mémoire. Pendant les études de médecine, tu dois retenir non seulement des faits, mais aussi, surtout en anatomie et en histopathologie, de nombreuses structures visuelles – et plus tard, tu présentes des patient·e·s à d'autres professionnel·le·s de façon brève et précise, avec les caractéristiques principales, le diagnostic et la prise en charge. Une bonne technique de mémorisation t'aide énormément dans les deux cas.
 
-## Quand et à quelle fréquence s'entraîner ?
+## Moment et fréquence de l'entraînement
 
 Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile de faire tous les jours. Commence tôt, environ 3 mois avant l'EMS, avec 3 à 4 séances par semaine. Au début, accorde-toi volontairement plus de temps que prévu (par ex. 10 au lieu de 6 minutes pour les faits), afin d'essayer différentes stratégies, et ne réduis le temps que progressivement, à mesure que tu gagnes en assurance. Le dernier mois, entraîne-toi dans les conditions réelles du NC : mémoriser les figures avant, compréhension de texte entre les deux, puis mémoriser les faits. Arrête l'entraînement ciblé quelques jours avant le NC pour garder la tête libre.
 
@@ -50,7 +50,7 @@ Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile
 - **Essayer différentes stratégies :** il n'existe pas une seule bonne méthode pour tout le monde. Ne te laisse pas déstabiliser si une stratégie fonctionne mieux chez d'autres que chez toi – ce qui compte, c'est ce qui marche pour toi.
 - **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 20 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – le NC, c'est de la pure gestion des points.
 
-## Pièges typiques
+## Erreurs fréquentes
 
 - **Figures très semblables :** quand des figures se ressemblent fortement, fais attention aux fines différences géométriques (par ex. angles droits) ou concentre-toi, pour des contours semblables, surtout sur la forme et la position de la surface sombre.
 - **Épuiser trop tôt les séries d'exercices :** répéter plusieurs fois la même série fausse ton ressenti de ton propre niveau.

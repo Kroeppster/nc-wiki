@@ -4,7 +4,7 @@ description: "Abbinamento di schemi all'EMS: serie di esercizi gratuite e consig
 weight: 1
 ---
 
-## Breve riassunto
+## Panoramica
 
 L'abbinamento di schemi è il primo sottotest dell'EMS e apre la giornata del test. Per ogni domanda ricevi uno schema complesso e cinque ritagli (da A a E). Gli schemi si trovano nella parte superiore della pagina, i ritagli corrispondenti più in basso sulla stessa pagina. Solo uno dei cinque ritagli si può sovrapporre allo schema in modo esatto e completo, in un punto qualsiasi. Negli altri quattro un dettaglio è stato aggiunto, tolto o modificato. I ritagli non sono né ingranditi o rimpiccioliti, né ruotati o specchiati. Le differenze sono sempre univoche; puntini o imperfezioni di stampa non contano come errori.
 
@@ -14,11 +14,11 @@ L'abbinamento di schemi è il primo sottotest dell'EMS e apre la giornata del te
 
 Il sottotest è pensato apposta perché nel tempo a disposizione di solito non si riescano a svolgere tutte le domande. Se non finisci, quindi, non significa che sia andata male.
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 Si verifica la capacità di confrontare con precisione immagini e strutture e di riconoscere piccole differenze. Questa capacità ti servirà di continuo durante gli studi di medicina, per esempio al microscopio con le sezioni istologiche o nel valutare radiografie e alterazioni cutanee in radiologia e dermatologia.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1.5–2 mesi prima dell'EMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
 
@@ -39,7 +39,7 @@ Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anc
 - **Non intestardirsi su una domanda:** ogni domanda vale esattamente un punto. Una domanda difficile che ti costa due minuti ti manca per due domande facili.
 - **Non piegare il fascicolo:** secondo le direttive ufficiali, le pagine del fascicolo del test non devono essere piegate. Abituati quindi già durante l'esercizio a confrontare schema e ritagli sulla stessa pagina.
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Modifiche minime:** alcune differenze sono così sottili da non notarsi a un primo sguardo. Si trovano in modo affidabile solo con un procedimento sistematico, che costa tempo in più.
 - **Ritagli che non stanno affatto nello schema:** alcuni ritagli non si ritrovano per intero nello schema, oppure un errore si trova appena fuori dalla parte visibile ma si può dedurre logicamente. Già nella visione d'insieme controlla quindi se un ritaglio corrisponde davvero a un punto dello schema.

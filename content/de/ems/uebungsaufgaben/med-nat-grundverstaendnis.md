@@ -4,7 +4,7 @@ description: "Medizinisch-naturwissenschaftliches Grundverständnis im EMS: Kost
 weight: 3
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 Jede Aufgabe schildert in wenigen Sätzen einen medizinischen oder naturwissenschaftlichen Sachverhalt. Anschliessend beurteilst du drei oder fünf Aussagen daraufhin, ob sie sich aus den gegebenen Informationen ableiten lassen. Häufig sind die Aussagen nummeriert (I, II, III), und die Antwortoptionen A bis E geben mögliche Kombinationen vor. Fachwissen ist nicht erforderlich, da alle Fachbegriffe im Text erläutert werden.
 
@@ -25,11 +25,11 @@ Die Zeit ist sehr knapp bemessen, und du musst auch nicht alle Aufgaben schaffen
 
 Gefragt: welche Aussagen sind aus dem Text ableitbar? Richtig ist hier «Aussage 1 und 4» – zu Aussage 2 sagt der Text nichts, Aussage 3 wird bereits im ersten Satz widerlegt.
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 In der Physiologie und vielen anderen Bereichen des Studiums geht es oft um das Verständnis von Zusammenhängen. Auswendiglernen ist ein grosser Teil des Medizinstudiums, aber das Verstehen von Interaktionen ist unabdingbar – genau das wird hier trainiert.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Diesen Untertest solltest du über eine längere Zeit üben. Starte spätestens ein bis zwei Monate vor dem Eignungstest für das Medizinstudium (EMS). Zweimal pro Woche ein bis zwei Stunden reichen meist, um schnell genauer zu werden, typische Fallen zu erkennen und das Tempo zu erhöhen.
 
@@ -44,7 +44,7 @@ Diesen Untertest solltest du über eine längere Zeit üben. Starte spätestens 
 - **Nicht an einer Aufgabe festbeissen:** Jede Aufgabe gibt genau einen Punkt. Kommst du nicht weiter, kreuze eine Antwort an und gehe weiter. Für falsche Antworten gibt es keinen Abzug.
 - **Fehler verstehen statt Punkte zählen:** Schau dir nach jeder Übungsserie an, warum du eine Aussage falsch beurteilt hast – hast du etwas überlesen, dein Vorwissen verwendet oder eine Aussage zu grosszügig ausgelegt?
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Nicht erwähnt heisst nicht ableitbar:** Sagt der Text zu einer Aussage nichts, lässt sie sich auch nicht ableiten – selbst wenn sie fachlich stimmt (Aussage 2 im Beispiel).
 - **Vorwissen statt Text:** Vorwissen hilft beim Verstehen, beurteilt wird aber nur, was im Text steht.

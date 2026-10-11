@@ -4,7 +4,7 @@ description: "Compréhension de texte à l'EMS : séries d'exercices gratuites e
 weight: 6
 ---
 
-## Bref résumé
+## Aperçu
 
 Ce sous-test évalue ta capacité à saisir et à traiter des textes longs et complexes. Tu reçois trois textes d'environ une page chacun sur des thèmes de médecine ou de sciences naturelles, chacun suivi de six questions. Il s'agit d'évaluer quelles affirmations peuvent être déduites du texte, tantôt sous forme de réponse unique, tantôt sous forme de combinaison d'affirmations numérotées. Aucune connaissance préalable n'est nécessaire.
 
@@ -14,11 +14,11 @@ Ce sous-test évalue ta capacité à saisir et à traiter des textes longs et co
 
 Les trois textes sont volontairement rédigés de façon complexe, et les questions contiennent souvent des pièges placés à dessein. Règle d'or : toujours lire attentivement.
 
-## Pourquoi ce sous-test est-il pertinent pour tes études ?
+## Importance pour les études
 
 Pendant les études, tu seras confronté·e à un flot de nouvelles matières. Une bonne compréhension de texte t'aide à filtrer et à hiérarchiser les informations importantes – et plus tard, au quotidien clinique (par ex. aux urgences), la capacité à traiter des textes sous pression est aussi un avantage.
 
-## Quand et à quelle fréquence s'entraîner ?
+## Moment et fréquence de l'entraînement
 
 La compréhension de texte doit s'entraîner sur le long terme – commence environ 2 à 3 mois avant la date du test. À l'entraînement, ne résous qu'un texte à la fois, pour pouvoir analyser tes erreurs au fur et à mesure et en tenir compte directement au texte suivant. Un texte tous les deux jours répartit bien l'entraînement sur la semaine.
 
@@ -32,7 +32,7 @@ La compréhension de texte doit s'entraîner sur le long terme – commence envi
 - **Rassembler son énergie :** après les phases d'apprentissage de la mémorisation de figures et de faits, tu es souvent déjà un peu fatigué·e. Rassemble consciemment ton énergie une nouvelle fois.
 - **Deux textes plutôt que trois :** il peut valoir la peine de se concentrer sur deux des trois textes, plutôt que de risquer des fautes d'inattention sur les trois à cause de la pression du temps.
 
-## Pièges typiques
+## Erreurs fréquentes
 
 - **Connaissances préalables :** elles aident à lire plus vite, mais ne doivent pas remplacer le contenu du texte pour répondre aux questions.
 - **Questions à la forme négative :** pour « Qu'est-ce qui est faux ? », lis la question attentivement pour ne pas manquer la négation.

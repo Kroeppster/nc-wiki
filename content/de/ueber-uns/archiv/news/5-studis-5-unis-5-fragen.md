@@ -1,5 +1,5 @@
 ---
-title: "Fünf Studierende, fünf Unis, fünf Fragen (Interview)"
+title: "Interview: Fünf Studierende, fünf Universitäten, fünf Fragen"
 date: 2022-12-05
 eyebrow: "Interview"
 draft: false

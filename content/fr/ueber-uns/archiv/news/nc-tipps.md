@@ -1,5 +1,5 @@
 ---
-title: "Conseils NC – nos meilleurs conseils pour l'EMS"
+title: "Conseils pour l'EMS"
 date: 2024-04-21
 eyebrow: "Conseils"
 draft: false

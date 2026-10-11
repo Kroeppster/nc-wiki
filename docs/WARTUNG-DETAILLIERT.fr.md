@@ -703,7 +703,7 @@ jour du test) viennent de `data/testablauf.yaml`.
 **État actuel :** les deux générateurs se trouvent pour l'instant seulement sur la
 [page Alpha](#page-alpha) (`content/de/alpha/_index.md`), pas sur la page publique
 « Figures & faits ». Pour les valider, remettre le bloc dans le texte de la page d'exercices
-(dans les trois langues, avec la mention du générateur dans « Pièges typiques »).
+(dans les trois langues, avec la mention du générateur dans « Erreurs fréquentes »).
 
 ### Format du cahier
 

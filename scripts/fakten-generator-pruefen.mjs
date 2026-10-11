@@ -209,7 +209,7 @@ pruef('S. 5: Antwortbogen', /Antwortbogen/.test(t[4]));
 const loes = (t[5].split('Lösungsschlüssel')[0].match(/^[A-E]$/gm) || []).join('');
 pruef('S. 6: Loesungen stimmen mit der Auswertung ueberein', loes === erwartet, loes + ' / ' + erwartet);
 pruef('S. 6: Loesungsschluessel (schwarze Kaestchen) = Loesungen', dr.schluessel === erwartet, dr.schluessel + ' / ' + erwartet);
-pruef('PDF ohne Navigation und Artikeltext', !t.join(' ').includes('Wieso ist dieser Untertest') && !/Unterstützer:innen/.test(t.join(' ')));
+pruef('PDF ohne Navigation und Artikeltext', !t.join(' ').includes('Bedeutung für das Studium') && !/Unterstützer:innen/.test(t.join(' ')));
 
 await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
 pruef('nach dem Druck aufgeraeumt', await p.evaluate(() => !document.body.classList.contains('fg-druckt')

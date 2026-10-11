@@ -1,5 +1,5 @@
 ---
-title: "Testsimulation 2025 (Infos + Anmeldung)"
+title: "Testsimulation 2025: Informationen und Anmeldung"
 date: 2025-04-13
 eyebrow: "Anmeldung"
 draft: false

@@ -4,7 +4,7 @@ description: "Comprensione del testo all'EMS: serie di esercizi gratuite e consi
 weight: 6
 ---
 
-## Breve riassunto
+## Panoramica
 
 Questo sottotest verifica quanto bene riesci a cogliere ed elaborare testi lunghi e complessi. Ricevi tre testi di circa una pagina ciascuno su temi di medicina o scienze naturali, ognuno seguito da sei domande. Si tratta di valutare quali affermazioni si possono dedurre dal testo, a volte come risposta singola, a volte come combinazione di affermazioni numerate. Non servono conoscenze preliminari.
 
@@ -14,11 +14,11 @@ Questo sottotest verifica quanto bene riesci a cogliere ed elaborare testi lungh
 
 I tre testi sono scritti apposta in modo complesso, e le domande contengono spesso tranelli inseriti di proposito. Vale quindi la regola: leggere sempre con attenzione.
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 Durante gli studi ti troverai di fronte a una marea di nuova materia. Una buona comprensione del testo ti aiuta a filtrare le informazioni importanti e a stabilire le priorità – e più tardi, nella quotidianità clinica (per es. in pronto soccorso), la capacità di elaborare testi sotto pressione è un vantaggio.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 La comprensione del testo va allenata a lungo termine – inizia circa 2–3 mesi prima della data del test. Durante l'esercizio risolvi un solo testo alla volta, così puoi analizzare i tuoi errori man mano e tenerne conto subito nel testo successivo. Un testo ogni due giorni distribuisce bene l'allenamento sulla settimana.
 
@@ -32,7 +32,7 @@ La comprensione del testo va allenata a lungo termine – inizia circa 2–3 mes
 - **Raccogliere le energie:** dopo le fasi di apprendimento della memorizzazione di figure e fatti sei spesso già un po' stanco·a. Raccogli consapevolmente le energie ancora una volta.
 - **Due testi invece di tre:** può valere la pena concentrarsi su due dei tre testi, invece di rischiare errori di distrazione su tutti e tre per la pressione del tempo.
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Conoscenze preliminari:** aiutano a leggere più in fretta, ma per rispondere alle domande non devono sostituire il contenuto del testo.
 - **Domande in forma negativa:** con «Che cosa non è corretto?» leggi la domanda con attenzione, per non perdere il «non».

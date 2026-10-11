@@ -72,7 +72,7 @@ T = {
         'wandert beim Hochladen ins Archiv, in allen drei Sprachen. Leer lassen = nichts passiert.',
         aktuell='Aktuelle Saison auf der Website: {s}', ressort='Ressort', neues_ressort='Neues Ressort',
         name='Name', rolle='Rolle', deutsch='Deutsch:',
-        abschnitte=dict(hero='Kopfbereich (ganz oben)', news='News-Vorschau', weg='Was du wann brauchst',
+        abschnitte=dict(hero='Kopfbereich (ganz oben)', news='News-Vorschau', weg='Zeitplan bis zum Studienbeginn',
                         material='Was du hier findest', subtests='Übungsaufgaben', mission='Wieso es uns gibt',
                         support='Spendenaufruf (unten)'),
         felder=dict(eyebrow='Kleine Zeile', ticket_label='Etikett', title='Titel', heading='Titel', titel='Titel',

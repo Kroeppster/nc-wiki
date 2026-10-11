@@ -685,7 +685,7 @@ echte Lücke am Testtag) kommen aus `data/testablauf.yaml`.
 **Stand:** Beide Generatoren stehen vorerst nur auf der [Alpha-Seite](#alpha-seite)
 (`content/de/alpha/_index.md`), nicht auf der öffentlichen Seite „Figuren & Fakten
 lernen“. Zum Freigeben den Baustein wieder in den Text der Übungsaufgaben-Seite setzen
-(in allen drei Sprachen, dazu den Verweis auf den Generator im Abschnitt „Typische Fallen“).
+(in allen drei Sprachen, dazu den Verweis auf den Generator im Abschnitt „Häufige Fehler“).
 
 ### Heftformat
 

@@ -4,7 +4,7 @@ description: "Travail concentré et soigné à l'EMS : séries d'exercices gratu
 weight: 8
 ---
 
-## Bref résumé
+## Aperçu
 
 Tu reçois une feuille de 40 lignes de 40 caractères chacune et tu marques certains caractères cibles selon une règle donnée. Le travail se fait strictement ligne par ligne et sans omission. Jusqu'au dernier caractère marqué, chaque caractère marqué à tort ou oublié compte comme une erreur et est déduit des marquages corrects. Les caractères et la règle changent chaque année et ne sont pas communiqués à l'avance.
 
@@ -20,11 +20,11 @@ C'est le seul sous-test pour lequel un classement est établi entre tous les can
 
 Chaque caractère correctement marqué rapporte un point, chaque caractère marqué à tort ou omis en retire un. Comme un caractère sauté te prive en plus de la chance d'un point, omettre est plutôt pire qu'un trait mal placé. Il y a au total 40 lignes avec des caractères répartis à peu près uniformément – on peut en moyenne marquer environ 10 caractères par ligne, ce qui peut servir de repère approximatif.
 
-## Pourquoi ce sous-test est-il pertinent pour tes études ?
+## Importance pour les études
 
 En tant que médecin, il est important de pouvoir travailler de façon concentrée et précise, même sous stress. C'est exactement ce que teste ce sous-test.
 
-## Quand et à quelle fréquence s'entraîner ?
+## Moment et fréquence de l'entraînement
 
 Dans ce sous-test, les progrès sont vite visibles – il suffit généralement de commencer 1.5 à 2 mois avant, mais avec 4 à 5 séances par semaine, car chaque séance est courte. Pour simuler la situation de test de façon réaliste, il vaut la peine de ne pas résoudre le test de concentration en premier à l'entraînement, mais seulement après quelques autres sous-tests – tu es ainsi déjà un peu fatigué·e, comme le jour du test.
 
@@ -42,7 +42,7 @@ Dans ce sous-test, les progrès sont vite visibles – il suffit généralement 
 - **S'entraîner de façon aussi variée que possible :** au vrai NC, plusieurs règles couplées apparaissent souvent (par ex. « barre chaque q après un p et chaque b avant un d »). Entraîne-toi donc avec différents types de règles, pas avec un seul.
 - **Passer sur ses erreurs :** s'énerver pour une erreur ne coûte que de la concentration et du temps en plus – revenir en arrière pour corriger ne vaut de toute façon pas la peine, car seul le dernier marquage compte.
 
-## Pièges typiques
+## Erreurs fréquentes
 
 - **Caractères semblables :** des caractères comme « pq » et « bd » se confondent facilement.
 - **Miser uniquement sur la vitesse :** qui ne fait attention qu'à la vitesse oublie facilement des caractères – et chaque caractère omis est déduit.

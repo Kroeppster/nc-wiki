@@ -9,7 +9,7 @@ menu:
 
 Questa pagina ti guida attraverso il test attitudinale per gli studi di medicina (EMS): dall'iscrizione al giorno del test fino all'assegnazione dei posti di studio.
 
-## Accesso diretto alle aree
+## Panoramica
 
 - [Serie di esercizi](/ems/uebungsaufgaben)
 - [Simulazioni del test](/ems/testsimulationen)

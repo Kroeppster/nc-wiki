@@ -4,7 +4,7 @@ description: "Lavoro concentrato e accurato all'EMS: serie di esercizi gratuite 
 weight: 8
 ---
 
-## Breve riassunto
+## Panoramica
 
 Ricevi un foglio con 40 righe di 40 simboli ciascuna e marchi determinati simboli bersaglio secondo una regola data. Si lavora rigorosamente riga per riga e senza omissioni. Fino all'ultimo simbolo marcato, ogni simbolo marcato per errore o tralasciato conta come errore e viene sottratto dalle marcature corrette. Simboli e regola cambiano ogni anno e non vengono comunicati in anticipo.
 
@@ -20,11 +20,11 @@ Il foglio è così lungo che difficilmente si riesce a completarlo.
 
 Per ogni simbolo marcato correttamente c'è un punto, per ogni simbolo marcato per errore o tralasciato se ne toglie uno. Siccome un simbolo saltato ti toglie in più la possibilità di un punto, tralasciare è tendenzialmente peggio di un segno sbagliato. In tutto ci sono 40 righe con simboli distribuiti in modo più o meno uniforme – in media se ne possono marcare circa 10 per riga, il che può servire da orientamento approssimativo.
 
-## Perché questo sottotest è rilevante per gli studi?
+## Importanza per gli studi
 
 Come medico è importante riuscire a lavorare in modo concentrato e preciso anche sotto stress. È proprio ciò che verifica questo sottotest.
 
-## Quando e quanto spesso esercitarsi?
+## Tempi e frequenza dell'esercizio
 
 In questo sottotest i progressi si vedono in fretta – di solito basta iniziare 1.5–2 mesi prima, però con 4–5 sessioni a settimana, perché ogni sessione dura poco. Per simulare in modo realistico la situazione del test, conviene non risolvere il test di concentrazione per primo durante l'esercizio, ma solo dopo alcuni altri sottotest – così, come il giorno del test, sei già un po' stanco·a quando lo affronti.
 
@@ -42,7 +42,7 @@ In questo sottotest i progressi si vedono in fretta – di solito basta iniziare
 - **Esercitarsi nel modo più vario possibile:** al vero NC compaiono spesso più regole combinate (per es. «cancella ogni q dopo una p e ogni b prima di una d»). Esercitati quindi con diversi tipi di regole, non con uno solo.
 - **Lasciarsi alle spalle gli errori:** arrabbiarsi per un errore costa solo concentrazione e tempo in più – tornare indietro a correggere comunque non conviene, perché conta solo l'ultima marcatura.
 
-## Tranelli tipici
+## Errori frequenti
 
 - **Simboli simili:** simboli come «pq» e «bd» si confondono facilmente.
 - **Puntare solo sulla velocità:** chi bada solo alla velocità tralascia facilmente dei simboli – e ogni simbolo tralasciato viene sottratto.

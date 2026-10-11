@@ -26,8 +26,11 @@ steht unter [Französisch und Italienisch](#französisch-und-italienisch).
 
 - Seitentitel und Menü: nüchtern, ein Substantiv, überall identisch (Menü, Seitentitel,
   Links, Karten).
-- Abschnittstitel auf der Startseite dürfen pointiert sein, auf Inhaltsseiten
-  beschreibend.
+- Titel und Zwischentitel sachlich, nicht umgangssprachlich – der Fliesstext darf locker
+  sein, die Titel nicht. Lieber «Häufige Fehler» als «Typische Fallen», «Zeitplan bis zum
+  Studienbeginn» als «Was du wann brauchst», keine Fragen als Titel («Wann und wie oft üben?»).
+- Abschnittstitel auf der Startseite dürfen etwas pointierter sein, bleiben aber sachlich;
+  auf Inhaltsseiten beschreibend.
 - Keine Nummerierung (1.1, 1.2), kein Ausrufezeichen, kein Punkt am Ende.
 - Nur das erste Wort und Substantive gross: «Über uns».
 

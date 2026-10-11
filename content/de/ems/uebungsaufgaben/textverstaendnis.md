@@ -4,7 +4,7 @@ description: "Textverständnis im EMS: Kostenlose Übungsserien und Tipps, mit d
 weight: 6
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 Dieser Untertest prüft, wie gut du umfangreiche und komplexe Texte erfassen und verarbeiten kannst. Du erhältst drei Texte von jeweils rund einer Seite zu Themen aus Medizin oder Naturwissenschaft, zu jedem Text folgen sechs Fragen. Zu beurteilen ist, welche Aussagen sich aus dem Text ableiten lassen, teils als Einzelantwort, teils als Kombination nummerierter Aussagen. Vorwissen ist nicht erforderlich.
 
@@ -14,11 +14,11 @@ Dieser Untertest prüft, wie gut du umfangreiche und komplexe Texte erfassen und
 
 Die drei Texte sind bewusst komplex geschrieben, und die Fragen enthalten oft gezielt eingebaute Stolpersteine. Es gilt also: immer aufmerksam lesen.
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 Im Studium wirst du mit einer Flut an neuem Lernstoff konfrontiert. Ein gutes Textverständnis hilft dir, wichtige Informationen herauszufiltern und zu priorisieren – auch im späteren klinischen Alltag (z. B. im Notfall) ist die Fähigkeit, Texte unter Zeitdruck zu verarbeiten, von Vorteil.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Textverständnis muss langfristig trainiert werden – beginne rund zwei bis drei Monate vor dem Testdatum. Löse beim Üben jeweils nur einen Text auf einmal, damit du deine Fehler laufend analysieren und beim nächsten Text direkt anwenden kannst. Ein Text alle zwei Tage verteilt das Training gut über die Woche.
 
@@ -32,7 +32,7 @@ Textverständnis muss langfristig trainiert werden – beginne rund zwei bis dre
 - **Energie bündeln:** Nach den Einprägephasen von Figuren und Fakten lernen bist du oft schon etwas erschöpft. Bündle deine Energie nochmals bewusst.
 - **Zwei statt drei Texte:** Es kann sich lohnen, sich auf zwei der drei Texte zu konzentrieren, statt bei allen drei Texten durch Zeitdruck Flüchtigkeitsfehler zu riskieren.
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Vorwissen:** Vorwissen hilft beim schnelleren Lesen, darf aber beim Beantworten der Fragen nicht anstelle des Textinhalts verwendet werden.
 - **Negierende Fragen:** Bei «Was stimmt nicht?» die Frage aufmerksam lesen, damit du das «nicht» nicht überliest.

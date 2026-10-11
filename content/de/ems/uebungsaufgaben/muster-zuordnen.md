@@ -4,7 +4,7 @@ description: "Muster zuordnen im EMS: Kostenlose Übungsserien und bewährte Tip
 weight: 1
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 Muster zuordnen ist der erste Untertest des Eignungstests für das Medizinstudium (EMS) und eröffnet den Testtag. Zu jeder Aufgabe erhältst du ein komplexes Muster sowie fünf Ausschnitte (A bis E). Die Muster stehen im oberen Bereich der Seite, die zugehörigen Ausschnitte weiter unten auf derselben Seite. Nur einer der fünf Ausschnitte lässt sich an einer beliebigen Stelle deckungsgleich und vollständig auf das Muster legen. Bei den übrigen vier wurde ein Detail hinzugefügt, weggelassen oder verändert. Die Ausschnitte sind weder vergrössert oder verkleinert noch gedreht oder gespiegelt. Die Abweichungen sind jeweils eindeutig, kleine Pünktchen oder Druckunreinheiten gelten nicht als Fehler.
 
@@ -14,11 +14,11 @@ Muster zuordnen ist der erste Untertest des Eignungstests für das Medizinstudiu
 
 Der Untertest ist bewusst so angelegt, dass in der verfügbaren Zeit in der Regel nicht alle Aufgaben bearbeitet werden können. Wenn du nicht fertig wirst, heisst das also noch nicht, dass du schlecht abgeschnitten hast.
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 Geprüft wird die Fähigkeit, Bilder und Strukturen genau zu vergleichen und kleine Unterschiede zu erkennen. Diese Fähigkeit brauchst du im Medizinstudium immer wieder, etwa beim Mikroskopieren histologischer Schnitte oder beim Beurteilen von Röntgenbildern und Hautveränderungen in der Radiologie und Dermatologie.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Muster zuordnen lässt sich gut und vergleichsweise schnell trainieren. Ein Start etwa eineinhalb bis zwei Monate vor dem EMS reicht in der Regel aus. Wir empfehlen drei bis vier Serien pro Woche. Übe zu Beginn ohne Zeitdruck, bis du ein sicheres Gefühl für die Aufgaben und eine eigene Strategie entwickelt hast. Erst danach solltest du mit der echten Zeitvorgabe arbeiten.
 
@@ -39,7 +39,7 @@ Da Muster zuordnen am Testtag ganz am Anfang steht, lohnt es sich, auch Übungse
 - **Nicht an einer Aufgabe festbeissen:** Jede Aufgabe gibt genau einen Punkt. Eine schwierige Aufgabe, die dich zwei Minuten kostet, fehlt dir bei zwei einfachen.
 - **Testheft nicht falten:** Die Seiten des Testhefts dürfen laut offiziellen Vorgaben nicht gefaltet werden. Gewöhne dir deshalb schon beim Üben an, Muster und Ausschnitte auf derselben Seite zu vergleichen.
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Sehr kleine Änderungen:** Manche Abweichungen sind so fein, dass sie beim groben Überblick nicht auffallen. Sie lassen sich nur mit einem systematischen Vorgehen zuverlässig finden, was zusätzlich Zeit kostet.
 - **Ausschnitte, die gar nicht ins Muster passen:** Manche Ausschnitte lassen sich im Muster gar nicht vollständig wiederfinden, oder ein Fehler liegt knapp ausserhalb des sichtbaren Bereichs, ist aber logisch ableitbar. Prüfe deshalb beim Überblick auch, ob ein Ausschnitt überhaupt an eine Stelle des Musters passt.

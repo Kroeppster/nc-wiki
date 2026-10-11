@@ -690,7 +690,7 @@ giorno del test) vengono da `data/testablauf.yaml`.
 **Stato attuale:** per ora i due generatori si trovano solo sulla
 [pagina Alpha](#pagina-alpha) (`content/de/alpha/_index.md`), non sulla pagina pubblica
 «Figure e fatti». Per approvarli, rimettere il blocco nel testo della pagina degli esercizi
-(nelle tre lingue, con il rimando al generatore in «Tranelli tipici»).
+(nelle tre lingue, con il rimando al generatore in «Errori frequenti»).
 
 ### Formato del fascicolo
 

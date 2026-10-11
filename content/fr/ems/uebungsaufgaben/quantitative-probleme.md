@@ -4,7 +4,7 @@ description: "Problèmes quantitatifs et formels à l'EMS : séries gratuites et
 weight: 4
 ---
 
-## Bref résumé
+## Aperçu
 
 Dans ce sous-test, tu résous des problèmes mathématiques en lien avec la médecine ou les sciences naturelles. Il s'agit en particulier de règle de trois, de proportionnalités, de calcul de puissances, de conversions d'unités et de transformation de formules. Les connaissances du secondaire sont supposées acquises. Le calcul différentiel et intégral, la trigonométrie et le calcul des probabilités ne font pas partie du test ; les formules géométriques nécessaires sont fournies.
 
@@ -14,11 +14,11 @@ Dans ce sous-test, tu résous des problèmes mathématiques en lien avec la méd
 
 Avec 2.5 minutes par question, ce sous-test n'est plutôt pas conçu pour la pression du temps.
 
-## Pourquoi ce sous-test est-il pertinent pour tes études ?
+## Importance pour les études
 
 De nombreuses relations biologiques dans le corps suivent des lois physiques (vitesses d'écoulement, diffusion – la physiologie te salue). Qui comprend comment la modification d'une variable se répercute sur une autre s'en sort plus facilement ensuite et s'épargne pas mal d'apprentissage par cœur.
 
-## Quand et à quelle fréquence s'entraîner ?
+## Moment et fréquence de l'entraînement
 
 Comme il s'agit ici surtout d'entraînement, un début précoce vaut la peine – idéalement 2 à 3 mois avant, avec au moins 2 à 3 séances d'une heure par semaine. Au début, un bloc de plusieurs jours consacré uniquement à ce sous-test aide à te familiariser avec les types de questions récurrents. Ensuite, tu peux travailler de façon plus ciblée sur les types qui te conviennent moins.
 
@@ -37,7 +37,7 @@ Comme il s'agit ici surtout d'entraînement, un début précoce vaut la peine �
 - **Déplacer les virgules lors de multiplications et divisions :** pour multiplier, additionne les décimales des deux nombres, calcule sans virgule et replace-la à la fin. Pour diviser, rends diviseur et dividende pareillement entiers avant de calculer.
 - **S'entraîner à transformer des formules :** certaines questions demandent d'isoler une grandeur ou une unité dans une formule – cela s'entraîne bien avec des formules de physique.
 
-## Pièges typiques
+## Erreurs fréquentes
 
 - **Unités :** les conversions, par exemple entre cm³ et m³ ou d'autres unités courantes, sont une source d'erreurs fréquente – révise-les à l'avance.
 - **Indications cachées :** l'information décisive ne figure parfois que dans la dernière phrase, et d'autres indications ne te servent à rien.

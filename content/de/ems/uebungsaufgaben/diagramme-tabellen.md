@@ -4,7 +4,7 @@ description: "Diagramme und Tabellen im EMS: Kostenlose Übungsserien und Tipps,
 weight: 7
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 Zu jeder Aufgabe erhältst du ein Diagramm oder eine Tabelle, meist ergänzt durch einen kurzen Begleittext. Gefragt ist, welche von fünf Aussagen sich aus den Informationen ableiten lässt oder welche nicht ableitbar ist. In einzelnen Aufgaben wählst du umgekehrt jenes Diagramm aus, das einen beschriebenen Sachverhalt korrekt darstellt. Fachwissen ist nicht erforderlich, alle nötigen Informationen sind in der Aufgabe enthalten.
 
@@ -25,11 +25,11 @@ Es gibt nur eine begrenzte Anzahl wiederkehrender Aufgabentypen:
 - **Spinnendiagramme** (Werte von innen nach aussen lesen – die innerste Zahl ist meist der Nullpunkt)
 - **Scatterplots** (selten – wie ein Kurvendiagramm, aber mit unverbundenen Einzelwerten)
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 Im Studium und später im Beruf liest du laufend Studien, Laborwerte und Verlaufskurven. Wer Diagramme und Tabellen schnell und genau auswertet, erkennt, was eine Grafik tatsächlich aussagt und was nicht.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Dieser Untertest lässt sich vergleichsweise spät noch gut lernen – ein Zeitraum von ein bis eineinhalb Monaten vor dem Eignungstest für das Medizinstudium (EMS) reicht in der Regel. Übe ihn dafür intensiv, etwa dreimal pro Woche. Es lohnt sich, Diagramme und Tabellen jeweils am Ende einer längeren Übungssession zu bearbeiten – so simulierst du die Situation am EMS, wo dieser Untertest ebenfalls ganz am Schluss kommt.
 
@@ -44,7 +44,7 @@ Dieser Untertest lässt sich vergleichsweise spät noch gut lernen – ein Zeitr
 - **Schwierige Typen gezielt trainieren:** Achte beim Üben darauf, bei welchen Diagrammtypen du am meisten Mühe hast, und trainiere gezielt diese.
 - **Mehrere Tabellen:** Zuerst den Text lesen, dann die Tabellen einzeln betrachten, erst danach den Zusammenhang.
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Absolut und relativ:** Absolute Werte (Anzahl) und relative Werte (Prozent) nicht verwechseln.
 - **Prozentpunkte ≠ Prozent:** Ein Anstieg von 50 % um 2 Prozentpunkte ergibt 52 %, ein Anstieg um 2 Prozent ergibt 51 %.

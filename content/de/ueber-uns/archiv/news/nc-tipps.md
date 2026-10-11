@@ -1,5 +1,5 @@
 ---
-title: "Unsere besten Tipps für den EMS"
+title: "Tipps für den EMS"
 date: 2024-04-21
 eyebrow: "Tipps"
 draft: false

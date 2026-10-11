@@ -4,7 +4,7 @@ description: "Figuren und Fakten lernen im EMS: Kostenlose Übungsserien und Mer
 weight: 5
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 ### Figuren
 
@@ -20,11 +20,11 @@ Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Kel
 - **Umfang:** Figuren 18 Aufgaben, 18 Punkte; Fakten 18 Aufgaben, 18 Punkte
 - **Zeit:** Figuren 4 Minuten Einprägen und 5 Minuten Reproduktion; Fakten je 6 Minuten
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 Bei beiden geht es um deine Gedächtnisleistung. Im Medizinstudium musst du dir nicht nur Fakten, sondern gerade in Anatomie und Histopathologie auch viele bildliche Strukturen merken können – und später stellst du Patient*innen anderen Fachpersonen kurz und präzise vor, mit den wichtigsten Merkmalen, Diagnose und Prozedere. Eine gute Merktechnik hilft dir bei beidem enorm.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Figuren und Fakten lernen sind beides Gedächtnisübungen, die nicht täglich sinnvoll sind. Starte frühzeitig, etwa drei Monate vor dem Eignungstest für das Medizinstudium (EMS), mit drei bis vier Einheiten pro Woche. Lass dir am Anfang bewusst mehr Zeit als vorgesehen (z. B. 10 statt 6 Minuten bei Fakten), um verschiedene Strategien auszuprobieren, und reduziere die Zeit erst allmählich, je sicherer du wirst. Im letzten Monat solltest du unter echten Testbedingungen üben: Figuren einprägen davor, Textverständnis dazwischen, dann Fakten einprägen. Stoppe das gezielte Üben einige Tage vor dem EMS, damit der Kopf frei bleibt.
 
@@ -50,7 +50,7 @@ Figuren und Fakten lernen sind beides Gedächtnisübungen, die nicht täglich si
 - **Verschiedene Strategien ausprobieren:** Es gibt nicht die eine richtige Methode für alle. Lass dich nicht verunsichern, wenn eine Strategie bei anderen besser funktioniert als bei dir – wichtig ist, was für dich persönlich klappt.
 - **Punkte gezielt holen:** Figuren und Fakten lernen sowie der Konzentrationstest lassen sich mit Übung gut auf 16–20 Punkte trainieren – das ist am Anfang unrealistisch, wird aber mit der richtigen Technik machbar. Nimm dir für diese gut trainierbaren Untertests lieber die nötige Zeit, statt bei den längeren Untertests (z. B. Textverständnis) den letzten Text zu hetzen, der ohnehin nur wenige Punkte bringt – der EMS ist reines Punktemanagement.
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Sehr ähnliche Figuren:** Wenn sich Figuren stark ähneln, achte auf feine geometrische Unterschiede (z. B. rechte Winkel) oder konzentriere dich bei ähnlichen Aussenformen v. a. auf Form und Lage der dunklen Fläche.
 - **Übungsserien zu früh verbrauchen:** Mehrfaches Wiederholen derselben Serie verzerrt dein Gefühl für den eigenen Leistungsstand.

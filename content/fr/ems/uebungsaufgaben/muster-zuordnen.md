@@ -4,7 +4,7 @@ description: "Association de motifs à l'EMS : séries d'exercices gratuites et 
 weight: 1
 ---
 
-## Bref résumé
+## Aperçu
 
 L'association de motifs est le premier sous-test de l'EMS et ouvre la journée de test. Pour chaque question, tu reçois un motif complexe ainsi que cinq extraits (A à E). Les motifs se trouvent dans la partie supérieure de la page, les extraits correspondants plus bas sur la même page. Un seul des cinq extraits peut être superposé exactement et entièrement au motif, à un endroit quelconque. Pour les quatre autres, un détail a été ajouté, omis ou modifié. Les extraits ne sont ni agrandis ou réduits, ni tournés ou inversés. Les différences sont toujours univoques ; de petits points ou des défauts d'impression ne comptent pas comme des erreurs.
 
@@ -14,11 +14,11 @@ L'association de motifs est le premier sous-test de l'EMS et ouvre la journée d
 
 Le sous-test est volontairement conçu pour qu'on ne puisse en général pas traiter toutes les questions dans le temps imparti. Si tu ne termines pas, cela ne veut donc pas dire que tu as mal réussi.
 
-## Pourquoi ce sous-test est-il pertinent pour tes études ?
+## Importance pour les études
 
 On teste la capacité à comparer précisément des images et des structures et à reconnaître de petites différences. Tu auras besoin de cette capacité tout au long des études de médecine, par exemple au microscope face à des coupes histologiques ou pour évaluer des radiographies et des lésions cutanées en radiologie et en dermatologie.
 
-## Quand et à quelle fréquence s'entraîner ?
+## Moment et fréquence de l'entraînement
 
 L'association de motifs s'entraîne bien et relativement vite. Commencer environ 1.5 à 2 mois avant l'EMS suffit en général. Nous recommandons 3 à 4 séries par semaine. Au début, entraîne-toi sans pression temporelle, jusqu'à ce que tu te sentes à l'aise avec les questions et que tu aies développé ta propre stratégie. Ce n'est qu'ensuite que tu devrais travailler avec le temps réel.
 
@@ -39,7 +39,7 @@ Comme l'association de motifs ouvre la journée de test, il vaut la peine de com
 - **Ne pas s'acharner sur une question :** chaque question rapporte exactement un point. Une question difficile qui te coûte deux minutes te manquera pour deux questions faciles.
 - **Ne pas plier le cahier :** selon les directives officielles, les pages du cahier de test ne doivent pas être pliées. Habitue-toi donc dès l'entraînement à comparer motif et extraits sur la même page.
 
-## Pièges typiques
+## Erreurs fréquentes
 
 - **Changements très petits :** certaines différences sont si fines qu'elles n'apparaissent pas lors du coup d'œil général. On ne les trouve de manière fiable qu'avec une démarche systématique, ce qui coûte du temps supplémentaire.
 - **Extraits qui ne rentrent pas du tout dans le motif :** certains extraits ne se retrouvent pas entièrement dans le motif, ou une erreur se situe juste en dehors de la zone visible mais peut être déduite logiquement. Vérifie donc aussi, lors du coup d'œil général, si un extrait correspond seulement à un endroit du motif.

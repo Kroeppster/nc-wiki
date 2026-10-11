@@ -4,7 +4,7 @@ description: "Konzentriertes und sorgfältiges Arbeiten im EMS: Kostenlose Übun
 weight: 8
 ---
 
-## Kurze Zusammenfassung
+## Überblick
 
 Du erhältst ein Blatt mit 40 Zeilen zu je 40 Zeichen und markierst nach einer vorgegebenen Regel bestimmte Zielzeichen. Du arbeitest strikt zeilenweise und ohne Auslassungen. Bis zum letzten markierten Zeichen wird jedes fälschlich markierte oder übersehene Zeichen als Fehler gewertet und von den richtigen Markierungen abgezogen. Zeichen und Regel ändern sich jedes Jahr und werden im Voraus nicht bekannt gegeben.
 
@@ -20,11 +20,11 @@ Dies ist der einzige Untertest, bei dem eine Rangliste zwischen allen Kandidiere
 
 Für jedes richtig markierte Zeichen gibt es einen Punkt, für jedes falsch markierte oder ausgelassene Zeichen wird ein Punkt abgezogen. Da ein übersprungenes Zeichen dich zusätzlich um die Chance auf einen Punkt bringt, ist Auslassen tendenziell schlechter als ein falsch gesetzter Strich. Insgesamt gibt es 40 Zeilen mit ungefähr gleichmässig verteilten Zeichen – im Schnitt lassen sich etwa zehn pro Zeile markieren, das kann als grobe Orientierung dienen.
 
-## Wieso ist dieser Untertest fürs Studium relevant?
+## Bedeutung für das Studium
 
 Als Ärztin oder Arzt ist es wichtig, auch unter Stress konzentriert und genau arbeiten zu können. Genau das prüft dieser Untertest.
 
-## Wann und wie oft üben?
+## Zeitpunkt und Häufigkeit des Übens
 
 Bei diesem Untertest sind schnell Fortschritte sichtbar – es reicht meist, eineinhalb bis zwei Monate vorher zu beginnen, dafür aber mit vier bis fünf Einheiten pro Woche, da jede Einheit nur kurz dauert. Um die Testsituation realistisch zu simulieren, lohnt es sich, den Konzentrationstest beim Üben nicht als Erstes zu lösen, sondern erst nach ein paar anderen Untertests – so bist du wie am echten Testtag bereits etwas erschöpft, wenn du ihn angehst.
 
@@ -42,7 +42,7 @@ Bei diesem Untertest sind schnell Fortschritte sichtbar – es reicht meist, ein
 - **Möglichst vielfältig üben:** Beim echten Eignungstest für das Medizinstudium (EMS) kommen oft mehrere gekoppelte Bedingungen vor (z. B. «streiche jedes q nach einem p und jedes b vor einem d»). Übe daher mit unterschiedlichen Bedingungstypen, nicht nur mit einer Art.
 - **Fehler abhaken:** Ärger über einen Fehler kostet nur zusätzliche Konzentration und Zeit – zurückgehen und korrigieren lohnt sich ohnehin nicht, da nur die letzte Markierung zählt.
 
-## Typische Fallen
+## Häufige Fehler
 
 - **Ähnliche Zeichen:** Zeichen wie «pq» und «bd» werden leicht verwechselt.
 - **Nur auf Tempo gehen:** Wer nur auf Geschwindigkeit achtet, lässt leicht Zeichen aus – und jedes ausgelassene Zeichen wird abgezogen.
