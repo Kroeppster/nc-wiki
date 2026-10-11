@@ -42,7 +42,9 @@ mkdirSync(ABLAGE, { recursive: true });
 const b = await chromium.launch();
 let ok = 0, fail = 0;
 const pruef = (n, c, i = '') => { if (c) { ok++; console.log('  OK    ' + n); } else { fail++; console.log('  FEHLT ' + n + '  ' + String(i).slice(0, 300)); } };
-const ctx = await b.newContext({ viewport: { width: 1100, height: 1000 } });
+// reducedMotion: die Seite scrollt sonst weich (scroll-behavior: smooth), und
+// Playwright findet den Knopf waehrend der Animation nie im Bild.
+const ctx = await b.newContext({ viewport: { width: 1100, height: 1000 }, reducedMotion: 'reduce' });
 await ctx.addInitScript(() => { try { localStorage.setItem('alpha-notice-seen', '1'); localStorage.setItem('cookie-consent', 'accepted'); } catch (e) {} });
 const p = await ctx.newPage(); const js = [];
 p.on('pageerror', e => { if (!/PagefindUI/.test(String(e.message))) js.push(String(e.message).slice(0, 110)); });
