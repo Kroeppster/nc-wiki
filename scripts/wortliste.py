@@ -64,7 +64,7 @@ RELEASE = ('https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/'
 KOPF = 4            # Zeile mit den Spaltentiteln
 ERSTE = 5           # erste Datenzeile
 RESERVE = 40        # so viele leere, vorformatierte Zeilen für Neues
-BIS = 600           # Formeln und Auswahllisten reichen bis zu dieser Zeile
+BIS = 3000          # Formeln und Auswahllisten reichen bis zu dieser Zeile (reicht für rund 2900 Wörter je Blatt)
 
 SCHRIFT = 'Arial'
 PAPIER, NAVY, GRAU, WEISS, GRUEN, HELL = 'F5F7FB', '101A33', '636D88', 'FFFFFF', '1C6B3F', 'EEF1F7'
@@ -185,6 +185,8 @@ def datenblatt(wb, name, farbe, hinweis, spalten, zeilen, hilfen=None, listen=No
         pruefer[idx] = dv
 
     letzte = ERSTE + len(zeilen) + RESERVE - 1
+    if letzte > BIS:
+        raise ValueError(f'Blatt «{name}» hat {len(zeilen)} Zeilen - mehr als die Formeln erfassen (BIS = {BIS}).')
     for n in range(letzte - ERSTE + 1):
         r = ERSTE + n
         werte = zeilen[n] if n < len(zeilen) else [''] * len(spalten)
@@ -197,14 +199,15 @@ def datenblatt(wb, name, farbe, hinweis, spalten, zeilen, hilfen=None, listen=No
             if i in pruefer:
                 pruefer[i].add(c.coordinate)
         for j, (_, _, formel) in enumerate(hilfen):
-            c = ws.cell(row=r, column=len(spalten) + 1 + j, value=formel.format(r=r))
+            c = ws.cell(row=r, column=len(spalten) + 1 + j, value=formel.format(r=r, bis=BIS))
             c.font = _schrift(size=9, italic=True, color=GRAU)
             c.fill = _fill(HELL)
             c.border = _rand()
     # Auswahllisten und Formeln gelten auch für Zeilen, die später hinzukommen
     for idx, dv in pruefer.items():
         col = chr(ord('A') + idx)
-        dv.add(f'{col}{letzte + 1}:{col}{BIS}')
+        if letzte < BIS:
+            dv.add(f'{col}{letzte + 1}:{col}{BIS}')
     ws.freeze_panes = f'A{ERSTE}'
     ws.auto_filter.ref = f'A{KOPF}:{chr(ord("A") + gesamt - 1)}{letzte}'
     return ws
@@ -340,7 +343,7 @@ def ausgeben(yaml_pfad, ziel, stand=None):
     datenblatt(wb, 'Einzelne Namen', '2E75B6',
                'Nachnamen ohne Gruppe - einer pro Zeile. Der Generator nimmt sie, wenn die Namensgruppen nicht reichen. '
                'Mindestens 15.', [('Nachname', 30)], [[n] for n in d['namen']],
-               hilfen=[('Hinweis', 24, '=IF(A{r}="","",IF(COUNTIF($A$5:$A$600,A{r})>1,"⚠ doppelt","ok"))')])
+               hilfen=[('Hinweis', 24, '=IF(A{r}="","",IF(COUNTIF($A$5:$A${bis},A{r})>1,"⚠ doppelt","ok"))')])
 
     felder = list(d['berufe'])
     zeilen = [[f, w, g] for f, liste in d['berufe'].items() for w, g in liste]
@@ -350,9 +353,9 @@ def ausgeben(yaml_pfad, ziel, stand=None):
         'Altersgruppe drei Berufe aus EINEM Feld, darum braucht ein Feld mindestens drei Berufe. Neues Feld: einfach '
         'einen neuen Namen in die Spalte «Berufsfeld» schreiben.',
         [('Berufsfeld', 22), ('Beruf', 30), ('Geschlecht (m/w)', 12)], zeilen,
-        hilfen=[('Hinweis', 44, '=IF(B{r}="","",IF(COUNTIF($B$5:$B$600,B{r})>1,"⚠ doppelt",'
-                                'IF(COUNTIF($A$5:$A$600,A{r})<3,"⚠ Feld hat nur "&COUNTIF($A$5:$A$600,A{r})&" - wird nicht benutzt",'
-                                'COUNTIF($A$5:$A$600,A{r})&" im Feld")))')],
+        hilfen=[('Hinweis', 44, '=IF(B{r}="","",IF(COUNTIF($B$5:$B${bis},B{r})>1,"⚠ doppelt",'
+                                'IF(COUNTIF($A$5:$A${bis},A{r})<3,"⚠ Feld hat nur "&COUNTIF($A$5:$A${bis},A{r})&" - wird nicht benutzt",'
+                                'COUNTIF($A$5:$A${bis},A{r})&" im Feld")))')],
         listen={0: ','.join(felder) if len(','.join(felder)) < 250 else '', 2: 'm,w'})
 
     arten = list(d['krankheiten'])
@@ -362,8 +365,8 @@ def ausgeben(yaml_pfad, ziel, stand=None):
         'Art - Krankheit. Der Generator gibt jeder Person eine Krankheit, die drei einer Altersgruppe stammen aus drei '
         'verschiedenen Arten. Jede Krankheit nur einmal, auch nicht in zwei Arten. Neue Art: neuen Namen eintragen.',
         [('Art', 22), ('Krankheit', 34)], zeilen,
-        hilfen=[('Hinweis', 34, '=IF(B{r}="","",IF(COUNTIF($B$5:$B$600,B{r})>1,"⚠ doppelt",'
-                                'COUNTIF($A$5:$A$600,A{r})&" in dieser Art"))')],
+        hilfen=[('Hinweis', 34, '=IF(B{r}="","",IF(COUNTIF($B$5:$B${bis},B{r})>1,"⚠ doppelt",'
+                                'COUNTIF($A$5:$A${bis},A{r})&" in dieser Art"))')],
         listen={0: ','.join(arten) if len(','.join(arten)) < 250 else ''})
 
     zeilen = []
@@ -376,7 +379,7 @@ def ausgeben(yaml_pfad, ziel, stand=None):
         'Ein «x» in der dritten Spalte: passt nur nach «ist», nicht als Adjektiv vor dem Nomen.',
         [('Gruppe', 14), ('Merkmal', 30), ('Nur nach «ist» (x)', 14)], zeilen,
         hilfen=[('Wird benutzt?', 44,
-                 '=IF(B{r}="","",IF(COUNTIF($B$5:$B$600,B{r})>1,"⚠ doppelt",'
+                 '=IF(B{r}="","",IF(COUNTIF($B$5:$B${bis},B{r})>1,"⚠ doppelt",'
                  'IF(EXACT(LEFT(B{r},1),UPPER(LEFT(B{r},1))),"nicht benutzt (Grossbuchstabe am Anfang)",'
                  'IF(C{r}<>"","benutzt, aber nie vor dem Nomen","benutzt"))))')],
         listen={0: ','.join(GRUPPEN_MERKMALE)})
@@ -388,7 +391,7 @@ def ausgeben(yaml_pfad, ziel, stand=None):
                'Links die Form wie in der Liste Krankheiten, rechts die Form nach «mit».',
                [('Form in der Liste', 30), ('Form nach «mit»', 30)], zeilen,
                hilfen=[('Hinweis', 34,
-                        '=IF(A{r}="","",IF(COUNTIF(Krankheiten!$B$5:$B$600,A{r})=0,"⚠ steht nicht in Krankheiten","ok"))')])
+                        '=IF(A{r}="","",IF(COUNTIF(Krankheiten!$B$5:$B${bis},A{r})=0,"⚠ steht nicht in Krankheiten","ok"))')])
 
     verst = wb.create_sheet('_stand')
     verst['A1'] = kennung(d)

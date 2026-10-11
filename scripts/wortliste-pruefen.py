@@ -343,6 +343,28 @@ def formeln(ordner):
               if isinstance(c.value, str) and c.value.startswith('#') and c.value[1:4].isupper()]
     pruef('keine Formelfehler (#NAME?, #WERT! ...) in der ganzen Datei', not fehler, fehler[:3])
 
+    # Grosse Liste: Formeln und Uebersicht muessen auch weit jenseits von Zeile 600 stimmen
+    gross = Arbeit(ordner, 'gross')
+    d = wl.laden(gross.yaml)
+    for f in range(40):
+        d['berufe'][f'testfeld_{f}'] = sorted((f'Testberuf{f}x{i}', 'm' if i % 2 else 'w') for i in range(25))
+    wl.yaml_schreiben(gross.yaml, d)
+    gesamt = sum(len(l) for l in d['berufe'].values())
+    rc, _ = lauf('ausgeben', '--yaml', gross.yaml, '--ziel', os.path.join(gross.ordner, 'gross'), '--stand', 'T')
+    r = subprocess.run([soffice, '--headless', '--convert-to', 'xlsx', '--outdir', os.path.join(gross.ordner, 'gross-gerechnet'),
+                        os.path.join(gross.ordner, 'gross', wl.DATEI)], capture_output=True, text=True, timeout=240)
+    wbg = load_workbook(os.path.join(gross.ordner, 'gross-gerechnet', wl.DATEI), data_only=True)
+    ug = wbg['Übersicht']
+    pruef(f'Liste mit {gesamt} Berufen: Uebersicht zaehlt alle mit',
+          ug.cell(row=wl.ERSTE + 3, column=2).value == gesamt, ug.cell(row=wl.ERSTE + 3, column=2).value)
+    pruef('Liste mit ueber 1000 Berufen: Berufsfelder mit mind. 3 Berufen zaehlt alle', ug.cell(row=wl.ERSTE + 2, column=2).value == 7 + 40,
+          ug.cell(row=wl.ERSTE + 2, column=2).value)
+    bg = wbg['Berufe']
+    pruef('Hinweisspalte in der letzten Zeile der grossen Liste rechnet', str(bg.cell(row=wl.ERSTE + gesamt - 1, column=4).value).endswith('im Feld'),
+          bg.cell(row=wl.ERSTE + gesamt - 1, column=4).value)
+    rc, aus = lauf('einlesen', os.path.join(gross.ordner, 'gross', wl.DATEI), '--yaml', gross.yaml, '--probe')
+    pruef('grosse Liste laesst sich wieder einlesen', rc == 0, aus[-300:])
+
 
 def bauen(ordner):
     print('\n=== Website mit geaenderter Wortliste bauen und Generator pruefen ===')
