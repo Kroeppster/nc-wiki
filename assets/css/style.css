@@ -1662,8 +1662,11 @@ body.pm-aktiv{overflow:hidden;}
 .fig-svg{width:100%;max-width:120pt;height:auto;display:block;margin:0 auto;background:#fff;}
 /* "1)" über der Figur, fett - wie im Heft (ems.typ: figuren-raster). */
 .fig-nr{margin:0 0 4pt;font-weight:700;}
-.fig-wahl{list-style:none;display:flex;justify-content:center;flex-wrap:wrap;gap:.1rem .5rem;margin:.35rem 0 0;padding:0;}
-.fig-wahl label{cursor:pointer;}
+/* Die fuenf Antworten in EINER Zeile, Buchstabe ueber dem Kreis wie auf dem
+   Antwortbogen - nebeneinander brachen sie in der schmalen Spalte um (4 + 1). */
+.fig-wahl{list-style:none;display:grid;grid-template-columns:repeat(5,auto);justify-content:center;gap:0 .45rem;margin:.35rem 0 0;padding:0;}
+.fig-wahl label{cursor:pointer;display:flex;flex-direction:column-reverse;align-items:center;line-height:1.1;}
+.fig-wahl input{margin:.15rem 0 0;}
 @media (max-width:900px){ .fig-raster{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:560px){ .fig-raster{grid-template-columns:repeat(2,1fr);} }
 
@@ -1702,6 +1705,9 @@ body.pm-aktiv{overflow:hidden;}
 :where(.ems-blatt,.ems-seite) p{margin:0;}
 .ems-kopf{display:grid;grid-template-columns:1fr auto;column-gap:10pt;font-weight:700;font-size:1.2em;margin:0 0 10.958pt;}
 .ems-kopf > :last-child{text-align:right;}
+/* Schmaler Bildschirm: Titel und Zeit untereinander - nebeneinander ragte
+   «Bearbeitungszeit: 5 Minuten» rechts aus dem Blatt. */
+@media screen and (max-width:560px){ .ems-kopf{grid-template-columns:1fr;} .ems-kopf > :last-child{text-align:left;} }
 .ems-kasten{border:1pt solid #000;padding:5.135pt 2.83pt 4.815pt;margin:0 -1pt 0 0;}
 .ems-kasten > * + *{margin-top:12pt;}
 .ems-kasten + *{margin-top:14.535pt;}
