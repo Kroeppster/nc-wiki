@@ -83,7 +83,7 @@ pruef('zweispaltig wie im Heft', ab.spalten === '2', ab.spalten);
 // --- 2. Viele Sets, jede Frage gegen die Liste --------------------------------
 console.log(`\n=== ${RUNDEN} Sets, jede Frage gegen die Einpraegeliste ===`);
 const geschlecht = {};
-Object.values(W.berufe).forEach(l => l.forEach(x => { geschlecht[x.wort] = x.geschlecht === 'w' ? 'w' : 'm'; }));
+Object.values(W.berufe).forEach(l => l.forEach(x => { geschlecht[x.m] = 'm'; geschlecht[x.w] = 'w'; }));
 const attributiv = m => (/e$/.test(m) ? m : /el$/.test(m) ? m.slice(0, -2) + 'le' : m + 'e');
 const fehler = { loesung: [], eindeutig: [], optionen: [], geschlecht: [], namen: [], alter: [], verraten: [], dativ: [], gruppe: [], sortiert: [] };
 const typen = {};

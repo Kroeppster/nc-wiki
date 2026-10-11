@@ -720,8 +720,8 @@ Ein Blatt je Liste (Namensgruppen, Einzelne Namen, Berufe, Krankheiten, Merkmale
 speichern, in `redaktion/` hochladen (Dateiname beginnt mit `ncwiki-wortliste`): `wortliste-einlesen.yml`
 prüft die Datei mit `scripts/wortliste.py` und eröffnet einen Pull Request mit Bericht (neu / entfernt /
 Hinweise). **Bei einem Fehler** wird nichts übernommen und kein Pull Request eröffnet; der Lauf wird rot,
-seine Zusammenfassung nennt jeden Fehler mit Blatt und Zeile (zu wenige Wörter, Wort doppelt, Geschlecht
-nicht m/w, Zeichen `< > & { }`). Mindestmengen: 15 einzelne Namen; mindestens 5 Berufsfelder mit je
+seine Zusammenfassung nennt jeden Fehler mit Blatt und Zeile (zu wenige Wörter, Wort doppelt, weibliche oder
+männliche Berufsform fehlt, Zeichen `< > & { }`). Mindestmengen: 15 einzelne Namen; mindestens 5 Berufsfelder mit je
 mindestens 3 Berufen; mindestens 3 Krankheits-Arten und 15 Krankheiten; mindestens 15 klein geschriebene
 Merkmale. Die Excel ersetzt die **ganze** Liste (Schnappschuss); beruht sie auf einem älteren Stand der
 Liste, warnt der Bericht. Ersetzt werden nur die Wortlisten-Blöcke – Erklärkommentar, Altersgruppen und

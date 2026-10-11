@@ -23,7 +23,7 @@ Zeile für Zeile im Text der Datei - mit einem Rundlauf (aus -> ein ohne
 Änderung) bleibt die Datei Zeichen für Zeichen gleich.
 
 SICHERHEIT: Zuerst wird alles geprüft (Mindestmengen, doppelte Wörter,
-Geschlecht m/w, verbotene Zeichen). Gibt es auch nur einen Fehler, wird NICHTS
+beide Berufsformen, verbotene Zeichen). Gibt es auch nur einen Fehler, wird NICHTS
 geschrieben und der Bericht nennt jeden Fehler mit Blatt und Zeile. Die
 Mindestmengen sind die, die der Generator wirklich braucht
 (layouts/partials/bausteine/fakten-generator.html) - eine zu kleine Liste würde
@@ -64,7 +64,7 @@ RELEASE = ('https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/'
 KOPF = 4            # Zeile mit den Spaltentiteln
 ERSTE = 5           # erste Datenzeile
 RESERVE = 40        # so viele leere, vorformatierte Zeilen für Neues
-BIS = 600           # Formeln und Auswahllisten reichen bis zu dieser Zeile
+BIS = 3000          # Formeln und Auswahllisten reichen bis zu dieser Zeile (reicht für rund 2900 Wörter je Blatt)
 
 SCHRIFT = 'Arial'
 PAPIER, NAVY, GRAU, WEISS, GRUEN, HELL = 'F5F7FB', '101A33', '636D88', 'FFFFFF', '1C6B3F', 'EEF1F7'
@@ -97,7 +97,7 @@ def laden(pfad):
     d = {
         'gruppen': [[_text(n) for n in g] for g in roh.get('namensgruppen') or []],
         'namen': [_text(n) for n in roh.get('namen') or []],
-        'berufe': {f: [(_text(b['wort']), str(b.get('geschlecht', 'm'))) for b in liste]
+        'berufe': {f: [(_text(b['m']), _text(b['w'])) for b in liste]
                    for f, liste in (roh.get('berufe') or {}).items()},
         'krankheiten': {a: [_text(k) for k in liste]
                         for a, liste in (roh.get('krankheiten') or {}).items()},
@@ -185,6 +185,8 @@ def datenblatt(wb, name, farbe, hinweis, spalten, zeilen, hilfen=None, listen=No
         pruefer[idx] = dv
 
     letzte = ERSTE + len(zeilen) + RESERVE - 1
+    if letzte > BIS:
+        raise ValueError(f'Blatt «{name}» hat {len(zeilen)} Zeilen - mehr als die Formeln erfassen (BIS = {BIS}).')
     for n in range(letzte - ERSTE + 1):
         r = ERSTE + n
         werte = zeilen[n] if n < len(zeilen) else [''] * len(spalten)
@@ -197,14 +199,15 @@ def datenblatt(wb, name, farbe, hinweis, spalten, zeilen, hilfen=None, listen=No
             if i in pruefer:
                 pruefer[i].add(c.coordinate)
         for j, (_, _, formel) in enumerate(hilfen):
-            c = ws.cell(row=r, column=len(spalten) + 1 + j, value=formel.format(r=r))
+            c = ws.cell(row=r, column=len(spalten) + 1 + j, value=formel.format(r=r, bis=BIS))
             c.font = _schrift(size=9, italic=True, color=GRAU)
             c.fill = _fill(HELL)
             c.border = _rand()
     # Auswahllisten und Formeln gelten auch für Zeilen, die später hinzukommen
     for idx, dv in pruefer.items():
         col = chr(ord('A') + idx)
-        dv.add(f'{col}{letzte + 1}:{col}{BIS}')
+        if letzte < BIS:
+            dv.add(f'{col}{letzte + 1}:{col}{BIS}')
     ws.freeze_panes = f'A{ERSTE}'
     ws.auto_filter.ref = f'A{KOPF}:{chr(ord("A") + gesamt - 1)}{letzte}'
     return ws
@@ -275,9 +278,10 @@ ANLEITUNG = [
     ('Die Blätter', None),
     ('Namensgruppen: eine Zeile = drei oder mehr ähnlich klingende Namen. Ein Name darf nur in EINER Zeile stehen.', 0),
     ('Einzelne Namen: Nachnamen ohne Gruppe. Mindestens 15, sonst blendet sich der Generator aus.', 0),
-    ('Berufe: Berufsfeld (kurz, klein, ohne Leerzeichen, z. B. technik_bau) - Beruf - Geschlecht m oder w. Das '
-     'Geschlecht steuert «Der/Die» und «Herr/Frau» in den Fragen, also die Berufsbezeichnung so schreiben, wie sie '
-     'gemeint ist («Ingenieurin» = w). Ein Feld braucht mindestens drei Berufe, sonst wird es nicht benutzt.', 0),
+    ('Berufe: Berufsfeld (kurz, klein, ohne Leerzeichen, z. B. technik_bau) - männliche Form - weibliche Form. '
+     'BEIDE Formen sind Pflicht («Apotheker» und «Apothekerin»): Der Generator würfelt pro Person eine der beiden '
+     'und passt «Der/Die» und «Herr/Frau» in den Fragen an. Ein Beruf kommt in einem Set nie in beiden Formen vor. '
+     'Ein Feld braucht mindestens drei Berufe, sonst wird es nicht benutzt.', 0),
     ('Krankheiten: Art (z. B. herz_kreislauf) - Krankheit. Jede Krankheit nur einmal, auch nicht in zwei Arten.', 0),
     ('Merkmale: Gruppe «zustand» (Aufenthalt, Zivilstand) oder «charakter» (Eigenschaft) - Merkmal. Merkmale mit '
      'grossem Anfangsbuchstaben (Nomen wie «Notfall») kommen in keinem Set vor. Ein «x» in der dritten Spalte heisst: '
@@ -340,20 +344,23 @@ def ausgeben(yaml_pfad, ziel, stand=None):
     datenblatt(wb, 'Einzelne Namen', '2E75B6',
                'Nachnamen ohne Gruppe - einer pro Zeile. Der Generator nimmt sie, wenn die Namensgruppen nicht reichen. '
                'Mindestens 15.', [('Nachname', 30)], [[n] for n in d['namen']],
-               hilfen=[('Hinweis', 24, '=IF(A{r}="","",IF(COUNTIF($A$5:$A$600,A{r})>1,"⚠ doppelt","ok"))')])
+               hilfen=[('Hinweis', 24, '=IF(A{r}="","",IF(COUNTIF($A$5:$A${bis},A{r})>1,"⚠ doppelt","ok"))')])
 
     felder = list(d['berufe'])
-    zeilen = [[f, w, g] for f, liste in d['berufe'].items() for w, g in liste]
+    zeilen = [[f, m_, w_] for f, liste in d['berufe'].items() for m_, w_ in liste]
     datenblatt(
         wb, 'Berufe', 'C55A11',
-        'Berufsfeld (kurz, klein, ohne Leerzeichen) - Beruf - Geschlecht m oder w. Der Generator zieht je '
+        'Berufsfeld (kurz, klein, ohne Leerzeichen) - männliche Form - weibliche Form. BEIDE Formen sind Pflicht '
+        '(Apotheker / Apothekerin): Der Generator würfelt eine davon, nie beide im selben Set. Er zieht je '
         'Altersgruppe drei Berufe aus EINEM Feld, darum braucht ein Feld mindestens drei Berufe. Neues Feld: einfach '
         'einen neuen Namen in die Spalte «Berufsfeld» schreiben.',
-        [('Berufsfeld', 22), ('Beruf', 30), ('Geschlecht (m/w)', 12)], zeilen,
-        hilfen=[('Hinweis', 44, '=IF(B{r}="","",IF(COUNTIF($B$5:$B$600,B{r})>1,"⚠ doppelt",'
-                                'IF(COUNTIF($A$5:$A$600,A{r})<3,"⚠ Feld hat nur "&COUNTIF($A$5:$A$600,A{r})&" - wird nicht benutzt",'
-                                'COUNTIF($A$5:$A$600,A{r})&" im Feld")))')],
-        listen={0: ','.join(felder) if len(','.join(felder)) < 250 else '', 2: 'm,w'})
+        [('Berufsfeld', 22), ('Männlich', 30), ('Weiblich', 30)], zeilen,
+        hilfen=[('Hinweis', 44, '=IF(AND(B{r}="",C{r}=""),"",IF(OR(B{r}="",C{r}=""),"⚠ beide Formen nötig",'
+                                'IF(OR(COUNTIF($B$5:$B${bis},B{r})+COUNTIF($C$5:$C${bis},B{r})>1,'
+                                'COUNTIF($B$5:$B${bis},C{r})+COUNTIF($C$5:$C${bis},C{r})>1),"⚠ doppelt",'
+                                'IF(COUNTIF($A$5:$A${bis},A{r})<3,"⚠ Feld hat nur "&COUNTIF($A$5:$A${bis},A{r})&" - wird nicht benutzt",'
+                                'COUNTIF($A$5:$A${bis},A{r})&" im Feld"))))')],
+        listen={0: ','.join(felder) if len(','.join(felder)) < 250 else ''})
 
     arten = list(d['krankheiten'])
     zeilen = [[a, k] for a, liste in d['krankheiten'].items() for k in liste]
@@ -362,8 +369,8 @@ def ausgeben(yaml_pfad, ziel, stand=None):
         'Art - Krankheit. Der Generator gibt jeder Person eine Krankheit, die drei einer Altersgruppe stammen aus drei '
         'verschiedenen Arten. Jede Krankheit nur einmal, auch nicht in zwei Arten. Neue Art: neuen Namen eintragen.',
         [('Art', 22), ('Krankheit', 34)], zeilen,
-        hilfen=[('Hinweis', 34, '=IF(B{r}="","",IF(COUNTIF($B$5:$B$600,B{r})>1,"⚠ doppelt",'
-                                'COUNTIF($A$5:$A$600,A{r})&" in dieser Art"))')],
+        hilfen=[('Hinweis', 34, '=IF(B{r}="","",IF(COUNTIF($B$5:$B${bis},B{r})>1,"⚠ doppelt",'
+                                'COUNTIF($A$5:$A${bis},A{r})&" in dieser Art"))')],
         listen={0: ','.join(arten) if len(','.join(arten)) < 250 else ''})
 
     zeilen = []
@@ -376,7 +383,7 @@ def ausgeben(yaml_pfad, ziel, stand=None):
         'Ein «x» in der dritten Spalte: passt nur nach «ist», nicht als Adjektiv vor dem Nomen.',
         [('Gruppe', 14), ('Merkmal', 30), ('Nur nach «ist» (x)', 14)], zeilen,
         hilfen=[('Wird benutzt?', 44,
-                 '=IF(B{r}="","",IF(COUNTIF($B$5:$B$600,B{r})>1,"⚠ doppelt",'
+                 '=IF(B{r}="","",IF(COUNTIF($B$5:$B${bis},B{r})>1,"⚠ doppelt",'
                  'IF(EXACT(LEFT(B{r},1),UPPER(LEFT(B{r},1))),"nicht benutzt (Grossbuchstabe am Anfang)",'
                  'IF(C{r}<>"","benutzt, aber nie vor dem Nomen","benutzt"))))')],
         listen={0: ','.join(GRUPPEN_MERKMALE)})
@@ -388,7 +395,7 @@ def ausgeben(yaml_pfad, ziel, stand=None):
                'Links die Form wie in der Liste Krankheiten, rechts die Form nach «mit».',
                [('Form in der Liste', 30), ('Form nach «mit»', 30)], zeilen,
                hilfen=[('Hinweis', 34,
-                        '=IF(A{r}="","",IF(COUNTIF(Krankheiten!$B$5:$B$600,A{r})=0,"⚠ steht nicht in Krankheiten","ok"))')])
+                        '=IF(A{r}="","",IF(COUNTIF(Krankheiten!$B$5:$B${bis},A{r})=0,"⚠ steht nicht in Krankheiten","ok"))')])
 
     verst = wb.create_sheet('_stand')
     verst['A1'] = kennung(d)
@@ -534,9 +541,13 @@ def lesen(pfad, m):
     felder, eintr = {}, []
     roh_felder = {}
     for r, w in _zeilen(wb['Berufe'], 'Berufsfeld', 3, m):
-        feld_roh, beruf, g = w
-        if not feld_roh or not beruf:
-            m.f('Berufe', r, 'Berufsfeld und Beruf müssen beide ausgefüllt sein.')
+        feld_roh, maennlich, weiblich = w
+        if not feld_roh or not maennlich or not weiblich:
+            m.f('Berufe', r, 'Berufsfeld, männliche UND weibliche Form müssen ausgefüllt sein '
+                '(z. B. Apotheker / Apothekerin) - der Generator würfelt eine der beiden Formen.')
+            continue
+        if maennlich.casefold() == weiblich.casefold():
+            m.f('Berufe', r, f'Männliche und weibliche Form sind gleich («{maennlich}») - bitte beide Formen schreiben.')
             continue
         feld = _schluessel(feld_roh)
         if not _schluessel_ok(feld):
@@ -544,18 +555,11 @@ def lesen(pfad, m):
             continue
         if feld != feld_roh:
             roh_felder[feld_roh] = feld
-        gk = g.casefold()
-        if gk in ('m', 'männlich', 'maennlich'):
-            g = 'm'
-        elif gk in ('w', 'weiblich'):
-            g = 'w'
-        else:
-            m.f('Berufe', r, f'Geschlecht muss m oder w sein (steht: «{g}»).' if g else
-                'Geschlecht fehlt (m oder w) - es steuert «Der/Die» und «Herr/Frau» in den Fragen.')
-            continue
-        beruf = _wort('Berufe', r, beruf, m, 'Beruf')
-        felder.setdefault(feld, []).append((beruf, g))
-        eintr.append((r, beruf))
+        maennlich = _wort('Berufe', r, maennlich, m, 'Beruf')
+        weiblich = _wort('Berufe', r, weiblich, m, 'Beruf')
+        felder.setdefault(feld, []).append((maennlich, weiblich))
+        eintr.append((r, maennlich))
+        eintr.append((r, weiblich))
     for roh, feld in roh_felder.items():
         m.h(f'Berufsfeld «{roh}» wird als «{feld}» gespeichert (klein, ohne Leerzeichen und Sonderzeichen).')
     _doppelt(m, 'Berufe', eintr)
@@ -666,7 +670,7 @@ def bloecke(d):
     z = ['berufe:']
     for f, liste in d['berufe'].items():
         z.append(f'  {f}:')
-        z += ['    - { wort: %s, geschlecht: %s }' % (_q(w), _q(g)) for w, g in liste]
+        z += ['    - { m: %s, w: %s }' % (_q(m_), _q(w_)) for m_, w_ in liste]
     b['berufe'] = z
     z = ['krankheiten:']
     for a, liste in d['krankheiten'].items():
@@ -733,8 +737,8 @@ def flach(d):
     for n in d['namen']:
         s.add(('Name', n))
     for f, l in d['berufe'].items():
-        for w, g in l:
-            s.add((f'Beruf ({f})', f'{w} ({g})'))
+        for m_, w_ in l:
+            s.add((f'Beruf ({f})', f'{m_} / {w_}'))
     for a, l in d['krankheiten'].items():
         for k in l:
             s.add((f'Krankheit ({a})', k))

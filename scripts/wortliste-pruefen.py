@@ -145,10 +145,10 @@ def aenderungen(ordner):
     # neue Woerter, mitten unter die vorhandenen und unten angehaengt
     a.neu('Einzelne Namen', 'Zimmerli')
     a.neu('Einzelne Namen', 'Aebischer')
-    a.neu('Berufe', 'medizin', 'Hebamme', 'w')
-    a.neu('Berufe', 'Technik Bau', 'Statiker', 'M')              # Schreibweise wird bereinigt
-    a.neu('Berufe', 'tiere', 'Tierpfleger', 'm')                 # Feld "tiere" hat dann 3 -> wird benutzt
-    for b, g in (('Astronaut', 'm'), ('Raumfahrttechnikerin', 'w'), ('Missionsleiter', 'm')):
+    a.neu('Berufe', 'medizin', 'Hebammerich', 'Hebamme')
+    a.neu('Berufe', 'Technik Bau', 'Statiker', 'Statikerin')     # Schreibweise wird bereinigt
+    a.neu('Berufe', 'tiere', 'Tierpfleger', 'Tierpflegerin')     # Feld "tiere" hat dann 3 -> wird benutzt
+    for b, g in (('Raumfahrer', 'Raumfahrerin'), ('Raumfahrttechniker', 'Raumfahrttechnikerin'), ('Missionsleiter', 'Missionsleiterin')):
         a.neu('Berufe', 'raumfahrt', b, g)                       # ganz neues Feld
     a.neu('Krankheiten', 'innere', 'Gallensteine')
     a.neu('Krankheiten', 'Haut Allergie', 'Neurodermitis')       # neue Art
@@ -167,11 +167,11 @@ def aenderungen(ordner):
     pruef('neue Namen drin, gestrichener Name weg', {'Zimmerli', 'Aebischer'} <= set(d['namen']) and 'Baier' not in d['namen'])
     pruef('Namen alphabetisch einsortiert', d['namen'] == sorted(d['namen']))
     pruef('Beruf unten angehaengt landet im richtigen Feld, sortiert',
-          ('Hebamme', 'w') in d['berufe']['medizin'] and d['berufe']['medizin'] == sorted(d['berufe']['medizin']))
-    pruef('"Technik Bau" -> technik_bau, Geschlecht "M" -> m',
-          ('Statiker', 'm') in d['berufe']['technik_bau'] and 'Technik Bau' not in d['berufe'])
+          ('Hebammerich', 'Hebamme') in d['berufe']['medizin'] and d['berufe']['medizin'] == sorted(d['berufe']['medizin']))
+    pruef('"Technik Bau" -> technik_bau, beide Formen gespeichert',
+          ('Statiker', 'Statikerin') in d['berufe']['technik_bau'] and 'Technik Bau' not in d['berufe'])
     pruef('Feld mit nun 3 Berufen bleibt erhalten', len(d['berufe']['tiere']) == 3)
-    pruef('ganz neues Berufsfeld mit drei Berufen', [b for b, _ in d['berufe']['raumfahrt']] == ['Astronaut', 'Missionsleiter', 'Raumfahrttechnikerin'])
+    pruef('ganz neues Berufsfeld mit drei Berufen', [b for b, _ in d['berufe']['raumfahrt']] == ['Missionsleiter', 'Raumfahrer', 'Raumfahrttechniker'])
     pruef('Reihenfolge der Berufsfelder: bestehende vorn, neue hinten',
           list(d['berufe'])[:9] == list(d0['berufe']) and list(d['berufe'])[9:] == ['raumfahrt'])
     pruef('Krankheit ergaenzt, Krankheit mit !Löschen! entfernt',
@@ -215,13 +215,16 @@ FEHLER = [
     ('Name in zwei Namensgruppen', lambda a: a.setze('Namensgruppen', a.frei('Namensgruppen'), 'Meier', 'Maier', 'Mayer'),
      'nur in einer Gruppe'),
     ('Name doppelt in der Namensliste', lambda a: a.neu('Einzelne Namen', 'Wulf'), 'jedes Wort nur einmal'),
-    ('Beruf ohne Geschlecht', lambda a: a.neu('Berufe', 'medizin', 'Chirurg', ''), 'Geschlecht fehlt'),
-    ('Beruf mit falschem Geschlecht', lambda a: a.neu('Berufe', 'medizin', 'Chirurg', 'x'), 'm oder w sein'),
-    ('Beruf ohne Berufsfeld', lambda a: a.neu('Berufe', '', 'Chirurg', 'm'), 'beide ausgefüllt'),
-    ('Beruf doppelt', lambda a: a.neu('Berufe', 'sport', 'Arzt', 'm'), 'jedes Wort nur einmal'),
+    ('Beruf ohne weibliche Form (Apotheker, aber keine Apothekerin)', lambda a: a.neu('Berufe', 'medizin', 'Apotheker', ''),
+     'UND weibliche Form'),
+    ('Beruf ohne maennliche Form', lambda a: a.neu('Berufe', 'medizin', '', 'Apothekerin'), 'UND weibliche Form'),
+    ('Beruf mit zwei gleichen Formen', lambda a: a.neu('Berufe', 'medizin', 'Hebamme', 'Hebamme'), 'gleich'),
+    ('Beruf ohne Berufsfeld', lambda a: a.neu('Berufe', '', 'Apotheker', 'Apothekerin'), 'UND weibliche Form'),
+    ('Beruf doppelt (maennliche Form schon da)', lambda a: a.neu('Berufe', 'sport', 'Arzt', 'Aerztin2'), 'jedes Wort nur einmal'),
+    ('Beruf doppelt (weibliche Form schon da)', lambda a: a.neu('Berufe', 'sport', 'Doktor', 'Ärztin'), 'jedes Wort nur einmal'),
     ('zu wenige Berufsfelder mit drei Berufen', lambda a: felder_leeren(a, ('medizin', 'luftfahrt', 'sport')),
      'Berufsfelder mit je mindestens 3 Berufen'),
-    ('Berufsfeld "No" (waere in YAML ein Wahrheitswert)', lambda a: a.neu('Berufe', 'No', 'Chirurg', 'm'), 'nicht erlaubt'),
+    ('Berufsfeld "No" (waere in YAML ein Wahrheitswert)', lambda a: a.neu('Berufe', 'No', 'Chirurg', 'Chirurgin'), 'nicht erlaubt'),
     ('Krankheit doppelt in zwei Arten', lambda a: a.neu('Krankheiten', 'innere', 'Karies'), 'jedes Wort nur einmal'),
     ('zu wenige Krankheits-Arten',
      lambda a: [a.setze('Krankheiten', r, 'zaehne', a.wb['Krankheiten'].cell(row=r, column=2).value)
@@ -240,11 +243,11 @@ FEHLER = [
 def tippfehler(ordner):
     print('\n=== Abweichender Feldname: neues Feld, im Bericht sichtbar ===')
     a = Arbeit(ordner, 'tippfehler')
-    a.neu('Berufe', 'Technik und Bau', 'Statiker', 'm')
+    a.neu('Berufe', 'Technik und Bau', 'Statiker', 'Statikerin')
     rc, aus = a.einlesen()
     d = a.daten()
     pruef('"Technik und Bau" ist NICHT technik_bau, sondern ein neues Feld technik_und_bau',
-          rc == 0 and d['berufe'].get('technik_und_bau') == [('Statiker', 'm')])
+          rc == 0 and d['berufe'].get('technik_und_bau') == [('Statiker', 'Statikerin')])
     pruef('Bericht warnt: Feld mit nur 1 Beruf wird nicht benutzt', 'technik_und_bau (1)' in lies(a.bericht), lies(a.bericht)[-400:])
 
 
@@ -267,8 +270,8 @@ def fehlerfaelle(ordner):
     pruef('Spaltentitel geloescht: abgelehnt mit klarer Meldung', rc == 1 and 'Spaltentitel' in aus and lies(a.yaml) == a.vorher, aus[-300:])
     # mehrere Fehler auf einmal: alle werden genannt, mit Zeile
     a = Arbeit(ordner, 'mehrere')
-    r1 = a.neu('Berufe', 'medizin', 'Chirurg', 'x')
-    r2 = a.neu('Berufe', 'sport', 'Arzt', 'm')
+    r1 = a.neu('Berufe', 'medizin', 'Apotheker', '')
+    r2 = a.neu('Berufe', 'sport', 'Arzt', 'Aerztin2')
     rc, aus = a.einlesen()
     pruef('mehrere Fehler: alle genannt, jeweils mit Blatt und Zeile',
           rc == 1 and f'Berufe, Zeile {r1}' in aus and f'Berufe, Zeile {r2}' in aus, aus[-400:])
@@ -304,8 +307,8 @@ def formeln(ordner):
         print('  (LibreOffice nicht gefunden - uebersprungen)')
         return
     a = Arbeit(ordner, 'formeln')
-    a.neu('Berufe', 'medizin', 'Hebamme', 'w')
-    a.neu('Berufe', 'tiere', 'Tierpfleger', 'm')
+    a.neu('Berufe', 'medizin', 'Hebammerich', 'Hebamme')
+    a.neu('Berufe', 'tiere', 'Tierpfleger', 'Tierpflegerin')
     a.neu('Merkmale', 'charakter', 'Notfallpatient')       # Grossbuchstabe -> "nicht benutzt"
     a.neu('Namensgruppen', 'Brunner', 'Brunnen')           # nur 2 Namen
     a.wb.save(a.xlsx)
@@ -326,9 +329,9 @@ def formeln(ordner):
     pruef('Uebersicht: Berufsfelder mit mind. 3 Berufen (tiere hat jetzt 3)',
           werte['Berufsfelder mit mind. 3 Berufen (Pflicht)'] == 8)
     pruef('Uebersicht: Berufe, Arten, Krankheiten',
-          werte['Berufe insgesamt'] == 43 and werte['Krankheits-Arten (Pflicht)'] == 5 and
+          werte['Berufe insgesamt'] == sum(len(l) for l in d['berufe'].values()) + 2 and werte['Krankheits-Arten (Pflicht)'] == 5 and
           werte['Krankheiten insgesamt (Pflicht)'] == 42)
-    pruef('Uebersicht: nur klein geschriebene Merkmale zaehlen', werte['Merkmale, die vorkommen (klein geschrieben; Pflicht)'] == 37)
+    pruef('Uebersicht: nur klein geschriebene Merkmale zaehlen', werte['Merkmale, die vorkommen (klein geschrieben; Pflicht)'] == sum(1 for l in d['merkmale'].values() for x in l if not x[:1].isupper()))
     b = wb['Berufe']
     r = a.zeile_von('Berufe', 2, 'Tierpfleger')
     pruef('Hinweis Berufe: Feld mit 3 Berufen wird benutzt', b.cell(row=r, column=4).value == '3 im Feld', b.cell(row=r, column=4).value)
@@ -342,6 +345,28 @@ def formeln(ordner):
     fehler = [(ws.title, c.coordinate, c.value) for ws in wb for row in ws.iter_rows() for c in row
               if isinstance(c.value, str) and c.value.startswith('#') and c.value[1:4].isupper()]
     pruef('keine Formelfehler (#NAME?, #WERT! ...) in der ganzen Datei', not fehler, fehler[:3])
+
+    # Grosse Liste: Formeln und Uebersicht muessen auch weit jenseits von Zeile 600 stimmen
+    gross = Arbeit(ordner, 'gross')
+    d = wl.laden(gross.yaml)
+    for f in range(40):
+        d['berufe'][f'testfeld_{f}'] = sorted((f'Testberuf{f}x{i}', f'Testberuferin{f}x{i}') for i in range(25))
+    wl.yaml_schreiben(gross.yaml, d)
+    gesamt = sum(len(l) for l in d['berufe'].values())
+    rc, _ = lauf('ausgeben', '--yaml', gross.yaml, '--ziel', os.path.join(gross.ordner, 'gross'), '--stand', 'T')
+    r = subprocess.run([soffice, '--headless', '--convert-to', 'xlsx', '--outdir', os.path.join(gross.ordner, 'gross-gerechnet'),
+                        os.path.join(gross.ordner, 'gross', wl.DATEI)], capture_output=True, text=True, timeout=240)
+    wbg = load_workbook(os.path.join(gross.ordner, 'gross-gerechnet', wl.DATEI), data_only=True)
+    ug = wbg['Übersicht']
+    pruef(f'Liste mit {gesamt} Berufen: Uebersicht zaehlt alle mit',
+          ug.cell(row=wl.ERSTE + 3, column=2).value == gesamt, ug.cell(row=wl.ERSTE + 3, column=2).value)
+    pruef('Liste mit ueber 1000 Berufen: Berufsfelder mit mind. 3 Berufen zaehlt alle', ug.cell(row=wl.ERSTE + 2, column=2).value == 7 + 40,
+          ug.cell(row=wl.ERSTE + 2, column=2).value)
+    bg = wbg['Berufe']
+    pruef('Hinweisspalte in der letzten Zeile der grossen Liste rechnet', str(bg.cell(row=wl.ERSTE + gesamt - 1, column=4).value).endswith('im Feld'),
+          bg.cell(row=wl.ERSTE + gesamt - 1, column=4).value)
+    rc, aus = lauf('einlesen', os.path.join(gross.ordner, 'gross', wl.DATEI), '--yaml', gross.yaml, '--probe')
+    pruef('grosse Liste laesst sich wieder einlesen', rc == 0, aus[-300:])
 
 
 def bauen(ordner):
@@ -364,7 +389,7 @@ def bauen(ordner):
     shutil.copy(yaml_kopie, a.yaml)
     a.vorher = lies(a.yaml)
     a.neu('Einzelne Namen', 'Zimmerli')
-    a.neu('Berufe', 'medizin', 'Hebamme', 'w')
+    a.neu('Berufe', 'medizin', 'Hebammerich', 'Hebamme')
     a.neu('Krankheiten', 'innere', 'Gallensteine')
     a.neu('Dativ-Plural', 'Gallensteine', 'Gallensteinen')
     rc, aus = a.einlesen()

@@ -35,9 +35,12 @@
 # NOCH ZU PRÜFEN (Stand: erste Fassung)
 # ------------------------------------------------------------------------------
 #  - Die Kategorien sind VORSORTIERT und von keinem Menschen freigegeben.
-#  - "geschlecht" steuert nur die Formulierung der Fragen ("Die Tierärztin",
-#    "Herr Walz"). Meist an der Endung -in erkannt; Sonderfälle wie Imker,
-#    Stewardess oder Bauer/Bäuerin bitte durchsehen.
+#  - Jeder Beruf steht in BEIDEN Formen: { m: "Apotheker", w: "Apothekerin" }.
+#    Der Generator zieht den Beruf und würfelt die Form; sie steuert auch die
+#    Formulierung der Fragen ("Die Tierärztin", "Herr Walz"). Beide Formen sind
+#    Pflicht, und ein Beruf kommt nie in beiden Formen im selben Set vor.
+#  - Merkmale sind bewusst NICHT medizinisch (kein "stationär", "ambulant",
+#    "privatversichert"): Das würde zur Diagnose passen und sie verraten.
 #  - Französisch und Italienisch fehlen noch ganz. Solange sie fehlen, zeigt
 #    der Generator dort einen Hinweis statt eines Sets.
 #  - Für echte Abwechslung wären ~80 Einträge je Kategorie gut; aktuell sind
@@ -139,55 +142,54 @@ namen:
 # EINEM Feld - siehe Erklärung oben.
 berufe:
   medizin:
-    - { wort: "Arzt", geschlecht: "m" }
-    - { wort: "Rettungssanitäterin", geschlecht: "w" }
-    - { wort: "Tierärztin", geschlecht: "w" }
+    - { m: "Arzt", w: "Ärztin" }
+    - { m: "Rettungssanitäter", w: "Rettungssanitäterin" }
+    - { m: "Tierarzt", w: "Tierärztin" }
   technik_bau:
-    - { wort: "Architekt", geschlecht: "m" }
-    - { wort: "Automechanikerin", geschlecht: "w" }
-    - { wort: "Chemietechnologe", geschlecht: "m" }
-    - { wort: "Elektroinstallateur", geschlecht: "m" }
-    - { wort: "Energieberater", geschlecht: "m" }
-    - { wort: "Heizungsinstallateurin", geschlecht: "w" }
-    - { wort: "Ingenieurin", geschlecht: "w" }
-    - { wort: "Klavierbauer", geschlecht: "m" }
-    - { wort: "Klavierstimmer", geschlecht: "m" }
-    - { wort: "Mikrotechnikerin", geschlecht: "w" }
-    - { wort: "Schreiner", geschlecht: "m" }
-    - { wort: "Stromleger", geschlecht: "m" }
-    - { wort: "Technikerin", geschlecht: "w" }
+    - { m: "Architekt", w: "Architektin" }
+    - { m: "Automechaniker", w: "Automechanikerin" }
+    - { m: "Chemietechnologe", w: "Chemietechnologin" }
+    - { m: "Elektroinstallateur", w: "Elektroinstallateurin" }
+    - { m: "Energieberater", w: "Energieberaterin" }
+    - { m: "Heizungsinstallateur", w: "Heizungsinstallateurin" }
+    - { m: "Ingenieur", w: "Ingenieurin" }
+    - { m: "Klavierbauer", w: "Klavierbauerin" }
+    - { m: "Klavierstimmer", w: "Klavierstimmerin" }
+    - { m: "Mikrotechniker", w: "Mikrotechnikerin" }
+    - { m: "Schreiner", w: "Schreinerin" }
+    - { m: "Stromleger", w: "Stromlegerin" }
+    - { m: "Techniker", w: "Technikerin" }
   luftfahrt:
-    - { wort: "Astronautin", geschlecht: "w" }
-    - { wort: "Flugingenieur", geschlecht: "m" }
-    - { wort: "Pilot", geschlecht: "m" }
-    - { wort: "Stewardess", geschlecht: "w" }
+    - { m: "Astronaut", w: "Astronautin" }
+    - { m: "Flugingenieur", w: "Flugingenieurin" }
+    - { m: "Pilot", w: "Pilotin" }
+    - { m: "Steward", w: "Stewardess" }
   sport:
-    - { wort: "Fussballspieler", geschlecht: "m" }
-    - { wort: "Skilehrerin", geschlecht: "w" }
-    - { wort: "Sportreporter", geschlecht: "m" }
-    - { wort: "Tennisspieler", geschlecht: "m" }
+    - { m: "Fussballspieler", w: "Fussballspielerin" }
+    - { m: "Skilehrer", w: "Skilehrerin" }
+    - { m: "Sportreporter", w: "Sportreporterin" }
+    - { m: "Tennisspieler", w: "Tennisspielerin" }
   kunst_kultur:
-    - { wort: "Fotografin", geschlecht: "w" }
-    - { wort: "Klavierspieler", geschlecht: "m" }
-    - { wort: "Künstler", geschlecht: "m" }
-    - { wort: "Malerin", geschlecht: "w" }
-    - { wort: "Maskenbildner", geschlecht: "m" }
+    - { m: "Fotograf", w: "Fotografin" }
+    - { m: "Klavierspieler", w: "Klavierspielerin" }
+    - { m: "Künstler", w: "Künstlerin" }
+    - { m: "Maler", w: "Malerin" }
+    - { m: "Maskenbildner", w: "Maskenbildnerin" }
   bildung:
-    - { wort: "Jugendleiterin", geschlecht: "w" }
-    - { wort: "Kindergärtner", geschlecht: "m" }
-    - { wort: "Lehrer", geschlecht: "m" }
-    - { wort: "Lehrerin", geschlecht: "w" }
+    - { m: "Jugendleiter", w: "Jugendleiterin" }
+    - { m: "Kindergärtner", w: "Kindergärtnerin" }
+    - { m: "Lehrer", w: "Lehrerin" }
   buero_recht:
-    - { wort: "Anwältin", geschlecht: "w" }
-    - { wort: "Assistentin", geschlecht: "w" }
-    - { wort: "Auditorin", geschlecht: "w" }
-    - { wort: "Beraterin", geschlecht: "w" }
+    - { m: "Anwalt", w: "Anwältin" }
+    - { m: "Assistent", w: "Assistentin" }
+    - { m: "Auditor", w: "Auditorin" }
+    - { m: "Berater", w: "Beraterin" }
   tiere:
-    - { wort: "Hundezüchterin", geschlecht: "w" }
-    - { wort: "Imker", geschlecht: "m" }
+    - { m: "Hundezüchter", w: "Hundezüchterin" }
+    - { m: "Imker", w: "Imkerin" }
   handwerk_essen:
-    - { wort: "Konditorin", geschlecht: "w" }
-    - { wort: "Kosmetiker", geschlecht: "m" }
+    - { m: "Konditor", w: "Konditorin" }
+    - { m: "Kosmetiker", w: "Kosmetikerin" }
 
 # Krankheiten, nach Art. Pro Altersgruppe je eine aus drei verschiedenen
 # Arten - siehe Erklärung oben.
@@ -244,13 +246,9 @@ krankheiten:
 # Zivilstand, "charakter" sind Eigenschaften - gemischt wie im Original.
 merkmale:
   zustand:
-    - "Ambulanz"
-    - "Notfall"
-    - "Privatpatientin"
     - "gepflegt"
     - "geschieden"
     - "ledig"
-    - "stationär"
     - "verheiratet"
   charakter:
     - "ablehnend"
@@ -275,7 +273,6 @@ merkmale:
     - "kontaktfreudig"
     - "materialistisch"
     - "misstrauisch"
-    - "narzisstisch"
     - "nervös"
     - "sensibel"
     - "seriös"

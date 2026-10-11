@@ -725,7 +725,7 @@ Un foglio per elenco (Namensgruppen, Einzelne Namen, Berufe, Krankheiten, Merkma
 caricare in `redaktion/` (il nome inizia con `ncwiki-wortliste`): `wortliste-einlesen.yml` controlla il file con
 `scripts/wortliste.py` e apre una pull request con rapporto (nuovo / rimosso / avvisi). **In caso di errore**
 non viene accettato nulla e non si apre nessuna pull request; l'esecuzione diventa rossa e il suo riepilogo
-nomina ogni errore con foglio e riga (troppe poche parole, parola doppia, sesso diverso da m/w, caratteri
+nomina ogni errore con foglio e riga (troppe poche parole, parola doppia, forma femminile o maschile di una professione mancante, caratteri
 `< > & { }`). Quantità minime: 15 nomi singoli; almeno 5 campi professionali con almeno 3 professioni
 ciascuno; almeno 3 tipi di malattia e 15 malattie; almeno 15 caratteristiche in minuscolo. L'Excel sostituisce
 l'elenco **intero** (istantanea); se si basa su uno stato più vecchio, il rapporto avvisa. Si sostituiscono solo
