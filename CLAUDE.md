@@ -34,6 +34,7 @@ sonst fehl.
 | `assets/css/style.css`, `static/css/style.css` | Design, unverändert aus der ursprünglichen HTML-Vorlage übernommen. |
 | `archetypes/`, `docs/vorlage-*.md` | Copy-Paste-Vorlagen für neue Seiten (News, Erfahrungsbericht, Jahresbericht). |
 | `docs/STYLEGUIDE.md` | Schreibregeln für alle Texte (Anrede, Ton, Titel, Begriffe, Schreibweisen). |
+| `docs/NEWSLETTER-BREVO.md` | Anleitung und Stand für den Newsletter mit Brevo (noch nicht eingerichtet; «Einschreiben»/«Abmelden» sind Platzhalter). Sobald die drei Formular-Adressen dort eingetragen sind, kann der Einbau auf der Website erfolgen (Schritt 5). |
 | `docs/WARTUNG.md`, `docs/WARTUNG-DETAILLIERT.md` (+ `.fr.md`, `.it.md`) | Kurzanleitung (nur Alltag: Mappe, Web-Editor, News, PDF, Bild, Löschen) bzw. ausführliche Anleitung (alles andere) — dreisprachig; bei Änderungen an Navigation, Design, Formularen etc. alle Sprachfassungen mitpflegen. |
 | `.github/workflows/hugo.yml` | Build + interner Link-Check laufen bei jedem PR gegen `main` und bei Push; **Deploy läuft nur bei Push auf `main`**, nie bei PRs. |
 | `.github/workflows/textmappen.yml` | Legt nach jedem Push auf `main` frische Textmappen und die Wortliste des Fakten-Generators an das GitHub-Release `textmappen` (bewusst nicht auf die Website). |
