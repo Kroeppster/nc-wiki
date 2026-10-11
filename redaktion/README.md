@@ -45,7 +45,7 @@ Auch sie ist immer frisch (nach jeder Änderung neu). Ein Blatt je Liste; „Anl
 
 - **In Ordnung** → Pull Request mit Bericht (was neu ist, was wegfällt, was zu beachten ist),
   die Datei wird entfernt. Live erst nach dem *Merge*.
-- **Fehler** (zu wenige Wörter, ein Wort doppelt, Geschlecht nicht m/w …) → es wird **nichts**
+- **Fehler** (zu wenige Wörter, ein Wort doppelt, eine Berufsform (männlich/weiblich) fehlt …) → es wird **nichts**
   übernommen und kein Pull Request eröffnet. Unter *Actions → Wortliste einlesen* steht jeder
   Fehler mit Blatt und Zeile. Korrigieren und noch einmal hochladen.
 

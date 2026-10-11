@@ -218,7 +218,10 @@
       var berufe = zieh(W.berufe[feld], 3);
       var dreiArten = zieh(arten, 3);
       berufe.forEach(function(b, k){
-        leute.push({ name: namen[g][k], alter: alter, gruppe: g, beruf: b.wort, geschlecht: b.geschlecht === 'w' ? 'w' : 'm',
+        // Jeder Beruf steht in beiden Formen in der Liste ({ m: "Apotheker", w: "Apothekerin" });
+        // gezogen wird der Beruf, die Form wuerfelt - so kommt er nie doppelt im Set vor.
+        var form = eins(['m', 'w']);
+        leute.push({ name: namen[g][k], alter: alter, gruppe: g, beruf: b[form], geschlecht: form,
                      merkmal: merkmale[i % merkmale.length], krankheit: krankheitAus(dreiArten[k % dreiArten.length]) });
         i++;
       });
