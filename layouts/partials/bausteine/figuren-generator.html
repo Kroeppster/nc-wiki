@@ -140,7 +140,8 @@
   // Untertest aus - man muss sie ja auseinanderhalten. Verschiedene Serien
   // duerfen und sollen dagegen deutlich anders aussehen, genau wie unsere
   // echten Serien 2022, 2025 und 2026 untereinander.
-  function serienstil(){
+  var FAMILIEN=['kiesel','kiesel','kantig','laenglich','zerklueftet','gemischt'];
+  function serienstil(gewaehlt){
     // Die Bereiche sind bewusst weit. Gemessen wurde nicht der Mittelwert
     // einer Serie, sondern wie weit die SERIENWERTE auseinanderliegen: Bei
     // elf echten Serien schwankt der Fuellgrad von 0.63 bis 0.79, die
@@ -155,7 +156,7 @@
     // Unterschiede zwischen den Serien verschwinden wieder - genau das war
     // messbar, bevor die beiden Werte aneinander gekoppelt waren.
     var eng = hoechst<0.29 || mindest>0.105;
-    return {
+    var stil = {
       bauart:       art,
       ecken:        Math.floor(Z(6,13)),   // Grundzahl der Stuetzpunkte der Kontur
       eckenSpiel:   Math.floor(Z(0,4)),    // wie stark sie je Figur schwankt
@@ -203,8 +204,31 @@
       // den echten Serien (0.33 statt 0.27 der Figurflaeche). In den echten
       // Serien ist die Figur rund 100 Strichbreiten gross, hier waren es 60.
       strich:       Z(0.8,1.4),            // Strichstaerke der Trennlinien
-      kontur:       Z(1.1,1.9)             // Strichstaerke der Aussenlinie
+      kontur:       Z(1.1,1.9),            // Strichstaerke der Aussenlinie
+      seiten:       [0.82,1.22]            // Seitenverhaeltnis der Figuren
     };
+    // FORMFAMILIE DER SERIE. Die Werte oben streuen je Serie, aber jeder fuer
+    // sich - im Mittel kommt dann doch meist ein runder Kiesel heraus, und die
+    // Serien gleichen sich (Rueckmeldung Oktober 2026: mehr Unterschied
+    // zwischen den Serien). Darum wuerfelt jede Serie zuerst eine Familie,
+    // die mehrere Werte GEMEINSAM in eine Richtung schiebt. Die Figuren
+    // DERSELBEN Serie bleiben einander aehnlich - das macht den Untertest aus.
+    // (Die Familie waehlt baueSet EINMAL je Serie: Wuerde sie bei jedem
+    // gescheiterten Anlauf neu gewuerfelt, kaeme die schwierigste - laenglich -
+    // kaum je durch: gemessen 1 von 30 statt 5.)
+    var familie = gewaehlt || FAMILIEN[Math.floor(Math.random()*FAMILIEN.length)];
+    if (familie==='kantig'){            // Vielecke mit spitzen Ecken (wie unsere Serie 2023)
+      stil.rundung=Z(0.05,0.35); stil.eckenAnteil=Z(0.45,0.9); stil.ecken=Math.floor(Z(5,9));
+    } else if (familie==='laenglich'){  // deutlich gestreckte Formen in allen Richtungen
+      stil.seiten=[1.8,2.6]; stil.buchtAnteil=Z(0.1,0.6);
+    } else if (familie==='zerklueftet'){// tiefe Buchten, unruhige Kontur
+      stil.buchtAnteil=Z(0.75,1.0); stil.radiusSpiel=Z(0.22,0.45); stil.ecken=Math.floor(Z(9,15));
+    } else if (familie==='gemischt'){   // jede Figur anders: rund neben kantig neben lang
+      stil.eckenSpiel=Math.floor(Z(3,6)); stil.seiten=[0.7,1.6]; stil.eckenAnteil=Z(0.2,0.6);
+      stil.rundungSpiel=true;
+    }
+    stil.familie=familie;
+    return stil;
   }
   function aussenform(stil){
     var cx=G/2, cy=G/2;
@@ -220,7 +244,7 @@
     // Wird s gleichverteilt gezogen, streckt s die eine und staucht 1/s die
     // andere Richtung, und das Verhaeltnis ist s*s - im Mittel 1.08 statt 1.
     // Die Figuren waeren also systematisch breiter als hoch.
-    var s=Math.sqrt(Z(0.82,1.22)), dreh=Z(0,Math.PI), co=Math.cos(dreh), si=Math.sin(dreh);
+    var s=Math.sqrt(Z(stil.seiten[0],stil.seiten[1])), dreh=Z(0,Math.PI), co=Math.cos(dreh), si=Math.sin(dreh);
     // Der Serienstil gibt den Charakter vor, aber jede Figur weicht kraeftig
     // davon ab. Auf der Originalseite fuellen die Figuren DERSELBEN Serie
     // ihren Rahmen zwischen 62 und 86 Prozent aus - da stehen fast runde
@@ -232,7 +256,7 @@
     // innerhalb der Serie streut, taugt als Anhaltspunkt - aber wie stark
     // sich zwei Serien unterscheiden duerfen, sagt diese eine Seite nicht.
     var wellig=Math.min(0.55, stil.radiusSpiel*Z(0.25,2.10));
-    var rund=stil.rundung*Z(0.70,1.30);
+    var rund=stil.rundungSpiel ? Z(0.1,1.15) : stil.rundung*Z(0.70,1.30);
     var strahl=[];
     for(var i=0;i<n;i++) strahl.push(1-Z(0,wellig));
     // EINZELNE TIEFE EINBUCHTUNGEN. Gleichmaessige Wellen allein reichen
@@ -626,7 +650,14 @@
       // einer Serie bleibt er gleich, damit die kleinen Groessenunterschiede
       // der Figuren sichtbar bleiben.
       var seite=Math.min(G, 1.75*G*stil.groesse), rand=(G-seite)/2;
-      return {form:form.d, felder:g.flaechen, linien:g.linien, mitten:mitten,
+      // BUCHSTABEN ZUFAELLIG VERTEILEN. Die Felder kommen in der Reihenfolge
+      // der Aufteilung an, und die setzt das mittlere Feld meist zuerst oder
+      // zuletzt: Gemessen trug es in 85 Prozent der Figuren A oder E. Im
+      // Heft folgen die Buchstaben keinem Muster - also Felder und
+      // Buchstabenplaetze gemeinsam mischen.
+      var folge=misch([0,1,2,3,4]);
+      return {form:form.d, felder:folge.map(function(i){ return g.flaechen[i]; }), linien:g.linien,
+              mitten:folge.map(function(i){ return mitten[i]; }),
               schrift:schrift, strich:stil.strich, kontur:stil.kontur,
               sicht:rand.toFixed(1)+' '+rand.toFixed(1)+' '+seite.toFixed(1)+' '+seite.toFixed(1)};
     }
@@ -658,8 +689,10 @@
     // unterschiedlich grosse Felder verlangt, die in eine zackige Form kaum
     // passen -, wird ein neuer Stil gewuerfelt statt endlos weiterzuprobieren.
     figuren=[];
+    var familie = window.NCWikiFigurenFamilie ||   // (zum Testen fest vorgeben)
+      FAMILIEN[Math.floor(Math.random()*FAMILIEN.length)];
     for(var anlauf=0; anlauf<10 && figuren.length<18; anlauf++){
-      var stil=serienstil();
+      var stil=serienstil(familie);
       figuren=[];
       for(var i=0;i<18;i++){
         var f=figur(stil);
@@ -667,6 +700,8 @@
         figuren.push(f);
       }
     }
+    // fuer scripts/figuren-generator-pruefen.mjs: welche Familie, wie viele Anlaeufe
+    window.NCWikiFigurenSerie = { familie: stil && stil.familie, anlaeufe: anlauf, voll: figuren.length };
     // Sollte auch das nicht reichen, mit gutmuetigen Werten auffuellen.
     while(figuren.length<18){
       var notstil=serienstil();
