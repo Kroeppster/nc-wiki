@@ -41,24 +41,26 @@ await p.goto(ADRESSE, { waitUntil: 'networkidle' });
 
 console.log('=== Ein Durchlauf ===');
 pruef('Alpha-Seite erreichbar', (await p.title()).length > 0);
-pruef('Generator vorhanden', !!(await p.$('#fig-wurzel')));
+pruef('Generator vorhanden', !!(await p.$('#lg-wurzel')));
+// Seit Oktober 2026 im Lern-Generator: nur Figuren anhaken
+await p.uncheck('#lg-mit-fakten');
 
 // Die Vorgabezeiten kommen aus data/testablauf.yaml. Die Pause ist die ECHTE
 // Luecke zwischen Einpraegen und Reproduktion (Fakten einpraegen 6 +
 // Textverstaendnis 45 = 51), nicht eine bequeme kurze Pause.
 const vor = await p.evaluate(() => ({
-  l: +document.getElementById('fig-min-lernen').value,
-  p: +document.getElementById('fig-min-pause').value,
-  a: +document.getElementById('fig-min-abfrage').value }));
+  l: +document.getElementById('lg-figuren-lernen').value,
+  p: +document.getElementById('lg-pause').value,
+  a: +document.getElementById('lg-figuren-abfrage').value }));
 pruef('Vorgabe: Einpraegen 4 Min', vor.l === 4, String(vor.l));
 pruef('Vorgabe: Abfrage 5 Min', vor.a === 5, String(vor.a));
 pruef('Vorgabe: echte Pause (51 Min)', vor.p === 51, String(vor.p));
 
-await p.fill('#fig-min-lernen', '1'); await p.fill('#fig-min-pause', '0'); await p.fill('#fig-min-abfrage', '9');
-await p.click('#fig-los'); await p.waitForTimeout(2500);
+await p.fill('#lg-figuren-lernen', '1'); await p.fill('#lg-pause', '0'); await p.fill('#lg-figuren-abfrage', '9');
+await p.click('#lg-los'); await p.waitForTimeout(2500);
 const lern = await p.evaluate(() => {
   // Nur das Raster - im Anleitungskasten darueber stehen zwei Beispielfiguren.
-  const svgs = [...document.querySelectorAll('#fig-blatt-lernen .fig-raster .fig-svg')];
+  const svgs = [...document.querySelectorAll('#lg-blatt .fig-raster .fig-svg')];
   return { anzahl: svgs.length,
     schwarzProFigur: svgs.map(s => [...s.querySelectorAll('path[fill="#000"]')].length),
     clipIds: new Set([...document.querySelectorAll('clipPath')].map(c => c.id)).size,
@@ -71,7 +73,7 @@ pruef('je genau ein schwarzes Feld', lern.schwarzProFigur.every(n => n === 1), J
 pruef('Clip-Kennungen eindeutig', lern.clipIds === lern.clipGesamt, `${lern.clipIds}/${lern.clipGesamt}`);
 // Format wie im Testheft: Ueberschrift, Kasten mit Beispielfigur, STOPP.
 const heft = await p.evaluate(() => {
-  const b = document.getElementById('fig-blatt-lernen'), k = b.querySelector('.ems-kasten');
+  const b = document.getElementById('lg-blatt'), k = b.querySelector('.ems-kasten');
   const bsp = [...k.querySelectorAll('.fig-svg')];
   const schwarz = bsp[0] ? [...bsp[0].querySelectorAll('g > path[fill]')].findIndex(e => e.getAttribute('fill') === '#000') : -1;
   return { kopf: b.querySelector('.ems-kopf').textContent, beispiele: bsp.length, schwarz,
@@ -83,13 +85,13 @@ pruef('Anleitung mit Beispielfigur (schwarz) und abgefragter Fassung (A-E)', hef
 pruef('"Die Loesung waere dann (X)" nennt das schwarze Feld der Beispielfigur', heft.loesung === 'ABCDE'[heft.schwarz], JSON.stringify(heft));
 pruef('STOPP am Ende', heft.stopp);
 
-await p.click('#fig-fertig-lernen'); await p.waitForTimeout(800);
+await p.click('#lg-weiter'); await p.waitForTimeout(800);
 const ab = await p.evaluate(() => {
-  const felder = [...document.querySelectorAll('#fig-blatt-abfrage .fig-feld')];
+  const felder = [...document.querySelectorAll('#lg-blatt .fig-feld')];
   return { anzahl: felder.length, nummern: felder.map(f => f.querySelector('.fig-nr').textContent).join(' '),
     buchstabenProFigur: felder.map(f => [...f.querySelectorAll('text')].map(t => t.textContent).join('')),
     wahl: felder.map(f => f.querySelectorAll('input[type=radio]').length),
-    schwarz: [...document.querySelectorAll('#fig-blatt-abfrage path[fill="#000"]')].length };
+    schwarz: [...document.querySelectorAll('#lg-blatt path[fill="#000"]')].length };
 });
 pruef('18 Aufgaben', ab.anzahl === 18, String(ab.anzahl));
 pruef('nummeriert 1) bis 18), zeilenweise', ab.nummern === Array.from({ length: 18 }, (_, i) => (i + 1) + ')').join(' '), ab.nummern);
@@ -98,15 +100,15 @@ pruef('je 5 Auswahlfelder', ab.wahl.every(n => n === 5), JSON.stringify([...new 
 // In der Abfrage darf nichts schwarz sein - sonst waere die Loesung zu sehen.
 pruef('in der Abfrage ist NICHTS schwarz', ab.schwarz === 0, String(ab.schwarz));
 
-await p.evaluate(() => { document.querySelectorAll('#fig-blatt-abfrage input[type=radio][value="0"]').forEach(r => { r.checked = true; }); });
-await p.click('#fig-auswerten'); await p.waitForTimeout(700);
-const erg = await p.evaluate(() => ({ text: document.getElementById('fig-punkte').textContent,
-  richtig: document.querySelectorAll('#fig-blatt-loesung .fg-ist-richtig').length,
-  buchstaben: [...document.querySelectorAll('#fig-blatt-loesung .fg-ist-richtig')].map(e => e.textContent.trim()[0]).join('') }));
+await p.evaluate(() => { document.querySelectorAll('#lg-blatt input[type=radio][value="0"]').forEach(r => { r.checked = true; }); });
+await p.click('#lg-weiter'); await p.waitForTimeout(700);
+const erg = await p.evaluate(() => ({ text: document.getElementById('lg-punkte').textContent,
+  richtig: document.querySelectorAll('#lg-loesungen .fg-ist-richtig').length,
+  buchstaben: [...document.querySelectorAll('#lg-loesungen .fg-ist-richtig')].map(e => e.textContent.trim()[0]).join('') }));
 pruef('Auswertung erscheint', /\d+\s*von\s*18/.test(erg.text), erg.text);
 pruef('genau 18 Loesungen markiert', erg.richtig === 18, String(erg.richtig));
 
-await p.click('#fig-drucken-ende'); await p.waitForTimeout(600);
+await p.click('#lg-drucken-ende'); await p.waitForTimeout(600);
 const dr = await p.evaluate(() => { const d = document.getElementById('ems-druck');
   return { seiten: d.querySelectorAll('.ems-seite').length, svgs: d.querySelectorAll('.fig-svg').length,
     zellen: d.querySelectorAll('.ems-fl-figur').length, nummern: d.querySelectorAll('.ems-fl-nr').length,
@@ -138,13 +140,13 @@ await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
 console.log(`\n=== Buchstaben-Abstaende ueber ${RUNDEN} Runden ===`);
 let schlimmste = 0, faelle = 0, figuren = 0;
 for (let runde = 0; runde < RUNDEN; runde++) {
-  await p.reload({ waitUntil: 'networkidle' });
-  await p.fill('#fig-min-lernen', '1'); await p.fill('#fig-min-pause', '0'); await p.fill('#fig-min-abfrage', '9');
-  await p.click('#fig-los'); await p.waitForTimeout(400);
-  await p.click('#fig-fertig-lernen'); await p.waitForTimeout(400);
+  await p.reload({ waitUntil: 'networkidle' }); await p.uncheck('#lg-mit-fakten');
+  await p.fill('#lg-figuren-lernen', '1'); await p.fill('#lg-pause', '0'); await p.fill('#lg-figuren-abfrage', '9');
+  await p.click('#lg-los'); await p.waitForTimeout(400);
+  await p.click('#lg-weiter'); await p.waitForTimeout(400);
   const r = await p.evaluate(() => {
     const raus = [];
-    document.querySelectorAll('#fig-blatt-abfrage .fig-feld svg').forEach(svg => {
+    document.querySelectorAll('#lg-blatt .fig-feld svg').forEach(svg => {
       const t = [...svg.querySelectorAll('text')].map(e => e.getBoundingClientRect());
       let max = 0;
       for (let a = 0; a < t.length; a++) for (let d = a + 1; d < t.length; d++) {

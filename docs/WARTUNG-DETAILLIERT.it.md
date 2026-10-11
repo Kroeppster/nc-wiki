@@ -355,8 +355,8 @@ Blocco di codice con la lingua `baustein` (`layouts/_default/_markup/render-code
 | --- | --- | --- |
 | `testablauf` | tabella dello svolgimento | `data/testablauf.yaml` |
 | `team-leitung` | schede del team dirigente | `ressorts:` nell'intestazione della pagina del team |
-| `fakten-generator` | generatore di fatti | `data/fakten-generator/` |
-| `figuren-generator` | generatore di figure | – |
+| `lern-generator` | generatore di apprendimento: figure, fatti o entrambi (caselle) | `data/fakten-generator/` |
+| `fakten-generator`, `figuren-generator` | vecchi nomi, mostrano anch’essi il generatore di apprendimento | – |
 | `sponsoring-kontakt` | pulsante e-mail/telefono | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | valutare il foglio delle risposte da foto (Alpha) | `data/antwortbogen.yaml` |
 | `konztest-auswertung` | valutare il test di concentrazione da foto (Alpha) | `data/konztest.yaml` |

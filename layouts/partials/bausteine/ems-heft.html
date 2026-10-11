@@ -116,26 +116,33 @@ window.EMSHeft = (function(){
     }
     return '<div class="ems-bogen"><div class="ems-bogen-titel">' + titel + '</div>' + z + '</div>';
   }
-  function antwortbogen(titel, anzahl){
+  // titel: Ueberschrift rechts; boegen: [{ titel, anzahl }] - einer je
+  // Untertest, nebeneinander (der Lern-Generator kann Figuren UND Fakten).
+  function antwortbogen(titel, boegen){
     return kopf(T.antwortbogen, titel)
       + '<p class="ems-bogen-name">' + T.name + '<span></span></p>'
       + '<p class="ems-bogen-hinweis">' + T.antwortbogenHinweis + '</p>'
-      + bogen(titel, anzahl);
+      + '<div class="ems-boegen">' + boegen.map(function(b){ return bogen(b.titel, b.anzahl); }).join('') + '</div>';
   }
   // --- Loesungsblatt ---------------------------------------------------------
   // Wie vorlage/loesungsblatt.typ: Ueberschrift "Loesungen" mit dem Titel
-  // rechts, darunter der Untertest fett und eine Tabelle mit zehn Spalten -
-  // je zehn Aufgaben ein Zeilenpaar, die Nummernzeile grau hinterlegt.
-  // Danach der Loesungsschluessel (Antwortbogen, richtige Kaestchen schwarz).
-  function loesungsblatt(titel, loesungen){
-    var h = kopf(T.loesungen, titel) + '<p class="ems-loesung-titel">' + titel + '</p><table class="ems-loesung">';
-    for (var s = 0; s < loesungen.length; s += 10){
-      var teil = loesungen.slice(s, s + 10), leer = new Array(11 - teil.length).join('<td></td>');
-      h += '<tr class="ems-loesung-nr">' + teil.map(function(_, i){ return '<td>' + (s + i + 1) + '</td>'; }).join('') + leer
-        + '</tr><tr>' + teil.map(function(l){ return '<td><b>' + l + '</b></td>'; }).join('') + leer + '</tr>';
-    }
-    return h + '</table><p class="ems-loesung-titel ems-loesung-schluessel">' + T.loesungsschluessel + '</p>'
-      + bogen(titel, loesungen.length, loesungen);
+  // rechts, darunter je Untertest der Name fett und eine Tabelle mit zehn
+  // Spalten zu 36 pt - je zehn Aufgaben ein Zeilenpaar, die Nummernzeile grau
+  // hinterlegt. Danach der Loesungsschluessel (Antwortbogen, richtige
+  // Kaestchen schwarz). gruppen: [{ titel, loesungen: ['A', ...] }]
+  function loesungsblatt(titel, gruppen){
+    var h = kopf(T.loesungen, titel);
+    gruppen.forEach(function(g, gi){
+      h += '<p class="ems-loesung-titel' + (gi ? ' ems-loesung-weitere' : '') + '">' + g.titel + '</p><table class="ems-loesung">';
+      for (var s = 0; s < g.loesungen.length; s += 10){
+        var teil = g.loesungen.slice(s, s + 10), leer = new Array(11 - teil.length).join('<td></td>');
+        h += '<tr class="ems-loesung-nr">' + teil.map(function(_, i){ return '<td>' + (s + i + 1) + '</td>'; }).join('') + leer
+          + '</tr><tr>' + teil.map(function(l){ return '<td><b>' + l + '</b></td>'; }).join('') + leer + '</tr>';
+      }
+      h += '</table>';
+    });
+    return h + '<p class="ems-loesung-titel ems-loesung-schluessel">' + T.loesungsschluessel + '</p>'
+      + '<div class="ems-boegen">' + gruppen.map(function(g){ return bogen(g.titel, g.loesungen.length, g.loesungen); }).join('') + '</div>';
   }
   // --- Drucken ----------------------------------------------------------------
   // Die Seiten kommen in einen eigenen Behaelter direkt unter <body>; die

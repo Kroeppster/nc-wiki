@@ -53,10 +53,11 @@ await p.goto('http://127.0.0.1:8123/alpha/', { waitUntil: 'networkidle' });
 
 console.log('=== Ein Durchlauf ===');
 const W = await p.evaluate(() => JSON.parse(document.getElementById('fg-daten').textContent));
-await p.fill('#fg-min-pause', '0');
-await p.click('#fg-los'); await p.waitForTimeout(200);
+// Seit Oktober 2026 im Lern-Generator: nur Fakten anhaken, ohne Ablenkung
+await p.uncheck('#lg-mit-figuren'); await p.fill('#lg-pause', '0');
+await p.click('#lg-los'); await p.waitForTimeout(200);
 const lern = await p.evaluate(() => {
-  const b = document.getElementById('fg-blatt-lernen');
+  const b = document.getElementById('lg-blatt');
   return { kopf: b.querySelector('.ems-kopf')?.textContent, kasten: b.querySelector('.ems-kasten')?.textContent,
            gruppen: [...b.querySelectorAll('.ems-gruppe')].map(g => g.querySelectorAll('.ems-zeile').length),
            stopp: !!b.querySelector('.ems-marke-stopp') };
@@ -66,9 +67,9 @@ pruef('Anleitung im Wortlaut des Hefts, mit Beispiel', /15 Patienten werden Ihne
   && /Meier: ca\. 40 Jahre, Polizistin, ledig - Oberarmfraktur/.test(lern.kasten) && /richtige Antwort wäre \(C\)/.test(lern.kasten));
 pruef('fuenf Gruppen zu drei Personen', JSON.stringify(lern.gruppen) === '[3,3,3,3,3]', JSON.stringify(lern.gruppen));
 pruef('STOPP am Ende der Einpraegephase', lern.stopp);
-await p.click('#fg-fertig-lernen'); await p.waitForTimeout(200);
+await p.click('#lg-weiter'); await p.waitForTimeout(200);
 const ab = await p.evaluate(() => {
-  const b = document.getElementById('fg-blatt-abfrage');
+  const b = document.getElementById('lg-blatt');
   return { kopf: b.querySelector('.ems-kopf')?.textContent, fragen: b.querySelectorAll('.ems-frage').length,
            wahl: [...b.querySelectorAll('.ems-frage')].map(f => f.querySelectorAll('input[type=radio]').length),
            nummern: [...b.querySelectorAll('.ems-nr')].map(n => n.textContent).join(' '),
@@ -87,11 +88,11 @@ const attributiv = m => (/e$/.test(m) ? m : /el$/.test(m) ? m.slice(0, -2) + 'le
 const fehler = { loesung: [], eindeutig: [], optionen: [], geschlecht: [], namen: [], alter: [], verraten: [], dativ: [], gruppe: [], sortiert: [] };
 const typen = {};
 for (let r = 0; r < RUNDEN; r++) {
-  if (r) { await p.click('#fg-nochmal'); await p.click('#fg-los'); await p.click('#fg-fertig-lernen'); }
-  await p.click('#fg-auswerten');
+  if (r) { await p.click('#lg-nochmal'); await p.click('#lg-los'); await p.click('#lg-weiter'); }
+  await p.click('#lg-weiter');
   const d = await p.evaluate(() => ({
-    liste: [...document.querySelectorAll('#fg-blatt-set .ems-gruppe')].map(g => [...g.querySelectorAll('.ems-zeile')].map(z => [...z.children].map(c => c.textContent))),
-    fragen: [...document.querySelectorAll('#fg-blatt-loesung .ems-frage')].map(f => ({
+    liste: [...document.querySelectorAll('#lg-loesungen .ems-gruppe')].map(g => [...g.querySelectorAll('.ems-zeile')].map(z => [...z.children].map(c => c.textContent))),
+    fragen: [...document.querySelectorAll('#lg-loesungen .ems-frage')].map(f => ({
       text: f.querySelector('.ems-frage-text').textContent,
       optionen: [...f.querySelectorAll('.ems-option')].map(o => o.children[1].textContent),
       richtig: [...f.querySelectorAll('.ems-option')].findIndex(o => o.classList.contains('fg-ist-richtig')) })) }));
@@ -171,9 +172,9 @@ else console.log('    (Fragetypen erst ab RUNDEN=50 gewertet)');
 
 // --- 3. Der Druck ---------------------------------------------------------------
 console.log('\n=== Druck ===');
-const erwartet = await p.evaluate(() => [...document.querySelectorAll('#fg-blatt-loesung .ems-frage')]
+const erwartet = await p.evaluate(() => [...document.querySelectorAll('#lg-loesungen .ems-frage')]
   .map(f => 'ABCDE'[[...f.querySelectorAll('.ems-option')].findIndex(o => o.classList.contains('fg-ist-richtig'))]).join(''));
-await p.click('#fg-drucken-ende'); await p.waitForTimeout(300);
+await p.click('#lg-drucken-ende'); await p.waitForTimeout(300);
 pruef('print() aufgerufen', (await p.evaluate(() => window.__gedruckt)) === 1);
 const dr = await p.evaluate(() => { const d = document.getElementById('ems-druck');
   return { seiten: d.querySelectorAll('.ems-seite').length, amBody: d.parentElement === document.body,
@@ -188,7 +189,7 @@ await p.emulateMedia({ media: 'print' });
 const sichtbar = await p.evaluate(() => {
   const gerendert = e => !!e && e.getClientRects().length > 0;
   return { druck: gerendert(document.getElementById('ems-druck')), kopf: gerendert(document.querySelector('header.site')),
-           start: gerendert(document.getElementById('fg-wurzel')) };
+           start: gerendert(document.getElementById('lg-wurzel')) };
 });
 pruef('im Druck nur das Heft', sichtbar.druck && !sichtbar.kopf && !sichtbar.start, JSON.stringify(sichtbar));
 await p.pdf({ path: ABLAGE + '/fakten-set.pdf', preferCSSPageSize: true, printBackground: true });

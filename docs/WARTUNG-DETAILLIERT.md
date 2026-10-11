@@ -349,8 +349,8 @@ Als Code-Block mit der Sprache `baustein` (`layouts/_default/_markup/render-code
 | --- | --- | --- |
 | `testablauf` | Tabelle Tagesablauf | `data/testablauf.yaml` |
 | `team-leitung` | Karten des Leitungsteams | `ressorts:` im Kopf der Team-Seite |
-| `fakten-generator` | Fakten-Generator | `data/fakten-generator/` |
-| `figuren-generator` | Figuren-Generator | – |
+| `lern-generator` | Lern-Generator: Figuren lernen, Fakten lernen oder beides (Häkchen) | `data/fakten-generator/` |
+| `fakten-generator`, `figuren-generator` | alte Namen, zeigen ebenfalls den Lern-Generator | – |
 | `sponsoring-kontakt` | E-Mail-/Telefon-Knopf | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | Antwortbogen per Foto auswerten (Alpha) | `data/antwortbogen.yaml` |
 | `konztest-auswertung` | Konzentrationstest per Foto auswerten (Alpha) | `data/konztest.yaml` |

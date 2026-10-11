@@ -1657,6 +1657,17 @@ body.pm-aktiv{overflow:hidden;}
    Die Figuren sind erzeugte SVGs. Weiss ist fest verdrahtet und folgt NICHT
    dem Farbmodus: Die Aufgabe besteht darin, ein SCHWARZES Feld von weissen
    zu unterscheiden - im Dunkelmodus eingefärbt wäre sie sinnlos. */
+/* Lern-Generator: Haekchen und eine Zeitzeile je Untertest */
+.lg-wahl{border:0;padding:0;margin:0 0 .75rem;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;}
+.lg-wahl legend{font-weight:600;margin-bottom:.35rem;padding:0;}
+.lg-wahl label{cursor:pointer;display:flex;align-items:center;gap:.4rem;}
+.lg-wahl .note{flex-basis:100%;margin:.25rem 0 0;}
+.lg-wahl .note[hidden]{display:none;}
+.fg .lg-regler,#lg-start .fg-regler{flex-direction:column;gap:0;}
+.fg-set-nochmal{margin-top:var(--space-5);}
+.lg-zeile{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;margin:0 0 .5rem;}
+.lg-zeile b{min-width:11rem;}
+.fg-fehler{color:var(--color-fehler,#b3261e);font-weight:600;}
 .fig-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:14pt 10pt;margin:14pt 0 0;}
 .fig-feld{text-align:center;}
 .fig-svg{width:100%;max-width:120pt;height:auto;display:block;margin:0 auto;background:#fff;}
@@ -1782,18 +1793,26 @@ body.pm-aktiv{overflow:hidden;}
 .ems-bogen-feld{display:flex;align-items:center;width:20.82pt;font-size:8pt;}
 .ems-bogen-feld span{width:7.92pt;}
 .ems-bogen-feld i{display:block;box-sizing:border-box;width:9.12pt;height:6.24pt;border:1.07pt solid #ff00ff;background:#fff;}
-.ems-bogen-feld i.ems-bogen-richtig{border-color:#000;background:#000;}
+/* SCHWARZ UEBER DEN RAND, nicht ueber den Hintergrund: Ohne die Option
+   «Hintergrundgrafiken» druckt der Browser keine Hintergruende - das
+   Loesungskaestchen blieb auf Papier leer. Ein 3.12 pt dicker Rand fuellt
+   das 6.24 pt hohe Kaestchen ganz und wird immer gedruckt. */
+.ems-bogen-feld i.ems-bogen-richtig{border:3.12pt solid #000;background:#000;}
 /* Loesungsblatt wie vorlage/loesungsblatt.typ: eine Tabelle, je zehn
    Aufgaben ein Zeilenpaar, die Nummernzeile grau (luma 235) */
 .ems-loesung-titel{font-weight:700;margin:0;}
 .ems-kopf + .ems-loesung-titel{margin-top:17.345pt;}
-.ems-loesung{border-collapse:collapse;margin:4.985pt 0 0;letter-spacing:0;}
+.ems-loesung{border-collapse:collapse;margin:4.985pt 0 0;letter-spacing:0;width:360pt !important;table-layout:fixed;}
+.ems-loesung-titel.ems-loesung-weitere{margin-top:24pt;}
+.ems-boegen{display:flex;gap:24pt;align-items:flex-start;}
 .ems-loesung td{box-sizing:border-box;width:36pt;height:19.39pt;border:.5pt solid #000;padding:0;text-align:center;font-size:10pt;}
 .ems-loesung-nr td{background:#ebebeb;}
 .ems-loesung-titel.ems-loesung-schluessel{margin:24pt 0 5.67pt;}
 
 /* Die gedruckte Heftseite: A4, alles in pt ab der Blattecke. Etwas weniger
    hoch als A4 (841.89 pt), sonst erzeugt Rundung eine leere Seite dazwischen. */
+/* Rosa Zeilen und Magenta wie im Tool-PDF auch ohne «Hintergrundgrafiken» */
+.ems-druck,.ems-druck *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 .ems-druck .ems-seite{position:relative;width:595.28pt;height:841pt;overflow:hidden;font-size:10pt;line-height:12pt;
   break-after:page;page-break-after:always;}
 .ems-druck .ems-seite:last-child{break-after:auto;page-break-after:auto;}

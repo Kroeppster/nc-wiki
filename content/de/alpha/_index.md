@@ -13,28 +13,21 @@ gefunden. Suchmaschinen bekommen zusätzlich ein `noindex`.
 
 *Was hier steht, kann jederzeit verschwinden oder sich ändern.*
 
-## Figuren-Generator
+## Lern-Generator (Figuren und Fakten lernen)
 
-Würfelt 18 Figuren wie im Untertest «Figuren lernen». Zu beurteilen ist vor
-allem die **Schwierigkeit**: Sind die Formen unterscheidbar genug, um sie sich
-in vier Minuten zu merken – und nicht so ähnlich, dass es zum Ratespiel wird?
-Zum Vergleich liegen die echten Serien unter Übungsaufgaben.
+Würfelt neue Sets für «Figuren lernen» (18 Figuren) und «Fakten lernen»
+(15 Patient*innen, 18 Fragen) – einzeln oder beide zusammen wie am Testtag:
+erst beide einprägen, dann die Ablenkung, dann beide abfragen. Per Häkchen
+wählen, was geübt wird; die Zeiten passen sich dem Testtag an.
 
-```baustein
-figuren-generator
-```
-
-## Fakten-Generator
-
-Würfelt 15 Patient*innen und 18 Fragen dazu wie im Untertest «Fakten lernen».
-Zu beurteilen ist vor allem der **Realismus**: Klingen Namen, Berufe, Merkmale
-und Diagnosen so, wie sie im echten Testheft stehen? Sind die Fragen eindeutig
-zu beantworten, ohne dass zwei Antworten passen? Und: Reichen die Wortlisten,
-oder wiederholen sich die Sets zu schnell? Die Listen sind noch nicht
-freigegeben und haben erst etwa halb so viele Einträge wie geplant.
+Zu beurteilen: **Schwierigkeit und Realismus.** Sind die Figuren
+unterscheidbar genug, um sie sich in vier Minuten zu merken – und unterscheiden
+sich die Serien genug voneinander? Klingen Namen, Berufe, Merkmale und
+Diagnosen wie im echten Testheft, und sind die Fragen eindeutig? Und gedruckt:
+Sehen Antwortbogen und Lösungen aus wie aus dem Formatierungstool?
 
 ```baustein
-fakten-generator
+lern-generator
 ```
 
 ## Antwortbogen auswerten

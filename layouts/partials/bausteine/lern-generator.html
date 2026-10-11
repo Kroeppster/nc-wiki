@@ -1,0 +1,222 @@
+{{- /*
+  ============================================================================
+  LERN-GENERATOR  -  ```baustein lern-generator```
+  ============================================================================
+  Uebt «Figuren lernen», «Fakten lernen» oder BEIDES wie am Testtag. Mit
+  Haekchen waehlt man, was dran ist; die Maschinen dahinter stehen in
+  bausteine/figuren-generator.html und bausteine/fakten-generator.html
+  (wie die Sets entstehen, steht dort).
+
+  DER ABLAUF FOLGT DEM TESTTAG (data/testablauf.yaml):
+    Figuren einpraegen -> Fakten einpraegen -> ... -> Figuren abfragen ->
+    Fakten abfragen
+  Gewaehlt ist, was angehakt ist, in dieser Reihenfolge. Die Ablenkung ist
+  die ECHTE Luecke zwischen der letzten Einpraegephase und der ersten
+  Abfrage - alles, was am Testtag dazwischen liegt und hier nicht geuebt
+  wird: nur Figuren 51 Min (Fakten einpraegen + Textverstaendnis), nur
+  Fakten 50 Min (Textverstaendnis + Figuren abfragen), beides 45 Min.
+
+  GEDRUCKT entsteht ein Testheft wie aus dem Formatierungstool: Testteil A
+  (Einpraegen), Testteil B (Abfrage), dann Antwortbogen und Loesungsblatt
+  mit Loesungsschluessel - bei beiden Untertests je ein Block nebeneinander,
+  jeder mit 1) bis 18) wie im Einzelblatt aus dem Tool.
+
+  KENNUNGEN mit Praefix "lg-": Hugo vergibt jeder Ueberschrift einen Anker
+  aus ihrem Text ("## Lern-Generator" -> id="lern-generator"). Hiesse der
+  Rahmen genauso, gaebe es die Kennung zweimal, und getElementById lieferte
+  die Ueberschrift statt des Rahmens.
+
+  KEINE LEERZEILEN IN DER AUSGABE: Goldmark beendet den HTML-Block an der
+  ersten Leerzeile, die Schachtelung bricht auseinander (siehe
+  fakten-generator.html).
+
+  .Store: Steht der Baustein zweimal auf einer Seite, bekaeme das zweite
+  Exemplar dieselben Kennungen. Deshalb nur einmal je Seite.
+  ============================================================================
+*/ -}}
+{{- if not (.Store.Get "lernGenerator") }}{{ .Store.Set "lernGenerator" true }}
+{{- partial "bausteine/figuren-generator.html" . }}
+{{- partial "bausteine/fakten-generator.html" . }}
+{{- $ablauf := slice }}
+{{- range hugo.Data.testablauf.bloecke }}{{ $ablauf = $ablauf | append (dict "key" .key "minuten" .minuten) }}{{ end }}
+<script type="application/json" id="lg-ablauf">{{ $ablauf | jsonify | safeJS }}</script>
+<div class="fg" id="lg-wurzel" data-pagefind-ignore>
+<div class="fg-start" id="lg-start">
+<p class="fg-intro">{{ i18n "lg_intro" }}</p>
+<fieldset class="lg-wahl"><legend>{{ i18n "lg_waehlen" }}</legend>
+<label><input type="checkbox" id="lg-mit-figuren" checked> {{ i18n "lg_figuren" }}</label>
+<label><input type="checkbox" id="lg-mit-fakten" checked> {{ i18n "lg_fakten" }}</label>
+<p class="note" id="lg-keine-fakten" hidden>{{ i18n "fg_keine_liste" }}</p>
+</fieldset>
+<div class="fg-regler">
+<p class="lg-zeile" id="lg-zeile-figuren"><b>{{ i18n "lg_figuren" }}</b>
+<label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-figuren-lernen" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-figuren-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label></p>
+<p class="lg-zeile" id="lg-zeile-fakten"><b>{{ i18n "lg_fakten" }}</b>
+<label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-fakten-lernen" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-fakten-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label></p>
+<p class="lg-zeile"><label>{{ i18n "fg_zeit_pause" }} <input type="number" id="lg-pause" min="0" max="120"> {{ i18n "fg_minuten" }}</label></p>
+</div>
+<p class="fg-fehler" id="lg-fehler" hidden>{{ i18n "lg_keine_auswahl" }}</p>
+<div class="fg-knoepfe">
+<button type="button" class="btn btn-primary" id="lg-los">{{ i18n "fg_starten" }}</button>
+<button type="button" class="btn btn-ghost" id="lg-drucken">{{ i18n "fg_drucken" }}</button>
+</div>
+<p class="fg-hinweis">{{ i18n "lg_drucken_hinweis" }}</p>
+</div>
+<div class="fg-phase" id="lg-phase" hidden>
+<div class="fg-kopf"><h3 id="lg-phase-titel"></h3><p class="fg-uhr" id="lg-uhr">--:--</p></div>
+<div class="ems-blatt" id="lg-blatt"></div>
+<p class="fg-intro" id="lg-pause-text" hidden>{{ i18n "fg_pause_hinweis" }}</p>
+<button type="button" class="btn btn-primary" id="lg-weiter">{{ i18n "fg_weiter" }}</button>
+</div>
+<div class="fg-phase" id="lg-ergebnis" hidden>
+<div class="fg-kopf"><h3>{{ i18n "fg_phase_ergebnis" }}</h3><p class="fg-punkte" id="lg-punkte"></p></div>
+<div id="lg-loesungen"></div>
+<div class="fg-knoepfe">
+<button type="button" class="btn btn-primary" id="lg-nochmal">{{ i18n "fg_nochmal" }}</button>
+<button type="button" class="btn btn-ghost" id="lg-drucken-ende">{{ i18n "fg_drucken_dieses" }}</button>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  var H = window.EMSHeft;
+  var T = {
+    einpraegen: {{ i18n "fg_phase_einpraegen" | jsonify | safeJS }},
+    pause: {{ i18n "fg_phase_pause" | jsonify | safeJS }},
+    abfrage: {{ i18n "fg_phase_abfrage" | jsonify | safeJS }},
+    auswerten: {{ i18n "fg_auswerten" | jsonify | safeJS }},
+    weiter: {{ i18n "fg_weiter" | jsonify | safeJS }},
+    punkte: {{ i18n "fg_punkte_von" | jsonify | safeJS }},
+    gesamt: {{ i18n "lg_gesamt" | jsonify | safeJS }},
+    figuren: {{ i18n "lg_figuren" | jsonify | safeJS }},
+    fakten: {{ i18n "lg_fakten" | jsonify | safeJS }}
+  };
+  var el = function(id){ return document.getElementById(id); };
+  // Die beiden Untertests in der Reihenfolge des Testtags; Fakten fehlt,
+  // wenn es fuer die Sprache keine Wortliste gibt.
+  var ALLE = [
+    { name: 'figuren', m: window.NCWikiFiguren, titel: T.figuren, einpraegen: 'figuren-einpraegen', abfrage: 'figuren-reproduktion' },
+    { name: 'fakten', m: window.NCWikiFakten, titel: T.fakten, einpraegen: 'fakten-einpraegen', abfrage: 'fakten-reproduktion' }];
+  if (!window.NCWikiFakten){
+    el('lg-mit-fakten').checked = false; el('lg-mit-fakten').disabled = true; el('lg-keine-fakten').hidden = false;
+  }
+  ALLE.forEach(function(u){ if (!u.m) return;
+    el('lg-' + u.name + '-lernen').value = u.m.minLern; el('lg-' + u.name + '-abfrage').value = u.m.minAbfrage; });
+  // Vorgabe fuer die Ablenkung: alles, was am Testtag zwischen der letzten
+  // gewaehlten Einpraegephase und der ersten gewaehlten Abfrage liegt und
+  // nicht selbst geuebt wird.
+  var ablauf = JSON.parse(el('lg-ablauf').textContent);
+  function gewaehlt(){ return ALLE.filter(function(u){ return u.m && el('lg-mit-' + u.name).checked; }); }
+  function vorgabePause(){
+    var g = gewaehlt(), eigen = {}, start = -1, ende = ablauf.length, summe = 0;
+    if (!g.length) return 0;
+    g.forEach(function(u){ eigen[u.einpraegen] = eigen[u.abfrage] = true; });
+    ablauf.forEach(function(b, i){
+      if (g.some(function(u){ return u.einpraegen === b.key; })) start = i;
+    });
+    for (var i = ablauf.length - 1; i >= 0; i--) if (g.some(function(u){ return u.abfrage === ablauf[i].key; })) ende = i;
+    for (var k = start + 1; k < ende; k++) if (!eigen[ablauf[k].key]) summe += ablauf[k].minuten;
+    return summe;
+  }
+  function wahlGeaendert(){
+    ALLE.forEach(function(u){ el('lg-zeile-' + u.name).hidden = !(u.m && el('lg-mit-' + u.name).checked); });
+    el('lg-pause').value = vorgabePause();
+    el('lg-fehler').hidden = true;
+  }
+  el('lg-mit-figuren').addEventListener('change', wahlGeaendert);
+  el('lg-mit-fakten').addEventListener('change', wahlGeaendert);
+  wahlGeaendert();
+  function minuten(u, art){ return +el('lg-' + u.name + '-' + art).value || u.m[art === 'lernen' ? 'minLern' : 'minAbfrage']; }
+  // --- Der getaktete Durchlauf -------------------------------------------------
+  // Eine Liste von Schritten (einpraegen, Ablenkung, abfragen), abgearbeitet
+  // mit einer Uhr; "Weiter" springt zum naechsten Schritt.
+  var laufend = null, schritte = [], jetzt = -1, auswahl = [];
+  function uhr(sekunden, fertig){
+    clearInterval(laufend);
+    var rest = sekunden, anzeige = el('lg-uhr');
+    function zeig(){ var m = Math.floor(rest / 60), s = rest % 60; anzeige.textContent = m + ':' + (s < 10 ? '0' : '') + s; }
+    zeig();
+    laufend = setInterval(function(){ rest--; zeig(); if (rest <= 0){ clearInterval(laufend); fertig(); } }, 1000);
+  }
+  function zeige(welche){
+    ['lg-start', 'lg-phase', 'lg-ergebnis'].forEach(function(id){ el(id).hidden = (id !== welche); });
+    // Wird der Abschnitt kuerzer, bleibt die Seite sonst weit unten stehen
+    var w = el('lg-wurzel');
+    if (w.getBoundingClientRect().top < 0) w.scrollIntoView({ block: 'start' });
+  }
+  function neu(){
+    auswahl = gewaehlt();
+    if (!auswahl.length){ el('lg-fehler').hidden = false; return false; }
+    auswahl.forEach(function(u){ u.m.neu(); });
+    return true;
+  }
+  // Beim Wechsel von einer Abfrage zur naechsten verschwindet ihr Blatt -
+  // ihre Antworten deshalb beim Verlassen einsammeln.
+  var antworten = {};
+  function naechster(){
+    clearInterval(laufend);
+    var vorher = schritte[jetzt];
+    if (vorher && vorher.abfrage) antworten[vorher.abfrage.name] = vorher.abfrage.m.antworten();
+    jetzt++;
+    if (jetzt >= schritte.length) return auswerten();
+    var s = schritte[jetzt];
+    el('lg-phase-titel').textContent = s.titel;
+    el('lg-blatt').innerHTML = s.blatt || '';
+    el('lg-blatt').hidden = !s.blatt;
+    el('lg-pause-text').hidden = !!s.blatt;
+    el('lg-weiter').textContent = jetzt === schritte.length - 1 ? T.auswerten : T.weiter;
+    zeige('lg-phase');
+    uhr(s.sekunden, naechster);
+  }
+  el('lg-los').addEventListener('click', function(){
+    if (!neu()) return;
+    antworten = {};
+    schritte = [];
+    auswahl.forEach(function(u){ var min = minuten(u, 'lernen');
+      schritte.push({ titel: T.einpraegen + ' – ' + u.titel, sekunden: min * 60, blatt: u.m.lernen(min) }); });
+    var p = +el('lg-pause').value || 0;
+    if (p > 0) schritte.push({ titel: T.pause, sekunden: p * 60 });
+    auswahl.forEach(function(u){ var min = minuten(u, 'abfrage');
+      schritte.push({ titel: T.abfrage + ' – ' + u.titel, sekunden: min * 60, abfrage: u, blatt: u.m.abfrage(min) }); });
+    jetzt = -1;
+    naechster();
+  });
+  el('lg-weiter').addEventListener('click', naechster);
+  function auswerten(){
+    clearInterval(laufend);
+    var summe = 0, von = 0, h = '';
+    auswahl.forEach(function(u){
+      var a = antworten[u.name] || [], r = u.m.richtig(a);
+      summe += r; von += u.m.anzahl;
+      h += '<h4>' + u.titel + ': ' + T.punkte.replace('{n}', r).replace('{von}', u.m.anzahl) + '</h4>'
+        + '<div class="ems-blatt">' + u.m.loesung(a) + '</div>';
+    });
+    el('lg-punkte').textContent = auswahl.length > 1 ? T.gesamt.replace('{n}', summe).replace('{von}', von)
+      : T.punkte.replace('{n}', summe).replace('{von}', von);
+    el('lg-loesungen').innerHTML = h;
+    zeige('lg-ergebnis');
+  }
+  el('lg-nochmal').addEventListener('click', function(){ clearInterval(laufend); zeige('lg-start'); });
+  // --- Drucken: ein Testheft wie aus dem Formatierungstool ----------------------
+  // Teil A: die Einpraegephasen, Teil B: die Abfragen, dann Antwortbogen und
+  // Loesungsblatt mit Loesungsschluessel - bei beiden Untertests je ein Block
+  // nebeneinander. Gedruckt wird ueber window.print(); der Browser bietet
+  // dort "Als PDF sichern" an.
+  function drucken(neuesSet){
+    if (neuesSet && !neu()) return;
+    if (!auswahl.length) return;
+    var seiten = [], nr = 0, titel = auswahl.length > 1 ? '' : auswahl[0].m.titelAbfrage;
+    function dazu(teil, liste){ liste.forEach(function(o){ o.teil = teil; o.nr = ++nr; seiten.push(H.seite(o)); }); }
+    auswahl.forEach(function(u){ dazu('A', u.m.seitenA(minuten(u, 'lernen'))); });
+    auswahl.forEach(function(u){ dazu('B', u.m.seitenB(minuten(u, 'abfrage'))); });
+    dazu(null, [{ inhalt: H.antwortbogen(titel, auswahl.map(function(u){ return { titel: u.m.titelAbfrage, anzahl: u.m.anzahl }; })) }]);
+    dazu(null, [{ inhalt: H.loesungsblatt(titel, auswahl.map(function(u){ return { titel: u.m.titelAbfrage, loesungen: u.m.loesungen() }; })) }]);
+    H.drucken(seiten);
+  }
+  el('lg-drucken').addEventListener('click', function(){ drucken(true); });
+  el('lg-drucken-ende').addEventListener('click', function(){ drucken(false); });
+})();
+</script>
+{{- end }}

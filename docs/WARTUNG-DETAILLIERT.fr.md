@@ -361,8 +361,8 @@ Bloc de code avec la langue `baustein` (`layouts/_default/_markup/render-codeblo
 | --- | --- | --- |
 | `testablauf` | tableau du déroulement | `data/testablauf.yaml` |
 | `team-leitung` | cartes de l'équipe dirigeante | `ressorts:` dans l'en-tête de la page équipe |
-| `fakten-generator` | générateur de faits | `data/fakten-generator/` |
-| `figuren-generator` | générateur de figures | – |
+| `lern-generator` | générateur d’apprentissage : figures, faits ou les deux (cases à cocher) | `data/fakten-generator/` |
+| `fakten-generator`, `figuren-generator` | anciens noms, affichent aussi le générateur d’apprentissage | – |
 | `sponsoring-kontakt` | bouton e-mail/téléphone | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | évaluer la feuille de réponses par photo (Alpha) | `data/antwortbogen.yaml` |
 | `konztest-auswertung` | évaluer le test de concentration par photo (Alpha) | `data/konztest.yaml` |
