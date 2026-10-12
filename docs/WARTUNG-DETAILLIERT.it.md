@@ -99,10 +99,13 @@ di menu proprio. Primo livello oggi:
 | --- | --- | --- |
 | Pagina iniziale | `home` | – |
 | News | `news` | – |
-| EMS | `ems` | Serie di esercizi, Simulazioni del test (con la modalità simulazione), Corsi di preparazione, Uniguide, Compensazione degli svantaggi, Domande frequenti, Testimonianze |
+| EMS | `ems` | Serie di esercizi, Simulazioni del test (con la modalità simulazione), Corsi di preparazione, Uniguide, Domande frequenti, Testimonianze |
 | Sostenitori e sostenitrici | `unterstuetzer-innen` | Sostienici ora |
 | Chi siamo | `ueber-uns` | Team, Rapporti annuali, Archivio |
 | Contatto | `kontakt` | – |
+
+Non ogni pagina ha bisogno di una voce di menu: la compensazione degli svantaggi
+(`/ems/nachteilsausgleich/`) volutamente non ha un blocco `menu` ed è collegata dalla pagina EMS.
 
 Gli indirizzi delle pagine **non dipendono** dal menu: le serie di esercizi stanno sotto
 `/it/ems/uebungsaufgaben/`, ovunque compaiano nel menu. Un gruppo senza pagina propria

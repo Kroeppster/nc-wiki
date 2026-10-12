@@ -1,10 +1,6 @@
 ---
 title: "Nachteilsausgleich"
 description: "Nachteilsausgleich am Eignungstest für das Medizinstudium (EMS): welche Anpassungen möglich sind, welche Unterlagen du brauchst und bis wann du das Gesuch einreichen musst."
-menu:
-  main:
-    parent: ems
-    weight: 5
 ---
 
 Hast du eine Behinderung, eine chronische Krankheit oder eine Beeinträchtigung wie ADHS, Autismus oder Dyslexie? Oder bist du am Testtag auf Medikamente oder Hilfsmittel angewiesen? Dann kannst du beim Eignungstest für das Medizinstudium (EMS) beantragen, dass die Testbedingungen für dich angepasst werden. Hier findest du einen Überblick. Verbindlich sind immer die aktuellen Angaben und Merkblätter von [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium/zulassungsverfahren-mit-numerus-clausus/anpassung-der-testbedingungen-/-nachteilsausgleich).

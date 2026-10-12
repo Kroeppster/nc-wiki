@@ -100,10 +100,13 @@ pas de fichier de menu propre. Premier niveau aujourd'hui :
 | --- | --- | --- |
 | Accueil | `home` | – |
 | Actualités | `news` | – |
-| EMS | `ems` | Séries d'exercices, Simulations de test (avec le mode simulation), Cours de préparation, Uniguide, Compensation des désavantages, Questions fréquentes, Témoignages |
+| EMS | `ems` | Séries d'exercices, Simulations de test (avec le mode simulation), Cours de préparation, Uniguide, Questions fréquentes, Témoignages |
 | Nos soutiens | `unterstuetzer-innen` | Soutenir maintenant |
 | À propos de nous | `ueber-uns` | Équipe, Rapports annuels, Archives |
 | Contact | `kontakt` | – |
+
+Toutes les pages n'ont pas besoin d'une entrée de menu : la compensation des désavantages
+(`/ems/nachteilsausgleich/`) n'a volontairement pas de bloc `menu` et est liée depuis la page EMS.
 
 Les adresses des pages **ne dépendent pas** du menu : les séries d'exercices sont sous
 `/fr/ems/uebungsaufgaben/`, où qu'elles figurent dans le menu. Un groupe sans page propre

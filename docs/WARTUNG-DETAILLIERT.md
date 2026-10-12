@@ -97,10 +97,13 @@ Menüdatei. Oberste Ebene heute:
 | --- | --- | --- |
 | Startseite | `home` | – |
 | News | `news` | – |
-| EMS | `ems` | Übungsserien, Testsimulationen (mit dem Simulationsmodus), Vorbereitungskurse, Uniguide, Nachteilsausgleich, Häufige Fragen, Erfahrungsberichte |
+| EMS | `ems` | Übungsserien, Testsimulationen (mit dem Simulationsmodus), Vorbereitungskurse, Uniguide, Häufige Fragen, Erfahrungsberichte |
 | Unterstützer\*innen | `unterstuetzer-innen` | Jetzt unterstützen |
 | Über uns | `ueber-uns` | Team, Jahresberichte, Archiv |
 | Kontakt | `kontakt` | – |
+
+Nicht jede Seite braucht einen Menüpunkt: Der Nachteilsausgleich (`/ems/nachteilsausgleich/`)
+hat bewusst keinen `menu`-Block und ist von der EMS-Seite aus verlinkt.
 
 Die Adressen der Seiten hängen **nicht** am Menü: Übungsserien liegen unter
 `/ems/uebungsaufgaben/`, egal wo sie im Menü stehen. Eine Gruppe ohne eigene Seite ginge

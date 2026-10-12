@@ -1,10 +1,6 @@
 ---
 title: "Compensazione degli svantaggi"
 description: "Compensazione degli svantaggi al test attitudinale per gli studi di medicina (EMS): quali adeguamenti sono possibili, quali documenti ti servono ed entro quando presentare la domanda."
-menu:
-  main:
-    parent: ems
-    weight: 5
 ---
 
 Hai una disabilità, una malattia cronica o un disturbo come l'ADHD, l'autismo o la dislessia? Oppure il giorno del test hai bisogno di medicamenti o di ausili? Allora puoi chiedere un adeguamento delle condizioni del test attitudinale per gli studi di medicina (EMS). Qui trovi una panoramica. Fanno sempre fede le informazioni e i promemoria aggiornati di [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium/zulassungsverfahren-mit-numerus-clausus/anpassung-der-testbedingungen-/-nachteilsausgleich) (in tedesco e francese).
