@@ -92,9 +92,22 @@ http://localhost:1313/. `npm run build` construit comme sur GitHub.
 
 ### Le menu
 
-Le menu principal est composé **uniquement à partir des en-têtes** – il n'existe pas de
-fichier de menu. Premier niveau aujourd'hui : Accueil, Actualités, EMS, Nos soutiens, À
-propos de nous, Contact.
+Le menu principal est composé à partir des en-têtes des pages, plus deux entrées sans page
+propre dans `hugo.toml` (par langue sous `[[languages.xx.menus.main]]`). Premier niveau
+aujourd'hui :
+
+| Entrée | `identifier` | En dessous |
+| --- | --- | --- |
+| Accueil | `home` | – |
+| L'EMS | `ems` | À propos de l'EMS (`hugo.toml`), Compensation des désavantages, Uniguide, Questions fréquentes, Témoignages, Actualités |
+| Préparation | `vorbereitung` (seulement `hugo.toml`, pas de page) | Séries d'exercices, Simulations de test, Cours de préparation, Mode examen |
+| Nos soutiens | `unterstuetzer-innen` | Soutenir maintenant |
+| À propos de nous | `ueber-uns` | Équipe, Rapports annuels, Archives |
+| Contact | `kontakt` | – |
+
+Les adresses des pages **ne dépendent pas** du menu : les séries d'exercices restent sous
+`/fr/ems/uebungsaufgaben/`, les actualités sous `/fr/news/`. Une entrée sans page propre
+(« Préparation ») ouvre son sous-menu au clic et n'apparaît pas dans le pied de page.
 
 ```yaml
 menu:
@@ -104,14 +117,14 @@ menu:
     name: "Nom court"   # facultatif, sinon le title
 ```
 
-- `parent` est le nom du dossier de la rubrique parente (`ems`, `ueber-uns`,
+- `parent` est l'`identifier` de l'entrée parente (`ems`, `vorbereitung`, `ueber-uns`,
   `unterstuetzer-innen`) ; sans `parent`, la page devient une entrée de premier niveau.
 - `weight` peut être décimal (`2.5`) pour glisser une entrée entre deux autres.
 - Le bloc de menu doit figurer dans **chaque version linguistique**.
 - Le pied de page a son propre menu `legal` (mentions légales, protection des données …),
   construit de la même façon.
 - Les sous-menus s'ouvrent à la souris et au toucher ; sur mobile seulement au toucher.
-  Rien à régler.
+  Rien à régler. En dessous de 1020 px de largeur, le menu devient un menu hamburger.
 
 ### Renommer ou déplacer une page
 

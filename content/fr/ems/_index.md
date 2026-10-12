@@ -3,20 +3,17 @@ title: "EMS"
 description: "Tout pour ta préparation à l'EMS : séries d'exercices gratuites, simulations de test, cours de préparation et guide des universités. Par des étudiant·e·s."
 menu:
   main:
+    name: "L'EMS"
     identifier: ems
-    weight: 3
+    weight: 2
 ---
 
 Cette page te guide à travers le test d'aptitudes pour les études de médecine (EMS) : de l'inscription au jour du test jusqu'à l'attribution des places d'études.
 
 ## Aperçu
 
-- [Séries d'exercices](/ems/uebungsaufgaben)
-- [Simulations de test](/ems/testsimulationen)
-- [Cours de préparation](/ems/vorbereitungskurse)
-- [Uniguide](/ems/uniguide)
-- [Témoignages](/ems/erfahrungsberichte)
-- [Questions fréquentes](/ems/qa)
+- **Informations :** [Compensation des désavantages](/ems/nachteilsausgleich) · [Uniguide](/ems/uniguide) · [Questions fréquentes](/ems/qa) · [Témoignages](/ems/erfahrungsberichte) · [Actualités](/news)
+- **Préparation :** [Séries d'exercices](/ems/uebungsaufgaben) · [Simulations de test](/ems/testsimulationen) · [Cours de préparation](/ems/vorbereitungskurse) · [Mode examen](/ems/pruefungsmodus)
 
 ## Préparation à l'EMS
 
@@ -40,6 +37,8 @@ Le calendrier de swissuniversities pour une rentrée à l'automne 2027 :
 - **9 juillet 2027 :** test d'aptitudes pour les études de médecine – emporte une pièce d'identité officielle valable (carte d'identité ou passeport)
 - **Fin juillet :** attribution des places d'études par courrier (parfois recommandé) ou par e-mail
 - **Début août :** confirmer ta place d'études dans le délai fixé par l'université, en général 10 jours
+
+**Compensation des désavantages :** si tu as besoin d'aides ou de conditions de test adaptées le jour du test, tu déposes une demande séparée auprès de swissuniversities – tôt et avec son propre délai (jusqu'ici le 1er mai). Plus d'informations sur la page [Compensation des désavantages](/ems/nachteilsausgleich).
 
 ### Choisir l'université
 

@@ -91,9 +91,21 @@ http://localhost:1313/. `npm run build` costruisce come su GitHub.
 
 ### Il menu
 
-Il menu principale è composto **solo dalle intestazioni** – non esiste un file di menu.
-Primo livello oggi: Pagina iniziale, News, EMS, Sostenitori e sostenitrici, Chi siamo,
-Contatto.
+Il menu principale è composto dalle intestazioni delle pagine, più due voci senza pagina
+propria in `hugo.toml` (per lingua sotto `[[languages.xx.menus.main]]`). Primo livello oggi:
+
+| Voce | `identifier` | Sotto |
+| --- | --- | --- |
+| Pagina iniziale | `home` | – |
+| L'EMS | `ems` | Informazioni sull'EMS (`hugo.toml`), Compensazione degli svantaggi, Uniguide, Domande frequenti, Testimonianze, News |
+| Preparazione | `vorbereitung` (solo `hugo.toml`, nessuna pagina) | Serie di esercizi, Simulazioni del test, Corsi di preparazione, Modalità esame |
+| Sostenitori e sostenitrici | `unterstuetzer-innen` | Sostienici ora |
+| Chi siamo | `ueber-uns` | Team, Rapporti annuali, Archivio |
+| Contatto | `kontakt` | – |
+
+Gli indirizzi delle pagine **non dipendono** dal menu: le serie di esercizi restano sotto
+`/it/ems/uebungsaufgaben/`, le news sotto `/it/news/`. Una voce senza pagina propria
+(«Preparazione») apre il suo sottomenu al clic e non compare nel piè di pagina.
 
 ```yaml
 menu:
@@ -103,14 +115,14 @@ menu:
     name: "Nome breve"  # facoltativo, altrimenti vale il title
 ```
 
-- `parent` è il nome della cartella della sezione superiore (`ems`, `ueber-uns`,
+- `parent` è l'`identifier` della voce superiore (`ems`, `vorbereitung`, `ueber-uns`,
   `unterstuetzer-innen`); senza `parent` la pagina diventa una voce di primo livello.
 - `weight` può essere decimale (`2.5`) per inserire una voce tra due altre.
 - Il blocco di menu deve stare in **ogni versione linguistica**.
 - Il piè di pagina ha un proprio menu `legal` (impressum, privacy …), costruito allo stesso
   modo.
 - I sottomenu si aprono con il mouse e al tocco; sul telefono solo al tocco. Niente da
-  impostare.
+  impostare. Sotto i 1020 px di larghezza il menu diventa un menu hamburger.
 
 ### Rinominare o spostare una pagina
 

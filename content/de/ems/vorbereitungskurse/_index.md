@@ -3,8 +3,8 @@ title: "Vorbereitungskurse"
 description: "Kostenloser Vorbereitungskurs für den EMS: zwei Tage in Kleingruppen mit erfahrenen Medizinstudierenden, inklusive Kursskript mit Strategien und Übungsaufgaben."
 menu:
   main:
-    parent: ems
-    weight: 4
+    parent: vorbereitung
+    weight: 3
 featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Gedrucktes NCWiki-Kursskript zum EMS-Vorbereitungskurs vom März 2024 auf einem Hörsaaltisch"
 ---

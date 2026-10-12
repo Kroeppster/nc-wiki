@@ -4,7 +4,7 @@ description: "Trainiere für den EMS mit 120 kostenlosen Übungsserien: Aufgaben
 menu:
   main:
     identifier: uebungsaufgaben
-    parent: ems
+    parent: vorbereitung
     weight: 1
 ---
 

@@ -3,20 +3,17 @@ title: "EMS"
 description: "Tutto per la tua preparazione all'EMS: serie di esercizi gratuite, simulazioni del test, corsi di preparazione e una guida alle università. Da studenti, per te."
 menu:
   main:
+    name: "L'EMS"
     identifier: ems
-    weight: 3
+    weight: 2
 ---
 
 Questa pagina ti guida attraverso il test attitudinale per gli studi di medicina (EMS): dall'iscrizione al giorno del test fino all'assegnazione dei posti di studio.
 
 ## Panoramica
 
-- [Serie di esercizi](/ems/uebungsaufgaben)
-- [Simulazioni del test](/ems/testsimulationen)
-- [Corsi di preparazione](/ems/vorbereitungskurse)
-- [Uniguide](/ems/uniguide)
-- [Testimonianze](/ems/erfahrungsberichte)
-- [Domande frequenti](/ems/qa)
+- **Informazioni:** [Compensazione degli svantaggi](/ems/nachteilsausgleich) · [Uniguide](/ems/uniguide) · [Domande frequenti](/ems/qa) · [Testimonianze](/ems/erfahrungsberichte) · [News](/news)
+- **Preparazione:** [Serie di esercizi](/ems/uebungsaufgaben) · [Simulazioni del test](/ems/testsimulationen) · [Corsi di preparazione](/ems/vorbereitungskurse) · [Modalità esame](/ems/pruefungsmodus)
 
 ## Preparazione all'EMS
 
@@ -40,6 +37,8 @@ Il calendario di swissuniversities per l'inizio degli studi nell'autunno 2027:
 - **9 luglio 2027:** test attitudinale per gli studi di medicina – porta un documento d'identità ufficiale valido (carta d'identità o passaporto)
 - **Fine luglio:** assegnazione dei posti di studio per posta (in parte raccomandata) o via e-mail
 - **Inizio agosto:** confermare il posto di studio entro il termine dell'università, di solito 10 giorni
+
+**Compensazione degli svantaggi:** se il giorno del test hai bisogno di ausili o di condizioni di test adeguate, presenti una domanda separata a swissuniversities – per tempo e con un proprio termine (finora il 1° maggio). Maggiori informazioni alla pagina [Compensazione degli svantaggi](/ems/nachteilsausgleich).
 
 ### Scegliere l'università
 

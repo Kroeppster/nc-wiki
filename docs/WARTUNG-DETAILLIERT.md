@@ -89,9 +89,22 @@ die Seite läuft auf http://localhost:1313/. `npm run build` baut wie auf GitHub
 
 ### Das Menü
 
-Das Hauptmenü setzt sich **nur aus den Seitenköpfen** zusammen – es gibt keine eigene
-Menüdatei. Oberste Ebene heute: Startseite, News, EMS, Unterstützer:innen, Über uns,
-Kontakt.
+Das Hauptmenü setzt sich aus den Seitenköpfen zusammen, plus zwei Einträgen ohne eigene
+Seite in `hugo.toml` (je Sprache unter `[[languages.xx.menus.main]]`). Oberste Ebene heute:
+
+| Menüpunkt | `identifier` | Darunter |
+| --- | --- | --- |
+| Startseite | `home` | – |
+| Der EMS | `ems` | Über den EMS (`hugo.toml`), Nachteilsausgleich, Uniguide, Häufige Fragen, Erfahrungsberichte, News |
+| Vorbereitung | `vorbereitung` (nur `hugo.toml`, keine Seite) | Übungsserien, Testsimulationen, Vorbereitungskurse, Prüfungsmodus |
+| Unterstützer\*innen | `unterstuetzer-innen` | Jetzt unterstützen |
+| Über uns | `ueber-uns` | Team, Jahresberichte, Archiv |
+| Kontakt | `kontakt` | – |
+
+Die Adressen der Seiten hängen **nicht** am Menü: Übungsserien liegen weiter unter
+`/ems/uebungsaufgaben/`, News unter `/news/`. Ein Menüpunkt ohne eigene Seite
+(«Vorbereitung») klappt beim Klick sein Untermenü auf und erscheint nicht in der
+Fusszeile.
 
 ```yaml
 menu:
@@ -101,13 +114,14 @@ menu:
     name: "Kurzname"    # optional, sonst gilt der title
 ```
 
-- `parent` ist der Ordnername des übergeordneten Bereichs (`ems`, `ueber-uns`,
-  `unterstuetzer-innen`); ohne `parent` wird die Seite ein Punkt der obersten Ebene.
+- `parent` ist der `identifier` des übergeordneten Menüpunkts (`ems`, `vorbereitung`,
+  `ueber-uns`, `unterstuetzer-innen`); ohne `parent` wird die Seite ein Punkt der obersten Ebene.
 - `weight` darf auch eine Kommazahl sein (`2.5`), um etwas dazwischenzuschieben.
 - Der Menüblock muss in **jeder Sprachfassung** stehen.
 - Die Fusszeile hat ein eigenes Menü `legal` (Impressum, Datenschutz …), gleich aufgebaut.
 - Untermenüs öffnen per Maus und per Tippen; auf dem Handy nur per Tippen. Dafür ist
-  nichts einzustellen.
+  nichts einzustellen. Unter 1020 px Breite wird das Menü zum Hamburger-Menü (darüber
+  passt die Kopfzeile in allen drei Sprachen auf eine Zeile).
 
 ### Seite umbenennen oder verschieben
 

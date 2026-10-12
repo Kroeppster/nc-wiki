@@ -4,7 +4,7 @@ description: "Entraîne-toi pour l'EMS avec 120 séries d'exercices gratuites. N
 menu:
   main:
     identifier: uebungsaufgaben
-    parent: ems
+    parent: vorbereitung
     weight: 1
 ---
 

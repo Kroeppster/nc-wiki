@@ -4,7 +4,8 @@ description: "Actualités sur l'EMS : dates et inscriptions pour nos simulations
 menu:
   main:
     identifier: news
-    weight: 2
+    parent: ems
+    weight: 6
 ---
 
 Tu trouveras ici régulièrement des nouvelles sur l'EMS, notre association et nos événements (simulations de test, cours de préparation, etc.).

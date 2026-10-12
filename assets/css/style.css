@@ -361,12 +361,12 @@ nav.main-nav>ul{display:flex;gap:var(--space-4);list-style:none;margin:0;padding
 nav.main-nav li{position:relative;}
 nav.main-nav>ul>li>a,nav.main-nav>ul>li>span{font-size:.82rem;font-weight:600;padding:var(--space-2) 0;display:inline-block;}
 nav.main-nav>ul>li>a:hover{color:var(--color-signal);}
-/* Absicherung für den generischen Fall, dass ein Menüpunkt mal keine eigene
-   URL hätte (siehe header.html) - würde dann als <span> statt <a> gerendert,
-   etwas gedämpfter eingefärbt, damit optisch klar ist, dass hier kein Klick
-   zu einer eigenen Seite führt. Aktuell hat aber jeder Hauptmenüpunkt eine
-   echte Seite. */
-nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
+/* Menüpunkt ohne eigene Seite (aktuell «Vorbereitung», siehe hugo.toml): wird
+   als <span> statt <a> gerendert. Er sieht aus wie die anderen Punkte und
+   klappt beim Klick sein Untermenü auf (Klick-Logik in footer.html) - grau
+   wirkte er wie deaktiviert. */
+nav.main-nav>ul>li>span{cursor:pointer;}
+nav.main-nav>ul>li>span:hover{color:var(--color-signal);}
 .has-children>.submenu{display:none;position:absolute;top:100%;left:0;background:var(--color-surface);border:1px solid var(--color-line);min-width:220px;padding:var(--space-2);margin:0;list-style:none;box-shadow:0 16px 32px rgba(16,26,51,.1);border-radius:var(--radius-md);}
 .has-children:hover>.submenu,.has-children:focus-within>.submenu{display:block;}
 /* Zusätzlich zum Hover (Maus) öffnet/schliesst die Klick/Tap-Logik aus
@@ -398,7 +398,7 @@ nav.main-nav>ul>li>span{color:var(--color-ink-soft);cursor:default;}
 .has-children.is-open>.submenu-toggle .chevron{transform:rotate(180deg);}
 
 /* Hamburger-Knopf: nur auf schmalen Bildschirmen sichtbar gemacht (siehe
-   @media max-width:860px weiter unten) - auf breiten Bildschirmen per
+   @media max-width:1020px weiter unten) - auf breiten Bildschirmen per
    display:none ausgeblendet, dort ist das Menü ohnehin immer sichtbar. */
 .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:2.1rem;height:2.1rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:var(--color-surface);cursor:pointer;padding:0;order:1;}
 .nav-toggle-bar{display:block;width:1.1rem;height:1.5px;background:var(--color-ink);transition:transform .15s,opacity .15s;}
@@ -1523,7 +1523,12 @@ body.pm-aktiv{overflow:hidden;}
 /* ==========================================================================
    Responsiv
    ========================================================================== */
-@media (max-width:860px){
+/* Kopfzeile und Hamburger-Menü schon unter 1020px: Darüber passt die Kopfzeile
+   in allen drei Sprachen auf eine Zeile (gemessen: DE ab 961px, FR ab 931px,
+   IT ab 1011px). Vorher griff das Hamburger-Menü erst unter 860px, dazwischen
+   brach die Kopfzeile in zwei Zeilen um. Die übrigen Regeln für schmale
+   Bildschirme bleiben im Block darunter bei 860px. */
+@media (max-width:1020px){
   header.site{position:static;}
   /* Auf schmalen Bildschirmen bleibt das Suchfeld wie bisher immer
      ausgeklappt sichtbar (kein Platzproblem mehr, da das Hauptmenü hier
@@ -1553,6 +1558,8 @@ body.pm-aktiv{overflow:hidden;}
      im eingeklappten Hamburger-Menü etwas mehr Einzug als die 2. Ebene,
      damit die Verschachtelung optisch erkennbar bleibt. */
   .submenu .submenu{padding-left:var(--space-6);}
+}
+@media (max-width:860px){
 
   .hero{padding-block:var(--space-12) var(--space-10);}
   section{padding-block:var(--space-12);}

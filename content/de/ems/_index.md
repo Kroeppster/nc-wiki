@@ -3,20 +3,17 @@ title: "EMS"
 description: "Alles für deine EMS-Vorbereitung: Kostenlose Übungsserien, Testsimulationen, Vorbereitungskurse und ein Uniguide. Von Studierenden für dich."
 menu:
   main:
+    name: "Der EMS"
     identifier: ems
-    weight: 3
+    weight: 2
 ---
 
 Diese Seite führt dich durch den Eignungstest für das Medizinstudium (EMS): von der Anmeldung über den Testtag bis zur Zuteilung der Studienplätze.
 
 ## Übersicht
 
-- [Übungsserien](/ems/uebungsaufgaben)
-- [Testsimulationen](/ems/testsimulationen)
-- [Vorbereitungskurse](/ems/vorbereitungskurse)
-- [Uniguide](/ems/uniguide)
-- [Erfahrungsberichte](/ems/erfahrungsberichte)
-- [Häufige Fragen](/ems/qa)
+- **Informationen:** [Nachteilsausgleich](/ems/nachteilsausgleich) · [Uniguide](/ems/uniguide) · [Häufige Fragen](/ems/qa) · [Erfahrungsberichte](/ems/erfahrungsberichte) · [News](/news)
+- **Vorbereitung:** [Übungsserien](/ems/uebungsaufgaben) · [Testsimulationen](/ems/testsimulationen) · [Vorbereitungskurse](/ems/vorbereitungskurse) · [Prüfungsmodus](/ems/pruefungsmodus)
 
 ## Vorbereitung auf den EMS
 
@@ -40,6 +37,8 @@ Der Zeitplan von swissuniversities für den Studienstart im Herbst 2027:
 - **9. Juli 2027:** EMS, nimm einen gültigen amtlichen Ausweis (ID oder Pass) mit
 - **Ende Juli:** Zuteilung der Studienplätze per Post (teilweise eingeschrieben) oder E-Mail
 - **Anfang August:** Studienplatz innert der Frist der Universität bestätigen, meist zehn Tage
+
+**Nachteilsausgleich:** Bist du am Testtag auf Hilfsmittel oder angepasste Testbedingungen angewiesen, stellst du dafür ein eigenes Gesuch bei swissuniversities – früh und mit eigener Frist (bisher jeweils der 1. Mai). Mehr dazu auf der Seite [Nachteilsausgleich](/ems/nachteilsausgleich).
 
 ### Universität wählen
 

@@ -4,7 +4,7 @@ description: "Allenati per l'EMS con 120 serie di esercizi gratuite. Ti offriamo
 menu:
   main:
     identifier: uebungsaufgaben
-    parent: ems
+    parent: vorbereitung
     weight: 1
 ---
 

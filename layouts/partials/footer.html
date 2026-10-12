@@ -347,6 +347,13 @@
       });
     });
 
+    {{/* Menüpunkt ohne eigene Seite (z. B. «Vorbereitung»): ein Klick auf den
+         Text wirkt wie ein Klick auf den Aufklapp-Pfeil daneben. */}}
+    document.querySelectorAll('nav.main-nav .has-children > span').forEach(function(sp){
+      var btn = sp.parentElement.querySelector(':scope > .submenu-toggle');
+      if(btn) sp.addEventListener('click', function(){ btn.click(); });
+    });
+
     {{/* Aussen-Klick schliesst offene Untermenüs (nicht das Mobile-Hauptmenü
          selbst - das bleibt offen, bis der Hamburger erneut angeklickt wird). */}}
     document.addEventListener('click', function(e){

@@ -4,7 +4,7 @@ description: "Simule l'EMS dans des conditions réelles. Télécharge gratuiteme
 menu:
   main:
     identifier: testsimulationen
-    parent: ems
+    parent: vorbereitung
     weight: 2
 featured_image: "testsimulationen/testsimulation-2023.jpg"
 featured_image_alt: "Feuille de réponses EMS remplie au premier plan, avec en arrière-plan un amphithéâtre plein pendant une simulation de test NCWiki"

@@ -4,7 +4,8 @@ description: "News sull'EMS: date e iscrizioni per le nostre simulazioni del tes
 menu:
   main:
     identifier: news
-    weight: 2
+    parent: ems
+    weight: 6
 ---
 
 Qui trovi regolarmente novità sull'EMS, sulla nostra associazione e sui nostri eventi (simulazioni del test, corso di preparazione e altro).

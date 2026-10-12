@@ -4,7 +4,7 @@ description: "Simuliere den EMS unter realen Bedingungen: Lade fünf komplette T
 menu:
   main:
     identifier: testsimulationen
-    parent: ems
+    parent: vorbereitung
     weight: 2
 featured_image: "testsimulationen/testsimulation-2023.jpg"
 featured_image_alt: "Ausgefüllter EMS-Antwortbogen im Vordergrund, dahinter ein voller Hörsaal während einer NCWiki-Testsimulation"

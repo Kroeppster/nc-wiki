@@ -5,8 +5,8 @@ pruefungsmodus: true
 menu:
   main:
     identifier: pruefungsmodus
-    parent: ems
-    weight: 3
+    parent: vorbereitung
+    weight: 4
 ---
 
 Diese Seite simuliert den Ablauf am Testtag, damit du zu Hause unter realistischen Bedingungen übst. Mit konkreten Anweisungen und einer mitlaufenden Uhr kommst du dem Eignungstest für das Medizinstudium (EMS) sehr nah. Du wählst zwischen der kompletten Testsimulation, einzelnen Untertests und deinem eigenen Ablauf.

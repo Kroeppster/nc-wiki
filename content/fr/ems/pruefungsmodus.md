@@ -5,8 +5,8 @@ pruefungsmodus: true
 menu:
   main:
     identifier: pruefungsmodus
-    parent: ems
-    weight: 3
+    parent: vorbereitung
+    weight: 4
 ---
 
 Pour que tu puisses t'entraîner chez toi dans des conditions réalistes, cette page simule le déroulement de la journée de test. Grâce à des consignes concrètes et à un chronomètre qui tourne, tu t'approches au plus près de l'EMS. Choisis simplement entre la simulation complète, des sous-tests isolés ou ton propre déroulement.
