@@ -737,8 +737,14 @@ navigateur arrondit aux pixels).
 
 ### Générateur de faits
 
-Listes de mots dans `data/fakten-generator/<langue>.yaml` (actuellement seulement
-`de.yaml` ; dès qu'un `fr.yaml`/`it.yaml` existe, il apparaît tout seul). Ne pas dissoudre
+Listes de mots dans `data/fakten-generator/<langue>.yaml` (`de.yaml`, `fr.yaml`, `it.yaml` ;
+s'il en manque une, le générateur affiche une remarque). FR et IT ont `grammatik: fr|it` :
+caractéristiques avec une forme par genre (`{ m: "nerveux", w: "nerveuse" }`), article devant
+les professions (`fragen.artikel_beruf` : L'avocate, Lo psicologo), « d' » devant les
+diagnostics (`fragen.praep_de`), en italien diagnostics avec article sous `dativ` ; professions
+uniquement avec une forme féminine visiblement différente. L'Excel ci-dessous n'existe qu'en
+allemand – modifier FR/IT directement dans le YAML, puis
+`node scripts/fakten-generator-sprachen-pruefen.mjs`. Ne pas dissoudre
 les catégories : une vraie série donne à chaque groupe d'âge trois professions d'**un**
 domaine et trois maladies de **trois** sortes. Les questions naissent de modèles de phrases
 (`fragen`), plus `namensgruppen`, `dativ`, `nicht_attributiv`.
@@ -778,8 +784,8 @@ lettres au centre de gravité, logo mesuré comme figure).
 ### Page Alpha
 
 `content/de/alpha/` est l'établi des nouvelles fonctions : protégée par mot de passe, liée
-nulle part, **seulement en allemand**. Une section par fonction, qui dit ce qu'il faut
-évaluer. Une fois validée, le bloc passe sur la vraie page (alors en trois langues).
+nulle part, dans les trois langues (`content/de|fr|it/alpha/`). Une section par fonction, qui dit ce qu'il faut
+évaluer. Une fois validée, le bloc passe sur la vraie page.
 Actuellement : générateur de figures, générateur de faits, « Antwortbogen auswerten » et « Konzentrationstest auswerten ».
 
 ### Évaluer la feuille de réponses (Alpha)
@@ -1007,9 +1013,11 @@ BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs  # mise en 
 python3 scripts/struktur-pruefen.py                                  # doublons, pages inaccessibles, liens morts
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # utilisation, formulaires (Formspree intercepté)
 node scripts/fakten-generator-pruefen.mjs                            # 150 sets + PDF
+node scripts/fakten-generator-sprachen-pruefen.mjs                    # sets FR/IT + impression
 node scripts/figuren-generator-pruefen.mjs                           # 12 sets + PDF
 python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # photos de feuilles
 python3 scripts/konztest-testbilder.py /tmp/kt && node scripts/konztest-pruefen.mjs /tmp/kt              # photos du test de concentration
+ADRESSE=http://127.0.0.1:8123/fr node scripts/antwortbogen-pruefen.mjs /tmp/ab        # (fr/it : mêmes vérifications)
 python3 scripts/texte-mappe-pruefen.py                               # classeurs
 python3 scripts/wortliste-pruefen.py                                 # liste de mots (Excel)
 node scripts/editor-rundlauf.mjs                                     # éditeur web

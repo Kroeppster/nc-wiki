@@ -722,8 +722,13 @@ strumento (p. es. con `pymupdf`); scarti tollerati sotto 1 pt (il browser arroto
 
 ### Generatore di fatti
 
-Elenchi di parole in `data/fakten-generator/<lingua>.yaml` (per ora solo `de.yaml`; appena
-esiste un `fr.yaml`/`it.yaml`, compare da solo). Non sciogliere le categorie: una vera serie
+Elenchi di parole in `data/fakten-generator/<lingua>.yaml` (`de.yaml`, `fr.yaml`, `it.yaml`; se
+ne manca uno, il generatore mostra un avviso). FR e IT hanno `grammatik: fr|it`:
+caratteristiche con una forma per genere (`{ m: "nervoso", w: "nervosa" }`), articolo davanti
+alle professioni (`fragen.artikel_beruf`: L'avvocata, Lo psicologo), «d'» davanti alle diagnosi
+in francese (`fragen.praep_de`), in italiano diagnosi con articolo sotto `dativ`; professioni
+solo con forma femminile visibilmente diversa. L'Excel qui sotto esiste solo in tedesco –
+modificare FR/IT direttamente nello YAML, poi `node scripts/fakten-generator-sprachen-pruefen.mjs`. Non sciogliere le categorie: una vera serie
 dà a ogni fascia d'età tre professioni di **un** campo e tre malattie di **tre** tipi. Le
 domande nascono da modelli di frase (`fragen`), più `namensgruppen`, `dativ`,
 `nicht_attributiv`. `scripts/fakten-listen-auslesen.py` estrae parole dai PDF ma non
@@ -761,8 +766,8 @@ lettere nel baricentro, logo misurato come figura).
 ### Pagina Alpha
 
 `content/de/alpha/` è il banco di lavoro per le nuove funzioni: protetta da password, non
-collegata da nessuna parte, **solo in tedesco**. Una sezione per funzione, che dice cosa
-valutare. Una volta approvata, il blocco passa sulla pagina vera (allora in tre lingue).
+collegata da nessuna parte, nelle tre lingue (`content/de|fr|it/alpha/`). Una sezione per funzione, che dice cosa
+valutare. Una volta approvata, il blocco passa sulla pagina vera.
 Attualmente: generatore di figure, generatore di fatti, «Antwortbogen auswerten» e «Konzentrationstest auswerten».
 
 ### Valutare il foglio delle risposte (Alpha)
@@ -986,9 +991,11 @@ BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs  # layout, 
 python3 scripts/struktur-pruefen.py                                  # doppioni, pagine irraggiungibili, link morti
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # uso, moduli (Formspree intercettato)
 node scripts/fakten-generator-pruefen.mjs                            # 150 set + PDF
+node scripts/fakten-generator-sprachen-pruefen.mjs                    # set FR/IT + stampa
 node scripts/figuren-generator-pruefen.mjs                           # 12 set + PDF
 python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # foto di fogli
 python3 scripts/konztest-testbilder.py /tmp/kt && node scripts/konztest-pruefen.mjs /tmp/kt              # foto del test di concentrazione
+ADRESSE=http://127.0.0.1:8123/fr node scripts/antwortbogen-pruefen.mjs /tmp/ab        # (fr/it: stesse verifiche)
 python3 scripts/texte-mappe-pruefen.py                               # cartelle Excel
 python3 scripts/wortliste-pruefen.py                                 # elenco di parole (Excel)
 node scripts/editor-rundlauf.mjs                                     # editor web

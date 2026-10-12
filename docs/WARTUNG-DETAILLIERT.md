@@ -719,8 +719,13 @@ auf Bildpunkte).
 
 ### Fakten-Generator
 
-Wortlisten in `data/fakten-generator/<sprache>.yaml` (aktuell nur `de.yaml`; sobald
-`fr.yaml`/`it.yaml` existiert, erscheint er dort von selbst). Kategorien nicht auflösen: Eine
+Wortlisten in `data/fakten-generator/<sprache>.yaml` (`de.yaml`, `fr.yaml`, `it.yaml`; fehlt
+eine, zeigt der Generator dort einen Hinweis). FR und IT haben `grammatik: fr|it`: Merkmale mit
+einer Form je Geschlecht (`{ m: "nerveux", w: "nerveuse" }`), Artikel vor Berufen
+(`fragen.artikel_beruf`: L'avocate, Lo psicologo), «d'» vor Diagnosen (`fragen.praep_de`), IT
+Diagnosen mit Artikel unter `dativ`; Berufe nur mit sichtbar verschiedener weiblicher Form.
+Die Excel unten gibt es nur für Deutsch – FR/IT direkt in der YAML bearbeiten, danach
+`node scripts/fakten-generator-sprachen-pruefen.mjs`. Kategorien nicht auflösen: Eine
 echte Serie gibt jeder Altersgruppe drei Berufe aus **einem** Feld und drei Krankheiten aus
 **drei** Arten. Fragen entstehen aus Satzvorlagen (`fragen`), dazu `namensgruppen`,
 `dativ`, `nicht_attributiv`. `scripts/fakten-listen-auslesen.py` liest Wörter aus den PDFs,
@@ -759,9 +764,9 @@ Buchstaben im Schwerpunkt, Logo als Figur mitgemessen).
 ### Alpha-Seite
 
 `content/de/alpha/` ist die Werkbank für neue Funktionen: passwortgeschützt, nirgends
-verlinkt, **nur Deutsch**. Pro Funktion ein Abschnitt, der sagt, was zu beurteilen ist.
+verlinkt, in allen drei Sprachen (`content/de|fr|it/alpha/`). Pro Funktion ein Abschnitt, der sagt, was zu beurteilen ist.
 Aktuell dort: Figuren-Generator, Fakten-Generator, «Antwortbogen auswerten» und «Konzentrationstest auswerten».
-Ist sie freigegeben, wandert der Baustein auf die echte Seite (dann dreisprachig).
+Ist sie freigegeben, wandert der Baustein auf die echte Seite.
 
 ### Antwortbogen auswerten
 
@@ -982,9 +987,11 @@ BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs  # Layout, 
 python3 scripts/struktur-pruefen.py                                  # Duplikate, unerreichbare Seiten, tote Links
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # Bedienung, Formulare (Formspree abgefangen)
 node scripts/fakten-generator-pruefen.mjs                            # 150 Sets + PDF
+node scripts/fakten-generator-sprachen-pruefen.mjs                    # FR/IT-Sets + Druck
 node scripts/figuren-generator-pruefen.mjs                           # 12 Sets + PDF
 python3 scripts/antwortbogen-testbilder.py /tmp/ab && node scripts/antwortbogen-pruefen.mjs /tmp/ab  # Antwortbogen-Fotos
 python3 scripts/konztest-testbilder.py /tmp/kt && node scripts/konztest-pruefen.mjs /tmp/kt              # Konztest-Fotos
+ADRESSE=http://127.0.0.1:8123/fr node scripts/antwortbogen-pruefen.mjs /tmp/ab        # (fr/it: dieselben Prüfungen)
 python3 scripts/texte-mappe-pruefen.py                               # Textmappen
 python3 scripts/wortliste-pruefen.py                                 # Wortliste (Excel)
 node scripts/editor-rundlauf.mjs                                     # Web-Editor

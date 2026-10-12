@@ -1,0 +1,297 @@
+# ==============================================================================
+# WORTLISTEN FÜR DEN FAKTEN-GENERATOR - FRANZÖSISCH
+# ==============================================================================
+# Gleicher Aufbau wie de.yaml (dort steht die ausführliche Erklärung, warum die
+# Kategorien wichtig sind). Unterschiede zum Deutschen:
+#  - "grammatik: fr": Merkmale haben eine Form je Geschlecht
+#    ({ m: "nerveux", w: "nerveuse" }; unveränderliche wie "calme" bleiben ein
+#    Wort) und stehen hinter dem Nomen ("Le patient nerveux").
+#  - Vor einem Beruf steht der Artikel mit Apostroph, wo nötig ("L'avocate"),
+#    siehe fragen.artikel_beruf; "de" vor einer Diagnose wird zu "d'"
+#    ("souffrant d'asthme"), siehe fragen.praep_de. Diagnosen deshalb ohne
+#    Artikel und so, dass "souffrant de …" passt.
+#  - Berufe nur mit sichtbar verschiedener weiblicher Form (keine "dentiste",
+#    "pilote", "juge" …): Das Geschlecht soll an der Berufsbezeichnung
+#    erkennbar sein.
+#  - Keine Excel-Datei: Die Wortlisten-Excel (scripts/wortliste.py) gibt es nur
+#    für Deutsch. Diese Datei direkt bearbeiten.
+# Noch von niemandem aus der Romandie durchgesehen.
+# ==============================================================================
+
+grammatik: fr
+
+altersgruppen: [25, 35, 45, 55, 75]
+altersgruppen_wahl: [18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45, 48, 50, 52, 55, 58, 60, 62, 65, 68, 70, 72, 75]
+altersgruppen_abstand: 5
+
+# Je Altersgruppe drei ähnlich klingende Namen aus einer Zeile.
+namensgruppen:
+  - ["Favre", "Fabre", "Faivre", "Fabri"]
+  - ["Rochat", "Rochet", "Roch", "Rochaix"]
+  - ["Dubois", "Dupuis", "Dupont", "Dumont"]
+  - ["Perret", "Perrin", "Perroud", "Perrot"]
+  - ["Girard", "Girod", "Giroud", "Girardet"]
+  - ["Bonvin", "Bonnet", "Bonny", "Bonzon"]
+  - ["Mottier", "Mottet", "Mottaz", "Mottiez"]
+  - ["Chappuis", "Chappaz", "Chapuisat", "Chapelle"]
+  - ["Jaquet", "Jaccard", "Jacot", "Jaquier"]
+  - ["Rossier", "Rossel", "Rossat", "Rosset"]
+  - ["Gaillard", "Gaille", "Gaudin", "Gaudard"]
+  - ["Monnier", "Monney", "Monnard", "Monnet"]
+  - ["Meylan", "Meystre", "Meillard", "Meyrat"]
+  - ["Vuilleumier", "Vuillemin", "Vuille", "Vuillaume"]
+  - ["Pittet", "Piguet", "Pidoux", "Pilet"]
+  - ["Da Silva", "Da Costa", "Da Cunha", "Da Rocha"]
+  - ["Kowalski", "Kowalczyk", "Kowalewski", "Kowal"]
+  - ["Haddad", "Hamdi", "Hamid", "Hadji"]
+
+# Nachnamen ohne Gruppe.
+namen:
+  - "Aubert"
+  - "Barras"
+  - "Baud"
+  - "Berthoud"
+  - "Besson"
+  - "Blanc"
+  - "Bochud"
+  - "Bugnon"
+  - "Cardinaux"
+  - "Chevalley"
+  - "Clerc"
+  - "Cochard"
+  - "Corboz"
+  - "Cornaz"
+  - "Cuche"
+  - "Dafflon"
+  - "Delley"
+  - "Demierre"
+  - "Descloux"
+  - "Duc"
+  - "Dumas"
+  - "Dutoit"
+  - "Emery"
+  - "Fellay"
+  - "Ferrier"
+  - "Fournier"
+  - "Francey"
+  - "Genoud"
+  - "Gillioz"
+  - "Glardon"
+  - "Grandjean"
+  - "Grosjean"
+  - "Guex"
+  - "Guignard"
+  - "Jobin"
+  - "Joly"
+  - "Lachat"
+  - "Lavanchy"
+  - "Leuba"
+  - "Maillard"
+  - "Masson"
+  - "Mayor"
+  - "Michaud"
+  - "Morand"
+  - "Morel"
+  - "Nicolet"
+  - "Oberson"
+  - "Panchaud"
+  - "Pasche"
+  - "Pellaud"
+  - "Pochon"
+  - "Rapin"
+  - "Reymond"
+  - "Rudaz"
+  - "Sallin"
+  - "Savoy"
+  - "Sierro"
+  - "Sonnay"
+  - "Thévenaz"
+  - "Tissot"
+  - "Udry"
+  - "Vaucher"
+  - "Vionnet"
+  - "Zufferey"
+
+# Berufe nach Themenfeld, immer beide Formen. Pro Altersgruppe zieht der
+# Generator drei Berufe aus EINEM Feld und würfelt je Person die Form.
+berufe:
+  medecine:
+    - { m: "ambulancier", w: "ambulancière" }
+    - { m: "chirurgien", w: "chirurgienne" }
+    - { m: "infirmier", w: "infirmière" }
+    - { m: "opticien", w: "opticienne" }
+    - { m: "pharmacien", w: "pharmacienne" }
+  technique:
+    - { m: "électricien", w: "électricienne" }
+    - { m: "horloger", w: "horlogère" }
+    - { m: "informaticien", w: "informaticienne" }
+    - { m: "ingénieur", w: "ingénieure" }
+    - { m: "mécanicien", w: "mécanicienne" }
+    - { m: "menuisier", w: "menuisière" }
+  aviation:
+    - { m: "aviateur", w: "aviatrice" }
+    - { m: "contrôleur aérien", w: "contrôleuse aérienne" }
+    - { m: "ingénieur aéronautique", w: "ingénieure aéronautique" }
+    - { m: "steward", w: "hôtesse de l'air" }
+  sport:
+    - { m: "coureur cycliste", w: "coureuse cycliste" }
+    - { m: "entraîneur", w: "entraîneuse" }
+    - { m: "joueur de tennis", w: "joueuse de tennis" }
+    - { m: "moniteur de ski", w: "monitrice de ski" }
+    - { m: "nageur", w: "nageuse" }
+  arts:
+    - { m: "chanteur", w: "chanteuse" }
+    - { m: "comédien", w: "comédienne" }
+    - { m: "danseur", w: "danseuse" }
+    - { m: "écrivain", w: "écrivaine" }
+    - { m: "musicien", w: "musicienne" }
+    - { m: "sculpteur", w: "sculptrice" }
+  enseignement:
+    - { m: "chercheur", w: "chercheuse" }
+    - { m: "directeur d'école", w: "directrice d'école" }
+    - { m: "éducateur", w: "éducatrice" }
+    - { m: "enseignant", w: "enseignante" }
+    - { m: "étudiant", w: "étudiante" }
+  bureau_droit:
+    - { m: "agent immobilier", w: "agente immobilière" }
+    - { m: "avocat", w: "avocate" }
+    - { m: "banquier", w: "banquière" }
+    - { m: "conseiller", w: "conseillère" }
+    - { m: "employé de commerce", w: "employée de commerce" }
+    - { m: "traducteur", w: "traductrice" }
+  animaux:
+    - { m: "apiculteur", w: "apicultrice" }
+    - { m: "berger", w: "bergère" }
+    - { m: "dresseur", w: "dresseuse" }
+    - { m: "éleveur", w: "éleveuse" }
+    - { m: "fermier", w: "fermière" }
+    - { m: "gardien de zoo", w: "gardienne de zoo" }
+  alimentation:
+    - { m: "boucher", w: "bouchère" }
+    - { m: "boulanger", w: "boulangère" }
+    - { m: "cuisinier", w: "cuisinière" }
+    - { m: "fromager", w: "fromagère" }
+    - { m: "pâtissier", w: "pâtissière" }
+    - { m: "serveur", w: "serveuse" }
+    - { m: "vigneron", w: "vigneronne" }
+  commerce:
+    - { m: "caissier", w: "caissière" }
+    - { m: "coiffeur", w: "coiffeuse" }
+    - { m: "facteur", w: "factrice" }
+    - { m: "vendeur", w: "vendeuse" }
+
+# Diagnosen ohne Artikel, passend nach "souffrant de …" / "souffre de …".
+krankheiten:
+  dents:
+    - "aphtes"
+    - "bruxisme"
+    - "caries"
+    - "gingivite"
+    - "halitose"
+    - "parodontite"
+  coeur_circulation:
+    - "angine de poitrine"
+    - "arythmie"
+    - "hypertension"
+    - "insuffisance cardiaque"
+    - "tachycardie"
+    - "varices"
+  os_articulations:
+    - "arthrose"
+    - "lombalgie"
+    - "ostéoporose"
+    - "rhumatismes"
+    - "scoliose"
+    - "tendinite"
+  interne:
+    - "anémie"
+    - "asthme"
+    - "bronchite"
+    - "colite"
+    - "cystite"
+    - "diabète"
+    - "gastrite"
+    - "pneumonie"
+  psyche_neuro:
+    - "acouphènes"
+    - "épilepsie"
+    - "insomnie"
+    - "migraine"
+    - "vertiges"
+
+# Merkmale: { m: …, w: … } oder ein Wort, wenn beide Formen gleich sind.
+# Kein "patient" (wäre "le patient patient").
+merkmale:
+  zustand:
+    - "célibataire"
+    - { m: "divorcé", w: "divorcée" }
+    - { m: "fatigué", w: "fatiguée" }
+    - { m: "marié", w: "mariée" }
+    - { m: "pressé", w: "pressée" }
+    - { m: "soigné", w: "soignée" }
+    - { m: "veuf", w: "veuve" }
+  charakter:
+    - { m: "ambitieux", w: "ambitieuse" }
+    - { m: "anxieux", w: "anxieuse" }
+    - { m: "bavard", w: "bavarde" }
+    - "calme"
+    - { m: "courageux", w: "courageuse" }
+    - { m: "créatif", w: "créative" }
+    - { m: "curieux", w: "curieuse" }
+    - { m: "discret", w: "discrète" }
+    - { m: "distrait", w: "distraite" }
+    - { m: "élégant", w: "élégante" }
+    - { m: "fier", w: "fière" }
+    - { m: "généreux", w: "généreuse" }
+    - { m: "gentil", w: "gentille" }
+    - "honnête"
+    - { m: "impatient", w: "impatiente" }
+    - { m: "impulsif", w: "impulsive" }
+    - { m: "joyeux", w: "joyeuse" }
+    - { m: "maladroit", w: "maladroite" }
+    - { m: "méfiant", w: "méfiante" }
+    - { m: "nerveux", w: "nerveuse" }
+    - "optimiste"
+    - { m: "ordonné", w: "ordonnée" }
+    - "pessimiste"
+    - { m: "poli", w: "polie" }
+    - { m: "ponctuel", w: "ponctuelle" }
+    - { m: "prudent", w: "prudente" }
+    - { m: "rêveur", w: "rêveuse" }
+    - "sensible"
+    - { m: "sérieux", w: "sérieuse" }
+    - "sociable"
+    - { m: "sportif", w: "sportive" }
+    - { m: "têtu", w: "têtue" }
+    - "timide"
+    - { m: "travailleur", w: "travailleuse" }
+
+nicht_attributiv: []
+
+fragen:
+  der:     { m: "Le", w: "La" }
+  patient: { m: "patient", w: "patiente" }
+  anrede:  { m: "Monsieur", w: "Madame" }
+  # Artikel vor einem Beruf am Satzanfang: "Le pilote", "La vendeuse",
+  # "L'avocate", auch vor stummem h ("L'horloger").
+  artikel_beruf: { m: "Le", w: "La", vokal: "L'", h_stumm: true }
+  # "souffrant de diabète", aber "souffrant d'asthme"
+  praep_de: { normal: "de ", vokal: "d'" }
+  # So steht eine Person in der Einprägeliste - wie im Beispiel der Anleitung:
+  # "Meier : env. 40 ans, policière, célibataire - fracture de l'humérus".
+  alter_liste: "env. {alter} ans"
+  zeile: "{beruf}, {merkmal} - {diagnose}"
+  alter_antwort: "env. {alter} ans"
+  typen:
+    alter_von_diagnose:   "La personne souffrant {de_diagnose} a …"
+    beruf_von_diagnose:   "La personne souffrant {de_diagnose} exerce la profession de …"
+    name_von_diagnose:    "{Der} {Patient} souffrant {de_diagnose} s'appelle …"
+    merkmal_von_diagnose: "{Der} {Patient} souffrant {de_diagnose} est …"
+    name_von_merkmal:     "{Der} {Patient} {merkmal_attr} s'appelle …"
+    diagnose_von_merkmal: "{Der} {Patient} {merkmal_attr} souffre de …"
+    name_von_beruf:       "{Der_beruf} s'appelle …"
+    merkmal_von_beruf:    "{Der_beruf} est …"
+    diagnose_von_beruf:   "{Der_beruf} souffre de …"
+    beruf_von_name:       "{Anrede} {name} exerce la profession de …"
+    diagnose_von_name:    "{Anrede} {name} souffre de …"
+    beruf_von_alter:      "{Der} {Patient} de {alter} ans exerce la profession de …"

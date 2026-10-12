@@ -122,7 +122,7 @@ if (erwartet._kamera) {
     if (!(await kp.evaluate(() => document.getElementById('kt-ergebnis').hidden))) break;
   }
   const liste = [...hinweise].join(' | ');
-  pruef('Sucher meldet erst das fehlende Raster, dann «ruhig halten»', /Rasters/.test(liste) && /ruhig/.test(liste), liste);
+  pruef('Sucher meldet erst das fehlende Raster, dann «ruhig halten»', /Rasters|de la grille|della griglia/.test(liste) && /ruhig|ne bouge plus|tieni fermo/.test(liste), liste);
   const r = await lesen(kp);
   const soll = erwartet._kamera.markiert;
   const falsch = r ? [...Array(1600).keys()].filter(i => r.markiert[i] !== soll[i] && !r.unsicher.includes(i)) : null;

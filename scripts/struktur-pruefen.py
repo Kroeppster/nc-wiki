@@ -21,10 +21,10 @@ Geprueft wird der Ordner "public" neben dem Projekt, also das Ergebnis von
 einzelnen Sitzung. Der zeigte spaeter auf einen alten Build, und das Skript
 pruefte klaglos den Stand von vorgestern - deshalb jetzt der Projektordner.)
 
-ZU ERWARTEN SIND GENAU ZEHN UNERREICHBARE SEITEN, alle absichtlich nirgends
+ZU ERWARTEN SIND GENAU ZWOELF UNERREICHBARE SEITEN, alle absichtlich nirgends
 verlinkt: der Mitgliederbereich (/mitglieder/ und die beiden Unterseiten, mal
 drei Sprachen = 9, siehe docs/WARTUNG-DETAILLIERT.md, Abschnitt "Mitgliederbereich") und
-die Alpha-Seite /alpha/ (Abschnitt 11b-3). Taucht sonst etwas auf, ist es ein
+die Alpha-Seite (/alpha/, /fr/alpha/, /it/alpha/; Abschnitt 11, «Alpha-Seite»). Taucht sonst etwas auf, ist es ein
 Fund.
 
 Weiterleitungsseiten (Hugo legt sie z.B. fuer /de/ an) werden erkannt und

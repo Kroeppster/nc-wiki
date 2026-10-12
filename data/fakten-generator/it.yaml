@@ -1,0 +1,337 @@
+# ==============================================================================
+# WORTLISTEN FÜR DEN FAKTEN-GENERATOR - ITALIENISCH
+# ==============================================================================
+# Gleicher Aufbau wie de.yaml (dort steht die ausführliche Erklärung, warum die
+# Kategorien wichtig sind). Unterschiede zum Deutschen:
+#  - "grammatik: it": Merkmale haben eine Form je Geschlecht
+#    ({ m: "nervoso", w: "nervosa" }; unveränderliche wie "gentile" bleiben ein
+#    Wort) und stehen hinter dem Nomen ("Il paziente nervoso").
+#  - Vor einem Beruf steht der passende Artikel ("Il medico", "Lo psicologo",
+#    "L'avvocata", "La cuoca"), siehe fragen.artikel_beruf.
+#  - In den Fragen steht die Diagnose mit Artikel ("La persona con l'asma"):
+#    Diese Form steht unter "dativ" (der Name kommt aus dem Deutschen, wo dort
+#    der Dativ steht). In der Einprägeliste und in den Antworten ohne Artikel.
+#  - Berufe nur mit sichtbar verschiedener weiblicher Form (keine
+#    "farmacista", "pilota", "insegnante" …): Das Geschlecht soll an der
+#    Berufsbezeichnung erkennbar sein.
+#  - Keine Excel-Datei: Die Wortlisten-Excel (scripts/wortliste.py) gibt es nur
+#    für Deutsch. Diese Datei direkt bearbeiten.
+# Noch von niemandem aus dem Tessin durchgesehen.
+# ==============================================================================
+
+grammatik: it
+
+altersgruppen: [25, 35, 45, 55, 75]
+altersgruppen_wahl: [18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45, 48, 50, 52, 55, 58, 60, 62, 65, 68, 70, 72, 75]
+altersgruppen_abstand: 5
+
+# Je Altersgruppe drei ähnlich klingende Namen aus einer Zeile.
+namensgruppen:
+  - ["Bernasconi", "Bernardi", "Bernardoni", "Bernasca"]
+  - ["Rossi", "Rossini", "Rossetti", "Rosselli"]
+  - ["Ferrari", "Ferraro", "Ferretti", "Ferrante"]
+  - ["Colombo", "Colombi", "Colombini", "Colombera"]
+  - ["Bianchi", "Bianchetti", "Bianconi", "Bianco"]
+  - ["Galli", "Gallo", "Gallina", "Gallacchi"]
+  - ["Martinelli", "Martini", "Martinetti", "Martinoni"]
+  - ["Moretti", "Morelli", "Moro", "Morandi"]
+  - ["Lombardi", "Lombardo", "Lombardini", "Lombardoni"]
+  - ["Fontana", "Fontanella", "Fontanesi", "Fontani"]
+  - ["Bertoli", "Bertolini", "Bertola", "Bertoni"]
+  - ["Pedrazzini", "Pedrazzi", "Pedroni", "Pedrini"]
+  - ["Cattaneo", "Cattani", "Cattori", "Cattarin"]
+  - ["Gianella", "Gianola", "Gianini", "Giannini"]
+  - ["Da Silva", "Da Costa", "Da Cunha", "Da Rocha"]
+  - ["Kowalski", "Kowalczyk", "Kowalewski", "Kowal"]
+
+# Nachnamen ohne Gruppe.
+namen:
+  - "Albertini"
+  - "Andreoli"
+  - "Antonini"
+  - "Arcioni"
+  - "Balestra"
+  - "Barenco"
+  - "Bassi"
+  - "Beffa"
+  - "Bellini"
+  - "Biaggi"
+  - "Boffa"
+  - "Bolla"
+  - "Bonetti"
+  - "Borradori"
+  - "Brenni"
+  - "Caldelari"
+  - "Camponovo"
+  - "Canevascini"
+  - "Casella"
+  - "Cavadini"
+  - "Ceschi"
+  - "Chiesa"
+  - "Codoni"
+  - "Conti"
+  - "Cotti"
+  - "Croci"
+  - "Delmenico"
+  - "Donati"
+  - "Fasola"
+  - "Foletti"
+  - "Franscini"
+  - "Fumagalli"
+  - "Gabaglio"
+  - "Gamboni"
+  - "Ghisletta"
+  - "Grassi"
+  - "Guscetti"
+  - "Induni"
+  - "Lepori"
+  - "Lurati"
+  - "Maffei"
+  - "Magginetti"
+  - "Manzoni"
+  - "Marcionetti"
+  - "Mariotta"
+  - "Molinari"
+  - "Mombelli"
+  - "Nessi"
+  - "Orelli"
+  - "Pagani"
+  - "Pellandini"
+  - "Pestoni"
+  - "Petrini"
+  - "Pini"
+  - "Poncini"
+  - "Quadri"
+  - "Ramelli"
+  - "Righetti"
+  - "Rusca"
+  - "Sala"
+  - "Soldati"
+  - "Stoppa"
+  - "Tettamanti"
+  - "Valsangiacomo"
+  - "Vanoni"
+  - "Vassalli"
+  - "Zanetti"
+  - "Zappa"
+  - "Zorzi"
+
+# Berufe nach Themenfeld, immer beide Formen. Pro Altersgruppe zieht der
+# Generator drei Berufe aus EINEM Feld und würfelt je Person die Form.
+berufe:
+  medicina:
+    - { m: "chirurgo", w: "chirurga" }
+    - { m: "infermiere", w: "infermiera" }
+    - { m: "ottico", w: "ottica" }
+    - { m: "psicologo", w: "psicologa" }
+    - { m: "soccorritore", w: "soccorritrice" }
+    - { m: "veterinario", w: "veterinaria" }
+  tecnica:
+    - { m: "architetto", w: "architetta" }
+    - { m: "informatico", w: "informatica" }
+    - { m: "ingegnere", w: "ingegnera" }
+    - { m: "meccanico", w: "meccanica" }
+    - { m: "orologiaio", w: "orologiaia" }
+    - { m: "tecnico", w: "tecnica" }
+  aviazione:
+    - { m: "aviatore", w: "aviatrice" }
+    - { m: "controllore di volo", w: "controllora di volo" }
+    - { m: "ingegnere aeronautico", w: "ingegnera aeronautica" }
+    - { m: "steward", w: "hostess" }
+  sport:
+    - { m: "allenatore", w: "allenatrice" }
+    - { m: "calciatore", w: "calciatrice" }
+    - { m: "maestro di sci", w: "maestra di sci" }
+    - { m: "nuotatore", w: "nuotatrice" }
+    - { m: "sciatore", w: "sciatrice" }
+  arti:
+    - { m: "attore", w: "attrice" }
+    - { m: "ballerino", w: "ballerina" }
+    - { m: "fotografo", w: "fotografa" }
+    - { m: "pittore", w: "pittrice" }
+    - { m: "scrittore", w: "scrittrice" }
+    - { m: "scultore", w: "scultrice" }
+  istruzione:
+    - { m: "direttore scolastico", w: "direttrice scolastica" }
+    - { m: "educatore", w: "educatrice" }
+    - { m: "maestro", w: "maestra" }
+    - { m: "professore", w: "professoressa" }
+    - { m: "ricercatore", w: "ricercatrice" }
+    - { m: "studente", w: "studentessa" }
+  ufficio_diritto:
+    - { m: "avvocato", w: "avvocata" }
+    - { m: "banchiere", w: "banchiera" }
+    - { m: "impiegato", w: "impiegata" }
+    - { m: "notaio", w: "notaia" }
+    - { m: "segretario", w: "segretaria" }
+    - { m: "traduttore", w: "traduttrice" }
+  animali:
+    - { m: "addestratore", w: "addestratrice" }
+    - { m: "allevatore", w: "allevatrice" }
+    - { m: "apicoltore", w: "apicoltrice" }
+    - { m: "contadino", w: "contadina" }
+    - { m: "guardiano dello zoo", w: "guardiana dello zoo" }
+    - { m: "pastore", w: "pastora" }
+  alimentazione:
+    - { m: "cameriere", w: "cameriera" }
+    - { m: "casaro", w: "casara" }
+    - { m: "cuoco", w: "cuoca" }
+    - { m: "macellaio", w: "macellaia" }
+    - { m: "panettiere", w: "panettiera" }
+    - { m: "pasticciere", w: "pasticciera" }
+    - { m: "viticoltore", w: "viticoltrice" }
+  commercio:
+    - { m: "cassiere", w: "cassiera" }
+    - { m: "commesso", w: "commessa" }
+    - { m: "parrucchiere", w: "parrucchiera" }
+    - { m: "postino", w: "postina" }
+    - { m: "venditore", w: "venditrice" }
+
+# Diagnosen ohne Artikel (Einprägeliste, Antworten: "soffre di …").
+krankheiten:
+  denti:
+    - "alitosi"
+    - "bruxismo"
+    - "carie"
+    - "gengivite"
+    - "parodontite"
+  cuore_circolazione:
+    - "angina pectoris"
+    - "aritmia"
+    - "insufficienza cardiaca"
+    - "ipertensione"
+    - "tachicardia"
+    - "varici"
+  ossa_articolazioni:
+    - "artrosi"
+    - "frattura dell'omero"
+    - "lombalgia"
+    - "osteoporosi"
+    - "reumatismi"
+    - "scoliosi"
+    - "tendinite"
+  interni:
+    - "anemia"
+    - "asma"
+    - "bronchite"
+    - "cistite"
+    - "colite"
+    - "diabete"
+    - "gastrite"
+    - "polmonite"
+    - "sinusite"
+  psiche_neuro:
+    - "acufeni"
+    - "emicrania"
+    - "epilessia"
+    - "insonnia"
+    - "vertigini"
+
+# Merkmale: { m: …, w: … } oder ein Wort, wenn beide Formen gleich sind.
+# Kein "paziente" (wäre "il paziente paziente").
+merkmale:
+  zustand:
+    - { m: "divorziato", w: "divorziata" }
+    - { m: "frettoloso", w: "frettolosa" }
+    - { m: "sposato", w: "sposata" }
+    - { m: "stanco", w: "stanca" }
+    - { m: "vedovo", w: "vedova" }
+  charakter:
+    - { m: "allegro", w: "allegra" }
+    - { m: "ambizioso", w: "ambiziosa" }
+    - { m: "ansioso", w: "ansiosa" }
+    - { m: "calmo", w: "calma" }
+    - { m: "chiacchierone", w: "chiacchierona" }
+    - { m: "coraggioso", w: "coraggiosa" }
+    - { m: "creativo", w: "creativa" }
+    - { m: "curioso", w: "curiosa" }
+    - "diffidente"
+    - { m: "discreto", w: "discreta" }
+    - { m: "distratto", w: "distratta" }
+    - { m: "educato", w: "educata" }
+    - "elegante"
+    - { m: "generoso", w: "generosa" }
+    - "gentile"
+    - "impaziente"
+    - { m: "impulsivo", w: "impulsiva" }
+    - { m: "laborioso", w: "laboriosa" }
+    - { m: "maldestro", w: "maldestra" }
+    - { m: "nervoso", w: "nervosa" }
+    - { m: "onesto", w: "onesta" }
+    - { m: "ordinato", w: "ordinata" }
+    - { m: "orgoglioso", w: "orgogliosa" }
+    - "ottimista"
+    - { m: "permaloso", w: "permalosa" }
+    - "pessimista"
+    - "prudente"
+    - "puntuale"
+    - "sensibile"
+    - { m: "serio", w: "seria" }
+    - "socievole"
+    - { m: "sognatore", w: "sognatrice" }
+    - { m: "sportivo", w: "sportiva" }
+    - { m: "testardo", w: "testarda" }
+    - { m: "timido", w: "timida" }
+
+nicht_attributiv: []
+
+# Form der Diagnose in den Fragen, mit Artikel: "La persona con l'asma".
+dativ:
+  alitosi: "l'alitosi"
+  bruxismo: "il bruxismo"
+  carie: "la carie"
+  gengivite: "la gengivite"
+  parodontite: "la parodontite"
+  angina pectoris: "l'angina pectoris"
+  aritmia: "l'aritmia"
+  insufficienza cardiaca: "l'insufficienza cardiaca"
+  ipertensione: "l'ipertensione"
+  tachicardia: "la tachicardia"
+  varici: "le varici"
+  artrosi: "l'artrosi"
+  frattura dell'omero: "la frattura dell'omero"
+  lombalgia: "la lombalgia"
+  osteoporosi: "l'osteoporosi"
+  reumatismi: "i reumatismi"
+  scoliosi: "la scoliosi"
+  tendinite: "la tendinite"
+  anemia: "l'anemia"
+  asma: "l'asma"
+  bronchite: "la bronchite"
+  cistite: "la cistite"
+  colite: "la colite"
+  diabete: "il diabete"
+  gastrite: "la gastrite"
+  polmonite: "la polmonite"
+  sinusite: "la sinusite"
+  acufeni: "gli acufeni"
+  emicrania: "l'emicrania"
+  epilessia: "l'epilessia"
+  insonnia: "l'insonnia"
+  vertigini: "le vertigini"
+
+fragen:
+  der:     { m: "Il", w: "La" }
+  patient: { m: "paziente", w: "paziente" }
+  anrede:  { m: "Il signor", w: "La signora" }
+  # Artikel vor einem Beruf am Satzanfang: "Il cuoco", "La cuoca",
+  # "L'avvocata", "Lo psicologo" (vor s + Konsonant, z, gn, ps …).
+  artikel_beruf: { m: "Il", w: "La", vokal: "L'", m_lo: "Lo", h_stumm: true }
+  # Wie im Beispiel der Anleitung: "Meier: circa 40 anni, poliziotta, nubile -
+  # frattura dell'omero".
+  alter_liste: "circa {alter} anni"
+  zeile: "{beruf}, {merkmal} - {diagnose}"
+  alter_antwort: "circa {alter} anni"
+  typen:
+    alter_von_diagnose:   "La persona con {diagnose} ha …"
+    beruf_von_diagnose:   "La persona con {diagnose} è di professione …"
+    name_von_diagnose:    "{Der} {Patient} con {diagnose} si chiama …"
+    merkmal_von_diagnose: "{Der} {Patient} con {diagnose} è …"
+    name_von_merkmal:     "{Der} {Patient} {merkmal_attr} si chiama …"
+    diagnose_von_merkmal: "{Der} {Patient} {merkmal_attr} soffre di …"
+    name_von_beruf:       "{Der_beruf} si chiama …"
+    merkmal_von_beruf:    "{Der_beruf} è …"
+    diagnose_von_beruf:   "{Der_beruf} soffre di …"
+    beruf_von_name:       "{Anrede} {name} è di professione …"
+    diagnose_von_name:    "{Anrede} {name} soffre di …"
+    beruf_von_alter:      "{Der} {Patient} di {alter} anni è di professione …"

@@ -99,6 +99,32 @@
   function zieh(a,n){ return misch(a).slice(0,n); }
   function eins(a){ return a[Math.floor(Math.random()*a.length)]; }
   function ersetze(s, werte){ return s.replace(/\{(\w+)\}/g, function(m, k){ return k in werte ? werte[k] : m; }); }
+  // --- Sprache ---------------------------------------------------------------
+  // Deutsch (Standard, ohne "grammatik" in der Wortliste): Merkmale sind
+  // einzelne Woerter und werden vor dem Nomen nach deutscher Regel gebeugt
+  // ("der nervoese Patient"). Franzoesisch und Italienisch ("grammatik: fr"
+  // bzw. "it" in data/fakten-generator/<sprache>.yaml): Ein Merkmal hat eine
+  // Form je Geschlecht ({ m: "nerveux", w: "nerveuse" }; unveraenderliche
+  // wie "calme" bleiben ein Wort) und steht unveraendert hinter dem Nomen.
+  // Vor Berufen steht der Artikel mit Apostroph, wo die Sprache es verlangt
+  // (L'avocate, Lo psicologo) - Regeln in "fragen.artikel_beruf", und "de"
+  // vor einer Diagnose wird zu "d'" (souffrant d'asthme, "fragen.praep_de").
+  // Fuer Deutsch greift nichts davon: Die deutschen Saetze bleiben gleich.
+  var DEUTSCH = !W.grammatik || W.grammatik === 'de';
+  var VOKAL = /^[aeiouàâäéèêëîïôöùûüœæ]/i, VOKAL_H = /^[aeiouàâäéèêëîïôöùûüœæh]/i;
+  function form(m, g){ return (m && typeof m === 'object') ? m[g] : m; }
+  function artikelVor(wort, g){
+    var A = F.artikel_beruf;
+    if (!A) return F.der[g] + ' ' + wort;
+    if (A.vokal && (A.h_stumm ? VOKAL_H : VOKAL).test(wort)) return A.vokal + wort;
+    if (g === 'm' && A.m_lo && /^(s[^aeiouàèéìòù]|z|gn|ps|pn|x|y)/i.test(wort)) return A.m_lo + ' ' + wort;
+    return A[g] + ' ' + wort;
+  }
+  function deVor(wort){
+    var P = F.praep_de;
+    if (!P) return wort;
+    return (VOKAL_H.test(wort) ? P.vokal : P.normal) + wort;
+  }
   // --- Ein Set bauen -------------------------------------------------------
   // Nachgebaut nach den echten Serien: fuenf Altersgruppen zu je drei
   // Personen; die drei Berufe einer Gruppe stammen aus EINEM Berufsfeld, die
@@ -142,7 +168,7 @@
     // Nur Adjektive (klein geschrieben): Ein Nomen wie "Notfall" passt weder
     // in "Der Urologe ist …" noch waere es unter lauter Adjektiven als
     // Antwort zu verstecken.
-    var merkmale = misch([].concat(W.merkmale.charakter, W.merkmale.zustand).filter(function(m){ return !/^[A-ZÄÖÜ]/.test(m); }));
+    var merkmale = misch([].concat(W.merkmale.charakter, W.merkmale.zustand).filter(function(m){ return typeof m !== 'string' || !/^[A-ZÄÖÜ]/.test(m); }));
     // Krankheiten werden OHNE ZURUECKLEGEN gezogen. Kaeme eine zweimal vor,
     // waere "Die Person mit Karies ist …" nicht mehr eindeutig.
     var vergeben = {};
@@ -161,9 +187,10 @@
       berufe.forEach(function(b, k){
         // Jeder Beruf steht in beiden Formen in der Liste ({ m: "Apotheker", w: "Apothekerin" });
         // gezogen wird der Beruf, die Form wuerfelt - so kommt er nie doppelt im Set vor.
-        var form = eins(['m', 'w']);
-        leute.push({ name: namen[g][k], alter: alter, gruppe: g, beruf: b[form], geschlecht: form,
-                     merkmal: merkmale[i % merkmale.length], krankheit: krankheitAus(dreiArten[k % dreiArten.length]) });
+        var geschl = eins(['m', 'w']);
+        var mk = merkmale[i % merkmale.length];
+        leute.push({ name: namen[g][k], alter: alter, gruppe: g, beruf: b[geschl], geschlecht: geschl,
+                     merkmal: form(mk, geschl), merkmalRoh: mk, krankheit: krankheitAus(dreiArten[k % dreiArten.length]) });
         i++;
       });
     });
@@ -202,10 +229,23 @@
     { id: 'diagnose_von_name',    nennt: 'name',      fragt: 'krankheit' },
     { id: 'beruf_von_alter',      nennt: 'alter',     fragt: 'beruf' }
   ].filter(function(t){ return F.typen[t.id]; });
-  function antwortText(p, was){ return was === 'alter' ? ersetze(F.alter_antwort, { alter: p.alter }) : p[was]; }
+  // g: Geschlecht der gefragten Person. Auf Franzoesisch und Italienisch
+  // stehen auch die Merkmale der Ablenker in dieser Form ("La patiente ... est
+  // nerveuse / curieuse ..."), sonst passte die Antwort nicht zum Satz.
+  function antwortText(p, was, g){
+    if (was === 'alter') return ersetze(F.alter_antwort, { alter: p.alter });
+    if (was === 'merkmal' && g) return form(p.merkmalRoh, g);
+    return p[was];
+  }
+  // Das Merkmal im Satz vor (Deutsch) bzw. hinter dem Nomen.
+  function merkmalAttr(p){
+    if (DEUTSCH) return attributiv(p.merkmal);
+    return (W.nicht_attributiv || []).indexOf(p.merkmal) >= 0 ? null : p.merkmal;
+  }
   function frageText(t, p){
     return ersetze(F.typen[t.id], { Der: F.der[p.geschlecht], Patient: F.patient[p.geschlecht], Anrede: F.anrede[p.geschlecht],
-      diagnose: (W.dativ && W.dativ[p.krankheit]) || p.krankheit, name: p.name, beruf: p.beruf, alter: p.alter, merkmal_attr: attributiv(p.merkmal) });
+      diagnose: (W.dativ && W.dativ[p.krankheit]) || p.krankheit, name: p.name, beruf: p.beruf, alter: p.alter, merkmal_attr: merkmalAttr(p),
+      Der_beruf: artikelVor(p.beruf, p.geschlecht), de_diagnose: deVor(p.krankheit) });
   }
   // Nennt eine Frage das Geschlecht ("Frau Koskinen ist …") und fragt nach
   // dem Beruf, muessen auch die Ablenker Berufe dieses Geschlechts sein -
@@ -213,7 +253,7 @@
   // Antworten weiblich.
   function nenntGeschlecht(t){ return t.fragt === 'beruf' && (t.nennt === 'name' || t.nennt === 'alter'); }
   function gueltig(t, p, leute){
-    if (t.nennt === 'merkmal' && !attributiv(p.merkmal)) return false;
+    if (t.nennt === 'merkmal' && !merkmalAttr(p)) return false;
     if (nenntGeschlecht(t) && leute.filter(function(q){ return q !== p && q.geschlecht === p.geschlecht; }).length < 4) return false;
     // "Die 55-jaehrige Patientin" muss es genau einmal geben.
     if (t.nennt === 'alter' && leute.some(function(q){ return q !== p && q.alter === p.alter && q.geschlecht === p.geschlecht; })) return false;
@@ -230,9 +270,9 @@
     // Meister oder Mettler?" ist die eigentliche Frage des Untertests.
     var nah = (t.fragt === 'name' || t.fragt === 'beruf') ? misch(andere.filter(function(q){ return q.gruppe === p.gruppe; })) : [];
     var fern = misch(andere.filter(function(q){ return nah.indexOf(q) < 0; }));
-    var ablenker = nah.concat(fern).slice(0, 4).map(function(q){ return antwortText(q, t.fragt); });
-    var liste = misch([antwortText(p, t.fragt)].concat(ablenker));
-    return { liste: liste, richtig: liste.indexOf(antwortText(p, t.fragt)) };
+    var ablenker = nah.concat(fern).slice(0, 4).map(function(q){ return antwortText(q, t.fragt, p.geschlecht); });
+    var liste = misch([antwortText(p, t.fragt, p.geschlecht)].concat(ablenker));
+    return { liste: liste, richtig: liste.indexOf(antwortText(p, t.fragt, p.geschlecht)) };
   }
   function baueFragen(leute){
     var kandidaten = [];

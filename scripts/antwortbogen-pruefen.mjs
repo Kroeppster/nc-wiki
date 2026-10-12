@@ -96,7 +96,7 @@ console.log('\n=== Eigener Loesungsschluessel ===');
   await p.selectOption('#ab-testsim', 'eigen');
   pruef('Feld fuer den Schluessel erscheint', await p.isVisible('#ab-schluessel'));
   await p.setInputFiles('#ab-datei', join(ORDNER, 'scan.png'));
-  await p.waitForFunction(() => /Lösungsschlüssel/.test(document.getElementById('ab-status').textContent), null, { timeout: 60000 });
+  await p.waitForFunction(() => /Lösungsschlüssel|grille de correction|chiave di correzione/i.test(document.getElementById('ab-status').textContent), null, { timeout: 60000 });
   pruef('ohne Schluessel: Bogen gelesen, Hinweis statt Ergebnis', await p.evaluate(() => document.getElementById('ab-ergebnis').hidden));
   for (const datei of sch.dateien) {
     await p.evaluate(() => { document.getElementById('ab-schluessel-status').textContent = ''; });
@@ -104,9 +104,9 @@ console.log('\n=== Eigener Loesungsschluessel ===');
     await p.waitForFunction(() => /\d/.test(document.getElementById('ab-schluessel-status').textContent)
       || document.getElementById('ab-schluessel-status').classList.contains('ab-fehler'), null, { timeout: 60000 });
     const st = await p.textContent('#ab-schluessel-status');
-    pruef(datei + ': ' + mit + ' Aufgaben mit Loesung erkannt', st.includes(String(mit)) && !/nicht eindeutig/.test(st), st);
+    pruef(datei + ': ' + mit + ' Aufgaben mit Loesung erkannt', st.includes(String(mit)) && !/nicht eindeutig|pas claires|non erano chiare/.test(st), st);
     const summe = await p.textContent('#ab-summe');
-    pruef(datei + ': Punkte ' + soll + ' von ' + mit, summe.startsWith(soll + ' ') && summe.includes(' ' + mit + ' '), summe);
+    pruef(datei + ': Punkte ' + soll + ' von ' + mit, summe.startsWith(soll + ' ') && new RegExp('\\b' + mit + '\\b').test(summe), summe);
   }
   const ohne = await p.$$eval('#ab-zeilen tr.ab-ohne', z => z.length);
   pruef('Aufgaben ohne Loesung als solche markiert (' + (144 - mit) + ')', ohne === 144 - mit, String(ohne));
@@ -139,7 +139,7 @@ if (erwartet._kamera) {
     if (!(await kp.evaluate(() => document.getElementById('ab-ergebnis').hidden))) break;
   }
   const liste = [...hinweise].join(' | ');
-  pruef('Sucher meldet erst fehlende Ecken, dann «ruhig halten»', /0 von 4/.test(liste) && /ruhig/.test(liste), liste);
+  pruef('Sucher meldet erst fehlende Ecken, dann «ruhig halten»', /0 (von|des|dei) 4/.test(liste) && /ruhig|ne bouge plus|tieni fermo/.test(liste), liste);
   const gelesen = await kp.evaluate(() => [...document.querySelectorAll('#ab-zeilen select[data-nr]')].map(s => s.value || '.').join(''));
   const unsicherNr = await kp.evaluate(() => [...document.querySelectorAll('#ab-zeilen tr.ab-unsicher select')].map(s => +s.dataset.nr));
   const soll = erwartet._kamera.antworten;

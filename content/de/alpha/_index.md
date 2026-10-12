@@ -1,6 +1,8 @@
 ---
 title: "Alpha – Features im Test"
 geschuetzt: true
+# Kein RSS-Feed (siehe content/de/mitglieder/_index.md).
+outputs: ["html"]
 ---
 
 Diese Seite ist **nicht Teil der öffentlichen Website**. Hier stehen neue
