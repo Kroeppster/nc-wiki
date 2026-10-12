@@ -26,7 +26,7 @@ Dans les deux cas, il s'agit de ta mémoire. Pendant les études de médecine, t
 
 ## Moment et fréquence de l'entraînement
 
-Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile de faire tous les jours. Commence tôt, environ 3 mois avant l'EMS, avec 3 à 4 séances par semaine. Au début, accorde-toi volontairement plus de temps que prévu (par ex. 10 au lieu de 6 minutes pour les faits), afin d'essayer différentes stratégies, et ne réduis le temps que progressivement, à mesure que tu gagnes en assurance. Le dernier mois, entraîne-toi dans les conditions réelles du NC : mémoriser les figures avant, compréhension de texte entre les deux, puis mémoriser les faits. Arrête l'entraînement ciblé quelques jours avant le NC pour garder la tête libre.
+Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile de faire tous les jours. Commence tôt, environ 3 mois avant l'EMS, avec 3 à 4 séances par semaine. Au début, accorde-toi volontairement plus de temps que prévu (par ex. 10 au lieu de 6 minutes pour les faits), afin d'essayer différentes stratégies, et ne réduis le temps que progressivement, à mesure que tu gagnes en assurance. Le dernier mois, entraîne-toi dans les conditions réelles de l'EMS : mémoriser les figures avant, compréhension de texte entre les deux, puis mémoriser les faits. Arrête l'entraînement ciblé quelques jours avant le NC pour garder la tête libre.
 
 ## Marche à suivre pour résoudre
 
@@ -48,7 +48,7 @@ Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile
 - **Ne pas viser 18 sur 18 :** il vaut souvent mieux bien mémoriser 12 à 15 figures que les 18 superficiellement – tu n'as pas besoin du score maximal.
 - **Moyens mnémotechniques fixes :** après quelques passages, tu remarqueras que certaines caractéristiques et certains diagnostics reviennent – établis pour eux une liste fixe de tes moyens mnémotechniques.
 - **Essayer différentes stratégies :** il n'existe pas une seule bonne méthode pour tout le monde. Ne te laisse pas déstabiliser si une stratégie fonctionne mieux chez d'autres que chez toi – ce qui compte, c'est ce qui marche pour toi.
-- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 20 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – le NC, c'est de la pure gestion des points.
+- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 20 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – l'EMS, c'est de la pure gestion des points.
 
 ## Erreurs fréquentes
 

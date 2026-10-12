@@ -12,9 +12,14 @@
   ============================================================================
 */ -}}
 {{ $entry := .entry }}
-<li{{ if $entry.HasChildren }} class="has-children"{{ end }}>
+{{ $page := .page }}
+{{- /* Wo man gerade ist: der Punkt der aktuellen Seite bekommt
+     aria-current="page", seine Eltern die Klasse "ist-darin" (CSS hebt beide hervor). */ -}}
+{{ $aktuell := and $page (or ($page.IsMenuCurrent "main" $entry) (eq $entry.URL $page.RelPermalink)) }}
+{{ $darin := and $page ($page.HasMenuCurrent "main" $entry) }}
+<li class="{{ if $entry.HasChildren }}has-children{{ end }}{{ if $darin }} ist-darin{{ end }}">
   {{ if $entry.URL }}
-  <a href="{{ $entry.URL }}"{{ if eq $entry.Identifier "kontakt" }} class="nav-cta"{{ end }}>{{ $entry.Name }}</a>
+  <a href="{{ $entry.URL }}"{{ if eq $entry.Identifier "kontakt" }} class="nav-cta"{{ end }}{{ if $aktuell }} aria-current="page"{{ end }}>{{ $entry.Name }}</a>
   {{ else }}
   <span>{{ $entry.Name }}</span>
   {{ end }}
@@ -24,7 +29,7 @@
   </button>
   <ul class="submenu" id="submenu-{{ $entry.Identifier }}">
     {{ range $entry.Children }}
-    {{ partial "nav-menu-item.html" (dict "entry" .) }}
+    {{ partial "nav-menu-item.html" (dict "entry" . "page" $page) }}
     {{ end }}
   </ul>
   {{ end }}

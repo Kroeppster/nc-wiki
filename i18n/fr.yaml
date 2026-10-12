@@ -395,7 +395,7 @@ ab_regel: "L’évaluation suit celle de l’AMS : chaque bonne réponse vaut un
 ab_konz: "Le test de concentration ne figure pas sur la feuille de réponses – évalue-le avec la feuille de solutions de la simulation."
 ab_testsim_eigener: "Propre grille de correction (de l’outil de formatage)"
 ab_schluessel: "Grille de correction"
-ab_schluessel_hinweis: "Le PDF des solutions d’une simulation créé avec l’outil de formatage – il contient la feuille de réponses avec les bonnes cases en noir. Une photo de cette page fonctionne aussi. Comme la photo, la grille reste sur ton appareil."
+ab_schluessel_hinweis: "Le PDF des solutions d’une simulation (avec la liste « 27 D … » ou la feuille de réponses avec les bonnes cases en noir). Une photo de cette page fonctionne aussi. Comme la photo, la grille reste sur ton appareil."
 ab_schluessel_ok: "Grille de correction lue : {n} questions avec solution."
 ab_schluessel_unsicher: "{n} lignes n’y étaient pas claires et ne comptent pas (n° {liste})."
 ab_schluessel_fehlt: "La feuille est lue – choisis maintenant la grille de correction."

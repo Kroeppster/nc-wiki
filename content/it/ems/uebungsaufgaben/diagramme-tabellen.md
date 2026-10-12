@@ -31,7 +31,7 @@ Durante gli studi e poi nella professione leggi di continuo studi, valori di lab
 
 ## Tempi e frequenza dell'esercizio
 
-Questo sottotest si impara bene anche relativamente tardi – di solito basta un periodo di 1–1.5 mesi prima del NC. Allenalo però in modo intenso, circa 3 volte a settimana. Conviene svolgere diagrammi e tabelle alla fine di una lunga sessione di esercizio – così simuli la situazione al NC, dove anche questo sottotest arriva proprio alla fine.
+Questo sottotest si impara bene anche relativamente tardi – di solito basta un periodo di 1–1.5 mesi prima dell'EMS. Allenalo però in modo intenso, circa 3 volte a settimana. Conviene svolgere diagrammi e tabelle alla fine di una lunga sessione di esercizio – così simuli la situazione al NC, dove anche questo sottotest arriva proprio alla fine.
 
 ## Come procedere
 

@@ -39,7 +39,7 @@ In questo sottotest i progressi si vedono in fretta – di solito basta iniziare
 ## Altri consigli
 
 - **Provare prima la penna:** il test viene valutato a macchina – la tua penna deve essere abbastanza scura e non deve sbavare.
-- **Esercitarsi nel modo più vario possibile:** al vero NC compaiono spesso più regole combinate (per es. «cancella ogni q dopo una p e ogni b prima di una d»). Esercitati quindi con diversi tipi di regole, non con uno solo.
+- **Esercitarsi nel modo più vario possibile:** all'EMS vero e proprio compaiono spesso più regole combinate (per es. «cancella ogni q dopo una p e ogni b prima di una d»). Esercitati quindi con diversi tipi di regole, non con uno solo.
 - **Lasciarsi alle spalle gli errori:** arrabbiarsi per un errore costa solo concentrazione e tempo in più – tornare indietro a correggere comunque non conviene, perché conta solo l'ultima marcatura.
 
 ## Errori frequenti

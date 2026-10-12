@@ -118,6 +118,8 @@ Sind alle drei Adressen in der Tabelle oben, wird auf der Website gebaut:
   der Seite bestimmt die Liste.
 - Seiten «Anmeldung bestätigt» (DE/FR/IT) – Ziel der Weiterleitung aus Schritt 4.
 - Seiten «Abmelden» mit Erklärung zum Abmeldelink in jedem Newsletter.
+- In `hugo.toml` `newsletter_url` setzen: erst dann erscheint der Newsletter-Teil in der
+  Fusszeile (solange das Feld leer ist, bleibt er weg, weil die Seiten noch Platzhalter sind).
 - Abschnitt «Newsletter» in der Datenschutzerklärung (DE/FR/IT): Dienstleister Brevo,
   doppelte Bestätigung, jederzeitige Abmeldung.
 - Test mit einer Testadresse, bevor es live geht.

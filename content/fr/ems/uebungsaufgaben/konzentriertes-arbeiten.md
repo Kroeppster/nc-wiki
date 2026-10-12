@@ -39,7 +39,7 @@ Dans ce sous-test, les progrès sont vite visibles – il suffit généralement 
 ## Autres conseils
 
 - **Tester son stylo à l'avance :** le test est évalué par machine – ton stylo doit être assez foncé et ne doit pas baver.
-- **S'entraîner de façon aussi variée que possible :** au vrai NC, plusieurs règles couplées apparaissent souvent (par ex. « barre chaque q après un p et chaque b avant un d »). Entraîne-toi donc avec différents types de règles, pas avec un seul.
+- **S'entraîner de façon aussi variée que possible :** à l'EMS réel, plusieurs règles couplées apparaissent souvent (par ex. « barre chaque q après un p et chaque b avant un d »). Entraîne-toi donc avec différents types de règles, pas avec un seul.
 - **Passer sur ses erreurs :** s'énerver pour une erreur ne coûte que de la concentration et du temps en plus – revenir en arrière pour corriger ne vaut de toute façon pas la peine, car seul le dernier marquage compte.
 
 ## Erreurs fréquentes

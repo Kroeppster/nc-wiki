@@ -31,7 +31,7 @@ Pendant les études et plus tard dans la profession, tu lis en permanence des é
 
 ## Moment et fréquence de l'entraînement
 
-Ce sous-test s'apprend encore bien relativement tard – une période de 1 à 1.5 mois avant le NC suffit en général. Entraîne-le en revanche intensivement, environ 3 fois par semaine. Il vaut la peine de traiter les diagrammes et tableaux à la fin d'une longue séance d'entraînement – tu simules ainsi la situation au NC, où ce sous-test arrive aussi tout à la fin.
+Ce sous-test s'apprend encore bien relativement tard – une période de 1 à 1.5 mois avant l'EMS suffit en général. Entraîne-le en revanche intensivement, environ 3 fois par semaine. Il vaut la peine de traiter les diagrammes et tableaux à la fin d'une longue séance d'entraînement – tu simules ainsi la situation au NC, où ce sous-test arrive aussi tout à la fin.
 
 ## Marche à suivre pour résoudre
 

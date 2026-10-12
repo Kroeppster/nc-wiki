@@ -394,7 +394,7 @@ ab_regel: "La valutazione segue quella dell’AMS: ogni risposta giusta vale un 
 ab_konz: "Il test di concentrazione non è sul foglio delle risposte: valutalo con il foglio delle soluzioni della simulazione."
 ab_testsim_eigener: "Chiave di correzione propria (dallo strumento di formattazione)"
 ab_schluessel: "Chiave di correzione"
-ab_schluessel_hinweis: "Il PDF delle soluzioni di una simulazione creato con lo strumento di formattazione: contiene il foglio delle risposte con le caselle giuste in nero. Va bene anche una foto di questa pagina. Come la foto, la chiave resta sul tuo dispositivo."
+ab_schluessel_hinweis: "Il PDF delle soluzioni di una simulazione (con l’elenco «27 D …» o con il foglio delle risposte con le caselle giuste in nero). Va bene anche una foto di questa pagina. Come la foto, la chiave resta sul tuo dispositivo."
 ab_schluessel_ok: "Chiave di correzione letta: {n} domande con soluzione."
 ab_schluessel_unsicher: "{n} righe non erano chiare e non contano (n. {liste})."
 ab_schluessel_fehlt: "Il foglio è stato letto: ora scegli la chiave di correzione."

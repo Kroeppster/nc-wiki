@@ -400,7 +400,7 @@ ab_regel: "Gewertet wird wie im EMS: Jede richtige Antwort gibt einen Punkt; lee
 ab_konz: "Der Konzentrationstest steht nicht auf dem Antwortbogen – ihn wertest du mit dem Lösungsblatt der Testsimulation aus."
 ab_testsim_eigener: "Eigener Lösungsschlüssel (aus dem Formatierungstool)"
 ab_schluessel: "Lösungsschlüssel"
-ab_schluessel_hinweis: "Das Lösungs-PDF einer Testsimulation aus dem Formatierungstool – darin steht der Antwortbogen mit den richtigen Kästchen schwarz. Ein Foto dieser Seite geht auch. Der Schlüssel bleibt wie das Foto auf deinem Gerät."
+ab_schluessel_hinweis: "Das Lösungs-PDF einer Testsimulation (mit der Liste «27 D …» oder dem Antwortbogen mit den richtigen Kästchen schwarz). Ein Foto dieser Seite geht auch. Der Schlüssel bleibt wie das Foto auf deinem Gerät."
 ab_schluessel_ok: "Lösungsschlüssel gelesen: {n} Aufgaben mit Lösung."
 ab_schluessel_unsicher: "{n} Zeilen waren darin nicht eindeutig und zählen nicht (Nr. {liste})."
 ab_schluessel_fehlt: "Der Bogen ist gelesen – jetzt noch den Lösungsschlüssel wählen."

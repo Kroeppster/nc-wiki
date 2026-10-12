@@ -106,14 +106,6 @@ mit_loesung:
   - 2024_konzentriertes-arbeiten_S03
 
 overrides:
-  UT3_A2_2026:
-    de: "Serie A2 (UT3)"
-    fr: "Série A2 (UT3)"
-    it: "Serie A2 (UT3)"
-  TESTHEFT_2026_DE_V6_postSIM_ohne_Loesung:
-    de: "Testheft (ohne Lösung)"
-    fr: "Cahier de test (sans corrigé)"
-    it: "Fascicolo del test (senza soluzione)"
   NCWiki_Kursskript_2026_deutsch:
     de: "Kursskript 2026 (Deutsch)"
     fr: "Script de cours 2026 (allemand)"
@@ -147,9 +139,9 @@ overrides:
     fr: "Cahier de test"
     it: "Fascicolo del test"
   2025_testsimulationen_Loesung-Auswertung-Konzentrationstest:
-    de: "Auswertung Konzentrationstest"
-    fr: "Évaluation du test de concentration"
-    it: "Valutazione del test di concentrazione"
+    de: "Lösung und Auswertung Konzentrationstest"
+    fr: "Corrigé et évaluation du test de concentration"
+    it: "Soluzione e valutazione del test di concentrazione"
   2025_testsimulationen_Vergleich-Testprozentrang:
     de: "Vergleich Testprozentrang"
     fr: "Comparaison des rangs percentiles"
