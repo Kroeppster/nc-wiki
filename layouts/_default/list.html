@@ -94,7 +94,7 @@
            Hugo kann die Überschriften aus dem Fliesstext hier schon zählen
            und setzt die Klasse deshalb gleich beim Bauen - dadurch steht das
            Raster auf den allermeisten Seiten sofort richtig. Auf Seiten, die
-           ihre Überschriften erst aus einer Vorlage bekommen (Prüfungsmodus,
+           ihre Überschriften erst aus einer Vorlage bekommen (Simulationsmodus,
            Uniguide, Q&A), weiss Hugo davon nichts; dort ergänzt bzw. entfernt
            das Skript in seiten-uebersicht.html die Klasse nach dem Laden. */}}
       <div class="seite-raster{{ if ge (len .Fragments.Headings) 2 }} mit-liste{{ end }}">
@@ -146,6 +146,12 @@
       {{ else if strings.Contains .Path "ems/vorbereitungskurse" }}
       {{ partial "download-list.html" (dict "path" "downloads/kursskripte" "page" .) }}
       {{ end }}
+
+      {{/* Simulationsmodus (Uhr und vorgelesene Anweisungen wie am Testtag):
+           auf der Seite Testsimulationen, UNTER den Testheften - erst das
+           Heft herunterladen, dann hier starten. Eingeschaltet über
+           "simulationsmodus: true" im Seitenkopf. */}}
+      {{ if .Params.simulationsmodus }}{{ partial "simulationsmodus.html" . }}{{ end }}
 
       {{/* Vier Übersichtsseiten haben einen komplett eigenen Aufbau statt der
            normalen Kartenliste weiter unten: Erfahrungsberichte (Filterbare

@@ -4,7 +4,7 @@ description: "Tutte le risposte importanti sul test attitudinale in un colpo d'o
 menu:
   main:
     parent: ems
-    weight: 4
+    weight: 6
 ---
 
 Risposte alle domande più frequenti su EMS, iscrizione e la nostra offerta.

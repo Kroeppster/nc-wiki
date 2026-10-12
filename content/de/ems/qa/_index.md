@@ -4,7 +4,7 @@ description: "Antworten auf häufige Fragen zum Eignungstest Medizinstudium: Anm
 menu:
   main:
     parent: ems
-    weight: 4
+    weight: 6
 ---
 
 Antworten auf häufige Fragen zum Eignungstest Medizinstudium (EMS), zur Anmeldung und zu unserem Angebot.

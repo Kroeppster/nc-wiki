@@ -22,7 +22,7 @@ Si verifica la capacità di confrontare con precisione immagini e strutture e di
 
 L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1.5–2 mesi prima dell'EMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
 
-Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anche le sessioni di esercizio con questo sottotest. In condizioni realistiche, con cronometro e istruzioni, ti eserciti nella [modalità esame](/ems/pruefungsmodus).
+Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anche le sessioni di esercizio con questo sottotest. In condizioni realistiche, con cronometro e istruzioni, ti eserciti nella [modalità simulazione](/ems/testsimulationen#simulationsmodus).
 
 ## Come procedere
 

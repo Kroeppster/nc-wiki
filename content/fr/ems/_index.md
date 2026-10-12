@@ -3,9 +3,8 @@ title: "EMS"
 description: "Tout pour ta préparation à l'EMS : séries d'exercices gratuites, simulations de test, cours de préparation et guide des universités. Par des étudiant·e·s."
 menu:
   main:
-    name: "L'EMS"
     identifier: ems
-    weight: 2
+    weight: 3
 ---
 
 Cette page te guide à travers le test d'aptitudes pour les études de médecine (EMS) : de l'inscription au jour du test jusqu'à l'attribution des places d'études.
@@ -13,7 +12,7 @@ Cette page te guide à travers le test d'aptitudes pour les études de médecine
 ## Aperçu
 
 - **Informations :** [Compensation des désavantages](/ems/nachteilsausgleich) · [Uniguide](/ems/uniguide) · [Questions fréquentes](/ems/qa) · [Témoignages](/ems/erfahrungsberichte) · [Actualités](/news)
-- **Préparation :** [Séries d'exercices](/ems/uebungsaufgaben) · [Simulations de test](/ems/testsimulationen) · [Cours de préparation](/ems/vorbereitungskurse) · [Mode examen](/ems/pruefungsmodus)
+- **Préparation :** [Séries d'exercices](/ems/uebungsaufgaben) · [Simulations de test](/ems/testsimulationen) · [Cours de préparation](/ems/vorbereitungskurse) · [Mode simulation](/ems/testsimulationen#simulationsmodus)
 
 ## Préparation à l'EMS
 

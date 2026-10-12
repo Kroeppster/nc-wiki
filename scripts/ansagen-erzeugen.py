@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Erzeugt die Ansagen des Prüfungsmodus als MP3-Dateien.
+"""Erzeugt die Ansagen des Simulationsmodus als MP3-Dateien.
 
-WOZU: Die Seite /ems/pruefungsmodus/ liest die Ansagen sonst mit der
+WOZU: Der Simulationsmodus auf /ems/testsimulationen/ liest die Ansagen sonst mit der
 Sprachausgabe des Browsers vor - die klingt je nach Gerät unterschiedlich und
 teilweise ziemlich blechern. Diese Dateien geben allen dieselbe, ruhigere
 Stimme.
@@ -20,12 +20,12 @@ NEU ERZEUGEN (nötig, sobald sich ein pm_-Text oder eine Bearbeitungszeit
     #   https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-de-thorsten-low.tar.gz
     #   https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-fr-siwis-medium.tar.gz
     # entpacken nach voices/<name>/
-    .venv/bin/python scripts/ansagen-erzeugen.py assets/audio/pruefungsmodus
+    .venv/bin/python scripts/ansagen-erzeugen.py assets/audio/simulationsmodus
 
 BESSER ALS DIESES SKRIPT sind echte Aufnahmen von Vereinsmitgliedern. Sobald
 eine Datei von Hand eingesprochen wird, einfach die erzeugte überschreiben -
 die Seite merkt keinen Unterschied. Welche Datei welchen Satz enthält, steht
-in assets/audio/pruefungsmodus/README.md.
+in assets/audio/simulationsmodus/README.md.
 
 STIMMEN UND LIZENZEN:
   Deutsch      Thorsten (piper, low)  - Datensatz CC0, keine Auflagen
@@ -45,8 +45,8 @@ SP = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUBLIC = os.path.join(SP, 'public')
 ZIEL = sys.argv[1]
 SPRACHEN = {
-    'de': (os.path.join(SP, 'voices/de-thorsten-low/de-thorsten-low.onnx'), 'ems/pruefungsmodus/index.html'),
-    'fr': (os.path.join(SP, 'voices/fr-siwis-medium/fr-siwis-medium.onnx'), 'fr/ems/pruefungsmodus/index.html'),
+    'de': (os.path.join(SP, 'voices/de-thorsten-low/de-thorsten-low.onnx'), 'ems/testsimulationen/index.html'),
+    'fr': (os.path.join(SP, 'voices/fr-siwis-medium/fr-siwis-medium.onnx'), 'fr/ems/testsimulationen/index.html'),
 }
 
 def saetze(html_pfad):
@@ -58,7 +58,7 @@ def saetze(html_pfad):
         raus[b['key']] = b['ansage']
     raus['beginne'] = t['beginne']
     # Die zusammengesetzten Sätze müssen als EIN Stück aufgenommen werden -
-    # genau so ruft das Skript sie auf (siehe pruefungsmodus.html).
+    # genau so ruft das Skript sie auf (siehe simulationsmodus.html).
     raus['stopp-weiter'] = t['stopp'] + ' ' + t['stoppWeiter']
     raus['fertig-einzeln'] = t['stopp'] + ' ' + t['fertigEinzeln']
     raus['fertig-komplett'] = t['stopp'] + ' ' + t['fertigKomplett']

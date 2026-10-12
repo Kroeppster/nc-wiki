@@ -1,6 +1,6 @@
-# Ansagen für den Prüfungsmodus
+# Ansagen für den Simulationsmodus
 
-Die Seite `/ems/pruefungsmodus/` sagt an, was als Nächstes kommt, sagt „Start"
+Der Simulationsmodus (Abschnitt auf `/ems/testsimulationen/`) sagt an, was als Nächstes kommt, sagt „Start"
 und am Ende „Stopp". **Liegt hier eine passende Datei, wird sie abgespielt** –
 sonst liest die Sprachausgabe des Geräts vor, die je nach Handy oder Computer
 sehr unterschiedlich klingt.

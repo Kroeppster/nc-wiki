@@ -1,0 +1,10 @@
+{{- /*
+  WEITERLEITUNG FÜR ALTE ADRESSEN (Feld "aliases" im Seitenkopf)
+  Wie Hugos eingebaute Vorlage, plus eine Zeile Skript: Sie nimmt den Teil
+  hinter "#" mit. Grund: Geteilte Links des Simulationsmodus ("Als Link
+  kopieren") tragen den eigenen Ablauf genau dort (#ablauf=...) - und alte
+  Links auf /ems/pruefungsmodus/ sollen nach dem Umzug auf die Seite
+  Testsimulationen weiter funktionieren. Ohne Skript greift die normale
+  Weiterleitung, nur eben ohne diesen Teil.
+*/ -}}
+<!DOCTYPE html><html lang="{{ site.Language.Locale }}"><head><title>{{ .Permalink }}</title><link rel="canonical" href="{{ .Permalink }}"><meta charset="utf-8"><meta name="robots" content="noindex"><script>location.replace({{ .Permalink }} + location.hash);</script><meta http-equiv="refresh" content="0; url={{ .Permalink }}"></head></html>

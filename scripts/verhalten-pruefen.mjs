@@ -19,21 +19,21 @@
  *   Suche            liefert zu einem echten Begriff Treffer
  *   Erfahrungsberichte  Filter veraendert die Anzahl sichtbarer Karten
  *   Uniguide         Vergleich zweier Universitaeten erscheint
- *   Pruefungsmodus   Uhr zaehlt, Pause haelt an, Abbrechen schliesst
- *   Pruefungsmodus   Zeit folgt der Aufgabenzahl, Experte gibt sie frei
- *   Pruefungsmodus   Figuren/Fakten: nur Zeit, nie die Aufgabenzahl
+ *   Simulationsmodus Uhr zaehlt, Pause haelt an, Abbrechen schliesst
+ *   Simulationsmodus Zeit folgt der Aufgabenzahl, Experte gibt sie frei
+ *   Simulationsmodus Figuren/Fakten: nur Zeit, nie die Aufgabenzahl
  *   Formulare        leer wird nicht gesendet, ausgefuellt schon
  *
  * ZWEI FALLEN, die hier schon Zeit gekostet haben:
  *
- *  1. DIALOGE. "Abbrechen" im Pruefungsmodus fragt per confirm() nach.
+ *  1. DIALOGE. "Abbrechen" im Simulationsmodus fragt per confirm() nach.
  *     Playwright VERWIRFT Dialoge automatisch, wenn kein Handler registriert
  *     ist - die Rueckfrage wird also mit "Nein" beantwortet, die Uebung laeuft
  *     weiter, und der Test meldet faelschlich einen Fehler. Jeder Kontext
  *     bekommt deshalb unten einen Dialog-Handler.
  *
  *  2. KNOEPFE NACH TEXT SUCHEN. Ein Durchlauf, der Knoepfe nach Textmuster
- *     anklickt, startet irgendwann versehentlich den Pruefungsmodus; dessen
+ *     anklickt, startet irgendwann versehentlich den Simulationsmodus; dessen
  *     Buehne faengt danach alle weiteren Klicks ab und der Lauf laeuft in
  *     einen Timeout. Deshalb nur echte Kennungen aus dem Markup verwenden
  *     (data-pm-start, #pm-los, .pm-c-aufgaben ...).
@@ -162,10 +162,10 @@ console.log('\n=== Uniguide: Vergleich ===');
 }
 
 
-console.log('\n=== Prüfungsmodus: Uhr laeuft und laesst sich stoppen ===');
+console.log('\n=== Simulationsmodus: Uhr laeuft und laesst sich stoppen ===');
 {
   const {ctx,p,js}=await neu();
-  await p.goto(B+'/ems/pruefungsmodus/',{waitUntil:'networkidle'});
+  await p.goto(B+'/ems/testsimulationen/',{waitUntil:'networkidle'});
   await p.click('[data-pm-start="0"]');
   await p.waitForTimeout(500);
   const buehneAuf = await p.$eval('#pm-buehne', e=>!e.hidden).catch(()=>false);
@@ -194,10 +194,10 @@ console.log('\n=== Prüfungsmodus: Uhr laeuft und laesst sich stoppen ===');
   await ctx.close();
 }
 
-console.log('\n=== Prüfungsmodus: Zeit folgt der Aufgabenzahl ===');
+console.log('\n=== Simulationsmodus: Zeit folgt der Aufgabenzahl ===');
 {
   const {ctx,p,js}=await neu();
-  await p.goto(B+'/ems/pruefungsmodus/',{waitUntil:'networkidle'});
+  await p.goto(B+'/ems/testsimulationen/',{waitUntil:'networkidle'});
   const reihen = await p.$$('#pm-custom tr');
   pruef('Tabelle des individuellen Laufs vorhanden', reihen.length>0, `${reihen.length} Zeilen`);
   const a0 = await p.$('.pm-c-aufgaben');
@@ -220,10 +220,10 @@ console.log('\n=== Prüfungsmodus: Zeit folgt der Aufgabenzahl ===');
   await ctx.close();
 }
 
-console.log('\n=== Prüfungsmodus: Figuren/Fakten nur Zeit, nicht Aufgabenzahl ===');
+console.log('\n=== Simulationsmodus: Figuren/Fakten nur Zeit, nicht Aufgabenzahl ===');
 {
   const {ctx,p,js}=await neu();
-  await p.goto(B+'/ems/pruefungsmodus/',{waitUntil:'networkidle'});
+  await p.goto(B+'/ems/testsimulationen/',{waitUntil:'networkidle'});
   await p.check('#pm-c-experte'); await p.waitForTimeout(400);
   const daten = await p.$$eval('#pm-custom tr', rs => rs.map(r => ({
     text: (r.textContent||'').replace(/\s+/g,' ').trim().slice(0,30),

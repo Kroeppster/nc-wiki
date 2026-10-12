@@ -217,7 +217,7 @@ const pruefung = () => {
   // oben ein VERLAUF oder Bild liegt. Ein Verlauf hat keine eine Farbe; wer
   // ihn ignoriert, rechnet gegen Weiss und meldet dann Fehlalarme. Genau so
   // erschienen das Markenband (echte 6.8:1, gemeldet 2.3:1) und die Uhr des
-  // Prüfungsmodus (weiss auf dunklem Verlauf, gemeldet 1.07:1) als "zu
+  // Simulationsmodus (weiss auf dunklem Verlauf, gemeldet 1.07:1) als "zu
   // schwach". Solche Stellen werden übersprungen statt falsch gemeldet.
   const hinterGrund = el => {
     let a = el;

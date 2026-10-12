@@ -22,7 +22,7 @@ Geprüft wird die Fähigkeit, Bilder und Strukturen genau zu vergleichen und kle
 
 Muster zuordnen lässt sich gut und vergleichsweise schnell trainieren. Ein Start etwa eineinhalb bis zwei Monate vor dem EMS reicht in der Regel aus. Wir empfehlen drei bis vier Serien pro Woche. Übe zu Beginn ohne Zeitdruck, bis du ein sicheres Gefühl für die Aufgaben und eine eigene Strategie entwickelt hast. Erst danach solltest du mit der echten Zeitvorgabe arbeiten.
 
-Da Muster zuordnen am Testtag ganz am Anfang steht, lohnt es sich, auch Übungseinheiten damit zu beginnen. Unter realistischen Bedingungen mit Uhr und Anweisungen übst du im [Prüfungsmodus](/ems/pruefungsmodus).
+Da Muster zuordnen am Testtag ganz am Anfang steht, lohnt es sich, auch Übungseinheiten damit zu beginnen. Unter realistischen Bedingungen mit Uhr und Anweisungen übst du im [Simulationsmodus](/ems/testsimulationen#simulationsmodus).
 
 ## Vorgehen beim Lösen
 

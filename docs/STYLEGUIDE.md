@@ -57,7 +57,7 @@ steht unter [Französisch und Italienisch](#französisch-und-italienisch).
 
 ## Wie wir den Styleguide anwenden
 
-- **Prüfungssimulation:** Die Ansagen im Prüfungsmodus und die Texte der EMS-Hefte (Anleitungen
+- **Prüfungssimulation:** Die Ansagen im Simulationsmodus und die Texte der EMS-Hefte (Anleitungen
   im Testheft) sprechen mit «Sie», weil sie den echten EMS nachbilden.
 - **Erfahrungsberichte:** Sie geben die Worte der Verfasser\*innen wieder und bleiben, wie sie
   geschrieben wurden. Zitate aus Berichten auf den Untertest-Seiten haben wir an Anrede und

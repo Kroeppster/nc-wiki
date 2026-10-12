@@ -3,9 +3,8 @@ title: "EMS"
 description: "Alles für deine EMS-Vorbereitung: Kostenlose Übungsserien, Testsimulationen, Vorbereitungskurse und ein Uniguide. Von Studierenden für dich."
 menu:
   main:
-    name: "Der EMS"
     identifier: ems
-    weight: 2
+    weight: 3
 ---
 
 Diese Seite führt dich durch den Eignungstest für das Medizinstudium (EMS): von der Anmeldung über den Testtag bis zur Zuteilung der Studienplätze.
@@ -13,7 +12,7 @@ Diese Seite führt dich durch den Eignungstest für das Medizinstudium (EMS): vo
 ## Übersicht
 
 - **Informationen:** [Nachteilsausgleich](/ems/nachteilsausgleich) · [Uniguide](/ems/uniguide) · [Häufige Fragen](/ems/qa) · [Erfahrungsberichte](/ems/erfahrungsberichte) · [News](/news)
-- **Vorbereitung:** [Übungsserien](/ems/uebungsaufgaben) · [Testsimulationen](/ems/testsimulationen) · [Vorbereitungskurse](/ems/vorbereitungskurse) · [Prüfungsmodus](/ems/pruefungsmodus)
+- **Vorbereitung:** [Übungsserien](/ems/uebungsaufgaben) · [Testsimulationen](/ems/testsimulationen) · [Vorbereitungskurse](/ems/vorbereitungskurse) · [Simulationsmodus](/ems/testsimulationen#simulationsmodus)
 
 ## Vorbereitung auf den EMS
 

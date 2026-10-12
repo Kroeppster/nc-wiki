@@ -4,8 +4,7 @@ description: "Neuigkeiten vom Verein NCWiki: Termine und Anmeldungen für unsere
 menu:
   main:
     identifier: news
-    parent: ems
-    weight: 6
+    weight: 2
 ---
 
 Hier findest du laufend Neuigkeiten zum Eignungstest für das Medizinstudium (EMS), zu unserem Verein und zu unseren Veranstaltungen: Testsimulationen, Vorbereitungskurse und mehr.

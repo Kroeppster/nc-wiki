@@ -3,7 +3,7 @@ title: "Corsi di preparazione"
 description: "Corso di preparazione all'EMS gratuito: due giorni in piccoli gruppi con studenti di medicina esperti, script del corso con strategie ed esercizi incluso."
 menu:
   main:
-    parent: vorbereitung
+    parent: ems
     weight: 3
 featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Dispensa NCWiki stampata per il corso di preparazione all'EMS di marzo 2024, su un tavolo d'aula magna"

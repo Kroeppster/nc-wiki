@@ -4,7 +4,7 @@ description: "Compensation des désavantages au test d'aptitudes pour les étude
 menu:
   main:
     parent: ems
-    weight: 2
+    weight: 5
 ---
 
 Tu as un handicap, une maladie chronique ou un trouble comme le TDAH, l'autisme ou la dyslexie ? Ou tu as besoin de médicaments ou d'aides le jour du test ? Tu peux alors demander une adaptation des conditions du test d'aptitudes pour les études de médecine (EMS). Tu trouveras ici un aperçu. Seules les informations et fiches actuelles de [swissuniversities](https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine/procedure-dadmission-avec-numerus-clausus) font foi.
@@ -52,7 +52,7 @@ Juridiquement, la question n'est pas définitivement tranchée : en 2024, dans l
 2. **Lire la fiche et le formulaire** dès que swissuniversities envoie les informations sur l'inscription, début avril.
 3. **Envoyer la demande par e-mail avant le délai.** Garde une copie et la confirmation.
 4. **Attendre la décision** et lire attentivement les indications pour le jour du test, par exemple où tu seras assis·e ou ce que tu peux emporter.
-5. **T'entraîner dans les conditions que tu auras le jour du test** – par exemple avec une protection auditive en [mode examen](/ems/pruefungsmodus).
+5. **T'entraîner dans les conditions que tu auras le jour du test** – par exemple avec une protection auditive en [mode simulation](/ems/testsimulationen#simulationsmodus).
 
 ## Après l'EMS : compensation des désavantages pendant les études
 

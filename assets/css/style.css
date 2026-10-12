@@ -361,7 +361,7 @@ nav.main-nav>ul{display:flex;gap:var(--space-4);list-style:none;margin:0;padding
 nav.main-nav li{position:relative;}
 nav.main-nav>ul>li>a,nav.main-nav>ul>li>span{font-size:.82rem;font-weight:600;padding:var(--space-2) 0;display:inline-block;}
 nav.main-nav>ul>li>a:hover{color:var(--color-signal);}
-/* Menüpunkt ohne eigene Seite (aktuell «Vorbereitung», siehe hugo.toml): wird
+/* Menüpunkt ohne eigene Seite (heute keiner; möglich über hugo.toml): wird
    als <span> statt <a> gerendert. Er sieht aus wie die anderen Punkte und
    klappt beim Klick sein Untermenü auf (Klick-Logik in footer.html) - grau
    wirkte er wie deaktiviert. */
@@ -1295,7 +1295,7 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .report-error-general button:hover{background:var(--color-btn-bg-hover);color:var(--color-on-signal);}
 
 /* ==========================================================================
-   Prüfungsmodus (siehe layouts/partials/pruefungsmodus.html)
+   Simulationsmodus (siehe layouts/partials/simulationsmodus.html)
    ========================================================================== */
 /* minmax(0,1fr) statt des voreingestellten 1fr: Rasterelemente schrumpfen
    sonst NICHT unter die Breite ihres Inhalts. Die breite Tabelle im eigenen
@@ -1304,7 +1304,7 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
    seitlich verschiebbar gewesen (310px Überlauf bei 390px Fenster). */
 .pm{margin-top:var(--space-8);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-10);}
 .pm .table-scroll{max-width:100%;}
-.pm h2{font-size:var(--text-xl);margin:0 0 var(--space-2);}
+.pm h3{font-size:var(--text-xl);margin:0 0 var(--space-2);}
 .pm section>p{color:var(--color-ink-soft);max-width:38rem;margin:0 0 var(--space-5);}
 
 .pm-optionen{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);box-shadow:var(--shadow-sm);}
@@ -1428,7 +1428,7 @@ main h2[id],main h3[id]{scroll-margin-top:var(--sprung-abstand,5.5rem);}
 .pm-liste{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-3);}
 .pm-block{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s;}
 .pm-block:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);}
-.pm-block h3{margin:0;font-size:var(--text-base);}
+.pm-block h4{margin:0;font-size:var(--text-base);}
 .pm-block-meta{margin:.25rem 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);display:flex;gap:var(--space-3);flex-wrap:wrap;}
 .pm-block-zeit{font-variant-numeric:tabular-nums;}
 .pm-block .btn{flex:0 0 auto;}

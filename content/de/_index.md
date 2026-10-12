@@ -131,8 +131,6 @@ weg:
       mittel:
         - titel: "Testsimulationen"
           url: "ems/testsimulationen/"
-        - titel: "Prüfungsmodus"
-          url: "ems/pruefungsmodus/"
     - wann: "9. Juli bis August"
       titel: "Am Testtag"
       text: "Was mitnehmen, wie einteilen, wie raten."

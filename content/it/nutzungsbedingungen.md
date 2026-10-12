@@ -15,7 +15,7 @@ NCWiki è un'associazione di pubblica utilità di studentesse e studenti di medi
 
 ## Diritto d'autore
 
-Tutti i contenuti di questo sito web, in particolare testi, esercizi, simulazioni del test, script dei corsi, grafici e funzioni come la modalità esame e i generatori di esercizi, sono protetti dal diritto d'autore. Salvo diversa indicazione esplicita, tutti i diritti appartengono a NCWiki.
+Tutti i contenuti di questo sito web, in particolare testi, esercizi, simulazioni del test, script dei corsi, grafici e funzioni come la modalità simulazione e i generatori di esercizi, sono protetti dal diritto d'autore. Salvo diversa indicazione esplicita, tutti i diritti appartengono a NCWiki.
 
 Gli esercizi sono pubblicati con la licenza [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.it). Possono essere condivisi per scopi non commerciali, citando NCWiki. Ogni utilizzo commerciale è vietato.
 
@@ -27,7 +27,7 @@ Senza il previo consenso scritto di NCWiki è in particolare vietato:
 
 - copiare, modificare o riprendere nelle proprie offerte in tutto o in parte i contenuti di questo sito web
 - vendere esercizi, simulazioni del test o script dei corsi, utilizzarli in corsi a pagamento o come modello per il proprio materiale
-- utilizzare o riprodurre la modalità esame, i generatori di esercizi o altre funzioni di questo sito web per le proprie offerte
+- utilizzare o riprodurre la modalità simulazione, i generatori di esercizi o altre funzioni di questo sito web per le proprie offerte
 - entrare nella nostra community Discord o utilizzarne i contenuti
 - partecipare alle nostre simulazioni del test e ai nostri corsi di preparazione
 

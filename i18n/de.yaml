@@ -203,16 +203,21 @@ testablauf_gesamt: "Gesamt"
 testablauf_gesamtzeit: "ca. {{ .std }} Std. {{ .min }} Min (netto)"
 
 # ---------------------------------------------------------------------------
-# ANREDE: Die Ansagen im Prüfungsmodus siezen ("Sie haben 16 Minuten Zeit"),
+# ANREDE: Die Ansagen im Simulationsmodus siezen ("Sie haben 16 Minuten Zeit"),
 # obwohl die Website sonst durchgehend duzt. Das ist Absicht: Sie geben eine
 # Aufsichtsperson im Testsaal wieder, und genau so wird dort angesagt. Der
 # übrige Text der Seite bleibt beim Du.
 # ---------------------------------------------------------------------------
-# PRÜFUNGSMODUS (/ems/pruefungsmodus/) - Uhr und Ansagen
+# SIMULATIONSMODUS (Abschnitt auf /ems/testsimulationen/, bis Oktober 2026
+# «Prüfungsmodus» mit eigener Seite) - Uhr und Ansagen
 # Alles, was hier steht, wird auch VORGELESEN, wenn die Sprachausgabe an ist.
 # Beim Übersetzen also darauf achten, dass die Sätze gesprochen natürlich
 # klingen (kurze Sätze, keine Klammern, keine Abkürzungen).
 # ---------------------------------------------------------------------------
+# Titel und Einleitung des Abschnitts (werden nicht vorgelesen)
+pm_titel: "Simulationsmodus"
+pm_einleitung: "Übe zu Hause unter den Bedingungen des Testtags: mit vorgelesenen Anweisungen und einer Uhr, wie sie im Testsaal hängt. Du wählst zwischen der kompletten Testsimulation, einzelnen Untertests und deinem eigenen Ablauf."
+pm_so_gehts: "**So funktioniert es:** Leg dir zuerst eines der Testhefte oben oder eine Übungsserie und einen Antwortbogen bereit. Dann drückst du auf «Starten». Die Uhr geht auf Vollbild, du hörst die Anweisung, und danach ist es still, bis die Zeit um ist. Bei der kompletten Simulation geht es ohne Klick mit dem nächsten Untertest weiter, genau wie am echten EMS: Dazwischen gibt es keine Pause."
 pm_einzeln_heading: "Einzelne Untertests"
 pm_einzeln_text: "Jeder Block mit seiner echten Bearbeitungszeit. Leg dir die passende Übungsserie bereit, bevor du startest."
 pm_komplett_heading: "Komplette Testsimulation"

@@ -104,19 +104,6 @@ enableRobotsTXT = true
     title = 'NCWiki'
     contentDir = 'content/de'
 
-    # Menüpunkte ohne eigene Seite (siehe docs/WARTUNG-DETAILLIERT.md, «Das Menü»):
-    # die Gruppe «Vorbereitung» und der erste Eintrag unter «Der EMS».
-    [[languages.de.menus.main]]
-      identifier = 'vorbereitung'
-      name = "Vorbereitung"
-      weight = 3
-    [[languages.de.menus.main]]
-      identifier = 'ems-ueberblick'
-      name = "Über den EMS"
-      pageRef = '/ems'
-      parent = 'ems'
-      weight = 1
-
   [languages.fr]
     label = 'Français'
     locale = 'fr-CH'
@@ -124,38 +111,12 @@ enableRobotsTXT = true
     title = 'NCWiki'
     contentDir = 'content/fr'
 
-    # Menüpunkte ohne eigene Seite (siehe docs/WARTUNG-DETAILLIERT.md, «Das Menü»):
-    # die Gruppe «Préparation» und der erste Eintrag unter «L'EMS».
-    [[languages.fr.menus.main]]
-      identifier = 'vorbereitung'
-      name = "Préparation"
-      weight = 3
-    [[languages.fr.menus.main]]
-      identifier = 'ems-ueberblick'
-      name = "À propos de l'EMS"
-      pageRef = '/ems'
-      parent = 'ems'
-      weight = 1
-
   [languages.it]
     label = 'Italiano'
     locale = 'it-CH'
     weight = 3
     title = 'NCWiki'
     contentDir = 'content/it'
-
-    # Menüpunkte ohne eigene Seite (siehe docs/WARTUNG-DETAILLIERT.md, «Das Menü»):
-    # die Gruppe «Preparazione» und der erste Eintrag unter «L'EMS».
-    [[languages.it.menus.main]]
-      identifier = 'vorbereitung'
-      name = "Preparazione"
-      weight = 3
-    [[languages.it.menus.main]]
-      identifier = 'ems-ueberblick'
-      name = "Informazioni sull'EMS"
-      pageRef = '/ems'
-      parent = 'ems'
-      weight = 1
 
 # Anführungszeichen im Text: gerade Zeichen ("…") werden zu «Guillemets» (Styleguide,
 # docs/STYLEGUIDE.md). Einfache Zeichen bleiben unverändert (Apostroph in l'EMS usw.).

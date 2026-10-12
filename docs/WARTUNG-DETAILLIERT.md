@@ -19,7 +19,7 @@ dabei.
 7. [Team und neue Saison](#7-team-und-neue-saison)
 8. [Unterstützen, Spenden, Sponsoren](#8-unterstützen-spenden-sponsoren)
 9. [FAQ, Uniguide, Untertests, Download-Namen](#9-faq-uniguide-untertests-download-namen)
-10. [Prüfungsmodus](#10-prüfungsmodus)
+10. [Simulationsmodus](#10-simulationsmodus)
 11. [Lern-Generatoren und Alpha-Seite](#11-lern-generatoren-und-alpha-seite)
 12. [Mitgliederbereich](#12-mitgliederbereich)
 13. [Formulare](#13-formulare)
@@ -85,26 +85,28 @@ die Seite läuft auf http://localhost:1313/. `npm run build` baut wie auf GitHub
 | `download_ordner` | automatische PDF-Liste aus einem Ordner unter `assets/` |
 | `leer_hinweis: true` | Übersichtsseite zeigt einen Hinweis, solange es noch keine Unterseiten gibt (Jahresberichte) |
 | `geschuetzt: true` | Passwortschutz, siehe [12](#12-mitgliederbereich) |
+| `simulationsmodus: true` | Simulationsmodus unter dem Seitentext (heute nur Testsimulationen), siehe [10](#10-simulationsmodus) |
 | `layout` | besondere Vorlage, z. B. `spenden` |
 
 ### Das Menü
 
-Das Hauptmenü setzt sich aus den Seitenköpfen zusammen, plus zwei Einträgen ohne eigene
-Seite in `hugo.toml` (je Sprache unter `[[languages.xx.menus.main]]`). Oberste Ebene heute:
+Das Hauptmenü setzt sich **nur aus den Seitenköpfen** zusammen – es gibt keine eigene
+Menüdatei. Oberste Ebene heute:
 
 | Menüpunkt | `identifier` | Darunter |
 | --- | --- | --- |
 | Startseite | `home` | – |
-| Der EMS | `ems` | Über den EMS (`hugo.toml`), Nachteilsausgleich, Uniguide, Häufige Fragen, Erfahrungsberichte, News |
-| Vorbereitung | `vorbereitung` (nur `hugo.toml`, keine Seite) | Übungsserien, Testsimulationen, Vorbereitungskurse, Prüfungsmodus |
+| News | `news` | – |
+| EMS | `ems` | Übungsserien, Testsimulationen (mit dem Simulationsmodus), Vorbereitungskurse, Uniguide, Nachteilsausgleich, Häufige Fragen, Erfahrungsberichte |
 | Unterstützer\*innen | `unterstuetzer-innen` | Jetzt unterstützen |
 | Über uns | `ueber-uns` | Team, Jahresberichte, Archiv |
 | Kontakt | `kontakt` | – |
 
-Die Adressen der Seiten hängen **nicht** am Menü: Übungsserien liegen weiter unter
-`/ems/uebungsaufgaben/`, News unter `/news/`. Ein Menüpunkt ohne eigene Seite
-(«Vorbereitung») klappt beim Klick sein Untermenü auf und erscheint nicht in der
-Fusszeile.
+Die Adressen der Seiten hängen **nicht** am Menü: Übungsserien liegen unter
+`/ems/uebungsaufgaben/`, egal wo sie im Menü stehen. Eine Gruppe ohne eigene Seite ginge
+auch (Eintrag in `hugo.toml` unter `[[languages.xx.menus.main]]`); sie klappt beim Klick
+ihr Untermenü auf. Im Oktober 2026 gab es kurz die Aufteilung «Der EMS» / «Vorbereitung» –
+zurückgenommen, weil die Kopfzeile damit unübersichtlich wurde.
 
 ```yaml
 menu:
@@ -114,8 +116,8 @@ menu:
     name: "Kurzname"    # optional, sonst gilt der title
 ```
 
-- `parent` ist der `identifier` des übergeordneten Menüpunkts (`ems`, `vorbereitung`,
-  `ueber-uns`, `unterstuetzer-innen`); ohne `parent` wird die Seite ein Punkt der obersten Ebene.
+- `parent` ist der `identifier` des übergeordneten Menüpunkts (`ems`, `ueber-uns`,
+  `unterstuetzer-innen`); ohne `parent` wird die Seite ein Punkt der obersten Ebene.
 - `weight` darf auch eine Kommazahl sein (`2.5`), um etwas dazwischenzuschieben.
 - Der Menüblock muss in **jeder Sprachfassung** stehen.
 - Die Fusszeile hat ein eigenes Menü `legal` (Impressum, Datenschutz …), gleich aufgebaut.
@@ -639,16 +641,23 @@ Dateien (Testhefte, Auswertungen, Kursskripte) bekommen unter `overrides:` einen
 
 ---
 
-## 10. Prüfungsmodus
+## 10. Simulationsmodus
 
-`/ems/pruefungsmodus/`: liest Anweisungen vor, zeigt eine Vollbild-Uhr und sagt „Stopp“ –
-für einen Untertest oder den ganzen Testtag ohne Pausen. Die Aufgaben kommen aus den PDFs.
+Abschnitt auf `/ems/testsimulationen/`, unter den Testheften: liest Anweisungen vor, zeigt
+eine Vollbild-Uhr und sagt „Stopp“ – für einen Untertest oder den ganzen Testtag ohne
+Pausen. Die Aufgaben kommen aus den PDFs. Eingeschaltet mit `simulationsmodus: true` im
+Seitenkopf, Vorlage `layouts/partials/simulationsmodus.html`, Titel und Einleitung in
+`i18n/*.yaml` (`pm_titel`, `pm_einleitung`, `pm_so_gehts`).
+
+Bis Oktober 2026 hiess er «Prüfungsmodus» und hatte die eigene Seite `/ems/pruefungsmodus/`.
+Die leitet weiter (`aliases` auf der Seite Testsimulationen); `layouts/alias.html` nimmt
+dabei den Teil hinter `#` mit, damit geteilte Abläufe (`#ablauf=…`) gültig bleiben.
 
 ### Zeiten und Reihenfolge
 
 Alles in **`data/testablauf.yaml`**: Blöcke in der Reihenfolge des Testtags mit
 `minuten`, Aufgabenzahl, Punkten und Namen in drei Sprachen. Die Datei speist die Tabelle
-auf `/ems/` (Baustein `testablauf`), den Prüfungsmodus und die Vorgabezeiten der
+auf `/ems/` (Baustein `testablauf`), den Simulationsmodus und die Vorgabezeiten der
 Generatoren. Die Gesamtzeit wird zusammengezählt. **Sorgfältig ändern** – eine falsche
 Zahl heisst monatelanges Üben mit falscher Dauer.
 
@@ -668,7 +677,7 @@ Zahl heisst monatelanges Üben mit falscher Dauer.
 
 Texte in `i18n/*.yaml`, Präfix `pm_` – kurz, ohne Klammern und Abkürzungen, sie werden
 gesprochen. Anrede **Sie**, wie eine Aufsichtsperson. Für DE und FR liegen 15 Aufnahmen
-unter `assets/audio/pruefungsmodus/<sprache>/` (Liste im README dort; FR-Stimme CC-BY 4.0,
+unter `assets/audio/simulationsmodus/<sprache>/` (Liste im README dort; FR-Stimme CC-BY 4.0,
 Namensnennung im README); eine Aufnahme hat Vorrang vor der Sprachausgabe des Browsers.
 Italienisch liest das Gerät vor. Nach einer Änderung an einem `pm_`-Text die Aufnahme
 löschen oder mit `scripts/ansagen-erzeugen.py` neu erzeugen. Echte Aufnahmen aus dem
@@ -683,8 +692,8 @@ Verein: Datei mit gleichem Namen überschreiben.
   als „nur zum Üben“ beschriftet.
 - Geänderte Aufgabenzahl/Zeit → der Satz wird vorgelesen statt der Aufnahme (die nennt die
   echten Werte). `{dauer}` nutzt `pm_dauer_min`/`pm_dauer_min_sek`.
-- `safeJS` in `layouts/partials/pruefungsmodus.html` nicht entfernen – sonst bleibt die
-  Seite stumm.
+- `safeJS` in `layouts/partials/simulationsmodus.html` nicht entfernen – sonst bleibt der
+  Simulationsmodus stumm.
 
 ---
 

@@ -4,7 +4,7 @@ description: "Esperienze reali sull'EMS. Scopri come altri hanno vissuto il test
 menu:
   main:
     parent: ems
-    weight: 5
+    weight: 7
 ---
 
 Ex partecipanti raccontano la loro preparazione all'EMS e il loro percorso verso gli studi di medicina.

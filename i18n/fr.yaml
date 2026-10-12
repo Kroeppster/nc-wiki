@@ -203,10 +203,15 @@ testablauf_gesamt: "Total"
 testablauf_gesamtzeit: "env. {{ .std }} h {{ .min }} (net)"
 
 # ---------------------------------------------------------------------------
-# MODE EXAMEN (/ems/pruefungsmodus/) - chronomètre et consignes
+# MODE SIMULATION (section de /ems/testsimulationen/, jusqu'en octobre 2026
+# « mode examen » avec sa propre page) - chronomètre et consignes
 # Tout ce qui suit peut être LU À VOIX HAUTE si la synthèse vocale est
 # activée : privilégier des phrases courtes, sans parenthèses ni abréviations.
 # ---------------------------------------------------------------------------
+# Titre et introduction de la section (non lus à voix haute)
+pm_titel: "Mode simulation"
+pm_einleitung: "Entraîne-toi chez toi dans les conditions de la journée de test : avec des consignes lues à voix haute et une horloge comme celle de la salle d'examen. Choisis entre la simulation complète, des sous-tests isolés ou ton propre déroulement."
+pm_so_gehts: "**Comment ça marche :** prépare d'abord un des cahiers de test ci-dessus ou une série d'exercices, ainsi qu'une feuille de réponses. Appuie ensuite sur « Démarrer » – le chronomètre passe en plein écran, tu entends la consigne, puis c'est le silence jusqu'à la fin du temps imparti. En simulation complète, on passe sans clic au sous-test suivant, comme au véritable EMS : il n'y a pas de pause entre les deux."
 pm_einzeln_heading: "Sous-tests individuels"
 pm_einzeln_text: "Chaque bloc avec son temps réel. Prépare la série d'exercices correspondante avant de démarrer."
 pm_komplett_heading: "Simulation complète"

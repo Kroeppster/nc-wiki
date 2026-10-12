@@ -36,7 +36,7 @@
   WOHER DIE ABSCHNITTE KOMMEN: aus den Überschriften der zweiten Ebene, die
   wirklich auf der fertigen Seite stehen - egal ob sie aus dem Fliesstext einer
   .md-Datei stammen (dort "## Titel") oder aus einer Vorlage wie dem
-  Prüfungsmodus oder dem Uniguide. Deshalb sammelt das Skript sie nach dem
+  Simulationsmodus oder dem Uniguide. Deshalb sammelt das Skript sie nach dem
   Laden selbst ein, statt sie beim Bauen zu übernehmen: Hugo weiss von den
   Überschriften aus einer Vorlage an dieser Stelle nichts.
 
@@ -83,7 +83,7 @@
     Array.prototype.forEach.call(bereich.querySelectorAll('h2'), function(h){
       /* Der Seitentitel (den gibt list.html als h1 aus, er ist aber kein
          Abschnitt) und alles gerade Ausgeblendete - vor allem die
-         Vollbild-Ansicht des Prüfungsmodus - gehören nicht in die Liste.
+         Vollbild-Ansicht des Simulationsmodus - gehören nicht in die Liste.
          Ebenso Kartentitel (.card): Auf Übersichtsseiten sind sie h2, weil sie
          direkt unter dem h1 stehen - Abschnitte der Seite sind sie nicht. */
       if(h.closest && h.closest('.section-head, .pm-buehne, [hidden], .card')) return;

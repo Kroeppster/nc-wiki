@@ -15,7 +15,7 @@ Wir sind ein gemeinnütziger Verein von Medizinstudierenden. Unser Angebot ist k
 
 ## Urheberrecht
 
-Alle Inhalte dieser Website, insbesondere Texte, Übungsaufgaben, Testsimulationen, Kursskripte, Grafiken und Funktionen wie der Prüfungsmodus und die Übungsgeneratoren, sind urheberrechtlich geschützt. Soweit nicht ausdrücklich anders angegeben, liegen alle Rechte bei NCWiki.
+Alle Inhalte dieser Website, insbesondere Texte, Übungsaufgaben, Testsimulationen, Kursskripte, Grafiken und Funktionen wie der Simulationsmodus und die Übungsgeneratoren, sind urheberrechtlich geschützt. Soweit nicht ausdrücklich anders angegeben, liegen alle Rechte bei NCWiki.
 
 Die Übungsaufgaben stehen unter der Lizenz [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.de). Sie dürfen sie für nicht kommerzielle Zwecke und unter Nennung von NCWiki weitergeben. Jede kommerzielle Nutzung ist untersagt.
 
@@ -27,7 +27,7 @@ Ohne vorgängige schriftliche Zustimmung von NCWiki ist insbesondere untersagt:
 
 - Inhalte dieser Website ganz oder teilweise zu kopieren, zu bearbeiten oder in eigene Angebote zu übernehmen
 - Übungsaufgaben, Testsimulationen oder Kursskripte zu verkaufen, in kostenpflichtigen Kursen einzusetzen oder als Vorlage für eigene Materialien zu verwenden
-- den Prüfungsmodus, die Übungsgeneratoren oder andere Funktionen dieser Website für eigene Angebote zu nutzen oder nachzubauen
+- den Simulationsmodus, die Übungsgeneratoren oder andere Funktionen dieser Website für eigene Angebote zu nutzen oder nachzubauen
 - unsere Discord-Community zu betreten oder deren Inhalte zu nutzen
 - an unseren Testsimulationen und Vorbereitungskursen teilzunehmen
 

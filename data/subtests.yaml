@@ -37,7 +37,7 @@
 # ============================================================================
 # DIE REIHENFOLGE IST DIE DES ECHTEN TESTTAGS und keine freie Sortierung.
 # Sie muss mit data/testablauf.yaml übereinstimmen - das ist die Liste, nach
-# der der Prüfungsmodus taktet und nach der der Tagesablauf auf /ems/ steht.
+# der der Simulationsmodus taktet und nach der der Tagesablauf auf /ems/ steht.
 # Wer hier umsortiert, ohne dort mitzuziehen, lässt die Website zwei
 # verschiedene Reihenfolgen behaupten. (Genau das war bis September 2026 der
 # Fall: "Objekte im Raum" stand hier an zweiter Stelle, am Testtag kommt aber

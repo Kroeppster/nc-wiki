@@ -9,11 +9,11 @@
 #      layouts/shortcodes/testablauf.html. Vorher stand dieselbe Tabelle von
 #      Hand in content/de|fr|it/ems/_index.md - also dreimal, mit dreimal der
 #      Gefahr, dass eine geänderte Zeit irgendwo vergessen wird.
-#   2. Den Prüfungsmodus auf /ems/pruefungsmodus/ (Uhr + Ansagen), siehe
-#      layouts/partials/pruefungsmodus.html.
+#   2. Den Simulationsmodus auf /ems/testsimulationen/ (Uhr + Ansagen), siehe
+#      layouts/partials/simulationsmodus.html.
 #
 # WICHTIG: Ändert sich am echten EMS eine Bearbeitungszeit, wird sie HIER
-# geändert - Tabelle und Prüfungsmodus ziehen automatisch mit. Eine Zeit, die
+# geändert - Tabelle und Simulationsmodus ziehen automatisch mit. Eine Zeit, die
 # hier falsch steht, ist ein echter Schaden: Jemand übt dann monatelang mit
 # der falschen Dauer.
 #
@@ -25,7 +25,7 @@
 #   minuten   - Bearbeitungszeit in Minuten (Zahl, keine Anführungszeichen)
 #   aufgaben  - Anzahl Aufgaben als Text, oder "" wenn es keine gibt
 #               (Einprägephasen werden nicht bewertet)
-#   aufgaben_fest - nur für den "eigenen Ablauf" im Prüfungsmodus: Bei diesem
+#   aufgaben_fest - nur für den "eigenen Ablauf" im Simulationsmodus: Bei diesem
 #               Block laesst sich die Anzahl Aufgaben NICHT frei waehlen,
 #               dafuer die Zeit. Gesetzt bei Figuren und Fakten einpraegen:
 #               Wie viele Figuren auf dem Blatt stehen, gibt das Uebungsblatt
@@ -36,7 +36,7 @@
 #   punkte    - Maximalpunktzahl als Text, oder ""
 #   de/fr/it  - angezeigter Name in den drei Sprachen
 #
-# REIHENFOLGE = die echte Reihenfolge am Testtag. Der Prüfungsmodus spielt die
+# REIHENFOLGE = die echte Reihenfolge am Testtag. Der Simulationsmodus spielt die
 # Blöcke bei der kompletten Simulation genau so nacheinander ab.
 #
 # Quelle der Zeiten: der bisherige Tagesablauf auf /ems/ (Stand 2026-08).

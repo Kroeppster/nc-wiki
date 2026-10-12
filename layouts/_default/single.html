@@ -112,7 +112,7 @@
            Hugo kann die Überschriften aus dem Fliesstext hier schon zählen
            und setzt die Klasse deshalb gleich beim Bauen - dadurch steht das
            Raster auf den allermeisten Seiten sofort richtig. Auf Seiten, die
-           ihre Überschriften erst aus einer Vorlage bekommen (Prüfungsmodus,
+           ihre Überschriften erst aus einer Vorlage bekommen (Simulationsmodus,
            Uniguide, Q&A), weiss Hugo davon nichts; dort ergänzt bzw. entfernt
            das Skript in seiten-uebersicht.html die Klasse nach dem Laden. */}}
       <div class="seite-raster{{ if ge (len .Fragments.Headings) 2 }} mit-liste{{ end }}">
@@ -199,7 +199,7 @@
       {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
       {{ if .Params.experience_form }}{{ partial "experience-form.html" . }}{{ end }}
       {{ if .Params.uni_slug }}{{ partial "uni-detail.html" . }}{{ end }}
-      {{ if .Params.pruefungsmodus }}{{ partial "pruefungsmodus.html" . }}{{ end }}
+      {{ if .Params.simulationsmodus }}{{ partial "simulationsmodus.html" . }}{{ end }}
         </div>
       </div>
     </div>

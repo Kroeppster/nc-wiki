@@ -131,8 +131,6 @@ weg:
       mittel:
         - titel: "Simulazioni del test"
           url: "ems/testsimulationen/"
-        - titel: "Modalità esame"
-          url: "ems/pruefungsmodus/"
     - wann: "9 luglio – agosto"
       titel: "Il giorno del test"
       text: "Cosa portare, come gestire il tempo, come tirare a indovinare."

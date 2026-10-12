@@ -21,7 +21,7 @@ repository.
 7. [Team e nuova stagione](#7-team-e-nuova-stagione)
 8. [Sostegno, donazioni, sponsor](#8-sostegno-donazioni-sponsor)
 9. [FAQ, Uniguide, subtest, nomi dei download](#9-faq-uniguide-subtest-nomi-dei-download)
-10. [Modalità esame](#10-modalità-esame)
+10. [Modalità simulazione](#10-modalità-simulazione)
 11. [Generatori di apprendimento e pagina Alpha](#11-generatori-di-apprendimento-e-pagina-alpha)
 12. [Area membri](#12-area-membri)
 13. [Moduli](#13-moduli)
@@ -87,25 +87,28 @@ http://localhost:1313/. `npm run build` costruisce come su GitHub.
 | `download_ordner` | elenco di PDF automatico da una cartella sotto `assets/` |
 | `leer_hinweis: true` | la pagina elenco mostra una nota finché non ci sono sottopagine (rapporti annuali) |
 | `geschuetzt: true` | protezione con password, vedi [12](#12-area-membri) |
+| `simulationsmodus: true` | modalità simulazione sotto il testo della pagina (oggi solo Simulazioni del test), vedi [10](#10-modalità-simulazione) |
 | `layout` | modello particolare, p. es. `spenden` |
 
 ### Il menu
 
-Il menu principale è composto dalle intestazioni delle pagine, più due voci senza pagina
-propria in `hugo.toml` (per lingua sotto `[[languages.xx.menus.main]]`). Primo livello oggi:
+Il menu principale è composto **solo dalle intestazioni delle pagine** – non c'è un file
+di menu proprio. Primo livello oggi:
 
 | Voce | `identifier` | Sotto |
 | --- | --- | --- |
 | Pagina iniziale | `home` | – |
-| L'EMS | `ems` | Informazioni sull'EMS (`hugo.toml`), Compensazione degli svantaggi, Uniguide, Domande frequenti, Testimonianze, News |
-| Preparazione | `vorbereitung` (solo `hugo.toml`, nessuna pagina) | Serie di esercizi, Simulazioni del test, Corsi di preparazione, Modalità esame |
+| News | `news` | – |
+| EMS | `ems` | Serie di esercizi, Simulazioni del test (con la modalità simulazione), Corsi di preparazione, Uniguide, Compensazione degli svantaggi, Domande frequenti, Testimonianze |
 | Sostenitori e sostenitrici | `unterstuetzer-innen` | Sostienici ora |
 | Chi siamo | `ueber-uns` | Team, Rapporti annuali, Archivio |
 | Contatto | `kontakt` | – |
 
-Gli indirizzi delle pagine **non dipendono** dal menu: le serie di esercizi restano sotto
-`/it/ems/uebungsaufgaben/`, le news sotto `/it/news/`. Una voce senza pagina propria
-(«Preparazione») apre il suo sottomenu al clic e non compare nel piè di pagina.
+Gli indirizzi delle pagine **non dipendono** dal menu: le serie di esercizi stanno sotto
+`/it/ems/uebungsaufgaben/`, ovunque compaiano nel menu. Un gruppo senza pagina propria
+sarebbe possibile (voce in `hugo.toml` sotto `[[languages.xx.menus.main]]`); apre il suo
+sottomenu al clic. Nell'ottobre 2026 è esistita per poco la divisione «L'EMS» /
+«Preparazione» – abbandonata perché l'intestazione diventava poco chiara.
 
 ```yaml
 menu:
@@ -115,7 +118,7 @@ menu:
     name: "Nome breve"  # facoltativo, altrimenti vale il title
 ```
 
-- `parent` è l'`identifier` della voce superiore (`ems`, `vorbereitung`, `ueber-uns`,
+- `parent` è l'`identifier` della voce superiore (`ems`, `ueber-uns`,
   `unterstuetzer-innen`); senza `parent` la pagina diventa una voce di primo livello.
 - `weight` può essere decimale (`2.5`) per inserire una voce tra due altre.
 - Il blocco di menu deve stare in **ogni versione linguistica**.
@@ -642,17 +645,24 @@ traduzioni, per le simulazioni del test senza l'anno. Il formato è spiegato in 
 
 ---
 
-## 10. Modalità esame
+## 10. Modalità simulazione
 
-`/ems/pruefungsmodus/`: legge ad alta voce le istruzioni, mostra un orologio a schermo
-intero e dice «Stop» – per un subtest o per tutto il giorno senza pause. Gli esercizi
-vengono dai PDF.
+Sezione di `/ems/testsimulationen/`, sotto i fascicoli del test: legge ad alta voce le
+istruzioni, mostra un orologio a schermo intero e dice «Stop» – per un subtest o per tutto
+il giorno senza pause. Gli esercizi vengono dai PDF. Attivata con `simulationsmodus: true`
+nell'intestazione, modello `layouts/partials/simulationsmodus.html`, titolo e introduzione
+in `i18n/*.yaml` (`pm_titel`, `pm_einleitung`, `pm_so_gehts`).
+
+Fino a ottobre 2026 si chiamava «modalità esame» e aveva una pagina propria
+`/ems/pruefungsmodus/`. Questa reindirizza (`aliases` sulla pagina Simulazioni del test);
+`layouts/alias.html` conserva la parte dopo `#`, così gli svolgimenti condivisi
+(`#ablauf=…`) restano validi.
 
 ### Durate e ordine
 
 Tutto in **`data/testablauf.yaml`**: blocchi nell'ordine del giorno del test con `minuten`,
 numero di esercizi, punti e nomi nelle tre lingue. Il file alimenta la tabella su `/ems/`
-(blocco `testablauf`), la modalità esame e le durate predefinite dei generatori. Il tempo
+(blocco `testablauf`), la modalità simulazione e le durate predefinite dei generatori. Il tempo
 totale viene sommato. **Modificare con cura** – un numero sbagliato significa mesi di
 esercizio con la durata sbagliata.
 
@@ -671,7 +681,7 @@ esercizio con la durata sbagliata.
 
 Testi in `i18n/*.yaml`, prefisso `pm_` – brevi, senza parentesi né abbreviazioni, perché
 vengono pronunciati. Forma di cortesia, come un·a sorvegliante. Per DE e FR ci sono 15
-registrazioni sotto `assets/audio/pruefungsmodus/<lingua>/` (elenco nel README; voce
+registrazioni sotto `assets/audio/simulationsmodus/<lingua>/` (elenco nel README; voce
 francese CC-BY 4.0, attribuzione nel README); una registrazione ha la precedenza sulla
 sintesi vocale del browser. In italiano legge il dispositivo. Dopo una modifica a un testo
 `pm_`, eliminare la registrazione o rigenerarla con `scripts/ansagen-erzeugen.py`.
@@ -686,8 +696,8 @@ Registrazioni vere dell'associazione: sovrascrivere il file con lo stesso nome.
   «solo per esercitarsi».
 - Numero di esercizi/tempo modificato → la frase viene letta invece della registrazione
   (che cita i valori veri). `{dauer}` usa `pm_dauer_min`/`pm_dauer_min_sek`.
-- Non togliere `safeJS` in `layouts/partials/pruefungsmodus.html` – altrimenti la pagina
-  resta muta.
+- Non togliere `safeJS` in `layouts/partials/simulationsmodus.html` – altrimenti la
+  modalità simulazione resta muta.
 
 ---
 

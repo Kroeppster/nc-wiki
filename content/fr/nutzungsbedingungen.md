@@ -15,7 +15,7 @@ NCWiki est une association d'utilité publique d'étudiant·e·s en médecine. N
 
 ## Droit d'auteur
 
-Tous les contenus de ce site web, en particulier les textes, exercices, simulations de test, scripts de cours, graphiques et fonctions comme le mode examen et les générateurs d'exercices, sont protégés par le droit d'auteur. Sauf indication contraire expresse, tous les droits appartiennent à NCWiki.
+Tous les contenus de ce site web, en particulier les textes, exercices, simulations de test, scripts de cours, graphiques et fonctions comme le mode simulation et les générateurs d'exercices, sont protégés par le droit d'auteur. Sauf indication contraire expresse, tous les droits appartiennent à NCWiki.
 
 Les exercices sont placés sous la licence [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.fr). Vous pouvez les partager à des fins non commerciales, en mentionnant NCWiki. Toute utilisation commerciale est interdite.
 
@@ -27,7 +27,7 @@ Sans l'accord écrit préalable de NCWiki, il est notamment interdit :
 
 - de copier, de modifier ou de reprendre dans ses propres offres tout ou partie des contenus de ce site web
 - de vendre des exercices, des simulations de test ou des scripts de cours, de les utiliser dans des cours payants ou comme modèle pour son propre matériel
-- d'utiliser ou de reproduire le mode examen, les générateurs d'exercices ou d'autres fonctions de ce site web pour ses propres offres
+- d'utiliser ou de reproduire le mode simulation, les générateurs d'exercices ou d'autres fonctions de ce site web pour ses propres offres
 - de rejoindre notre communauté Discord ou d'en utiliser les contenus
 - de participer à nos simulations de test et à nos cours de préparation
 

@@ -3,9 +3,8 @@ title: "EMS"
 description: "Tutto per la tua preparazione all'EMS: serie di esercizi gratuite, simulazioni del test, corsi di preparazione e una guida alle università. Da studenti, per te."
 menu:
   main:
-    name: "L'EMS"
     identifier: ems
-    weight: 2
+    weight: 3
 ---
 
 Questa pagina ti guida attraverso il test attitudinale per gli studi di medicina (EMS): dall'iscrizione al giorno del test fino all'assegnazione dei posti di studio.
@@ -13,7 +12,7 @@ Questa pagina ti guida attraverso il test attitudinale per gli studi di medicina
 ## Panoramica
 
 - **Informazioni:** [Compensazione degli svantaggi](/ems/nachteilsausgleich) · [Uniguide](/ems/uniguide) · [Domande frequenti](/ems/qa) · [Testimonianze](/ems/erfahrungsberichte) · [News](/news)
-- **Preparazione:** [Serie di esercizi](/ems/uebungsaufgaben) · [Simulazioni del test](/ems/testsimulationen) · [Corsi di preparazione](/ems/vorbereitungskurse) · [Modalità esame](/ems/pruefungsmodus)
+- **Preparazione:** [Serie di esercizi](/ems/uebungsaufgaben) · [Simulazioni del test](/ems/testsimulationen) · [Corsi di preparazione](/ems/vorbereitungskurse) · [Modalità simulazione](/ems/testsimulationen#simulationsmodus)
 
 ## Preparazione all'EMS
 

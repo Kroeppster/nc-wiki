@@ -1,9 +1,14 @@
 {{- /*
   ============================================================================
-  PRÜFUNGSMODUS: UHR UND ANSAGEN (/ems/pruefungsmodus/)
+  SIMULATIONSMODUS: UHR UND ANSAGEN (Abschnitt auf /ems/testsimulationen/)
   ============================================================================
-  Erscheint auf einer Seite, die im Frontmatter "pruefungsmodus: true" hat
-  (siehe layouts/_default/single.html).
+  Erscheint auf einer Seite, die im Frontmatter "simulationsmodus: true" hat
+  (heute nur die Übersichtsseite Testsimulationen, siehe list.html - dort
+  unter den Testheften, die man dafür braucht). Bis Oktober 2026 hiess das
+  Werkzeug "Prüfungsmodus" und hatte eine eigene Seite /ems/pruefungsmodus/;
+  die alte Adresse leitet auf die Testsimulationen weiter (aliases dort).
+  Die internen Namen (Klassen pm-*, Texte pm_* in i18n/*.yaml, der
+  Browser-Speicher "pruefungsmodus-ablauf") sind bewusst geblieben.
 
   WAS DAS IST: Kein Aufgaben-Generator. Die Aufgaben liegen als PDF vor - was
   beim Üben zu Hause fehlt, sind die PRÜFUNGSBEDINGUNGEN: jemand, der die
@@ -66,7 +71,7 @@
 {{- range $daten.bloecke }}{{ $total = add $total .minuten }}{{ end }}
 
 {{- /* ECHTE AUFNAHMEN STATT ROBOTERSTIMME
-       Liegt unter assets/audio/pruefungsmodus/<sprache>/ eine Datei mit dem
+       Liegt unter assets/audio/simulationsmodus/<sprache>/ eine Datei mit dem
        passenden Namen, wird sie abgespielt - sonst liest die Sprachausgabe des
        Browsers vor. Es muss also nichts umgestellt werden: Datei hochladen
        genügt, genau wie bei den PDF-Downloads.
@@ -81,11 +86,19 @@
        Fehlt eine einzelne Datei, wird genau für diesen Satz vorgelesen - die
        Sammlung muss also nicht auf einmal vollständig sein. */ -}}
 {{- $audio := dict }}
-{{- range resources.Match (printf "audio/pruefungsmodus/%s/*.mp3" $lang) }}
+{{- range resources.Match (printf "audio/simulationsmodus/%s/*.mp3" $lang) }}
   {{- $audio = merge $audio (dict (strings.TrimSuffix ".mp3" (path.Base .Name)) .RelPermalink) }}
 {{- end }}
 
-<div class="pm" id="pruefungsmodus">
+{{/* Eigene Überschrift der zweiten Ebene: Sie steht in der Abschnittsliste
+     der Seite ("Auf dieser Seite") und ist das Sprungziel für Links wie
+     /ems/testsimulationen#simulationsmodus. Die drei Teile darunter sind
+     deshalb Überschriften der dritten Ebene. */}}
+<h2 id="simulationsmodus">{{ i18n "pm_titel" }}</h2>
+<p>{{ i18n "pm_einleitung" }}</p>
+<p>{{ i18n "pm_so_gehts" | markdownify }}</p>
+
+<div class="pm" id="pm-wurzel">
 
   {{/* Sprachausgabe an/aus. Standardmässig an - der Nutzen der Seite steckt
        zu einem grossen Teil genau darin. */}}
@@ -98,7 +111,7 @@
   </div>
 
   <section class="pm-komplett">
-    <h2>{{ i18n "pm_komplett_heading" }}</h2>
+    <h3>{{ i18n "pm_komplett_heading" }}</h3>
     <p>{{ i18n "pm_komplett_text" }}</p>
     <button type="button" class="btn btn-primary" data-pm-start="alle">
       {{ i18n "pm_komplett_start" }}
@@ -107,14 +120,14 @@
   </section>
 
   <section class="pm-einzeln">
-    <h2>{{ i18n "pm_einzeln_heading" }}</h2>
+    <h3>{{ i18n "pm_einzeln_heading" }}</h3>
     <p>{{ i18n "pm_einzeln_text" }}</p>
     <ul class="pm-liste">
       {{- range $i, $b := $daten.bloecke }}
       {{- $name := or (index $b $lang) $b.de }}
       <li class="pm-block">
         <div class="pm-block-text">
-          <h3>{{ $name }}</h3>
+          <h4>{{ $name }}</h4>
           <p class="pm-block-meta">
             <span class="pm-block-zeit">{{ i18n "pm_minuten" (dict "min" $b.minuten) }}</span>
             {{- with $b.slug }}
@@ -159,7 +172,7 @@
        man ändern will. Die Zusammenstellung merkt sich der Browser und lässt
        sich als Link weitergeben. */}}
   <section class="pm-custom" id="pm-custom">
-    <h2>{{ i18n "pm_custom_heading" }}</h2>
+    <h3>{{ i18n "pm_custom_heading" }}</h3>
     <p>{{ i18n "pm_custom_text" }}</p>
 
     <div class="pm-custom-modus">
@@ -315,7 +328,7 @@
 
 <script>
 (function(){
-  var wurzel = document.getElementById('pruefungsmodus');
+  var wurzel = document.getElementById('pm-wurzel');
   var buehne = document.getElementById('pm-buehne');
   var datenTag = document.getElementById('pm-daten');
   if(!wurzel || !buehne || !datenTag) return;
@@ -684,6 +697,8 @@
      ================================================================== */
   var custom = document.getElementById('pm-custom');
   if(custom){
+    /* Name stammt noch vom früheren "Prüfungsmodus" - bleibt, damit
+       gemerkte Abläufe nicht verloren gehen. */
     var SPEICHER = 'pruefungsmodus-ablauf';
     var zeilen = Array.prototype.slice.call(custom.querySelectorAll('tbody tr'));
     var pauseAlle = document.getElementById('pm-c-pause-alle');
