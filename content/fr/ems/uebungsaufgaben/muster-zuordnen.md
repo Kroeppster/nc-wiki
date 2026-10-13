@@ -50,7 +50,7 @@ Comme l'association de motifs ouvre la journée de test, il vaut la peine de com
 
 *« Avant les séances d'entraînement, je résolvais toujours quelques comparaisons de motifs pour préparer mon cerveau à la première (et la plus difficile) tâche du vrai NC. »*
 
-*« J'ai complètement raté la première tâche de comparaison de motifs, je ne suis même pas arrivé·e à la moitié […] ne vous laissez pas déstabiliser, en général tout ne dépend pas d'une seule tâche, et intérieurement, vous ne devez jamais abandonner avant la dernière tâche. »* Cette personne a réussi l'EMS avec un rang centile de 97 et a obtenu sa place d'études dans son premier choix.
+*« J'ai complètement raté la première tâche de comparaison de motifs, je ne suis même pas arrivé·e à la moitié […] ne te laisse pas déstabiliser, en général tout ne dépend pas d'une seule tâche, et intérieurement, tu ne dois jamais abandonner avant la dernière tâche. »* Cette personne a réussi l'EMS avec un rang centile de 97 et a obtenu sa place d'études dans son premier choix.
 
 *« Les motifs avec le regard croisé, ça vaut vraiment énormément la peine, peu importe la difficulté des motifs. »* Une autre personne a en revanche abandonné le regard croisé au bout de deux heures. Quelle méthode fonctionne pour toi, seul l'entraînement le montre.
 

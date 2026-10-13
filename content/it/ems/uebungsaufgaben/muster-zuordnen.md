@@ -50,7 +50,7 @@ Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anc
 
 *«Prima delle sessioni di esercizio risolvevo sempre qualche confronto di schemi, per preparare il cervello al primo (e più difficile) compito del vero NC.»*
 
-*«Il primo compito di confronto di schemi l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciatevi scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di voi non dovete mai arrendervi prima dell'ultimo compito.»* Questa persona ha superato l'EMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
+*«Il primo compito di confronto di schemi l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciarti scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di te non devi mai arrenderti prima dell'ultimo compito.»* Questa persona ha superato l'EMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
 
 *«Gli schemi con lo sguardo incrociato valgono davvero tantissimo, per quanto difficili siano gli schemi.»* Un'altra persona ha invece abbandonato lo sguardo incrociato dopo due ore. Quale metodo funziona per te lo scopri solo esercitandoti.
 

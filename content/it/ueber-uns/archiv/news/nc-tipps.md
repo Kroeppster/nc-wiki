@@ -5,7 +5,7 @@ eyebrow: "Consigli"
 draft: false
 ---
 
-«Quali consigli e trucchi potete dare a chi affronta il NC quest'anno?» – Abbiamo posto questa domanda ai nostri studenti di medicina del 1° e 2° anno e abbiamo raccolto e ordinato le loro risposte per te. I consigli nascono da esperienze personali e ovviamente non vanno bene per tutti allo stesso modo – scegli ciò che ti sembra utile.
+«Quali consigli e trucchi puoi dare a chi affronta il NC quest'anno?» – Abbiamo posto questa domanda ai nostri studenti di medicina del 1° e 2° anno e abbiamo raccolto e ordinato le loro risposte per te. I consigli nascono da esperienze personali e ovviamente non vanno bene per tutti allo stesso modo – scegli ciò che ti sembra utile.
 
 **Durante l'esercizio:** non lasciarti scoraggiare da risultati scarsi all'inizio, i progressi arrivano con l'allenamento. Concentrati sui tuoi punti di forza – i sottotest più deboli si possono compensare. Dopo ogni prova annota gli errori commessi e rileggili prima della volta successiva. Fai il maggior numero possibile di prove complete, anche per prepararti mentalmente alla situazione con altri partecipanti.
 

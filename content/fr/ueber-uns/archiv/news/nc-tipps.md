@@ -5,7 +5,7 @@ eyebrow: "Conseils"
 draft: false
 ---
 
-« Quels conseils et astuces pouvez-vous donner aux candidat·e·s de cette année ? » – Nous avons posé cette question à nos étudiant·e·s en médecine de 1re et 2e année et avons rassemblé et classé leurs réponses pour toi. Ces conseils viennent d'expériences personnelles et ne conviennent évidemment pas à tout le monde de la même manière – prends ce qui te paraît utile.
+« Quels conseils et astuces peux-tu donner aux candidat·e·s de cette année ? » – Nous avons posé cette question à nos étudiant·e·s en médecine de 1re et 2e année et avons rassemblé et classé leurs réponses pour toi. Ces conseils viennent d'expériences personnelles et ne conviennent évidemment pas à tout le monde de la même manière – prends ce qui te paraît utile.
 
 **Pendant l'entraînement :** ne te laisse pas déstabiliser par de mauvais résultats au début, les progrès viennent avec l'entraînement. Concentre-toi sur tes points forts – les sous-tests plus faibles peuvent être compensés. Note après chaque passage les erreurs commises et relis-les avant la fois suivante. Fais le plus de tests complets possible, aussi pour te préparer mentalement à la situation avec d'autres participant·e·s.
 

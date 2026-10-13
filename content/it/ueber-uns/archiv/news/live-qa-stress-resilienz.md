@@ -1,5 +1,5 @@
 ---
-title: "Q&A in diretta (24.06): stress e resilienza"
+title: "Domande e risposte in diretta (24.06): stress e resilienza"
 date: 2024-06-21
 eyebrow: "Community"
 draft: false

@@ -47,6 +47,6 @@ Siccome qui conta soprattutto l'esercizio, conviene iniziare presto – idealmen
 
 *«Prima di iniziare a risolvere esercizi, mi sono fatto·a una visione d'insieme e ho guardato quali tipi di domande mi riuscivano più difficili. Ho iniziato da lì e ho cercato di elaborare una tecnica di risoluzione prima di preparare un piano di allenamento. Durante il NC consiglierei di annotare i passaggi di calcolo e i risultati intermedi, così che in un test così lungo non si crei confusione – e di non farsi stressare dal tempo.»*
 
-*«Per i problemi quantitativi e formali esercitatevi sempre senza calcolatrice e semplificate il più possibile.»*
+*«Per i problemi quantitativi e formali esercitati sempre senza calcolatrice e semplifica il più possibile.»*
 
 Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).
