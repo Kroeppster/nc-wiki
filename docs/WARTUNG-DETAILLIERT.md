@@ -740,7 +740,9 @@ Die Excel unten gibt es nur für Deutsch – FR/IT direkt in der YAML bearbeiten
 `node scripts/fakten-generator-sprachen-pruefen.mjs`. Kategorien nicht auflösen: Eine
 echte Serie gibt jeder Altersgruppe drei Berufe aus **einem** Feld und drei Krankheiten aus
 **drei** Arten. Fragen entstehen aus Satzvorlagen (`fragen`), dazu `namensgruppen`,
-`dativ`, `nicht_attributiv`. `scripts/fakten-listen-auslesen.py` liest Wörter aus den PDFs,
+`dativ`, `nicht_attributiv`. Zuletzt gezogene Namensgruppen merkt sich der Browser und nimmt
+sie erst wieder, wenn die anderen durch sind (bei 42 Gruppen: acht Sets ohne Wiederholung) –
+je mehr Gruppen, desto mehr Abwechslung. `scripts/fakten-listen-auslesen.py` liest Wörter aus den PDFs,
 überschreibt die YAML aber nicht. Offen: Kategorien noch nicht menschlich freigegeben; ~40
 statt ~80 Einträge je Kategorie.
 

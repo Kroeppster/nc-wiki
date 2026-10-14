@@ -138,7 +138,7 @@ await p.emulateMedia({ media: 'screen' });
 await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
 
 console.log(`\n=== Buchstaben-Abstaende ueber ${RUNDEN} Runden ===`);
-let schlimmste = 0, faelle = 0, figuren = 0;
+let schlimmste = 0, faelle = 0, figuren = 0, abgeschnitten = 0, knappste = 99;
 for (let runde = 0; runde < RUNDEN; runde++) {
   await p.reload({ waitUntil: 'networkidle' }); await p.uncheck('#lg-mit-fakten');
   await p.fill('#lg-figuren-lernen', '1'); await p.fill('#lg-pause', '0'); await p.fill('#lg-figuren-abfrage', '9');
@@ -154,14 +154,22 @@ for (let runde = 0; runde < RUNDEN; runde++) {
         const uy = Math.min(t[a].bottom, t[d].bottom) - Math.max(t[a].top, t[d].top);
         if (ux > 0 && uy > 0) max = Math.max(max, Math.min(ux, uy));
       }
-      raus.push(max);
+      // Ragt der Umriss (samt halber Strichbreite) aus dem Ausschnitt, ist
+      // die Figur am Bildschirm abgeschnitten (Rueckmeldung Oktober 2026).
+      const umr = svg.querySelector(':scope > path');
+      const b = umr.getBBox(), h = parseFloat(umr.getAttribute('stroke-width')) / 2;
+      const v = svg.viewBox.baseVal;
+      const luft = Math.min(b.x - h - v.x, b.y - h - v.y, v.x + v.width - (b.x + b.width + h), v.y + v.height - (b.y + b.height + h));
+      raus.push([max, luft]);
     });
     return raus;
   });
-  r.forEach(v => { figuren++; if (v > 0) { faelle++; schlimmste = Math.max(schlimmste, v); } });
+  r.forEach(([v, luft]) => { figuren++; if (v > 0) { faelle++; schlimmste = Math.max(schlimmste, v); }
+    knappste = Math.min(knappste, luft); if (luft < 0) abgeschnitten++; });
 }
 console.log(`    ${figuren} Figuren, ${faelle} mit sich beruehrenden Buchstaben, groesste Ueberlappung ${schlimmste.toFixed(1)} px`);
 pruef('keine sich beruehrenden Buchstaben', faelle === 0, `${faelle}/${figuren}`);
+pruef('keine Figur am Rand abgeschnitten', abgeschnitten === 0, `${abgeschnitten}/${figuren}, knappster Rand ${knappste.toFixed(1)}`);
 pruef('keine JS-Fehler', js.length === 0, js.join(' | '));
 console.log(`\n==== ${ok} bestanden, ${fail} nicht ====`);
 await b.close();

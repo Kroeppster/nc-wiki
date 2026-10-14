@@ -310,11 +310,16 @@ window.NCWikiBild = (function(){
   }
   function kamera(o){
     var feld = o.feld, laeuft = true, strom = null, uhr = null, ruhig = 0, letzte = null;
-    feld.innerHTML = '<div class="bl-kamera"><div class="bl-sucher"><video playsinline muted autoplay></video><canvas></canvas></div>'
+    // Hinweis und Knoepfe liegen IM Sucher (oben bzw. unten): Darunter
+    // rutschte der Ausloeser auf dem Handy unter den Bildschirmrand, man
+    // musste scrollen (Rueckmeldung Oktober 2026). Beim Start scrollt die
+    // Seite zum Sucher.
+    feld.innerHTML = '<div class="bl-kamera"><div class="bl-sucher"><video playsinline muted autoplay></video><canvas></canvas>'
       + '<p class="bl-kamera-hinweis" role="status" aria-live="polite">' + T.startet + '</p>'
       + '<div class="bl-kamera-knoepfe"><button type="button" class="btn btn-primary">' + T.ausloesen + '</button>'
-      + '<button type="button" class="btn btn-ghost">' + T.abbrechen + '</button></div></div>';
+      + '<button type="button" class="btn btn-ghost">' + T.abbrechen + '</button></div></div></div>';
     feld.hidden = false;
+    try { feld.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) { feld.scrollIntoView(); }
     var video = feld.querySelector('video'), ueber = feld.querySelector('canvas'), hinweis = feld.querySelector('.bl-kamera-hinweis');
     var knoepfe = feld.querySelectorAll('button');
     var klein = document.createElement('canvas'), gut = document.createElement('canvas'), analyse = o.analyse || 960;

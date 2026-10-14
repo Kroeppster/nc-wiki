@@ -678,6 +678,20 @@
       var f2=figur(notstil);
       if(f2) figuren.push(f2);
     }
+    // AUSSCHNITT AM BILDSCHIRM: so gross, dass jede Figur der Serie ganz
+    // hineinpasst. Der aus der Seriengroesse geschaetzte Ausschnitt (figur())
+    // war bei gestreckten Figuren zu knapp, oben oder unten fehlte ein Stueck
+    // (Rueckmeldung Oktober 2026). Weiterhin EIN Ausschnitt fuer die ganze
+    // Serie, um die Mitte des Zeichenfelds - so bleiben die kleinen
+    // Groessenunterschiede sichtbar.
+    var halb=0;
+    figuren.forEach(function(f){
+      var u=umriss(f), m=G/2;
+      halb=Math.max(halb, m-u.x, u.x+u.w-m, m-u.y, u.y+u.h-m, parseFloat(f.sicht.split(' ')[2])/2);
+    });
+    halb+=1.5;
+    var sicht=(G/2-halb).toFixed(1)+' '+(G/2-halb).toFixed(1)+' '+(2*halb).toFixed(1)+' '+(2*halb).toFixed(1);
+    figuren.forEach(function(f){ f.sicht=sicht; });
     // Die Beispielfigur der Anleitung, im Stil derselben Serie - so zeigt die
     // Anleitung, wie die Figuren gleich aussehen werden. Im Heft steht dort
     // ein festes Bild; ein erzeugtes passt zu jeder Serie.

@@ -744,7 +744,9 @@ solo con forma femminile visibilmente diversa. L'Excel qui sotto esiste solo in 
 modificare FR/IT direttamente nello YAML, poi `node scripts/fakten-generator-sprachen-pruefen.mjs`. Non sciogliere le categorie: una vera serie
 dà a ogni fascia d'età tre professioni di **un** campo e tre malattie di **tre** tipi. Le
 domande nascono da modelli di frase (`fragen`), più `namensgruppen`, `dativ`,
-`nicht_attributiv`. `scripts/fakten-listen-auslesen.py` estrae parole dai PDF ma non
+`nicht_attributiv`. Il browser ricorda i gruppi di nomi estratti per ultimi e li riprende solo
+quando gli altri sono esauriti (con 42 gruppi: otto set senza ripetizioni) – più gruppi,
+più varietà. `scripts/fakten-listen-auslesen.py` estrae parole dai PDF ma non
 sovrascrive lo YAML. In sospeso: categorie non ancora approvate da una persona; ~40 invece
 di ~80 voci per categoria.
 

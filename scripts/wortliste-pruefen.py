@@ -143,7 +143,7 @@ def aenderungen(ordner):
     a = Arbeit(ordner, 'aendern')
     d0 = a.daten()
     # neue Woerter, mitten unter die vorhandenen und unten angehaengt
-    a.neu('Einzelne Namen', 'Zimmerli')
+    a.neu('Einzelne Namen', 'Zbinden')
     a.neu('Einzelne Namen', 'Aebischer')
     a.neu('Berufe', 'medizin', 'Hebammerich', 'Hebamme')
     a.neu('Berufe', 'Technik Bau', 'Statiker', 'Statikerin')     # Schreibweise wird bereinigt
@@ -155,7 +155,7 @@ def aenderungen(ordner):
     a.neu('Merkmale', 'charakter', 'bescheiden')
     a.neu('Merkmale', 'Zustand', 'berufstätig', 'x')             # Gruppe gross geschrieben, "nur nach ist"
     a.neu('Dativ-Plural', 'Gallensteine', 'Gallensteinen')
-    a.neu('Namensgruppen', 'Brunner', 'Brunnen', 'Brunold')
+    a.neu('Namensgruppen', 'Brändli', 'Brandt', 'Brandenberger')
     # streichen: einmal Zelle leeren, einmal !Löschen!
     r = a.zeile_von('Einzelne Namen', 1, 'Baier')
     a.leeren('Einzelne Namen', r, 1)
@@ -164,7 +164,7 @@ def aenderungen(ordner):
     rc, aus = a.einlesen()
     d = a.daten()
     pruef('Einlesen gelingt', rc == 0, aus[-500:])
-    pruef('neue Namen drin, gestrichener Name weg', {'Zimmerli', 'Aebischer'} <= set(d['namen']) and 'Baier' not in d['namen'])
+    pruef('neue Namen drin, gestrichener Name weg', {'Zbinden', 'Aebischer'} <= set(d['namen']) and 'Baier' not in d['namen'])
     pruef('Namen alphabetisch einsortiert', d['namen'] == sorted(d['namen']))
     pruef('Beruf unten angehaengt landet im richtigen Feld, sortiert',
           ('Hebammerich', 'Hebamme') in d['berufe']['medizin'] and d['berufe']['medizin'] == sorted(d['berufe']['medizin']))
@@ -181,7 +181,7 @@ def aenderungen(ordner):
           'bescheiden' in d['merkmale']['charakter'] and 'berufstätig' in d['merkmale']['zustand'])
     pruef('x in der dritten Spalte -> nicht_attributiv', d['nicht_attributiv'] == ['berufstätig', 'durcheinander'])
     pruef('Dativ-Form ergaenzt', d['dativ'].get('Gallensteine') == 'Gallensteinen' and len(d['dativ']) == 3)
-    pruef('neue Namensgruppe angehaengt', d['gruppen'][-1] == ['Brunner', 'Brunnen', 'Brunold'] and len(d['gruppen']) == 21)
+    pruef('neue Namensgruppe angehaengt', d['gruppen'][-1] == ['Brändli', 'Brandt', 'Brandenberger'] and len(d['gruppen']) == len(d0['gruppen']) + 1)
     pruef('Bericht listet Neues und Entferntes', '**Neu (' in lies(a.bericht) and '**Entfernt (' in lies(a.bericht))
     pruef('Hinweis zur Schreibweise "Technik Bau"', 'technik_bau' in lies(a.bericht) and 'Technik Bau' in lies(a.bericht))
 
@@ -276,7 +276,7 @@ def fehlerfaelle(ordner):
     pruef('mehrere Fehler: alle genannt, jeweils mit Blatt und Zeile',
           rc == 1 and f'Berufe, Zeile {r1}' in aus and f'Berufe, Zeile {r2}' in aus, aus[-400:])
     a = Arbeit(ordner, 'probe')
-    a.neu('Einzelne Namen', 'Zimmerli')
+    a.neu('Einzelne Namen', 'Zbinden')
     rc, aus = a.einlesen('--probe')
     pruef('--probe: Datei in Ordnung, aber nichts geschrieben', rc == 0 and lies(a.yaml) == a.vorher and 'nur geprüft' in aus, aus[-200:])
 
@@ -310,7 +310,7 @@ def formeln(ordner):
     a.neu('Berufe', 'medizin', 'Hebammerich', 'Hebamme')
     a.neu('Berufe', 'tiere', 'Tierpfleger', 'Tierpflegerin')
     a.neu('Merkmale', 'charakter', 'Notfallpatient')       # Grossbuchstabe -> "nicht benutzt"
-    a.neu('Namensgruppen', 'Brunner', 'Brunnen')           # nur 2 Namen
+    a.neu('Namensgruppen', 'Brändli', 'Brandt')           # nur 2 Namen
     a.wb.save(a.xlsx)
     aus = os.path.join(a.ordner, 'gerechnet')
     r = subprocess.run([soffice, '--headless', '--convert-to', 'xlsx', '--outdir', aus, a.xlsx],
@@ -340,7 +340,7 @@ def formeln(ordner):
     pruef('Hinweis Merkmale: Grossbuchstabe -> nicht benutzt',
           str(m.cell(row=r, column=4).value).startswith('nicht benutzt'), m.cell(row=r, column=4).value)
     g = wb['Namensgruppen']
-    r = a.zeile_von('Namensgruppen', 1, 'Brunner')
+    r = a.zeile_von('Namensgruppen', 1, 'Brändli')
     pruef('Hinweis Namensgruppen: zwei Namen -> Warnung', 'mindestens 3' in str(g.cell(row=r, column=10).value), g.cell(row=r, column=10).value)
     fehler = [(ws.title, c.coordinate, c.value) for ws in wb for row in ws.iter_rows() for c in row
               if isinstance(c.value, str) and c.value.startswith('#') and c.value[1:4].isupper()]
@@ -388,7 +388,7 @@ def bauen(ordner):
     a = Arbeit(ordner, 'bauen')
     shutil.copy(yaml_kopie, a.yaml)
     a.vorher = lies(a.yaml)
-    a.neu('Einzelne Namen', 'Zimmerli')
+    a.neu('Einzelne Namen', 'Zbinden')
     a.neu('Berufe', 'medizin', 'Hebammerich', 'Hebamme')
     a.neu('Krankheiten', 'innere', 'Gallensteine')
     a.neu('Dativ-Plural', 'Gallensteine', 'Gallensteinen')
@@ -400,7 +400,7 @@ def bauen(ordner):
     pruef('hugo baut mit der geaenderten Wortliste fehlerfrei', r.returncode == 0, (r.stderr or r.stdout)[-400:])
     seite = os.path.join(ordner, 'public', 'alpha', 'index.html')
     html = lies(seite) if os.path.exists(seite) else ''
-    pruef('Alpha-Seite enthaelt die neuen Woerter im Generator', 'Zimmerli' in html and 'Hebamme' in html and 'Gallensteinen' in html)
+    pruef('Alpha-Seite enthaelt die neuen Woerter im Generator', 'Zbinden' in html and 'Hebamme' in html and 'Gallensteinen' in html)
 
 
 def main():

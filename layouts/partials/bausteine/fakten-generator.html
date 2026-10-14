@@ -142,9 +142,36 @@
     }
     return W.altersgruppen.slice(0, 5);
   }
+  // ZULETZT VERWENDETE NAMENSGRUPPEN kommen erst wieder dran, wenn die
+  // anderen durch sind. Rein zufaellig zog man bei 20 Gruppen in drei Sets
+  // hintereinander oft wieder dieselben Meier/Meister/Mettler (Rueckmeldung
+  // Oktober 2026). Gemerkt wird im Browser (sonst nur fuer diesen Besuch);
+  // der Schluessel sind die Namen selbst, so kommen sich die Sprachen nicht
+  // in die Quere.
+  var ZULETZT = 'fakten-namensgruppen-zuletzt', zuletztHier = [];
+  function zuletztLesen(){
+    try { var z = JSON.parse(localStorage.getItem(ZULETZT)); if (Array.isArray(z)) return z; } catch(e){}
+    return zuletztHier;
+  }
+  function zuletztMerken(z){
+    zuletztHier = z;
+    try { localStorage.setItem(ZULETZT, JSON.stringify(z)); } catch(e){}
+  }
   function namenJeGruppe(n){
-    var gruppen = misch((W.namensgruppen || []).filter(function(g){ return g.length >= 3; }));
-    var raus = gruppen.slice(0, n).map(function(g){ return zieh(g, 3); });
+    var alle = (W.namensgruppen || []).filter(function(g){ return g.length >= 3; });
+    var zuletzt = zuletztLesen();
+    // Nie benutzte zuerst (gemischt), dann die benutzten - die am laengsten
+    // zurueckliegenden vorne.
+    var gruppen = misch(alle.filter(function(g){ return zuletzt.indexOf(g.join('|')) < 0; }))
+      .concat(alle.filter(function(g){ return zuletzt.indexOf(g.join('|')) >= 0; })
+        .sort(function(a, b){ return zuletzt.indexOf(a.join('|')) - zuletzt.indexOf(b.join('|')); }));
+    gruppen = gruppen.slice(0, n);
+    // Behalten wird, was in die Liste passt, ohne dass alle Gruppen
+    // gesperrt waeren: hoechstens alle bis auf ein Set.
+    var neuListe = zuletzt.filter(function(k){ return !gruppen.some(function(g){ return g.join('|') === k; }); })
+      .concat(gruppen.map(function(g){ return g.join('|'); }));
+    zuletztMerken(neuListe.slice(-Math.max(0, alle.length - n)));
+    var raus = gruppen.map(function(g){ return zieh(g, 3); });
     // Zu wenige Namensgruppen: der Rest frei aus der Namensliste, ohne einen
     // Namen zu wiederholen.
     var frei = misch(W.namen.filter(function(x){ return !raus.some(function(g){ return g.indexOf(x) >= 0; }); }));

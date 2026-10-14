@@ -1762,6 +1762,9 @@ body.pm-aktiv{overflow:hidden;}
    "spaltenweiser Abfolge" wie im Heft. Gedruckt stehen sie auf festen
    Plaetzen (.ems-fl-fragen weiter unten). */
 .ems-fragen{list-style:none;margin:0;padding:0;}
+/* Abstand zum Anleitungskasten wie ueberall im Heft (.ems-kasten + *):
+   das "margin:0" eine Zeile hoeher hatte ihn ueberschrieben. */
+.ems-kasten + .ems-fragen{margin-top:14.535pt;}
 .ems-zweispaltig{columns:2;column-gap:28pt;column-rule:1pt solid #000;}
 .ems-frage{break-inside:avoid;display:grid;grid-template-columns:28.4pt 1fr;margin:0 0 20pt;}
 .ems-nr{font-weight:700;}
@@ -1885,12 +1888,16 @@ body.pm-aktiv{overflow:hidden;}
 .ab-ohne td{color:var(--color-ink-faint);}
 /* Live-Kamera (bausteine/bild-lesen.html): Sucher mit den gefundenen Ecken */
 .ab-kamera{margin-top:var(--space-4);}
-.bl-kamera{max-width:32rem;}
+.bl-kamera{max-width:32rem;scroll-margin-top:5rem;}
 .bl-sucher{position:relative;line-height:0;background:#000;border-radius:var(--radius-sm);overflow:hidden;}
-.bl-sucher video{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;}
+/* Hoehe so, dass Sucher samt Kopfzeile auf den Bildschirm passt (svh: ohne
+   die Adressleiste des Handys); Hinweis und Knoepfe liegen darin */
+.bl-sucher video{display:block;width:100%;height:auto;max-height:70vh;max-height:calc(100svh - 7rem);object-fit:contain;}
 .bl-sucher canvas{position:absolute;left:0;top:0;pointer-events:none;}
-.bl-kamera-hinweis{margin:var(--space-2) 0;font-weight:600;min-height:1.5em;}
-.bl-kamera-knoepfe{display:flex;flex-wrap:wrap;gap:var(--space-3);}
+.bl-kamera-hinweis{position:absolute;left:0;right:0;top:0;margin:0;padding:var(--space-2) var(--space-3);background:rgba(0,0,0,.6);color:#fff;font-weight:600;line-height:1.35;}
+.bl-kamera-hinweis:empty{display:none;}
+.bl-kamera-knoepfe{position:absolute;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-3);padding:var(--space-6) var(--space-3) var(--space-3);background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.65));line-height:1.2;}
+.bl-kamera-knoepfe .btn-ghost{background:#fff;color:#111;border-color:#fff;}
 .ab-hinweis{margin:var(--space-3) 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);max-width:44rem;}
 .ab-status{margin:var(--space-4) 0 0;font-weight:600;}
 .ab-status:empty{display:none;}

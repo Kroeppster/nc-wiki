@@ -759,7 +759,9 @@ allemand – modifier FR/IT directement dans le YAML, puis
 `node scripts/fakten-generator-sprachen-pruefen.mjs`. Ne pas dissoudre
 les catégories : une vraie série donne à chaque groupe d'âge trois professions d'**un**
 domaine et trois maladies de **trois** sortes. Les questions naissent de modèles de phrases
-(`fragen`), plus `namensgruppen`, `dativ`, `nicht_attributiv`.
+(`fragen`), plus `namensgruppen`, `dativ`, `nicht_attributiv`. Le navigateur retient les
+groupes de noms tirés en dernier et ne les reprend qu'une fois les autres épuisés (avec 42
+groupes : huit sets sans répétition) – plus il y a de groupes, plus il y a de variété.
 `scripts/fakten-listen-auslesen.py` extrait des mots des PDF mais n'écrase pas le YAML. En
 suspens : catégories pas encore validées par un humain ; ~40 au lieu de ~80 entrées par
 catégorie.
