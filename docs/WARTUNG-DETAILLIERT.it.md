@@ -804,8 +804,12 @@ Lösungsschlüssel»: il PDF delle soluzioni dello strumento (o una foto della p
 di correzione) viene letto come un foglio compilato, le caselle nere sono le soluzioni; le
 righe senza casella non contano. I PDF vengono aperti da pdf.js in `static/vendor/pdfjs/`
 (volutamente non da una CDN: nulla deve lasciare il dispositivo; per aggiornarlo sostituire i
-due `.mjs` del pacchetto npm `pdfjs-dist`). Dopo modifiche alla lettura: `python3
-scripts/antwortbogen-testbilder.py /tmp/ab` (foto di prova con crocette note) e
+due `.mjs` del pacchetto npm `pdfjs-dist`). All'AMS si segna **a matita, un tratto obliquo per
+casella** (istruzione in alto sul foglio), non con crocette. La lettura misura quindi un'oscurità
+graduata invece di «inchiostro sì/no», con soglie ricavate dalla foto stessa (rumore di fondo) –
+volutamente diversa dallo strumento di impaginazione, dove un tratto di matita sottile spesso
+spariva. Dopo modifiche alla lettura: `python3
+scripts/antwortbogen-testbilder.py /tmp/ab` (foto di prova con tratti a matita noti) e
 `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 
 ### Valutare il test di concentrazione (Alpha)

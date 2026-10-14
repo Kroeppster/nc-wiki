@@ -51,8 +51,9 @@ nell'inquadratura e scatta da sola appena il foglio è fermo nell'immagine;
 «Scatta una foto» apre la fotocamera del telefono, «Scegli immagine o PDF» usa una foto o una scansione esistente.
 
 Da valutare soprattutto: **funziona con vere foto del telefono** – storte,
-all'ombra, a matita, a penna, con crocette cancellate o barrate? Le crocette
-lette sono giuste? Le righe incerte (in arancione) sono segnalate in modo
+all'ombra, con matita dura o morbida, con tratti cancellati (si segna come
+richiesto in alto sul foglio: un tratto obliquo per casella)? I segni letti
+sono giusti? Le righe incerte (in arancione) sono segnalate in modo
 sensato e facili da correggere? La pagina legge correttamente un test di
 concentrazione proprio dello strumento? E: le indicazioni sono comprensibili
 quando una foto non va bene?

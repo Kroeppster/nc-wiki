@@ -53,8 +53,9 @@ déclenche toute seule dès que la feuille est immobile dans l'image ;
 ou un PDF » prend une photo ou un scan existant.
 
 À évaluer surtout : **est-ce que ça marche avec de vraies photos de
-téléphone** – de travers, à l'ombre, au crayon, au stylo, avec des croix
-gommées ou barrées ? Les croix lues sont-elles correctes ? Les lignes
+téléphone** – de travers, à l'ombre, au crayon dur ou tendre, avec des traits
+gommés (on marque comme demandé en haut de la feuille : un trait oblique par
+case) ? Les marques lues sont-elles correctes ? Les lignes
 incertaines (en orange) sont-elles marquées de façon sensée, et faciles à
 corriger ? La page lit-elle correctement un test de concentration personnel
 de l'outil ? Et : les indications sont-elles compréhensibles quand une photo

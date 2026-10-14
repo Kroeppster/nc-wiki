@@ -63,9 +63,11 @@ for (const [name, e] of Object.entries(erwartet)) {
   const falsch = [];
   for (let i = 0; i < 144; i++) if (r.antworten[i] !== e.antworten[i] && !r.unsicherNr.includes(i)) falsch.push((i + 1) + ':' + e.antworten[i] + '->' + r.antworten[i]);
   pruef('keine falsch gelesene Zeile ohne Markierung', falsch.length === 0, falsch.join(' '));
-  // Mehrere Kreuze in einer Zeile stehen immer als unsicher da (so will es
+  // Mehrere Markierungen in einer Zeile stehen immer als unsicher da (so will es
   // das Tool: zum Nachsehen). Gezaehlt werden nur die uebrigen.
-  const unnoetig = r.unsicherNr.filter(n => !(e.antworten[n] === '*' && r.antworten[n] === '*'));
+  // Ebenso Zeilen mit einem wegradierten Strich neben dem deutlichen: die
+  // stehen zum Nachsehen da, gezaehlt wird der deutliche.
+  const unnoetig = r.unsicherNr.filter(n => !(e.antworten[n] === '*' && r.antworten[n] === '*') && !(e.radiert || []).includes(n));
   pruef('hoechstens ' + MAX_UNSICHER + ' unnoetig unsichere Zeilen (' + unnoetig.length + ')', unnoetig.length <= MAX_UNSICHER,
     unnoetig.map(n => (n + 1) + ':' + e.antworten[n] + '/' + r.antworten[n]).join(' '));
   const soll = [...e.antworten].filter((a, i) => a === loesung[i]).length;

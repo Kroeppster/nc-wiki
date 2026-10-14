@@ -3,9 +3,9 @@
 ================================================================================
 TESTBILDER FÜR «ANTWORTBOGEN AUSWERTEN» (Alpha-Seite)
 ================================================================================
-Erzeugt ausgefüllte Antwortbögen als Bilder, deren Kreuze bekannt sind: der
-echte Bogen der Testsimulation 2026 (erste Seite des Hefts), darin Kreuze
-wie von Hand - dann einmal als sauberer Scan und mehrmals als «Handyfoto»
+Erzeugt ausgefüllte Antwortbögen als Bilder, deren Markierungen bekannt sind:
+der echte Bogen der Testsimulation 2026 (erste Seite des Hefts), darin wie
+verlangt mit Bleistift je ein schräger Strich, einmal mit radierten - dann einmal als sauberer Scan und mehrmals als «Handyfoto»
 (schräg, gedreht, auf dunklem Tisch, mit Schatten, unscharf, als JPG).
 scripts/antwortbogen-pruefen.mjs liest sie im Browser und vergleicht.
 
@@ -15,7 +15,7 @@ scripts/antwortbogen-pruefen.mjs liest sie im Browser und vergleicht.
 Schreibt ORDNER/*.jpg|png|pdf und ORDNER/erwartet.json:
   {"bild.jpg": {"antworten": "A.B*..", "fehler": false}, ...,
    "_schluessel": {"dateien": [...], "loesungen": "AB.C.."}}
-  Je Aufgabe ein Zeichen: A-E ein Kreuz, "." leer, "*" mehrere; im
+  Je Aufgabe ein Zeichen: A-E ein Strich, "." leer, "*" mehrere; im
   Schlüssel "." = Aufgabe ohne Lösung.
 
 Dazu ein eigener Lösungsschlüssel, wie ihn das Formatierungstool ausgibt
@@ -24,7 +24,7 @@ Antwortbogen, die richtigen Kästchen schwarz - hier die Lösungen 2026, aber
 Muster zuordnen 3-18 ohne Lösung (wie im Tool, wo diese Serie keine hat).
 Und derselbe Schlüssel als Foto, und der Scan als PDF.
 
-Die Kreuze sitzen dort, wo die Kästchen im PDF wirklich stehen (aus den
+Die Striche sitzen dort, wo die Kästchen im PDF wirklich stehen (aus den
 Zeichnungen des PDFs gelesen, nicht aus den Zahlen der Auswertung) - sonst
 prüfte der Test die Auswertung gegen sich selbst.
 ================================================================================
@@ -71,19 +71,33 @@ def kaestchen():
     return [aus[nr] for nr in range(144)]
 
 
-def ausfuellen(bild, felder, antworten, stift, s):
-    """Kreuze wie von Hand: zwei Striche, leicht schief und über den Rand."""
+def ausfuellen(bild, felder, antworten, stift, s, breite_pt=(0.9, 1.5), radiert=0.0):
+    """Markiert wie am EMS verlangt («Bitte nur so markieren» oben auf dem
+    Bogen): mit Bleistift EIN schräger Strich durchs Kästchen, mal / mal \\,
+    leicht schief und über den Rand. Doppelt markierte Zeilen haben zwei
+    solche Kästchen. radiert: Anteil der Zeilen mit einem wegradierten Strich
+    (nur noch ein Hauch) in einem anderen Kästchen - gezählt wird der deutliche."""
     zeichnen = ImageDraw.Draw(bild)
+    weg = []
+    def strich(x0, y0, x1, y1, farbe):
+        j = lambda: random.uniform(-0.8, 0.8) * s
+        breite = max(1, int(round(random.uniform(*breite_pt) * s)))
+        if random.random() < 0.5:
+            zeichnen.line([(x0 + j(), y1 + j()), (x1 + j(), y0 + j())], fill=farbe, width=breite)
+        else:
+            zeichnen.line([(x0 + j(), y0 + j()), (x1 + j(), y1 + j())], fill=farbe, width=breite)
     for nr, a in enumerate(antworten):
         if a == '.':
             continue
         wahl = [BST.index(a)] if a in BST else random.sample(range(5), 2)
         for k in wahl:
-            x0, y0, x1, y1 = [v * s for v in felder[nr][k]]
-            j = lambda: random.uniform(-0.8, 0.8) * s
-            breite = max(2, int(random.uniform(0.9, 1.5) * s))
-            zeichnen.line([(x0 + j(), y0 + j()), (x1 + j(), y1 + j())], fill=stift, width=breite)
-            zeichnen.line([(x0 + j(), y1 + j()), (x1 + j(), y0 + j())], fill=stift, width=breite)
+            strich(*[v * s for v in felder[nr][k]], stift)
+        if a in BST and random.random() < radiert:
+            k = random.choice([i for i in range(5) if i != wahl[0]])
+            hauch = tuple(min(255, int(c + 0.85 * (235 - c))) for c in stift)
+            strich(*[v * s for v in felder[nr][k]], hauch)
+            weg.append(nr)
+    return weg
 
 
 def perspektive(punkte_von, punkte_nach):
@@ -161,7 +175,7 @@ def main():
     erwartet = {}
 
     def bogen(muster):
-        """Zufällige Antworten: meist ein Kreuz, ein paar leer, ein paar doppelt."""
+        """Zufällige Antworten: meist ein Strich, ein paar leer, ein paar doppelt."""
         aus = []
         for _ in range(144):
             r = random.random()
@@ -169,25 +183,27 @@ def main():
         return ''.join(aus)
 
     faelle = [
-        # name, stift, foto-Einstellungen (None = Scan)
-        ('scan.png', (25, 25, 120), None),
-        ('foto-gerade.jpg', (30, 30, 30), dict(drehung=0, schraeg=0.01, rand=0.06, schatten=0.25, unschaerfe=0.6, breite_ziel=2400)),
-        ('foto-schraeg.jpg', (20, 40, 140), dict(drehung=4, schraeg=0.04, rand=0.08, schatten=0.45, unschaerfe=1.0, breite_ziel=3000)),
-        ('foto-kopfueber.jpg', (60, 60, 60), dict(drehung=178, schraeg=0.02, rand=0.05, schatten=0.3, unschaerfe=0.8, breite_ziel=2200)),
-        ('foto-quer.jpg', (35, 35, 35), dict(drehung=91, schraeg=0.02, rand=0.1, schatten=0.35, unschaerfe=0.8, breite_ziel=3200)),
-        ('foto-bleistift.jpg', (110, 110, 110), dict(drehung=-2, schraeg=0.02, rand=0.07, schatten=0.3, unschaerfe=0.7, breite_ziel=2600)),
+        # name, stift, foto-Einstellungen (None = Scan), Strichbreite (pt), radiert
+        # Bleistift in verschiedenen Härten; einmal Kugelschreiber zum Vergleich
+        ('scan.png', (70, 70, 70), None, (0.9, 1.5), 0),
+        ('foto-gerade.jpg', (95, 95, 95), dict(drehung=0, schraeg=0.01, rand=0.06, schatten=0.25, unschaerfe=0.6, breite_ziel=2400), (0.9, 1.5), 0),
+        ('foto-schraeg.jpg', (20, 40, 140), dict(drehung=4, schraeg=0.04, rand=0.08, schatten=0.45, unschaerfe=1.0, breite_ziel=3000), (0.9, 1.5), 0),
+        ('foto-kopfueber.jpg', (110, 110, 110), dict(drehung=178, schraeg=0.02, rand=0.05, schatten=0.3, unschaerfe=0.8, breite_ziel=2200), (0.9, 1.5), 0),
+        ('foto-quer.jpg', (100, 100, 100), dict(drehung=91, schraeg=0.02, rand=0.1, schatten=0.35, unschaerfe=0.8, breite_ziel=3200), (0.9, 1.5), 0),
+        ('foto-bleistift.jpg', (130, 130, 130), dict(drehung=-2, schraeg=0.02, rand=0.07, schatten=0.3, unschaerfe=0.9, breite_ziel=2400), (0.7, 1.1), 0),
+        ('foto-radiert.jpg', (110, 110, 110), dict(drehung=1, schraeg=0.02, rand=0.06, schatten=0.3, unschaerfe=0.8, breite_ziel=2400), (0.9, 1.3), 0.05),
     ]
-    for name, stift, einst in faelle:
+    for name, stift, einst, breite_pt, radiert in faelle:
         antworten = bogen((0.08, 0.03))
         scan = leer.copy()
-        ausfuellen(scan, felder, antworten, stift, s)
+        weg = ausfuellen(scan, felder, antworten, stift, s, breite_pt, radiert)
         bild = scan if einst is None else foto(scan, **einst)
         pfad = os.path.join(ordner, name)
         if name.endswith('.jpg'):
             bild.save(pfad, quality=82)
         else:
             bild.save(pfad)
-        erwartet[name] = {'antworten': antworten, 'fehler': False}
+        erwartet[name] = {'antworten': antworten, 'fehler': False, 'radiert': weg}
     # Zu klein: der ganze Bogen nur 420 Bildpunkte breit
     klein = leer.copy()
     klein.thumbnail((420, 600))

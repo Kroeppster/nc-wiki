@@ -821,9 +821,13 @@ ne sont pas sur le site, il y a « Eigener Lösungsschlüssel » : le PDF des so
 cases noires sont les solutions ; les lignes sans case ne comptent pas. Les PDF sont ouverts
 par pdf.js depuis `static/vendor/pdfjs/` (volontairement pas depuis un CDN : rien ne doit
 quitter l'appareil ; pour mettre à jour, remplacer les deux `.mjs` du paquet npm
-`pdfjs-dist`). Après une modification
+`pdfjs-dist`). À l'AMS, on marque **au crayon, un trait oblique par case** (consigne en
+haut de la feuille), pas avec des croix. La lecture mesure donc une obscurité graduée au lieu
+de « encre oui/non », avec des seuils tirés de la photo elle-même (bruit de fond) – volontairement
+autrement que dans l'outil de mise en forme, où un trait de crayon fin disparaissait souvent.
+Après une modification
 de la lecture : `python3 scripts/antwortbogen-testbilder.py /tmp/ab` (photos de test aux
-croix connues) puis `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
+traits de crayon connus) puis `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 
 ### Évaluer le test de concentration (Alpha)
 

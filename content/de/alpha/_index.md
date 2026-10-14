@@ -47,8 +47,9 @@ aufnehmen» öffnet die Kamera-App des Handys, «Bild oder PDF wählen» nimmt e
 vorhandenes Foto oder einen Scan.
 
 Zu beurteilen ist vor allem, **ob es mit echten Handyfotos klappt**: schräg,
-im Schatten, mit Bleistift, Kugelschreiber, radierten oder durchgestrichenen
-Kreuzen. Stimmen die gelesenen Kreuze? Werden unsichere Zeilen (orange)
+im Schatten, mit hartem und weichem Bleistift, mit radierten Strichen (markiert
+wird wie oben auf dem Bogen verlangt: ein schräger Strich je Kästchen). Stimmen
+die gelesenen Markierungen? Werden unsichere Zeilen (orange)
 sinnvoll markiert, und lassen sie sich leicht korrigieren? Liest die Seite einen eigenen Konztest aus dem Tool richtig ein? Und: Sind die
 Hinweise verständlich, wenn ein Foto nicht taugt?
 

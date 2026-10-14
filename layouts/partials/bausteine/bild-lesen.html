@@ -131,6 +131,19 @@ window.NCWikiBild = (function(){
     if (magenta(r, g, b, p)) return false;
     return (299 * r + 587 * g + 114 * b) / 1000 < 0.8 * this.papierFein(x, y, p);
   };
+  // Wie dunkel ein Bildpunkt ist, abgestuft statt ja/nein (0 bis 1): voll
+  // ab (oben - spanne) des Papiers, nichts ab oben. Fuer feine, helle
+  // Bleistiftstriche - im Foto liegen sie oft knapp ueber der Schwelle von
+  // tinte() und fielen dort ganz heraus. Magenta zaehlt nicht.
+  Bild.prototype.grau = function(x, y, oben, spanne){
+    x = Math.trunc(x); y = Math.trunc(y);
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return 0;
+    var i = (y * this.w + x) * 4, r = this.rgba[i], g = this.rgba[i + 1], b = this.rgba[i + 2];
+    var p = this.papierBei(x, y);
+    if (magenta(r, g, b, p)) return 0;
+    var pf = this.papierFein(x, y, p), l = (299 * r + 587 * g + 114 * b) / 1000;
+    return Math.max(0, Math.min(1, (oben * pf - l) / (spanne * pf)));
+  };
   // Feiner als die Karte (etwa 8 pt je Feld, ohne Ausweiten): Faellt ein
   // harter Schatten mitten durch eine Zeile Kaestchen, gilt sonst der
   // Schatten am Rand als Tinte. Nie heller als die grobe Karte und nie unter

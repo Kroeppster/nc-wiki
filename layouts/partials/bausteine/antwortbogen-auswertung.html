@@ -3,7 +3,7 @@
   ANTWORTBOGEN AUSWERTEN  -  ```baustein antwortbogen-auswertung ```
   ============================================================================
   Ein Foto (oder ein Scan) des ausgefuellten Antwortbogens einer
-  Testsimulation: die Kreuze werden gelesen und mit den Loesungen verglichen.
+  Testsimulation: die Markierungen (Bleistiftstriche) werden gelesen und mit den Loesungen verglichen.
   Heraus kommen die Punkte je Untertest und das Bild mit dem, was gelesen
   wurde - gruen richtig, rot falsch, blau die Loesung, orange bitte ansehen.
   Was nicht eindeutig war, laesst sich in der Liste darunter von Hand
@@ -24,7 +24,8 @@
        fotografierte Boegen. Von den vier Drehungen gewinnt die, bei der die
        Oberkante des Kopfkastens dort liegt, wo sie liegen muss.
     4. Je Kaestchen der Anteil Tinte im Innern (Magenta zaehlt nicht), je
-       Zeile die Antwort: ein Kreuz, leer, mehrere - oder unsicher.
+       Zeile die Antwort: ein Strich, leer, mehrere - oder unsicher. Abgestufte
+       Dunkelheit statt Tinte ja/nein, siehe MARKIERT unten (Abweichung vom Tool).
   Wer dort etwas aendert, zieht es hier nach (und umgekehrt).
 
   QUELLEN: ein Foto (der Knopf "Foto aufnehmen" oeffnet auf dem Handy die
@@ -146,9 +147,17 @@
   var MARKEN = {};
   KREIS.forEach(function(e){ MARKEN[e] = [PASSER[e][0] + PASSER_RAND + PASSER_KERN / 2, PASSER[e][1] + PASSER_RAND + PASSER_KERN / 2]; });
   var EINZUG = 1.5;        // pt - so weit innerhalb des Kaestchenrands wird gemessen
-  var MARKIERT = 0.06;     // Anteil Tinte, ab dem ein Kaestchen angekreuzt ist
-  var UNSICHER = 0.025;    // dazwischen: bitte ansehen
+  // Markiert wird am EMS mit BLEISTIFT und EINEM schraegen Strich durchs
+  // Kaestchen (siehe «Bitte nur so markieren» oben auf dem Bogen), nicht mit
+  // einem Kreuz. Bis Oktober 2026 war das Lesen auf Kreuze abgestimmt und
+  // zaehlte je Bildpunkt nur Tinte ja/nein - ein feiner Bleistiftstrich fiel
+  // im Foto so oft ganz heraus. Jetzt: abgestufte Dunkelheit (Bild.grau),
+  // Werte als Anteil des Kaestchen-Innern (ein satter Strich gibt 0.1-0.6,
+  // leere Kaestchen im Foto bis etwa 0.02).
+  var MARKIERT = 0.022;    // ab hier ist ein Kaestchen markiert ...
+  var UNSICHER = 0.010;    // ... ab hier bitte ansehen
   var VOLL = 0.30;         // sind alle fuenf so voll, ist die Zeile ungueltig
+  var SCHLUESSEL = [0.30, 0.10];  // Loesungsschluessel: Kaestchen ganz schwarz
   var MIN_INHALT = 60;     // Helligkeitsunterschied, ab dem der Kopfkasten erkannt ist
   var GEDRUCKT = 0.25;     // Anteil Rahmen, ab dem eine Zeile als gedruckt gilt
   var PASSUNG_MIN = 0.7;   // so viel Rahmen muss genau auf den Kanten liegen
@@ -300,17 +309,18 @@
   function feldEcke(block, zeile, spalte){
     return [BLOCK_X[block % 4] + FELD_X + spalte * SPALTE, ZEILE_Y[Math.floor(block / 4)] + zeile * ZEILE];
   }
-  // Wie deutlich ein Kaestchen angekreuzt ist (0 bis 1): der Anteil Tinte im
-  // Innern. Tinte, die nur einen schmalen Teil der Breite belegt (Staub,
-  // Kratzer), zaehlt weniger.
+  // Wie deutlich ein Kaestchen markiert ist (0 bis 1): die mittlere
+  // Dunkelheit im Innern. Was nur einen schmalen Teil der Breite belegt
+  // (Staub, Kratzer), zaehlt weniger - ein schraeger Strich geht ueber die
+  // ganze Breite.
   function fuellung(bild, abb, x0, y0){
     var n = 0, t = 0, spalten = 0, belegt = 0;
     for (var x = x0 + EINZUG; x <= x0 + FELD_B - EINZUG + 1e-6; x += 0.4){
-      var vorher = t;
+      var spitze = 0;
       for (var y = y0 + EINZUG; y <= y0 + FELD_H - EINZUG + 1e-6; y += 0.4){
-        var p = abb(x, y); n++; if (bild.tinte(p[0], p[1])) t++;
+        var p = abb(x, y), g = bild.grau(p[0], p[1], 0.92, 0.3); n++; t += g; if (g > spitze) spitze = g;
       }
-      spalten++; if (t > vorher) belegt++;
+      spalten++; if (spitze > 0.05) belegt++;
     }
     var anteil = t / n, breite = belegt / spalten;
     return breite >= 0.4 ? anteil : anteil * breite / 0.4;
@@ -423,43 +433,51 @@
     return fein;
   }
   // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
-  // Buchstabe, '' fuer leer oder '*' fuer mehrere Kreuze.
-  function zeileLesen(werte){
+  // Buchstabe, '' fuer leer oder '*' fuer mehrere Markierungen.
+  function zeileLesen(werte, markiert, unsicher){
     var grund = Math.min.apply(null, werte);
     if (grund >= VOLL) return ['*', true];
-    // Liegt das Bild eine Spur daneben, ragt in alle fuenf Kaestchen gleich
-    // viel Rahmen ins Messfeld - das zaehlt nicht als Kreuz.
-    var netto = werte.map(function(w){ return w - Math.min(grund, 0.08); });
-    var reihe = [0, 1, 2, 3, 4].sort(function(a, b){ return netto[b] - netto[a] || a - b; });
-    var erstes = netto[reihe[0]], zweites = netto[reihe[1]];
-    if (erstes < MARKIERT) return ['', erstes >= UNSICHER];
-    if (zweites < UNSICHER) return [BST[reihe[0]], false];
-    if (zweites >= MARKIERT && zweites >= 0.5 * erstes) return ['*', true];
-    // Neben einem deutlichen Kreuz etwas Schwaches: radiert, ein Fleck oder
-    // ein zaghaftes zweites Kreuz. Gezaehlt wird das deutliche.
+    var reihe = [0, 1, 2, 3, 4].sort(function(a, b){ return werte[b] - werte[a] || a - b; });
+    var erstes = werte[reihe[0]], zweites = werte[reihe[1]];
+    if (erstes < markiert) return ['', erstes >= unsicher];
+    if (zweites < unsicher) return [BST[reihe[0]], false];
+    if (zweites >= markiert && zweites >= 0.5 * erstes) return ['*', true];
+    // Neben einem deutlichen Strich etwas Schwaches: radiert, ein Fleck oder
+    // ein zaghafter zweiter Strich. Gezaehlt wird das deutliche.
     return [BST[reihe[0]], true];
   }
-  function bogenLesen(bild){
+  // schwellen: fuer den Loesungsschluessel (Kaestchen ganz schwarz) feste,
+  // unempfindliche Schwellen - sonst die aus dem Foto bestimmten.
+  function bogenLesen(bild, schwellen){
     var r = ausrichten(bild);
     if (r.fehler) return r;
     r.abb = feinAusrichten(bild, r.abb);
     // Liegen die gedruckten Kaestchen auch danach nicht deutlich auf den
-    // erwarteten (stark gewellt, verzerrt, falsche Ecke), waeren die Kreuze
+    // erwarteten (stark gewellt, verzerrt, falsche Ecke), waeren die Markierungen
     // geraten - lieber neu fotografieren lassen.
     r.passung = passungScharf(bild, r.abb);
     if (r.passung < PASSUNG_MIN) return { fehler: T.fehlerKein };
-    var antworten = [], unsicher = [], fehlend = 0;
+    var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [], alle = [];
     for (var k = 0; k < BLOECKE; k++){
       for (var i = 0; i < ZEILEN; i++){
         // Wo die gedruckten Kaestchen nicht zu sehen sind (verdeckt, Falte,
-        // Bogen verrutscht), ist auch ein gelesenes Kreuz nicht sicher.
+        // Bogen verrutscht), ist auch eine gelesene Markierung nicht sicher.
         var da = zeileGedruckt(bild, r.abb, k, i) >= GEDRUCKT;
         if (!da) fehlend++;
         var w = [0, 1, 2, 3, 4].map(function(s){ var e = feldEcke(k, i, s); return fuellung(bild, r.abb, e[0], e[1]); });
-        var a = zeileLesen(w);
-        antworten.push(a[0]); unsicher.push(a[1] || !da);
+        werte.push(w); gedruckt.push(da); alle.push.apply(alle, w);
       }
     }
+    // Grundrauschen des Fotos (Schatten, Koernung): mindestens drei Viertel
+    // aller Kaestchen sind leer. Ist es hoch, liegen die Schwellen hoeher.
+    alle.sort(function(a, b){ return a - b; });
+    var rauschen = alle[Math.floor(alle.length * 0.75)];
+    var markiert = Math.max(MARKIERT, 0.012 + 3 * rauschen), zweifel = Math.max(UNSICHER, 2 * rauschen);
+    if (schwellen){ markiert = schwellen[0]; zweifel = schwellen[1]; }
+    werte.forEach(function(w, z){
+      var a = zeileLesen(w, markiert, zweifel);
+      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z]);
+    });
     // Fehlt ein Viertel, lag der Bogen falsch - lieber neu fotografieren.
     if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: T.fehlerKein };
     if (fehlend) r.hinweise.push(T.zeilen);
@@ -468,10 +486,10 @@
   }
   // Die erste Seite, auf der ein Bogen zu lesen ist. Fehlt er ueberall,
   // die Meldung der ersten Seite.
-  function ersterBogen(liste, pruefen){
+  function ersterBogen(liste, pruefen, schwellen){
     var erster = null;
     for (var i = 0; i < liste.length; i++){
-      var bild = bildAus(liste[i]), r = bogenLesen(bild);
+      var bild = bildAus(liste[i]), r = bogenLesen(bild, schwellen);
       r.bild = bild;
       if (!r.fehler && (!pruefen || pruefen(r))) return r;
       if (!erster) erster = r.fehler ? r : { fehler: T.schluesselKein };
@@ -643,7 +661,7 @@
       // Ein Schluessel hat in den meisten Zeilen genau ein schwarzes Kaestchen;
       // eine Tabellenseite davor hat gar keinen Bogen.
       return spaeter(function(){ return ersterBogen(liste, function(r){
-        return r.antworten.filter(function(a){ return /^[A-E]$/.test(a); }).length >= 18; }); });
+        return r.antworten.filter(function(a){ return /^[A-E]$/.test(a); }).length >= 18; }, SCHLUESSEL); });
     }).then(function(r){
       if (r.fehler){ melden('ab-schluessel-status', r.fehler === T.fehlerKein ? T.schluesselKein : r.fehler, true); zeigen(); return; }
       var k = schluesselAus(r);

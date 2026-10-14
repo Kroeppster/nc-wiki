@@ -800,8 +800,11 @@ stehen, gibt es «Eigener Lösungsschlüssel»: das Lösungs-PDF aus dem Tool (o
 Lösungsschlüssel-Seite) wird wie ein ausgefüllter Bogen gelesen, die schwarzen Kästchen sind
 die Lösungen; Zeilen ohne Kästchen zählen nicht. PDFs öffnet pdf.js aus
 `static/vendor/pdfjs/` (bewusst nicht von einem CDN: nichts soll das Gerät verlassen; beim
-Aktualisieren beide `.mjs` aus dem npm-Paket `pdfjs-dist` ersetzen). Nach Änderungen am Lesen:
-`python3 scripts/antwortbogen-testbilder.py /tmp/ab` (Testfotos mit bekannten Kreuzen) und
+Aktualisieren beide `.mjs` aus dem npm-Paket `pdfjs-dist` ersetzen). Markiert wird am EMS mit **Bleistift, ein schräger Strich je Kästchen**
+(Anleitung oben auf dem Bogen), nicht mit Kreuzen. Gemessen wird deshalb abgestufte Dunkelheit
+statt «Tinte ja/nein», mit Schwellen aus dem Foto selbst (Grundrauschen) – bewusst anders als im
+Formatierungstool, wo ein feiner Bleistiftstrich im Foto oft ganz herausfiel. Nach Änderungen am Lesen:
+`python3 scripts/antwortbogen-testbilder.py /tmp/ab` (Testfotos mit bekannten Bleistiftstrichen) und
 `node scripts/antwortbogen-pruefen.mjs /tmp/ab`.
 
 ### Konzentrationstest auswerten
