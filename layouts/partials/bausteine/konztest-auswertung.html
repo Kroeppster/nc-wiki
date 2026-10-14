@@ -86,6 +86,7 @@
 <table class="ab-punkte" id="kt-punkte"></table>
 <p class="ab-hinweis">{{ i18n "kt_regel" }}</p>
 <p class="ab-legende">{{ i18n "kt_legende" }}</p>
+<label class="ab-schalter"><input type="checkbox" id="kt-original"> {{ i18n "bl_original" }}</label>
 <canvas class="ab-bild kt-bild" id="kt-bild"></canvas>
 <p class="ab-hinweis" id="kt-unsicher" hidden></p>
 </div>
@@ -871,19 +872,46 @@
     el('kt-meldungen').innerHTML = stand.hinweise.map(function(h){ return '<li>' + h + '</li>'; }).join('');
     zeichnen(w);
   }
+  // Scan-Ansicht (gerade, weisses Papier, nur der Bereich der Zeichen) oder
+  // das Foto selbst. In der Scan-Ansicht sitzt jedes Zeichen dort, wo die
+  // Abbildung es hinlegt, plus seine Korrektur - umgerechnet in pt.
+  function scanBereit(r){
+    var sx = K.schrittX, sy = K.schrittY;
+    try {
+      r.scan = B.scan(r.bild, r.abb, [K.x[0] - 1.5 * sx, K.y[0] - 1.5 * sy, K.x[N - 1] + 1.5 * sx, K.y[N - 1] + 1.5 * sy], 1100);
+    } catch (e) { r.scan = null; return; }
+    r.scanKorr = [];
+    for (var R = 0; R < N; R++){
+      var zeile = [];
+      for (var C = 0; C < N; C++){
+        var m = mitte(R, C), o = r.abb(m[0], m[1]), a = r.abb(m[0] + 1, m[1]), b = r.abb(m[0], m[1] + 1), k = r.korrektur[R][C];
+        var j11 = a[0] - o[0], j21 = a[1] - o[1], j12 = b[0] - o[0], j22 = b[1] - o[1], det = j11 * j22 - j12 * j21;
+        zeile.push(det ? [(j22 * k[0] - j12 * k[1]) / det, (-j21 * k[0] + j11 * k[1]) / det] : [0, 0]);
+      }
+      r.scanKorr.push(zeile);
+    }
+  }
+  function alsScan(){ return !el('kt-original').checked && stand.scan; }
+  function zeichenPunkt(R, C){
+    var sc = alsScan();
+    if (!sc) return imBild(stand, R, C);
+    var m = mitte(R, C), d = stand.scanKorr[R][C];
+    return [(m[0] + d[0] - sc.x0) * sc.k, (m[1] + d[1] - sc.y0) * sc.k];
+  }
+  function pxptAnzeige(){ var sc = alsScan(); return sc ? sc.k : stand.pxpt; }
   // Gruen richtig markiert, rot falsch markiert, blau ausgelassen (vor dem
   // letzten markierten Zeichen), orange bitte ansehen.
   var anzeige = 1;
   function zeichnen(w){
-    var c = el('kt-bild'), q = stand.bild.leinwand, s = anzeige = Math.min(1, 1100 / q.width);
+    var sc = alsScan(), c = el('kt-bild'), q = sc ? sc.leinwand : stand.bild.leinwand, s = anzeige = Math.min(1, 1100 / q.width);
     c.width = Math.round(q.width * s); c.height = Math.round(q.height * s);
     var ctx = c.getContext('2d');
     ctx.drawImage(q, 0, 0, c.width, c.height);
-    var rad = 0.42 * K.schrittX * stand.pxpt * s;
+    var rad = 0.42 * K.schrittX * pxptAnzeige() * s;
     for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
       var m = stand.markiert[R][C], z = K.ziele[R][C] === '1', farbe = null;
       if (m && z) farbe = '#1e9e4a'; else if (m) farbe = '#c5221f'; else if (z && R * N + C < w.letztes) farbe = '#1a56db';
-      var p = imBild(stand, R, C);
+      var p = zeichenPunkt(R, C);
       if (farbe){ ctx.beginPath(); ctx.arc(p[0] * s, p[1] * s, rad, 0, 2 * Math.PI); ctx.strokeStyle = farbe; ctx.lineWidth = 2; ctx.stroke(); }
       if (stand.unsicher[R * N + C]){ ctx.strokeStyle = '#e8710a'; ctx.lineWidth = 2; ctx.strokeRect(p[0] * s - rad * 1.2, p[1] * s - rad * 1.2, rad * 2.4, rad * 2.4); }
     }
@@ -892,8 +920,8 @@
     // gelesene Markierung weit hinten kostet viele Punkte.
     if (w.letztes >= 0){
       // in Richtung der Zeile (das Foto kann gedreht sein)
-      var LR = Math.floor(w.letztes / N), LC = w.letztes % N, e = imBild(stand, LR, LC), m = mitte(LR, LC);
-      var o = stand.abb(m[0], m[1]), dx = stand.abb(m[0] + 1, m[1]), dy = stand.abb(m[0], m[1] + 1);
+      var LR = Math.floor(w.letztes / N), LC = w.letztes % N, e = zeichenPunkt(LR, LC), m = mitte(LR, LC);
+      var o = sc ? [0, 0] : stand.abb(m[0], m[1]), dx = sc ? [sc.k, 0] : stand.abb(m[0] + 1, m[1]), dy = sc ? [0, sc.k] : stand.abb(m[0], m[1] + 1);
       var bx = 0.6 * K.schrittX, hy = 0.6 * K.schrittY;
       var punkt = function(a, b){ return [(e[0] + a * (dx[0] - o[0]) + b * (dy[0] - o[0])) * s, (e[1] + a * (dx[1] - o[1]) + b * (dy[1] - o[1])) * s]; };
       var p1 = punkt(bx, -hy), p2 = punkt(bx, hy);
@@ -902,16 +930,17 @@
     }
   }
   // Tippen auf ein Zeichen schaltet seine Markierung um
+  el('kt-original').addEventListener('change', function(){ if (stand) zeigen(); });
   el('kt-bild').addEventListener('click', function(ev){
     if (!stand) return;
     var c = this, b = c.getBoundingClientRect();
     var x = (ev.clientX - b.left) * c.width / b.width / anzeige, y = (ev.clientY - b.top) * c.height / b.height / anzeige;
     var beste = null;
     for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
-      var p = imBild(stand, R, C), d = Math.hypot(p[0] - x, p[1] - y);
+      var p = zeichenPunkt(R, C), d = Math.hypot(p[0] - x, p[1] - y);
       if (!beste || d < beste[0]) beste = [d, R, C];
     }
-    if (!beste || beste[0] > 0.6 * K.schrittX * stand.pxpt) return;
+    if (!beste || beste[0] > 0.6 * K.schrittX * pxptAnzeige()) return;
     stand.markiert[beste[1]][beste[2]] = !stand.markiert[beste[1]][beste[2]];
     stand.unsicher[beste[1] * N + beste[2]] = false;
     zeigen();
@@ -931,6 +960,7 @@
     }).then(function(r){
       if (r.fehler){ melden(r.fehler, true); return; }
       stand = r;
+      scanBereit(stand);
       melden('');
       el('kt-ergebnis').hidden = false;
       zeigen();
@@ -1003,7 +1033,7 @@
   // Fuer die Fehlersuche an neuen Konztests (scripts/konztest-pruefen.mjs)
   window.NCWikiKonztestIntern = { flecken: flecken, gitter: gitter, istFarbig: istFarbig, weissabgleich: weissabgleich, bogenLesen: bogenLesen, K: function(){ return K; } };
   window.NCWikiKonztestPunkt = function(R, C){
-    var p = imBild(stand, R, C), q = stand.bild.leinwand;
+    var sc = alsScan(), p = zeichenPunkt(R, C), q = sc ? sc.leinwand : stand.bild.leinwand;
     return [p[0] / q.width, p[1] / q.height];
   };
 })();

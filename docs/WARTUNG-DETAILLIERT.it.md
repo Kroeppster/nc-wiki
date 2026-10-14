@@ -794,7 +794,13 @@ dello strumento di formattazione (`werkzeug/auswertung.py`), trasposto in JavaSc
 parte comune – immagine, caricamento, PDF, fotocamera dal vivo – è in
 `bausteine/bild-lesen.html`). La **fotocamera dal vivo** cerca i quattro angoli neri già nel
 mirino e scatta da sola appena il foglio è fermo; altrimenti resta «Scatta una foto» (app
-fotocamera).
+fotocamera). Allo scatto fa una vera foto dove il browser lo permette (Chrome su Android);
+altrimenti (iPhone, Firefox …) fino a cinque immagini video in al massimo 2,5 s, allineate tra loro
+(riquadri, trasformazione affine) e mediate – meno rumore, i tratti di matita sottili restano
+(`stapeln` in `bild-lesen.html`; verificato in `antwortbogen-pruefen.mjs`). L'immagine del
+risultato mostra di base una **vista scansione** (raddrizzata, carta bianca, `scan` in
+`bild-lesen.html`); «Mostra la foto originale» passa alla foto. La lettura avviene sempre
+nell'immagine originale.
 Tutte le simulazioni dal 2022 hanno lo stesso foglio. Le soluzioni sono in
 `data/antwortbogen.yaml` e **non si modificano a mano**: per una nuova simulazione caricare
 come sempre il PDF delle soluzioni, inserirlo in `scripts/antwortbogen-loesungen.py` e

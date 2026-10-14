@@ -810,7 +810,13 @@ de formatage (`werkzeug/auswertung.py`), transposé en JavaScript
 (`layouts/partials/bausteine/antwortbogen-auswertung.html`, lire le commentaire d'en-tête ;
 le commun – image, chargement, PDF, caméra en direct – est dans `bausteine/bild-lesen.html`).
 La **caméra en direct** cherche les quatre coins noirs dès le viseur et déclenche seule dès que
-la feuille ne bouge plus ; sinon reste « Prendre une photo » (appli caméra).
+la feuille ne bouge plus ; sinon reste « Prendre une photo » (appli caméra). Au déclenchement,
+elle prend une vraie photo là où le navigateur le permet (Chrome sur Android) ; sinon (iPhone,
+Firefox …) jusqu'à cinq images vidéo en 2,5 s au plus, alignées entre elles (tuiles, transformation
+affine) puis moyennées – moins de bruit, les traits de crayon fins restent (`stapeln` dans
+`bild-lesen.html` ; testé dans `antwortbogen-pruefen.mjs`). L'image du résultat montre par défaut
+une **vue scan** (redressée, papier blanc, `scan` dans `bild-lesen.html`) ; « Afficher la photo
+originale » bascule sur la photo. La lecture se fait toujours dans l'image originale.
 Toutes les simulations depuis 2022 ont la même feuille. Les solutions sont dans
 `data/antwortbogen.yaml` et ne se modifient **pas à la main** : pour une nouvelle
 simulation, téléverser le PDF des solutions comme d'habitude, l'inscrire dans

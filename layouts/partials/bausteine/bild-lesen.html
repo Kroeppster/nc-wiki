@@ -307,6 +307,210 @@ window.NCWikiBild = (function(){
   function quellen(datei){
     return istPdf(datei) ? pdfSeiten(datei) : laden(datei).then(function(img){ return [img]; });
   }
+  // --- Scan-Ansicht ------------------------------------------------------------------
+  // Das gelesene Blatt gerade gerueckt und mit weissem Papier, wie die
+  // Scan-Funktion einer Handykamera: der Bereich bereich = [x0, y0, x1, y1]
+  // (pt auf dem Bogen) ueber die Abbildung abb (pt -> Bildpunkt) aus dem Bild
+  // geholt, je Stelle durch die Papierhelligkeit dort geteilt (Schatten weg).
+  // Nur zum Anschauen - gelesen wird immer im Originalbild.
+  // Gibt { leinwand, k (Bildpunkte je pt), x0, y0 } zurueck.
+  function scan(bild, abb, bereich, breite){
+    var x0 = bereich[0], y0 = bereich[1], k = breite / (bereich[2] - x0);
+    var w = Math.round(breite), h = Math.round((bereich[3] - y0) * k);
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var ctx = c.getContext('2d'), aus = ctx.createImageData(w, h), o = aus.data, d = bild.rgba, bw = bild.w, bh = bild.h;
+    for (var j = 0; j < h; j++){
+      for (var i = 0; i < w; i++){
+        var p = abb(x0 + (i + 0.5) / k, y0 + (j + 0.5) / k), q = (j * w + i) * 4;
+        var sx = p[0] - 0.5, sy = p[1] - 0.5, ix = Math.floor(sx), iy = Math.floor(sy);
+        if (ix < 0 || iy < 0 || ix >= bw - 1 || iy >= bh - 1){ o[q] = o[q + 1] = o[q + 2] = 255; o[q + 3] = 255; continue; }
+        var fx = sx - ix, fy = sy - iy, a = (iy * bw + ix) * 4, b = a + bw * 4;
+        var pap = bild.papierFein(ix, iy, bild.papierBei(ix, iy)), f = Math.min(2.5, 245 / Math.max(pap, 1));
+        for (var ch = 0; ch < 3; ch++){
+          var v = (1 - fy) * ((1 - fx) * d[a + ch] + fx * d[a + 4 + ch]) + fy * ((1 - fx) * d[b + ch] + fx * d[b + 4 + ch]);
+          o[q + ch] = Math.min(255, v * f);
+        }
+        o[q + 3] = 255;
+      }
+    }
+    ctx.putImageData(aus, 0, 0);
+    return { leinwand: c, k: k, x0: x0, y0: y0 };
+  }
+  // --- Mehrere Videobilder mitteln (Live-Kamera) ------------------------------------
+  // Ein einzelnes Videobild ist verrauscht (wenig Licht, Kompression) - feine
+  // Bleistiftstriche gehen darin unter. Wie die Scan-Funktion der Handykamera
+  // nimmt die Live-Kamera deshalb mehrere Bilder kurz nacheinander, richtet
+  // sie aufeinander aus und mittelt sie: Das Rauschen sinkt, der Strich
+  // bleibt. Ausrichten, weil die Hand nie ganz ruhig ist: In 5 x 5 Kacheln
+  // wird die Verschiebung gegenueber dem ersten Bild gesucht, daraus eine
+  // affine Abbildung (Verschieben, leicht Drehen, Zoomen). Ein Bild, das sich
+  // nicht sauber ausrichten laesst (Hand durchs Bild, verwackelt), faellt weg.
+  var STAPEL = 5, STAPEL_ZEIT = 2500, STAPEL_SEITE = 2 * LANGE_SEITE;
+  // Graustufen, um den ganzzahligen Faktor f verkleinert (Mittel ueber f x f),
+  // auf mittlere Helligkeit 100 gebracht (die Belichtung schwankt etwas)
+  function grauKlein(d, w, h, f){
+    var gw = Math.floor(w / f), gh = Math.floor(h / f), g = new Float32Array(gw * gh), summe = 0;
+    for (var y = 0; y < gh; y++) for (var x = 0; x < gw; x++){
+      var t = 0;
+      for (var j = 0; j < f; j++){ var o = ((y * f + j) * w + x * f) * 4; for (var i = 0; i < f; i++, o += 4) t += 299 * d[o] + 587 * d[o + 1] + 114 * d[o + 2]; }
+      t /= 1000 * f * f; g[y * gw + x] = t; summe += t;
+    }
+    var m = 100 * gw * gh / Math.max(summe, 1);
+    for (var k = 0; k < g.length; k++) g[k] *= m;
+    return { g: g, w: gw, h: gh };
+  }
+  // Mittlere Abweichung zwischen a (Bereich x0..x1, y0..y1) und b um (dx, dy) verschoben
+  function abweichung(a, b, x0, y0, x1, y1, dx, dy, schritt){
+    var s = 0, n = 0;
+    for (var y = y0; y < y1; y += schritt){
+      var yb = y + dy; if (yb < 0 || yb >= b.h) continue;
+      for (var x = x0; x < x1; x += schritt){
+        var xb = x + dx; if (xb < 0 || xb >= b.w) continue;
+        s += Math.abs(a.g[y * a.w + x] - b.g[yb * b.w + xb]); n++;
+      }
+    }
+    return n ? s / n : 1e9;
+  }
+  // Dasselbe als mittleres Quadrat - fuer die Feinsuche: Dessen Minimum
+  // folgt einer Parabel, der Betrag nicht (Bruchteile eines Pixels)
+  function abweichungQ(a, b, x0, y0, x1, y1, dx, dy, schritt){
+    var s = 0, n = 0;
+    for (var y = y0; y < y1; y += schritt){
+      var yb = y + dy; if (yb < 0 || yb >= b.h) continue;
+      for (var x = x0; x < x1; x += schritt){
+        var xb = x + dx; if (xb < 0 || xb >= b.w) continue;
+        var t = a.g[y * a.w + x] - b.g[yb * b.w + xb]; s += t * t; n++;
+      }
+    }
+    return n ? s / n : 1e9;
+  }
+  // Wo das Minimum zwischen drei Werten wirklich liegt (Parabel)
+  function feinMinimum(l, m, r){ var n = l - 2 * m + r; return n > 1e-9 ? Math.max(-0.5, Math.min(0.5, 0.5 * (l - r) / n)) : 0; }
+  // Abbildung Referenzbild -> Bild (in Pixeln der mittleren Stufe) oder null
+  function ausrichtung(refK, bK, refM, bM, fk){
+    // 1. grob: eine Verschiebung fuers ganze Bild, auf der kleinen Stufe
+    var R = Math.ceil(0.025 * Math.max(refK.w, refK.h)), beste = [1e9, 0, 0];
+    var x0 = Math.floor(0.1 * refK.w), x1 = Math.ceil(0.9 * refK.w), y0 = Math.floor(0.1 * refK.h), y1 = Math.ceil(0.9 * refK.h);
+    for (var dy = -R; dy <= R; dy++) for (var dx = -R; dx <= R; dx++){
+      var a = abweichung(refK, bK, x0, y0, x1, y1, dx, dy, 3);
+      if (a < beste[0]) beste = [a, dx, dy];
+    }
+    var gx = beste[1] * fk, gy = beste[2] * fk;
+    // 2. je Kachel fein, auf der mittleren Stufe, mit Bruchteilen eines Pixels
+    var punkte = [], N = 5, F = 3;
+    for (var ty = 0; ty < N; ty++) for (var tx = 0; tx < N; tx++){
+      var kx0 = Math.floor(refM.w * (0.05 + 0.9 * tx / N)), kx1 = Math.floor(refM.w * (0.05 + 0.9 * (tx + 1) / N));
+      var ky0 = Math.floor(refM.h * (0.05 + 0.9 * ty / N)), ky1 = Math.floor(refM.h * (0.05 + 0.9 * (ty + 1) / N));
+      // genug Struktur? (eine leere Tischflaeche laesst sich nicht ausrichten)
+      var s1 = 0, s2 = 0, n = 0;
+      for (var y = ky0; y < ky1; y += 3) for (var x = kx0; x < kx1; x += 3){ var v = refM.g[y * refM.w + x]; s1 += v; s2 += v * v; n++; }
+      if (!n || s2 / n - (s1 / n) * (s1 / n) < 16) continue;
+      var feld = {}, b2 = [1e9, 0, 0];
+      for (dy = -F; dy <= F; dy++) for (dx = -F; dx <= F; dx++){
+        var w = abweichungQ(refM, bM, kx0, ky0, kx1, ky1, gx + dx, gy + dy, 3);
+        feld[dx + ',' + dy] = w;
+        if (w < b2[0]) b2 = [w, dx, dy];
+      }
+      if (Math.abs(b2[1]) === F || Math.abs(b2[2]) === F) continue;   // Minimum am Rand: unsicher
+      var fx = feinMinimum(feld[(b2[1] - 1) + ',' + b2[2]], b2[0], feld[(b2[1] + 1) + ',' + b2[2]]);
+      var fy = feinMinimum(feld[b2[1] + ',' + (b2[2] - 1)], b2[0], feld[b2[1] + ',' + (b2[2] + 1)]);
+      var cx = (kx0 + kx1) / 2, cy = (ky0 + ky1) / 2;
+      punkte.push({ x: cx, y: cy, u: cx + gx + b2[1] + fx, v: cy + gy + b2[2] + fy, rest: b2[0] });
+    }
+    // 3. affine Abbildung nach kleinsten Quadraten, Ausreisser einmal weg
+    function anpassen(p){
+      if (p.length < 5) return null;
+      var A = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], bu = [0, 0, 0], bv = [0, 0, 0];
+      p.forEach(function(q){
+        var z = [q.x, q.y, 1];
+        for (var i = 0; i < 3; i++){ for (var j = 0; j < 3; j++) A[i][j] += z[i] * z[j]; bu[i] += z[i] * q.u; bv[i] += z[i] * q.v; }
+      });
+      try { return { u: loesen(A.map(function(r){ return r.slice(); }), bu), v: loesen(A.map(function(r){ return r.slice(); }), bv) }; } catch (e) { return null; }
+    }
+    function fehler(m, q){ return Math.hypot(m.u[0] * q.x + m.u[1] * q.y + m.u[2] - q.u, m.v[0] * q.x + m.v[1] * q.y + m.v[2] - q.v); }
+    var restMitte = punkte.map(function(q){ return q.rest; }).sort(function(a, b){ return a - b; })[Math.floor(punkte.length / 2)];
+    punkte = punkte.filter(function(q){ return q.rest <= 3 * restMitte + 4; });
+    var m = anpassen(punkte);
+    if (!m) return null;
+    punkte = punkte.filter(function(q){ return fehler(m, q) <= 0.6; });
+    m = anpassen(punkte);
+    if (!m) return null;
+    // Nur fast reine Verschiebung/Drehung zulassen - alles andere ist ein
+    // Fehlgriff (oder die Hand ist durchs Bild gefahren)
+    if (Math.abs(m.u[0] - 1) > 0.03 || Math.abs(m.v[1] - 1) > 0.03 || Math.abs(m.u[1]) > 0.03 || Math.abs(m.v[0]) > 0.03) return null;
+    return m;
+  }
+  // bild (RGBA) mit der Abbildung m (in Pixeln der Stufe fm) aufs Referenzbild
+  // legen und in summe zaehlen; ausserhalb gilt das Referenzbild
+  function dazuzaehlen(summe, ref, bild, w, h, m, fm){
+    var a = m.u[0], b = m.u[1], c = m.u[2] * fm, d = m.v[0], e = m.v[1], f = m.v[2] * fm;
+    // Pixel i der Stufe hat seine Mitte bei fm * i + (fm - 1) / 2 im vollen
+    // Bild - daher der kleine Ausgleich
+    var k = (fm - 1) / 2, kx = k * (1 - a - b), ky = k * (1 - d - e);
+    for (var y = 0; y < h; y++){
+      var sx = b * y + c + kx, sy = e * y + f + ky, o = y * w * 4;
+      for (var x = 0; x < w; x++, o += 4, sx += a, sy += d){
+        var ix = Math.floor(sx), iy = Math.floor(sy);
+        if (ix < 0 || iy < 0 || ix >= w - 1 || iy >= h - 1){
+          summe[o] += ref[o]; summe[o + 1] += ref[o + 1]; summe[o + 2] += ref[o + 2]; continue;
+        }
+        var fx = sx - ix, fy = sy - iy, q = (iy * w + ix) * 4, q2 = q + w * 4;
+        var w00 = (1 - fx) * (1 - fy), w10 = fx * (1 - fy), w01 = (1 - fx) * fy, w11 = fx * fy;
+        summe[o] += w00 * bild[q] + w10 * bild[q + 4] + w01 * bild[q2] + w11 * bild[q2 + 4] + 0.5 | 0;
+        summe[o + 1] += w00 * bild[q + 1] + w10 * bild[q + 5] + w01 * bild[q2 + 1] + w11 * bild[q2 + 5] + 0.5 | 0;
+        summe[o + 2] += w00 * bild[q + 2] + w10 * bild[q + 6] + w01 * bild[q2 + 2] + w11 * bild[q2 + 6] + 0.5 | 0;
+      }
+    }
+  }
+  // Nimmt bis zu anzahl Videobilder (hoechstens STAPEL_ZEIT ms), richtet sie
+  // auf das erste aus und gibt das Mittel als Leinwand an fertig(leinwand, info)
+  function stapeln(video, anzahl, weiter, fertig){
+    var vw = video.videoWidth, vh = video.videoHeight, z = Math.min(1, STAPEL_SEITE / Math.max(vw, vh));
+    var w = Math.round(vw * z), h = Math.round(vh * z), lang = Math.max(w, h);
+    var arbeit = document.createElement('canvas'); arbeit.width = w; arbeit.height = h;
+    var ctx = arbeit.getContext('2d', { willReadFrequently: true });
+    var fm = Math.max(1, Math.round(lang / 1200)), fk = Math.max(1, Math.round(lang / 400 / fm));
+    var start = Date.now(), ref = null, refM = null, refK = null, summe = null, genutzt = 0, versucht = 0;
+    function klein(gM){ return grauKleinAus(gM, fk); }
+    function naechstes(){
+      if (!weiter()) return;
+      ctx.drawImage(video, 0, 0, w, h);
+      var d = ctx.getImageData(0, 0, w, h).data;
+      versucht++;
+      if (!ref){
+        ref = d; refM = grauKlein(d, w, h, fm); refK = klein(refM);
+        summe = new Uint16Array(w * h * 4);
+        for (var i = 0; i < d.length; i++) summe[i] = d[i];
+        genutzt = 1;
+      } else {
+        var bM = grauKlein(d, w, h, fm), m = ausrichtung(refK, klein(bM), refM, bM, fk);
+        if (m){ dazuzaehlen(summe, ref, d, w, h, m, fm); genutzt++; }
+      }
+      if (versucht < anzahl && Date.now() - start < STAPEL_ZEIT){
+        if (video.requestVideoFrameCallback) video.requestVideoFrameCallback(function(){ naechstes(); });
+        else setTimeout(naechstes, 80);
+        return;
+      }
+      var aus = ctx.createImageData(w, h), o = aus.data;
+      for (var k = 0; k < o.length; k += 4){
+        o[k] = summe[k] / genutzt + 0.5; o[k + 1] = summe[k + 1] / genutzt + 0.5; o[k + 2] = summe[k + 2] / genutzt + 0.5; o[k + 3] = 255;
+      }
+      ctx.putImageData(aus, 0, 0);
+      fertig(arbeit, { versucht: versucht, genutzt: genutzt, ms: Date.now() - start });
+    }
+    naechstes();
+  }
+  // Die kleine Stufe aus der mittleren (nochmals um f verkleinert)
+  function grauKleinAus(a, f){
+    if (f <= 1) return a;
+    var gw = Math.floor(a.w / f), gh = Math.floor(a.h / f), g = new Float32Array(gw * gh);
+    for (var y = 0; y < gh; y++) for (var x = 0; x < gw; x++){
+      var t = 0;
+      for (var j = 0; j < f; j++) for (var i = 0; i < f; i++) t += a.g[(y * f + j) * a.w + x * f + i];
+      g[y * gw + x] = t / (f * f);
+    }
+    return { g: g, w: gw, h: gh };
+  }
   // --- Live-Kamera ----------------------------------------------------------------
   // o.feld      Element, in das der Sucher kommt
   // o.pruefen   function(bild) -> { ok, punkte: [[x, y]...] (px im Bild),
@@ -322,7 +526,7 @@ window.NCWikiBild = (function(){
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && window.isSecureContext !== false;
   }
   function kamera(o){
-    var feld = o.feld, laeuft = true, strom = null, uhr = null, ruhig = 0, letzte = null;
+    var feld = o.feld, laeuft = true, strom = null, uhr = null, ruhig = 0, letzte = null, abgebrochen = false;
     // Hinweis und Knoepfe liegen IM Sucher (oben bzw. unten): Darunter
     // rutschte der Ausloeser auf dem Handy unter den Bildschirmrand, man
     // musste scrollen (Rueckmeldung Oktober 2026). Beim Start scrollt die
@@ -341,7 +545,7 @@ window.NCWikiBild = (function(){
       if (strom) strom.getTracks().forEach(function(t){ t.stop(); });
       feld.innerHTML = ''; feld.hidden = true;
     }
-    knoepfe[1].addEventListener('click', function(){ stopp(); if (o.abbruch) o.abbruch(); });
+    knoepfe[1].addEventListener('click', function(){ abgebrochen = true; stopp(); if (o.abbruch) o.abbruch(); });
     knoepfe[0].addEventListener('click', ausloesen);
     function zeichnen(r, z){
       var w = video.clientWidth, h = video.clientHeight;
@@ -395,13 +599,26 @@ window.NCWikiBild = (function(){
       c.width = video.videoWidth; c.height = video.videoHeight;
       c.getContext('2d').drawImage(video, 0, 0);
       var spur = strom && strom.getVideoTracks()[0];
-      var foto = (window.ImageCapture && spur) ? new Promise(function(ok, fehler){
-        var t = setTimeout(fehler, 3000);
-        new ImageCapture(spur).takePhoto().then(function(blob){ clearTimeout(t); return laden(blob); }).then(ok, fehler);
-      }) : Promise.reject();
-      // Mit dem Foto auch das Videobild: laesst sich das Foto nicht lesen,
-      // nimmt die Auswertung das Videobild
-      foto.then(function(img){ stopp(); o.fertig(img, [c, gut]); }, function(){ stopp(); o.fertig(c, [gut]); });
+      // Wo der Browser ein richtiges Foto mit Autofokus machen kann
+      // (ImageCapture, Chrome auf Android), ist das besser als jedes
+      // Videobild. Sonst (iPhone, Firefox ...) mehrere Videobilder mitteln.
+      // (window.NCWikiKameraStapel: Zahl der Bilder, erzwingt das Mitteln -
+      // fuer die Pruefskripte)
+      var erzwungen = window.NCWikiKameraStapel;
+      if (window.ImageCapture && spur && !erzwungen){
+        var foto = new Promise(function(ok, fehler){
+          var t = setTimeout(fehler, 3000);
+          new ImageCapture(spur).takePhoto().then(function(blob){ clearTimeout(t); return laden(blob); }).then(ok, fehler);
+        });
+        // Mit dem Foto auch das Videobild: laesst sich das Foto nicht lesen,
+        // nimmt die Auswertung das Videobild
+        foto.then(function(img){ stopp(); o.fertig(img, [c, gut]); }, function(){ stopp(); o.fertig(c, [gut]); });
+        return;
+      }
+      stapeln(video, erzwungen || STAPEL, function(){ return !abgebrochen; }, function(gemittelt, info){
+        window.NCWikiKameraStapelInfo = info;
+        stopp(); o.fertig(gemittelt, [c, gut]);
+      });
     }
     navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' },
       width: { ideal: 3840 }, height: { ideal: 2160 } } }).then(function(s){
@@ -415,7 +632,10 @@ window.NCWikiBild = (function(){
     });
     return { stopp: stopp, ausloesen: ausloesen };
   }
-  return { A4: A4, LANGE_SEITE: LANGE_SEITE, Bild: Bild, magenta: magenta, loesen: loesen, abbildung: abbildung,
+  // (stapelTeile: fuer scripts/antwortbogen-pruefen.mjs - misst, wie genau
+  // die Ausrichtung eine bekannte Verschiebung und Drehung findet)
+  return { stapelTeile: { grauKlein: grauKlein, grauKleinAus: grauKleinAus, ausrichtung: ausrichtung },
+           scan: scan, A4: A4, LANGE_SEITE: LANGE_SEITE, Bild: Bild, magenta: magenta, loesen: loesen, abbildung: abbildung,
            ausgleichend: ausgleichend, laden: laden, bildAus: bildAus, istPdf: istPdf, quellen: quellen,
            pdfOeffnen: pdfOeffnen, pdfSeite: pdfSeite,
            kameraMoeglich: kameraMoeglich, kamera: kamera };

@@ -92,6 +92,7 @@
 <table class="ab-punkte" id="ab-punkte"></table>
 <p class="ab-hinweis">{{ i18n "ab_regel" }} {{ i18n "ab_konz" }}</p>
 <p class="ab-legende">{{ i18n "ab_legende" }}</p>
+<label class="ab-schalter"><input type="checkbox" id="ab-original"> {{ i18n "bl_original" }}</label>
 <canvas class="ab-bild" id="ab-bild"></canvas>
 <p class="ab-hinweis" id="ab-unsicher" hidden></p>
 <div class="ab-zeilen" id="ab-zeilen"></div>
@@ -567,14 +568,17 @@
   // Das Bild mit dem, was gelesen wurde: gruen richtig, rot falsch, blau
   // die Loesung, orange um eine Zeile, die bitte angesehen werden soll.
   function zeichnen(l){
-    var c = el('ab-bild'), q = stand.bild.leinwand, s = Math.min(1, 1100 / q.width);
+    // Scan-Ansicht (gerade, weisses Papier) oder das Foto selbst
+    var sc = !el('ab-original').checked && stand.scan;
+    var abb = sc ? function(x, y){ return [(x - sc.x0) * sc.k, (y - sc.y0) * sc.k]; } : stand.abb;
+    var c = el('ab-bild'), q = sc ? sc.leinwand : stand.bild.leinwand, s = Math.min(1, 1100 / q.width);
     c.width = Math.round(q.width * s); c.height = Math.round(q.height * s);
     var ctx = c.getContext('2d');
     ctx.drawImage(q, 0, 0, c.width, c.height);
     function viereck(x, y, b, h, farbe, breite, fuellen){
       ctx.beginPath();
       [[x, y], [x + b, y], [x + b, y + h], [x, y + h]].forEach(function(p, i){
-        var u = stand.abb(p[0], p[1]); ctx[i ? 'lineTo' : 'moveTo'](u[0] * s, u[1] * s); });
+        var u = abb(p[0], p[1]); ctx[i ? 'lineTo' : 'moveTo'](u[0] * s, u[1] * s); });
       ctx.closePath();
       if (fuellen){ ctx.fillStyle = farbe; ctx.fill(); }
       ctx.strokeStyle = farbe; ctx.lineWidth = breite; ctx.stroke();
@@ -610,6 +614,7 @@
     return spaeter(function(){ return ersterBogen(liste); }).then(function(r){
       if (r.fehler){ melden('ab-status', r.fehler, true); return; }
       stand = { bild: r.bild, abb: r.abb, antworten: r.antworten, unsicher: r.unsicher, hinweise: r.hinweise };
+      try { stand.scan = B.scan(r.bild, r.abb, [0, 0, A4[0], A4[1]], 1100); } catch (e) { stand.scan = null; }
       zeigen();
       if (!el('ab-ergebnis').hidden) el('ab-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
     });
@@ -678,6 +683,7 @@
     stand.antworten[+w.getAttribute('data-nr')] = w.value;
     zeigen();
   });
+  el('ab-original').addEventListener('change', function(){ if (stand) zeigen(); });
   el('ab-testsim').addEventListener('change', function(){
     el('ab-schluessel').hidden = !eigen();
     if (stand) zeigen();

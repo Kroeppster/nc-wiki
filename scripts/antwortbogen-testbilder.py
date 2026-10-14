@@ -141,8 +141,11 @@ def foto(scan, drehung, schraeg, rand, schatten, unschaerfe, breite_ziel):
     return gross.resize((int(gross.size[0] * z), int(gross.size[1] * z)), Image.LANCZOS)
 
 
-def video(bild, aus, w, h, leer=15, voll=15):
-    """y4m (YUV 4:2:0) für --use-file-for-fake-video-capture."""
+def video(bild, aus, w, h, leer=15, voll=15, rauschen=0.0, wackeln=False):
+    """y4m (YUV 4:2:0) für --use-file-for-fake-video-capture. rauschen:
+    Bildrauschen (Standardabweichung) je Bild neu; wackeln: jedes Bild leicht
+    verschoben und gedreht wie aus der Hand - für das Mitteln mehrerer
+    Videobilder (bild-lesen.html, stapeln)."""
     def yuv(im):
         a = np.asarray(im.convert('RGB'), dtype=np.float32)
         y = 0.299 * a[..., 0] + 0.587 * a[..., 1] + 0.114 * a[..., 2]
@@ -160,7 +163,19 @@ def video(bild, aus, w, h, leer=15, voll=15):
         f.write(b'YUV4MPEG2 W%d H%d F10:1 Ip A1:1 C420jpeg\n' % (w, h))
         for i in range(leer + voll):
             f.write(b'FRAME\n')
-            f.write(a if i < leer else b)
+            if i < leer:
+                f.write(a)
+            elif not rauschen and not wackeln:
+                f.write(b)
+            else:
+                bildchen = mit
+                if wackeln:
+                    bildchen = mit.rotate(random.uniform(-0.3, 0.3), resample=Image.BICUBIC, fillcolor=(92, 84, 76),
+                                          translate=(random.uniform(-4, 4), random.uniform(-4, 4)))
+                arr = np.asarray(bildchen, dtype=np.float32)
+                if rauschen:
+                    arr = arr + np.random.normal(0, rauschen, arr.shape)
+                f.write(yuv(Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))))
 
 
 def main():
@@ -249,6 +264,11 @@ def main():
     # erst eineinhalb Sekunden leerer Tisch, dann das schräge Foto
     video(os.path.join(ordner, 'foto-schraeg.jpg'), os.path.join(ordner, 'kamera.y4m'), 1080, 1440)
     erwartet['_kamera'] = {'datei': 'kamera.y4m', 'antworten': erwartet['foto-schraeg.jpg']['antworten']}
+    # Dasselbe verrauscht und wackelnd, für das Mitteln mehrerer Videobilder:
+    # der Bogen in hellem Bleistift, wo ein einzelnes verrauschtes Bild nicht reicht
+    video(os.path.join(ordner, 'foto-bleistift.jpg'), os.path.join(ordner, 'kamera-wackelt.y4m'), 1080, 1440,
+          voll=45, rauschen=30, wackeln=True)
+    erwartet['_kamera_wackelt'] = {'datei': 'kamera-wackelt.y4m', 'antworten': erwartet['foto-bleistift.jpg']['antworten']}
     with open(os.path.join(ordner, 'erwartet.json'), 'w') as f:
         json.dump(erwartet, f, indent=1)
     print('geschrieben:', ', '.join(erwartet))

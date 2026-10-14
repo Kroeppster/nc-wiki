@@ -1911,6 +1911,8 @@ body.pm-aktiv{overflow:hidden;}
 .ab-punkte td:last-child,.ab-punkte th:last-child{text-align:right;white-space:nowrap;}
 .ab-total td{font-weight:700;border-bottom:0;}
 .ab-legende{margin:var(--space-4) 0 var(--space-2);font-size:var(--text-sm);color:var(--color-ink-soft);}
+.ab-schalter{display:inline-flex;align-items:center;gap:var(--space-2);margin:0 0 var(--space-2);font-size:var(--text-sm);color:var(--color-ink-soft);cursor:pointer;}
+.ab-schalter input{accent-color:var(--color-signal);}
 /* Das Foto: immer hell, wie die Testheft-Seiten der Generatoren */
 .ab-bild{display:block;max-width:100%;height:auto;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:#fff;}
 .ab-zeilen{margin-top:var(--space-4);display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:var(--space-3);align-items:start;}

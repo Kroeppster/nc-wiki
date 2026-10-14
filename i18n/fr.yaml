@@ -414,6 +414,8 @@ bl_kamera_naeher: "Approche-toi un peu."
 bl_kamera_ausloesen: "Déclencher maintenant"
 bl_kamera_abbrechen: "Annuler"
 bl_kamera_aufnahme: "Prise de vue …"
+# Ergebnis: gerade gerückte «Scan-Ansicht» oder das Foto selbst
+bl_original: "Afficher la photo originale"
 ab_live_kamera: "Caméra en direct"
 ab_kamera_ecken: "{n} des 4 coins noirs visibles – cadre toute la feuille."
 ab_kamera_kein: "Coins trouvés, mais aucune feuille de réponses reconnue. Toute la feuille est-elle dans l’image ?"

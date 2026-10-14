@@ -790,7 +790,14 @@ Formatierungstools (`werkzeug/auswertung.py`), nach JavaScript übertragen
 (`layouts/partials/bausteine/antwortbogen-auswertung.html`, Kommentarkopf lesen; das
 Gemeinsame – Bild, Laden, PDF, Live-Kamera – steht in `bausteine/bild-lesen.html`). Die
 **Live-Kamera** sucht die vier schwarzen Ecken schon im Sucher und löst selbst aus, sobald
-der Bogen ruhig liegt; wo sie nicht geht, bleibt «Foto aufnehmen» (Kamera-App). Alle
+der Bogen ruhig liegt; wo sie nicht geht, bleibt «Foto aufnehmen» (Kamera-App). Beim Auslösen
+macht sie, wo der Browser es kann (Chrome auf Android), ein richtiges Foto; sonst (iPhone,
+Firefox …) nimmt sie bis zu fünf Videobilder in höchstens 2,5 s, richtet sie aufeinander aus
+(5 × 5 Kacheln, affine Abbildung) und mittelt sie – weniger Rauschen, feine
+Bleistiftstriche bleiben (`stapeln` in `bild-lesen.html`; geprüft in `antwortbogen-pruefen.mjs`).
+Das Ergebnisbild zeigt standardmässig eine **Scan-Ansicht** (gerade gerückt, Papier weiss,
+`scan` in `bild-lesen.html`); «Originalfoto zeigen» schaltet aufs Foto um. Gelesen wird immer
+im Originalbild. Alle
 Testsimulationen seit 2022 haben denselben Bogen. Die Lösungen stehen in
 `data/antwortbogen.yaml` und werden **nicht von Hand** gepflegt: Für eine neue
 Testsimulation das Lösungs-PDF wie gewohnt hochladen, in `scripts/antwortbogen-loesungen.py`
