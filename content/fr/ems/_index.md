@@ -126,6 +126,6 @@ Si tu dois deviner, un système fixe augmente tes chances – par exemple toujou
 
 Tu as terminé le test d'aptitudes – c'est une belle performance, fais-toi plaisir ! Fin juillet, l'université souhaitée t'informe par courrier (parfois recommandé) ou par e-mail de l'attribution des places d'études – assure-toi de pouvoir réceptionner ton courrier. Si tu as obtenu une place, tu dois la confirmer début août dans le délai fixé par l'université, en général dans les 10 jours.
 
-## Témoignages
+## Pour aller plus loin
 
-Jette un coup d'œil aux [témoignages](/ems/erfahrungsberichte) des participant·e·s précédent·e·s – ou [soumets le tien](/ems/erfahrungsberichte/bericht-einreichen).
+Tu trouveras ici toutes les pages consacrées à l'EMS. Comment d'autres ont vécu le test, tu le découvres dans les [témoignages](/ems/erfahrungsberichte) – tu peux aussi [soumettre le tien](/ems/erfahrungsberichte/bericht-einreichen).

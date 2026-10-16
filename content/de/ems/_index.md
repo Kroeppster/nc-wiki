@@ -122,6 +122,6 @@ Wenn du raten musst, erhöht ein festes Schema deine Chancen, zum Beispiel immer
 
 Du hast den Eignungstest hinter dir. Das ist eine starke Leistung, gönn dir etwas. Ende Juli informiert dich deine Wunsch-Universität per Post (teilweise eingeschrieben) oder per E-Mail über die Zuteilung der Studienplätze. Sorge dafür, dass du die Post entgegennehmen kannst. Hast du einen Studienplatz erhalten, bestätigst du ihn Anfang August innert der Frist der Universität, in der Regel innerhalb von zehn Tagen.
 
-## Erfahrungsberichte
+## Weiterführende Informationen
 
-Lies die [Erfahrungsberichte](/ems/erfahrungsberichte) früherer Teilnehmender oder [reiche selbst einen ein](/ems/erfahrungsberichte/bericht-einreichen).
+Hier findest du alle Seiten rund um den EMS. Wie andere den Test erlebt haben, liest du in den [Erfahrungsberichten](/ems/erfahrungsberichte) – du kannst auch [selbst einen einreichen](/ems/erfahrungsberichte/bericht-einreichen).

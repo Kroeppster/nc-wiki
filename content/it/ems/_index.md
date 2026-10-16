@@ -122,6 +122,6 @@ Se devi tirare a indovinare, uno schema fisso aumenta le tue probabilità – pe
 
 Hai terminato il test attitudinale – è un grande risultato, concediti qualcosa! A fine luglio l'università desiderata ti informa per posta (in parte raccomandata) o via e-mail sull'assegnazione dei posti di studio – assicurati di poter ricevere la posta. Se hai ottenuto un posto, devi confermarlo a inizio agosto entro il termine dell'università, di solito entro 10 giorni.
 
-## Testimonianze
+## Ulteriori informazioni
 
-Dai un'occhiata alle [testimonianze](/ems/erfahrungsberichte) di chi ha partecipato in passato – oppure [invia la tua](/ems/erfahrungsberichte/bericht-einreichen).
+Qui trovi tutte le pagine dedicate all'EMS. Come altri hanno vissuto il test lo leggi nelle [testimonianze](/ems/erfahrungsberichte) – puoi anche [inviare la tua](/ems/erfahrungsberichte/bericht-einreichen).
