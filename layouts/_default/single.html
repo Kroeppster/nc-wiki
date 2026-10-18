@@ -73,7 +73,7 @@
       {{/* Nur bei Erfahrungsberichten: Jahr/Ort-Angabe und Schlagwort-Pills
            unter dem Titel anzeigen */}}
       {{ if and .Params.name .Params.jahr }}
-      <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
+      <p class="report-meta">{{ i18n "ems_kurz" }} {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
       {{/* Die Schlagworte sind LINKS auf die jeweilige Tag-Seite. Vorher
            waren es reine Beschriftungen - dadurch baute Hugo rund 84
            Tag-Seiten, auf die nichts verwies: Sie existierten, waren aber

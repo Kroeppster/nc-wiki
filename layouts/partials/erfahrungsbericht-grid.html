@@ -74,7 +74,7 @@
       <span class="avatar avatar-{{ $colorIdx }}" aria-hidden="true">{{ $initials }}</span>
       <div>
         <h2>{{ $name }}</h2>
-        <p class="report-meta">EMS {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
+        <p class="report-meta">{{ i18n "ems_kurz" }} {{ .Params.jahr }}{{ with .Params.ort }} · {{ . }}{{ end }}</p>
       </div>
     </div>
     {{ partial "card-excerpt.html" . }}
