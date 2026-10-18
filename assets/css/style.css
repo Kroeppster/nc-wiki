@@ -701,7 +701,8 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    standardmaessig ausgeblendet und werden erst sichtbar, wenn das Skript die
    Klasse "js-compare" setzt: Ohne JavaScript koennte man zwar ankreuzen, aber
    nichts wuerde passieren - dann lieber gar nicht erst anbieten. */
-.compare-col,.uniguide-compare-hint{display:none;}
+.compare-col,.uniguide-leer{margin:var(--space-4) 0 0;color:var(--color-ink-soft);font-size:var(--text-sm);}
+.uniguide-compare-hint{display:none;}
 .js-compare .uniguide-compare-hint{display:block;color:var(--color-ink-faint);font-size:var(--text-sm);margin:0 0 var(--space-4);}
 .js-compare th.compare-col,.js-compare td.compare-col{display:table-cell;}
 /* Ueberschrift der Ankreuz-Spalte: schmal halten, der Text darf umbrechen. */

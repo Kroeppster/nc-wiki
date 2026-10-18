@@ -81,9 +81,9 @@
   bereich: zulassung
   fehlt: true
   hinweis:
-    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18.08.2025)"
-    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18.08.2025)"
-    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18.08.2025)"
+    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18. August 2025)"
+    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18 août 2025)"
+    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18 agosto 2025)"
   breite: 18
 
 - feld: plaetze_2_jahr
@@ -93,9 +93,9 @@
   tabelle: false
   bereich: zulassung
   hinweis:
-    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18.08.2025)"
-    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18.08.2025)"
-    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18.08.2025)"
+    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18. August 2025)"
+    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18 août 2025)"
+    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18 agosto 2025)"
   breite: 16
 
 - feld: plaetze_master
@@ -105,9 +105,9 @@
   tabelle: false
   bereich: zulassung
   hinweis:
-    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18.08.2025)"
-    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18.08.2025)"
-    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18.08.2025)"
+    de: "swissuniversities, Aufnahmekapazität Studienjahr 2026/27 (Stand 18. August 2025)"
+    fr: "swissuniversities, capacités d'accueil année académique 2026/27 (état au 18 août 2025)"
+    it: "swissuniversities, capacità d'accoglienza anno accademico 2026/27 (stato al 18 agosto 2025)"
   breite: 18
 
 - feld: wohnsitzvorteil

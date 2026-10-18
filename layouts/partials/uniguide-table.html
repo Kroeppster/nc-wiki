@@ -67,7 +67,7 @@
   <div class="report-filters" role="group" aria-label="{{ i18n "uniguide_table_filter_lang_label" }}">
     <button type="button" class="filter-pill is-active" data-filter-group="sprache" data-filter-value="all" aria-pressed="true">{{ i18n "uniguide_table_all" }}</button>
     {{ range $sprachen }}
-    <button type="button" class="filter-pill" data-filter-group="sprache" data-filter-value="{{ . }}" aria-pressed="false">{{ or (i18n (printf "sprache_%s" .)) . }}</button>
+    <button type="button" class="filter-pill" data-filter-group="sprache" data-filter-value="{{ . }}" aria-pressed="false">{{ or (i18n (printf "sprache_%s" .)) . | strings.FirstUpper }}</button>
     {{ end }}
   </div>
   <div class="report-filters" role="group" aria-label="{{ i18n "uniguide_table_filter_ems_label" }}">
@@ -122,6 +122,8 @@
     </tbody>
   </table>
 </div>
+{{/* Passt keine Universität zu den Filtern, steht sonst nur der Tabellenkopf da. */}}
+<p class="uniguide-leer" id="uniguide-leer" role="status" hidden>{{ i18n "uniguide_table_leer" }}</p>
 {{ with $noten }}
 <ol class="uniguide-hinweise">
   {{ range $i, $n := . }}<li id="uniguide-hinweis-{{ add $i 1 }}">{{ $n }}</li>{{ end }}
@@ -195,12 +197,16 @@
   var rows = table.querySelectorAll('tbody tr');
   var active = { sprache: 'all', ems: 'all' };
 
+  var leer = document.getElementById('uniguide-leer');
   function apply(){
+    var sichtbar = 0;
     rows.forEach(function(row){
       var okSprache = active.sprache === 'all' || row.getAttribute('data-sprachen').split('|').indexOf(active.sprache) !== -1;
       var okEms = active.ems === 'all' || row.getAttribute('data-ems') === active.ems;
       row.hidden = !(okSprache && okEms);
+      if(!row.hidden) sichtbar++;
     });
+    if(leer) leer.hidden = sichtbar > 0;
   }
 
   document.querySelectorAll('.uniguide-filters .filter-pill').forEach(function(btn){
@@ -248,7 +254,10 @@
       return;
     }
 
-    bar.hidden = false;
+    /* Ist der Vergleich offen, verdeckt die Leiste (unten fest am Rand) auf
+       dem Handy sonst einen guten Teil davon - der Vergleich hat seinen
+       eigenen Schliessen-Knopf. */
+    bar.hidden = !panel.hidden;
     var vorlage = slugs.length === 1 ? bar.getAttribute('data-selected-one') : bar.getAttribute('data-selected-other');
     zaehler.textContent = vorlage.replace('{count}', slugs.length) + (amLimit ? ' · ' + bar.getAttribute('data-max-message') : '');
 
@@ -257,18 +266,20 @@
     document.getElementById('compare-open').disabled = slugs.length < 2;
 
     /* Ist der Vergleich bereits offen, aktualisiert er sich sofort mit. */
-    if(!panel.hidden && slugs.length < 2){ panel.hidden = true; }
+    if(!panel.hidden && slugs.length < 2){ panel.hidden = true; bar.hidden = false; }
   }
 
   boxen.forEach(function(b){ b.addEventListener('change', zeichnen); });
 
   document.getElementById('compare-open').addEventListener('click', function(){
     panel.hidden = false;
+    bar.hidden = true;
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   document.getElementById('compare-close').addEventListener('click', function(){
     panel.hidden = true;
+    zeichnen();
   });
 
   document.getElementById('compare-reset').addEventListener('click', function(){
