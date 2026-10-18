@@ -30,6 +30,8 @@ nav_toggle_aria_label: "Menü öffnen/schliessen"
 submenu_toggle_aria_label: "Untermenü öffnen"
 search_toggle_aria_label: "Suche öffnen"
 theme_toggle_aria_label: "Farbschema umschalten"
+# Name einer Tabelle, die seitlich scrollt (Vorleseprogramme), wenn keine Überschrift darüber steht
+table_scroll_label: "Tabelle, seitlich verschiebbar"
 lang_switch_aria_label: "Sprache"
 lang_switch_toggle_aria_label: "Sprachauswahl öffnen"
 site_tagline: "Kostenlose EMS-Vorbereitung von Studierenden für Studierende."

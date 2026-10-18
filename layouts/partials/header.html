@@ -80,6 +80,10 @@
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         new PagefindUI({ element: "#search" });
+        // Pagefind beschriftet sein Feld nur mit "title" - Vorleseprogramme
+        // brauchen ein richtiges Label (Text wie Platzhalter, schon übersetzt).
+        var suchfeld = document.querySelector('#search input');
+        if (suchfeld) suchfeld.setAttribute('aria-label', suchfeld.getAttribute('placeholder') || suchfeld.title);
       });
     </script>
 
@@ -105,7 +109,7 @@
          Klassen aus). Jede andere Sprache verlinkt zur übersetzten Version
          DERSELBEN Seite, falls es die gibt - sonst zur Startseite der
          jeweiligen Sprache (besser als ein kaputter Link). */}}
-    <div class="lang-switch has-children" aria-label="{{ i18n "lang_switch_aria_label" }}">
+    <div class="lang-switch has-children" role="group" aria-label="{{ i18n "lang_switch_aria_label" }}">
       <span class="lang-switch-current">{{ .Language.Lang | upper }}</span>
       <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="langSwitchList" aria-label="{{ i18n "lang_switch_toggle_aria_label" }}">
         <svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.2 6 7.8l3.5-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -121,9 +125,9 @@
             {{ end }}
             <li>
               {{ if $translated }}
-              <a href="{{ $translated.RelPermalink }}">{{ $lang | upper }}</a>
+              <a href="{{ $translated.RelPermalink }}" hreflang="{{ $lang }}" lang="{{ $lang }}">{{ $lang | upper }}</a>
               {{ else }}
-              <a href="{{ .Home.RelPermalink }}">{{ $lang | upper }}</a>
+              <a href="{{ .Home.RelPermalink }}" hreflang="{{ $lang }}" lang="{{ $lang }}">{{ $lang | upper }}</a>
               {{ end }}
             </li>
           {{ end }}

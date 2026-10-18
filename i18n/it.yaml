@@ -29,6 +29,8 @@ nav_toggle_aria_label: "Apri/chiudi il menu"
 submenu_toggle_aria_label: "Apri il sottomenu"
 search_toggle_aria_label: "Apri la ricerca"
 theme_toggle_aria_label: "Cambia tema"
+# Name einer Tabelle, die seitlich scrollt (Vorleseprogramme), wenn keine Überschrift darüber steht
+table_scroll_label: "Tabella, scorrimento orizzontale"
 lang_switch_aria_label: "Lingua"
 lang_switch_toggle_aria_label: "Apri la selezione della lingua"
 site_tagline: "Preparazione gratuita all'AMS, da studenti per studenti."

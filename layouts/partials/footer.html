@@ -365,6 +365,26 @@
       if(e.target.closest('.has-children')) return;
       document.querySelectorAll('.has-children.is-open').forEach(closeSubmenu);
     });
+
+    {{/* Escape schliesst zuerst das innerste offene Untermenü, beim nächsten
+         Druck das Handy-Hauptmenü - und setzt den Fokus auf den Knopf, der es
+         geöffnet hat, damit man mit der Tastatur nicht im Leeren steht. */}}
+    document.addEventListener('keydown', function(e){
+      if(e.key !== 'Escape') return;
+      var offen = document.querySelectorAll('.has-children.is-open');
+      if(offen.length){
+        var li = offen[offen.length - 1];
+        closeSubmenu(li);
+        var btn = li.querySelector('.submenu-toggle');
+        if(btn) btn.focus();
+        return;
+      }
+      if(navToggle && nav && nav.classList.contains('is-open')){
+        nav.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.focus();
+      }
+    });
   })();
 
   {{/* ---- Teil 5: "Fehler melden"-Formulare bei PDF-Downloads ----
@@ -497,7 +517,52 @@
       if(evt.target === backdrop){ close(); }
     });
     document.addEventListener('keydown', function(evt){
-      if(evt.key === 'Escape' && !backdrop.hidden){ close(); }
+      if(backdrop.hidden) return;
+      if(evt.key === 'Escape'){ close(); return; }
+      {{/* Tab bleibt im Fenster (aria-modal): sonst landet der Fokus auf der
+           abgedunkelten Seite dahinter, die man gar nicht sieht. */}}
+      if(evt.key === 'Tab'){
+        var ziele = backdrop.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])');
+        var erstes = ziele[0], letztes = ziele[ziele.length - 1];
+        if(!backdrop.contains(document.activeElement)){ evt.preventDefault(); erstes.focus(); }
+        else if(evt.shiftKey && document.activeElement === erstes){ evt.preventDefault(); letztes.focus(); }
+        else if(!evt.shiftKey && document.activeElement === letztes){ evt.preventDefault(); erstes.focus(); }
+      }
     });
+  })();
+
+  {{/* ---- Teil 9: Tabellen, die seitlich scrollen, per Tastatur erreichbar ----
+       Ist eine Tabelle breiter als ihr Rahmen (.table-scroll, meist auf dem
+       Handy), kann man sie mit der Maus/dem Finger verschieben - mit der
+       Tastatur nur, wenn der Rahmen den Fokus bekommen kann. Dann aber auch
+       nur dann: Ein Tab-Halt auf einer Tabelle, die gar nicht scrollt, stört.
+       Darum wird tabindex je nach Breite gesetzt oder entfernt, beim Laden
+       und bei jeder Grössenänderung. Name für Vorleseprogramme: die
+       Überschrift über der Tabelle, sonst ein allgemeiner Text. */}}
+  (function(){
+    var rahmen = document.querySelectorAll('.table-scroll');
+    if(!rahmen.length || !('ResizeObserver' in window)) return;
+    function name(el){
+      var h = el.previousElementSibling;
+      while(h && !/^H[2-4]$/.test(h.tagName)) h = h.previousElementSibling;
+      return h ? h.textContent.trim() : {{ i18n "table_scroll_label" | jsonify | safeJS }};
+    }
+    function pruefen(el){
+      if(el.scrollWidth > el.clientWidth + 1){
+        if(!el.hasAttribute('tabindex')){
+          el.setAttribute('tabindex', '0');
+          el.setAttribute('role', 'region');
+          el.setAttribute('aria-label', name(el));
+        }
+      } else if(el.getAttribute('tabindex') === '0'){
+        el.removeAttribute('tabindex');
+        el.removeAttribute('role');
+        el.removeAttribute('aria-label');
+      }
+    }
+    var beobachter = new ResizeObserver(function(eintraege){
+      eintraege.forEach(function(e){ pruefen(e.target); });
+    });
+    rahmen.forEach(function(el){ beobachter.observe(el); });
   })();
 </script>
