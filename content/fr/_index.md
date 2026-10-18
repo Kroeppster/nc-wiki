@@ -1,6 +1,6 @@
 ---
 title: "Accueil"
-description: "Préparation gratuite à l'AMS : séries d'exercices, simulations de test et cours pour le test d'aptitudes aux études de médecine – par des étudiant·e·s."
+description: "Préparation gratuite à l'AMS : séries d'exercices, simulations de test et cours pour le test d'aptitudes pour les études de médecine – par des étudiant·e·s."
 menu:
   main:
     identifier: home

@@ -41,6 +41,11 @@
     <div class="team-photo">
       {{ partial "image.html" (dict "src" .foto "alt" $name "sizes" "96px") }}
     </div>
+    {{- else if findRE `(?i)vakant|vacant` $name }}
+    {{- /* Unbesetzte Stelle ("Vakant", "Poste vacant", "Posto vacante"):
+           keine Initialen wie bei einer Person ("V", "PV"), sondern ein
+           leerer, gestrichelter Kreis. */}}
+    <span class="avatar avatar-lg avatar-vakant" aria-hidden="true"></span>
     {{- else }}
     <span class="avatar avatar-{{ $colorIdx }} avatar-lg" aria-hidden="true">{{ $initials }}</span>
     {{- end }}

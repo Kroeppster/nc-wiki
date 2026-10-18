@@ -1,6 +1,6 @@
 ---
 title: "Pagina iniziale"
-description: "Preparazione gratuita all'AMS: serie di esercizi, simulazioni del test e corsi per il test attitudinale agli studi di medicina – da studenti di medicina."
+description: "Preparazione gratuita all'AMS: serie di esercizi, simulazioni del test e corsi per il test attitudinale per gli studi di medicina – da studenti di medicina."
 menu:
   main:
     identifier: home
