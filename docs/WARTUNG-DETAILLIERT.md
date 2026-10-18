@@ -895,7 +895,10 @@ Uebungsaufgaben (Website)“ zum Filtern. Eigene Adresse später: nur in
 
 **Die Erfahrungsbericht-Adresse nicht umhängen:** Eine Einsendung löst über
 `repository_dispatch` den Workflow `erfahrungsbericht-intake.yml` aus, der Datei und Pull
-Request baut (der dafür nötige GitHub-Token ist nur in Formspree hinterlegt).
+Request baut (der dafür nötige GitHub-Token ist nur in Formspree hinterlegt). Die Datei
+landet im Ordner der Sprache, in der das Formular ausgefüllt wurde (`content/fr/…` usw.),
+mit den Zwischentiteln dieser Sprache. Wer «Früher» als Jahr wählt, bekommt keinen Eintrag
+`jahr:` - vor dem Veröffentlichen im Seitenkopf ergänzen (der PR weist darauf hin).
 
 Das Senden im Hintergrund erledigt ein gemeinsames Skript in
 `layouts/partials/footer.html` für alle Formulare mit der Klasse `report-error`. Ein neues

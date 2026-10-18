@@ -920,7 +920,10 @@ l'inscrire seulement dans `report-error-general.html`.
 
 **Ne pas changer l'adresse des témoignages :** un envoi déclenche via
 `repository_dispatch` le workflow `erfahrungsbericht-intake.yml`, qui crée fichier et pull
-request (le jeton GitHub nécessaire n'est enregistré que dans Formspree).
+request (le jeton GitHub nécessaire n'est enregistré que dans Formspree). Le fichier est
+créé dans le dossier de la langue dans laquelle le formulaire a été rempli (`content/fr/…`
+etc.), avec les intertitres de cette langue. Si « Avant » est choisi comme année, il n'y a
+pas de champ `jahr:` – à compléter dans l'en-tête avant la publication (la PR le rappelle).
 
 L'envoi en arrière-plan est assuré par un script commun dans
 `layouts/partials/footer.html` pour tous les formulaires de classe `report-error`. Un

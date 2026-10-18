@@ -72,10 +72,16 @@ jobs:
             }
 
             const name = req('display_name');
-            const jahr = parseInt(req('ems_jahr'), 10);
-            if (!Number.isInteger(jahr)) {
-              throw new Error(`Ungültiges EMS-Jahr: ${p.ems_jahr}`);
-            }
+            // Im Formular gibt es neben den Jahren die Wahl "früher" (Wert
+            // "frueher"). Dann bleibt das Jahr leer und wird im PR erfragt -
+            // bisher brach die Automatisierung hier ab und der Bericht kam nie an.
+            const jahrRoh = req('ems_jahr');
+            const jahr = /^\d{4}$/.test(jahrRoh) ? parseInt(jahrRoh, 10) : null;
+
+            // Sprache der Seite, auf der das Formular ausgefüllt wurde
+            // (verstecktes Feld "sprache"). Nur bekannte Werte - alles andere
+            // landet wie bisher im deutschen Ordner.
+            const sprache = ['de', 'fr', 'it'].includes(String(p.sprache)) ? String(p.sprache) : 'de';
 
             const ort = (p.studienort ?? '').toString().trim();
             const vorbereitung = (p.vorbereitung ?? '').toString().trim();
@@ -95,6 +101,7 @@ jobs:
               return s
                 .toLowerCase()
                 .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')   // é -> e, à -> a
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/^-+|-+$/g, '') || 'anonym';
             }
@@ -105,7 +112,7 @@ jobs:
             // überschreiben.
             const stamp = Date.now().toString(36);
             const slug = `bericht-${slugify(name)}-${stamp}`;
-            const filePath = `content/de/ems/erfahrungsberichte/${slug}.md`;
+            const filePath = `content/${sprache}/ems/erfahrungsberichte/${slug}.md`;
 
             // JSON.stringify erzeugt gültige YAML-Skalare (YAML ist ein Superset von JSON)
             // und übernimmt dabei automatisch das Escaping von Anführungszeichen etc.
@@ -115,7 +122,7 @@ jobs:
             // "---"-Zeilen ganz oben in der Datei) von Hand zusammen.
             let fm = '---\n';
             fm += `name: ${y(name)}\n`;
-            fm += `jahr: ${jahr}\n`;
+            if (jahr) fm += `jahr: ${jahr}\n`;
             if (ort) fm += `ort: ${y(ort)}\n`;
             fm += `tags: []\n`;
             fm += `draft: true\n`;
@@ -124,10 +131,16 @@ jobs:
             // Baut den eigentlichen Berichtstext mit denselben drei
             // Zwischenüberschriften wie in archetypes/erfahrungsbericht.md -
             // so sehen manuell und automatisch angelegte Berichte gleich aus.
+            // In FR/IT dieselben Fragen wie in den bestehenden Berichten dort.
+            const titel = {
+              de: ['Wie hast du dich vorbereitet?', 'Was hat dir am meisten geholfen?', 'Dein Tipp an zukünftige Teilnehmende?'],
+              fr: ["Comment t'es-tu préparé·e ?", "Qu'est-ce qui t'a le plus aidé·e ?", 'Ton conseil pour les futures candidates et futurs candidats ?'],
+              it: ['Come ti sei preparato·a?', 'Cosa ti ha aiutato·a di più?', 'Il tuo consiglio per le future candidate e i futuri candidati?'],
+            }[sprache];
             let body = '';
-            if (vorbereitung) body += `## Wie hast du dich vorbereitet?\n\n${vorbereitung}\n\n`;
-            if (geholfen) body += `## Was hat dir am meisten geholfen?\n\n${geholfen}\n\n`;
-            if (tipp) body += `## Dein Tipp an zukünftige Teilnehmende?\n\n${tipp}\n`;
+            if (vorbereitung) body += `## ${titel[0]}\n\n${vorbereitung}\n\n`;
+            if (geholfen) body += `## ${titel[1]}\n\n${geholfen}\n\n`;
+            if (tipp) body += `## ${titel[2]}\n\n${tipp}\n`;
 
             fs.mkdirSync(path.dirname(filePath), { recursive: true });
             fs.writeFileSync(filePath, fm + body, 'utf8');
@@ -136,7 +149,8 @@ jobs:
             // (siehe "${{ steps.build.outputs.xxx }}" weiter unten).
             core.setOutput('file_path', filePath);
             core.setOutput('name', name);
-            core.setOutput('jahr', String(jahr));
+            core.setOutput('jahr', jahr ? String(jahr) : 'früher – Jahr bitte im Seitenkopf ergänzen');
+            core.setOutput('sprache', sprache.toUpperCase());
             core.setOutput('slug', slug);
 
       # Öffnet automatisch einen fertigen, review-bereiten Pull Request mit
@@ -146,20 +160,21 @@ jobs:
       - name: Pull Request öffnen
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: "Neuer Erfahrungsbericht: ${{ steps.build.outputs.name }} (EMS ${{ steps.build.outputs.jahr }})"
-          title: "Erfahrungsbericht: ${{ steps.build.outputs.name }} (EMS ${{ steps.build.outputs.jahr }})"
+          commit-message: "Neuer Erfahrungsbericht (${{ steps.build.outputs.sprache }}): ${{ steps.build.outputs.name }}"
+          title: "Erfahrungsbericht (${{ steps.build.outputs.sprache }}): ${{ steps.build.outputs.name }}"
           body: |
             Automatisch aus einer Formular-Einreichung (Formspree) erzeugt.
 
             - **Name:** ${{ steps.build.outputs.name }}
             - **EMS-Jahr:** ${{ steps.build.outputs.jahr }}
+            - **Sprache:** ${{ steps.build.outputs.sprache }}
 
             Bitte vor dem Mergen prüfen (Inhalt, Ton, ggf. Tags in der Datei ergänzen)
             und `draft: true` entfernen bzw. auf `false` setzen, sobald der Bericht
             veröffentlicht werden soll. Die E-Mail-Adresse der einreichenden Person
             wurde absichtlich nicht übernommen und steht nur in Formspree.
           branch: "erfahrungsbericht/${{ steps.build.outputs.slug }}"
-          add-paths: "content/de/ems/erfahrungsberichte/*.md"
+          add-paths: "content/*/ems/erfahrungsberichte/*.md"
           labels: |
             erfahrungsbericht
             needs-review

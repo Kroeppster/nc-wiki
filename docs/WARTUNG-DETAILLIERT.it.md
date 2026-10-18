@@ -901,7 +901,10 @@ inserirlo solo in `report-error-general.html`.
 
 **Non cambiare l'indirizzo dei resoconti:** un invio avvia tramite `repository_dispatch` il
 workflow `erfahrungsbericht-intake.yml`, che crea file e pull request (il token GitHub
-necessario è salvato solo in Formspree).
+necessario è salvato solo in Formspree). Il file viene creato nella cartella della lingua
+in cui è stato compilato il modulo (`content/it/…` ecc.), con i sottotitoli di quella
+lingua. Se come anno si sceglie «Prima», manca il campo `jahr:` – da completare
+nell'intestazione prima della pubblicazione (la PR lo ricorda).
 
 L'invio in background è gestito da uno script comune in `layouts/partials/footer.html` per
 tutti i moduli con la classe `report-error`. Un nuovo modulo in un nuovo punto è un passo

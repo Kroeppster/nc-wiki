@@ -31,7 +31,9 @@
   wird.
   ============================================================================
 */ -}}
-{{- $years := slice 2027 2026 2025 2024 2023 2022 2021 2020 }}
+{{- /* Jahre vom aktuellen rückwärts bis 2020 - wächst jedes Jahr von selbst mit
+       (gebaut wird bei jeder Änderung, also immer mit dem aktuellen Jahr). */ -}}
+{{- $years := seq now.Year -1 2020 }}
 
 <form class="contact-form experience-form" action="https://formspree.io/f/xaewqwoj" method="POST" novalidate>
   <div>
@@ -49,7 +51,9 @@
     <select name="ems_jahr" id="ef-year" required>
       <option value="" disabled selected>{{ i18n "experience_form_year_placeholder" }}</option>
       {{ range $years }}<option value="{{ . }}">{{ . }}</option>{{ end }}
-      <option value="{{ i18n "experience_form_year_earlier" }}">{{ i18n "experience_form_year_earlier" }}</option>
+      {{- /* Fester Wert statt des übersetzten Worts: Der Workflow
+             (erfahrungsbericht-intake.yml) erkennt daran "kein genaues Jahr". */}}
+      <option value="frueher">{{ i18n "experience_form_year_earlier" }}</option>
     </select>
   </div>
   <div>
@@ -85,6 +89,9 @@
 
   {{- /* Von JS beim Absenden befüllt - siehe <script> unten. Kein Unterstrich am Namensanfang
      (ausser _subject), sonst behandelt Formspree das Feld als Steuerfeld statt als Formulardaten. */}}
+  {{- /* Sprache der Seite: Der Workflow legt den Bericht dann in
+         content/<sprache>/ an statt immer im deutschen Ordner. */}}
+  <input type="hidden" name="sprache" value="{{ site.Language.Lang }}">
   <input type="hidden" name="dateiname">
   <input type="hidden" name="dateiinhalt">
   <input type="hidden" name="_subject">
