@@ -235,6 +235,7 @@ pm_fertig_komplett: "La simulazione è terminata."
 pm_block_zaehler: "Blocco {n} di {total}"
 
 pm_abbrechen: "Interrompi"
+pm_schliessen: "Chiudi"
 pm_pause: "Pausa"
 pm_weiter: "Continua"
 pm_pausiert: "In pausa"

@@ -304,6 +304,7 @@
       "pausiert" (i18n "pm_pausiert")
       "pauseHinweis" (i18n "pm_pause_hinweis")
       "abbrechen" (i18n "pm_abbrechen")
+      "schliessen" (i18n "pm_schliessen")
       "abbrechenFrage" (i18n "pm_abbrechen_frage")
       "escHinweis" (i18n "pm_esc_hinweis")
       "blockZaehler" (i18n "pm_block_zaehler")
@@ -607,7 +608,7 @@
       sprich(T.stopp + ' ' + el.anweisung.textContent, null,
              mehrereBloecke ? 'fertig-komplett' : 'fertig-einzeln');
       el.los.hidden = false;
-      el.los.textContent = T.abbrechen;
+      el.los.textContent = T.schliessen;
       return;
     }
 
@@ -680,7 +681,11 @@
 
   document.addEventListener('keydown', function(e){
     if(!lauf) return;
-    if(e.key === 'Escape'){ if(window.confirm(T.abbrechenFrage)) beenden(); }
+    if(e.key === 'Escape'){
+      /* Am Ende (Knopf "Schliessen" sichtbar) gibt es nichts mehr abzubrechen. */
+      if(buehne.classList.contains('is-stopp') && !el.los.hidden) beenden();
+      else if(window.confirm(T.abbrechenFrage)) beenden();
+    }
     if(e.key === ' ' && buehne.classList.contains('is-uhr')){ e.preventDefault(); pauseUmschalten(); }
   });
 
@@ -718,7 +723,10 @@
     }
     function aufgabenZahl(tr, b){
       var feld = tr.querySelector('.pm-c-aufgaben');
-      return feld ? zahl(feld, b.aufgaben) : '';
+      if(!feld) return '';
+      /* Weniger als eine Aufgabe gibt es nicht (wie min="1" im Feld) - sonst
+         bekäme "0" die volle Zeit und "-3" fünf Sekunden. */
+      return Math.max(1, zahl(feld, b.aufgaben));
     }
 
     /* Zeit aus der Aufgabenzahl, im Tempo des echten EMS: Wer die Hälfte der
@@ -803,18 +811,25 @@
     function ausText(text){
       var teile = String(text).split(';').filter(Boolean);
       if(!teile.length) return false;
-      var gewaehlteKeys = [], pausen = [];
+      var gewaehlteKeys = [];
       teile.forEach(function(t){
         var f = t.split(':');
-        if(f[0] === 'b') gewaehlteKeys.push({ key: f[1], aufgaben: f[2], sek: ausZeit(f[3], 0) });
-        if(f[0] === 'p') pausen.push(Math.round(ausZeit(f[1], 0) / 60));
+        if(f[0] === 'b') gewaehlteKeys.push({ key: f[1], aufgaben: f[2], sek: ausZeit(f[3], 0), pause: 0 });
+        /* Eine Pause gehört zum Block davor: Ihre Stelle zählt, nicht nur
+           ihre Länge. (Pausen von 0 Minuten stehen gar nicht im Link.) */
+        if(f[0] === 'p' && gewaehlteKeys.length){
+          gewaehlteKeys[gewaehlteKeys.length - 1].pause = Math.round(ausZeit(f[1], 0) / 60);
+        }
       });
       if(!gewaehlteKeys.length) return false;
+      var pausen = [];
       zeilen.forEach(function(tr){
         var key = tr.getAttribute('data-key');
         var treffer = null;
         gewaehlteKeys.forEach(function(g){ if(g.key === key) treffer = g; });
         tr.querySelector('.pm-c-an').checked = !!treffer;
+        tr.querySelector('.pm-c-pause').value = treffer ? treffer.pause : 0;
+        if(treffer) pausen.push(treffer.pause);
         if(treffer){
           if(treffer.sek > 0){
             tr.querySelector('.pm-c-min').value = Math.floor(treffer.sek / 60);
@@ -829,6 +844,8 @@
          überall gleich, dann lässt sich die Zusammenstellung ohne
          Expertenmodus gar nicht darstellen - also wird er eingeschaltet.
          Sonst würde ein geteilter Ablauf beim Öffnen still verändert. */
+      /* Nur die Pausen ZWISCHEN den Blöcken zählen - nach dem letzten gibt es keine. */
+      pausen.pop();
       var alleGleich = pausen.length === 0 || pausen.every(function(x){ return x === pausen[0]; });
       var eigeneZeit = false;
       zeilen.forEach(function(tr){
@@ -843,16 +860,7 @@
         if(gesetzt !== autoSekunden(b, aufgabenZahl(tr, b))) eigeneZeit = true;
       });
       experte.checked = eigeneZeit || !alleGleich;
-      if(alleGleich){
-        pauseAlle.value = pausen.length ? pausen[0] : 0;
-      } else {
-        var n = 0;
-        zeilen.forEach(function(tr){
-          if(tr.querySelector('.pm-c-an').checked && n < pausen.length){
-            tr.querySelector('.pm-c-pause').value = pausen[n]; n++;
-          }
-        });
-      }
+      pauseAlle.value = alleGleich && pausen.length ? pausen[0] : 0;
       return true;
     }
 
@@ -942,7 +950,9 @@
     /* Beim Laden: erst Adresse, dann Speicher, sonst Vorgabe. */
     var ausAdresse = (location.hash.match(/ablauf=([^&]+)/) || [])[1];
     var geladen = false;
-    if(ausAdresse){ geladen = ausText(decodeURIComponent(ausAdresse)); }
+    /* Ein abgeschnittener Link (z. B. halbes "%E0") darf nicht alles
+       abbrechen - dann gilt eben der Speicher bzw. die Vorgabe. */
+    if(ausAdresse){ try{ geladen = ausText(decodeURIComponent(ausAdresse)); }catch(e){ geladen = false; } }
     if(!geladen){
       try{ var gemerkt = localStorage.getItem(SPEICHER); if(gemerkt) ausText(gemerkt); }catch(e){}
     }

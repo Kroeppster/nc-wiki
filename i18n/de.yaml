@@ -242,6 +242,7 @@ pm_fertig_komplett: "Die Simulation ist beendet."
 pm_block_zaehler: "Block {n} von {total}"
 
 pm_abbrechen: "Abbrechen"
+pm_schliessen: "Schliessen"
 pm_pause: "Pause"
 pm_weiter: "Weiter"
 pm_pausiert: "Pausiert"

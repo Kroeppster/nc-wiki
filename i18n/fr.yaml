@@ -236,6 +236,7 @@ pm_fertig_komplett: "La simulation est terminée."
 pm_block_zaehler: "Bloc {n} sur {total}"
 
 pm_abbrechen: "Annuler"
+pm_schliessen: "Fermer"
 pm_pause: "Pause"
 pm_weiter: "Continuer"
 pm_pausiert: "En pause"
