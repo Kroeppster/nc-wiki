@@ -1,4 +1,5 @@
 ---
+newsletter_seite: true
 title: "Annullare l'iscrizione alla newsletter"
 menu:
   newsletter:

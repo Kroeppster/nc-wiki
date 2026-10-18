@@ -1,4 +1,5 @@
 ---
+newsletter_seite: true
 title: "Se désabonner de la newsletter"
 menu:
   newsletter:

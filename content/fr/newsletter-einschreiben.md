@@ -1,4 +1,5 @@
 ---
+newsletter_seite: true
 title: "S'abonner à la newsletter"
 menu:
   newsletter:

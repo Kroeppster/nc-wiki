@@ -1,4 +1,5 @@
 ---
+newsletter_seite: true
 title: "Iscriversi alla newsletter"
 menu:
   newsletter:

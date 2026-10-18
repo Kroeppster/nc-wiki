@@ -1,4 +1,5 @@
 ---
+newsletter_seite: true
 title: "Newsletter abmelden"
 menu:
   newsletter:
