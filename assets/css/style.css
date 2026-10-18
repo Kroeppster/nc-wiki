@@ -1666,6 +1666,33 @@ body.pm-aktiv{overflow:hidden;}
 }
 
 /* ==========================================================================
+   Drucken normaler Seiten
+   ==========================================================================
+   Die Generatoren drucken ihr eigenes Testheft (body.fg-druckt, oben) - alle
+   anderen Seiten bekamen bisher die Bildschirm-Ansicht aufs Papier: Kopfzeile
+   mit Menüknopf und Suche, das Cookie-Banner über dem Text auf jeder Seite,
+   und breite Tabellen (Uniguide) rechts abgeschnitten. Hier bleibt nur der
+   Inhalt, immer hell (auch wenn am Bildschirm der Dunkelmodus an ist). */
+@media print{
+  body:not(.fg-druckt){
+    --color-paper:#fff;--color-surface:#fff;--color-surface-sunken:#F2F4F8;--color-section-alt:#fff;
+    --color-ink:#000;--color-ink-soft:#333;--color-ink-faint:#444;--color-line:#C9CFDB;--color-signal:#1A2F9E;
+    background:#fff !important;color:#000;padding:0 !important;
+  }
+  body:not(.fg-druckt)::before,body:not(.fg-druckt)::after{display:none !important;}
+  body:not(.fg-druckt) :is(header.site,footer.site,.cookie-banner,.alpha-notice-backdrop,.skip-link,
+    .abschnittsliste,.compare-bar,.uniguide-filters,.uniguide-compare-hint,.uniguide-compare,.compare-col,
+    .hero-actions,.support,.brand-band,.weg-modus,.uebungsaufgaben-fehler,.pm-buehne,#search){display:none !important;}
+  body:not(.fg-druckt) td:has(.compare-box){display:none !important;}
+  body:not(.fg-druckt) .seite-raster{display:block !important;}
+  body:not(.fg-druckt) .table-scroll{overflow:visible !important;box-shadow:none !important;}
+  body:not(.fg-druckt) table{font-size:8.5pt;}
+  body:not(.fg-druckt) :is(.card,.table-scroll){box-shadow:none !important;}
+  body:not(.fg-druckt) :is(h1,h2,h3,h4){break-after:avoid;}
+  body:not(.fg-druckt) :is(tr,.card,figure,img){break-inside:avoid;}
+}
+
+/* ==========================================================================
    Figuren-Generator
    ==========================================================================
    Die Figuren sind erzeugte SVGs. Weiss ist fest verdrahtet und folgt NICHT
