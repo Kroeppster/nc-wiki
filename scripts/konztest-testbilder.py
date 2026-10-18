@@ -57,8 +57,9 @@ def bearbeiten(ziele, bis, treffer=0.92, daneben=0.02):
 
 
 def zeichnen(bild, k, markiert, stift, s, breite=1.3):
-    """Wie am EMS verlangt («Bitte nur so markieren» oben auf dem Blatt): mit
-    Bleistift EIN schräger Strich durch das Zeichen, mal / mal \\."""
+    """Wie am EMS verlangt («Bitte nur so markieren» oben auf dem Blatt): EIN
+    schräger Strich durch das Zeichen, mal / mal \\ - mit dickem Fineliner
+    (so empfiehlt es die EMS-Seite), einmal zum Vergleich mit Bleistift."""
     d = ImageDraw.Draw(bild)
     for n, m in enumerate(markiert):
         if m != '1':
@@ -83,13 +84,13 @@ def main():
     leer = Image.frombytes('RGB', (pix.width, pix.height), pix.samples)
     erwartet = {}
     faelle = [
-        # Bleistift in verschiedenen Härten (so verlangt es das Blatt); einmal
-        # Kugelschreiber zum Vergleich. Letzte Spalte: Strichbreite in pt.
-        ('scan.png', (70, 70, 70), None, 1.3),
-        ('foto-gerade.jpg', (95, 95, 95), dict(drehung=1, schraeg=0.01, rand=0.06, schatten=0.25, unschaerfe=0.6, breite_ziel=2400), 1.3),
+        # Dicker Fineliner schwarz oder blau (Empfehlung der EMS-Seite); zum
+        # Vergleich einmal Bleistift. Letzte Spalte: Strichbreite in pt.
+        ('scan.png', (25, 25, 30), None, 1.4),
+        ('foto-gerade.jpg', (30, 45, 150), dict(drehung=1, schraeg=0.01, rand=0.06, schatten=0.25, unschaerfe=0.6, breite_ziel=2400), 1.3),
         ('foto-schraeg.jpg', (20, 40, 140), dict(drehung=4, schraeg=0.035, rand=0.08, schatten=0.4, unschaerfe=0.9, breite_ziel=3000), 1.3),
-        ('foto-kopfueber.jpg', (105, 105, 105), dict(drehung=179, schraeg=0.02, rand=0.05, schatten=0.3, unschaerfe=0.7, breite_ziel=2600), 1.3),
-        ('foto-quer.jpg', (100, 100, 100), dict(drehung=-90, schraeg=0.02, rand=0.08, schatten=0.3, unschaerfe=0.7, breite_ziel=3400), 1.3),
+        ('foto-kopfueber.jpg', (30, 30, 35), dict(drehung=179, schraeg=0.02, rand=0.05, schatten=0.3, unschaerfe=0.7, breite_ziel=2600), 1.3),
+        ('foto-quer.jpg', (25, 40, 140), dict(drehung=-90, schraeg=0.02, rand=0.08, schatten=0.3, unschaerfe=0.7, breite_ziel=3400), 1.3),
         ('foto-bleistift.jpg', (125, 125, 125), dict(drehung=-2, schraeg=0.02, rand=0.07, schatten=0.3, unschaerfe=0.8, breite_ziel=2400), 1.0),
     ]
     for name, stift, einst, breite in faelle:

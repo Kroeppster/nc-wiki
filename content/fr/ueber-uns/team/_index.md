@@ -14,26 +14,26 @@ ressorts:
         rolle: "Co-président"
       - name: "Alessio Iseli"
         rolle: "Passation présidence"
-  - titel: "Coordination Romandie & Tessin"
+  - titel: "Coordination Romandie et Tessin"
     mitglieder:
       - name: "Selina Buchser"
         rolle: "Coordinatrice Romandie"
       - name: "Fabiano Mohr"
-        rolle: "Coordinateur Ticino"
+        rolle: "Coordinateur Tessin"
   - titel: "Offre"
     mitglieder:
       - name: "Poste vacant"
-        rolle: "Cours de Préparation"
+        rolle: "Cours de préparation"
       - name: "Matthias Schütz"
-        rolle: "Séries d'Exercices"
+        rolle: "Séries d'exercices"
       - name: "Gabriel Unglert"
-        rolle: "Simulation de Test"
+        rolle: "Simulation de test"
       - name: "Sabrina Zeller"
-        rolle: "Simulation de Test"
+        rolle: "Simulation de test"
       - name: "Elena Wittig"
-        rolle: "Contrôle Qualité"
+        rolle: "Contrôle qualité"
       - name: "Marlon Seonbuchner"
-        rolle: "Contrôle Qualité"
+        rolle: "Contrôle qualité"
   - titel: "Communication"
     mitglieder:
       - name: "Julia Freiermuth"
@@ -41,19 +41,19 @@ ressorts:
       - name: "Niklas Probst"
         rolle: "Public Relations"
       - name: "Johanna Denz"
-        rolle: "Social & Onboarding"
+        rolle: "Social et onboarding"
       - name: "Edgar Brändle"
-        rolle: "Site Web"
+        rolle: "Site web"
       - name: "Valentina Nocito"
         rolle: "Passation marketing"
       - name: "Isabel Kretschi"
         rolle: "Passation public relations"
-  - titel: "Association & administration"
+  - titel: "Association et administration"
     mitglieder:
       - name: "Valentin Hesselbarth"
         rolle: "Finances"
       - name: "Poste vacant"
-        rolle: "Protocole & Données"
+        rolle: "Protocole et données"
       - name: "Poste vacant"
         rolle: "Sponsoring"
       - name: "Lea Meyer"
@@ -62,15 +62,15 @@ ressorts:
 
 Derrière NCWiki, il y a plus de 110 étudiant·e·s en médecine de toute la Suisse qui s'engagent bénévolement. Nous te présentons ici l'équipe dirigeante actuelle et les responsables de cette saison. Celles et ceux qui ont façonné NCWiki lors des saisons précédentes se trouvent dans les [archives](/ueber-uns/archiv).
 
-## Équipe dirigeante actuelle
+## Équipe dirigeante 2026/27
 
 ```baustein
 team-leitung
 ```
 
-## Équipe saison 2026/27
+## Autres responsables 2026/27
 
-Nous présenterons bientôt ici l'équipe de la saison 2026/27.
+Nous présenterons bientôt ici les autres responsables de cette saison.
 
 ## S'engager
 

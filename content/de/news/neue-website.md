@@ -7,7 +7,7 @@ draft: false
 
 Unsere Website hat ein neues Gesicht: Sie ist jetzt übersichtlicher und moderner, und du findest schneller, was du für deine Vorbereitung auf den Eignungstest für das Medizinstudium (EMS) brauchst.
 
-## Was ist neu?
+## Neuerungen
 
 - **Übersichtlichere Navigation:** Das Hauptmenü ist nach Themen gegliedert (EMS, Unterstützer*innen, Über uns). Über die Untermenüs kommst du direkt zu den wichtigsten Bereichen.
 - **Überarbeitete Übungsserien:** Alle Untertests tragen jetzt ihre offiziellen Namen und sind inhaltlich überarbeitet. Zu jedem gibt es eine kurze Zusammenfassung, Tipps zum Vorgehen und eine Empfehlung, wann und wie oft du üben solltest.

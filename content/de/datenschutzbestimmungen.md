@@ -17,7 +17,7 @@ Website: https://nc-wiki.ch/
 
 ## Allgemeiner Hinweis
 
-Gestützt auf Artikel 13 der schweizerischen Bundesverfassung und den datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
+Gestützt auf Artikel 13 der schweizerischen Bundesverfassung und den datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre Personendaten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
 
 In Zusammenarbeit mit unseren Hosting-Providern bemühen wir uns, die Daten so gut wie möglich vor fremden Zugriffen, Verlusten, Missbrauch oder vor Fälschung zu schützen.
 
@@ -44,17 +44,17 @@ Wir treffen nach Massgabe der gesetzlichen Vorgaben unter Berücksichtigung des 
 
 Zu den Massnahmen gehören insbesondere die Sicherung der Vertraulichkeit, Integrität und Verfügbarkeit von Daten durch Kontrolle des physischen und elektronischen Zugangs zu den Daten als auch des sie betreffenden Zugriffs, der Eingabe, der Weitergabe, der Sicherung der Verfügbarkeit und ihrer Trennung. Ferner berücksichtigen wir den Schutz personenbezogener Daten bereits bei der Entwicklung bzw. Auswahl von Hardware, Software sowie Verfahren entsprechend dem Prinzip des Datenschutzes, durch Technikgestaltung und durch datenschutzfreundliche Voreinstellungen.
 
-## Übermittlung von personenbezogenen Daten
+## Übermittlung von Personendaten
 
-Im Rahmen unserer Verarbeitung von personenbezogenen Daten kommt es vor, dass die Daten an andere Stellen, Unternehmen, rechtlich selbstständige Organisationseinheiten oder Personen übermittelt oder ihnen gegenüber offengelegt werden – zum Beispiel an mit IT-Aufgaben beauftragte Dienstleister oder Anbieter von Diensten, die in die Website eingebunden werden. In solchen Fällen beachten wir die gesetzlichen Vorgaben und schliessen insbesondere entsprechende Verträge bzw. Vereinbarungen, die dem Schutz Ihrer Daten dienen, mit den Empfängern Ihrer Daten ab.
+Im Rahmen unserer Verarbeitung von Personendaten kommt es vor, dass die Daten an andere Stellen, Unternehmen, rechtlich selbstständige Organisationseinheiten oder Personen übermittelt oder ihnen gegenüber offengelegt werden – zum Beispiel an mit IT-Aufgaben beauftragte Dienstleister oder Anbieter von Diensten, die in die Website eingebunden werden. In solchen Fällen beachten wir die gesetzlichen Vorgaben und schliessen insbesondere entsprechende Verträge bzw. Vereinbarungen, die dem Schutz Ihrer Daten dienen, mit den Empfängern Ihrer Daten ab.
 
 ## Datenschutzerklärung für SSL-/TLS-Verschlüsselung
 
 Diese Website nutzt aus Gründen der Sicherheit und zum Schutz der Übertragung vertraulicher Inhalte eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von «http://» auf «https://» wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
 
-## Datenschutzerklärung für Server-Log-Files
+## Datenschutzerklärung für Server-Logdateien
 
-Der Provider dieser Website (GitHub Pages) erhebt und speichert automatisch Informationen in so genannten Server-Log-Files, die Ihr Browser automatisch übermittelt. Dies sind insbesondere Browsertyp und -version, verwendetes Betriebssystem, Referrer-URL und Uhrzeit der Serveranfrage. Diese Daten sind nicht bestimmten Personen zuordenbar; eine Zusammenführung mit anderen Datenquellen findet nicht statt.
+Der Provider dieser Website (GitHub Pages) erhebt und speichert automatisch Informationen in sogenannten Server-Logdateien, die Ihr Browser automatisch übermittelt. Dies sind insbesondere Browsertyp und -version, verwendetes Betriebssystem, Referrer-URL und Uhrzeit der Serveranfrage. Diese Daten sind nicht bestimmten Personen zuordenbar; eine Zusammenführung mit anderen Datenquellen findet nicht statt.
 
 ## Kontaktformular und Erfahrungsberichte
 
@@ -84,7 +84,7 @@ Wir übernehmen keine Verantwortung und Haftung für die Inhalte und die Verfüg
 
 Wir können diese Datenschutzerklärung jederzeit anpassen. Es gilt die jeweils aktuelle, auf dieser Website publizierte Fassung.
 
-## Fragen an den Datenschutzbeauftragten
+## Fragen zum Datenschutz
 
 Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail an info@nc-wiki.ch.
 

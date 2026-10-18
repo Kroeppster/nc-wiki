@@ -1,7 +1,8 @@
 ---
-title: "Se désinscrire"
+title: "Se désabonner de la newsletter"
 menu:
   newsletter:
+    name: "Se désinscrire"
     identifier: newsletter-abmelden
     weight: 2
 ---

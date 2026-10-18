@@ -1,5 +1,5 @@
 ---
-title: "Termini di utilizzo"
+title: "Condizioni d'uso"
 description: "Condizioni d'uso di NCWiki: come si possono usare i nostri contenuti, gli esercizi e la community Discord, e che cosa è vietato a fini commerciali."
 menu:
   legal:
@@ -11,35 +11,35 @@ Le presenti condizioni d'uso si applicano al sito web di NCWiki, a tutti i conte
 
 ## Scopo della nostra offerta
 
-NCWiki è un'associazione di pubblica utilità di studentesse e studenti di medicina. La nostra offerta è gratuita e serve esclusivamente alla preparazione personale delle candidate e dei candidati al test attitudinale per gli studi di medicina (EMS).
+NCWiki è un'associazione di pubblica utilità di studentesse e studenti di medicina. La nostra offerta è gratuita e serve esclusivamente alla preparazione personale delle candidate e dei candidati al test attitudinale per gli studi di medicina (AMS).
 
 ## Diritto d'autore
 
-Tutti i contenuti di questo sito web, in particolare testi, esercizi, simulazioni del test, script dei corsi, grafici e funzioni come la modalità simulazione e i generatori di esercizi, sono protetti dal diritto d'autore. Salvo diversa indicazione esplicita, tutti i diritti appartengono a NCWiki.
+Tutti i contenuti di questo sito web, in particolare testi, esercizi, simulazioni del test, dispense dei corsi, grafici e funzioni come la modalità simulazione e i generatori di esercizi, sono protetti dal diritto d'autore. Salvo diversa indicazione esplicita, tutti i diritti appartengono a NCWiki.
 
 Gli esercizi sono pubblicati con la licenza [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.it). Possono essere condivisi per scopi non commerciali, citando NCWiki. Ogni utilizzo commerciale è vietato.
 
 ## Utilizzo commerciale
 
-Ai sensi delle presenti condizioni sono considerati fornitori commerciali tutte le persone e le imprese che propongono offerte a pagamento per la preparazione all'EMS, al TMS o a test attitudinali simili, per esempio corsi, materiale didattico, ripetizioni, app o piattaforme online. Ne fanno parte anche i loro collaboratori, tutor e incaricati.
+Ai sensi delle presenti condizioni sono considerati fornitori commerciali tutte le persone e le imprese che propongono offerte a pagamento per la preparazione all'AMS, al TMS o a test attitudinali simili, per esempio corsi, materiale didattico, ripetizioni, app o piattaforme online. Ne fanno parte anche i loro collaboratori, tutor e incaricati.
 
 Senza il previo consenso scritto di NCWiki è in particolare vietato:
 
 - copiare, modificare o riprendere nelle proprie offerte in tutto o in parte i contenuti di questo sito web
-- vendere esercizi, simulazioni del test o script dei corsi, utilizzarli in corsi a pagamento o come modello per il proprio materiale
+- vendere esercizi, simulazioni del test o dispense dei corsi, utilizzarli in corsi a pagamento o come modello per il proprio materiale
 - utilizzare o riprodurre la modalità simulazione, i generatori di esercizi o altre funzioni di questo sito web per le proprie offerte
 - entrare nella nostra community Discord o utilizzarne i contenuti
 - partecipare alle nostre simulazioni del test e ai nostri corsi di preparazione
 
 ## Community Discord
 
-La nostra community Discord è aperta esclusivamente alle candidate e ai candidati all'EMS e ai membri di NCWiki. Ai fornitori commerciali è vietato aderirvi. I contenuti della community non possono essere raccolti né riutilizzati al di fuori di Discord.
+La nostra community Discord è aperta esclusivamente alle candidate e ai candidati all'AMS e ai membri di NCWiki. Ai fornitori commerciali è vietato aderirvi. I contenuti della community non possono essere raccolti né riutilizzati al di fuori di Discord.
 
 La pubblicità per offerte a pagamento e il reclutamento di membri per tali offerte non sono consentiti nella community, nemmeno tramite messaggi privati. Possiamo escludere dalla community in qualsiasi momento e senza indicarne i motivi le persone che violano queste regole o che sospettiamo di violarle.
 
 ## Simulazioni del test e corsi di preparazione
 
-I nostri eventi sono rivolti alle candidate e ai candidati all'EMS. Ci riserviamo il diritto di rifiutare iscrizioni senza indicarne i motivi e di escludere persone dagli eventi, in particolare se partecipano per conto di un fornitore commerciale.
+I nostri eventi sono rivolti alle candidate e ai candidati all'AMS. Ci riserviamo il diritto di rifiutare iscrizioni senza indicarne i motivi e di escludere persone dagli eventi, in particolare se partecipano per conto di un fornitore commerciale.
 
 ## Accessi automatizzati
 

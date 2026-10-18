@@ -1,0 +1,10 @@
+{{- /*
+  Der Name einer Uni in der Sprache der Seite: der Titel ihrer Uniguide-Seite
+  (content/<sprache>/ems/uniguide/<slug>.md) - dort steht er übersetzt
+  («Université de Bâle», «Università di Basilea»). Gibt es die Seite nicht,
+  gilt "name" aus data/unis.yaml.
+  Aufruf: partial "uni-name.html" $uni
+*/ -}}
+{{- $n := .name -}}
+{{- with site.GetPage (printf "/ems/uniguide/%s" .slug) }}{{ $n = .Title }}{{ end -}}
+{{- return $n -}}

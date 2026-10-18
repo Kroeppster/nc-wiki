@@ -106,7 +106,7 @@ bloecke:
     aufgaben: "18"
     punkte: "18"
     de: "Textverständnis"
-    fr: "Compréhension de textes"
+    fr: "Compréhension de texte"
     it: "Comprensione del testo"
 
   - key: figuren-reproduktion
@@ -142,12 +142,12 @@ bloecke:
     slug: konzentriertes-arbeiten
     minuten: 8
     aufgaben_de: "1600 Zeichen"
-    aufgaben_fr: "1600 symboles"
+    aufgaben_fr: "1600 signes"
     aufgaben_it: "1600 simboli"
     aufgaben: "1600"
     punkte: "18"
     de: "Konzentriertes und sorgfältiges Arbeiten"
-    fr: "Travail avec soin et concentration"
+    fr: "Travail concentré et soigné"
     it: "Lavoro concentrato e accurato"
 
 # Text der Gesamt-Zeile in der Tabelle. Die Gesamtzeit wird NICHT hier
@@ -156,6 +156,6 @@ bloecke:
 # weil "144 + 1600 Zeichen" keine reine Zahl ist.
 summe:
   aufgaben_de: "144 + 1600 Zeichen"
-  aufgaben_fr: "144 + 1600 symboles"
+  aufgaben_fr: "144 + 1600 signes"
   aufgaben_it: "144 + 1600 simboli"
   punkte: "162"

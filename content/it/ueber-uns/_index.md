@@ -1,6 +1,6 @@
 ---
 title: "Chi siamo"
-description: "Chi siamo: dal 2021 oltre 110 studenti di medicina di tutta la Svizzera si impegnano affinché la preparazione all'EMS sia gratuita per tutti."
+description: "Chi siamo: dal 2021 oltre 110 studenti di medicina di tutta la Svizzera si impegnano affinché la preparazione all'AMS sia gratuita per tutti."
 menu:
   main:
     identifier: ueber-uns
@@ -9,7 +9,7 @@ menu:
 
 ## La nostra missione
 
-Siamo un team di studentesse e studenti di medicina e vogliamo facilitarti la preparazione al test attitudinale per gli studi di medicina (EMS).
+Siamo un team di studentesse e studenti di medicina e vogliamo facilitarti la preparazione al test attitudinale per gli studi di medicina (AMS).
 
 Il tuo risultato il giorno del test e la possibilità di iniziare a settembre gli studi che desideri non devono dipendere dalle tue possibilità economiche. Per questo ti mettiamo a disposizione gratuitamente tutto ciò che ti serve per prepararti bene.
 

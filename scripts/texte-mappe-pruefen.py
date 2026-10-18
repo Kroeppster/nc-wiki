@@ -852,10 +852,11 @@ def ansicht_pruefen(projekt, ordner):
     geaendert = unterschiede(stand, zustand(projekt))
     erwartet = sorted(f'content/{s}/ueber-uns/{x}/_index.md' for s in tb.SPRACHEN for x in ('team', 'archiv'))
     pruef('Neue Saison: Team und Archiv in allen drei Sprachen geaendert', geaendert == erwartet, geaendert)
-    t, a = lesen(projekt, team), lesen(projekt, 'content/de/ueber-uns/archiv/_index.md')
-    pruef('Neue Saison: Team-Seite zeigt 2099/00, Archiv hat die alte Saison samt Leitungsteam',
-          '## Team Saison 2099/00' in t and re.search(r'^### Team Saison \d{4}/\d{2}\n\n\*\*Leitungsteam\*\*', a, re.M)
-          is not None, aus[-300:])
+    t, a = lesen(projekt, team), tb.kopf_trennen(lesen(projekt, 'content/de/ueber-uns/archiv/_index.md'))[1]
+    neu_archiv = re.search(r'^## Saison \d{4}/\d{2}\n\n### Leitungsteam\n\n- \*\*', a, re.M)
+    pruef('Neue Saison: Team-Seite zeigt 2099/00, Archiv hat die alte Saison samt Leitungsteam zuoberst',
+          '## Leitungsteam 2099/00' in t and '## Weitere Verantwortliche 2099/00' in t and 'team-leitung' in t
+          and neu_archiv is not None and neu_archiv.start() == re.search(r'^## ', a, re.M).start(), aus[-300:])
 
 
 def uniguide_pruefen(projekt, ordner):

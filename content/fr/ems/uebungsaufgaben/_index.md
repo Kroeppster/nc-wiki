@@ -1,6 +1,6 @@
 ---
 title: "Séries d'exercices"
-description: "Entraîne-toi pour l'EMS avec 120 séries d'exercices gratuites. Nous te proposons des exercices et leurs solutions pour les huit sous-tests."
+description: "Entraîne-toi pour l'AMS avec 120 séries d'exercices gratuites. Nous te proposons des exercices et leurs solutions pour les huit sous-tests."
 menu:
   main:
     identifier: uebungsaufgaben
@@ -8,6 +8,6 @@ menu:
     weight: 1
 ---
 
-Tu trouveras ici des séries d'exercices gratuites avec solutions pour tous les sous-tests de l'EMS, préparées par des étudiant·e·s en médecine qui ont passé le test eux-mêmes. Pour chaque sous-test, il y a en plus une courte introduction et des conseils éprouvés pour ta préparation.
+Tu trouveras ici des séries d'exercices gratuites avec solutions pour tous les sous-tests de l'AMS, préparées par des étudiant·e·s en médecine qui ont passé le test eux-mêmes. Pour chaque sous-test, il y a en plus une courte introduction et des conseils éprouvés pour ta préparation.
 
 Pour t'entraîner dans les conditions de la journée de test, avec une horloge et des consignes lues à voix haute, utilise le [mode simulation](/ems/testsimulationen#simulationsmodus) sur la page Simulations de test.

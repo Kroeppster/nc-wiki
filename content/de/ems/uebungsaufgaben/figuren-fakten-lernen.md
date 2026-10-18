@@ -26,7 +26,7 @@ Bei beiden geht es um deine Gedächtnisleistung. Im Medizinstudium musst du dir 
 
 ## Zeitpunkt und Häufigkeit des Übens
 
-Figuren und Fakten lernen sind beides Gedächtnisübungen, die nicht täglich sinnvoll sind. Starte frühzeitig, etwa drei Monate vor dem Eignungstest für das Medizinstudium (EMS), mit drei bis vier Einheiten pro Woche. Lass dir am Anfang bewusst mehr Zeit als vorgesehen (z. B. 10 statt 6 Minuten bei Fakten), um verschiedene Strategien auszuprobieren, und reduziere die Zeit erst allmählich, je sicherer du wirst. Im letzten Monat solltest du unter echten Testbedingungen üben: Figuren einprägen davor, Textverständnis dazwischen, dann Fakten einprägen. Stoppe das gezielte Üben einige Tage vor dem EMS, damit der Kopf frei bleibt.
+Figuren und Fakten lernen sind beides Gedächtnisübungen, die nicht täglich sinnvoll sind. Starte frühzeitig, etwa drei Monate vor dem Eignungstest für das Medizinstudium (EMS), mit drei bis vier Einheiten pro Woche. Lass dir am Anfang bewusst mehr Zeit als vorgesehen (z. B. 10 statt 6 Minuten bei Fakten), um verschiedene Strategien auszuprobieren, und reduziere die Zeit erst allmählich, je sicherer du wirst. Im letzten Monat solltest du unter echten Testbedingungen üben: erst Figuren und Fakten einprägen, dann Textverständnis, danach Figuren und Fakten wiedergeben. Stoppe das gezielte Üben einige Tage vor dem EMS, damit der Kopf frei bleibt.
 
 ## Vorgehen beim Lösen
 

@@ -32,7 +32,7 @@ Da es hier vor allem um Übung geht, lohnt sich ein früher Start – idealerwei
 ## Weitere Tipps
 
 - **Kopfrechnen/schriftliches Rechnen üben:** Da am Test kein Taschenrechner erlaubt ist, solltest du auch beim Üben darauf verzichten. Der Schwierigkeitsgrad bleibt bei «Basic-Mathe» – nie sind Integrale o. Ä. gefragt, aber Grundtechniken wie schriftliches Dividieren solltest du parat haben.
-- **Prozente-Trick:** Ein Prozentsatz eines Werts ist dasselbe wie der Wert als Prozentsatz des ursprünglichen Prozentsatzes – 7 % von 50 ist also gleich 50 % von 7, also 3.5. Das funktioniert immer und spart Zeit.
+- **Prozente-Trick:** x % von y ist dasselbe wie y % von x – 7 % von 50 ist also gleich 50 % von 7, also 3.5. Das funktioniert immer und spart Zeit.
 - **Brüche kennen:** Wiederkehrende Dezimalzahlen wie 0.166 als Bruch (⅙) zu erkennen, macht manche Rechnung deutlich einfacher.
 - **Kommastellen beim Multiplizieren/Dividieren verschieben:** Beim Multiplizieren zählst du die Nachkommastellen beider Zahlen zusammen, rechnest ohne Komma und setzt es am Schluss wieder ein. Beim Dividieren machst du Divisor und Dividend gleichermassen kommafrei, bevor du rechnest.
 - **Formeln umstellen üben:** Manche Aufgaben verlangen, eine Formel nach einer bestimmten Grösse oder Einheit aufzulösen – das lässt sich mit physikalischen Formeln gut trainieren.

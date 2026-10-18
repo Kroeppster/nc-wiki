@@ -1,6 +1,6 @@
 ---
 title: "Comprensione del testo"
-description: "Comprensione del testo all'EMS: serie di esercizi gratuite e consigli per cogliere in fretta testi complessi e valutare le affermazioni."
+description: "Comprensione del testo all'AMS: serie di esercizi gratuite e consigli per cogliere in fretta testi complessi e valutare le affermazioni."
 weight: 6
 ---
 
@@ -38,7 +38,7 @@ La comprensione del testo va allenata a lungo termine – inizia circa 2–3 mes
 - **Domande in forma negativa:** con «Che cosa non è corretto?» leggi la domanda con attenzione, per non perdere il «non».
 - **«Qual è la risposta più pertinente?»** non è una domanda vero/falso: solo una risposta contiene esclusivamente affermazioni che si deducono direttamente dal testo.
 
-## Dai resoconti di esperienza
+## Dalle testimonianze
 
 *«Nella comprensione del testo la mia strategia era risolvere solo due dei tre testi – così potevo scegliere i testi e lavorare con più precisione, con uno schizzo e le parole chiave evidenziate già durante la lettura.»*
 
@@ -46,4 +46,4 @@ La comprensione del testo va allenata a lungo termine – inizia circa 2–3 mes
 
 *«Nella comprensione del testo è arrivato un testo per me assolutamente incomprensibile, con domande difficili; l'unica cosa che aiutava era dirsi che anche agli altri stava sicuramente succedendo lo stesso, e continuare a lavorare con ostinazione.»*
 
-Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).
+Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

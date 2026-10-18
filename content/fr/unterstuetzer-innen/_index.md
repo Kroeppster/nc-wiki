@@ -1,6 +1,6 @@
 ---
 title: "Nos soutiens"
-description: "Nos soutiens rendent possible une préparation gratuite à l'EMS. Découvre qui soutient NCWiki et comment toi aussi, tu peux nous soutenir."
+description: "Nos soutiens rendent possible une préparation gratuite à l'AMS. Découvre qui soutient NCWiki et comment toi aussi, tu peux nous soutenir."
 menu:
   main:
     identifier: unterstuetzer-innen

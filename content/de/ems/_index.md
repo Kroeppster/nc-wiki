@@ -24,7 +24,7 @@ Auf der [Website von swissuniversities](https://www.swissuniversities.ch/service
 
 ### Anmeldung
 
-Du musst dich **bis zum 15. Februar 2027** über [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) **anmelden**. Beachte auch die Fristen für andere Studiengänge, falls das dein Plan B ist.
+Du musst dich **bis zum 15. Februar 2027** bei [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) **voranmelden** (MEDON). Die Anmeldung zum EMS selbst folgt im Frühling, siehe Zeitplan unten. Beachte auch die Fristen für andere Studiengänge, falls das dein Plan B ist.
 
 Der Zeitplan von swissuniversities für den Studienstart im Herbst 2027:
 
@@ -41,7 +41,7 @@ Der Zeitplan von swissuniversities für den Studienstart im Herbst 2027:
 
 ### Universität wählen
 
-Bei der Anmeldung gibst du nach Priorität an, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Achte dabei auf zwei Dinge:
+Bei der Voranmeldung gibst du nach Priorität an, an welcher Universität du Human-, Zahn- oder Tiermedizin studieren möchtest. Achte dabei auf zwei Dinge:
 
 - Dein steuerlicher Wohnsitz garantiert dir bei bestandenem EMS einen Studienplatz in deinem Kanton, sofern dort Medizin angeboten wird. Für die Universität Basel gelten beide Basel als Unikanton und bieten diesen Vorteil. Die ETH ist als eidgenössische Hochschule die einzige Ausnahme und gewährt keinen kantonalen Wohnsitzvorteil. Details zu den einzelnen Universitäten findest du in unserem [Uniguide](/ems/uniguide).
 - Manche Universitäten sind beliebter, deshalb brauchst du dort einen höheren Rangplatz als andere Kandidierende. Deine erste Priorität wird immer zuerst berücksichtigt. Beispiel: Du wählst die ETH als erste und die Uni Zürich als zweite Wahl. Die ETH ist für Humanmedizin weniger beliebt als die Uni Zürich. Weil du bei deinem Testresultat zu den besten 1 % gehörst, wirst du deiner Erstwahl (ETH) zugeteilt.
@@ -50,7 +50,7 @@ Bei der Anmeldung gibst du nach Priorität an, an welcher Universität du Human-
 
 Du sparst am EMS wertvolle Zeit, wenn du die Aufgabenstellungen schon kennst. Dafür ist keine zusätzliche Zeit eingerechnet, du kannst sie also direkt zum Lösen nutzen. Mach dich mit den Regeln für das Ausfüllen der Antworten, das Weiterblättern und den Testablauf vertraut.
 
-### Zeitaufwand für eine seriöse Vorbereitung
+### Zeitaufwand für die Vorbereitung
 
 - Hoher Aufwand: Quantitative und formale Probleme, Textverständnis, Medizinisch-naturwissenschaftliches Grundverständnis, Diagramme und Tabellen
 - Mittlerer Aufwand: Figuren und Fakten lernen, Muster zuordnen, Objekte im Raum
@@ -60,10 +60,10 @@ Du sparst am EMS wertvolle Zeit, wenn du die Aufgabenstellungen schon kennst. Da
 | :--- | :---: | :---: | :---: |
 | Muster zuordnen | 1.5–2 | 3–4 | 1 |
 | Medizinisch-naturwissenschaftliches Grundverständnis | 1–2 | 2–3 | 1 |
-| Objekte im Raum | 1–2 | 3–4 | 1 |
+| Objekte im Raum | 1–1.5 | 2–3 | 1 |
 | Quantitative und formale Probleme | 2–3 | 2–3 | 1 |
-| Konzentriertes und sorgfältiges Arbeiten | 1.5–2 | 5–6 | 1 |
-| Figuren und Fakten lernen | 2–3 | 3–4 | 1 |
+| Konzentriertes und sorgfältiges Arbeiten | 1.5–2 | 4–5 | 1 |
+| Figuren und Fakten lernen | 3 | 3–4 | 1 |
 | Textverständnis | 2–3 | 2–3 | 1 |
 | Diagramme und Tabellen | 1–1.5 | 2–3 | 1 |
 
@@ -83,7 +83,7 @@ Am EMS kann nur teilnehmen, wer pünktlich ist. Der Grund für eine Verspätung 
 
 Je nach Testort sind sehr viele Leute im Raum. An der Universität Zürich am Campus Irchel sind es zum Beispiel bis zu 400 Personen. Lass dich davon nicht beirren.
 
-Du trägst die Lösungen auf dem separaten Lösungsblatt ein. Was im Aufgabenheft steht, ignoriert die Bewertung. Bei jeder Aufgabe gibt es genau einen Punkt, leichte und schwierige Aufgaben zählen also gleich viel. Rechne nicht damit, alle Aufgaben zu schaffen – das ist normal. **Es gibt keinen Abzug für falsche Antworten**, trage also auch bei unbearbeiteten Aufgaben eine Lösung ein.
+Du trägst die Lösungen auf dem separaten Lösungsblatt ein. Was im Aufgabenheft steht, ignoriert die Bewertung. Bei jeder Aufgabe gibt es genau einen Punkt, leichte und schwierige Aufgaben zählen also gleich viel. Rechne nicht damit, alle Aufgaben zu schaffen – das ist normal. **Es gibt keinen Abzug für falsche Antworten** (ausser beim Konzentrationstest), trage also auch bei unbearbeiteten Aufgaben eine Lösung ein.
 
 ### Checkliste
 

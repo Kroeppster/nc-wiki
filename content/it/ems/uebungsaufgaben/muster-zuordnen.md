@@ -1,18 +1,18 @@
 ---
 title: "Abbinamento di schemi"
-description: "Abbinamento di schemi all'EMS: serie di esercizi gratuite e consigli collaudati per trovare più in fretta il ritaglio giusto ed evitare gli errori tipici."
+description: "Abbinamento di schemi all'AMS: serie di esercizi gratuite e consigli collaudati per trovare più in fretta il ritaglio giusto ed evitare gli errori tipici."
 weight: 1
 ---
 
 ## Panoramica
 
-L'abbinamento di schemi è il primo sottotest dell'EMS e apre la giornata del test. Per ogni domanda ricevi uno schema complesso e cinque ritagli (da A a E). Gli schemi si trovano nella parte superiore della pagina, i ritagli corrispondenti più in basso sulla stessa pagina. Solo uno dei cinque ritagli si può sovrapporre allo schema in modo esatto e completo, in un punto qualsiasi. Negli altri quattro un dettaglio è stato aggiunto, tolto o modificato. I ritagli non sono né ingranditi o rimpiccioliti, né ruotati o specchiati. Le differenze sono sempre univoche; puntini o imperfezioni di stampa non contano come errori.
+L'abbinamento di schemi è il primo sottotest dell'AMS e apre la giornata del test. Per ogni domanda ricevi uno schema complesso e cinque ritagli (da A a E). Gli schemi si trovano nella parte superiore della pagina, i ritagli corrispondenti più in basso sulla stessa pagina. Solo uno dei cinque ritagli si può sovrapporre allo schema in modo esatto e completo, in un punto qualsiasi. Negli altri quattro un dettaglio è stato aggiunto, tolto o modificato. I ritagli non sono né ingranditi né rimpiccioliti, né ruotati né specchiati. Le differenze sono sempre univoche; puntini o imperfezioni di stampa non contano come errori.
 
 - **Posizione nella giornata del test:** 1° sottotest, seguito dalla comprensione medico-scientifica
 - **Volume:** 18 domande, 18 punti
-- **Tempo:** 16 minuti, cioè poco meno di 53 secondi per domanda
+- **Tempo:** 16 minuti, cioè poco più di 53 secondi per domanda
 
-Il sottotest è pensato apposta perché nel tempo a disposizione di solito non si riescano a svolgere tutte le domande. Se non finisci, quindi, non significa che sia andata male.
+Il sottotest è pensato apposta perché nel tempo a disposizione di solito non si riescono a svolgere tutte le domande. Se non finisci, quindi, non significa che sia andata male.
 
 ## Importanza per gli studi
 
@@ -20,7 +20,7 @@ Si verifica la capacità di confrontare con precisione immagini e strutture e di
 
 ## Tempi e frequenza dell'esercizio
 
-L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1.5–2 mesi prima dell'EMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
+L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1,5–2 mesi prima dell'AMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
 
 Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anche le sessioni di esercizio con questo sottotest. In condizioni realistiche, con cronometro e istruzioni, ti eserciti nella [modalità simulazione](/ems/testsimulationen#simulationsmodus).
 
@@ -36,7 +36,7 @@ Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anc
 
 - **Confrontare direttamente i ritagli simili:** se due ritagli mostrano lo stesso punto dello schema, conviene confrontarli direttamente. Almeno uno dei due è per forza sbagliato.
 - **Provare lo sguardo incrociato:** con questa tecnica incroci volutamente gli occhi in modo che ritaglio e punto dello schema si sovrappongano. Le differenze appaiono allora come zone che tremolano. Alcune persone risolvono così le domande molto più in fretta, altre non ci riescono affatto. Prova la tecnica presto e poi decidi se fa per te.
-- **Non intestardirsi su una domanda:** ogni domanda vale esattamente un punto. Una domanda difficile che ti costa due minuti ti manca per due domande facili.
+- **Non intestardirsi su una domanda:** ogni domanda vale esattamente un punto. Una domanda difficile che ti costa due minuti ti toglie il tempo per due domande facili.
 - **Non piegare il fascicolo:** secondo le direttive ufficiali, le pagine del fascicolo del test non devono essere piegate. Abituati quindi già durante l'esercizio a confrontare schema e ritagli sulla stessa pagina.
 
 ## Errori frequenti
@@ -46,12 +46,12 @@ Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anc
 - **Decidere troppo in fretta:** chi si decide alla prima caratteristica che coincide si lascia sfuggire facilmente una differenza in un altro punto del ritaglio.
 - **Nervosismo all'inizio:** essendo il primo sottotest, l'abbinamento di schemi ti coglie nel momento di massima tensione. Un inizio difficile dice poco sul tuo risultato complessivo.
 
-## Dai resoconti di esperienza
+## Dalle testimonianze
 
 *«Prima delle sessioni di esercizio risolvevo sempre qualche confronto di schemi, per preparare il cervello al primo (e più difficile) compito del vero NC.»*
 
-*«Il primo compito di confronto di schemi l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciarti scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di te non devi mai arrenderti prima dell'ultimo compito.»* Questa persona ha superato l'EMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
+*«Il primo compito di confronto di schemi l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciarti scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di te non devi mai arrenderti prima dell'ultimo compito.»* Questa persona ha superato l'AMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
 
 *«Gli schemi con lo sguardo incrociato valgono davvero tantissimo, per quanto difficili siano gli schemi.»* Un'altra persona ha invece abbandonato lo sguardo incrociato dopo due ore. Quale metodo funziona per te lo scopri solo esercitandoti.
 
-Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).
+Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

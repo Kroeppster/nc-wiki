@@ -1,6 +1,6 @@
 ---
 title: "Soutenir maintenant"
-description: "Soutiens NCWiki par un don par virement ou Twint et aide-nous à garder la préparation à l'EMS gratuite pour toutes et tous."
+description: "Soutiens NCWiki par un don par virement ou Twint et aide-nous à garder la préparation à l'AMS gratuite pour toutes et tous."
 menu:
   main:
     parent: unterstuetzer-innen

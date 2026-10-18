@@ -14,11 +14,11 @@ Du erhältst ein Blatt mit 40 Zeilen zu je 40 Zeichen und markierst nach einer v
 
 Das Blatt ist so umfangreich, dass es kaum vollständig bearbeitet werden kann.
 
-### Wie wird ausgewertet?
+### Auswertung
 
 Dies ist der einzige Untertest, bei dem eine Rangliste zwischen allen Kandidierenden erstellt wird – die Punkte werden anhand dieser Rangliste vergeben. Es gibt also keine feste Mindestanzahl an Zeichen, du musst einfach relativ zu den anderen gut abschneiden.
 
-Für jedes richtig markierte Zeichen gibt es einen Punkt, für jedes falsch markierte oder ausgelassene Zeichen wird ein Punkt abgezogen. Da ein übersprungenes Zeichen dich zusätzlich um die Chance auf einen Punkt bringt, ist Auslassen tendenziell schlechter als ein falsch gesetzter Strich. Insgesamt gibt es 40 Zeilen mit ungefähr gleichmässig verteilten Zeichen – im Schnitt lassen sich etwa zehn pro Zeile markieren, das kann als grobe Orientierung dienen.
+Für jedes richtig markierte Zeichen gibt es einen Punkt, für jedes falsch markierte oder bis zum letzten markierten Zeichen ausgelassene Zeichen wird ein Punkt abgezogen. Da ein übersprungenes Zeichen dich zusätzlich um die Chance auf einen Punkt bringt, ist Auslassen tendenziell schlechter als ein falsch gesetzter Strich. Insgesamt gibt es 40 Zeilen mit ungefähr gleichmässig verteilten Zeichen – im Schnitt lassen sich etwa zehn pro Zeile markieren, das kann als grobe Orientierung dienen.
 
 ## Bedeutung für das Studium
 

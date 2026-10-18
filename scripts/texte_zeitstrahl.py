@@ -39,21 +39,21 @@ BREITEN = {'wann': 34, 'titel': 34, 'text': 34, 'mittel': 34, 'von': 14, 'bis': 
 LOESCHEN = re.compile(r'!\s*(l(ö|oe)schen|supprimer|eliminare)\s*!', re.IGNORECASE)
 
 T = {
-    'de': dict(titel=dict(wann='Zeitpunkt (Anzeige)', titel='Titel', text='Text (nur Angebot)',
+    'de': dict(titel=dict(wann='Zeitpunkt (Anzeige)', titel='Titel', text='Text (offiziell: Zusatzzeile)',
                           mittel='Links: „Titel | Adresse“, eine Zeile je Link', von='Beginn', bis='Ende',
                           art='Art', fuer='Gilt für'),
                hinweis='Zeitstrahl: je Zeile ein Eintrag. Neu: in einer leeren Zeile unten ausfüllen (nötig: Titel '
                'und Beginn). Löschen: !Löschen! in „Titel“. Beginn/Ende als JJJJ-MM-TT; Ende leer = ein Tag. '
                'Art: offiziell oder angebot. Gilt für: mit, ohne oder beide (Umschalter mit/ohne EMS).',
                neu='neu'),
-    'fr': dict(titel=dict(wann="Moment (affichage)", titel='Titre', text="Texte (offre seulement)",
+    'fr': dict(titel=dict(wann="Moment (affichage)", titel='Titre', text="Texte (officiel : ligne complémentaire)",
                           mittel='Liens : « Titre | adresse », une ligne par lien', von='Début', bis='Fin',
                           art='Sorte', fuer='Valable pour'),
                hinweis="Frise : une ligne par entrée. Nouveau : remplir une ligne vide en bas (requis : titre et "
                "début). Supprimer : !Supprimer! dans « Titre ». Début/fin en AAAA-MM-JJ ; fin vide = un jour. "
                "Sorte : offiziell ou angebot. Valable pour : mit, ohne ou beide (sélecteur avec/sans EMS).",
                neu='nouveau'),
-    'it': dict(titel=dict(wann='Momento (visualizzato)', titel='Titolo', text="Testo (solo offerta)",
+    'it': dict(titel=dict(wann='Momento (visualizzato)', titel='Titolo', text="Testo (ufficiale: riga aggiuntiva)",
                           mittel='Link: «Titolo | indirizzo», una riga per link', von='Inizio', bis='Fine',
                           art='Tipo', fuer='Valido per'),
                hinweis="Linea del tempo: una riga per voce. Nuovo: compilare una riga vuota in basso (necessari: "

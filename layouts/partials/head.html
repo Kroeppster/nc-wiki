@@ -39,7 +39,7 @@
      der Seite, ausser bei Erfahrungsberichten (siehe single.html - dort gibt
      es absichtlich kein title-Feld, der Titel wird aus Name+Jahr gebaut). */}}
 {{- $pageTitle := .Title }}
-{{- if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
+{{- if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – %s %v" .Params.name (i18n "ems_kurz") .Params.jahr }}{{ end }}
 {{- /* Schlagwort-Seiten: .Title schreibt Hugo nach englischer Regel gross
        ("Neben Der Matura") und heisst auf der Übersicht in allen Sprachen
        "Tags" - so wie list.html den Titel zeigt, so auch hier. */ -}}

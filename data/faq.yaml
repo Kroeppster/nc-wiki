@@ -33,45 +33,45 @@
 
 
 - id: "was-ist-ems"
-  category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }
+  category: { de: "Über den EMS", fr: "À propos de l'AMS", it: "Informazioni sull'AMS" }
   question:
     de: "Was ist der EMS überhaupt?"
-    fr: "Qu'est-ce que l'EMS exactement ?"
-    it: "Cos'è esattamente l'EMS?"
+    fr: "Qu'est-ce que l'AMS exactement ?"
+    it: "Cos'è esattamente l'AMS?"
   answer:
     de: "Der EMS (Eignungstest für das Medizinstudium) ist ein schriftlicher Test. Die Schweizer Universitäten mit Numerus clausus setzen ihn ein, um Studienplätze für das Medizinstudium zu vergeben. Er findet einmal im Jahr statt und prüft in mehreren Untertests kognitive Fähigkeiten und schulisches Wissen."
-    fr: "L'EMS (test d'aptitudes pour les études de médecine) est un test écrit. Les universités suisses qui appliquent un numerus clausus l'utilisent pour attribuer les places en médecine. Il a lieu une fois par an et évalue, à travers plusieurs sous-tests, des capacités cognitives et des connaissances scolaires."
-    it: "L'EMS (test attitudinale per gli studi di medicina) è un test scritto. Le università svizzere con numerus clausus lo usano per assegnare i posti di medicina. Si svolge una volta all'anno e valuta, attraverso diversi sottotest, capacità cognitive e conoscenze scolastiche."
+    fr: "L'AMS (test d'aptitudes pour les études de médecine) est un test écrit. Les universités suisses qui appliquent un numerus clausus l'utilisent pour attribuer les places en médecine. Il a lieu une fois par an et évalue, à travers plusieurs sous-tests, des capacités cognitives et des connaissances scolaires."
+    it: "L'AMS (test attitudinale per gli studi di medicina) è un test scritto. Le università svizzere con numerus clausus lo usano per assegnare i posti di medicina. Si svolge una volta all'anno e valuta, attraverso diversi sottotest, capacità cognitive e conoscenze scolastiche."
 
 - id: "wann-ems-2027"
-  category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }
+  category: { de: "Über den EMS", fr: "À propos de l'AMS", it: "Informazioni sull'AMS" }
   question:
     de: "Wann findet der EMS 2027 statt?"
-    fr: "Quand aura lieu l'EMS 2027 ?"
-    it: "Quando si svolge l'EMS 2027?"
+    fr: "Quand aura lieu l'AMS 2027 ?"
+    it: "Quando si svolge l'AMS 2027?"
   answer:
     de: "Der EMS 2027 findet am 9. Juli 2027 statt."
-    fr: "L'EMS 2027 aura lieu le 9 juillet 2027."
-    it: "L'EMS 2027 si svolge il 9 luglio 2027."
+    fr: "L'AMS 2027 aura lieu le 9 juillet 2027."
+    it: "L'AMS 2027 si svolge il 9 luglio 2027."
 
 - id: "untertests"
-  category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }
+  category: { de: "Über den EMS", fr: "À propos de l'AMS", it: "Informazioni sull'AMS" }
   question:
     de: "Welche Untertests gibt es beim EMS?"
-    fr: "Quels sont les sous-tests de l'EMS ?"
-    it: "Quali sono i sottotest dell'EMS?"
+    fr: "Quels sont les sous-tests de l'AMS ?"
+    it: "Quali sono i sottotest dell'AMS?"
   answer:
     de: "Der EMS besteht aus neun Untertests, die kognitive Fähigkeiten und schulisches Grundlagenwissen prüfen. Auf unserer Website führen wir Figuren lernen und Fakten lernen zusammen auf, deshalb zeigt die Liste unten acht Einträge."
-    fr: "L'EMS comprend neuf sous-tests qui évaluent des capacités cognitives et des connaissances scolaires de base. Sur notre site, nous regroupons « Apprendre des figures » et « Apprendre des faits », c'est pourquoi la liste ci-dessous compte huit entrées."
-    it: "L'EMS è composto da nove sottotest che valutano capacità cognitive e conoscenze scolastiche di base. Sul nostro sito riuniamo «Imparare figure» e «Imparare fatti», per questo l'elenco qui sotto ha otto voci."
+    fr: "L'AMS comprend neuf sous-tests qui évaluent des capacités cognitives et des connaissances scolaires de base. Sur notre site, nous regroupons « Apprendre des figures » et « Apprendre des faits », c'est pourquoi la liste ci-dessous compte huit entrées."
+    it: "L'AMS è composto da nove sottotest che valutano capacità cognitive e conoscenze scolastiche di base. Sul nostro sito riuniamo «Imparare figure» e «Imparare fatti», per questo l'elenco qui sotto ha otto voci."
   dynamic: "subtests"
 
 - id: "punkte-noetig"
-  category: { de: "Über den EMS", fr: "À propos de l'EMS", it: "Informazioni sull'EMS" }
+  category: { de: "Über den EMS", fr: "À propos de l'AMS", it: "Informazioni sull'AMS" }
   question:
     de: "Wie viele Punkte brauchst du beim EMS für die Zulassung?"
-    fr: "Combien de points faut-il obtenir à l'EMS pour être admis·e ?"
-    it: "Quanti punti servono all'EMS per essere ammessi?"
+    fr: "Combien de points faut-il obtenir à l'AMS pour être admis·e ?"
+    it: "Quanti punti servono all'AMS per essere ammessi?"
   answer:
     de: "Es gibt keine feste Mindestpunktzahl. Die Zulassung läuft über ein Quotenverfahren (Numerus clausus): Du wirst zugelassen, wenn du in deinem Jahrgang an der jeweiligen Universität zu den Bestplatzierten gehörst. Wie viele Punkte dafür nötig sind, hängt von der Zahl der Studienplätze und der Konkurrenz ab. Der Wert ändert sich von Jahr zu Jahr und von Universität zu Universität. Verbindliche, aktuelle Angaben findest du nur bei den Universitäten und bei swissuniversities."
     fr: "Il n'existe pas de score minimal fixe. L'admission se fait par un système de quota (numerus clausus) : sont admis·es les candidat·e·s les mieux classé·e·s de l'année et de l'université concernées – le score nécessaire dépend du nombre de places disponibles et de la concurrence de l'année en question, et varie donc d'une année et d'une université à l'autre. Seules les universités et swissuniversities peuvent fournir des informations actuelles et contraignantes."
@@ -87,12 +87,12 @@
   category: { de: "Zulassung und Universitäten", fr: "Admission et universités", it: "Ammissione e università" }
   question:
     de: "Brauche ich für jede Schweizer Universität den EMS?"
-    fr: "L'EMS est-il nécessaire pour toutes les universités suisses ?"
-    it: "L'EMS è necessario per tutte le università svizzere?"
+    fr: "L'AMS est-il nécessaire pour toutes les universités suisses ?"
+    it: "L'AMS è necessario per tutte le università svizzere?"
   answer:
     de: "Nein. Die meisten Deutschschweizer Universitäten und die USI Lugano setzen den EMS voraus. Genf, Lausanne und Neuenburg verwenden ein anderes Verfahren ohne EMS: Der Studienbeginn ist offen, nach dem 1. Jahr folgt eine Eliminationsprüfung."
-    fr: "Non. La plupart des universités de Suisse alémanique ainsi que l'USI Lugano exigent l'EMS. Genève, Lausanne et Neuchâtel utilisent en revanche une autre procédure sans EMS (admission ouverte en 1ère année avec examen éliminatoire en fin d'année)."
-    it: "No. La maggior parte delle università della Svizzera tedesca e l'USI Lugano richiedono l'EMS. Ginevra, Losanna e Neuchâtel utilizzano invece una procedura diversa senza EMS (iscrizione aperta al 1° anno con esame eliminatorio al termine dell'anno)."
+    fr: "Non. La plupart des universités de Suisse alémanique ainsi que l'USI Lugano exigent l'AMS. Genève, Lausanne et Neuchâtel utilisent en revanche une autre procédure sans AMS (admission ouverte en 1ère année avec examen éliminatoire en fin d'année)."
+    it: "No. La maggior parte delle università della Svizzera tedesca e l'USI Lugano richiedono l'AMS. Ginevra, Losanna e Neuchâtel utilizzano invece una procedura diversa senza AMS (iscrizione aperta al 1° anno con esame eliminatorio al termine dell'anno)."
   link:
     href: "ems/uniguide/"
     label:
@@ -132,8 +132,8 @@
   category: { de: "Unser Angebot", fr: "Notre offre", it: "La nostra offerta" }
   question:
     de: "Wie bereite ich mich mit dem Material von NCWiki auf den EMS vor?"
-    fr: "Comment me préparer à l'EMS avec le matériel de NCWiki ?"
-    it: "Come mi preparo all'EMS con il materiale di NCWiki?"
+    fr: "Comment me préparer à l'AMS avec le matériel de NCWiki ?"
+    it: "Come mi preparo all'AMS con il materiale di NCWiki?"
   answer:
     de: "Am besten kombinierst du die Übungsserien zu den einzelnen Untertests, unsere realitätsnahen Testsimulationen und, falls gewünscht, einen unserer Vorbereitungskurse."
     fr: "L'idéal est de combiner nos exercices par sous-test, nos simulations de test proches de la réalité et, si tu le souhaites, l'un de nos cours de préparation."
@@ -153,7 +153,7 @@
     it: "Ci sono testimonianze di ex partecipanti?"
   answer:
     de: "Ja. Ehemalige Teilnehmende berichten dort, wie sie sich vorbereitet haben und was ihnen am meisten geholfen hat. Du kannst dort auch selbst einen Bericht einreichen."
-    fr: "Oui. D'ancien·ne·s participant·e·s y racontent comment ils/elles se sont préparé·e·s et ce qui les a le plus aidé·e·s. Tu peux aussi y soumettre ton propre témoignage."
+    fr: "Oui. D'ancien·ne·s participant·e·s y racontent comment ils·elles se sont préparé·e·s et ce qui les a le plus aidé·e·s. Tu peux aussi y soumettre ton propre témoignage."
     it: "Sì. Ex partecipanti raccontano come si sono preparati e cosa li ha aiutati di più. Puoi anche inviare tu stesso/a una testimonianza."
   link:
     href: "ems/erfahrungsberichte/"
@@ -170,8 +170,8 @@
     it: "Ci sono consigli per altri quaderni, corsi o simulazioni del test a pagamento?"
   answer:
     de: "Nein. Wir arbeiten ehrenamtlich und unabhängig von allen anderen Angeboten zur EMS-Vorbereitung. Deshalb können wir nicht beurteilen, ob und welche kostenpflichtigen Angebote sich für dich lohnen."
-    fr: "Non. Nous travaillons bénévolement et indépendamment de toutes les autres offres de préparation à l'EMS. C'est pourquoi nous ne pouvons pas juger si des offres payantes valent la peine pour toi, ni lesquelles."
-    it: "No. Lavoriamo su base volontaria e in modo indipendente da tutte le altre offerte di preparazione all'EMS. Per questo non possiamo valutare se e quali offerte a pagamento valgano la pena per te."
+    fr: "Non. Nous travaillons bénévolement et indépendamment de toutes les autres offres de préparation à l'AMS. C'est pourquoi nous ne pouvons pas juger si des offres payantes valent la peine pour toi, ni lesquelles."
+    it: "No. Lavoriamo su base volontaria e in modo indipendente da tutte le altre offerte di preparazione all'AMS. Per questo non possiamo valutare se e quali offerte a pagamento valgano la pena per te."
 
 - id: "bestaetigung-platz"
   category: { de: "Testsimulationen und Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
@@ -204,7 +204,7 @@
   answer:
     de: "Ja. Einige Wochen nach der Testsimulation kannst du das Testheft samt Lösungen kostenlos herunterladen."
     fr: "Oui. Quelques semaines après la simulation de test, tu peux télécharger gratuitement le cahier de test avec les solutions."
-    it: "Sì. Qualche settimana dopo la simulazione del test puoi scaricare gratuitamente il quaderno del test con le soluzioni."
+    it: "Sì. Qualche settimana dopo la simulazione del test puoi scaricare gratuitamente il fascicolo del test con le soluzioni."
   link:
     href: "ems/testsimulationen/"
     label:
@@ -217,11 +217,11 @@
   question:
     de: "Wird das aktuelle Kursskript auch online gestellt?"
     fr: "Le script de cours actuel sera-t-il aussi publié en ligne ?"
-    it: "Il materiale del corso attuale viene pubblicato anche online?"
+    it: "La dispensa del corso attuale viene pubblicata anche online?"
   answer:
     de: "Ja. Einige Wochen nach dem Kurs kannst du das Skript kostenlos herunterladen."
     fr: "Oui. Quelques semaines après le cours, tu peux télécharger gratuitement le script."
-    it: "Sì. Qualche settimana dopo il corso puoi scaricare gratuitamente il materiale."
+    it: "Sì. Qualche settimana dopo il corso puoi scaricare gratuitamente la dispensa."
   link:
     href: "ems/vorbereitungskurse/"
     label:
@@ -237,8 +237,8 @@
     it: "Non capisco una soluzione o vorrei soluzioni più dettagliate – chi può aiutarmi?"
   answer:
     de: "Wir können einzelne Aufgaben leider nicht persönlich erklären. Stell deine Frage am besten in unserer Discord-Community: Dort lernen viele andere mit denselben Materialien auf den EMS und helfen dir gern weiter."
-    fr: "Malheureusement, nous ne pouvons pas expliquer personnellement chaque exercice. Pose plutôt ta question dans notre communauté Discord : beaucoup d'autres s'y préparent à l'EMS avec le même matériel et t'aideront volontiers."
-    it: "Purtroppo non possiamo spiegare personalmente i singoli esercizi. Fai la tua domanda nella nostra community Discord: lì molte altre persone si preparano all'EMS con lo stesso materiale e ti aiutano volentieri."
+    fr: "Malheureusement, nous ne pouvons pas expliquer personnellement chaque exercice. Pose plutôt ta question dans notre communauté Discord : beaucoup d'autres s'y préparent à l'AMS avec le même matériel et t'aideront volontiers."
+    it: "Purtroppo non possiamo spiegare personalmente i singoli esercizi. Fai la tua domanda nella nostra community Discord: lì molte altre persone si preparano all'AMS con lo stesso materiale e ti aiutano volentieri."
   link:
     href: "https://discord.com/invite/DhgYpUGss9"
     label:

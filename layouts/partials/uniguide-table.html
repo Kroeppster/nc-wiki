@@ -40,7 +40,10 @@
        gleiche Nummer) */ -}}
 {{- $noten := slice }}
 {{- range $tabelle }}{{ with .hinweis }}{{ $h := partial "uni-titel.html" . }}{{ if not (in $noten $h) }}{{ $noten = $noten | append $h }}{{ end }}{{ end }}{{ end }}
-{{- $unis = sort $unis "name" }}
+{{- /* Name in der Sprache der Seite (uni-name.html), danach sortiert */ -}}
+{{- $mitName := slice }}
+{{- range $unis }}{{ $mitName = $mitName | append (merge . (dict "anzeige" (partial "uni-name.html" .))) }}{{ end }}
+{{- $unis = sort $mitName "anzeige" }}
 
 <div class="uniguide-disclaimer" role="note">
   <strong>⚠</strong>
@@ -107,7 +110,7 @@
                Universität gehört. */}}
           <label class="compare-check">
             <input type="checkbox" class="compare-box" value="{{ .slug }}">
-            <span class="visually-hidden-field">{{ i18n "uniguide_compare_add" }} {{ .name }}</span>
+            <span class="visually-hidden-field">{{ i18n "uniguide_compare_add" }} {{ .anzeige }}</span>
           </label>
         </td>
         {{- $uni := . }}
@@ -142,7 +145,7 @@
       <thead>
         <tr>
           <th>{{ i18n "uniguide_compare_field" }}</th>
-          {{ range $unis }}<th data-uni="{{ .slug }}" hidden><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .name }}</a></th>{{ end }}
+          {{ range $unis }}<th data-uni="{{ .slug }}" hidden><a href="{{ printf "ems/uniguide/%s/" .slug | relLangURL }}">{{ .anzeige }}</a></th>{{ end }}
         </tr>
       </thead>
       <tbody>

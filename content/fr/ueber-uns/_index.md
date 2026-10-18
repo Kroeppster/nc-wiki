@@ -1,6 +1,6 @@
 ---
 title: "À propos de nous"
-description: "À propos de NCWiki : depuis 2021, plus de 110 étudiant·e·s en médecine de toute la Suisse s'engagent pour une préparation à l'EMS gratuite."
+description: "À propos de NCWiki : depuis 2021, plus de 110 étudiant·e·s en médecine de toute la Suisse s'engagent pour une préparation à l'AMS gratuite."
 menu:
   main:
     identifier: ueber-uns
@@ -9,7 +9,7 @@ menu:
 
 ## Notre mission
 
-Nous sommes une équipe d'étudiant·e·s en médecine et voulons te faciliter la préparation au test d'aptitudes pour les études de médecine (EMS).
+Nous sommes une équipe d'étudiant·e·s en médecine et voulons te faciliter la préparation au test d'aptitudes pour les études de médecine (AMS).
 
 Plus précisément, notre section Romandie se réunit pour améliorer l'égalité des chances des candidat·e·s francophones souvent pénalisés par le manque de matériel d'exercices et d'astuces. Nous nous engageons en assurant la traduction du site web ainsi que des séries d'exercices.
 

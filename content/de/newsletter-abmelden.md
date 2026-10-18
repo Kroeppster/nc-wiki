@@ -1,7 +1,8 @@
 ---
-title: "Abmelden"
+title: "Newsletter abmelden"
 menu:
   newsletter:
+    name: "Abmelden"
     identifier: newsletter-abmelden
     weight: 2
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Travail concentré et soigné"
-description: "Travail concentré et soigné à l'EMS : séries d'exercices gratuites et conseils pour marquer plus vite et faire moins d'erreurs."
+description: "Travail concentré et soigné à l'AMS : séries d'exercices gratuites et conseils pour marquer plus vite et faire moins d'erreurs."
 weight: 8
 ---
 
@@ -14,11 +14,11 @@ Tu reçois une feuille de 40 lignes de 40 caractères chacune et tu marques cert
 
 La feuille est si longue qu'on ne peut guère la traiter entièrement.
 
-### Comment l'évaluation se fait-elle ?
+### Évaluation
 
 C'est le seul sous-test pour lequel un classement est établi entre tous les candidats et candidates – les points sont attribués sur la base de ce classement. Il n'y a donc pas de nombre minimal fixe de caractères, tu dois simplement bien réussir par rapport aux autres.
 
-Chaque caractère correctement marqué rapporte un point, chaque caractère marqué à tort ou omis en retire un. Comme un caractère sauté te prive en plus de la chance d'un point, omettre est plutôt pire qu'un trait mal placé. Il y a au total 40 lignes avec des caractères répartis à peu près uniformément – on peut en moyenne marquer environ 10 caractères par ligne, ce qui peut servir de repère approximatif.
+Chaque caractère correctement marqué rapporte un point, chaque caractère marqué à tort ou omis jusqu'au dernier caractère marqué en retire un. Comme un caractère sauté te prive en plus de la chance d'un point, omettre est plutôt pire qu'un trait mal placé. Il y a au total 40 lignes avec des caractères répartis à peu près uniformément – on peut en moyenne marquer environ 10 caractères par ligne, ce qui peut servir de repère approximatif.
 
 ## Importance pour les études
 
@@ -26,7 +26,7 @@ En tant que médecin, il est important de pouvoir travailler de façon concentr�
 
 ## Moment et fréquence de l'entraînement
 
-Dans ce sous-test, les progrès sont vite visibles – il suffit généralement de commencer 1.5 à 2 mois avant, mais avec 4 à 5 séances par semaine, car chaque séance est courte. Pour simuler la situation de test de façon réaliste, il vaut la peine de ne pas résoudre le test de concentration en premier à l'entraînement, mais seulement après quelques autres sous-tests – tu es ainsi déjà un peu fatigué·e, comme le jour du test.
+Dans ce sous-test, les progrès sont vite visibles – il suffit généralement de commencer 1,5 à 2 mois avant, mais avec 4 à 5 séances par semaine, car chaque séance est courte. Pour simuler la situation de test de façon réaliste, il vaut la peine de ne pas résoudre le test de concentration en premier à l'entraînement, mais seulement après quelques autres sous-tests – tu es ainsi déjà un peu fatigué·e, comme le jour du test.
 
 ## Marche à suivre pour résoudre
 
@@ -34,12 +34,12 @@ Dans ce sous-test, les progrès sont vite visibles – il suffit généralement 
 2. **Noter les combinaisons à l'avance :** si la règle demande un calcul (par ex. « barre le second de deux chiffres dont la somme fait 8 »), note toutes les combinaisons possibles avant de commencer (mais seulement après le signal de départ !), plutôt que de recalculer à chaque caractère.
 3. **Se concentrer sur un caractère :** concentre-toi uniquement sur le caractère décisif (par ex. « q ») et vérifie rapidement à chaque apparition si la règle est remplie, plutôt que de lire caractère par caractère.
 4. **Retenir le motif plutôt que la règle :** mémorise le motif visuel de la bonne solution (par ex. « pq ») plutôt que la règle en mots – il se reconnaît souvent plus vite.
-5. **Méthode du serpentin :** résous la première ligne de gauche à droite, la suivante de droite à gauche, etc., pour ne perdre aucune ligne au changement de ligne. Pendant les 30 dernières secondes environ (à partir de la minute 7.5 environ), travaille à nouveau seulement de gauche à droite, car l'évaluation se fait dans le sens de lecture.
+5. **Méthode du serpentin :** résous la première ligne de gauche à droite, la suivante de droite à gauche, etc., pour ne perdre aucune ligne au changement de ligne. Pendant les 30 dernières secondes environ (à partir de la minute 7,5 environ), travaille à nouveau seulement de gauche à droite, car l'évaluation se fait dans le sens de lecture.
 
 ## Autres conseils
 
 - **Tester son stylo à l'avance :** le test est évalué par machine – ton stylo doit être assez foncé et ne doit pas baver.
-- **S'entraîner de façon aussi variée que possible :** à l'EMS réel, plusieurs règles couplées apparaissent souvent (par ex. « barre chaque q après un p et chaque b avant un d »). Entraîne-toi donc avec différents types de règles, pas avec un seul.
+- **S'entraîner de façon aussi variée que possible :** à l'AMS réel, plusieurs règles couplées apparaissent souvent (par ex. « barre chaque q après un p et chaque b avant un d »). Entraîne-toi donc avec différents types de règles, pas avec un seul.
 - **Passer sur ses erreurs :** s'énerver pour une erreur ne coûte que de la concentration et du temps en plus – revenir en arrière pour corriger ne vaut de toute façon pas la peine, car seul le dernier marquage compte.
 
 ## Erreurs fréquentes
@@ -48,10 +48,10 @@ Dans ce sous-test, les progrès sont vite visibles – il suffit généralement 
 - **Miser uniquement sur la vitesse :** qui ne fait attention qu'à la vitesse oublie facilement des caractères – et chaque caractère omis est déduit.
 - **Sens de lecture à la fin :** qui travaille en serpentin jusqu'au bout perd les caractères de la dernière ligne commencée, car l'évaluation se fait dans le sens de lecture.
 
-## Extraits de rapports d'expérience
+## Extraits de témoignages
 
 *« Le moment du test est un peu méchamment choisi, car tu as déjà résolu d'autres tests pendant plusieurs heures. C'est dur, mais c'est pareil pour tout le monde. La tâche est en outre conçue de sorte qu'on ne la termine pratiquement jamais en 8 minutes – ne t'inquiète donc pas si tu n'arrives pas au bout. Sans erreur, tu peux quand même obtenir le score maximal. »*
 
 *« Lors de mon premier NC, je n'ai misé que sur la vitesse et j'ai ainsi omis beaucoup de caractères. Au deuxième NC, je savais que je devais faire attention aux deux : vitesse et précision. Pour simuler cette sensation, j'ai toujours résolu le test de concentration à la fin à l'entraînement. »*
 
-Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).
+Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

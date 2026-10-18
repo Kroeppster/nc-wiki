@@ -1,6 +1,6 @@
 ---
 title: "Diagrammi e tabelle"
-description: "Diagrammi e tabelle all'EMS: serie di esercizi gratuite e consigli per analizzare grafici e tabelle in modo sicuro e rapido."
+description: "Diagrammi e tabelle all'AMS: serie di esercizi gratuite e consigli per analizzare grafici e tabelle in modo sicuro e rapido."
 weight: 7
 ---
 
@@ -10,9 +10,9 @@ Per ogni domanda ricevi un diagramma o una tabella, di solito con un breve testo
 
 - **Posizione nella giornata del test:** 10° sottotest, dopo le fasi di riproduzione della memorizzazione di figure e fatti, seguito dal lavoro concentrato e accurato
 - **Volume:** 18 domande, 18 punti
-- **Tempo:** 45 minuti, cioè circa 2.5 minuti per domanda
+- **Tempo:** 45 minuti, cioè circa 2,5 minuti per domanda
 
-Il tempo è calcolato apposta perché di solito non si riescano a risolvere tutte le domande.
+Il tempo è calcolato apposta perché di solito non si riescono a risolvere tutte le domande.
 
 ### Tipi di diagrammi
 
@@ -31,7 +31,7 @@ Durante gli studi e poi nella professione leggi di continuo studi, valori di lab
 
 ## Tempi e frequenza dell'esercizio
 
-Questo sottotest si impara bene anche relativamente tardi – di solito basta un periodo di 1–1.5 mesi prima dell'EMS. Allenalo però in modo intenso, circa 3 volte a settimana. Conviene svolgere diagrammi e tabelle alla fine di una lunga sessione di esercizio – così simuli la situazione all'EMS, dove anche questo sottotest arriva proprio alla fine.
+Questo sottotest si impara bene anche relativamente tardi – di solito basta un periodo di 1–1,5 mesi prima dell'AMS. Allenalo però in modo intenso, circa 3 volte a settimana. Conviene svolgere diagrammi e tabelle alla fine di una lunga sessione di esercizio – così simuli la situazione all'AMS, dove anche questo sottotest arriva quasi alla fine.
 
 ## Come procedere
 
@@ -47,14 +47,14 @@ Questo sottotest si impara bene anche relativamente tardi – di solito basta un
 ## Errori frequenti
 
 - **Assoluto e relativo:** non confondere valori assoluti (numero) e valori relativi (percentuale).
-- **Punti percentuali ≠ percentuale:** un aumento del 50 % di 2 punti percentuali dà 52 %, un aumento del 2 per cento dà 51 %.
+- **Punti percentuali ≠ percentuale:** un valore del 50 % che aumenta di 2 punti percentuali diventa 52 %, con un aumento relativo del 2 % diventa 51 %.
 - **Unità:** le unità nelle affermazioni possono essere diverse da quelle del diagramma – e non sempre si chiede l'affermazione giusta, a volte anche quella sbagliata.
 - **Assi particolari:** doppi assi y o scale logaritmiche richiedono una lettura particolarmente attenta.
 
-## Dai resoconti di esperienza
+## Dalle testimonianze
 
 *«Consiglio importante: dopo «Diagrammi e tabelle» bisogna consegnare il materiale – le crocette a caso sul foglio delle risposte vanno quindi messe al più tardi lì, dopo non è più possibile.»*
 
 *«Diagrammi e tabelle non mi riuscivano proprio, e anche se li ho allenati regolarmente non ho notato quasi nessun miglioramento – col senno di poi avrei fatto meglio a investire quel tempo in altri sottotest.»*
 
-Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).
+Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

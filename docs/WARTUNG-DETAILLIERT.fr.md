@@ -530,9 +530,10 @@ Deux voies qui font la même chose (`scripts/texte_saison.py`) :
 - sur GitHub *Actions → Neue Saison starten → Run workflow*, inscrire la saison (donne une
   pull request).
 
-Dans les trois langues, la section « Équipe saison … » passe avec une liste de l'équipe
-dirigeante dans les archives (`ueber-uns/archiv/`, tout en haut sous les saisons
-précédentes), et la page équipe commence la nouvelle saison avec une phrase provisoire.
+Dans les trois langues, la section « Autres responsables … » passe avec une liste de
+l'équipe dirigeante dans les archives (`ueber-uns/archiv/`), tout en haut, comme nouvelle
+section « Saison … » ; sur la page équipe, les titres portent la nouvelle saison et la
+section « Autres responsables » commence avec une phrase provisoire.
 L'équipe dirigeante elle-même reste ; les changements se font ensuite. Une seconde
 exécution avec la même saison ne fait rien.
 

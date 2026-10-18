@@ -1,6 +1,6 @@
 ---
 title: "Oggetti nello spazio"
-description: "Oggetti nello spazio all'EMS: serie di esercizi gratuite e consigli per seguire in modo rapido e sicuro le rotazioni e i ribaltamenti del cubo."
+description: "Oggetti nello spazio all'AMS: serie di esercizi gratuite e consigli per seguire in modo rapido e sicuro le rotazioni e i ribaltamenti del cubo."
 weight: 2
 ---
 
@@ -20,7 +20,7 @@ In anatomia la rappresentazione spaziale di ossa e organi è molto importante pe
 
 ## Tempi e frequenza dell'esercizio
 
-Questo sottotest è tra i più facili e si impara bene – di solito basta iniziare 1–1.5 mesi prima. Esercitati circa 2–3 volte a settimana per non perdere la routine e trovare la tecnica adatta a te. Visto che con 10 minuti il test è piuttosto breve, si presta bene anche a brevi sessioni di esercizio nei momenti liberi.
+Questo sottotest è tra i più facili e si impara bene – di solito basta iniziare 1–1,5 mesi prima. Esercitati circa 2–3 volte a settimana per non perdere la routine e trovare la tecnica adatta a te. Visto che con 10 minuti il test è piuttosto breve, si presta bene anche a brevi sessioni di esercizio nei momenti liberi.
 
 ## Come procedere
 
@@ -44,10 +44,10 @@ Definisci un procedimento fisso con cui affrontare tutte le domande allo stesso 
 - **Trascurare l'ordine:** due movimenti in un ordine diverso portano di solito a un'altra vista.
 - **Scambiare destra e sinistra:** con le figure simmetriche succede facilmente – chiarisci quindi sempre la direzione dello sguardo.
 
-## Dai resoconti di esperienza
+## Dalle testimonianze
 
 *«Negli oggetti nello spazio: riconoscere brevemente la rotazione, altrimenti cercare oggetti uguali, procedere con costanza da A a E invece di ordinare per facilità.»*
 
 *«Fatti, figure, test di concentrazione e oggetti nello spazio invece valgono particolarmente la pena, perché lì si fanno progressi in fretta.»*
 
-Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).
+Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

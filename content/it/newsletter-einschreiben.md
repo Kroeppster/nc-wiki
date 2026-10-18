@@ -1,7 +1,8 @@
 ---
-title: "Iscriviti"
+title: "Iscriversi alla newsletter"
 menu:
   newsletter:
+    name: "Iscriviti"
     identifier: newsletter-einschreiben
     weight: 1
 ---

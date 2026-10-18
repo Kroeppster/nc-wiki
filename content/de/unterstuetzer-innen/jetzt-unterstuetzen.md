@@ -14,4 +14,4 @@ Wir sind dankbar für jede Spende. Damit finanzieren wir die kostenlosen Übungs
 
 ## Sponsor*in werden
 
-Wir arbeiten gerne mit Organisationen zusammen. Alle Informationen für Sponsor*innen und Partnerorganisationen stehen auf der Sponsoren-Seite.
+Wir arbeiten gerne mit Organisationen zusammen. Alle Informationen für Sponsor*innen und Partnerorganisationen stehen auf der Seite [Sponsor*innen](/unterstuetzer-innen/sponsoren).

@@ -6,11 +6,11 @@ weight: 1
 
 ## Überblick
 
-Muster zuordnen ist der erste Untertest des Eignungstests für das Medizinstudium (EMS) und eröffnet den Testtag. Zu jeder Aufgabe erhältst du ein komplexes Muster sowie fünf Ausschnitte (A bis E). Die Muster stehen im oberen Bereich der Seite, die zugehörigen Ausschnitte weiter unten auf derselben Seite. Nur einer der fünf Ausschnitte lässt sich an einer beliebigen Stelle deckungsgleich und vollständig auf das Muster legen. Bei den übrigen vier wurde ein Detail hinzugefügt, weggelassen oder verändert. Die Ausschnitte sind weder vergrössert oder verkleinert noch gedreht oder gespiegelt. Die Abweichungen sind jeweils eindeutig, kleine Pünktchen oder Druckunreinheiten gelten nicht als Fehler.
+Muster zuordnen ist der erste Untertest des Eignungstests für das Medizinstudium (EMS) und eröffnet den Testtag. Zu jeder Aufgabe erhältst du ein komplexes Muster sowie fünf Ausschnitte (A bis E). Die Muster stehen im oberen Bereich der Seite, die zugehörigen Ausschnitte weiter unten auf derselben Seite. Nur einer der fünf Ausschnitte lässt sich an einer beliebigen Stelle deckungsgleich und vollständig auf das Muster legen. Bei den übrigen vier wurde ein Detail hinzugefügt, weggelassen oder verändert. Die Ausschnitte sind weder vergrössert noch verkleinert, weder gedreht noch gespiegelt. Die Abweichungen sind jeweils eindeutig, kleine Pünktchen oder Druckunreinheiten gelten nicht als Fehler.
 
 - **Stellung im Testtag:** 1. Untertest, danach folgt Medizinisch-naturwissenschaftliches Grundverständnis
 - **Umfang:** 18 Aufgaben, 18 Punkte
-- **Zeit:** 16 Minuten, also knapp 53 Sekunden pro Aufgabe
+- **Zeit:** 16 Minuten, also gut 53 Sekunden pro Aufgabe
 
 Der Untertest ist bewusst so angelegt, dass in der verfügbaren Zeit in der Regel nicht alle Aufgaben bearbeitet werden können. Wenn du nicht fertig wirst, heisst das also noch nicht, dass du schlecht abgeschnitten hast.
 

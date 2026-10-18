@@ -7,4 +7,4 @@ menu:
     weight: 5
 ---
 
-Risposte alle domande più frequenti su EMS, iscrizione e la nostra offerta.
+Risposte alle domande più frequenti su AMS, iscrizione e la nostra offerta.

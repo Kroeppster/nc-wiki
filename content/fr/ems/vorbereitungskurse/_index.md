@@ -1,15 +1,15 @@
 ---
 title: "Cours de préparation"
-description: "Cours de préparation à l'EMS gratuit : deux jours en petits groupes avec des étudiant·e·s en médecine, script avec stratégies et exercices inclus."
+description: "Cours de préparation à l'AMS gratuit : deux jours en petits groupes avec des étudiant·e·s en médecine, script avec stratégies et exercices inclus."
 menu:
   main:
     parent: ems
     weight: 3
 featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
-featured_image_alt: "Script de cours NCWiki imprimé pour le cours de préparation à l'EMS de mars 2024, posé sur une table d'amphithéâtre"
+featured_image_alt: "Script de cours NCWiki imprimé pour le cours de préparation à l'AMS de mars 2024, posé sur une table d'amphithéâtre"
 ---
 
-Dans notre cours de préparation gratuit, tu découvres en deux jours les stratégies les plus importantes pour tous les sous-tests et apprends à planifier judicieusement ta préparation à l'EMS. Tu travailles en petits groupes, accompagné·e par des étudiant·e·s en médecine qui ont passé l'EMS et te transmettent directement leur expérience.
+Dans notre cours de préparation gratuit, tu découvres en deux jours les stratégies les plus importantes pour tous les sous-tests et apprends à planifier judicieusement ta préparation à l'AMS. Tu travailles en petits groupes, accompagné·e par des étudiant·e·s en médecine qui ont passé l'AMS et te transmettent directement leur expérience.
 
 Le cours comprend un script avec des exercices, que tu peux continuer à utiliser pour ta préparation. Tu fais aussi la connaissance d'autres participant·e·s avec qui former des groupes d'étude.
 

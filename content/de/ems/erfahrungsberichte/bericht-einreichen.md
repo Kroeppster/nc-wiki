@@ -1,5 +1,5 @@
 ---
-title: "Bericht einreichen"
+title: "Erfahrungsbericht einreichen"
 weight: 1
 experience_form: true
 ---

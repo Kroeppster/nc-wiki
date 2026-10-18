@@ -1,6 +1,6 @@
 ---
 title: "Apprendre figures et faits"
-description: "Apprendre figures et faits à l'EMS : séries d'exercices gratuites et techniques de mémorisation pour retenir 18 figures et 15 cas de patient·e·s."
+description: "Apprendre figures et faits à l'AMS : séries d'exercices gratuites et techniques de mémorisation pour retenir 18 figures et 15 cas de patient·e·s."
 weight: 5
 ---
 
@@ -12,7 +12,7 @@ Pendant la phase d'apprentissage, on te montre 18 figures dont une surface est �
 
 ### Faits
 
-Pendant la phase d'apprentissage, 15 patientes et patients te sont présentés, chacun avec un nom, une tranche d'âge, une profession, une autre caractéristique comme l'état d'esprit ou le lieu de séjour ainsi qu'un diagnostic. Les 15 personnes sont réparties en 5 tranches d'âge de 3 personnes. Tu as 6 minutes pour les mémoriser. Lors de la phase de reproduction ultérieure, tu réponds à 18 questions à choix multiple sur ces personnes, avec 5 réponses possibles chacune. L'ordre est modifié, et les indications sont demandées dans différentes combinaisons, par exemple « La personne atteinte de diabète est de profession … ». Tu disposes là aussi de 6 minutes.
+Pendant la phase d'apprentissage, 15 patientes et patients te sont présentés, chacun avec un nom, une tranche d'âge, une profession, une autre caractéristique comme l'état d'esprit ou le lieu de séjour ainsi qu'un diagnostic. Les 15 personnes sont réparties en cinq tranches d'âge de trois personnes. Tu as 6 minutes pour les mémoriser. Lors de la phase de reproduction ultérieure, tu réponds à 18 questions à choix multiple sur ces personnes, avec cinq réponses possibles chacune. L'ordre est modifié, et les indications sont demandées dans différentes combinaisons, par exemple « La personne atteinte de diabète est de profession … ». Tu disposes là aussi de 6 minutes.
 
 Exemple (abrégé) : *Maier, 20 ans, meunier, marié, Covid-19* – *Keller, 30 ans, vétérinaire, anxieuse, maux de tête*.
 
@@ -26,7 +26,7 @@ Dans les deux cas, il s'agit de ta mémoire. Pendant les études de médecine, t
 
 ## Moment et fréquence de l'entraînement
 
-Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile de faire tous les jours. Commence tôt, environ 3 mois avant l'EMS, avec 3 à 4 séances par semaine. Au début, accorde-toi volontairement plus de temps que prévu (par ex. 10 au lieu de 6 minutes pour les faits), afin d'essayer différentes stratégies, et ne réduis le temps que progressivement, à mesure que tu gagnes en assurance. Le dernier mois, entraîne-toi dans les conditions réelles de l'EMS : mémoriser les figures avant, compréhension de texte entre les deux, puis mémoriser les faits. Arrête l'entraînement ciblé quelques jours avant le NC pour garder la tête libre.
+Apprendre figures et faits, ce sont deux exercices de mémoire qu'il n'est pas utile de faire tous les jours. Commence tôt, environ 3 mois avant l'AMS, avec 3 à 4 séances par semaine. Au début, accorde-toi volontairement plus de temps que prévu (par ex. 10 au lieu de 6 minutes pour les faits), afin d'essayer différentes stratégies, et ne réduis le temps que progressivement, à mesure que tu gagnes en assurance. Le dernier mois, entraîne-toi dans les conditions réelles de l'AMS : d'abord mémoriser figures et faits, puis la compréhension de texte, ensuite la reproduction des figures et des faits. Arrête l'entraînement ciblé quelques jours avant l'AMS pour garder la tête libre.
 
 ## Marche à suivre pour résoudre
 
@@ -48,18 +48,18 @@ Apprendre figures et faits sont deux exercices de mémoire qu'il n'est pas utile
 - **Ne pas viser 18 sur 18 :** il vaut souvent mieux bien mémoriser 12 à 15 figures que les 18 superficiellement – tu n'as pas besoin du score maximal.
 - **Moyens mnémotechniques fixes :** après quelques passages, tu remarqueras que certaines caractéristiques et certains diagnostics reviennent – établis pour eux une liste fixe de tes moyens mnémotechniques.
 - **Essayer différentes stratégies :** il n'existe pas une seule bonne méthode pour tout le monde. Ne te laisse pas déstabiliser si une stratégie fonctionne mieux chez d'autres que chez toi – ce qui compte, c'est ce qui marche pour toi.
-- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 20 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – l'EMS, c'est de la pure gestion des points.
+- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 20 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – l'AMS, c'est de la pure gestion des points.
 
 ## Erreurs fréquentes
 
-- **Figures très semblables :** quand des figures se ressemblent fortement, fais attention aux fines différences géométriques (par ex. angles droits) ou concentre-toi, pour des contours semblables, surtout sur la forme et la position de la surface sombre.
+- **Figures très semblables :** quand des figures se ressemblent fortement, fais attention aux fines différences géométriques (par ex. angles droits) ; pour des contours semblables, concentre-toi surtout sur la forme et la position de la surface sombre.
 - **Épuiser trop tôt les séries d'exercices :** répéter plusieurs fois la même série fausse ton ressenti de ton propre niveau.
-- **Matériel d'entraînement trop facile :** dans beaucoup de matériel disponible dans le commerce, les différences entre les figures sont plus nettes qu'au vrai EMS.
+- **Matériel d'entraînement trop facile :** dans beaucoup de matériel disponible dans le commerce, les différences entre les figures sont plus nettes qu'au vrai AMS.
 
-## Extraits de rapports d'expérience
+## Extraits de témoignages
 
-*« Sous le stress de l'examen, les 4 minutes passeront en un éclair – sois-y préparé·e, mais ne te laisse pas déstabiliser. Il vaut souvent mieux ne pas vouloir mémoriser toutes les figures, mais seulement 12 à 15, en revanche très bien. Beaucoup de matériel d'entraînement disponible dans le commerce est d'ailleurs plutôt trop facile – les différences entre les figures y sont souvent plus nettes qu'au vrai EMS. »*
+*« Sous le stress de l'examen, les 4 minutes passeront en un éclair – sois-y préparé·e, mais ne te laisse pas déstabiliser. Il vaut souvent mieux ne pas vouloir mémoriser toutes les figures, mais seulement 12 à 15, en revanche très bien. Beaucoup de matériel d'entraînement disponible dans le commerce est d'ailleurs plutôt trop facile – les différences entre les figures y sont souvent plus nettes qu'au vrai AMS. »*
 
 *« Les faits, les figures, le test de concentration et les objets dans l'espace valent en revanche particulièrement la peine, car on y progresse rapidement. »*
 
-Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).
+Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

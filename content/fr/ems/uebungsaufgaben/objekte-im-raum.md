@@ -1,6 +1,6 @@
 ---
 title: "Objets dans l'espace"
-description: "Objets dans l'espace à l'EMS : séries d'exercices gratuites et conseils pour suivre rapidement et sûrement les rotations et les basculements du cube."
+description: "Objets dans l'espace à l'AMS : séries d'exercices gratuites et conseils pour suivre rapidement et sûrement les rotations et les basculements du cube."
 weight: 2
 ---
 
@@ -20,7 +20,7 @@ En anatomie, la représentation spatiale des os et des organes est très importa
 
 ## Moment et fréquence de l'entraînement
 
-Ce sous-test fait partie des plus faciles et s'apprend bien – commencer 1 à 1.5 mois avant suffit généralement. Entraîne-toi environ 2 à 3 fois par semaine pour ne pas perdre la routine et trouver la technique qui te convient. Comme le test est assez court avec 10 minutes, il se prête aussi bien à de courtes séances d'entraînement entre deux.
+Ce sous-test fait partie des plus faciles et s'apprend bien – commencer 1 à 1,5 mois avant suffit généralement. Entraîne-toi environ 2 à 3 fois par semaine pour ne pas perdre la routine et trouver la technique qui te convient. Comme le test est assez court avec 10 minutes, il se prête aussi bien à de courtes séances d'entraînement entre deux.
 
 ## Marche à suivre pour résoudre
 
@@ -35,7 +35,7 @@ Définis une démarche fixe avec laquelle tu abordes toutes les questions de la 
 ## Autres conseils
 
 - **D'abord la routine, puis la pression du temps :** ne travaille sous pression temporelle que lorsque ta démarche est devenue une routine.
-- **Oser laisser un trou :** en général, les questions faciles sont placées au début et les plus difficiles vers la fin. Laisse une question difficile de côté et reviens-y plus tard, plutôt que de t'y perdre.
+- **Oser sauter une question :** en général, les questions faciles sont placées au début et les plus difficiles vers la fin. Laisse une question difficile de côté et reviens-y plus tard, plutôt que de t'y perdre.
 
 ## Erreurs fréquentes
 
@@ -44,10 +44,10 @@ Définis une démarche fixe avec laquelle tu abordes toutes les questions de la 
 - **Négliger l'ordre :** deux mouvements dans un autre ordre mènent le plus souvent à une autre vue.
 - **Confondre gauche et droite :** cela arrive facilement avec les figures symétriques – clarifie donc toujours la direction du regard.
 
-## Extraits de rapports d'expérience
+## Extraits de témoignages
 
 *« Pour les objets dans l'espace : reconnaître brièvement la rotation, sinon chercher des objets identiques, travailler systématiquement de A à E plutôt que de trier selon la facilité. »*
 
 *« Les faits, les figures, le test de concentration et les objets dans l'espace valent en revanche particulièrement la peine, car on y progresse rapidement. »*
 
-Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).
+Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

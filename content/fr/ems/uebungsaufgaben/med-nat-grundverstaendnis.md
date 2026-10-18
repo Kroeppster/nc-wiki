@@ -1,6 +1,6 @@
 ---
 title: "Compréhension médico-scientifique"
-description: "Compréhension médico-scientifique à l'EMS : séries d'exercices gratuites et conseils pour saisir les faits décrits et vérifier les affirmations avec assurance."
+description: "Compréhension médico-scientifique à l'AMS : séries d'exercices gratuites et conseils pour saisir les faits décrits et vérifier les affirmations avec assurance."
 weight: 3
 ---
 
@@ -10,7 +10,7 @@ Chaque question décrit en quelques phrases un fait médical ou scientifique. Tu
 
 - **Place dans la journée de test :** 2e sous-test, après l'association de motifs, suivi des objets dans l'espace
 - **Volume :** 18 questions, 18 points
-- **Temps :** 45 minutes, soit environ 2.5 minutes par question
+- **Temps :** 45 minutes, soit environ 2,5 minutes par question
 
 Le temps est très serré, et tu n'as pas besoin de traiter toutes les questions. Ce qui compte, c'est le bon mélange entre rapidité et précision.
 
@@ -31,7 +31,7 @@ En physiologie et dans de nombreux autres domaines des études, il s'agit souven
 
 ## Moment et fréquence de l'entraînement
 
-Ce sous-test devrait être entraîné sur une assez longue période ; il est recommandé de commencer au plus tard 1 à 2 mois avant l'EMS. Deux fois par semaine une à deux heures suffisent généralement pour devenir rapidement plus précis·e, reconnaître les pièges typiques et gagner en vitesse.
+Ce sous-test devrait être entraîné sur une assez longue période ; il est recommandé de commencer au plus tard 1 à 2 mois avant l'AMS. Deux fois par semaine une à deux heures suffisent généralement pour devenir rapidement plus précis·e, reconnaître les pièges typiques et gagner en vitesse.
 
 ## Marche à suivre pour résoudre
 
@@ -50,7 +50,7 @@ Ce sous-test devrait être entraîné sur une assez longue période ; il est rec
 - **Connaissances préalables au lieu du texte :** tes connaissances aident à comprendre, mais seul ce qui figure dans le texte est évalué.
 - **Informations dispersées :** il faut souvent assembler des indications provenant de différents passages pour vérifier une affirmation.
 
-## Extraits de rapports d'expérience
+## Extraits de témoignages
 
 *« Pour la compréhension médico-scientifique et la compréhension de texte, seule une chose aide : commencer tôt. »*
 
@@ -58,4 +58,4 @@ Ce sous-test devrait être entraîné sur une assez longue période ; il est rec
 
 *« À partir de fin mars, j'ai presque exclusivement travaillé sur mes points faibles (compréhension médico-scientifique, compréhension de texte), 2 à 3 fois par semaine, en me concentrant sur la compréhension de mes erreurs plutôt que sur le simple comptage des points. »*
 
-Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).
+Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

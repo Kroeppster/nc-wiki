@@ -1,35 +1,35 @@
 ---
 title: "Sponsor"
-description: "Diventate sponsor o partner di NCWiki: sostenete una preparazione gratuita all'EMS e raggiungete i medici e i ricercatori di domani."
+description: "Diventi sponsor o partner di NCWiki: sostenga una preparazione gratuita all'AMS e raggiunga i medici e i ricercatori di domani."
 ---
 
 ## NCWiki si impegna per il futuro di domani
 
-NCWiki accompagna le future studentesse e i futuri studenti di medicina lungo uno dei percorsi più impegnativi del panorama formativo svizzero: dalla preparazione al test attitudinale per lo studio della medicina (EMS) fino a studi inoltrati. In quanto associazione gestita da studenti, ci impegniamo affinché l'accesso a materiali di preparazione di qualità non dipenda dalle proprie possibilità finanziarie.
+NCWiki accompagna le future studentesse e i futuri studenti di medicina lungo uno dei percorsi più impegnativi del panorama formativo svizzero: dalla preparazione al test attitudinale per lo studio della medicina (AMS) fino a studi inoltrati. In quanto associazione gestita da studenti, ci impegniamo affinché l'accesso a materiali di preparazione di qualità non dipenda dalle proprie possibilità finanziarie.
 
-Con il vostro sostegno come sponsor o partner permettete a giovani di iniziare la loro carriera medica in modo equo e ben preparato.
+Con il Suo sostegno come sponsor o partner permette a giovani di iniziare la loro carriera medica in modo equo e ben preparato.
 
-## Perché sostenere NCWiki?
+## I motivi di una sponsorizzazione
 
-Ogni anno migliaia di giovani nella Svizzera tedesca, nella Svizzera romanda e in Ticino si preparano all'EMS – molti di loro tramite la nostra piattaforma.
+Ogni anno migliaia di giovani nella Svizzera tedesca, nella Svizzera romanda e in Ticino si preparano all'AMS – molti di loro tramite la nostra piattaforma.
 
-Come sponsor raggiungete così un pubblico motivato e accademicamente ambizioso: i futuri medici e ricercatori che nei prossimi decenni plasmeranno il panorama sanitario e scientifico svizzero. Allo stesso tempo vi posizionate come azienda o organizzazione che promuove attivamente la formazione, le pari opportunità e le nuove leve accademiche.
+Come sponsor raggiunge così un pubblico motivato e accademicamente ambizioso: i futuri medici e ricercatori che nei prossimi decenni plasmeranno il panorama sanitario e scientifico svizzero. Allo stesso tempo si posiziona come azienda o organizzazione che promuove attivamente la formazione, le pari opportunità e le nuove leve accademiche.
 
-## Cosa rende possibile il vostro impegno
+## Cosa rende possibile il Suo impegno
 
-Il vostro sostegno confluisce direttamente nello sviluppo dei nostri esercizi gratuiti, delle simulazioni del test e delle offerte di preparazione. Aiutate le persone interessate allo studio della medicina a prepararsi al meglio all'EMS indipendentemente dalla loro situazione finanziaria – contribuendo così direttamente a maggiori pari opportunità nell'accesso allo studio della medicina.
+Il Suo sostegno confluisce direttamente nello sviluppo dei nostri esercizi gratuiti, delle simulazioni del test e delle offerte di preparazione. Aiuta le persone interessate allo studio della medicina a prepararsi al meglio all'AMS indipendentemente dalla loro situazione finanziaria – contribuendo così direttamente a maggiori pari opportunità nell'accesso allo studio della medicina.
 
-## La vostra visibilità come sponsor o partner
+## La Sua visibilità come sponsor
 
-Come ringraziamento per il vostro sostegno vi presentiamo in modo visibile sulla nostra [pagina Sostenitori e sostenitrici](/unterstuetzer-innen), visitata dalle persone interessate durante tutto il periodo di preparazione.
+Come ringraziamento per il Suo sostegno La presentiamo sulla nostra [pagina Sostenitori e sostenitrici](/unterstuetzer-innen), visitata dalle persone interessate durante tutto il periodo di preparazione.
 
 A seconda del tipo di partnership sono inoltre possibili menzioni nelle nostre notizie, nella newsletter e sui social media, nonché collaborazioni su misura – ad esempio nell'ambito di manifestazioni, eventi o progetti comuni.
 
-Contattateci: organizziamo volentieri la collaborazione in base ai vostri obiettivi.
+Ci contatti: organizziamo volentieri la collaborazione in base ai Suoi obiettivi.
 
 ## Contatto
 
-Entrate a far parte della nostra rete di università, organizzazioni e aziende che si impegnano insieme per le nuove leve della medicina in Svizzera. Contattateci – saremo lieti di sentirvi.
+Entri a far parte della nostra rete di università, organizzazioni e aziende che si impegnano insieme per le nuove leve della medicina in Svizzera. Ci contatti – saremo lieti di sentirLa.
 
 ```baustein
 sponsoring-kontakt

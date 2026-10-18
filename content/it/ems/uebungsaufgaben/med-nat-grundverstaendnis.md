@@ -1,6 +1,6 @@
 ---
 title: "Comprensione medico-scientifica"
-description: "Comprensione medico-scientifica all'EMS: serie di esercizi gratuite e consigli per cogliere i fatti descritti e verificare le affermazioni con sicurezza."
+description: "Comprensione medico-scientifica all'AMS: serie di esercizi gratuite e consigli per cogliere i fatti descritti e verificare le affermazioni con sicurezza."
 weight: 3
 ---
 
@@ -10,7 +10,7 @@ Ogni domanda descrive in poche frasi un fatto medico o scientifico. Poi valuti t
 
 - **Posizione nella giornata del test:** 2° sottotest, dopo l'abbinamento di schemi, seguito dagli oggetti nello spazio
 - **Volume:** 18 domande, 18 punti
-- **Tempo:** 45 minuti, cioè circa 2.5 minuti per domanda
+- **Tempo:** 45 minuti, cioè circa 2,5 minuti per domanda
 
 Il tempo è molto stretto e non devi per forza svolgere tutte le domande. Conta il giusto equilibrio tra rapidità e precisione.
 
@@ -31,7 +31,7 @@ In fisiologia e in molti altri ambiti degli studi si tratta spesso di capire dei
 
 ## Tempi e frequenza dell'esercizio
 
-Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile iniziare al più tardi 1–2 mesi prima dell'EMS. Due volte a settimana per una o due ore bastano di solito per diventare in fretta più precisi, riconoscere i tranelli tipici e aumentare il ritmo.
+Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile iniziare al più tardi 1–2 mesi prima dell'AMS. Due volte a settimana per una o due ore bastano di solito per diventare in fretta più precisi, riconoscere i tranelli tipici e aumentare il ritmo.
 
 ## Come procedere
 
@@ -50,7 +50,7 @@ Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile ini
 - **Conoscenze al posto del testo:** le conoscenze aiutano a capire, ma si valuta solo ciò che c'è nel testo.
 - **Informazioni sparse:** spesso bisogna mettere insieme indicazioni di passaggi diversi per verificare un'affermazione.
 
-## Dai resoconti di esperienza
+## Dalle testimonianze
 
 *«Per la comprensione medico-scientifica e la comprensione del testo aiuta solo una cosa: iniziare presto.»*
 
@@ -58,4 +58,4 @@ Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile ini
 
 *«Da fine marzo ho lavorato quasi esclusivamente sui miei punti deboli (comprensione medico-scientifica, comprensione del testo), 2–3 volte a settimana, concentrandomi sul capire perché sbagliavo invece di contare solo i punti.»*
 
-Trovi altri resoconti tra i [resoconti di esperienza](/ems/erfahrungsberichte).
+Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

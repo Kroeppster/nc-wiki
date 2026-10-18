@@ -7,4 +7,4 @@ menu:
     weight: 4
 ---
 
-Qui trovi tutte le università svizzere con studi di medicina, con lingua di studio, procedura di ammissione e particolarità di ogni sede. Così puoi confrontare quale università fa per te, prima di fissare le tue priorità al momento dell'iscrizione, entro il 15 febbraio.
+Qui trovi tutte le università svizzere con studi di medicina, con lingua di studio, procedura di ammissione e particolarità di ogni sede. Così puoi confrontare quale università fa per te, prima di fissare le tue priorità al momento della preiscrizione, entro il 15 febbraio.

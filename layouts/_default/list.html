@@ -194,7 +194,7 @@
                Schlagwort-Seiten deshalb LEER: Dort standen Karten ganz ohne
                Titel, nur mit Anrisstext und "Mehr erfahren". */}}
           {{ $kartenTitel := .Title }}
-          {{ if and (not $kartenTitel) .Params.name .Params.jahr }}{{ $kartenTitel = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
+          {{ if and (not $kartenTitel) .Params.name .Params.jahr }}{{ $kartenTitel = printf "%s – %s %v" .Params.name (i18n "ems_kurz") .Params.jahr }}{{ end }}
           <h2><a href="{{ .RelPermalink }}">{{ $kartenTitel }}</a></h2>
           {{/* Datum nur bei News-Beiträgen anzeigen, damit klar ist, von wann
                eine Meldung ist - sprachabhängig formatiert (":date_long"

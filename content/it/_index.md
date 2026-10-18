@@ -1,20 +1,20 @@
 ---
 title: "Pagina iniziale"
-description: "Preparazione gratuita all'EMS: serie di esercizi, simulazioni del test e corsi per il test attitudinale agli studi di medicina – da studenti di medicina."
+description: "Preparazione gratuita all'AMS: serie di esercizi, simulazioni del test e corsi per il test attitudinale agli studi di medicina – da studenti di medicina."
 menu:
   main:
     identifier: home
     weight: 1
 hero:
-  eyebrow: "Test attitudinale per gli studi di medicina (EMS) 2027"
-  ticket_label: "Ammissione EMS"
-  title: "Preparazione gratuita all'EMS"
+  eyebrow: "Test attitudinale per gli studi di medicina (AMS) 2027"
+  ticket_label: "Ammissione AMS"
+  title: "Preparazione gratuita all'AMS"
   lede: "Dietro NCWiki c'è un'associazione di oltre 110 studenti di medicina. Dal 2021 sviluppiamo serie di esercizi nostre, organizziamo simulazioni del test e teniamo corsi di preparazione. Tutta la nostra offerta nasce da persone che hanno sostenuto il test in prima persona ed è completamente gratuita, in tre lingue."
   cta_primary: "Vedi le serie di esercizi"
   cta_secondary: "Iscriviti alla newsletter"
   bild: "testsimulationen/testsimulation-2023.jpg"
   bild_alt: "Aula magna piena durante una simulazione del test NCWiki, in primo piano un foglio delle risposte trilingue con il logo NCWiki"
-  countdown_label: "Ancora fino all'EMS, il 9 luglio 2027"
+  countdown_label: "Ancora fino all'AMS, il 9 luglio 2027"
 news:
   eyebrow: "Attualità"
   heading: "News"
@@ -25,12 +25,12 @@ weg:
   start: "2026-10-01"
   ende: "2027-09-30"
   modus_label: "Quale università?"
-  modus_mit: "Con EMS"
-  modus_ohne: "Senza EMS (Ginevra, Losanna, Neuchâtel)"
+  modus_mit: "Con AMS"
+  modus_ohne: "Senza AMS (Ginevra, Losanna, Neuchâtel)"
   legende_offiziell: "Date ufficiali"
   legende_angebot: "La nostra offerta"
   hinweis_mit: "Date secondo swissuniversities, senza garanzia. Fanno fede solo le informazioni ufficiali di swissuniversities e delle università."
-  hinweis_ohne: "Senza EMS non c'è test attitudinale: il 1° anno è aperto, il passaggio al 2° anno avviene tramite un esame eliminatorio. Termini senza garanzia, fanno fede solo le università."
+  hinweis_ohne: "Senza AMS non c'è test attitudinale: il 1° anno è aperto, il passaggio al 2° anno avviene tramite un esame eliminatorio. Termini senza garanzia, fanno fede solo le università."
   hinweis_link: "Tutte le università nell'Uniguide →"
   termine:
     - wann: "Sett. – nov."
@@ -52,19 +52,21 @@ weg:
       art: "offiziell"
       fuer: "mit"
     - wann: "Aprile – 25 maggio"
-      titel: "Iscrizione all'EMS (termine 45 giorni prima del test, tassa CHF 300)"
+      titel: "Iscrizione all'AMS"
+      text: "Termine 45 giorni prima del test, tassa CHF 300"
       von: "2027-04-01"
       bis: "2027-05-25"
       art: "offiziell"
       fuer: "mit"
     - wann: "Giugno"
-      titel: "Informazioni sul giorno del test per e-mail (al più tardi 10 giorni prima)"
+      titel: "Informazioni sul giorno del test per e-mail"
+      text: "Al più tardi dieci giorni prima del test"
       von: "2027-06-01"
       bis: "2027-06-30"
       art: "offiziell"
       fuer: "mit"
     - wann: "9 luglio 2027"
-      titel: "Test attitudinale (EMS)"
+      titel: "Test attitudinale (AMS)"
       von: "2027-07-09"
       art: "offiziell"
       fuer: "mit"
@@ -92,7 +94,8 @@ weg:
       art: "offiziell"
       fuer: "ohne"
     - wann: "Gen. – 30 aprile"
-      titel: "Immatricolazione presso l'università desiderata (Ginevra: in certi casi già entro il 28 feb.)"
+      titel: "Immatricolazione presso l'università desiderata"
+      text: "Ginevra: in certi casi già entro il 28 febbraio"
       von: "2027-01-01"
       bis: "2027-04-30"
       art: "offiziell"
@@ -105,7 +108,7 @@ weg:
       art: "angebot"
       fuer: "beide"
       mittel:
-        - titel: "Guida alle università"
+        - titel: "Uniguide"
           url: "ems/uniguide/"
         - titel: "Domande frequenti"
           url: "ems/qa/"
@@ -139,7 +142,7 @@ weg:
       art: "angebot"
       fuer: "beide"
       mittel:
-        - titel: "EMS"
+        - titel: "AMS"
           url: "ems/"
         - titel: "Testimonianze"
           url: "ems/erfahrungsberichte/"
@@ -158,7 +161,7 @@ material:
       text: "{1} fascicoli completi di annate precedenti."
     - key: vorbereitungskurse
       titel: "Corsi di preparazione"
-      text: "Due giorni in aula, in piccoli gruppi – con dispensa stampata da portare a casa."
+      text: "Due giorni in aula, in piccoli gruppi – con dispensa del corso da scaricare."
     - key: community
       titel: "Orientamento e scambio"
       zahlen: ["unis", "berichte"]
@@ -169,7 +172,7 @@ subtests:
   heading: "Materiale di esercizio per tutti gli otto sottotest"
 mission:
   eyebrow: "Perché esistiamo"
-  heading: "Pari opportunità nella preparazione all'EMS"
+  heading: "Pari opportunità nella preparazione all'AMS"
   features:
     - title: "Dal 2021"
       text: "Partita come iniziativa studentesca, oggi è un'associazione senza scopo di lucro. Lavoriamo al 100 % come volontari e offriamo il nostro materiale in modo completamente gratuito."

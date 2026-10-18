@@ -58,7 +58,7 @@
   breite: 16
 
 - feld: ems_erforderlich
-  titel: {de: "EMS", fr: "EMS", it: "EMS"}
+  titel: {de: "EMS", fr: "AMS", it: "AMS"}
   art: ems
   tabelle: true
   bereich: zulassung

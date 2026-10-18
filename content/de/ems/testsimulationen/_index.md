@@ -18,7 +18,7 @@ Hier findest du alle Informationen zu unseren Testsimulationen.
 
 **Anmeldung:** Du meldest dich online an. Sobald die Termine für die nächste Runde feststehen, geben wir sie auf unserer Website und auf Instagram bekannt.
 
-**Termine:** Unsere Testsimulationen finden jeweils Anfang Mai statt, rund zwei Monate vor dem Eignungstest Medizinstudium (EMS). Wir führen sie an allen Universitäten durch, die den EMS verwenden: in Basel, Bern, Freiburg, Lugano und Zürich.
+**Termine:** Unsere Testsimulationen finden jeweils Anfang Mai statt, rund zwei Monate vor dem Eignungstest für das Medizinstudium (EMS). Wir führen sie an allen Universitäten durch, die den EMS verwenden: in Basel, Bern, Freiburg, Lugano sowie an der Universität und der ETH Zürich.
 
 ## Testhefte zum Herunterladen
 

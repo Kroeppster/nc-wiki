@@ -1,5 +1,5 @@
 ---
-title: "Alpha – Features im Test"
+title: "Alpha – Funktionen im Test"
 geschuetzt: true
 # Kein RSS-Feed (siehe content/de/mitglieder/_index.md).
 outputs: ["html"]

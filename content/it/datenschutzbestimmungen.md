@@ -17,13 +17,13 @@ Sito web: https://nc-wiki.ch/
 
 ## Avviso generale
 
-In base all'articolo 13 della Costituzione federale svizzera e alle disposizioni federali in materia di protezione dei dati (Legge sulla protezione dei dati, LPD), ogni persona ha diritto alla tutela della propria sfera privata e alla protezione dall'uso improprio dei propri dati personali. I gestori di queste pagine prendono molto sul serio la protezione dei tuoi dati personali. Trattiamo i tuoi dati personali in modo confidenziale e conformemente alle disposizioni di legge sulla protezione dei dati nonché alla presente informativa.
+In base all'articolo 13 della Costituzione federale svizzera e alle disposizioni federali in materia di protezione dei dati (Legge sulla protezione dei dati, LPD), ogni persona ha diritto alla tutela della propria sfera privata e alla protezione dall'uso improprio dei propri dati personali. I gestori di queste pagine prendono molto sul serio la protezione dei Suoi dati personali. Trattiamo i Suoi dati personali in modo confidenziale e conformemente alle disposizioni di legge sulla protezione dei dati nonché alla presente informativa.
 
 In collaborazione con i nostri fornitori di hosting, ci impegniamo a proteggere il più possibile i dati da accessi non autorizzati, perdite, abusi o falsificazioni.
 
 Segnaliamo che la trasmissione dei dati su Internet (ad es. nella comunicazione via e-mail) può presentare delle falle di sicurezza. Una protezione completa dei dati dall'accesso di terzi non è possibile.
 
-Utilizzando questo sito, accetti la raccolta, il trattamento e l'utilizzo dei dati secondo quanto descritto di seguito. Questo sito può in linea di principio essere consultato senza registrazione. In tal caso vengono memorizzati sul server, a scopo statistico, dati come le pagine visitate ovvero il nome del file richiesto, la data e l'ora, senza che tali dati siano direttamente riconducibili alla tua persona. I dati personali, in particolare nome, indirizzo o indirizzo e-mail, vengono raccolti per quanto possibile su base volontaria. Senza il tuo consenso, i dati non vengono trasmessi a terzi.
+Utilizzando questo sito, accetta la raccolta, il trattamento e l'utilizzo dei dati secondo quanto descritto di seguito. Questo sito può in linea di principio essere consultato senza registrazione. In tal caso vengono memorizzati sul server, a scopo statistico, dati come le pagine visitate ovvero il nome del file richiesto, la data e l'ora, senza che tali dati siano direttamente riconducibili alla Sua persona. I dati personali, in particolare nome, indirizzo o indirizzo e-mail, vengono raccolti per quanto possibile su base volontaria. Senza il Suo consenso, i dati non vengono trasmessi a terzi.
 
 ## Trattamento dei dati personali
 
@@ -40,39 +40,39 @@ Trattiamo i dati personali per il periodo necessario alla rispettiva finalità o
 
 ## Misure di sicurezza
 
-In conformità con le disposizioni di legge, tenendo conto dello stato dell'arte tecnologico, dei costi di implementazione nonché della natura, della portata, delle circostanze e delle finalità del trattamento, adottiamo misure tecniche e organizzative adeguate per garantire un livello di protezione adeguato al rischio.
+In conformità con le disposizioni di legge, tenendo conto dello stato della tecnica, dei costi di implementazione nonché della natura, della portata, delle circostanze e delle finalità del trattamento, adottiamo misure tecniche e organizzative adeguate per garantire un livello di protezione adeguato al rischio.
 
 Tra queste misure rientrano in particolare la garanzia della riservatezza, dell'integrità e della disponibilità dei dati mediante il controllo dell'accesso fisico ed elettronico ai dati. Teniamo inoltre conto della protezione dei dati personali già in fase di sviluppo o di scelta di hardware, software e procedure, secondo il principio della protezione dei dati fin dalla progettazione e di impostazioni predefinite rispettose della privacy.
 
 ## Trasmissione di dati personali
 
-Nell'ambito del trattamento dei dati personali, può accadere che i dati vengano trasmessi ad altri enti, aziende o persone, o vengano loro comunicati – ad esempio a fornitori di servizi incaricati di compiti informatici o a fornitori di servizi integrati nel sito. In tali casi rispettiamo le disposizioni di legge e concludiamo in particolare contratti o accordi appropriati a tutela dei tuoi dati con i destinatari degli stessi.
+Nell'ambito del trattamento dei dati personali, può accadere che i dati vengano trasmessi ad altri enti, aziende o persone, o vengano loro comunicati – ad esempio a fornitori di servizi incaricati di compiti informatici o a fornitori di servizi integrati nel sito. In tali casi rispettiamo le disposizioni di legge e concludiamo in particolare contratti o accordi appropriati a tutela dei Suoi dati con i destinatari degli stessi.
 
 ## Informativa sulla crittografia SSL/TLS
 
-Questo sito utilizza, per motivi di sicurezza e per proteggere la trasmissione di contenuti riservati, una crittografia SSL/TLS. Una connessione crittografata si riconosce dal fatto che la barra degli indirizzi del browser passa da „http://" a „https://" e dalla presenza del simbolo del lucchetto nella barra degli indirizzi.
+Questo sito utilizza, per motivi di sicurezza e per proteggere la trasmissione di contenuti riservati, una crittografia SSL/TLS. Una connessione crittografata si riconosce dal fatto che la barra degli indirizzi del browser passa da "http://" a "https://" e dalla presenza del simbolo del lucchetto nella barra degli indirizzi.
 
 ## Informativa sui file di log del server
 
-Il fornitore di questo sito (GitHub Pages) raccoglie e memorizza automaticamente informazioni nei cosiddetti file di log del server, che il tuo browser trasmette automaticamente. Si tratta in particolare del tipo e della versione del browser, del sistema operativo utilizzato, dell'URL di provenienza e dell'orario della richiesta al server. Questi dati non sono riconducibili a persone determinate; non viene effettuato alcun incrocio con altre fonti di dati.
+Il fornitore di questo sito (GitHub Pages) raccoglie e memorizza automaticamente informazioni nei cosiddetti file di log del server, che il Suo browser trasmette automaticamente. Si tratta in particolare del tipo e della versione del browser, del sistema operativo utilizzato, dell'URL di provenienza e dell'orario della richiesta al server. Questi dati non sono riconducibili a persone determinate; non viene effettuato alcun incrocio con altre fonti di dati.
 
 ## Modulo di contatto e testimonianze
 
-Se ci trasmetti informazioni tramite un modulo di questo sito (ad es. modulo di contatto, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, vedi la sezione „Servizi di terzi" qui sotto. Senza il tuo consenso non trasmettiamo i tuoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
+Se ci trasmette informazioni tramite un modulo di questo sito (ad es. modulo di contatto, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, veda la sezione "Servizi di terzi" qui sotto. Senza il Suo consenso non trasmettiamo i Suoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
 
 ## Servizi di terzi
 
 Questo sito utilizza i seguenti servizi esterni:
 
 - **Formspree** (invio dei moduli di contatto, testimonianze e segnalazioni di errori) – i dati inseriti vengono trasmessi a Formspree Inc. (USA).
-- **Pagefind** (funzione di ricerca) e font auto-ospitati – funzionano interamente nel browser o vengono forniti dal nostro stesso hosting, senza trasmissione di dati a terzi.
-- **Google Analytics** (misurazione dell'audience) – viene caricato solo se scegli attivamente "Accetta" nel banner dei cookie (vedi la sezione "Cookie" qui sotto). Senza questo consenso non viene caricato alcuno script Google e non viene impostato alcun cookie corrispondente. In caso di consenso, Google Analytics raccoglie tra l'altro informazioni sulle pagine visitate, la durata della visita e un'origine geografica approssimativa (paese/regione, non la posizione esatta), trattate su server di Google Ireland Limited o Google LLC (USA). Il consenso può essere revocato in qualsiasi momento cancellando i dati del browser relativi a questo sito, dopodiché il banner dei cookie ricomparirà.
+- **Pagefind** (funzione di ricerca) e font ospitati sul nostro server – funzionano interamente nel browser o vengono forniti dal nostro stesso hosting, senza trasmissione di dati a terzi.
+- **Google Analytics** (misurazione dell'audience) – viene caricato solo se sceglie attivamente "Accetta" nel banner dei cookie (veda la sezione "Cookie" qui sotto). Senza questo consenso non viene caricato alcuno script Google e non viene impostato alcun cookie corrispondente. In caso di consenso, Google Analytics raccoglie tra l'altro informazioni sulle pagine visitate, la durata della visita e un'origine geografica approssimativa (paese/regione, non la posizione esatta), trattate su server di Google Ireland Limited o Google LLC (USA). Il consenso può essere revocato in qualsiasi momento cancellando i dati del browser relativi a questo sito, dopodiché il banner dei cookie ricomparirà.
 
 Altri contenuti di terzi integrati (ad es. link a Instagram) comportano una trasmissione di dati al rispettivo fornitore solo in caso di clic attivo.
 
 ## Diritti d'autore
 
-I diritti d'autore e tutti gli altri diritti su contenuti, immagini o altri file del sito appartengono esclusivamente a NCWiki o ai titolari dei diritti espressamente indicati (vedi l'avviso di licenza per gli esercizi). Per la riproduzione di file al di fuori di questa licenza è necessario il consenso scritto preventivo del titolare dei diritti d'autore.
+I diritti d'autore e tutti gli altri diritti su contenuti, immagini o altri file del sito appartengono esclusivamente a NCWiki o ai titolari dei diritti espressamente indicati (veda l'avviso di licenza per gli esercizi). Per la riproduzione di file al di fuori di questa licenza è necessario il consenso scritto preventivo del titolare dei diritti d'autore.
 
 ## Esclusione generale di responsabilità
 
@@ -84,12 +84,12 @@ Non ci assumiamo alcuna responsabilità per i contenuti e la disponibilità di s
 
 Possiamo adattare questa informativa sulla privacy in qualsiasi momento. Fa fede la versione attuale pubblicata su questo sito.
 
-## Domande al responsabile della protezione dei dati
+## Domande sulla protezione dei dati
 
-Per domande relative alla protezione dei dati, scrivici a info@nc-wiki.ch.
+Per domande relative alla protezione dei dati, ci scriva a info@nc-wiki.ch.
 
 ## Cookie
 
-Nella memoria locale del tuo browser conserviamo solo pochi elementi tecnicamente necessari, non un vero e proprio cookie – ad esempio la tua impostazione del tema e questa stessa scelta relativa ai cookie.
+Nella memoria locale del Suo browser conserviamo solo pochi elementi tecnicamente necessari, non un vero e proprio cookie – ad esempio la Sua impostazione del tema e questa stessa scelta relativa ai cookie.
 
-Inoltre, tramite il banner dei cookie puoi attivare Google Analytics per la misurazione dell'audience. Questo viene caricato solo con il tuo consenso attivo e imposta un cookie solo a quel punto; senza consenso non avviene alcuna trasmissione a Google. Dettagli nella sezione "Servizi di terzi" qui sopra.
+Inoltre, tramite il banner dei cookie può attivare Google Analytics per la misurazione dell'audience. Questo viene caricato solo con il Suo consenso attivo e imposta un cookie solo a quel punto; senza consenso non avviene alcuna trasmissione a Google. Dettagli nella sezione "Servizi di terzi" qui sopra.

@@ -1,6 +1,6 @@
 ---
 title: "Sostenitori e sostenitrici"
-description: "I nostri sostenitori rendono possibile una preparazione all'EMS gratuita. Scopri chi sostiene NCWiki e come puoi sostenerci anche tu."
+description: "I nostri sostenitori rendono possibile una preparazione all'AMS gratuita. Scopri chi sostiene NCWiki e come puoi sostenerci anche tu."
 menu:
   main:
     identifier: unterstuetzer-innen

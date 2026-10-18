@@ -42,7 +42,7 @@ Eine Verlängerung der Bearbeitungszeit gewährt swissuniversities beim EMS nich
 
 Rechtlich ist diese Frage nicht abschliessend geklärt: Das Bundesgericht hat 2024 im Fall einer Bewerberin mit Dyslexie verlangt, dass eine unabhängige Fachperson prüft, ob ein Zeitzuschlag möglich wäre, und den Fall zur Neubeurteilung zurückgewiesen (Urteil 2C_299/2023 vom 7. Mai 2024). Bis auf Weiteres gilt die Regel von swissuniversities. Bist du selbst betroffen, lohnt sich eine Beratung bei einer Fachstelle, zum Beispiel bei der Beratungsstelle für Studium und Behinderung deiner künftigen Universität.
 
-## So gehst du vor
+## Vorgehen
 
 1. **Frühzeitig ein ärztliches Zeugnis organisieren.** Es darf bei der Einreichung höchstens sechs Monate alt sein. Am besten beschreibt es deine Beeinträchtigung und welche Anpassung du brauchst.
 2. **Merkblatt und Formular lesen,** sobald swissuniversities Anfang April die Informationen zur Anmeldung verschickt.

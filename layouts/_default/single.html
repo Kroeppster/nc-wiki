@@ -50,7 +50,7 @@
            dort wird der Titel automatisch aus "name" und "jahr" gebaut
            (z.B. "Anna K. – EMS 2027"), siehe archetypes/erfahrungsbericht.md. */}}
       {{ $pageTitle := .Title }}
-      {{ if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – EMS %v" .Params.name .Params.jahr }}{{ end }}
+      {{ if and (not $pageTitle) .Params.name .Params.jahr }}{{ $pageTitle = printf "%s – %s %v" .Params.name (i18n "ems_kurz") .Params.jahr }}{{ end }}
       <h1>{{ $pageTitle }}</h1>
 
       {{/* Datum nur bei News-Beiträgen anzeigen, damit sofort klar ist, von

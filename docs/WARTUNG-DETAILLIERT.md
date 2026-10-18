@@ -516,9 +516,10 @@ Zwei Wege, beide machen dasselbe (`scripts/texte_saison.py`):
 - auf GitHub *Actions → Neue Saison starten → Run workflow*, Saison eintragen (ergibt
   einen Pull Request).
 
-In allen drei Sprachen wandert der Abschnitt „Team Saison …“ samt einer Liste des
-Leitungsteams ins Archiv (`ueber-uns/archiv/`, zuoberst unter „Frühere Saisons“), und auf
-der Team-Seite beginnt die neue Saison mit einem Platzhalter-Satz. Das Leitungsteam
+In allen drei Sprachen wandert der Abschnitt „Weitere Verantwortliche …“ samt einer Liste
+des Leitungsteams als neuer Abschnitt „Saison …“ zuoberst ins Archiv (`ueber-uns/archiv/`),
+und auf der Team-Seite tragen die Überschriften die neue Saison; der Abschnitt „Weitere
+Verantwortliche“ beginnt mit einem Platzhalter-Satz. Das Leitungsteam
 selbst bleibt stehen; wer wechselt, wird danach geändert. Ein zweiter Lauf mit derselben
 Saison tut nichts.
 

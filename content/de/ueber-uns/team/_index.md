@@ -14,12 +14,12 @@ ressorts:
         rolle: "Co-Präsident"
       - name: "Alessio Iseli"
         rolle: "Handover Präsidium"
-  - titel: "Koordination Romandie und Ticino"
+  - titel: "Koordination Romandie und Tessin"
     mitglieder:
       - name: "Selina Buchser"
         rolle: "Koordinatorin Romandie"
       - name: "Fabiano Mohr"
-        rolle: "Koordinator Ticino"
+        rolle: "Koordinator Tessin"
   - titel: "Angebot"
     mitglieder:
       - name: "Vakant"
@@ -62,15 +62,15 @@ ressorts:
 
 Hinter NCWiki stehen über 110 Medizinstudierende aus der ganzen Schweiz, die sich ehrenamtlich engagieren. Hier stellen wir dir das aktuelle Leitungsteam und die Verantwortlichen dieser Saison vor. Wer NCWiki in früheren Saisons mitgestaltet hat, siehst du im [Archiv](/ueber-uns/archiv).
 
-## Aktuelles Leitungsteam
+## Leitungsteam 2026/27
 
 ```baustein
 team-leitung
 ```
 
-## Team Saison 2026/27
+## Weitere Verantwortliche 2026/27
 
-Das Team der Saison 2026/27 stellen wir hier bald vor.
+Die weiteren Verantwortlichen dieser Saison stellen wir hier bald vor.
 
 ## Mitmachen
 

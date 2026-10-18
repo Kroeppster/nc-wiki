@@ -9,7 +9,7 @@ featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Gedrucktes NCWiki-Kursskript zum EMS-Vorbereitungskurs vom März 2024 auf einem Hörsaaltisch"
 ---
 
-In unserem kostenlosen Vorbereitungskurs lernst du an zwei Tagen die wichtigsten Strategien für alle Untertests kennen und erfährst, wie du deine Vorbereitung auf den Eignungstest Medizinstudium (EMS) sinnvoll planst. Du arbeitest in Kleingruppen mit Medizinstudierenden, die den EMS selbst geschrieben haben. Sie geben dir ihre Erfahrungen direkt weiter.
+In unserem kostenlosen Vorbereitungskurs lernst du an zwei Tagen die wichtigsten Strategien für alle Untertests kennen und erfährst, wie du deine Vorbereitung auf den Eignungstest für das Medizinstudium (EMS) sinnvoll planst. Du arbeitest in Kleingruppen mit Medizinstudierenden, die den EMS selbst geschrieben haben. Sie geben dir ihre Erfahrungen direkt weiter.
 
 Zum Kurs gehört ein Kursskript mit Übungsaufgaben, das du auch danach für deine Vorbereitung nutzen kannst. Nebenbei lernst du andere Teilnehmende kennen, mit denen du Lerngruppen bilden kannst.
 

@@ -11,18 +11,19 @@ GitHub) und beim Einlesen einer Mappe benutzt (Feld "Neue Saison" im Blatt
 "Team - Ansicht").
 
 WAS PASSIERT, je Sprache:
-  1. Auf der Team-Seite (content/<sprache>/ueber-uns/team/_index.md) wird der
-     Abschnitt der laufenden Saison gesucht: die erste Ueberschrift "## ..."
-     mit einer Saison wie 2025/26 darin.
-  2. Dieser Abschnitt kommt ins Archiv (content/<sprache>/ueber-uns/archiv/
-     _index.md), zuoberst unter die erste "## "-Ueberschrift ("Fruehere
-     Saisons"): als "### Team Saison 2025/26", davor das Leitungsteam dieser
-     Saison als Liste (aus dem Feld "ressorts" im Seitenkopf), die
-     Unterabschnitte eine Stufe tiefer.
-  3. Auf der Team-Seite heisst der Abschnitt danach "... 2026/27" und enthaelt
-     nur einen Platzhalter-Satz. Das Leitungsteam (ressorts) BLEIBT stehen -
-     meist bleibt ein Teil der Leute, und so muss man nur aendern, wer
-     wechselt (Blatt "Team - Ansicht" in der Mappe).
+  1. Auf der Team-Seite (content/<sprache>/ueber-uns/team/_index.md) stehen
+     Ueberschriften "## ..." mit der laufenden Saison wie 2025/26 darin
+     ("Leitungsteam 2025/26", "Weitere Verantwortliche 2025/26"). Die erste
+     davon nennt die Saison, der Abschnitt unter der letzten ist das Team.
+  2. Ins Archiv (content/<sprache>/ueber-uns/archiv/_index.md) kommt vor die
+     erste "## "-Ueberschrift ein neuer Abschnitt "## Saison 2025/26" (FR
+     "Saison", IT "Stagione"): darin "### Leitungsteam" als Liste (aus dem
+     Feld "ressorts" im Seitenkopf) und danach der Team-Abschnitt - so wie
+     die frueheren Saisons im Archiv aufgebaut sind.
+  3. Auf der Team-Seite tragen die Ueberschriften danach die neue Saison, und
+     der Team-Abschnitt enthaelt nur einen Platzhalter-Satz. Das Leitungsteam
+     (ressorts) BLEIBT stehen - meist bleibt ein Teil der Leute, und so muss
+     man nur aendern, wer wechselt (Blatt "Team - Ansicht" in der Mappe).
 
 Laeuft ein zweites Mal mit derselben Saison: nichts passiert (die Saison ist
 schon die aktuelle). So schadet es nicht, wenn zwei Sprach-Mappen dieselbe
@@ -42,9 +43,12 @@ TEAM = 'content/{s}/ueber-uns/team/_index.md'
 ARCHIV = 'content/{s}/ueber-uns/archiv/_index.md'
 SAISON = re.compile(r'^\d{4}/\d{2}$')
 TEXTE = {
-    'de': dict(leitung='Leitungsteam', platzhalter='Das Team der Saison {s} stellen wir hier bald vor.'),
-    'fr': dict(leitung='Équipe dirigeante', platzhalter="Nous présenterons bientôt ici l'équipe de la saison {s}."),
-    'it': dict(leitung='Team dirigente', platzhalter='Presto presenteremo qui il team della stagione {s}.'),
+    'de': dict(saison='Saison {s}', leitung='Leitungsteam',
+               platzhalter='Die weiteren Verantwortlichen dieser Saison stellen wir hier bald vor.'),
+    'fr': dict(saison='Saison {s}', leitung='Équipe dirigeante',
+               platzhalter='Nous présenterons bientôt ici les autres responsables de cette saison.'),
+    'it': dict(saison='Stagione {s}', leitung='Team dirigente',
+               platzhalter='Presto presenteremo qui gli altri responsabili di questa stagione.'),
 }
 
 
@@ -77,32 +81,36 @@ def wechsel_sprache(projekt, sprache, neu, probe=False):
         return None
     roh = lesen(tp)
     kopf, koerper, _ = tb.kopf_trennen(roh)
-    m = re.search(r'^## (.*?(\d{4}/\d{2}))[ \t]*$', koerper, re.MULTILINE)
-    if not m:
-        return f'{sprache}: auf der Team-Seite keine Überschrift mit einer Saison (z. B. "## Team Saison 2025/26") gefunden - nichts archiviert.'
-    alt = m.group(2)
+    titel = list(re.finditer(r'^## (.*?(\d{4}/\d{2}))[ \t]*$', koerper, re.MULTILINE))
+    if not titel:
+        return f'{sprache}: auf der Team-Seite keine Überschrift mit einer Saison (z. B. "## Weitere Verantwortliche 2025/26") gefunden - nichts archiviert.'
+    alt = titel[0].group(2)
     if alt == neu:
         return None
+    m = titel[-1]
     ende = re.search(r'^## ', koerper[m.end():], re.MULTILINE)
     ende = m.end() + ende.start() if ende else len(koerper)
     inhalt = koerper[m.end():ende].strip()
-    teile = ['### ' + m.group(1)]
+    teile = ['## ' + TEXTE[sprache]['saison'].format(s=alt)]
     leitung = leitung_als_liste(kopf)
     if leitung:
-        teile.append('**%s**\n\n%s' % (TEXTE[sprache]['leitung'], leitung))
-    if inhalt:
-        teile.append(re.sub(r'^(#{3,5}) ', r'#\1 ', inhalt, flags=re.MULTILINE))
+        teile.append('### %s\n\n%s' % (TEXTE[sprache]['leitung'], leitung))
+    if inhalt and inhalt != TEXTE[sprache]['platzhalter']:
+        teile.append(inhalt)
     block = '\n\n'.join(teile) + '\n\n'
 
     aroh = lesen(ap)
     akopf, akoerper, _ = tb.kopf_trennen(aroh)
-    h = re.search(r'^## .*\n\n?', akoerper, re.MULTILINE)
+    h = re.search(r'^## ', akoerper, re.MULTILINE)
     if h:
-        akoerper = akoerper[:h.end()] + block + akoerper[h.end():]
+        akoerper = akoerper[:h.start()] + block + akoerper[h.start():]
     else:
         akoerper = akoerper.rstrip('\n') + '\n\n' + block
     neuer_koerper = (koerper[:m.start()] + '## ' + m.group(1).replace(alt, neu) + '\n\n'
-                     + TEXTE[sprache]['platzhalter'].format(s=neu) + '\n\n' + koerper[ende:].lstrip('\n'))
+                     + TEXTE[sprache]['platzhalter'] + '\n\n' + koerper[ende:].lstrip('\n'))
+    for t in reversed(titel[:-1]):
+        neuer_koerper = (neuer_koerper[:t.start()] + '## ' + t.group(1).replace(alt, neu)
+                         + neuer_koerper[t.end():])
     if not probe:
         schreiben(ap, akopf + akoerper.rstrip('\n') + '\n')
         schreiben(tp, kopf + neuer_koerper.rstrip('\n') + '\n')

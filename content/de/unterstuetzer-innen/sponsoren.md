@@ -9,7 +9,7 @@ Wir begleiten angehende Medizinstudierende von der Vorbereitung auf den Eignungs
 
 Als Sponsor oder Partner ermöglichen Sie jungen Menschen einen fairen Start in ihre medizinische Laufbahn.
 
-## Warum NCWiki unterstützen?
+## Gründe für ein Sponsoring
 
 Jedes Jahr bereiten sich Tausende junger Menschen in der Deutschschweiz, in der Westschweiz und im Tessin auf den EMS vor. Viele nutzen dafür unser Angebot.
 
@@ -19,7 +19,7 @@ Als Sponsor erreichen Sie künftige Ärzt*innen und Forschende, die das Schweize
 
 Ihre Unterstützung fliesst direkt in unsere kostenlosen Übungsserien, Testsimulationen und Vorbereitungskurse. So können sich Studieninteressierte unabhängig von ihrer finanziellen Situation auf den EMS vorbereiten, und der Zugang zum Medizinstudium wird gerechter.
 
-## Ihre Sichtbarkeit als Sponsor oder Partner
+## Ihre Sichtbarkeit als Sponsor*in
 
 Als Dank nennen wir Sie auf unserer Seite [Unterstützer*innen](/unterstuetzer-innen). Studieninteressierte besuchen sie während der ganzen Vorbereitungszeit.
 

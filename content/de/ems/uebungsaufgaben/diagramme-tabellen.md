@@ -31,7 +31,7 @@ Im Studium und später im Beruf liest du laufend Studien, Laborwerte und Verlauf
 
 ## Zeitpunkt und Häufigkeit des Übens
 
-Dieser Untertest lässt sich vergleichsweise spät noch gut lernen – ein Zeitraum von ein bis eineinhalb Monaten vor dem Eignungstest für das Medizinstudium (EMS) reicht in der Regel. Übe ihn dafür intensiv, etwa dreimal pro Woche. Es lohnt sich, Diagramme und Tabellen jeweils am Ende einer längeren Übungssession zu bearbeiten – so simulierst du die Situation am EMS, wo dieser Untertest ebenfalls ganz am Schluss kommt.
+Dieser Untertest lässt sich vergleichsweise spät noch gut lernen – ein Zeitraum von ein bis eineinhalb Monaten vor dem Eignungstest für das Medizinstudium (EMS) reicht in der Regel. Übe ihn dafür intensiv, etwa dreimal pro Woche. Es lohnt sich, Diagramme und Tabellen jeweils am Ende einer längeren Übungssession zu bearbeiten – so simulierst du die Situation am EMS, wo dieser Untertest ebenfalls fast am Schluss kommt.
 
 ## Vorgehen beim Lösen
 

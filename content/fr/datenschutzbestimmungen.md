@@ -84,7 +84,7 @@ Nous n'assumons aucune responsabilité pour le contenu et la disponibilité des 
 
 Nous pouvons adapter cette déclaration de protection des données à tout moment. La version actuelle publiée sur ce site fait foi.
 
-## Questions au responsable de la protection des données
+## Questions sur la protection des données
 
 Pour toute question relative à la protection des données, merci de nous écrire à info@nc-wiki.ch.
 

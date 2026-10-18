@@ -74,6 +74,8 @@ Der Geist ist derselbe. Folgendes gilt übersetzt:
 - Keine Nummerierung in Überschriften, kein Ausrufezeichen und kein Punkt am Ende von Titeln.
 - Gleiche Begriffe wie auf Deutsch: «Uniguide», «Questions fréquentes» / «Domande frequenti»,
   «Séries d'exercices» / «Serie di esercizi», «Apprendre figures et faits» / «Imparare figure e fatti».
-- EMS beim ersten Mal pro Seite ausgeschrieben, nie «NC».
+- Der Test heisst auf Französisch und Italienisch **AMS**, beim ersten Mal pro Seite
+  ausgeschrieben: «test d'aptitudes pour les études de médecine (AMS)» bzw. «test attitudinale
+  per gli studi di medicina (AMS)»; nie «EMS» oder «NC». Die Adressen (`/fr/ems/…`) bleiben.
 - Datum: 9 juillet 2027 / 9 luglio 2027; Beträge: CHF 300.
 - «Guillemets» wie bisher; inklusive Schreibung wie bisher («étudiant·e·s»).

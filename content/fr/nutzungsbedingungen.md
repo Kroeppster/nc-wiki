@@ -11,7 +11,7 @@ Les présentes conditions d'utilisation s'appliquent au site web de NCWiki, à t
 
 ## But de notre offre
 
-NCWiki est une association d'utilité publique d'étudiant·e·s en médecine. Notre offre est gratuite et sert exclusivement à la préparation personnelle des candidat·e·s au test d'aptitudes pour les études de médecine (EMS).
+NCWiki est une association d'utilité publique d'étudiant·e·s en médecine. Notre offre est gratuite et sert exclusivement à la préparation personnelle des candidat·e·s au test d'aptitudes pour les études de médecine (AMS).
 
 ## Droit d'auteur
 
@@ -21,7 +21,7 @@ Les exercices sont placés sous la licence [Creative Commons BY-NC 4.0](https://
 
 ## Utilisation commerciale
 
-Sont considérés comme prestataires commerciaux au sens des présentes conditions toutes les personnes et entreprises qui proposent des offres payantes de préparation à l'EMS, au TMS ou à des tests d'aptitude comparables, par exemple des cours, du matériel d'apprentissage, des cours particuliers, des applications ou des plateformes en ligne. En font également partie leurs collaborateur·rice·s, tuteur·rice·s et mandataires.
+Sont considérés comme prestataires commerciaux au sens des présentes conditions toutes les personnes et entreprises qui proposent des offres payantes de préparation à l'AMS, au TMS ou à des tests d'aptitude comparables, par exemple des cours, du matériel d'apprentissage, des cours particuliers, des applications ou des plateformes en ligne. En font également partie leurs collaborateur·rice·s, tuteur·rice·s et mandataires.
 
 Sans l'accord écrit préalable de NCWiki, il est notamment interdit :
 
@@ -33,13 +33,13 @@ Sans l'accord écrit préalable de NCWiki, il est notamment interdit :
 
 ## Communauté Discord
 
-Notre communauté Discord est ouverte exclusivement aux candidat·e·s à l'EMS ainsi qu'aux membres de NCWiki. Il est interdit aux prestataires commerciaux d'y adhérer. Les contenus de la communauté ne doivent être ni collectés ni réutilisés en dehors de Discord.
+Notre communauté Discord est ouverte exclusivement aux candidat·e·s à l'AMS ainsi qu'aux membres de NCWiki. Il est interdit aux prestataires commerciaux d'y adhérer. Les contenus de la communauté ne doivent être ni collectés ni réutilisés en dehors de Discord.
 
 La publicité pour des offres payantes et le recrutement de membres pour de telles offres ne sont pas autorisés dans la communauté, y compris par messages privés. Nous pouvons exclure de la communauté, à tout moment et sans indication de motifs, les personnes qui enfreignent ces règles ou que nous soupçonnons de les enfreindre.
 
 ## Simulations de test et cours de préparation
 
-Nos événements s'adressent aux candidat·e·s à l'EMS. Nous nous réservons le droit de refuser des inscriptions sans indication de motifs et d'exclure des personnes de nos événements, en particulier si elles participent pour le compte d'un prestataire commercial.
+Nos événements s'adressent aux candidat·e·s à l'AMS. Nous nous réservons le droit de refuser des inscriptions sans indication de motifs et d'exclure des personnes de nos événements, en particulier si elles participent pour le compte d'un prestataire commercial.
 
 ## Accès automatisés
 

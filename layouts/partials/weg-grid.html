@@ -18,7 +18,8 @@
 
     - wann: "Dez. bis 15. Feb."         # Text, wie er angezeigt wird
       titel: "Voranmeldung ..."
-      text: "..."                       # nur beim Angebot angezeigt
+      text: "..."                       # Angebot: Text; offiziell: kleine Zusatzzeile
+                                        # (Frist, Gebühr - Details gehören nicht in den Titel)
       von: "2026-12-01"                 # Beginn: bestimmt die Lage
       bis: "2027-02-15"                 # Ende (weglassen = einzelner Tag)
       art: "offiziell"                  # offiziell | angebot
@@ -62,7 +63,7 @@
       <div class="weg-eintrag weg-f-{{ .fuer }}" style="--s-mit:{{ .spur_mit }};--s-ohne:{{ .spur_ohne }}">
         <span class="weg-balken" style="left:{{ printf "%.2f" .l }}%;width:{{ printf "%.2f" .w }}%"></span>
         <p class="weg-label" style="left:{{ printf "%.2f" .boxl }}%;width:{{ printf "%.2f" .boxw }}%">
-          <span class="weg-datum">{{ .wann }}</span>{{ .titel }}
+          <span class="weg-datum">{{ .wann }}</span>{{ .titel }}{{ with .text }}<span class="weg-zusatz">{{ . }}</span>{{ end }}
         </p>
       </div>
       {{- end }}

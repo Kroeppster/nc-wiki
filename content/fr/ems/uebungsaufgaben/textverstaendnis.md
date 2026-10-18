@@ -1,6 +1,6 @@
 ---
 title: "Compréhension de texte"
-description: "Compréhension de texte à l'EMS : séries d'exercices gratuites et conseils pour saisir vite des textes complexes et évaluer les affirmations."
+description: "Compréhension de texte à l'AMS : séries d'exercices gratuites et conseils pour saisir vite des textes complexes et évaluer les affirmations."
 weight: 6
 ---
 
@@ -38,7 +38,7 @@ La compréhension de texte doit s'entraîner sur le long terme – commence envi
 - **Questions à la forme négative :** pour « Qu'est-ce qui est faux ? », lis la question attentivement pour ne pas manquer la négation.
 - **« Quelle est la réponse la plus juste ? »** n'est pas une question vrai/faux : une seule réponse contient exclusivement des affirmations qui se déduisent directement du texte.
 
-## Extraits de rapports d'expérience
+## Extraits de témoignages
 
 *« Pour la compréhension de texte, ma stratégie était de ne résoudre que deux des trois textes – je pouvais ainsi choisir les textes et travailler plus précisément, en faisant un schéma et en soulignant les mots-clés dès la lecture. »*
 
@@ -46,4 +46,4 @@ La compréhension de texte doit s'entraîner sur le long terme – commence envi
 
 *« En compréhension de texte, il y avait un texte absolument incompréhensible pour moi, avec des questions difficiles ; la seule chose qui aidait était de se dire que les autres vivaient sûrement la même chose, et de continuer à travailler obstinément. »*
 
-Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).
+Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

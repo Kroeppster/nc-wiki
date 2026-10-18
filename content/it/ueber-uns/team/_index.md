@@ -17,23 +17,23 @@ ressorts:
   - titel: "Coordinamento Romandia e Ticino"
     mitglieder:
       - name: "Selina Buchser"
-        rolle: "Coordinatrice Francofona"
+        rolle: "Coordinatrice Romandia"
       - name: "Fabiano Mohr"
-        rolle: "Coordinatore Italofono"
+        rolle: "Coordinatore Ticino"
   - titel: "Offerta"
     mitglieder:
       - name: "Posto vacante"
-        rolle: "Corso di Preparazione"
+        rolle: "Corso di preparazione"
       - name: "Matthias Schütz"
         rolle: "Esercizi"
       - name: "Gabriel Unglert"
-        rolle: "Simulazione del Test"
+        rolle: "Simulazione del test"
       - name: "Sabrina Zeller"
-        rolle: "Simulazione del Test"
+        rolle: "Simulazione del test"
       - name: "Elena Wittig"
-        rolle: "Controllo di Qualità"
+        rolle: "Controllo di qualità"
       - name: "Marlon Seonbuchner"
-        rolle: "Controllo di Qualità"
+        rolle: "Controllo di qualità"
   - titel: "Comunicazione"
     mitglieder:
       - name: "Julia Freiermuth"
@@ -41,9 +41,9 @@ ressorts:
       - name: "Niklas Probst"
         rolle: "Public Relations"
       - name: "Johanna Denz"
-        rolle: "Social & Onboarding"
+        rolle: "Social e onboarding"
       - name: "Edgar Brändle"
-        rolle: "Sito Web"
+        rolle: "Sito web"
       - name: "Valentina Nocito"
         rolle: "Passaggio di consegne marketing"
       - name: "Isabel Kretschi"
@@ -53,7 +53,7 @@ ressorts:
       - name: "Valentin Hesselbarth"
         rolle: "Finanze"
       - name: "Posto vacante"
-        rolle: "Protocollo & Dati"
+        rolle: "Protocollo e dati"
       - name: "Posto vacante"
         rolle: "Sponsoring"
       - name: "Lea Meyer"
@@ -62,15 +62,15 @@ ressorts:
 
 Dietro NCWiki ci sono oltre 110 studentesse e studenti di medicina di tutta la Svizzera che si impegnano come volontari. Qui ti presentiamo l'attuale team dirigente e i responsabili di questa stagione. Chi ha contribuito a NCWiki nelle stagioni precedenti lo trovi nell'[archivio](/ueber-uns/archiv).
 
-## Team dirigente attuale
+## Team dirigente 2026/27
 
 ```baustein
 team-leitung
 ```
 
-## Team stagione 2026/27
+## Altri responsabili 2026/27
 
-Presto presenteremo qui il team della stagione 2026/27.
+Presto presenteremo qui gli altri responsabili di questa stagione.
 
 ## Partecipare
 

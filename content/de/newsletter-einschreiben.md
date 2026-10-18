@@ -1,7 +1,8 @@
 ---
-title: "Einschreiben"
+title: "Newsletter abonnieren"
 menu:
   newsletter:
+    name: "Einschreiben"
     identifier: newsletter-einschreiben
     weight: 1
 ---

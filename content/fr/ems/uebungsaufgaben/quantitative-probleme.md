@@ -1,6 +1,6 @@
 ---
 title: "Problèmes quantitatifs et formels"
-description: "Problèmes quantitatifs et formels à l'EMS : séries gratuites et conseils sur la règle de trois, les unités et les formules pour calculer sûrement."
+description: "Problèmes quantitatifs et formels à l'AMS : séries gratuites et conseils sur la règle de trois, les unités et les formules pour calculer sûrement."
 weight: 4
 ---
 
@@ -10,9 +10,9 @@ Dans ce sous-test, tu résous des problèmes mathématiques en lien avec la méd
 
 - **Place dans la journée de test :** 4e sous-test, après les objets dans l'espace, suivi des phases d'apprentissage de la mémorisation de figures et de faits
 - **Volume :** 18 questions, 18 points
-- **Temps :** 45 minutes, soit environ 2.5 minutes par question
+- **Temps :** 45 minutes, soit environ 2,5 minutes par question
 
-Avec 2.5 minutes par question, ce sous-test n'est plutôt pas conçu pour la pression du temps.
+Avec 2,5 minutes par question, ce sous-test n'est pas vraiment conçu pour la pression du temps.
 
 ## Importance pour les études
 
@@ -32,8 +32,8 @@ Comme il s'agit ici surtout d'entraînement, un début précoce vaut la peine �
 ## Autres conseils
 
 - **Entraîner le calcul mental et écrit :** comme la calculatrice n'est pas autorisée au test, tu devrais aussi y renoncer à l'entraînement. Le niveau reste celui des « maths de base » – jamais d'intégrales ou autres, mais les techniques de base comme la division écrite doivent être maîtrisées.
-- **Astuce des pourcentages :** un pourcentage d'une valeur équivaut à la valeur en pourcentage du pourcentage initial – 7 % de 50 est donc égal à 50 % de 7, soit 3.5. Cela fonctionne toujours et fait gagner du temps.
-- **Connaître les fractions :** reconnaître des nombres décimaux récurrents comme 0.166 sous forme de fraction (⅙) simplifie nettement certains calculs.
+- **Astuce des pourcentages :** x % de y, c'est la même chose que y % de x – 7 % de 50 est donc égal à 50 % de 7, soit 3,5. Cela fonctionne toujours et fait gagner du temps.
+- **Connaître les fractions :** reconnaître des nombres décimaux récurrents comme 0,166 sous forme de fraction (⅙) simplifie nettement certains calculs.
 - **Déplacer les virgules lors de multiplications et divisions :** pour multiplier, additionne les décimales des deux nombres, calcule sans virgule et replace-la à la fin. Pour diviser, rends diviseur et dividende pareillement entiers avant de calculer.
 - **S'entraîner à transformer des formules :** certaines questions demandent d'isoler une grandeur ou une unité dans une formule – cela s'entraîne bien avec des formules de physique.
 
@@ -43,10 +43,10 @@ Comme il s'agit ici surtout d'entraînement, un début précoce vaut la peine �
 - **Indications cachées :** l'information décisive ne figure parfois que dans la dernière phrase, et d'autres indications ne te servent à rien.
 - **Habitude de la calculatrice :** qui s'entraîne avec une calculatrice est nettement plus lent·e au test sans elle.
 
-## Extraits de rapports d'expérience
+## Extraits de témoignages
 
 *« Avant de commencer à résoudre des exercices, je me suis d'abord fait une vue d'ensemble et j'ai regardé quels types de questions me posaient le plus de difficultés. J'ai commencé par là et j'ai essayé d'élaborer une technique de résolution avant d'établir un plan d'entraînement. Pendant le NC, je recommanderais de noter les étapes de calcul et les résultats intermédiaires, pour éviter le chaos dans un test aussi long – et de ne pas se laisser stresser par le temps. »*
 
 *« Pour les problèmes quantitatifs et formels, entraîne-toi toujours sans calculatrice et simplifie autant que possible. »*
 
-Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).
+Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

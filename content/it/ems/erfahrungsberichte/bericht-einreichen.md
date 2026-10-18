@@ -4,4 +4,4 @@ weight: 1
 experience_form: true
 ---
 
-Hai già affrontato l'EMS? Racconta alle future candidate e ai futuri candidati com'è andata la tua preparazione – in modo anonimo o con il tuo nome, come preferisci.
+Hai già affrontato l'AMS? Racconta alle future candidate e ai futuri candidati com'è andata la tua preparazione – in modo anonimo o con il tuo nome, come preferisci.

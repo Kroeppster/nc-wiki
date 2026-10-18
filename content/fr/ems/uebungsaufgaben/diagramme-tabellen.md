@@ -1,6 +1,6 @@
 ---
 title: "Diagrammes et tableaux"
-description: "Diagrammes et tableaux à l'EMS : séries d'exercices gratuites et conseils pour analyser graphiques et tableaux de façon sûre et rapide."
+description: "Diagrammes et tableaux à l'AMS : séries d'exercices gratuites et conseils pour analyser graphiques et tableaux de façon sûre et rapide."
 weight: 7
 ---
 
@@ -10,7 +10,7 @@ Pour chaque question, tu reçois un diagramme ou un tableau, généralement comp
 
 - **Place dans la journée de test :** 10e sous-test, après les phases de reproduction de la mémorisation de figures et de faits, suivi du travail concentré et soigné
 - **Volume :** 18 questions, 18 points
-- **Temps :** 45 minutes, soit environ 2.5 minutes par question
+- **Temps :** 45 minutes, soit environ 2,5 minutes par question
 
 Le temps est volontairement calculé pour qu'on ne puisse en général pas résoudre toutes les questions.
 
@@ -31,7 +31,7 @@ Pendant les études et plus tard dans la profession, tu lis en permanence des é
 
 ## Moment et fréquence de l'entraînement
 
-Ce sous-test s'apprend encore bien relativement tard – une période de 1 à 1.5 mois avant l'EMS suffit en général. Entraîne-le en revanche intensivement, environ 3 fois par semaine. Il vaut la peine de traiter les diagrammes et tableaux à la fin d'une longue séance d'entraînement – tu simules ainsi la situation à l'EMS, où ce sous-test arrive aussi tout à la fin.
+Ce sous-test s'apprend encore bien relativement tard – une période de 1 à 1,5 mois avant l'AMS suffit en général. Entraîne-le en revanche intensivement, environ 3 fois par semaine. Il vaut la peine de traiter les diagrammes et tableaux à la fin d'une longue séance d'entraînement – tu simules ainsi la situation à l'AMS, où ce sous-test arrive aussi presque à la fin.
 
 ## Marche à suivre pour résoudre
 
@@ -42,19 +42,19 @@ Ce sous-test s'apprend encore bien relativement tard – une période de 1 à 1.
 ## Autres conseils
 
 - **Entraîner de façon ciblée les types difficiles :** observe à l'entraînement avec quels types de diagrammes tu as le plus de difficultés, et entraîne-les de façon ciblée.
-- **Plusieurs tableaux :** lis d'abord le texte, puis regarde les tableaux un par un, et seulement ensuite leur lien.
+- **Plusieurs tableaux :** lis d'abord le texte, puis regarde les tableaux un par un, et seulement ensuite le lien entre eux.
 
 ## Erreurs fréquentes
 
 - **Absolu et relatif :** ne pas confondre valeurs absolues (nombre) et valeurs relatives (pourcentage).
-- **Points de pourcentage ≠ pourcentage :** une hausse de 50 % de 2 points de pourcentage donne 52 %, une hausse de 2 pour cent donne 51 %.
+- **Points de pourcentage ≠ pourcentage :** une valeur de 50 % qui augmente de 2 points de pourcentage donne 52 %, une hausse relative de 2 % donne 51 %.
 - **Unités :** les unités dans les affirmations peuvent différer de celles du diagramme – et on ne demande pas toujours l'affirmation juste, parfois aussi la fausse.
 - **Axes particuliers :** les doubles axes y ou les échelles logarithmiques demandent une lecture particulièrement attentive.
 
-## Extraits de rapports d'expérience
+## Extraits de témoignages
 
 *« Conseil important : après « Diagrammes et tableaux », il faut rendre les documents – les croix au hasard sur la feuille de réponses doivent donc être posées au plus tard à ce moment-là, après ce n'est plus possible. »*
 
 *« Les diagrammes et tableaux ne me convenaient pas du tout, et bien que je les aie entraînés régulièrement, je n'ai presque pas remarqué d'amélioration – avec le recul, j'aurais mieux fait d'investir ce temps dans d'autres sous-tests. »*
 
-Tu trouveras d'autres récits dans les [rapports d'expérience](/ems/erfahrungsberichte).
+Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).
