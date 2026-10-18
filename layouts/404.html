@@ -15,6 +15,25 @@
   ============================================================================
 */ -}}
 {{ define "main" }}
+  {{- /* GitHub Pages zeigt bei JEDER unbekannten Adresse nur die oberste
+         404.html (Deutsch) - auch unter /fr/... und /it/.... Diese Weiche
+         schickt dann auf die Fehlerseite der jeweiligen Sprache (fr/404.html,
+         it/404.html), damit Menü und Text in der richtigen Sprache stehen. */ -}}
+  {{- if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}
+  {{- $sprachen := slice }}
+  {{- range hugo.Sites }}{{ if ne .Language.Lang $.Site.Language.Lang }}{{ $sprachen = $sprachen | append .Language.Lang }}{{ end }}{{ end }}
+  <script>
+  (function(){
+    var basis = {{ .Site.Home.RelPermalink }};
+    var sprachen = {{ $sprachen }};
+    var rest = location.pathname.indexOf(basis) === 0 ? location.pathname.slice(basis.length) : '';
+    var sp = rest.split('/')[0];
+    if(sprachen.indexOf(sp) !== -1 && rest !== sp + '/404.html'){
+      location.replace(basis + sp + '/404.html');
+    }
+  })();
+  </script>
+  {{- end }}
   <section>
     <div class="wrap">
       <p class="eyebrow">{{ i18n "error_404_eyebrow" }}</p>
