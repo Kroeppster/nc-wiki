@@ -33,7 +33,13 @@
         <p class="lede">{{ .Params.hero.lede }}</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#subtests">{{ .Params.hero.cta_primary }}</a>
-          <a class="btn btn-ghost" href="#footer-kontakt">{{ .Params.hero.cta_secondary }}</a>
+          {{- /* "Newsletter abonnieren": erst, wenn der Newsletter eingerichtet ist
+                 (newsletter_url in hugo.toml) - vorher führte der Knopf zur
+                 Fusszeile, in der der Newsletter-Teil dann gar nicht steht.
+                 Ziel ist die Anmeldeseite (erster Eintrag im Menü "newsletter"). */}}
+          {{- if .Site.Params.newsletter_url }}{{ with .Site.Menus.newsletter }}
+          <a class="btn btn-ghost" href="{{ (index . 0).URL }}">{{ $.Params.hero.cta_secondary }}</a>
+          {{- end }}{{ end }}
         </div>
       </div>
 
