@@ -627,6 +627,15 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .report-filters{display:flex;gap:var(--space-2);flex-wrap:wrap;}
 .filter-pill{font-family:var(--font-body);font-size:var(--text-sm);padding:.45rem .9rem;border:1px solid var(--color-line);border-radius:var(--radius-full);background:var(--color-surface);color:var(--color-ink-soft);cursor:pointer;}
 .filter-pill.is-active{background:var(--color-ink);color:var(--color-paper);border-color:var(--color-ink);}
+/* Kontrastmodus (Windows "Kontrastdesigns", forced-colors): Dort ersetzt das
+   System alle Hintergrundfarben - aktive Filter, die aktuelle Sprache und die
+   aktuelle Seite der Blätterleiste sähen dann aus wie alle anderen. Deshalb
+   dort mit den Systemfarben für "ausgewählt" hervorheben, und den aktuellen
+   Menüpunkt (sonst nur farbig) unterstreichen. */
+@media (forced-colors:active){
+  .filter-pill.is-active,.lang-switch .active,.pagination .active .page-link{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight;}
+  nav.main-nav a[aria-current="page"],nav.main-nav>ul>li.ist-darin>a,nav.main-nav>ul>li.ist-darin>span{text-decoration:underline;text-underline-offset:4px;}
+}
 .report-grid{grid-template-columns:repeat(2,1fr);}
 .report-head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);}
 .avatar{flex-shrink:0;width:2.7rem;height:2.7rem;border-radius:50%;display:grid;place-items:center;color:var(--color-on-signal);font-family:var(--font-body);font-size:var(--text-sm);font-weight:700;}
