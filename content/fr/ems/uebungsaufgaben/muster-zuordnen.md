@@ -30,13 +30,13 @@ Comme l'association de motifs ouvre la journée de test, il vaut la peine de com
 2. **Chercher les différences, pas les points communs :** qu'un extrait corresponde au motif à un endroit frappant ne garantit pas qu'il corresponde partout. Tu trouves généralement une erreur plus vite qu'une correspondance complète. Cherche donc de façon ciblée les quatre extraits faux.
 3. **Comparer de façon systématique :** parcours chaque extrait dans un ordre fixe, par exemple de gauche à droite et de haut en bas. Guide-toi avec un crayon, pour que ton regard reste sur la pointe.
 4. **Barrer tout de suite les extraits faux :** dès que tu as trouvé une erreur, barre l'extrait au crayon. Ainsi, tu ne le vérifies pas une deuxième fois par inadvertance.
-5. **Avancer rapidement :** s'il ne reste qu'un extrait, vérifie-le brièvement et passe à la question suivante. Si tu bloques sur une question, coche une réponse et continue. Les réponses fausses ne sont pas pénalisées.
+5. **Avancer rapidement :** s'il ne reste qu'un extrait, vérifie-le brièvement et passe à la question suivante. Si tu bloques sur une question, marque une réponse et continue. Les réponses fausses ne sont pas pénalisées.
 
 ## Autres conseils
 
 - **Comparer directement les extraits semblables :** si deux extraits montrent le même endroit du motif, une comparaison directe vaut la peine. Au moins l'un des deux est forcément faux.
 - **Essayer le regard croisé :** avec cette technique, tu louches volontairement de sorte que l'extrait et l'endroit du motif se superposent. Les différences apparaissent alors comme des zones qui scintillent. Certaines personnes résolvent ainsi les questions nettement plus vite, d'autres n'y arrivent pas du tout. Essaie la technique tôt, puis décide si elle te convient.
-- **Ne pas s'acharner sur une question :** chaque question rapporte exactement un point. Une question difficile qui te coûte deux minutes te manquera pour deux questions faciles.
+- **Ne pas s'acharner sur une question :** chaque question rapporte exactement un point. Une question difficile qui te coûte deux minutes te prend le temps de deux questions faciles.
 - **Ne pas plier le cahier :** selon les directives officielles, les pages du cahier de test ne doivent pas être pliées. Habitue-toi donc dès l'entraînement à comparer motif et extraits sur la même page.
 
 ## Erreurs fréquentes

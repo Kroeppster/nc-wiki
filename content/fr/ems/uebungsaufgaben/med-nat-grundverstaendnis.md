@@ -41,7 +41,7 @@ Ce sous-test devrait être entraîné sur une assez longue période ; il est rec
 
 ## Autres conseils
 
-- **Ne pas s'acharner sur une question :** chaque question rapporte exactement un point. Si tu bloques, coche une réponse et continue. Les réponses fausses ne sont pas pénalisées.
+- **Ne pas s'acharner sur une question :** chaque question rapporte exactement un point. Si tu bloques, marque une réponse et continue. Les réponses fausses ne sont pas pénalisées.
 - **Comprendre ses erreurs plutôt que compter les points :** après chaque série d'exercices, regarde pourquoi tu as mal évalué une affirmation – as-tu survolé quelque chose, utilisé tes connaissances préalables ou interprété une affirmation trop largement ?
 
 ## Erreurs fréquentes

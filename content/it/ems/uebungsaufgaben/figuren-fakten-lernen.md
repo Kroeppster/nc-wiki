@@ -48,7 +48,7 @@ Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare 
 - **Non puntare a 18 su 18:** spesso conviene memorizzare davvero bene 12–15 figure invece di tutte e 18 in modo superficiale – non ti serve il punteggio pieno.
 - **Mnemotecniche fisse:** dopo qualche prova noterai che alcune caratteristiche e diagnosi si ripetono – prepara per queste una lista fissa delle tue mnemotecniche.
 - **Provare strategie diverse:** non esiste un unico metodo giusto per tutti. Non lasciarti scoraggiare se una strategia funziona meglio per altri che per te – conta ciò che funziona per te.
-- **Raccogliere punti in modo mirato:** imparare figure e fatti e il test di concentrazione si possono allenare bene fino a 16–20 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi piuttosto il tempo necessario per questi sottotest ben allenabili, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per es. comprensione del testo), che comunque porta pochi punti – l'AMS è pura gestione dei punti.
+- **Raccogliere punti in modo mirato:** imparare figure e fatti e il test di concentrazione si possono allenare bene fino a 16–18 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi piuttosto il tempo necessario per questi sottotest ben allenabili, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per es. comprensione del testo), che comunque porta pochi punti – l'AMS è pura gestione dei punti.
 
 ## Errori frequenti
 

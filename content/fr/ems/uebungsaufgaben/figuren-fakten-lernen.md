@@ -48,7 +48,7 @@ Apprendre figures et faits, ce sont deux exercices de mémoire qu'il n'est pas u
 - **Ne pas viser 18 sur 18 :** il vaut souvent mieux bien mémoriser 12 à 15 figures que les 18 superficiellement – tu n'as pas besoin du score maximal.
 - **Moyens mnémotechniques fixes :** après quelques passages, tu remarqueras que certaines caractéristiques et certains diagnostics reviennent – établis pour eux une liste fixe de tes moyens mnémotechniques.
 - **Essayer différentes stratégies :** il n'existe pas une seule bonne méthode pour tout le monde. Ne te laisse pas déstabiliser si une stratégie fonctionne mieux chez d'autres que chez toi – ce qui compte, c'est ce qui marche pour toi.
-- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 20 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – l'AMS, c'est de la pure gestion des points.
+- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 18 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – l'AMS, c'est de la pure gestion des points.
 
 ## Erreurs fréquentes
 

@@ -48,7 +48,7 @@ Figuren und Fakten lernen sind beides Gedächtnisübungen, die nicht täglich si
 - **Nicht auf 18 von 18 zielen:** Es lohnt sich oft mehr, sich 12–15 Figuren wirklich gut einzuprägen, statt alle 18 nur oberflächlich – du brauchst nicht die volle Punktzahl.
 - **Feste Eselsbrücken:** Nach ein paar Übungsdurchgängen wirst du merken, dass sich bestimmte Merkmale und Diagnosen wiederholen – leg dir dafür eine feste Liste mit deinen Eselsbrücken an (z. B. «ledig» → «ledrig» → Lederhosen).
 - **Verschiedene Strategien ausprobieren:** Es gibt nicht die eine richtige Methode für alle. Lass dich nicht verunsichern, wenn eine Strategie bei anderen besser funktioniert als bei dir – wichtig ist, was für dich persönlich klappt.
-- **Punkte gezielt holen:** Figuren und Fakten lernen sowie der Konzentrationstest lassen sich mit Übung gut auf 16–20 Punkte trainieren – das ist am Anfang unrealistisch, wird aber mit der richtigen Technik machbar. Nimm dir für diese gut trainierbaren Untertests lieber die nötige Zeit, statt bei den längeren Untertests (z. B. Textverständnis) den letzten Text zu hetzen, der ohnehin nur wenige Punkte bringt – der EMS ist reines Punktemanagement.
+- **Punkte gezielt holen:** Figuren und Fakten lernen sowie der Konzentrationstest lassen sich mit Übung gut auf 16–18 Punkte trainieren – das ist am Anfang unrealistisch, wird aber mit der richtigen Technik machbar. Nimm dir für diese gut trainierbaren Untertests lieber die nötige Zeit, statt bei den längeren Untertests (z. B. Textverständnis) den letzten Text zu hetzen, der ohnehin nur wenige Punkte bringt – der EMS ist reines Punktemanagement.
 
 ## Häufige Fehler
 

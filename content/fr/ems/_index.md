@@ -114,11 +114,11 @@ Il n'y a pas de pause entre les sous-tests – on tourne toujours directement la
 testablauf
 ```
 
-Tu trouveras des guides pour tous les sous-tests sous [Exercices](/ems/uebungsaufgaben).
+Tu trouveras des guides pour tous les sous-tests sous [Séries d'exercices](/ems/uebungsaufgaben).
 
 ### Compléter la feuille de réponses et deviner de façon stratégique
 
-Coche une réponse pour **chaque** question – les réponses fausses ne sont pas pénalisées (exception : travail concentré et soigné). Prévois du temps avant la remise pour vérifier la feuille de réponses et deviner les questions restées ouvertes. Tu ne peux toutefois pas revenir aux sous-tests précédents.
+Marque une réponse pour **chaque** question – les réponses fausses ne sont pas pénalisées (exception : travail concentré et soigné). Prévois du temps avant la remise pour vérifier la feuille de réponses et deviner les questions restées ouvertes. Tu ne peux toutefois pas revenir aux sous-tests précédents.
 
 Si tu dois deviner, un système fixe augmente tes chances – par exemple toujours choisir « A », sauf si tu peux exclure A, puis « B », etc. Nous recommandons de commencer par A plutôt que par E, car E signifie souvent « Aucune / Toutes sont correctes » et peut plus rarement être exclue.
 
