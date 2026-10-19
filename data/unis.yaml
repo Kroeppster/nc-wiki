@@ -478,13 +478,13 @@
     it: ["San Gallo (con Zurigo)"]
   auswahlverfahren:
     de: "Kein eigener Bachelor-Studiengang: Du wirst über den EMS für den «St. Galler Track» an der Universität Zürich zugelassen und absolvierst dort auch das komplette Bachelor-Studium. Den anschliessenden «Joint Medical Master» studierst du gemeinsam mit der Universität Zürich in St. Gallen."
-    fr: "Pas de bachelor propre : l'admission se fait via l'AMS pour le « St.Galler Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Saint-Gall, conjointement avec l'Université de Zurich."
-    it: "Nessun bachelor proprio: l'ammissione avviene tramite l'AMS per lo «St.Galler Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a San Gallo, insieme all'Università di Zurigo."
+    fr: "Pas de bachelor propre : l'admission se fait via l'AMS pour le « St. Galler Track » de l'Université de Zurich, où se déroule aussi tout le bachelor. Le « Joint Medical Master » qui suit est étudié à Saint-Gall, conjointement avec l'Université de Zurich."
+    it: "Nessun bachelor proprio: l'ammissione avviene tramite l'AMS per lo «St. Galler Track» dell'Università di Zurigo, dove si svolge anche l'intero bachelor. Il «Joint Medical Master» successivo si studia a San Gallo, insieme all'Università di Zurigo."
   anmeldefrist: "15.02.2027"
   besonderheiten:
     de: ["Kein eigener Bachelor, das Bachelor-Studium läuft vollständig über den «St. Galler Track» an der Universität Zürich"]
-    fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « St.Galler Track » de l'Université de Zurich"]
-    it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite lo «St.Galler Track» dell'Università di Zurigo"]
+    fr: ["Pas de bachelor propre ; le bachelor se fait entièrement via le « St. Galler Track » de l'Université de Zurich"]
+    it: ["Nessun bachelor proprio; il bachelor si svolge interamente tramite lo «St. Galler Track» dell'Università di Zurigo"]
   studienbeginn: "20.09.2027"
   semestergebuehr:
     de: "Bachelor CHF 720 (Universität Zürich)"
