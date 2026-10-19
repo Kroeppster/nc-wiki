@@ -1,0 +1,27 @@
+{{- /*
+  ============================================================================
+  ABSCHNITTE EINER SEITE (ihre Überschriften der zweiten Ebene)
+  ============================================================================
+  Gibt die h2-Überschriften der Seite zurück, in ihrer Reihenfolge (jede mit .ID und .Title). Gebraucht von single.html und
+  list.html (zwei Spalten ja/nein) und von seiten-uebersicht.html (Liste
+  "Auf dieser Seite" schon beim Bauen füllen).
+
+  Gelesen wird das fertige HTML: der Fliesstext (.Content) und die Vorlagen,
+  die single.html/list.html vorab erzeugen und unter .Store "vorlagen-html"
+  ablegen (Uniguide-Seiten, Simulationsmodus, Q&A, Download-Kasten der
+  Übungsserien). Gezählt werden die h2 mit id und Text - genau die, die auch
+  das Skript in seiten-uebersicht.html findet (Kartentitel und versteckte
+  Überschriften haben keine id bzw. keinen Text). Aus dem HTML statt aus
+  .Fragments, weil dort die Titel noch ohne Typografie stehen ("'" statt
+  "’"); ausserdem ist .Fragments.Headings ein Baum mit einer unsichtbaren
+  Wurzel, "len" davon ist immer 1.
+  ============================================================================
+*/ -}}
+{{- $liste := slice }}
+{{- range (slice (string .Content)) | append (.Store.Get "vorlagen-html") }}
+  {{- range findRESubmatch `<h2[^>]*\sid="([^"]+)"[^>]*>([\s\S]*?)</h2>` (string .) }}
+    {{- $titel := index . 2 | plainify | htmlUnescape | strings.TrimSpace }}
+    {{- if $titel }}{{ $liste = $liste | append (dict "ID" (index . 1) "Title" $titel) }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- return $liste }}

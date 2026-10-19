@@ -953,11 +953,14 @@ Alles in `assets/css/style.css`, oben als Variablen. Es gibt **zwei Paletten**: 
 
 **Poppins** (Überschriften) und **Inter** (Text), selbst ausgeliefert aus `static/fonts/`
 (nicht von Google geladen – Datenschutz). Austauschen: `.woff2` dort ablegen **und** den
-`@font-face`-Block sowie `--font-display`/`--font-body` anpassen.
+`@font-face`-Block sowie `--font-display`/`--font-body` anpassen, dazu die drei
+`rel="preload"`-Zeilen in `layouts/partials/head.html` (sonst springt die Seite beim
+Schrifttausch).
 
 ### Logo und Favicon
 
-Logo: `static/images/logo.svg` (Kopfzeile, Hero, Marken-Band). Es ist dunkel gezeichnet und
+Logo: `static/images/logo.webp` (Kopfzeile, Hero, Marken-Band; 28 KB, aus der Quelldatei
+`logo.svg` erzeugt, die mit 214 KB zu gross zum Anzeigen ist). Es ist dunkel gezeichnet und
 wird im Dunkelmodus und im dunklen Band per Filter weiss (`--logo-filter`,
 `.brand-band-logo`). Ein mehrfarbiges neues Logo braucht dafür eine eigene Lösung.
 Favicon (`static/favicon.ico`, `favicon-32.png`, `apple-touch-icon.png`) wird nicht
@@ -966,12 +969,16 @@ unter denselben Namen hochladen.
 
 ### Abschnittsliste („Auf dieser Seite“)
 
-Entsteht automatisch aus den `##`-Überschriften (erst ab zwei). Ab 1100 px rechts neben
+Entsteht automatisch aus den `##`-Überschriften (erst ab zwei) und den Überschriften aus
+Vorlagen (Uniguide-Seiten, Q&A, Simulationsmodus, Download-Kasten). Hugo füllt sie schon
+beim Bauen (`layouts/partials/abschnitte.html`), damit nach dem Laden nichts springt; eine
+neue Vorlagen-Überschrift braucht dafür eine `id` und muss in `single.html`/`list.html`
+vorab erzeugt werden (siehe `vorlagen-html`). Ab 1100 px rechts neben
 dem Text, darunter zugeklappt über dem Text. Code: `layouts/partials/seiten-uebersicht.html`,
 Raster `.seite-raster`/`.mit-liste` in `single.html`/`list.html`, Beschriftung
 `auf_dieser_seite`. Nicht zurückbauen zu: Block zwischen Titel und Text, Leiste erst beim
-Scrollen, waagrechte Scroll-Reihe. Das Skript wartet auf `DOMContentLoaded`, sammelt auch
-Überschriften aus Vorlagen, holt sich Platz aus dem Seitenrand (`--rand-ausbruch`) und
+Scrollen, waagrechte Scroll-Reihe. Das Skript wartet auf `DOMContentLoaded`, baut die Liste
+aus allen Überschriften neu auf, holt sich Platz aus dem Seitenrand (`--rand-ausbruch`) und
 braucht `--sprung-abstand`/`--kopf-hoehe`, damit Sprungziele nicht unter der Kopfzeile
 landen.
 

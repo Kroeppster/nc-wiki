@@ -959,11 +959,13 @@ entrambe.
 
 **Poppins** (titoli) e **Inter** (testo), serviti da `static/fonts/` (non caricati da
 Google – protezione dei dati). Sostituire: mettere lì il `.woff2` **e** adattare il blocco
-`@font-face` e `--font-display`/`--font-body`.
+`@font-face` e `--font-display`/`--font-body`, oltre alle tre righe `rel="preload"` in
+`layouts/partials/head.html` (altrimenti la pagina salta al cambio di carattere).
 
 ### Logo e favicon
 
-Logo: `static/images/logo.svg` (intestazione, hero, fascia del marchio). È disegnato scuro e
+Logo: `static/images/logo.webp` (intestazione, hero, fascia del marchio; 28 KB, generato dal
+file sorgente `logo.svg`, troppo pesante da mostrare con 214 KB). È disegnato scuro e
 diventa bianco tramite filtro in modalità scura e nella fascia scura (`--logo-filter`,
 `.brand-band-logo`). Un nuovo logo multicolore ha bisogno di una soluzione propria. Il
 favicon (`static/favicon.ico`, `favicon-32.png`, `apple-touch-icon.png`) non viene generato
@@ -972,12 +974,15 @@ caricarlo con gli stessi nomi.
 
 ### Elenco delle sezioni («In questa pagina»)
 
-Nasce automaticamente dai sottotitoli `##` (da due in su). Da 1100 px a destra del testo,
+Nasce automaticamente dai sottotitoli `##` (da due in su) e dai titoli che vengono dai
+modelli (pagine Uniguide, Q&A, modalità simulazione, riquadro dei download). Hugo la riempie
+già durante la costruzione (`layouts/partials/abschnitte.html`), così dopo il caricamento
+non salta nulla; un nuovo titolo di modello ha bisogno di un `id` e va generato in anticipo
+in `single.html`/`list.html` (vedi `vorlagen-html`). Da 1100 px a destra del testo,
 sotto chiuso sopra il testo. Codice: `layouts/partials/seiten-uebersicht.html`, griglia
 `.seite-raster`/`.mit-liste` in `single.html`/`list.html`, etichetta `auf_dieser_seite`. Non
 tornare a: blocco tra titolo e testo, barra che appare solo scorrendo, fila orizzontale che
-scorre. Lo script aspetta `DOMContentLoaded`, raccoglie anche i titoli che vengono dai
-modelli, prende spazio dal margine (`--rand-ausbruch`) e ha bisogno di
+scorre. Lo script aspetta `DOMContentLoaded`, ricostruisce l'elenco da tutti i titoli, prende spazio dal margine (`--rand-ausbruch`) e ha bisogno di
 `--sprung-abstand`/`--kopf-hoehe` perché le ancore non finiscano sotto l'intestazione.
 
 ---

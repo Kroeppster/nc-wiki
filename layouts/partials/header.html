@@ -81,7 +81,9 @@
     <script src="{{ "pagefind/pagefind-ui.js" | relURL }}" defer></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        new PagefindUI({ element: "#search" });
+        // showImages: false - die Treffer haben keine Bilder; sonst bleibt links
+        // eine leere Spalte frei.
+        new PagefindUI({ element: "#search", showImages: false });
         // Pagefind beschriftet sein Feld nur mit "title" - Vorleseprogramme
         // brauchen ein richtiges Label (Text wie Platzhalter, schon übersetzt).
         var suchfeld = document.querySelector('#search input');

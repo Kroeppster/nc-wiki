@@ -28,7 +28,7 @@
            Seiten ohne echten übergeordneten Bereich (z.B. direkt die
            Startseite) gibt es keinen ".Parent" und der Knopf bleibt weg. */}}
       {{ with .Parent }}
-      <a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>
+      <a class="back-link" data-pagefind-ignore href="{{ .RelPermalink }}">← {{ .Title }}</a>
       {{ end }}
 
       {{/* Sichtbarer Hinweis auf Seiten des Mitgliederbereichs
@@ -110,12 +110,20 @@
            und die Tabelle daneben wäre grundlos abgeschnitten.
 
            Hugo kann die Überschriften aus dem Fliesstext hier schon zählen
-           und setzt die Klasse deshalb gleich beim Bauen - dadurch steht das
-           Raster auf den allermeisten Seiten sofort richtig. Auf Seiten, die
+           (partials/abschnitte.html) und setzt die Klasse deshalb gleich beim
+           Bauen - dadurch steht das Raster auf den allermeisten Seiten sofort
+           richtig, ohne dass der Text nach dem Laden umspringt. Auf Seiten, die
            ihre Überschriften erst aus einer Vorlage bekommen (Simulationsmodus,
            Uniguide, Q&A), weiss Hugo davon nichts; dort ergänzt bzw. entfernt
            das Skript in seiten-uebersicht.html die Klasse nach dem Laden. */}}
-      <div class="seite-raster{{ if ge (len .Fragments.Headings) 2 }} mit-liste{{ end }}">
+      {{- /* Vorlagen mit eigenen Abschnitten (h2) schon hier erzeugen, damit
+             partials/abschnitte.html sie mitzählen kann; ausgegeben werden
+             sie weiter unten an ihrer gewohnten Stelle. */ -}}
+      {{- $uniDetail := "" }}{{ if .Params.uni_slug }}{{ $uniDetail = partial "uni-detail.html" . }}{{ end }}
+      {{- $simulation := "" }}{{ if .Params.simulationsmodus }}{{ $simulation = partial "simulationsmodus.html" . }}{{ end }}
+      {{- $downloadsTitel := "" }}{{ if strings.Contains .Path "uebungsaufgaben" }}{{ $downloadsTitel = printf `<h2 id="uebungsserien-herunterladen">%s</h2>` (i18n "uebungsaufgaben_downloads_heading") | safeHTML }}{{ end }}
+      {{- .Store.Set "vorlagen-html" (slice $downloadsTitel $uniDetail $simulation) }}
+      <div class="seite-raster{{ if ge (len (partial "abschnitte.html" .)) 2 }} mit-liste{{ end }}">
         {{ partial "seiten-uebersicht.html" . }}
         <div class="seite-inhalt">
 
@@ -161,7 +169,7 @@
            Textabschnitt überging. */}}
       {{ if strings.Contains .Path "uebungsaufgaben" }}
       <div class="uebungsaufgaben-downloads">
-        <h2>{{ i18n "uebungsaufgaben_downloads_heading" }}</h2>
+        {{ $downloadsTitel }}
         {{ partial "download-list.html" (dict "path" (printf "downloads/uebungsaufgaben/%s" .File.BaseFileName) "page" .) }}
 
         {{/* Zusätzlicher Copyright-Hinweis direkt bei den Downloads (der
@@ -198,8 +206,8 @@
            ein Kontaktformular, nicht jede Seite der Website. */}}
       {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
       {{ if .Params.experience_form }}{{ partial "experience-form.html" . }}{{ end }}
-      {{ if .Params.uni_slug }}{{ partial "uni-detail.html" . }}{{ end }}
-      {{ if .Params.simulationsmodus }}{{ partial "simulationsmodus.html" . }}{{ end }}
+      {{ $uniDetail }}
+      {{ $simulation }}
         </div>
       </div>
     </div>

@@ -50,7 +50,7 @@
 {{ range slice "zulassung" "studium" }}
 {{- $bereich := . }}
 <div>
-<h2 class="uni-section-title">{{ i18n (printf "uni_detail_section_%s" $bereich) }}</h2>
+<h2 class="uni-section-title" id="abschnitt-{{ $bereich }}">{{ i18n (printf "uni_detail_section_%s" $bereich) }}</h2>
 <dl class="uni-detail">
   {{- range where $spalten "bereich" $bereich }}
   {{- $spalte := . }}
@@ -103,7 +103,7 @@
 
 {{ with $berichte }}
 <section class="uni-reports">
-  <h2 class="uni-section-title">{{ i18n "uni_detail_reports_heading" }}</h2>
+  <h2 class="uni-section-title" id="abschnitt-berichte">{{ i18n "uni_detail_reports_heading" }}</h2>
   <p class="uni-reports-intro">{{ i18n "uni_detail_reports_intro" }}</p>
   <ul class="card-grid uni-reports-grid">
     {{ range first 3 . }}
@@ -133,7 +133,7 @@
 </section>
 {{ end }}
 
-<h2 class="uni-section-title">{{ i18n "uni_detail_section_quellen" }}</h2>
+<h2 class="uni-section-title" id="abschnitt-quellen">{{ i18n "uni_detail_section_quellen" }}</h2>
 <dl class="uni-detail">
   {{- range where $spalten "bereich" "quellen" }}
   {{- $spalte := . }}

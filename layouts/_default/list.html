@@ -32,7 +32,7 @@
            KEINEN: Sie hängen im Hauptmenü und brauchen ihn nicht. */}}
       {{ if eq .Kind "term" }}
       {{ with .Parent }}
-      <a class="back-link" href="{{ .RelPermalink }}">← {{ i18n "schlagwoerter" }}</a>
+      <a class="back-link" data-pagefind-ignore href="{{ .RelPermalink }}">← {{ i18n "schlagwoerter" }}</a>
       {{ end }}
       {{ end }}
 
@@ -92,12 +92,19 @@
            und die Tabelle daneben wäre grundlos abgeschnitten.
 
            Hugo kann die Überschriften aus dem Fliesstext hier schon zählen
-           und setzt die Klasse deshalb gleich beim Bauen - dadurch steht das
-           Raster auf den allermeisten Seiten sofort richtig. Auf Seiten, die
+           (partials/abschnitte.html) und setzt die Klasse deshalb gleich beim
+           Bauen - dadurch steht das Raster auf den allermeisten Seiten sofort
+           richtig, ohne dass der Text nach dem Laden umspringt. Auf Seiten, die
            ihre Überschriften erst aus einer Vorlage bekommen (Simulationsmodus,
            Uniguide, Q&A), weiss Hugo davon nichts; dort ergänzt bzw. entfernt
            das Skript in seiten-uebersicht.html die Klasse nach dem Laden. */}}
-      <div class="seite-raster{{ if ge (len .Fragments.Headings) 2 }} mit-liste{{ end }}">
+      {{- /* Vorlagen mit eigenen Abschnitten (h2) schon hier erzeugen, damit
+             partials/abschnitte.html sie mitzählen kann; ausgegeben werden
+             sie weiter unten an ihrer gewohnten Stelle. */ -}}
+      {{- $simulation := "" }}{{ if .Params.simulationsmodus }}{{ $simulation = partial "simulationsmodus.html" . }}{{ end }}
+      {{- $faq := "" }}{{ if eq .Path "/ems/qa" }}{{ $faq = partial "faq.html" . }}{{ end }}
+      {{- .Store.Set "vorlagen-html" (slice $simulation $faq) }}
+      <div class="seite-raster{{ if ge (len (partial "abschnitte.html" .)) 2 }} mit-liste{{ end }}">
         {{ partial "seiten-uebersicht.html" . }}
         <div class="seite-inhalt">
 
@@ -151,7 +158,7 @@
            auf der Seite Testsimulationen, UNTER den Testheften - erst das
            Heft herunterladen, dann hier starten. Eingeschaltet über
            "simulationsmodus: true" im Seitenkopf. */}}
-      {{ if .Params.simulationsmodus }}{{ partial "simulationsmodus.html" . }}{{ end }}
+      {{ $simulation }}
 
       {{/* Vier Übersichtsseiten haben einen komplett eigenen Aufbau statt der
            normalen Kartenliste weiter unten: Erfahrungsberichte (Filterbare
@@ -165,7 +172,7 @@
       {{ else if eq .Path "/ems/uniguide" }}
       {{ partial "uniguide-table.html" . }}
       {{ else if eq .Path "/ems/qa" }}
-      {{ partial "faq.html" . }}
+      {{ $faq }}
       {{ else if eq .Path "/ems/uebungsaufgaben" }}
       {{ partial "uebungsaufgaben-overview.html" . }}
       {{ else }}

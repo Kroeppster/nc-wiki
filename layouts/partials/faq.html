@@ -43,7 +43,7 @@
   {{- range $categories }}
   {{- $cat := . }}
   <div class="faq-category">
-    <h2>{{ $cat }}</h2>
+    <h2 id="faq-{{ anchorize $cat }}">{{ $cat }}</h2>
     {{- /* Alle Fragen ausgeben, die zu dieser Kategorie gehören */ -}}
     {{- range $faq }}
     {{- if eq (partial "uni-text.html" .category) $cat }}

@@ -23,7 +23,7 @@
   {{- if ge (len $teile) 3 }}{{ $sponsoring = printf "<h2%s" (delimit (after 2 $teile) "<h2") }}{{ end -}}
   <section>
     <div class="wrap">
-      {{ with .Parent }}<a class="back-link" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+      {{ with .Parent }}<a class="back-link" data-pagefind-ignore href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
       {{ with partial "bereich-label.html" . }}<p class="eyebrow">{{ . }}</p>{{ end }}
       <h1>{{ .Title }}</h1>
       {{ with $vorne }}<div class="spenden-vorne">{{ . | safeHTML }}</div>{{ end }}

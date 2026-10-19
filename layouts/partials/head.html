@@ -22,9 +22,13 @@
      hat (gespeichert im Browser unter "theme-preference"), und falls nicht,
      verwendet es die Systemeinstellung des Geräts. Das Ergebnis wird als
      data-theme="hell/dunkel" auf die <html>-Seite geschrieben - das ganze
-     CSS in assets/css/style.css reagiert auf genau dieses Attribut. */}}
+     CSS in assets/css/style.css reagiert auf genau dieses Attribut.
+     Ausserdem bekommt <html> die Klasse "js": CSS, das nur mit laufendem
+     Skript stimmt (z.B. die nicht aufklappbare Abschnittsliste auf breiten
+     Bildschirmen), hängt daran. */}}
 <script>
 (function(){
+  document.documentElement.classList.add('js');
   try {
     var stored = localStorage.getItem('theme-preference');
     var theme = stored === 'light' || stored === 'dark'
@@ -73,6 +77,14 @@
      korrektem Code, weil der Browser noch die alte CSS-Datei hatte). Mit
      Fingerprint bekommt jede neue Version automatisch eine neue Adresse,
      der Browser lädt sie garantiert neu. */}}
+{{/* Schriften vorladen: Ohne das entdeckt der Browser sie erst, wenn das CSS
+     gelesen und der erste Text gesetzt ist. Bis dahin steht der Text in einer
+     Ersatzschrift, und beim Tausch verschiebt sich die Seite (gemessen: Titel
+     und Text rutschen um rund 7px). "crossorigin" ist bei Schriften Pflicht,
+     sonst lädt der Browser die Datei zweimal. */}}
+<link rel="preload" href="{{ "fonts/inter-variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/poppins-700.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/poppins-600.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 {{ with resources.Get "css/style.css" }}
   {{ with . | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">

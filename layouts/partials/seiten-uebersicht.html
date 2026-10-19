@@ -43,16 +43,22 @@
   Tiefere Überschriften ("###") bleiben bewusst draussen - sonst wird aus der
   Übersicht ein Inhaltsverzeichnis, das länger ist als der Text daneben.
 
-  OHNE JAVASCRIPT gibt es die Liste nicht. Das ist Absicht: Sie ist reine
-  Bequemlichkeit, alle Abschnitte stehen ja untereinander auf der Seite. Sie
-  bleibt deshalb ausgeblendet, bis das Skript sie gefüllt hat - eine leere
-  Liste wäre schlimmer als keine.
+  SCHON BEIM BAUEN GEFÜLLT: Die Abschnitte (aus dem Fliesstext und aus
+  Vorlagen) kennt Hugo (partials/abschnitte.html). Sind es mindestens zwei, steht die
+  Liste von Anfang an da - sonst sprang der Text nach dem Laden um eine Zeile
+  nach unten (Handy) bzw. wurde schmaler (breiter Bildschirm). Das Skript
+  baut die Liste danach aus allen h2 der fertigen Seite neu auf (auch denen
+  aus Vorlagen) und blendet sie aus, wenn es weniger als zwei sind. Ohne
+  JavaScript funktionieren die Einträge als normale Sprunglinks.
   ============================================================================
 */ -}}
-<details class="abschnittsliste" id="abschnittsliste" hidden data-pagefind-ignore>
+{{- $abschnitte := partial "abschnitte.html" . }}
+<details class="abschnittsliste" id="abschnittsliste"{{ if lt (len $abschnitte) 2 }} hidden{{ end }} data-pagefind-ignore>
   <summary class="abschnittsliste-titel">{{ i18n "auf_dieser_seite" }}</summary>
   <nav aria-label="{{ i18n "auf_dieser_seite" }}">
-    <ul class="abschnittsliste-liste" id="abschnittsliste-liste"></ul>
+    <ul class="abschnittsliste-liste" id="abschnittsliste-liste">
+      {{- if ge (len $abschnitte) 2 }}{{ range $abschnitte }}<li><a href="#{{ .ID }}">{{ .Title | plainify }}</a></li>{{ end }}{{ end -}}
+    </ul>
   </nav>
 </details>
 <script>
@@ -108,9 +114,14 @@
 
     /* Bei einem einzigen Abschnitt gibt es nichts zu springen. */
     if(abschnitte.length < 2){
+      kasten.hidden = true;
       if(raster) raster.classList.remove('mit-liste');
       return;
     }
+
+    /* Die beim Bauen eingetragenen Einträge ersetzen (hier kommen auch die
+       Überschriften aus Vorlagen dazu). */
+    while(liste.firstChild) liste.removeChild(liste.firstChild);
 
     abschnitte.forEach(function(a){
       var li = document.createElement('li');

@@ -978,11 +978,14 @@ modifier une couleur dans les deux.
 
 **Poppins** (titres) et **Inter** (texte), servies depuis `static/fonts/` (pas chargées chez
 Google – protection des données). Remplacer : déposer le `.woff2` là **et** adapter le bloc
-`@font-face` ainsi que `--font-display`/`--font-body`.
+`@font-face` ainsi que `--font-display`/`--font-body`, et les trois lignes
+`rel="preload"` dans `layouts/partials/head.html` (sinon la page saute au changement de
+police).
 
 ### Logo et favicon
 
-Logo : `static/images/logo.svg` (en-tête, hero, bande de marque). Il est dessiné en foncé et
+Logo : `static/images/logo.webp` (en-tête, hero, bande de marque ; 28 Ko, généré à partir
+du fichier source `logo.svg`, trop lourd à afficher avec 214 Ko). Il est dessiné en foncé et
 devient blanc par filtre en mode sombre et dans la bande sombre (`--logo-filter`,
 `.brand-band-logo`). Un nouveau logo multicolore a besoin d'une solution propre. Le favicon
 (`static/favicon.ico`, `favicon-32.png`, `apple-touch-icon.png`) n'est pas généré
@@ -991,12 +994,16 @@ téléverser sous les mêmes noms.
 
 ### Liste des sections (« Sur cette page »)
 
-Naît automatiquement des intertitres `##` (à partir de deux). Dès 1100 px à droite du texte,
+Naît automatiquement des intertitres `##` (à partir de deux) et des titres venant de
+modèles (pages Uniguide, Q&R, mode simulation, encadré des téléchargements). Hugo la remplit
+dès la construction (`layouts/partials/abschnitte.html`) pour que rien ne saute après le
+chargement ; un nouveau titre de modèle a besoin pour cela d'un `id` et doit être généré à
+l'avance dans `single.html`/`list.html` (voir `vorlagen-html`). Dès 1100 px à droite du texte,
 en dessous repliée au-dessus du texte. Code : `layouts/partials/seiten-uebersicht.html`,
 grille `.seite-raster`/`.mit-liste` dans `single.html`/`list.html`, libellé
 `auf_dieser_seite`. Ne pas revenir à : bloc entre titre et texte, barre qui n'apparaît qu'au
-défilement, rangée horizontale défilante. Le script attend `DOMContentLoaded`, recueille
-aussi les titres venant de modèles, prend sa place dans la marge (`--rand-ausbruch`) et a
+défilement, rangée horizontale défilante. Le script attend `DOMContentLoaded`, reconstruit la
+liste à partir de tous les titres, prend sa place dans la marge (`--rand-ausbruch`) et a
 besoin de `--sprung-abstand`/`--kopf-hoehe` pour que les ancres ne finissent pas sous
 l'en-tête.
 

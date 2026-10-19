@@ -474,6 +474,15 @@
       if(input && input.value) return;
       close();
     });
+
+    /* Escape schliesst das Panel (auch mit Text darin) und gibt den Fokus an
+       die Lupe zurück. */
+    search.addEventListener('keydown', function(evt){
+      if(evt.key !== 'Escape' || !search.classList.contains('is-open')) return;
+      evt.stopPropagation();
+      close();
+      toggle.focus();
+    });
   })();
 
   {{/* ---- Teil 7: "reveal-at"-Shortcode - Inhalt erst ab Zeitpunkt X zeigen ----
