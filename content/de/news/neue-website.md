@@ -5,7 +5,7 @@ eyebrow: "Update"
 draft: false
 ---
 
-Unsere Website hat ein neues Gesicht: Sie ist jetzt übersichtlicher und moderner, und du findest schneller, was du für deine Vorbereitung auf den Eignungstest für das Medizinstudium (EMS) brauchst.
+Unsere Website hat ein neues Gesicht: Sie ist übersichtlicher und moderner, und du findest schneller, was du für die Vorbereitung auf den Eignungstest für das Medizinstudium (EMS) brauchst.
 
 ## Neuerungen
 

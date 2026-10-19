@@ -5,7 +5,7 @@ eyebrow: "Mise à jour"
 draft: false
 ---
 
-Notre site web a changé de visage : NCWiki est désormais plus clair et plus moderne, et tu trouves plus rapidement ce dont tu as besoin pour ta préparation au test d'aptitudes pour les études de médecine (AMS).
+Notre site a changé de visage : NCWiki est plus clair et plus moderne, et tu trouves plus vite ce dont tu as besoin pour te préparer au test d'aptitudes pour les études de médecine (AMS).
 
 ## Nouveautés
 
