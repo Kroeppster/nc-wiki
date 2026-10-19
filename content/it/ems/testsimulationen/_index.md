@@ -16,9 +16,9 @@ featured_image_alt: "Foglio delle risposte AMS compilato in primo piano, sullo s
 
 Qui trovi tutte le informazioni sulle nostre simulazioni del test.
 
-**Iscrizione:** L'iscrizione avviene online. Non appena le date della prossima edizione sono fissate, le annunciamo sul nostro sito web e su Instagram.
+**Iscrizione:** l'iscrizione avviene online. Non appena le date della prossima edizione sono fissate, le annunciamo sul nostro sito web e su Instagram.
 
-**Date:** Le nostre simulazioni del test si svolgono ogni anno all'inizio di maggio, circa due mesi prima dell'AMS. Hanno luogo in tutte le università che utilizzano l'AMS: a Basilea, Berna, Friburgo, Lugano e presso l'Università e il Politecnico federale di Zurigo.
+**Date:** le nostre simulazioni del test si svolgono ogni anno all'inizio di maggio, circa due mesi prima del test attitudinale per gli studi di medicina (AMS). Hanno luogo in tutte le università che utilizzano l'AMS: a Basilea, Berna, Friburgo, Lugano e presso l'Università e il Politecnico federale di Zurigo.
 
 ## Fascicoli del test da scaricare
 

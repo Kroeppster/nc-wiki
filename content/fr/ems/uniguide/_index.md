@@ -7,4 +7,4 @@ menu:
     weight: 4
 ---
 
-Tu trouveras ici toutes les universités suisses proposant des études de médecine, avec la langue d'études, la procédure d'admission et les particularités de chaque site. Tu peux ainsi comparer quelle université te convient avant de fixer tes priorités lors de la préinscription, jusqu'au 15 février.
+Tu trouveras ici toutes les universités suisses proposant des études de médecine, avec la langue d'études, la procédure d'admission et les particularités de chaque site. Tu peux ainsi comparer les universités et voir laquelle te convient avant de fixer tes priorités lors de la préinscription, jusqu'au 15 février.

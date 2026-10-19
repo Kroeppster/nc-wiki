@@ -9,7 +9,7 @@ featured_image: "vorbereitungskurse/vorbereitungskurs-2024.jpg"
 featured_image_alt: "Dispensa NCWiki stampata per il corso di preparazione all'AMS di marzo 2024, su un tavolo d'aula magna"
 ---
 
-Nel nostro corso di preparazione gratuito impari in due giorni le strategie più importanti per tutti i sottotest e scopri come pianificare in modo sensato la tua preparazione all'AMS. Lavori in piccoli gruppi, accompagnato·a da studenti di medicina che hanno sostenuto l'AMS in prima persona e ti trasmettono direttamente la loro esperienza.
+Nel nostro corso di preparazione gratuito impari in due giorni le strategie più importanti per tutti i sottotest e scopri come pianificare in modo sensato la tua preparazione al test attitudinale per gli studi di medicina (AMS). Lavori in piccoli gruppi, accompagnato·a da studentesse e studenti di medicina che hanno sostenuto l'AMS in prima persona e ti trasmettono direttamente la loro esperienza.
 
 Il corso comprende una dispensa con esercizi, che puoi continuare a usare anche dopo per la tua preparazione. Inoltre conosci altri partecipanti con cui formare gruppi di studio.
 
@@ -17,4 +17,4 @@ I corsi si svolgono in diverse sedi universitarie svizzere, tra cui Basilea, Ber
 
 Non appena le iscrizioni per la prossima edizione sono aperte, lo annunciamo su questa pagina, su [Instagram](https://www.instagram.com/ncwiki.ch/) e nella nostra [community Discord](https://discord.com/invite/DhgYpUGss9). I posti sono limitati e vengono sorteggiati tra tutte le iscrizioni. Non conta quindi quanto in fretta ti iscrivi, ma che tu lo faccia entro il termine d'iscrizione.
 
-Qui puoi scaricare gratuitamente la dispensa attuale del corso. Contiene strategie e consigli per tutti i sottotest, indicazioni generali sulla preparazione e sulla situazione d'esame, oltre a numerosi esercizi. L'edizione 2026 tiene già conto del sottotest Abbinamento di schemi modificato. Se partecipi al nostro corso di preparazione, scarica la dispensa in anticipo e portala il giorno del corso, in formato digitale o stampato.
+Qui puoi scaricare gratuitamente la dispensa attuale del corso. Contiene strategie e consigli per tutti i sottotest, indicazioni generali sulla preparazione e sulla situazione d'esame, oltre a numerosi esercizi. L'edizione 2026 tiene già conto della nuova versione del sottotest «Abbinamento di schemi». Se partecipi al nostro corso di preparazione, scarica la dispensa in anticipo e portala il giorno del corso, in formato digitale o stampato.

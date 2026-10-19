@@ -7,4 +7,4 @@ menu:
     weight: 5
 ---
 
-Réponses aux questions fréquemment posées sur l'AMS, l'inscription et notre offre.
+Réponses aux questions fréquemment posées sur le test d'aptitudes pour les études de médecine (AMS), l'inscription et notre offre.
