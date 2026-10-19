@@ -83,8 +83,15 @@
         {{- $pfad := printf "images/angebot/%s.png" . }}
         {{- if strings.Contains . "." }}{{ $pfad = printf "images/%s" . }}{{ end }}
         {{- with resources.Get $pfad }}
-        {{- $klein := .Resize "420x webp q76" }}
-        <img src="{{ $klein.RelPermalink }}" width="{{ $klein.Width }}" height="{{ $klein.Height }}" alt="" loading="lazy" decoding="async">
+        {{- /* Zwei Grössen: In der Neunerkachel (Übungsserien) ist jedes Bild nur
+               85-115 px breit - dafür reichen 200 px, 420 px braucht erst ein
+               Handy mit hoher Pixeldichte oder ein einzelnes, grosses Bild. */ -}}
+        {{- $klein := .Resize "200x webp q76" }}
+        {{- $gross := .Resize "420x webp q76" }}
+        {{- /* Angezeigte Breite je nach Spaltenzahl der Kacheln (.material in
+               style.css: bis 460px eine Spalte, bis 900px zwei, sonst vier). */ -}}
+        {{- $sizes := cond (ge (len $quelle.bilder) 4) "(max-width: 460px) 30vw, (max-width: 900px) 16vw, 85px" "(max-width: 460px) 90vw, (max-width: 900px) 47vw, 260px" }}
+        <img src="{{ $gross.RelPermalink }}" srcset="{{ $klein.RelPermalink }} 200w, {{ $gross.RelPermalink }} 420w" sizes="{{ $sizes }}" width="{{ $gross.Width }}" height="{{ $gross.Height }}" alt="" loading="lazy" decoding="async">
         {{- end }}
         {{- end }}
       </span>
