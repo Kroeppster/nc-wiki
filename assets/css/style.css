@@ -1646,6 +1646,15 @@ body.pm-aktiv{overflow:hidden;}
 .fg-regler{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-5);}
 .fg-regler label{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:var(--color-ink-soft);}
 .fg-regler input{width:4.5rem;}
+/* Eingabefelder der Werkzeuge (Generatoren, Auswertungen) wie die im
+   Simulationsmodus: Vorher Browser-Standard - im Dunkelmodus hellgrau, die
+   Auswahlliste nur 19px hoch und schwer zu treffen. */
+.fg-regler input[type="number"],.ab-feld select{padding:.35rem .5rem;min-height:2.25rem;border:1px solid var(--color-line);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-ink);font-family:var(--font-body);font-size:var(--text-sm);}
+/* iPhone-Safari zoomt in die Seite, sobald man in ein Feld mit weniger als
+   16px Schrift tippt - auf Touch-Geräten deshalb 16px. */
+@media (hover:none) and (pointer:coarse){
+  .fg-regler input[type="number"],.ab-feld select,.pm-custom-table input[type="number"],.pm-custom input[type="number"]{font-size:16px;}
+}
 /* Kopfzeile jeder Phase: Titel links, Uhr rechts. Die Uhr nutzt
    tabular-nums, sonst springt sie beim Herunterzaehlen in der Breite. */
 .fg-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-4);
