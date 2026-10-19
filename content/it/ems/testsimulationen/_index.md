@@ -11,7 +11,7 @@ menu:
 simulationsmodus: true
 aliases: ["/ems/pruefungsmodus/"]
 featured_image: "testsimulationen/testsimulation-2023.jpg"
-featured_image_alt: "Foglio di risposta AMS compilato in primo piano, sullo sfondo un'aula magna piena durante una simulazione del test NCWiki"
+featured_image_alt: "Foglio delle risposte AMS compilato in primo piano, sullo sfondo un'aula magna piena durante una simulazione del test NCWiki"
 ---
 
 Qui trovi tutte le informazioni sulle nostre simulazioni del test.
