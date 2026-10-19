@@ -1017,7 +1017,7 @@ l'en-tête.
 
 | Workflow | Quand | Quoi |
 | --- | --- | --- |
-| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, en français protéger les espaces avant ! ? : ; (`scripts/fr-typografie.mjs`), recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, publier (seulement `main`) |
+| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, espaces insécables (`scripts/typografie.mjs` : FR avant ! ? : ;, DE dans « z. B. », dates, CHF), recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, publier (seulement `main`) |
 | `textmappen.yml` | chaque modification de `main` | classeurs récents dans la release « Textmappen » |
 | `texte-einlesen.yml` | classeur téléversé dans `redaktion/` | lire, construire à l'essai, pull request avec rapport |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` téléversé dans `redaktion/` | vérifier, lire, construire à l'essai, pull request avec rapport ; en cas d'erreur pas de pull request, exécution rouge |

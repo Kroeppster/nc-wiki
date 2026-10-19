@@ -117,11 +117,11 @@ jobs:
       - name: Build with Hugo
         run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-      # Französisch: Leerzeichen vor ! ? : ; » und nach « werden geschützt,
-      # damit der Browser dort nicht umbricht (sonst steht z. B. ein «?»
-      # allein am Zeilenanfang). Siehe scripts/fr-typografie.mjs.
-      - name: French typography (no line break before punctuation)
-        run: node scripts/fr-typografie.mjs public
+      # Geschützte Leerzeichen, wo ein Zeilenumbruch falsch aussieht (FR vor
+      # ! ? : ; », DE in «z. B.», alle in Daten und «CHF 300»). Siehe
+      # scripts/typografie.mjs.
+      - name: Typography (non-breaking spaces)
+        run: node scripts/typografie.mjs public
 
       # Baut den durchsuchbaren Suchindex für die Suchfunktion oben rechts
       # auf der Website (Pagefind durchsucht dafür den fertigen "public/"-

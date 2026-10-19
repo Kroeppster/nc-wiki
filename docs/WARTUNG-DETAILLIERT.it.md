@@ -996,7 +996,7 @@ modelli, prende spazio dal margine (`--rand-ausbruch`) e ha bisogno di
 
 | Workflow | Quando | Cosa |
 | --- | --- | --- |
-| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, in francese proteggere gli spazi prima di ! ? : ; (`scripts/fr-typografie.mjs`), ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, pubblicare (solo `main`) |
+| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, spazi non separabili (`scripts/typografie.mjs`: FR prima di ! ? : ;, DE in «z. B.», date, CHF), ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, pubblicare (solo `main`) |
 | `textmappen.yml` | ogni modifica a `main` | cartelle Excel recenti nella release «Textmappen» |
 | `texte-einlesen.yml` | cartella caricata in `redaktion/` | leggere, costruire di prova, pull request con rapporto |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` caricato in `redaktion/` | controllare, leggere, costruire di prova, pull request con rapporto; in caso di errore nessuna pull request, esecuzione rossa |

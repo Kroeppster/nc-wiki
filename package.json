@@ -2,7 +2,7 @@
   "name": "nc-wiki",
   "private": true,
   "scripts": {
-    "build": "hugo --minify && node scripts/fr-typografie.mjs public && npx pagefind --site public",
+    "build": "hugo --minify && node scripts/typografie.mjs public && npx pagefind --site public",
     "schuetzen": "node scripts/encrypt-protected-pages.mjs public"
   },
   "devDependencies": {

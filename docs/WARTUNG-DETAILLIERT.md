@@ -991,7 +991,7 @@ landen.
 
 | Workflow | Wann | Was |
 | --- | --- | --- |
-| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, auf Französisch Leerzeichen vor ! ? : ; schützen (`scripts/fr-typografie.mjs`), Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, veröffentlichen (nur `main`) |
+| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, geschützte Leerzeichen setzen (`scripts/typografie.mjs`: FR vor ! ? : ;, DE in «z. B.», Daten, CHF), Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, veröffentlichen (nur `main`) |
 | `textmappen.yml` | jede Änderung an `main` | frische Textmappen und Wortliste ans Release „Textmappen“ |
 | `texte-einlesen.yml` | Mappe in `redaktion/` hochgeladen | einlesen, probeweise bauen, Pull Request mit Bericht |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` in `redaktion/` hochgeladen | prüfen, einlesen, probeweise bauen, Pull Request mit Bericht; bei Fehlern kein Pull Request, Lauf rot |
