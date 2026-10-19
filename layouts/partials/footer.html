@@ -50,6 +50,10 @@
           {{ range .Site.Menus.legal }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
           {{ end }}
+          {{/* Öffnet den Cookie-Banner wieder, damit man eine Einwilligung so
+               einfach zurücknehmen kann, wie man sie gegeben hat. Braucht das
+               Skript (Teil 2 unten), deshalb erst von dort eingeblendet. */}}
+          {{ if .Site.Params.google_analytics_id }}<li hidden><button type="button" class="footer-knopf" id="cookieEinstellungen">{{ i18n "cookie_settings" }}</button></li>{{ end }}
         </ul>
       </div>
       <div class="footer-newsletter">
@@ -264,6 +268,24 @@
       gtag('config', GA_ID);
     }
 
+    {{/* Nach "Ablehnen" (auch nachträglich über "Cookie-Einstellungen"):
+         Google Analytics auf dieser Seite sofort abschalten (offizieller
+         Schalter von Google) und seine Cookies löschen - auf dem eigenen
+         Host und allen übergeordneten Domains, wo Google sie ablegen kann. */}}
+    function stopGoogleAnalytics(){
+      if(!GA_ID) return;
+      window['ga-disable-' + GA_ID] = true;
+      document.cookie.split(';').forEach(function(c){
+        var name = c.split('=')[0].trim();
+        if(!/^(_ga|_gid|_gat)/.test(name)) return;
+        var teile = location.hostname.split('.');
+        for(var i = 0; i < teile.length; i++){
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=.' + teile.slice(i).join('.');
+        }
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+      });
+    }
+
     var stored;
     try{ stored = localStorage.getItem(STORAGE_KEY); }catch(e){ stored = null; }
     if(stored === 'accepted'){ loadGoogleAnalytics(); }
@@ -292,15 +314,37 @@
          kein Analytics laden kann. */}}
     if(!stored){ banner.classList.remove('hidden'); reserveSpace(); window.addEventListener('resize', reserveSpace); }
 
+    var einstellungen = document.getElementById('cookieEinstellungen');
+    var geladen = stored === 'accepted';
     var btns = document.querySelectorAll('[data-cookie-action]');
     btns.forEach(function(b){
       b.addEventListener('click', function(){
         var choice = b.getAttribute('data-cookie-action');
         try{ localStorage.setItem(STORAGE_KEY, choice); }catch(e){}
-        if(choice === 'accepted'){ loadGoogleAnalytics(); }
+        if(choice === 'accepted'){
+          if(GA_ID) window['ga-disable-' + GA_ID] = false;
+          if(!geladen){ loadGoogleAnalytics(); geladen = true; }
+        } else {
+          stopGoogleAnalytics();
+        }
+        var warOffenUeberLink = banner.dataset.ueberLink === 'ja';
+        delete banner.dataset.ueberLink;
         hideBanner();
+        if(warOffenUeberLink && einstellungen) einstellungen.focus();
       });
     });
+
+    if(einstellungen){
+      einstellungen.parentNode.hidden = false;
+      einstellungen.addEventListener('click', function(){
+        banner.dataset.ueberLink = 'ja';
+        banner.classList.remove('hidden');
+        reserveSpace();
+        window.addEventListener('resize', reserveSpace);
+        var erster = banner.querySelector('[data-cookie-action]');
+        if(erster) erster.focus();
+      });
+    }
   })();
 
   {{/* ---- Teil 3: Hell/Dunkel-Umschalter-Knopf ----

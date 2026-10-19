@@ -58,6 +58,7 @@ cookie_text: "En dehors de ce qui est techniquement nécessaire (par ex. ton ré
 cookie_details: "En savoir plus"
 cookie_reject: "Refuser"
 cookie_accept: "Accepter"
+cookie_settings: "Paramètres des cookies"
 
 countdown_days: "jours"
 countdown_hours: "h"
