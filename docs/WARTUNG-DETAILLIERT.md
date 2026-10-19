@@ -954,7 +954,8 @@ Alles in `assets/css/style.css`, oben als Variablen. Es gibt **zwei Paletten**: 
 ### Schrift
 
 **Poppins** (Überschriften) und **Inter** (Text), selbst ausgeliefert aus `static/fonts/`
-(nicht von Google geladen – Datenschutz). Austauschen: `.woff2` dort ablegen **und** den
+(nicht von Google geladen – Datenschutz). Lizenz: SIL Open Font License, der Text
+liegt als `static/fonts/OFL.txt` daneben und muss mit den Dateien mitkommen. Austauschen: `.woff2` dort ablegen **und** den
 `@font-face`-Block sowie `--font-display`/`--font-body` anpassen, dazu die drei
 `rel="preload"`-Zeilen in `layouts/partials/head.html` (sonst springt die Seite beim
 Schrifttausch).

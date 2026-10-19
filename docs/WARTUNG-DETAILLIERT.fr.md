@@ -980,7 +980,8 @@ modifier une couleur dans les deux.
 ### Police
 
 **Poppins** (titres) et **Inter** (texte), servies depuis `static/fonts/` (pas chargées chez
-Google – protection des données). Remplacer : déposer le `.woff2` là **et** adapter le bloc
+Google – protection des données). Licence : SIL Open Font License, le texte se trouve dans
+`static/fonts/OFL.txt` et doit accompagner les fichiers. Remplacer : déposer le `.woff2` là **et** adapter le bloc
 `@font-face` ainsi que `--font-display`/`--font-body`, et les trois lignes
 `rel="preload"` dans `layouts/partials/head.html` (sinon la page saute au changement de
 police).

@@ -960,7 +960,8 @@ entrambe.
 ### Carattere
 
 **Poppins** (titoli) e **Inter** (testo), serviti da `static/fonts/` (non caricati da
-Google – protezione dei dati). Sostituire: mettere lì il `.woff2` **e** adattare il blocco
+Google – protezione dei dati). Licenza: SIL Open Font License, il testo si trova in
+`static/fonts/OFL.txt` e deve accompagnare i file. Sostituire: mettere lì il `.woff2` **e** adattare il blocco
 `@font-face` e `--font-display`/`--font-body`, oltre alle tre righe `rel="preload"` in
 `layouts/partials/head.html` (altrimenti la pagina salta al cambio di carattere).
 
