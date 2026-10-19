@@ -912,7 +912,7 @@ Unter `[params]`:
 
 | Feld | Wirkung |
 | --- | --- |
-| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | Ziel des Countdowns auf der Startseite (Zeitzone Pflicht) |
+| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | Ziel des Countdowns auf der Startseite (Zeitzone Pflicht). Ist der Termin vorbei, verschwindet der Countdown, und der Bau warnt, bis das nächste Datum eingetragen ist. |
 | `google_analytics_id` | Google Analytics; leer = aus |
 | `social_instagram`, `social_discord`, `social_linkedin` | Knöpfe in der Fusszeile; leer = kein Knopf |
 | `newsletter_url` | Newsletter-Anmeldung; leer = kein Newsletter-Block |

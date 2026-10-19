@@ -918,7 +918,7 @@ Sotto `[params]`:
 
 | Campo | Effetto |
 | --- | --- |
-| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | obiettivo del conto alla rovescia sulla pagina iniziale (fuso orario obbligatorio) |
+| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | obiettivo del conto alla rovescia sulla pagina iniziale (fuso orario obbligatorio). Passata la data, il conto alla rovescia scompare e la costruzione avvisa finché non si inserisce la data successiva. |
 | `google_analytics_id` | Google Analytics; vuoto = disattivato |
 | `social_instagram`, `social_discord`, `social_linkedin` | pulsanti nel piè di pagina; vuoto = nessun pulsante |
 | `newsletter_url` | iscrizione alla newsletter; vuoto = nessun blocco newsletter |

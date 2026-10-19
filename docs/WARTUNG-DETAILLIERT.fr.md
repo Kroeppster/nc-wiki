@@ -937,7 +937,7 @@ Sous `[params]` :
 
 | Champ | Effet |
 | --- | --- |
-| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | cible du compte à rebours de l'accueil (fuseau obligatoire) |
+| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | cible du compte à rebours de l'accueil (fuseau obligatoire). Une fois la date passée, le compte à rebours disparaît et la construction avertit jusqu'à ce que la prochaine date soit saisie. |
 | `google_analytics_id` | Google Analytics ; vide = désactivé |
 | `social_instagram`, `social_discord`, `social_linkedin` | boutons du pied de page ; vide = pas de bouton |
 | `newsletter_url` | inscription à la newsletter ; vide = pas de bloc newsletter |

@@ -182,8 +182,17 @@
     var elSr = document.getElementById('cd-sr');
     var srLabels = elSr ? elSr.dataset : {};
 
+    /* Ist der Termin vorbei (und ems_exam_date in hugo.toml noch nicht auf
+       das naechste Jahr gesetzt), verschwindet die Countdown-Karte, statt
+       "Noch bis zum EMS am ..." mit lauter Nullen zu zeigen. */
+    var panel = document.querySelector('.hero-panel');
     function tick(){
-      var diff = Math.max(0, target - Date.now());
+      if(target - Date.now() <= 0){
+        if(panel) panel.hidden = true;
+        clearTimeout(timer);
+        return;
+      }
+      var diff = target - Date.now();
       var d = Math.floor(diff/86400000);
       var h = Math.floor((diff%86400000)/3600000);
       var m = Math.floor((diff%3600000)/60000);

@@ -70,7 +70,12 @@
         </figure>
         {{ end }}
 
-      <div class="hero-panel">
+      {{- /* Termin schon vorbei: Karte weglassen (das Skript blendet sie auch
+             aus, wenn der Termin zwischen zwei Builds verstreicht) und im
+             Build-Protokoll daran erinnern, ems_exam_date nachzutragen. */ -}}
+      {{- $vorbei := lt (time.AsTime site.Params.ems_exam_date) now }}
+      {{- if $vorbei }}{{ warnf "ems_exam_date (%s) liegt in der Vergangenheit: Countdown auf der Startseite ausgeblendet. Neues Datum in hugo.toml eintragen." site.Params.ems_exam_date }}{{ end }}
+      <div class="hero-panel"{{ if $vorbei }} hidden{{ end }}>
         <p class="ticket-label" aria-hidden="true">{{ .Params.hero.ticket_label }}</p>
 
         <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
