@@ -66,6 +66,8 @@
 {{- $jahre = sort ($jahre | uniq) "value" "desc" }}
 {{- $themaNamen := dict "figuren-einpraegen" (i18n "downloads_figuren") "fakten-einpraegen" (i18n "downloads_fakten") }}
 
+{{- /* Auf FR/IT: Hinweis, dass die PDFs (fast) alle deutsch sind */ -}}
+{{- with i18n "downloads_sprache" }}<p class="download-sprache">{{ . }}</p>{{ end }}
 <div class="download-jahre">
   {{- range $i, $jahr := $jahre }}
   <details class="download-jahr"{{ if eq $i 0 }} open{{ end }}>

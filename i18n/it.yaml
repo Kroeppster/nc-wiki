@@ -78,6 +78,7 @@ contact_form_success_heading: "Grazie per il tuo messaggio"
 contact_form_success_body: "L’abbiamo ricevuto e ti risponderemo il prima possibile."
 
 downloads_empty: "Al momento nessun materiale disponibile."
+downloads_sprache: "La maggior parte dei documenti è in tedesco."
 downloads_report_sending: "Segnalazione in corso…"
 downloads_report_sent: "Grazie, segnalato!"
 downloads_report_failed: "Non riuscito – scrivici via e-mail"

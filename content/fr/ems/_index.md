@@ -69,7 +69,7 @@ Tu gagnes un temps précieux à l'AMS si tu connais déjà les consignes – auc
 
 ### Matériel d'entraînement
 
-Il y a malheureusement moins de matériel d'exercices disponible pour les francophones que pour les germanophones. C'est pourquoi nous mettons à disposition des exercices gratuits en français. Nous recommandons aussi le « Test Info » officiel de swissuniversities (sous « Documents »), qui contient des exemples d'exercices et des conseils de résolution.
+Il y a malheureusement moins de matériel d'exercices disponible pour les francophones que pour les germanophones. Nos séries d'exercices gratuites sont pour la plupart en allemand ; celles des sous-tests sans texte (par ex. association de motifs, objets dans l'espace) s'utilisent toutefois sans bien connaître l'allemand. Nous recommandons aussi le « Test Info » officiel de swissuniversities (sous « Documents »), qui contient des exemples d'exercices et des conseils de résolution.
 
 ## Le jour de l'AMS
 

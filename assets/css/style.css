@@ -1287,6 +1287,8 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .download-serie .download-buttons{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-end;}
 .download-serie .download-link{flex:0 0 auto;padding:var(--space-2) var(--space-4);font-size:var(--text-sm);}
 @media (max-width:30rem){.download-serie .download-buttons{flex:1 1 100%;justify-content:flex-start;}}
+.download-sprache{margin:var(--space-5) 0 0;color:var(--color-ink-soft);font-size:var(--text-base);}
+.download-sprache + .download-jahre{margin-top:var(--space-3);}
 .download-empty{color:var(--color-ink-faint);font-size:var(--text-base);font-style:italic;margin:var(--space-6) 0 0;}
 .report-error{margin:0 0 0 .2rem;}
 .report-error button{background:none;border:none;padding:0;font:inherit;font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-ink-faint);text-decoration:underline;cursor:pointer;}
