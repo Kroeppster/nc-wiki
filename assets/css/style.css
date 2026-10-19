@@ -1722,6 +1722,10 @@ body.pm-aktiv{overflow:hidden;}
   body:not(.fg-druckt) :is(.card,.table-scroll){box-shadow:none !important;}
   body:not(.fg-druckt) :is(h1,h2,h3,h4){break-after:avoid;}
   body:not(.fg-druckt) :is(tr,.card,figure,img){break-inside:avoid;}
+  /* Die Q&A-Antworten werden zum Drucken aufgeklappt (footer.html, Teil 10) -
+     das Plus/Minus zum Auf- und Zuklappen hat auf Papier keinen Sinn. */
+  body:not(.fg-druckt) .faq-item summary::after{content:none;}
+  body:not(.fg-druckt) .faq-item{box-shadow:none;break-inside:avoid;}
 }
 
 /* ==========================================================================

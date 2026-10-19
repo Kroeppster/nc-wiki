@@ -632,4 +632,25 @@
     });
     rahmen.forEach(function(el){ beobachter.observe(el); });
   })();
+
+  {{/* ---- Teil 10: Beim Drucken zugeklappte Abschnitte aufklappen ----
+       Die Antworten der Q&A und die älteren Jahre der Download-Listen stecken
+       in zugeklappten <details>; deren Inhalt druckt der Browser nicht, und
+       CSS allein kann ihn nicht aufklappen. Gedruckt wurden so nur die
+       Fragen. Vor dem Druck werden sie geöffnet, danach wieder geschlossen.
+       Abschnittsliste und Fehlerformular bleiben zu (im Druck ausgeblendet). */}}
+  (function(){
+    var geoeffnet = [];
+    window.addEventListener('beforeprint', function(){
+      document.querySelectorAll('main details:not([open])').forEach(function(d){
+        if(d.closest('.abschnittsliste, .uebungsaufgaben-fehler')) return;
+        d.open = true;
+        geoeffnet.push(d);
+      });
+    });
+    window.addEventListener('afterprint', function(){
+      geoeffnet.forEach(function(d){ d.open = false; });
+      geoeffnet = [];
+    });
+  })();
 </script>
