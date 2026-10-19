@@ -31,6 +31,9 @@
     standen sonst mit dem Datum "1. Januar 0001" darin.
   - Newsletter-Seiten erst, wenn der Newsletter eingerichtet ist (wie in
     Sitemap und head.html).
+  - Archivierte Beiträge (ueber-uns/archiv/...) nur im Feed des Archivs
+    selbst. Sonst führte der Feed der ganzen Website alte News weiter als
+    neue Einträge, obwohl sie auf der News-Seite nicht mehr stehen.
 
   ACHTUNG beim Bearbeiten: Das ist eine XML-Datei, kein HTML. Wer hier etwas
   ändert, sollte danach lokal "hugo --minify" laufen lassen und einmal in
@@ -48,6 +51,11 @@
 {{- /* Der eigentliche Zweck dieser Datei: geschützte Seiten rauswerfen. */ -}}
 {{- $pages = where $pages "Params.geschuetzt" "!=" true -}}
 {{- if not site.Params.newsletter_url }}{{ $pages = where $pages "Params.newsletter_seite" "!=" true }}{{ end -}}
+{{- if not (hasPrefix $.Path "/ueber-uns/archiv") -}}
+{{- $ohneArchiv := slice -}}
+{{- range $pages }}{{ if not (hasPrefix .Path "/ueber-uns/archiv") }}{{ $ohneArchiv = $ohneArchiv | append . }}{{ end }}{{ end -}}
+{{- $pages = $ohneArchiv -}}
+{{- end -}}
 {{- $mitDatum := slice -}}
 {{- range $pages }}{{ if not .Date.IsZero }}{{ $mitDatum = $mitDatum | append . }}{{ end }}{{ end -}}
 {{- $pages = $mitDatum -}}
