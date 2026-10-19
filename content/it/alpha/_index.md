@@ -30,7 +30,7 @@ diagnosi suonano come in un vero fascicolo del test, e le domande sono chiare?
 In italiano in particolare: concordanze («la paziente nervosa», «lo
 psicologo», «l'avvocata») e formulazione delle domande sono corrette? E in
 stampa: foglio risposte e soluzioni sembrano quelli dello strumento di
-impaginazione?
+formattazione?
 
 ```baustein
 lern-generator
@@ -40,11 +40,11 @@ lern-generator
 
 Chi ha risolto a casa su carta una simulazione del test fotografa il foglio
 risposte e ottiene i punti per sottotest – senza confrontare a mano le 144
-soluzioni. La lettura avviene come nello strumento di impaginazione
+soluzioni. La lettura avviene come nello strumento di formattazione
 (valutazione), ma direttamente nel browser: la foto non lascia il
 dispositivo. Funziona per le simulazioni del test dal 2022 al 2026, che hanno
 tutte lo stesso foglio risposte – e per ogni simulazione dello strumento di
-impaginazione: sotto «Chiave di correzione propria» scegliere il PDF delle soluzioni
+formattazione: sotto «Chiave di correzione propria» scegliere il PDF delle soluzioni
 dello strumento (con il foglio risposte in cui le caselle giuste sono
 annerite). «Fotocamera dal vivo» cerca i quattro angoli neri già
 nell'inquadratura e scatta da sola appena il foglio è fermo nell'immagine;
@@ -69,10 +69,10 @@ scansione, PDF) del foglio svolto, contata secondo la regola delle
 istruzioni – segni giusti meno segni sbagliati meno segni bersaglio omessi
 prima dell'ultimo segno marcato. Il foglio non ha angoli neri; è la griglia
 dei 1600 segni stessa a servire da riferimento (procedimento dello strumento
-di impaginazione). Si possono scegliere tutti i test di concentrazione del
+di formattazione). Si possono scegliere tutti i test di concentrazione del
 sito con foglio delle soluzioni (simulazioni del test 2022, 2023, 2026 e serie
 di esercizi) – oppure uno proprio: caricare esercizio e soluzioni in PDF, per
-esempio dallo strumento di impaginazione.
+esempio dallo strumento di formattazione.
 
 Da valutare: **funziona con vere foto e penne diverse?** I segni barrati,
 cerchiati o appena toccati vengono riconosciuti bene? Un segno letto male si
