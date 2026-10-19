@@ -39,7 +39,9 @@ Die französische Stimme beruht auf dem SIWIS-Datensatz der University of
 Edinburgh, veröffentlicht unter CC-BY 4.0:
 <https://datashare.is.ed.ac.uk/handle/10283/2353>. Wird die französische
 Sprachfassung öffentlich genutzt, gehört dieser Hinweis dazu – deshalb steht er
-hier und im Erzeugungsskript.
+hier, im Erzeugungsskript und auf der französischen Seite beim Schalter «Lire les
+consignes à voix haute» (i18n `pm_stimme_quelle`). Werden die französischen Dateien durch eigene
+Aufnahmen ersetzt, `pm_stimme_quelle` in `i18n/fr.yaml` leeren.
 
 ## Format
 

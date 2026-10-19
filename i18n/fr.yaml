@@ -229,6 +229,8 @@ pm_start: "Démarrer"
 pm_minuten: "{{ .min }} min"
 pm_vorlesen: "Lire les consignes à voix haute"
 pm_vorlesen_hinweis: "Utilise la synthèse vocale de ton appareil. Aide à se faire une idée du temps avant que le chronomètre ne démarre."
+pm_vorlesen_hinweis_aufnahmen: "Joue l'annonce avant chaque sous-test. Aide à se faire une idée du temps avant que le chronomètre ne démarre."
+pm_stimme_quelle: "Voix de synthèse basée sur le [corpus SIWIS](https://datashare.is.ed.ac.uk/handle/10283/2353) (University of Edinburgh), licence [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.fr)."
 pm_uebungsseite: "Vers la page d'exercices"
 
 pm_beginne: "Départ."

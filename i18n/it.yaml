@@ -228,6 +228,8 @@ pm_start: "Avvia"
 pm_minuten: "{{ .min }} min"
 pm_vorlesen: "Leggi le istruzioni ad alta voce"
 pm_vorlesen_hinweis: "Usa la sintesi vocale del tuo dispositivo. Aiuta a farsi un'idea del tempo prima che parta il cronometro."
+pm_vorlesen_hinweis_aufnahmen: "Riproduce l'annuncio prima di ogni sottotest. Aiuta a farsi un'idea del tempo prima che parta il cronometro."
+pm_stimme_quelle: ""
 pm_uebungsseite: "Vai alla pagina di esercizi"
 
 pm_beginne: "Via."

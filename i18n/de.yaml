@@ -236,6 +236,10 @@ pm_start: "Starten"
 pm_minuten: "{{ .min }} Min"
 pm_vorlesen: "Anweisungen vorlesen"
 pm_vorlesen_hinweis: "Nutzt die Sprachausgabe deines Geräts. Hilft, ein Gefühl für die Zeit zu bekommen, bevor die Uhr läuft."
+# Hinweis, wenn unter assets/audio/simulationsmodus/<sprache>/ Aufnahmen liegen (sonst gilt pm_vorlesen_hinweis = Gerätestimme);
+# pm_stimme_quelle = Namensnennung der Stimme, falls deren Lizenz sie verlangt (FR: SIWIS, CC BY 4.0), sonst leer.
+pm_vorlesen_hinweis_aufnahmen: "Spielt vor jedem Untertest die Ansage ab. Hilft, ein Gefühl für die Zeit zu bekommen, bevor die Uhr läuft."
+pm_stimme_quelle: ""
 pm_uebungsseite: "Zur Übungsseite"
 
 pm_beginne: "Start."

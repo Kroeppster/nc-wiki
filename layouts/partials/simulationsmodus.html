@@ -107,7 +107,11 @@
       <input type="checkbox" id="pm-tts" checked>
       <span>{{ i18n "pm_vorlesen" }}</span>
     </label>
-    <p class="pm-hinweis">{{ i18n "pm_vorlesen_hinweis" }}</p>
+    {{- /* Mit Aufnahmen (assets/audio/...) spielt die Seite diese ab, ohne liest
+           die Gerätestimme vor - der Hinweis sagt, was wirklich passiert. Die
+           französische Stimme verlangt eine Namensnennung (CC BY 4.0, siehe
+           assets/audio/simulationsmodus/README.md). */}}
+    <p class="pm-hinweis">{{ if $audio }}{{ i18n "pm_vorlesen_hinweis_aufnahmen" }}{{ with i18n "pm_stimme_quelle" }} {{ . | markdownify }}{{ end }}{{ else }}{{ i18n "pm_vorlesen_hinweis" }}{{ end }}</p>
   </div>
 
   <section class="pm-komplett">

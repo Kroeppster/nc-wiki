@@ -1332,6 +1332,7 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .pm-schalter{display:flex;align-items:center;gap:var(--space-3);font-weight:600;cursor:pointer;}
 .pm-schalter input{width:1.05rem;height:1.05rem;accent-color:var(--color-signal);cursor:pointer;}
 .pm-hinweis{margin:var(--space-2) 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);}
+.pm-hinweis a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
 .pm-dauer{margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-ink-faint);}
 
 /* Eigener Ablauf: Tabelle mit Auswahl, Aufgabenzahl, Zeit und Pause.
