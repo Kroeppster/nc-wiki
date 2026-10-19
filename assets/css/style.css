@@ -294,6 +294,10 @@ body{
   background:var(--color-paper);color:var(--color-ink);
   line-height:var(--leading-normal);-webkit-font-smoothing:antialiased;
   position:relative;
+  /* Notbremse für Wörter, die auf einem schmalen Handy nicht in eine Zeile
+     passen ("Behindertengleichstellungsgesetzes" bei 320px): umbrechen statt
+     die Seite seitwärts zu schieben. Wörter, die passen, bleiben unberührt. */
+  overflow-wrap:break-word;
 }
 /* Zwei sehr blasse Farbwolken hinter dem gesamten Seiteninhalt. "fixed" heisst:
    sie scrollen NICHT mit, sondern bleiben im Fenster stehen - so hat auch auf
@@ -326,7 +330,7 @@ h1,h2,h3,h4{
      bewusst schmal ('Space Grotesk','Arial Narrow'), Poppins braucht bei
      gleicher Groesse deutlich mehr Platz. */
   overflow-wrap:break-word;
-  hyphens:auto;
+  -webkit-hyphens:auto;hyphens:auto; /* -webkit-: Safari vor Version 17 (ältere iPhones) */
 }
 h1{font-size:var(--text-5xl);}
 h2{font-size:var(--text-3xl);}
@@ -950,7 +954,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .sponsor-name{font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-logo-chip-text);text-align:center;padding:var(--space-5);display:block;}
 
 /* Untertests (echte Reihenfolge 1–10 → Nummerierung bleibt) */
-.subtest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);list-style:none;margin:var(--space-6) 0 0;padding:0;}
+.subtest-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-3);list-style:none;margin:var(--space-6) 0 0;padding:0;}
 .subtest-card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-lg);padding:var(--space-5) var(--space-4);box-shadow:var(--shadow-sm);transition:border-color .15s,box-shadow .2s,transform .2s;}
 .subtest-card:hover{border-color:var(--color-signal);box-shadow:var(--shadow-md);transform:translateY(-2px);}
 /* Statt einer laufenden Nummer traegt jede Kachel ein Zeichen, das aus der
@@ -963,7 +967,11 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    EMS-Pruefung. */
 .subtest-glyph{display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:var(--radius-md);background:var(--color-signal-soft);color:var(--color-signal);margin-bottom:var(--space-3);}
 .subtest-glyph svg{width:1.35rem;height:1.35rem;}
-.subtest-name{font-size:var(--text-sm);line-height:var(--leading-snug);display:block;}
+/* minmax(0,1fr) oben und die Trennung hier: Sonst macht ein langes Wort wie
+   "Medizinisch-naturwissenschaftliches" seine Spalte breiter als ihren Anteil,
+   und bei 320px Breite schob das die ganze Startseite seitwärts. */
+.subtest-name{font-size:var(--text-sm);line-height:var(--leading-snug);display:block;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto;}
+@media (max-width:380px){ .subtest-card{padding:var(--space-4) var(--space-3);} }
 .subtest-card a{display:block;}
 
 /* ---------------------------------------------------------------------------
@@ -1616,7 +1624,7 @@ body.pm-aktiv{overflow:hidden;}
      lesbar bleiben, statt eine sehr lange senkrechte Liste zu ergeben. */
   .team-grid{grid-template-columns:repeat(auto-fill,minmax(7rem,1fr));}
   .uebungsaufgaben-layout{grid-template-columns:1fr;}
-  .subtest-grid{grid-template-columns:repeat(2,1fr);}
+  .subtest-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   /* Angebots-Kacheln: 3 -> 2 Spalten. Auf ganz schmalen Schirmen (siehe
      naechster Block) wird daraus eine Spalte. */
   /* Die Spenden-Karte braucht auf schmalen Schirmen weniger Innenabstand,
