@@ -43,7 +43,9 @@
 {{- /* Schlagwort-Seiten: .Title schreibt Hugo nach englischer Regel gross
        ("Neben Der Matura") und heisst auf der Übersicht in allen Sprachen
        "Tags" - so wie list.html den Titel zeigt, so auch hier. */ -}}
-{{- if eq .Kind "term" }}{{ $pageTitle = .Data.Term }}{{ end }}
+{{- /* Schlagwort-Seite: "Schlagwort: Muster zuordnen" - sonst hiesse sie genau
+       wie die Untertest-Seite (bei Google und in der Suche verwechselbar). */ -}}
+{{- if eq .Kind "term" }}{{ $pageTitle = i18n "schlagwort_titel" (dict "Titel" .Data.Term) }}{{ end }}
 {{- if eq .Kind "taxonomy" }}{{ $pageTitle = i18n "schlagwoerter" }}{{ end }}
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ $pageTitle }}{{ end }}</title>
 
@@ -128,6 +130,7 @@
 {{- $ogTitle := $pageTitle }}
 {{- if .IsHome }}{{ $ogTitle = .Site.Title }}{{ end }}
 {{- $ogDescription := .Description }}
+{{- if and (eq .Kind "term") (not $ogDescription) }}{{ $ogDescription = i18n "schlagwort_beschreibung" (dict "Titel" .Data.Term) }}{{ end }}
 {{- if not $ogDescription }}{{ $ogDescription = .Summary }}{{ end }}
 {{- if not $ogDescription }}{{ $ogDescription = i18n "site_tagline" }}{{ end }}
 {{- $ogDescription = $ogDescription | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace }}

@@ -368,6 +368,8 @@ sprache_Italiano: "Italienisch"
 
 # Schlagwort-Seiten (Titel der Übersicht, Zeile über dem Titel, Zurück-Link)
 schlagwoerter: "Schlagwörter"
+schlagwort_titel: "Schlagwort: {{ .Titel }}"
+schlagwort_beschreibung: "Erfahrungsberichte zum Schlagwort «{{ .Titel }}» – von Studierenden, die den EMS geschrieben haben."
 downloads_serie: "Serie"
 downloads_aufgaben: "Aufgaben"
 downloads_aufgaben_loesung: "Aufgaben mit Lösung"

@@ -361,6 +361,8 @@ sprache_Italiano: "italiano"
 
 # Schlagwort-Seiten (Titel der Übersicht, Zeile über dem Titel, Zurück-Link)
 schlagwoerter: "Parole chiave"
+schlagwort_titel: "Parola chiave: {{ .Titel }}"
+schlagwort_beschreibung: "Testimonianze con la parola chiave «{{ .Titel }}» – di studenti che hanno sostenuto l'AMS."
 downloads_serie: "Serie"
 downloads_aufgaben: "Esercizi"
 downloads_aufgaben_loesung: "Esercizi con soluzione"

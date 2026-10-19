@@ -362,6 +362,8 @@ sprache_Italiano: "italien"
 
 # Schlagwort-Seiten (Titel der Übersicht, Zeile über dem Titel, Zurück-Link)
 schlagwoerter: "Mots-clés"
+schlagwort_titel: "Mot-clé : {{ .Titel }}"
+schlagwort_beschreibung: "Témoignages avec le mot-clé « {{ .Titel }} » – par des étudiant·e·s qui ont passé l'AMS."
 downloads_serie: "Série"
 downloads_aufgaben: "Exercices"
 downloads_aufgaben_loesung: "Exercices avec corrigé"
