@@ -133,15 +133,33 @@
   // Eine Liste von Schritten (einpraegen, Ablenkung, abfragen), abgearbeitet
   // mit einer Uhr; "Weiter" springt zum naechsten Schritt.
   var laufend = null, schritte = [], jetzt = -1, auswahl = [];
+  // Die Restzeit wird aus der Endzeit gerechnet, nicht Sekunde fuer Sekunde
+  // heruntergezaehlt: Im Hintergrund (Handy gesperrt, anderer Tab) bremst der
+  // Browser den Takt auf einmal pro Minute - die Uhr ging dann nach.
   function uhr(sekunden, fertig){
     clearInterval(laufend);
-    var rest = sekunden, anzeige = el('lg-uhr');
-    function zeig(){ var m = Math.floor(rest / 60), s = rest % 60; anzeige.textContent = m + ':' + (s < 10 ? '0' : '') + s; }
+    var ende = Date.now() + sekunden * 1000, anzeige = el('lg-uhr');
+    function rest(){ return Math.max(0, Math.ceil((ende - Date.now()) / 1000)); }
+    function zeig(){ var r = rest(), m = Math.floor(r / 60), s = r % 60; anzeige.textContent = m + ':' + (s < 10 ? '0' : '') + s; }
     zeig();
-    laufend = setInterval(function(){ rest--; zeig(); if (rest <= 0){ clearInterval(laufend); fertig(); } }, 1000);
+    laufend = setInterval(function(){ zeig(); if (rest() <= 0){ clearInterval(laufend); fertig(); } }, 250);
   }
+  // Bildschirm wachhalten, solange eine Phase laeuft: In der Einpraegephase
+  // schaut man minutenlang nur hin - das Handy schaltete den Bildschirm ab.
+  var wachsperre = null;
+  function wach(an){
+    try{
+      if (an && 'wakeLock' in navigator && (!wachsperre || wachsperre.released)){
+        navigator.wakeLock.request('screen').then(function(w){ wachsperre = w; }).catch(function(){});
+      } else if (!an && wachsperre){ wachsperre.release(); wachsperre = null; }
+    }catch(e){}
+  }
+  document.addEventListener('visibilitychange', function(){
+    if (document.visibilityState === 'visible' && !el('lg-phase').hidden) wach(true);
+  });
   function zeige(welche){
     ['lg-start', 'lg-phase', 'lg-ergebnis'].forEach(function(id){ el(id).hidden = (id !== welche); });
+    wach(welche === 'lg-phase');
     // Wird der Abschnitt kuerzer, bleibt die Seite sonst weit unten stehen
     var w = el('lg-wurzel');
     if (w.getBoundingClientRect().top < 0) w.scrollIntoView({ block: 'start' });

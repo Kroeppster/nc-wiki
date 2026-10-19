@@ -445,6 +445,12 @@
     }catch(e){}
   }
   function wachEnde(){ try{ if(wakeLock){ wakeLock.release(); wakeLock = null; } }catch(e){} }
+  /* Der Browser gibt die Sperre von selbst frei, sobald die Seite verdeckt
+     ist (andere App, anderer Tab). Zurück auf der Seite muss sie neu
+     angefordert werden, sonst geht der Bildschirm danach doch aus. */
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'visible' && lauf && (!wakeLock || wakeLock.released)) wachHalten();
+  });
 
   /* ------------------------------------------------------------- Anzeige */
   /* Die Uhrzeit, wie sie an der Wand im Testsaal steht: hh:mm:ss.
