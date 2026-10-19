@@ -29,23 +29,23 @@ distinguono abbastanza l'una dall'altra? Nomi, professioni, caratteristiche e
 diagnosi suonano come in un vero fascicolo del test, e le domande sono chiare?
 In italiano in particolare: concordanze («la paziente nervosa», «lo
 psicologo», «l'avvocata») e formulazione delle domande sono corrette? E in
-stampa: foglio risposte e soluzioni sembrano quelli dello strumento di
+stampa: foglio delle risposte e soluzioni sembrano quelli dello strumento di
 formattazione?
 
 ```baustein
 lern-generator
 ```
 
-## Valutare il foglio risposte
+## Valutare il foglio delle risposte
 
 Chi ha risolto a casa su carta una simulazione del test fotografa il foglio
 risposte e ottiene i punti per sottotest – senza confrontare a mano le 144
 soluzioni. La lettura avviene come nello strumento di formattazione
 (valutazione), ma direttamente nel browser: la foto non lascia il
 dispositivo. Funziona per le simulazioni del test dal 2022 al 2026, che hanno
-tutte lo stesso foglio risposte – e per ogni simulazione dello strumento di
+tutte lo stesso foglio delle risposte – e per ogni simulazione dello strumento di
 formattazione: sotto «Chiave di correzione propria» scegliere il PDF delle soluzioni
-dello strumento (con il foglio risposte in cui le caselle giuste sono
+dello strumento (con il foglio delle risposte in cui le caselle giuste sono
 annerite). «Fotocamera dal vivo» cerca i quattro angoli neri già
 nell'inquadratura e scatta da sola appena il foglio è fermo nell'immagine;
 «Scatta una foto» apre la fotocamera del telefono, «Scegli immagine o PDF» usa una foto o una scansione esistente.
