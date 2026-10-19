@@ -153,8 +153,8 @@
     it: "Ci sono testimonianze di ex partecipanti?"
   answer:
     de: "Ja. Ehemalige Teilnehmende berichten dort, wie sie sich vorbereitet haben und was ihnen am meisten geholfen hat. Du kannst dort auch selbst einen Bericht einreichen."
-    fr: "Oui. D'ancien·ne·s participant·e·s y racontent comment ils·elles se sont préparé·e·s et ce qui les a le plus aidé·e·s. Tu peux aussi y soumettre ton propre témoignage."
-    it: "Sì. Ex partecipanti raccontano come si sono preparati e cosa li ha aiutati di più. Puoi anche inviare tu stesso·a una testimonianza."
+    fr: "Oui. Dans nos témoignages, d'ancien·ne·s participant·e·s racontent comment ils·elles se sont préparé·e·s et ce qui les a le plus aidé·e·s. Tu peux aussi y soumettre ton propre témoignage."
+    it: "Sì. Nelle nostre testimonianze ex partecipanti raccontano come si sono preparati e cosa li ha aiutati di più. Puoi anche inviare tu stesso·a una testimonianza."
   link:
     href: "ems/erfahrungsberichte/"
     label:
@@ -181,8 +181,8 @@
     it: "Non ho ricevuto un'e-mail di conferma – ho comunque un posto?"
   answer:
     de: "Testsimulation: Ja – dein Platz am gewünschten Standort ist dir sicher, auch ohne separate Bestätigung. Vorbereitungskurs: Ein paar Tage nach Ablauf der Anmeldefrist erhältst du eine E-Mail mit der definitiven Zuteilung. Dieser Entscheid ist endgültig, auch was den zugeteilten Standort betrifft."
-    fr: "Simulation de test : oui – ta place sur le site souhaité t'est assurée, même sans confirmation séparée. Cours de préparation : quelques jours après la fin du délai d'inscription, tu reçois un e-mail avec l'attribution définitive. Cette décision est définitive, y compris pour le site attribué."
-    it: "Simulazione del test: sì – il tuo posto nella sede desiderata è assicurato, anche senza una conferma separata. Corso di preparazione: qualche giorno dopo la scadenza del termine d'iscrizione ricevi un'e-mail con l'assegnazione definitiva. Questa decisione è definitiva, anche per quanto riguarda la sede assegnata."
+    fr: "Simulation de test : oui – ta place sur le site souhaité t'est assurée, même sans confirmation séparée. Cours de préparation : quelques jours après la fin du délai d'inscription, tu reçois un e-mail avec l'attribution définitive. Elle ne peut plus être modifiée, y compris pour le site attribué."
+    it: "Simulazione del test: sì – il tuo posto nella sede desiderata è assicurato, anche senza una conferma separata. Corso di preparazione: qualche giorno dopo la scadenza del termine d'iscrizione ricevi un'e-mail con l'assegnazione definitiva. Non può più essere modificata, nemmeno per quanto riguarda la sede assegnata."
 
 - id: "auswertung-testsimulation"
   category: { de: "Testsimulationen und Kurse", fr: "Simulations de test et cours", it: "Simulazioni del test e corsi" }
@@ -254,11 +254,11 @@
     it: "Un esercizio o una soluzione contiene un errore – cosa faccio?"
   answer:
     de: "Melde den Fehler bitte über unser Fehlerformular. Du findest es auf der Übersicht der Übungsserien und bei jedem Untertest direkt unter den Downloads. Wir prüfen jede Meldung und korrigieren das Material so schnell wie möglich."
-    fr: "Signale l'erreur via notre formulaire d'erreur – tu le trouves sur la page d'aperçu des exercices et, pour chaque sous-test, directement sous les téléchargements. Nous examinons chaque signalement et corrigeons le matériel au plus vite."
+    fr: "Signale l'erreur via notre formulaire de signalement – tu le trouves sur la page d'aperçu des exercices et, pour chaque sous-test, directement sous les téléchargements. Nous examinons chaque signalement et corrigeons le matériel au plus vite."
     it: "Segnala l'errore tramite il nostro modulo per gli errori – lo trovi nella pagina panoramica degli esercizi e, per ogni sottotest, direttamente sotto i download. Esaminiamo ogni segnalazione e correggiamo il materiale il prima possibile."
   link:
     href: "ems/uebungsaufgaben/"
     label:
       de: "Zum Fehlerformular →"
-      fr: "Vers le formulaire d'erreur →"
+      fr: "Vers le formulaire de signalement →"
       it: "Al modulo per gli errori →"

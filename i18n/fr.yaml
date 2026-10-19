@@ -122,7 +122,7 @@ experience_form_error_body: "Merci de réessayer ou de nous écrire directement 
 
 label_sprache: "Langue"
 label_studiengaenge: "Filières"
-label_studienplaetze: "Places d'étude"
+label_studienplaetze: "Places d'études"
 
 uni_detail_kanton: "Canton"
 uni_detail_ems: "AMS requis"
@@ -228,8 +228,8 @@ pm_komplett_dauer: "{{ .std }} h {{ .min }} min d'affilée"
 pm_start: "Démarrer"
 pm_minuten: "{{ .min }} min"
 pm_vorlesen: "Lire les consignes à voix haute"
-pm_vorlesen_hinweis: "Utilise la synthèse vocale de ton appareil. Aide à se faire une idée du temps avant que le chronomètre ne démarre."
-pm_vorlesen_hinweis_aufnahmen: "Joue l'annonce avant chaque sous-test. Aide à se faire une idée du temps avant que le chronomètre ne démarre."
+pm_vorlesen_hinweis: "Utilise la synthèse vocale de ton appareil. Cela t'aide à te faire une idée du temps avant que le chronomètre ne démarre."
+pm_vorlesen_hinweis_aufnahmen: "Joue l'annonce avant chaque sous-test. Cela t'aide à te faire une idée du temps avant que le chronomètre ne démarre."
 pm_stimme_quelle: "Voix de synthèse basée sur le [corpus SIWIS](https://datashare.is.ed.ac.uk/handle/10283/2353) (University of Edinburgh), licence [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.fr)."
 pm_uebungsseite: "Vers la page d'exercices"
 
@@ -305,7 +305,7 @@ fg_drucken_hinweis: "Pour s'entraîner sur papier : l'impression est construite
 
 # --- Figuren-Generator (Alpha) ---
 fig_intro: Ce générateur crée 18 nouvelles figures. Chacune est divisée en cinq champs
-  de tailles différentes, un seul est noir. Après la pause, les mêmes figures sont
+  de tailles différentes, dont un seul est noir. Après la pause, les mêmes figures sont
   interrogées dans un autre ordre – tu indiques quel champ était noir.
 fig_drucken_hinweis: "Pour s'entraîner sur papier : l'impression est construite comme un cahier de test – phase d'apprentissage (partie A), phase de reproduction (partie B), feuille de réponses et solutions. Dans la boîte de dialogue d'impression, on peut aussi choisir « Enregistrer en PDF » au lieu d'une imprimante."
 
@@ -336,12 +336,12 @@ fg_anl_e4: "Votre tâche consiste à mémoriser les informations données pour c
 fg_anl_beispielfrage: "La personne souffrant d'une fracture de l'humérus exerce la profession de ..."
 fg_anl_beispieloptionen: "Électricien|Violoniste|Policière|Biologiste|Vendeur"
 fg_anl_beispielloesung: "La réponse correcte serait (C)."
-fg_anl_a1: "Vous avez pris soin auparavant de mémoriser les caractéristiques de plusieurs personnes. Vous devez à présent répondre à quelques questions au sujet de ces personnes. Pour chaque question, cochez la réponse correcte sur votre feuille de réponses."
+fg_anl_a1: "Vous avez mémorisé auparavant les caractéristiques de plusieurs personnes. Vous devez à présent répondre à quelques questions au sujet de ces personnes. Pour chaque question, cochez la réponse correcte sur votre feuille de réponses."
 fg_anl_a2: "(Attention : les questions se succèdent <b>par colonnes</b> !)"
 fig_heft_einpraegen: "Mémorisation de figures (phase d’apprentissage)"
 fig_heft_abfrage: "Mémorisation de figures (phase de reproduction)"
 fig_anl_e1: "Ce test est destiné à évaluer votre capacité à fixer et à retenir les détails d’éléments que vous percevez du regard."
-fig_anl_e2: "18 figures vous seront présentées, dont une partie de chacune des figures est en noir."
+fig_anl_e2: "18 figures vous seront présentées ; dans chacune d’elles, une partie est en noir."
 fig_anl_beispiel: "Exemple :"
 fig_anl_e3: "Vous devez à présent mémoriser la position de la zone en noir de manière à pouvoir indiquer plus tard quelle partie de la figure était noircie. L’ordre dans lequel les figures vous seront présentées à ce moment-là ne sera cependant pas le même."
 fig_anl_beispiel_abfrage: "Voici un exemple de la façon dont pourrait vous être présentée la question :"
@@ -442,7 +442,7 @@ kt_eigen_feld: "Test de concentration en PDF : énoncé et feuille de solutions
 kt_eigen_hinweis: "Par exemple issu de l’outil de formatage : la page avec les 40 lignes de signes et la feuille de solutions avec les cases remplies – dans un fichier ou dans deux (sélectionne les deux). La lecture se fait sur ton appareil ; le test reste enregistré pour la prochaine fois."
 kt_eigen_liest: "Lecture du PDF … page {n} sur {m}"
 kt_eigen_ok: "Test lu : {z} signes cibles, {k} signes différents ({quelle}). Photographie maintenant la feuille remplie."
-kt_eigen_keine_aufgabe: "Aucune page avec 40 lignes de 40 signes imprimés en couleur n’a été trouvée. L’énoncé du test est-il inclus – en PDF, avec les signes en couleur (magenta), pas en noir ? Une feuille de solutions seule ne suffit pas. Les tests de concentration de nos simulations et séries d’exercices se choisissent directement ci-dessus, sans rien télécharger."
+kt_eigen_keine_aufgabe: "Aucune page avec 40 lignes de 40 signes imprimés en couleur n’a été trouvée. L’énoncé du test est-il inclus – en PDF, avec les signes en couleur (magenta), pas en noir ? Une feuille de solutions seule ne suffit pas. Les tests de concentration de nos simulations et séries d’exercices se choisissent directement ci-dessus, sans rien charger."
 kt_eigen_keine_loesung: "L’énoncé est lu, mais aucune feuille de solutions n’a été trouvée (cases remplies sur les signes cibles). Sélectionne l’énoncé et la solution ensemble."
 kt_eigen_fehlt: "Choisis d’abord le test de concentration en PDF (énoncé et feuille de solutions)."
 kt_intro: "Photographie ton test de concentration rempli (ou charge un scan). Les marques sont lues et comptées selon la règle de la consigne."
@@ -456,7 +456,7 @@ kt_zu_klein: "La feuille est trop petite sur l’image. Merci de photographier d
 kt_unklar: "Les traits ne ressortent pas assez nettement sur cette image. Prends une nouvelle photo : plus près, nette, éclairée de manière égale, sans ombre ni reflet. Marqué très finement ou très clair, ou seulement souligné ? C’est presque illisible – repasse alors les traits avec un feutre épais, en oblique à travers les signes."
 kt_verdeckt: "Une partie de la feuille est masquée ou hors de l’image (doigt, objet, reflet, bord). Photographie toute la feuille, dégagée et sans reflet."
 kt_unplausibel: "Attention : jusqu’au dernier signe marqué, il manque un nombre inhabituel de signes cibles ({n} sur {m}). Vérifie l’image – des traits fins ou clairs n’ont peut-être pas été reconnus. Avec un stylo foncé, un trait net et une nouvelle photo, cela fonctionne généralement."
-kt_grau: "L’image est en noir et blanc : les marques ne s’y distinguent pas sûrement des signes. Merci de photographier ou scanner en couleur – le test de concentration est imprimé en couleur."
+kt_grau: "L’image est en noir et blanc : les marques ne s’y distinguent pas de manière fiable des signes. Merci de photographier ou scanner en couleur – le test de concentration est imprimé en couleur."
 kt_summe: "Valeur brute : {n} points"
 kt_richtig: "Marqués juste"
 kt_falsch: "Marqués à tort"
