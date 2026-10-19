@@ -91,7 +91,7 @@
     it: "L'AMS è necessario per tutte le università svizzere?"
   answer:
     de: "Nein. Die meisten Deutschschweizer Universitäten und die USI Lugano setzen den EMS voraus. Genf, Lausanne und Neuenburg verwenden ein anderes Verfahren ohne EMS: Der Studienbeginn ist offen, nach dem 1. Jahr folgt eine Eliminationsprüfung."
-    fr: "Non. La plupart des universités de Suisse alémanique ainsi que l'USI Lugano exigent l'AMS. Genève, Lausanne et Neuchâtel utilisent en revanche une autre procédure sans AMS (admission ouverte en 1ère année avec examen éliminatoire en fin d'année)."
+    fr: "Non. La plupart des universités de Suisse alémanique ainsi que l'USI Lugano exigent l'AMS. Genève, Lausanne et Neuchâtel utilisent en revanche une autre procédure sans AMS (admission ouverte en 1re année avec examen éliminatoire en fin d'année)."
     it: "No. La maggior parte delle università della Svizzera tedesca e l'USI Lugano richiedono l'AMS. Ginevra, Losanna e Neuchâtel utilizzano invece una procedura diversa senza AMS (iscrizione aperta al 1° anno con esame eliminatorio al termine dell'anno)."
   link:
     href: "ems/uniguide/"
@@ -154,7 +154,7 @@
   answer:
     de: "Ja. Ehemalige Teilnehmende berichten dort, wie sie sich vorbereitet haben und was ihnen am meisten geholfen hat. Du kannst dort auch selbst einen Bericht einreichen."
     fr: "Oui. D'ancien·ne·s participant·e·s y racontent comment ils·elles se sont préparé·e·s et ce qui les a le plus aidé·e·s. Tu peux aussi y soumettre ton propre témoignage."
-    it: "Sì. Ex partecipanti raccontano come si sono preparati e cosa li ha aiutati di più. Puoi anche inviare tu stesso/a una testimonianza."
+    it: "Sì. Ex partecipanti raccontano come si sono preparati e cosa li ha aiutati di più. Puoi anche inviare tu stesso·a una testimonianza."
   link:
     href: "ems/erfahrungsberichte/"
     label:
@@ -167,7 +167,7 @@
   question:
     de: "Gibt es Empfehlungen für weitere Hefte, kostenpflichtige Kurse oder Testsimulationen?"
     fr: "Existe-t-il des recommandations pour d'autres cahiers, des cours ou des simulations de test payants ?"
-    it: "Ci sono consigli per altri quaderni, corsi o simulazioni del test a pagamento?"
+    it: "Ci sono consigli per altri fascicoli, corsi o simulazioni del test a pagamento?"
   answer:
     de: "Nein. Wir arbeiten ehrenamtlich und unabhängig von allen anderen Angeboten zur EMS-Vorbereitung. Deshalb können wir nicht beurteilen, ob und welche kostenpflichtigen Angebote sich für dich lohnen."
     fr: "Non. Nous travaillons bénévolement et indépendamment de toutes les autres offres de préparation à l'AMS. C'est pourquoi nous ne pouvons pas juger si des offres payantes valent la peine pour toi, ni lesquelles."
@@ -250,8 +250,8 @@
   category: { de: "Übungsmaterial", fr: "Matériel d'exercice", it: "Materiale di esercizio" }
   question:
     de: "Eine Aufgabe oder Lösung ist falsch – was tun?"
-    fr: "Un exercice ou une solution est faux – que faire ?"
-    it: "Un esercizio o una soluzione è sbagliato – cosa faccio?"
+    fr: "Un exercice ou une solution contient une erreur – que faire ?"
+    it: "Un esercizio o una soluzione contiene un errore – cosa faccio?"
   answer:
     de: "Melde den Fehler bitte über unser Fehlerformular. Du findest es auf der Übersicht der Übungsserien und bei jedem Untertest direkt unter den Downloads. Wir prüfen jede Meldung und korrigieren das Material so schnell wie möglich."
     fr: "Signale l'erreur via notre formulaire d'erreur – tu le trouves sur la page d'aperçu des exercices et, pour chaque sous-test, directement sous les téléchargements. Nous examinons chaque signalement et corrigeons le matériel au plus vite."
