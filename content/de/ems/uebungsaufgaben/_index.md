@@ -1,6 +1,6 @@
 ---
 title: "Übungsserien"
-description: "Trainiere für den EMS mit 120 kostenlosen Übungsserien: Aufgaben und Lösungen zu allen acht Untertests."
+description: "Trainiere für den EMS mit über 100 kostenlosen Übungsserien: Aufgaben und Lösungen zu allen acht Untertests."
 menu:
   main:
     identifier: uebungsaufgaben

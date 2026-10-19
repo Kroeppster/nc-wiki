@@ -1,6 +1,6 @@
 ---
 title: "Serie di esercizi"
-description: "Allenati per l'AMS con 120 serie di esercizi gratuite. Ti offriamo esercizi e soluzioni per tutti e otto i sottotest."
+description: "Allenati per l'AMS con oltre 100 serie di esercizi gratuite. Ti offriamo esercizi e soluzioni per tutti e otto i sottotest."
 menu:
   main:
     identifier: uebungsaufgaben

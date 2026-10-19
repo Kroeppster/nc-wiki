@@ -1,6 +1,6 @@
 ---
 title: "Séries d'exercices"
-description: "Entraîne-toi pour l'AMS avec 120 séries d'exercices gratuites. Nous te proposons des exercices et leurs solutions pour les huit sous-tests."
+description: "Entraîne-toi pour l'AMS avec plus de 100 séries d'exercices gratuites. Nous te proposons des exercices et leurs solutions pour les huit sous-tests."
 menu:
   main:
     identifier: uebungsaufgaben

@@ -13,9 +13,13 @@
 
   GEZÄHLT WIRD, WAS JEMANDEN INTERESSIERT, NICHT WAS IM ORDNER LIEGT:
 
-  - uebungen:     Übungsserien OHNE die Lösungs-PDFs. Eine Serie mit Lösung
-                  ist eine Übung, nicht zwei - auf der Seite erscheint sie ja
-                  auch als ein Eintrag mit zwei Knöpfen (download-list.html).
+  - uebungen:     die SERIEN, nicht die PDFs. Zu einer Serie gehören bis zu
+                  drei Dateien (Aufgaben, "_Loesung", bei Figuren/Fakten die
+                  "_Einpraegephase"); auf der Seite ist sie eine Zeile mit
+                  mehreren Knöpfen (download-gruppen.html, dieselbe Regel für
+                  die Dateinamen). Andere Dateien (z.B. eine Vorlage) sind
+                  keine Serie. Vorher wurden die Einprägephasen und die
+                  Vorlage mitgezählt: 119 statt 113.
   - simulationen: die JAHRGÄNGE. Zu einem Jahrgang gehören mehrere PDFs
                   (Testheft, Lösungen, Konztest-Auswertung, Prozentrang-
                   Tabelle); alle zu zählen ergäbe 21 "Testsimulationen",
@@ -27,12 +31,13 @@
                   Ordner, ist aber kein Bericht).
   ============================================================================
 */ -}}
-{{- $uebungen := 0 }}
+{{- $serien := slice }}
 {{- range resources.Match "downloads/uebungsaufgaben/**/*.pdf" }}
-  {{- if not (strings.HasSuffix (strings.TrimSuffix ".pdf" (path.Base .Name)) "_Loesung") }}
-    {{- $uebungen = add $uebungen 1 }}
+  {{- with findRESubmatch `^(\d{4}_[a-z-]+_S\d+)(_Einpraegephase|_Loesung)?$` (strings.TrimSuffix ".pdf" (path.Base .Name)) 1 }}
+    {{- $serien = $serien | append (index (index . 0) 1) }}
   {{- end }}
 {{- end }}
+{{- $uebungen := len (uniq $serien) }}
 
 {{- $jahre := slice }}
 {{- range resources.Match "downloads/testsimulationen/*.pdf" }}
