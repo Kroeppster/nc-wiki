@@ -38,22 +38,22 @@ Apprendre figures et faits, ce sont deux exercices de mémoire qu'il n'est pas u
 
 ### Faits
 
-1. **Répartir dans des pièces et symboliser :** répartis mentalement les personnes dans différentes pièces (par ex. groupe le plus jeune = chambre du plus jeune de la fratrie). Imagine les personnes de façon aussi farfelue et imagée que possible – plus l'image est inhabituelle, mieux elle reste. Associe les diagnostics à des symboles (par ex. infarctus = cœur noir).
-2. **Raconter une histoire :** emballe les faits de chaque personne dans une petite histoire aussi folle que possible.
-3. **Éléphant rose :** imagine une image devant ton œil intérieur et « écris » un mot-clé dessus.
+1. **Répartir dans des pièces et symboliser :** répartis mentalement les personnes dans différentes pièces (par ex. groupe le plus jeune = chambre du plus jeune de la fratrie). Imagine les personnes de façon aussi farfelue et imagée que possible – plus l'image est inhabituelle, mieux elle se retient. Associe les diagnostics à des symboles (par ex. infarctus = cœur noir).
+2. **Raconter une histoire :** intègre les faits de chaque personne dans une petite histoire aussi folle que possible.
+3. **Éléphant rose :** visualise une image dans ta tête et « écris » un mot-clé dessus.
 
 ## Autres conseils
 
 - **« Poker » en cas d'accumulations :** au début de la phase d'apprentissage, fais-toi une vue d'ensemble de toutes les figures. Si plusieurs figures ont le marquage noir à peu près au même endroit (par ex. en haut à gauche), tu n'as pas besoin de les mémoriser une par une – retiens seulement la position approximative de l'accumulation. Utilise cette tactique avec modération et pas à chaque passage, et vérifie d'abord qu'elle correspond à ta façon de travailler.
 - **Ne pas viser 18 sur 18 :** il vaut souvent mieux bien mémoriser 12 à 15 figures que les 18 superficiellement – tu n'as pas besoin du score maximal.
-- **Moyens mnémotechniques fixes :** après quelques passages, tu remarqueras que certaines caractéristiques et certains diagnostics reviennent – établis pour eux une liste fixe de tes moyens mnémotechniques.
+- **Moyens mnémotechniques fixes :** après quelques passages, tu remarqueras que certaines caractéristiques et certains diagnostics reviennent – établis-toi pour eux une liste fixe de moyens mnémotechniques.
 - **Essayer différentes stratégies :** il n'existe pas une seule bonne méthode pour tout le monde. Ne te laisse pas déstabiliser si une stratégie fonctionne mieux chez d'autres que chez toi – ce qui compte, c'est ce qui marche pour toi.
-- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 18 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends plutôt le temps nécessaire pour ces sous-tests bien entraînables, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – l'AMS, c'est de la pure gestion des points.
+- **Aller chercher les points de façon ciblée :** apprendre figures et faits ainsi que le test de concentration s'entraînent bien jusqu'à 16 à 18 points – c'est irréaliste au début, mais devient faisable avec la bonne technique. Prends le temps nécessaire pour ces sous-tests qui s'entraînent bien, plutôt que de bâcler le dernier texte dans les sous-tests plus longs (par ex. compréhension de texte), qui ne rapporte de toute façon que peu de points – l'AMS, c'est de la pure gestion des points.
 
 ## Erreurs fréquentes
 
 - **Figures très semblables :** quand des figures se ressemblent fortement, fais attention aux fines différences géométriques (par ex. angles droits) ; pour des contours semblables, concentre-toi surtout sur la forme et la position de la surface sombre.
-- **Épuiser trop tôt les séries d'exercices :** répéter plusieurs fois la même série fausse ton ressenti de ton propre niveau.
+- **Épuiser trop tôt les séries d'exercices :** répéter plusieurs fois la même série fausse l'idée que tu te fais de ton niveau.
 - **Matériel d'entraînement trop facile :** dans beaucoup de matériel disponible dans le commerce, les différences entre les figures sont plus nettes qu'au vrai AMS.
 
 ## Extraits de témoignages

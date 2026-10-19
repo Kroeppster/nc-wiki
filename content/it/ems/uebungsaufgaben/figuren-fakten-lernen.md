@@ -12,7 +12,7 @@ Nella fase di apprendimento ti vengono mostrate 18 figure, in ognuna delle quali
 
 ### Fatti
 
-Nella fase di apprendimento ti vengono presentati 15 pazienti, ciascuno con nome, fascia d'età, professione, un'altra caratteristica come lo stato d'animo o il luogo in cui si trova e una diagnosi. Le 15 persone sono suddivise in cinque fasce d'età di tre persone ciascuna. Per memorizzarle hai 6 minuti. Nella successiva fase di riproduzione rispondi a 18 domande a scelta multipla su queste persone, con cinque risposte possibili ciascuna. L'ordine è cambiato, e le informazioni vengono chieste in combinazioni diverse, per esempio «La persona con il diabete di professione è …». Anche qui hai 6 minuti.
+Nella fase di apprendimento ti vengono presentati 15 pazienti, ciascuno con nome, fascia d'età, professione, un'altra caratteristica come lo stato d'animo o il luogo in cui si trova e una diagnosi. Le 15 persone sono suddivise in cinque fasce d'età di tre persone ciascuna. Per memorizzarle hai 6 minuti. Nella successiva fase di riproduzione rispondi a 18 domande a scelta multipla su queste persone, con cinque risposte possibili ciascuna. L'ordine è cambiato, e le informazioni vengono chieste in combinazioni diverse, per esempio «Di professione, la persona con il diabete è …». Anche qui hai 6 minuti.
 
 Esempio (abbreviato): *Maier, 20 anni, mugnaio, sposato, Covid-19* – *Keller, 30 anni, veterinaria, ansiosa, mal di testa*.
 
@@ -22,7 +22,7 @@ Esempio (abbreviato): *Maier, 20 anni, mugnaio, sposato, Covid-19* – *Keller, 
 
 ## Importanza per gli studi
 
-In entrambi i casi si tratta della tua memoria. Durante gli studi di medicina devi ricordare non solo fatti, ma soprattutto in anatomia e istopatologia anche molte strutture visive – e più tardi presenti pazienti ad altri professionisti in modo breve e preciso, con le caratteristiche principali, la diagnosi e la procedura. Una buona tecnica di memorizzazione ti aiuta moltissimo in entrambi i casi.
+In entrambi i casi si tratta della tua memoria. Durante gli studi di medicina devi ricordare non solo fatti, ma soprattutto in anatomia e istopatologia anche molte strutture visive – e più tardi presenti pazienti ad altri professionisti in modo breve e preciso, con le caratteristiche principali, la diagnosi e la gestione. Una buona tecnica di memorizzazione ti aiuta moltissimo in entrambi i casi.
 
 ## Tempi e frequenza dell'esercizio
 
@@ -40,15 +40,15 @@ Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare 
 
 1. **Suddividere in stanze e simbolizzare:** distribuisci mentalmente le persone in stanze diverse (per es. gruppo più giovane = camera del fratello o della sorella più giovane). Immagina le persone nel modo più bizzarro e visivo possibile – più l'immagine è insolita, meglio resta in mente. Collega le diagnosi a simboli (per es. infarto = cuore nero).
 2. **Raccontare una storia:** racchiudi i fatti di ogni persona in una piccola storia, il più folle possibile.
-3. **Elefante rosa:** immagina un'immagine davanti al tuo occhio interiore e «scrivici sopra» una parola chiave.
+3. **Elefante rosa:** visualizza un'immagine nella tua mente e «scrivici sopra» una parola chiave.
 
 ## Altri consigli
 
-- **«Bluffare» in caso di accumuli:** all'inizio della fase di apprendimento fatti una visione d'insieme di tutte le figure. Se più figure hanno la marcatura nera più o meno nello stesso punto (per es. in alto a sinistra), non devi memorizzarle una per una – ricorda solo la posizione approssimativa dell'accumulo. Usa questa tattica con moderazione e non a ogni prova, e verifica prima se si adatta al tuo modo di lavorare.
+- **«Bluffare» in caso di accumuli:** all'inizio della fase di apprendimento fatti una panoramica di tutte le figure. Se più figure hanno la marcatura nera più o meno nello stesso punto (per es. in alto a sinistra), non devi memorizzarle una per una – ricorda solo la posizione approssimativa dell'accumulo. Usa questa tattica con moderazione e non a ogni prova, e verifica prima se si adatta al tuo modo di lavorare.
 - **Non puntare a 18 su 18:** spesso conviene memorizzare davvero bene 12–15 figure invece di tutte e 18 in modo superficiale – non ti serve il punteggio pieno.
-- **Mnemotecniche fisse:** dopo qualche prova noterai che alcune caratteristiche e diagnosi si ripetono – prepara per queste una lista fissa delle tue mnemotecniche.
+- **Mnemotecniche fisse:** dopo qualche prova noterai che alcune caratteristiche e diagnosi si ripetono – preparati per queste una lista fissa di mnemotecniche.
 - **Provare strategie diverse:** non esiste un unico metodo giusto per tutti. Non lasciarti scoraggiare se una strategia funziona meglio per altri che per te – conta ciò che funziona per te.
-- **Raccogliere punti in modo mirato:** imparare figure e fatti e il test di concentrazione si possono allenare bene fino a 16–18 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi piuttosto il tempo necessario per questi sottotest ben allenabili, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per es. comprensione del testo), che comunque porta pochi punti – l'AMS è pura gestione dei punti.
+- **Raccogliere punti in modo mirato:** imparare figure e fatti e il test di concentrazione si possono allenare bene fino a 16–18 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi il tempo necessario per questi sottotest che si allenano bene, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per es. comprensione del testo), che comunque porta pochi punti – l'AMS è pura gestione dei punti.
 
 ## Errori frequenti
 

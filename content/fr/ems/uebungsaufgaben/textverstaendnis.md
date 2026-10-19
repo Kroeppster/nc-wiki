@@ -16,11 +16,11 @@ Les trois textes sont volontairement rédigés de façon complexe, et les questi
 
 ## Importance pour les études
 
-Pendant les études, tu seras confronté·e à un flot de nouvelles matières. Une bonne compréhension de texte t'aide à filtrer et à hiérarchiser les informations importantes – et plus tard, au quotidien clinique (par ex. aux urgences), la capacité à traiter des textes sous pression est aussi un avantage.
+Pendant les études, tu seras confronté·e à un flot de nouvelles matières. Une bonne compréhension de texte t'aide à filtrer et à hiérarchiser les informations importantes – et plus tard, dans la pratique clinique (par ex. aux urgences), la capacité à traiter des textes sous pression est aussi un avantage.
 
 ## Moment et fréquence de l'entraînement
 
-La compréhension de texte doit s'entraîner sur le long terme – commence environ 2 à 3 mois avant la date du test. À l'entraînement, ne résous qu'un texte à la fois, pour pouvoir analyser tes erreurs au fur et à mesure et en tenir compte directement au texte suivant. Un texte tous les deux jours répartit bien l'entraînement sur la semaine.
+La compréhension de texte doit s'entraîner sur le long terme – commence environ 2 à 3 mois avant la date du test. À l'entraînement, ne résous qu'un texte à la fois, pour pouvoir analyser tes erreurs au fur et à mesure et en tenir compte dès le texte suivant. Un texte tous les deux jours répartit bien l'entraînement sur la semaine.
 
 ## Marche à suivre pour résoudre
 

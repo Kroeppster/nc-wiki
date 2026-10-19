@@ -12,7 +12,7 @@ Dans ce sous-test, tu résous des problèmes mathématiques en lien avec la méd
 - **Volume :** 18 questions, 18 points
 - **Temps :** 45 minutes, soit environ 2,5 minutes par question
 
-Avec 2,5 minutes par question, ce sous-test n'est pas vraiment conçu pour la pression du temps.
+Avec 2,5 minutes par question, ce sous-test ne mise pas vraiment sur la pression du temps.
 
 ## Importance pour les études
 
@@ -25,7 +25,7 @@ Comme il s'agit ici surtout d'entraînement, un début précoce vaut la peine �
 ## Marche à suivre pour résoudre
 
 1. **Lire attentivement :** les énoncés contiennent souvent des informations superflues ou cachent l'indication décisive à la fin. Lire attentivement coûte d'abord du temps, mais en fait gagner beaucoup au total.
-2. **Tout noter :** utilise les feuilles de notes pour les étapes intermédiaires, plutôt que de tout garder en tête.
+2. **Tout noter :** utilise les feuilles de brouillon pour les étapes intermédiaires, plutôt que de tout garder en tête.
 3. **Oser arrondir :** les résultats intermédiaires n'ont pas besoin d'être exacts – avec cinq options de réponse, un arrondi raisonnable suffit généralement pour reconnaître la bonne réponse.
 4. **Répartir son temps :** 45 minutes, c'est relativement beaucoup. Si tu bloques sur une question, marque-la et passe à la suivante – à la fin, il reste du temps pour remplir quand même les réponses ouvertes (les réponses fausses ne sont pas pénalisées).
 
@@ -34,7 +34,7 @@ Comme il s'agit ici surtout d'entraînement, un début précoce vaut la peine �
 - **Entraîner le calcul mental et écrit :** comme la calculatrice n'est pas autorisée au test, tu devrais aussi y renoncer à l'entraînement. Le niveau reste celui des « maths de base » – jamais d'intégrales ou autres, mais les techniques de base comme la division écrite doivent être maîtrisées.
 - **Astuce des pourcentages :** x % de y, c'est la même chose que y % de x – 7 % de 50 est donc égal à 50 % de 7, soit 3,5. Cela fonctionne toujours et fait gagner du temps.
 - **Connaître les fractions :** reconnaître des nombres décimaux récurrents comme 0,166 sous forme de fraction (⅙) simplifie nettement certains calculs.
-- **Déplacer les virgules lors de multiplications et divisions :** pour multiplier, additionne les décimales des deux nombres, calcule sans virgule et replace-la à la fin. Pour diviser, rends diviseur et dividende pareillement entiers avant de calculer.
+- **Déplacer les virgules lors de multiplications et divisions :** pour multiplier, additionne les décimales des deux nombres, calcule sans virgule et replace-la à la fin. Pour diviser, décale la virgule du même nombre de rangs dans le diviseur et le dividende, jusqu'à ce que les deux soient entiers, avant de calculer.
 - **S'entraîner à transformer des formules :** certaines questions demandent d'isoler une grandeur ou une unité dans une formule – cela s'entraîne bien avec des formules de physique.
 
 ## Erreurs fréquentes

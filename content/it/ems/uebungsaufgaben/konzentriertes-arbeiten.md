@@ -31,7 +31,7 @@ In questo sottotest i progressi si vedono in fretta – di solito basta iniziare
 ## Come procedere
 
 1. **Memorizzare la regola invece di rileggerla:** ogni secondo conta – memorizza bene la regola mentre viene spiegata, così durante gli 8 minuti non devi pensarci.
-2. **Annotare prima le combinazioni:** se la regola richiede un calcolo (per es. «cancella il secondo di due numeri che insieme fanno 8»), annota tutte le combinazioni possibili prima di iniziare (ma solo dopo il segnale di partenza!), invece di ricalcolare a ogni simbolo.
+2. **Annotare prima le combinazioni:** se la regola richiede un calcolo (per es. «barra il secondo di due numeri che insieme fanno 8»), annota tutte le combinazioni possibili prima di iniziare (ma solo dopo il segnale di partenza!), invece di ricalcolare a ogni simbolo.
 3. **Concentrarsi su un simbolo:** concentrati solo sul simbolo decisivo (per es. «q») e a ogni occorrenza verifica rapidamente se la regola è soddisfatta, invece di leggere simbolo per simbolo.
 4. **Ricordare lo schema invece della regola:** memorizza lo schema visivo della soluzione giusta (per es. «pq») invece della regola a parole – spesso si riconosce più in fretta.
 5. **Metodo a serpentina:** risolvi la prima riga da sinistra a destra, la successiva da destra a sinistra e così via, per non perdere nessuna riga al cambio di riga. Negli ultimi 30 secondi circa (da circa il minuto 7,5) lavora di nuovo solo da sinistra a destra, perché la valutazione segue il senso di lettura.
@@ -39,7 +39,7 @@ In questo sottotest i progressi si vedono in fretta – di solito basta iniziare
 ## Altri consigli
 
 - **Provare prima la penna:** il test viene valutato a macchina – la tua penna deve essere abbastanza scura e non deve sbavare.
-- **Esercitarsi nel modo più vario possibile:** all'AMS vero e proprio compaiono spesso più regole combinate (per es. «cancella ogni q dopo una p e ogni b prima di una d»). Esercitati quindi con diversi tipi di regole, non con uno solo.
+- **Esercitarsi nel modo più vario possibile:** all'AMS vero e proprio compaiono spesso più regole combinate (per es. «barra ogni q dopo una p e ogni b prima di una d»). Esercitati quindi con diversi tipi di regole, non con uno solo.
 - **Lasciarsi alle spalle gli errori:** arrabbiarsi per un errore costa solo concentrazione e tempo in più – tornare indietro a correggere comunque non conviene, perché conta solo l'ultima marcatura.
 
 ## Errori frequenti

@@ -34,7 +34,7 @@ Définis une démarche fixe avec laquelle tu abordes toutes les questions de la 
 
 ## Autres conseils
 
-- **D'abord la routine, puis la pression du temps :** ne travaille sous pression temporelle que lorsque ta démarche est devenue une routine.
+- **D'abord la routine, puis la pression du temps :** ne travaille sous la pression du temps que lorsque ta démarche est devenue une routine.
 - **Oser sauter une question :** en général, les questions faciles sont placées au début et les plus difficiles vers la fin. Laisse une question difficile de côté et reviens-y plus tard, plutôt que de t'y perdre.
 
 ## Erreurs fréquentes

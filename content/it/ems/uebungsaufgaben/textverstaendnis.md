@@ -16,7 +16,7 @@ I tre testi sono scritti apposta in modo complesso, e le domande contengono spes
 
 ## Importanza per gli studi
 
-Durante gli studi ti troverai di fronte a una marea di nuova materia. Una buona comprensione del testo ti aiuta a filtrare le informazioni importanti e a stabilire le priorità – e più tardi, nella quotidianità clinica (per es. in pronto soccorso), la capacità di elaborare testi sotto pressione è un vantaggio.
+Durante gli studi ti troverai di fronte a una marea di nuova materia. Una buona comprensione del testo ti aiuta a filtrare le informazioni importanti e a stabilire le priorità – e più tardi, nella pratica clinica (per es. in pronto soccorso), la capacità di elaborare testi sotto pressione è un vantaggio.
 
 ## Tempi e frequenza dell'esercizio
 
@@ -25,7 +25,7 @@ La comprensione del testo va allenata a lungo termine – inizia circa 2–3 mes
 ## Come procedere
 
 1. **Prima il testo preferito:** scorri prima rapidamente tutti e tre i testi e poi risolvi quello che ti riesce meglio.
-2. **Creare struttura:** evidenzia i termini chiave e se serve fai piccoli schizzi – ti aiuta a ritrovare più in fretta i passaggi. Trova il tuo metodo e applicalo con coerenza, così regge anche sotto stress.
+2. **Strutturare:** evidenzia i termini chiave e se serve fai piccoli schizzi – ti aiuta a ritrovare più in fretta i passaggi. Trova il tuo metodo e applicalo con coerenza, così regge anche sotto stress.
 
 ## Altri consigli
 

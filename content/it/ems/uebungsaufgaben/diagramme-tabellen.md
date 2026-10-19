@@ -19,7 +19,7 @@ Il tempo è calcolato apposta perché di solito non si riescono a risolvere tutt
 Esiste solo un numero limitato di tipi di domande ricorrenti:
 
 - **Tabelle** (anche combinate: più tabelle contemporaneamente)
-- **Istogrammi** (semplici o impilati)
+- **Diagrammi a barre** (semplici o impilati)
 - **Diagrammi a linee** (linee continue invece di singoli punti di misura)
 - **Diagrammi a torta**
 - **Diagrammi a ragnatela** (leggere i valori dall'interno verso l'esterno – il numero più interno è di solito lo zero)

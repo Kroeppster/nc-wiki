@@ -20,7 +20,7 @@ On teste la capacité à comparer précisément des images et des structures et 
 
 ## Moment et fréquence de l'entraînement
 
-L'association de motifs s'entraîne bien et relativement vite. Commencer environ 1,5 à 2 mois avant l'AMS suffit en général. Nous recommandons 3 à 4 séries par semaine. Au début, entraîne-toi sans pression temporelle, jusqu'à ce que tu te sentes à l'aise avec les questions et que tu aies développé ta propre stratégie. Ce n'est qu'ensuite que tu devrais travailler avec le temps réel.
+L'association de motifs s'entraîne bien et relativement vite. Commencer environ 1,5 à 2 mois avant l'AMS suffit en général. Nous recommandons 3 à 4 séries par semaine. Au début, entraîne-toi sans contrainte de temps, jusqu'à ce que tu te sentes à l'aise avec les questions et que tu aies développé ta propre stratégie. Ce n'est qu'ensuite que tu devrais travailler avec le temps réel.
 
 Comme l'association de motifs ouvre la journée de test, il vaut la peine de commencer aussi tes séances d'entraînement par ce sous-test. Dans des conditions réalistes, avec chronomètre et consignes, tu t'entraînes dans le [mode simulation](/ems/testsimulationen#simulationsmodus).
 

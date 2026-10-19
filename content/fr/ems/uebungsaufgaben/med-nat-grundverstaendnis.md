@@ -31,7 +31,7 @@ En physiologie et dans de nombreux autres domaines des études, il s'agit souven
 
 ## Moment et fréquence de l'entraînement
 
-Ce sous-test devrait être entraîné sur une assez longue période ; il est recommandé de commencer au plus tard 1 à 2 mois avant l'AMS. Deux fois par semaine une à deux heures suffisent généralement pour devenir rapidement plus précis·e, reconnaître les pièges typiques et gagner en vitesse.
+Ce sous-test devrait être entraîné sur une assez longue période ; il est recommandé de commencer au plus tard 1 à 2 mois avant l'AMS. Deux séances d'une à deux heures par semaine suffisent généralement pour devenir rapidement plus précis·e, reconnaître les pièges typiques et gagner en vitesse.
 
 ## Marche à suivre pour résoudre
 

@@ -34,8 +34,8 @@ Definisci un procedimento fisso con cui affrontare tutte le domande allo stesso 
 
 ## Altri consigli
 
-- **Prima la routine, poi la pressione del tempo:** lavora sotto pressione del tempo solo quando il tuo procedimento è diventato routine.
-- **Coraggio di lasciare una lacuna:** di solito le domande facili sono all'inizio e quelle difficili verso la fine. Lascia da parte una domanda difficile e tornaci più tardi, invece di perderti.
+- **Prima la routine, poi la pressione del tempo:** lavora sotto la pressione del tempo solo quando il tuo procedimento è diventato routine.
+- **Osare saltare una domanda:** di solito le domande facili sono all'inizio e quelle difficili verso la fine. Lascia da parte una domanda difficile e tornaci più tardi, invece di perderti.
 
 ## Errori frequenti
 

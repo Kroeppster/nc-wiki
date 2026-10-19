@@ -31,7 +31,7 @@ In fisiologia e in molti altri ambiti degli studi si tratta spesso di capire dei
 
 ## Tempi e frequenza dell'esercizio
 
-Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile iniziare al più tardi 1–2 mesi prima dell'AMS. Due volte a settimana per una o due ore bastano di solito per diventare in fretta più precisi, riconoscere i tranelli tipici e aumentare il ritmo.
+Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile iniziare al più tardi 1–2 mesi prima dell'AMS. Due sessioni di una o due ore a settimana bastano di solito per diventare in fretta più preciso·a, riconoscere i tranelli tipici e aumentare il ritmo.
 
 ## Come procedere
 
@@ -42,7 +42,7 @@ Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile ini
 ## Altri consigli
 
 - **Non intestardirsi su una domanda:** ogni domanda vale esattamente un punto. Se ti blocchi, segna una risposta e prosegui. Le risposte sbagliate non vengono penalizzate.
-- **Capire gli errori invece di contare i punti:** dopo ogni serie di esercizi guarda perché hai valutato male un'affermazione – hai letto troppo in fretta, usato le tue conoscenze o interpretato un'affermazione in modo troppo largo?
+- **Capire gli errori invece di contare i punti:** dopo ogni serie di esercizi guarda perché hai valutato male un'affermazione – hai letto troppo in fretta, usato le tue conoscenze o interpretato un'affermazione in modo troppo ampio?
 
 ## Errori frequenti
 

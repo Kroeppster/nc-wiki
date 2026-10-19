@@ -20,7 +20,7 @@ Si verifica la capacità di confrontare con precisione immagini e strutture e di
 
 ## Tempi e frequenza dell'esercizio
 
-L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1,5–2 mesi prima dell'AMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
+L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1,5–2 mesi prima dell'AMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza la pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
 
 Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anche le sessioni di esercizio con questo sottotest. In condizioni realistiche, con cronometro e istruzioni, ti eserciti nella [modalità simulazione](/ems/testsimulationen#simulationsmodus).
 
@@ -29,7 +29,7 @@ Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anc
 1. **Farsi una visione d'insieme:** osserva prima lo schema e i ritagli con un po' di distanza, invece di concentrarti subito sui dettagli. Così saltano all'occhio le differenze grossolane e puoi escludere subito alcuni ritagli.
 2. **Cercare le differenze, non le somiglianze:** il fatto che un ritaglio coincida con lo schema in un punto evidente non garantisce che coincida ovunque. Di solito trovi un errore più in fretta di una corrispondenza completa. Cerca quindi in modo mirato i quattro ritagli sbagliati.
 3. **Confrontare in modo sistematico:** esamina ogni ritaglio in un ordine fisso, per esempio da sinistra a destra e dall'alto in basso. Aiutati con una matita, così lo sguardo resta sulla punta.
-4. **Cancellare subito i ritagli sbagliati:** appena trovi un errore, cancella il ritaglio con la matita. Così non lo controlli una seconda volta per sbaglio.
+4. **Barrare subito i ritagli sbagliati:** appena trovi un errore, barra il ritaglio con la matita. Così non lo controlli una seconda volta per sbaglio.
 5. **Andare avanti in fretta:** se resta un solo ritaglio, controllalo brevemente e passa alla domanda successiva. Se ti blocchi, segna una risposta e prosegui. Le risposte sbagliate non vengono penalizzate.
 
 ## Altri consigli
