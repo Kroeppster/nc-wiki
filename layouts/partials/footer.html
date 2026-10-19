@@ -93,7 +93,7 @@
      wird (siehe Teil 2 im <script> weiter unten). Die Wahl (akzeptiert/
      abgelehnt) liegt im Browser-Speicher (localStorage), nicht in einem
      echten Cookie, und bleibt bis zum manuellen Zurücksetzen bestehen. */}}
-<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="{{ i18n "cookie_aria_label" }}">
+<div class="cookie-banner hidden" id="cookieBanner" role="dialog" aria-label="{{ i18n "cookie_aria_label" }}">
   <p>{{ i18n "cookie_text" }} {{ with .Site.GetPage "/datenschutzbestimmungen" }}<a href="{{ .RelPermalink }}">{{ i18n "cookie_details" }}</a>{{ end }}</p>
   <div class="cookie-actions">
     <button class="btn btn-ghost" type="button" data-cookie-action="rejected">{{ i18n "cookie_reject" }}</button>
@@ -276,7 +276,12 @@
       reserveSpace();
     }
 
-    if(stored){ hideBanner(); }else{ reserveSpace(); window.addEventListener('resize', reserveSpace); }
+    {{/* Der Banner steht im HTML schon versteckt da und wird nur gezeigt,
+         wenn noch keine Wahl gespeichert ist. Umgekehrt (sichtbar, dann per
+         Skript verstecken) blitzte er bei jedem Seitenaufruf kurz auf - und
+         ohne JavaScript stand er für immer über dem Inhalt, obwohl dann gar
+         kein Analytics laden kann. */}}
+    if(!stored){ banner.classList.remove('hidden'); reserveSpace(); window.addEventListener('resize', reserveSpace); }
 
     var btns = document.querySelectorAll('[data-cookie-action]');
     btns.forEach(function(b){
