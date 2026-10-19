@@ -943,6 +943,9 @@ Sous `[params]` :
 | `newsletter_url` | inscription à la newsletter ; vide = pas de bloc newsletter |
 
 Google Analytics ne se charge **que** si « Accepter » a été choisi dans la bannière cookies.
+Le lien « Paramètres des cookies » sous « Mentions légales » rouvre la bannière ; « Refuser »
+coupe Analytics aussitôt et supprime ses cookies (lien affiché seulement avec
+`google_analytics_id`).
 Textes de la bannière : `i18n`, préfixe `cookie_`.
 
 ---

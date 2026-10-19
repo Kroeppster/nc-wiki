@@ -917,7 +917,9 @@ Unter `[params]`:
 | `social_instagram`, `social_discord`, `social_linkedin` | Knöpfe in der Fusszeile; leer = kein Knopf |
 | `newsletter_url` | Newsletter-Anmeldung; leer = kein Newsletter-Block |
 
-Google Analytics lädt **nur**, wenn im Cookie-Banner „Akzeptieren“ gewählt wurde. Texte
+Google Analytics lädt **nur**, wenn im Cookie-Banner „Akzeptieren“ gewählt wurde. Der Link
+„Cookie-Einstellungen“ unter „Rechtliches“ öffnet den Banner wieder; „Ablehnen“ schaltet
+Analytics sofort ab und löscht dessen Cookies (Link erscheint nur mit `google_analytics_id`). Texte
 des Banners: `i18n`, Präfix `cookie_`.
 
 ---

@@ -923,7 +923,9 @@ Sotto `[params]`:
 | `social_instagram`, `social_discord`, `social_linkedin` | pulsanti nel piè di pagina; vuoto = nessun pulsante |
 | `newsletter_url` | iscrizione alla newsletter; vuoto = nessun blocco newsletter |
 
-Google Analytics si carica **solo** se nel banner dei cookie è stato scelto «Accetta».
+Google Analytics si carica **solo** se nel banner dei cookie è stato scelto «Accetta». Il
+link «Impostazioni dei cookie» sotto «Informazioni legali» riapre il banner; «Rifiuta»
+spegne subito Analytics e ne cancella i cookie (link visibile solo con `google_analytics_id`).
 Testi del banner: `i18n`, prefisso `cookie_`.
 
 ---
