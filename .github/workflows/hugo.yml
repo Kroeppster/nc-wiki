@@ -120,7 +120,7 @@ jobs:
       # Französisch: Leerzeichen vor ! ? : ; » und nach « werden geschützt,
       # damit der Browser dort nicht umbricht (sonst steht z. B. ein «?»
       # allein am Zeilenanfang). Siehe scripts/fr-typografie.mjs.
-      - name: French typography (no line break before ! ? : ;)
+      - name: French typography (no line break before punctuation)
         run: node scripts/fr-typografie.mjs public
 
       # Baut den durchsuchbaren Suchindex für die Suchfunktion oben rechts
