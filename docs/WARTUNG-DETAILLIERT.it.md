@@ -996,7 +996,7 @@ modelli, prende spazio dal margine (`--rand-ausbruch`) e ha bisogno di
 
 | Workflow | Quando | Cosa |
 | --- | --- | --- |
-| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, pubblicare (solo `main`) |
+| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, in francese proteggere gli spazi prima di ! ? : ; (`scripts/fr-typografie.mjs`), ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, pubblicare (solo `main`) |
 | `textmappen.yml` | ogni modifica a `main` | cartelle Excel recenti nella release «Textmappen» |
 | `texte-einlesen.yml` | cartella caricata in `redaktion/` | leggere, costruire di prova, pull request con rapporto |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` caricato in `redaktion/` | controllare, leggere, costruire di prova, pull request con rapporto; in caso di errore nessuna pull request, esecuzione rossa |
@@ -1030,8 +1030,9 @@ python3 scripts/wortliste-pruefen.py                                 # elenco di
 node scripts/editor-rundlauf.mjs                                     # editor web
 ```
 
-Altra porta: `ADRESSE=http://127.0.0.1:8123` davanti. Atteso: esattamente dieci pagine
-irraggiungibili (area membri e Alpha). Provare una nuova verifica prima su un errore vero e
+Altra porta: `ADRESSE=http://127.0.0.1:8123` davanti. Atteso: esattamente 18 pagine
+irraggiungibili (area membri, Alpha e, finché la newsletter non è configurata, le sei
+pagine della newsletter). Provare una nuova verifica prima su un errore vero e
 noto, e togliere i falsi allarmi – altrimenti presto nessuno la legge più.
 
 ---

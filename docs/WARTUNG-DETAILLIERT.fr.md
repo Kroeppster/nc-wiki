@@ -1017,7 +1017,7 @@ l'en-tête.
 
 | Workflow | Quand | Quoi |
 | --- | --- | --- |
-| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, publier (seulement `main`) |
+| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, en français protéger les espaces avant ! ? : ; (`scripts/fr-typografie.mjs`), recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, publier (seulement `main`) |
 | `textmappen.yml` | chaque modification de `main` | classeurs récents dans la release « Textmappen » |
 | `texte-einlesen.yml` | classeur téléversé dans `redaktion/` | lire, construire à l'essai, pull request avec rapport |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` téléversé dans `redaktion/` | vérifier, lire, construire à l'essai, pull request avec rapport ; en cas d'erreur pas de pull request, exécution rouge |
@@ -1051,8 +1051,9 @@ python3 scripts/wortliste-pruefen.py                                 # liste de 
 node scripts/editor-rundlauf.mjs                                     # éditeur web
 ```
 
-Autre port : `ADRESSE=http://127.0.0.1:8123` devant. Attendu : exactement dix pages
-inaccessibles (espace membres et Alpha). Tester d'abord une nouvelle vérification sur une
+Autre port : `ADRESSE=http://127.0.0.1:8123` devant. Attendu : exactement 18 pages
+inaccessibles (espace membres, Alpha et, tant que la newsletter n'est pas configurée, les
+six pages de la newsletter). Tester d'abord une nouvelle vérification sur une
 vraie erreur connue et supprimer les fausses alertes – sinon plus personne ne la lit.
 
 ---

@@ -991,7 +991,7 @@ landen.
 
 | Workflow | Wann | Was |
 | --- | --- | --- |
-| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, veröffentlichen (nur `main`) |
+| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, auf Französisch Leerzeichen vor ! ? : ; schützen (`scripts/fr-typografie.mjs`), Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, veröffentlichen (nur `main`) |
 | `textmappen.yml` | jede Änderung an `main` | frische Textmappen und Wortliste ans Release „Textmappen“ |
 | `texte-einlesen.yml` | Mappe in `redaktion/` hochgeladen | einlesen, probeweise bauen, Pull Request mit Bericht |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` in `redaktion/` hochgeladen | prüfen, einlesen, probeweise bauen, Pull Request mit Bericht; bei Fehlern kein Pull Request, Lauf rot |
@@ -1025,8 +1025,9 @@ python3 scripts/wortliste-pruefen.py                                 # Wortliste
 node scripts/editor-rundlauf.mjs                                     # Web-Editor
 ```
 
-Anderer Port: `ADRESSE=http://127.0.0.1:8123` davor. Erwartet: genau zehn unerreichbare
-Seiten (Mitgliederbereich und Alpha). Eine neue Prüfung zuerst an einem echten, bekannten
+Anderer Port: `ADRESSE=http://127.0.0.1:8123` davor. Erwartet: genau 18 unerreichbare
+Seiten (Mitgliederbereich, Alpha und, solange der Newsletter nicht eingerichtet ist, die
+sechs Newsletter-Seiten). Eine neue Prüfung zuerst an einem echten, bekannten
 Fehler testen und Fehlalarme abschalten – sonst liest sie bald niemand mehr.
 
 ---
