@@ -1648,6 +1648,16 @@ body.pm-aktiv{overflow:hidden;}
 .fg-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-4);
   flex-wrap:wrap;margin-bottom:var(--space-4);}
 .fg-kopf h3{margin:0;}
+/* Die Uhr bleibt beim Scrollen sichtbar: In einer Phase stehen bis zu 18
+   Figuren bzw. 15 Personen untereinander, und wer unten ist, soll die Restzeit
+   trotzdem sehen. Auf breiten Bildschirmen unter der festen Kopfzeile der
+   Website (deren Höhe misst seiten-uebersicht.html), darunter ganz oben. */
+@media screen{
+  .fg-phase .fg-kopf{position:sticky;top:0;z-index:5;background:var(--color-surface);padding-block:var(--space-2);}
+}
+@media screen and (min-width:1021px){
+  .fg-phase .fg-kopf{top:var(--kopf-hoehe,3.9rem);}
+}
 .fg-uhr{margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);
   font-variant-numeric:tabular-nums;color:var(--color-signal);}
 .fg-punkte{margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);}
@@ -1755,6 +1765,14 @@ body.pm-aktiv{overflow:hidden;}
 .fig-wahl{list-style:none;display:grid;grid-template-columns:repeat(5,auto);justify-content:center;gap:0 .45rem;margin:.35rem 0 0;padding:0;}
 .fig-wahl label{cursor:pointer;display:flex;flex-direction:column-reverse;align-items:center;line-height:1.1;}
 .fig-wahl input{margin:.15rem 0 0;}
+/* Am Bildschirm ist jede Antwort mindestens 24px breit (WCAG 2.2, Zielgrösse):
+   Vorher war ein Ziel nur so breit wie der Kreis (13px), auf dem Handy mit
+   22px Abstand - leicht danebengetippt. Die Lücke fällt dafür weg, die Zeile
+   bleibt gleich lang. Der Druck bleibt unverändert. */
+@media screen{
+  .fig-wahl{gap:0;}
+  .fig-wahl label{min-width:1.5rem;padding:.1rem 0;}
+}
 @media (max-width:900px){ .fig-raster{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:560px){ .fig-raster{grid-template-columns:repeat(2,1fr);} }
 
