@@ -111,8 +111,10 @@
          Untermenüs oben, siehe footer.html - kein eigenes Skript nötig, die
          dortige Klick-/Aussenklick-Logik wählt Elemente generisch über diese
          Klassen aus). Jede andere Sprache verlinkt zur übersetzten Version
-         DERSELBEN Seite, falls es die gibt - sonst zur Startseite der
-         jeweiligen Sprache (besser als ein kaputter Link). */}}
+         DERSELBEN Seite, falls es die gibt - sonst zur nächsten übersetzten
+         übergeordneten Seite (ein nur deutscher Erfahrungsbericht führt so
+         auf die französische Liste der Berichte statt auf die Startseite),
+         und erst ganz zuletzt zur Startseite der jeweiligen Sprache. */}}
     <div class="lang-switch has-children" role="group" aria-label="{{ i18n "lang_switch_aria_label" }}">
       <span class="lang-switch-current">{{ .Language.Lang | upper }}</span>
       <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="langSwitchList" aria-label="{{ i18n "lang_switch_toggle_aria_label" }}">
@@ -126,6 +128,13 @@
             {{ $translated := false }}
             {{ range $page.Translations }}
               {{ if eq .Language.Lang $lang }}{{ $translated = . }}{{ end }}
+            {{ end }}
+            {{ $vorfahr := $page.Parent }}
+            {{ range seq 8 }}
+              {{ if and (not $translated) $vorfahr }}
+                {{ range $vorfahr.Translations }}{{ if eq .Language.Lang $lang }}{{ $translated = . }}{{ end }}{{ end }}
+                {{ if not $translated }}{{ $vorfahr = $vorfahr.Parent }}{{ end }}
+              {{ end }}
             {{ end }}
             <li>
               {{ if $translated }}
