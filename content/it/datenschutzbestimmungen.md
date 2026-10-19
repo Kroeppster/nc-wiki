@@ -50,7 +50,7 @@ Nell'ambito del trattamento dei dati personali, può accadere che i dati vengano
 
 ## Informativa sulla crittografia SSL/TLS
 
-Questo sito utilizza, per motivi di sicurezza e per proteggere la trasmissione di contenuti riservati, una crittografia SSL/TLS. Una connessione crittografata si riconosce dal fatto che la barra degli indirizzi del browser passa da "http://" a "https://" e dalla presenza del simbolo del lucchetto nella barra degli indirizzi.
+Questo sito utilizza, per motivi di sicurezza e per proteggere la trasmissione di contenuti riservati, una crittografia SSL/TLS. Una connessione crittografata si riconosce dal fatto che la barra degli indirizzi del browser passa da «http://» a «https://» e dalla presenza del simbolo del lucchetto nella barra degli indirizzi.
 
 ## Informativa sui file di log del server
 
@@ -58,7 +58,7 @@ Il fornitore di questo sito (GitHub Pages) raccoglie e memorizza automaticamente
 
 ## Modulo di contatto e testimonianze
 
-Se ci trasmette informazioni tramite un modulo di questo sito (ad es. modulo di contatto, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, veda la sezione "Servizi di terzi" qui sotto. Senza il Suo consenso non trasmettiamo i Suoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
+Se ci trasmette informazioni tramite un modulo di questo sito (ad es. modulo di contatto, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, veda la sezione «Servizi di terzi» qui sotto. Senza il Suo consenso non trasmettiamo i Suoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
 
 ## Servizi di terzi
 
@@ -66,7 +66,7 @@ Questo sito utilizza i seguenti servizi esterni:
 
 - **Formspree** (invio dei moduli di contatto, testimonianze e segnalazioni di errori) – i dati inseriti vengono trasmessi a Formspree Inc. (USA).
 - **Pagefind** (funzione di ricerca) e font ospitati sul nostro server – funzionano interamente nel browser o vengono forniti dal nostro stesso hosting, senza trasmissione di dati a terzi.
-- **Google Analytics** (misurazione dell'audience) – viene caricato solo se sceglie attivamente "Accetta" nel banner dei cookie (veda la sezione "Cookie" qui sotto). Senza questo consenso non viene caricato alcuno script Google e non viene impostato alcun cookie corrispondente. In caso di consenso, Google Analytics raccoglie tra l'altro informazioni sulle pagine visitate, la durata della visita e un'origine geografica approssimativa (paese/regione, non la posizione esatta), trattate su server di Google Ireland Limited o Google LLC (USA). Il consenso può essere revocato in qualsiasi momento: tramite il link «Impostazioni dei cookie» in fondo a ogni pagina e poi «Rifiuta», oppure cancellando i dati del browser relativi a questo sito, dopodiché il banner dei cookie ricomparirà.
+- **Google Analytics** (misurazione dell'audience) – viene caricato solo se sceglie attivamente «Accetta» nel banner dei cookie (veda la sezione «Cookie» qui sotto). Senza questo consenso non viene caricato alcuno script Google e non viene impostato alcun cookie corrispondente. In caso di consenso, Google Analytics raccoglie tra l'altro informazioni sulle pagine visitate, la durata della visita e un'origine geografica approssimativa (paese/regione, non la posizione esatta), trattate su server di Google Ireland Limited o Google LLC (USA). Il consenso può essere revocato in qualsiasi momento: tramite il link «Impostazioni dei cookie» in fondo a ogni pagina e poi «Rifiuta», oppure cancellando i dati del browser relativi a questo sito, dopodiché il banner dei cookie ricomparirà.
 
 Altri contenuti di terzi integrati (ad es. link a Instagram) comportano una trasmissione di dati al rispettivo fornitore solo in caso di clic attivo.
 
@@ -76,7 +76,7 @@ I diritti d'autore e tutti gli altri diritti su contenuti, immagini o altri file
 
 ## Esclusione generale di responsabilità
 
-Tutte le informazioni della nostra offerta online sono state accuratamente verificate. Ci impegniamo a offrire informazioni aggiornate, corrette e complete. Ciononostante non si può escludere del tutto la presenza di errori, per cui non possiamo garantire la completezza, la correttezza e l'attualità delle informazioni. Sono escluse pretese di responsabilità per danni materiali o immateriali causati dall'utilizzo delle informazioni offerte, salvo colpa intenzionale o gravemente negligente comprovata.
+Tutte le informazioni della nostra offerta online sono state accuratamente verificate. Ci impegniamo a offrire informazioni aggiornate, corrette e complete. Ciononostante non si può escludere del tutto la presenza di errori, per cui non possiamo garantire la completezza, la correttezza e l'attualità delle informazioni. Sono escluse pretese di responsabilità per danni materiali o immateriali causati dall'utilizzo delle informazioni offerte, salvo dolo o colpa grave comprovati.
 
 Non ci assumiamo alcuna responsabilità per i contenuti e la disponibilità di siti web di terzi raggiungibili tramite link esterni presenti su questo sito. Per il contenuto delle pagine collegate sono responsabili esclusivamente i rispettivi gestori.
 
@@ -92,4 +92,4 @@ Per domande relative alla protezione dei dati, ci scriva a info@nc-wiki.ch.
 
 Nella memoria locale del Suo browser conserviamo solo pochi elementi tecnicamente necessari, non un vero e proprio cookie – ad esempio la Sua impostazione del tema e questa stessa scelta relativa ai cookie.
 
-Inoltre, tramite il banner dei cookie può attivare Google Analytics per la misurazione dell'audience. Questo viene caricato solo con il Suo consenso attivo e imposta un cookie solo a quel punto; senza consenso non avviene alcuna trasmissione a Google. Dettagli nella sezione "Servizi di terzi" qui sopra.
+Inoltre, tramite il banner dei cookie può attivare Google Analytics per la misurazione dell'audience. Questo viene caricato solo con il Suo consenso attivo e imposta un cookie solo a quel punto; senza consenso non avviene alcuna trasmissione a Google. Dettagli nella sezione «Servizi di terzi» qui sopra.

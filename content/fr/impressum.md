@@ -14,9 +14,9 @@ E-mail : info@nc-wiki.ch
 
 ## Remarques sur nos contenus
 
-Nous avons élaboré tous les conseils et exercices en toute bonne foi. Nous ne pouvons toutefois pas garantir la réussite de l'AMS (test d'aptitudes pour les études de médecine).
+Nous avons élaboré tous les conseils et exercices en toute bonne foi. Nous ne pouvons toutefois pas garantir la réussite au test d'aptitudes pour les études de médecine (AMS).
 
-Nous tenons beaucoup à ce que nos informations sur l'AMS soient correctes. Font toutefois toujours foi les indications officielles de [swissuniversities](https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine) et du [Centre pour le développement de tests et le diagnostic (ZTD)](https://www.unifr.ch/ztd/fr/ems).
+Nous tenons beaucoup à ce que nos informations sur l'AMS soient correctes. Seules font toutefois foi les indications officielles de [swissuniversities](https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine) et du [Centre pour le développement de tests et le diagnostic (ZTD)](https://www.unifr.ch/ztd/fr/ems).
 
 Les témoignages reflètent les expériences et opinions personnelles de leurs auteur·e·s.
 

@@ -74,4 +74,4 @@ Presto presenteremo qui gli altri responsabili di questa stagione.
 
 ## Partecipare
 
-Per domande, suggerimenti o se vuoi essere coinvolt\* con noi come studentessa o studente delle facoltà mediche, contattaci tramite il nostro [modulo di contatto](/kontakt)!
+Per domande, suggerimenti o se studi medicina e vuoi impegnarti con noi, contattaci tramite il nostro [modulo di contatto](/kontakt).

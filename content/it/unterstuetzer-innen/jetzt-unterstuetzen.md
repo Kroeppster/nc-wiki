@@ -14,4 +14,4 @@ Siamo grati per ogni donazione. Finanzia le serie di esercizi, le simulazioni de
 
 ## Diventa sponsor
 
-Collaboriamo volentieri con le organizzazioni. Tutte le informazioni per sponsor e organizzazioni partner si trovano sulla pagina degli sponsor.
+Collaboriamo volentieri con organizzazioni. Tutte le informazioni per sponsor e organizzazioni partner si trovano alla pagina [Sponsor](/unterstuetzer-innen/sponsoren).

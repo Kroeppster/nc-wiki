@@ -7,4 +7,4 @@ menu:
     weight: 2
 ---
 
-Qui trovi regolarmente novità sull'AMS, sulla nostra associazione e sui nostri eventi (simulazioni del test, corso di preparazione e altro).
+Qui trovi regolarmente novità sul test attitudinale per gli studi di medicina (AMS), sulla nostra associazione e sui nostri eventi (simulazioni del test, corsi di preparazione e altro).

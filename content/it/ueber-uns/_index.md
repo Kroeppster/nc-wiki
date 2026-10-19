@@ -1,6 +1,6 @@
 ---
 title: "Chi siamo"
-description: "Chi siamo: dal 2021 oltre 110 studenti di medicina di tutta la Svizzera si impegnano affinché la preparazione all'AMS sia gratuita per tutti."
+description: "Chi siamo: dal 2021 oltre 110 studentesse e studenti di medicina di tutta la Svizzera si impegnano affinché la preparazione all'AMS sia gratuita per tutti."
 menu:
   main:
     identifier: ueber-uns
@@ -19,6 +19,6 @@ Dalla fondazione nel 2021 NCWiki è cresciuto molto: oggi nel team si impegnano 
 
 Studi medicina e vuoi impegnarti con noi? Oppure hai domande e suggerimenti? Allora scrivici tramite il nostro [modulo di contatto](/kontakt).
 
-## Supporto
+## Sostegno
 
 Vuoi sostenere la nostra missione? Saremo lieti di ricevere la tua [donazione](/unterstuetzer-innen/jetzt-unterstuetzen).

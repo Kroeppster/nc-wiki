@@ -13,7 +13,7 @@ menu:
 
 Siamo felici di ricevere il tuo messaggio. Scrivici per domande, suggerimenti o se studi medicina e vuoi impegnarti con noi.
 
-Rispondiamo già a molte domande sull'AMS e sulla nostra offerta nelle [domande frequenti](/ems/qa). Lì trovi spesso la risposta più in fretta.
+Rispondiamo già a molte domande sul test attitudinale per gli studi di medicina (AMS) e sulla nostra offerta nelle [domande frequenti](/ems/qa). Lì trovi spesso la risposta più in fretta.
 
 Lavoriamo con grande cura. Se dovessi comunque notare un errore, ti saremo molto grati per una breve segnalazione.
 

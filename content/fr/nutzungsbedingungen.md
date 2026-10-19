@@ -21,7 +21,7 @@ Les exercices sont placés sous la licence [Creative Commons BY-NC 4.0](https://
 
 ## Utilisation commerciale
 
-Sont considérés comme prestataires commerciaux au sens des présentes conditions toutes les personnes et entreprises qui proposent des offres payantes de préparation à l'AMS, au TMS ou à des tests d'aptitude comparables, par exemple des cours, du matériel d'apprentissage, des cours particuliers, des applications ou des plateformes en ligne. En font également partie leurs collaborateur·rice·s, tuteur·rice·s et mandataires.
+Sont considérées comme prestataires commerciaux au sens des présentes conditions toutes les personnes et entreprises qui proposent des offres payantes de préparation à l'AMS, au TMS ou à des tests d'aptitude comparables, par exemple des cours, du matériel d'apprentissage, des cours particuliers, des applications ou des plateformes en ligne. En font également partie leurs collaborateur·rice·s, tuteur·rice·s et mandataires.
 
 Sans l'accord écrit préalable de NCWiki, il est notamment interdit :
 
@@ -47,7 +47,7 @@ L'extraction, le téléchargement et l'enregistrement systématiques ou automati
 
 ## Infractions
 
-En cas d'infraction aux présentes conditions d'utilisation, nous nous réservons toutes les démarches juridiques, notamment sur la base de la loi sur le droit d'auteur et de la loi fédérale contre la concurrence déloyale.
+En cas d'infraction aux présentes conditions d'utilisation, nous nous réservons le droit d'engager toutes les démarches juridiques, notamment sur la base de la loi sur le droit d'auteur et de la loi fédérale contre la concurrence déloyale.
 
 ## Droit applicable et for juridique
 

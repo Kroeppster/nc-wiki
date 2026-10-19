@@ -56,6 +56,6 @@ La compensazione degli svantaggi all'AMS vale solo per il test. Per gli esami du
 
 ## Domande
 
-Per domande sulla procedura rivolgiti direttamente a swissuniversities. Per domande sulla preparazione ti aiutiamo volentieri tramite il [formulario di contatto](/kontakt) o nella nostra community su Discord.
+Per domande sulla procedura rivolgiti direttamente a swissuniversities. Per domande sulla preparazione ti aiutiamo volentieri tramite il [modulo di contatto](/kontakt) o nella nostra community su Discord.
 
 *Stato: ottobre 2026. Termini e procedure possono cambiare ogni anno.*

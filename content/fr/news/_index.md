@@ -7,4 +7,4 @@ menu:
     weight: 2
 ---
 
-Tu trouveras ici régulièrement des nouvelles sur l'AMS, notre association et nos événements (simulations de test, cours de préparation, etc.).
+Tu trouveras ici régulièrement des nouvelles sur le test d'aptitudes pour les études de médecine (AMS), notre association et nos événements (simulations de test, cours de préparation, etc.).

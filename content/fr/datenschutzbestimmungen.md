@@ -90,6 +90,6 @@ Pour toute question relative à la protection des données, merci de nous écrir
 
 ## Cookies
 
-Seuls quelques éléments techniquement nécessaires sont stockés dans le stockage local de votre navigateur, pas un cookie à proprement parler – par exemple votre réglage de thème et votre choix relatif aux cookies lui-même.
+Seuls quelques éléments techniquement nécessaires sont enregistrés dans le stockage local de votre navigateur, pas un cookie à proprement parler – par exemple votre réglage de thème et votre choix relatif aux cookies lui-même.
 
 De plus, la bannière de cookies vous permet d'activer Google Analytics pour la mesure d'audience. Celui-ci n'est chargé qu'avec votre consentement actif et ne dépose un cookie qu'à ce moment-là ; sans consentement, aucune transmission à Google n'a lieu. Détails dans la section « Services de tiers » ci-dessus.

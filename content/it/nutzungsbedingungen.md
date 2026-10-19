@@ -21,7 +21,7 @@ Gli esercizi sono pubblicati con la licenza [Creative Commons BY-NC 4.0](https:/
 
 ## Utilizzo commerciale
 
-Ai sensi delle presenti condizioni sono considerati fornitori commerciali tutte le persone e le imprese che propongono offerte a pagamento per la preparazione all'AMS, al TMS o a test attitudinali simili, per esempio corsi, materiale didattico, ripetizioni, app o piattaforme online. Ne fanno parte anche i loro collaboratori, tutor e incaricati.
+Ai sensi delle presenti condizioni sono considerate fornitori commerciali tutte le persone e le imprese che propongono offerte a pagamento per la preparazione all'AMS, al TMS o a test attitudinali simili, per esempio corsi, materiale didattico, ripetizioni, app o piattaforme online. Ne fanno parte anche i loro collaboratori, tutor e incaricati.
 
 Senza il previo consenso scritto di NCWiki è in particolare vietato:
 
@@ -43,7 +43,7 @@ I nostri eventi sono rivolti alle candidate e ai candidati all'AMS. Ci riserviam
 
 ## Accessi automatizzati
 
-La lettura, il download e il salvataggio sistematici o automatizzati di contenuti di questo sito web sono vietati. Ciò vale in particolare per la creazione di banche dati e per l'addestramento di sistemi di intelligenza artificiale.
+L'estrazione, il download e il salvataggio sistematici o automatizzati di contenuti di questo sito web sono vietati. Ciò vale in particolare per la creazione di banche dati e per l'addestramento di sistemi di intelligenza artificiale.
 
 ## Violazioni
 

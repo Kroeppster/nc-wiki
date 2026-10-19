@@ -19,4 +19,4 @@ Nous remercions également les universités suisses où ont lieu nos simulations
 
 NCWiki est accrédité par l'[UZH Impulsfabrik](https://impulsfabrik.vsuzh.ch/de/portfolio/ncwiki).
 
-Tu souhaites toi aussi soutenir notre travail ? Toutes les informations sur les dons et le sponsoring se trouvent sous [Soutenir maintenant](/unterstuetzer-innen/jetzt-unterstuetzen).
+Tu souhaites toi aussi soutenir notre travail ? Toutes les informations sur les dons et le sponsoring se trouvent sur la page [Soutenir maintenant](/unterstuetzer-innen/jetzt-unterstuetzen).

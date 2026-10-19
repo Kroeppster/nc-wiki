@@ -14,4 +14,4 @@ Nous sommes reconnaissants pour chaque don. Il finance les séries d'exercices, 
 
 ## Devenir sponsor
 
-Nous collaborons volontiers avec des organisations. Toutes les informations pour les sponsors et les organisations partenaires se trouvent sur la page des sponsors.
+Nous collaborons volontiers avec des organisations. Toutes les informations pour les sponsors et les organisations partenaires se trouvent sur la page [Sponsors](/unterstuetzer-innen/sponsoren).

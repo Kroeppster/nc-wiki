@@ -5,7 +5,7 @@ eyebrow: "Aggiornamento"
 draft: false
 ---
 
-Il nostro sito web ha un volto nuovo: NCWiki ora è più chiaro e moderno, e trovi più in fretta ciò che ti serve per la tua preparazione all'AMS.
+Il nostro sito web ha un volto nuovo: NCWiki ora è più chiaro e moderno, e trovi più in fretta ciò che ti serve per la tua preparazione al test attitudinale per gli studi di medicina (AMS).
 
 ## Novità
 

@@ -74,7 +74,7 @@ dernier signe marqué. La feuille n'a pas de coins noirs ; c'est la grille des
 1600 signes elle-même qui sert de repère (procédé de l'outil de formatage).
 On peut choisir tous les tests de concentration du site avec corrigé
 (simulations de test 2022, 2023, 2026 et séries d'exercices) – ou un test
-personnel : télécharger l'exercice et le corrigé en PDF, par exemple depuis
+personnel : charger l'exercice et le corrigé en PDF, par exemple issus de
 l'outil de formatage.
 
 À évaluer : **est-ce que ça marche avec de vraies photos et différents

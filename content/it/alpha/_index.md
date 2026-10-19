@@ -6,7 +6,7 @@ outputs: ["html"]
 ---
 
 Questa pagina **non fa parte del sito pubblico**. Qui si trovano le nuove
-funzioni finché non sono ancora approvate – per provarle, metterle alla prova
+funzioni finché non sono approvate – per provarle, spingerle al limite
 e valutarle prima che arrivino su una pagina vera.
 
 È protetta dalla stessa password dell'area soci, non è collegata in nessun
@@ -38,7 +38,7 @@ lern-generator
 
 ## Valutare il foglio delle risposte
 
-Chi ha risolto a casa su carta una simulazione del test fotografa il foglio
+Chi ha risolto a casa su carta una simulazione del test fotografa il foglio delle
 risposte e ottiene i punti per sottotest – senza confrontare a mano le 144
 soluzioni. La lettura avviene come nello strumento di formattazione
 (valutazione), ma direttamente nel browser: la foto non lascia il

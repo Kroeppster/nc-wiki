@@ -13,7 +13,7 @@ menu:
 
 Nous nous réjouissons de ton message. Écris-nous pour toute question, suggestion ou si tu étudies la médecine et souhaites t'engager avec nous.
 
-Nous répondons déjà à beaucoup de questions sur l'AMS et notre offre dans les [questions fréquentes](/ems/qa). Tu y trouveras souvent la réponse plus rapidement.
+Nous répondons déjà à beaucoup de questions sur le test d'aptitudes pour les études de médecine (AMS) et notre offre dans les [questions fréquentes](/ems/qa). Tu y trouveras souvent la réponse plus rapidement.
 
 Nous travaillons avec le plus grand soin. Si tu remarques malgré tout une erreur, nous te serons très reconnaissants de nous le signaler.
 

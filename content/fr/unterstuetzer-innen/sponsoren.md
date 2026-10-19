@@ -3,9 +3,9 @@ title: "Sponsors"
 description: "Devenez sponsor ou partenaire de NCWiki : soutenez une préparation gratuite à l'AMS et atteignez les médecins et chercheur·euse·s de demain."
 ---
 
-## NCWiki s'engage pour l'avenir de demain
+## Notre engagement
 
-NCWiki accompagne les futur·e·s étudiant·e·s en médecine sur l'un des parcours les plus exigeants du paysage éducatif suisse : de la préparation au test d'aptitudes pour les études de médecine (AMS) jusque loin dans les études. En tant qu'association gérée par des étudiant·e·s, nous nous engageons pour que l'accès à du matériel de préparation de qualité ne dépende pas des moyens financiers de chacun·e.
+NCWiki accompagne les futur·e·s étudiant·e·s en médecine sur l'un des parcours les plus exigeants du paysage éducatif suisse : de la préparation au test d'aptitudes pour les études de médecine (AMS) jusqu'à un stade avancé des études. En tant qu'association gérée par des étudiant·e·s, nous nous engageons pour que l'accès à du matériel de préparation de qualité ne dépende pas des moyens financiers de chacun·e.
 
 Grâce à votre soutien en tant que sponsor ou partenaire, vous offrez à des jeunes un départ équitable et bien préparé dans leur carrière médicale.
 
