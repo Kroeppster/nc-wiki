@@ -18,33 +18,33 @@ Cette page te guide à travers le test d'aptitudes pour les études de médecine
 
 ### Informations officielles
 
-Tu reçois les informations officielles sur l'AMS de swissuniversities en avril, une fois inscrit·e. Si tu trouves des informations contradictoires, fie-toi au « Test Info » officiel.
+Les informations officielles sur l'AMS, tu les reçois de swissuniversities en avril, une fois inscrit·e. Si tu trouves des informations contradictoires, fie-toi au « Test Info » officiel.
 
 [Voici le site officiel de swissuniversities](https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine), sur lequel tu peux t'inscrire aux études de médecine et obtenir les brochures d'information sur le test ainsi que des exemples d'exercices (sous « Documents »). Voici aussi le site du [Centre pour le développement de tests et le diagnostic (ZTD)](https://www.unifr.ch/ztd/fr/ems), avec d'autres informations officielles.
 
 ### Inscription
 
-N'oublie pas que tu dois **te préinscrire** **avant le 15 février 2027** auprès de [swissuniversities](https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine) (MEDON). L'inscription à l'AMS elle-même suit au printemps, voir le calendrier ci-dessous. Pense aussi aux délais des autres filières, si c'est ton plan B.
+N'oublie pas que tu dois **te préinscrire avant le 15 février 2027** auprès de [swissuniversities](https://www.swissuniversities.ch/fr/service/inscription-aux-etudes-de-medecine) (MEDON). L'inscription à l'AMS elle-même a lieu au printemps, voir le calendrier ci-dessous. Pense aussi aux délais des autres filières, si c'est ton plan B.
 
 Le calendrier de swissuniversities pour une rentrée à l'automne 2027 :
 
 - **Septembre à novembre :** s'informer sur l'offre d'études, l'admission et le test d'aptitudes
 - **Décembre au 15 février 2027 :** préinscription auprès de swissuniversities via la plateforme MEDON (il te faut pour cela une SWITCH edu-ID). Vérifie que tu as reçu une confirmation par e-mail, y compris dans le dossier spam.
 - **Janvier à mars :** vérifier si tu dois aussi t'inscrire auprès de l'université souhaitée
-- **Avril au 25 mai 2027 :** inscription à l'AMS via MEDON, valable seulement avec le paiement dans les délais de la taxe de CHF 300
-- **Juin :** au plus tard dix jours avant le test, tu reçois par e-mail l'heure d'entrée et ton numéro de place
+- **Avril au 25 mai 2027 :** inscription à l'AMS via MEDON, valable seulement si la taxe de CHF 300 est payée dans les délais
+- **Juin :** au plus tard dix jours avant le test, tu reçois par e-mail ton heure d'entrée en salle et ton numéro de place
 - **9 juillet 2027 :** test d'aptitudes pour les études de médecine – emporte une pièce d'identité officielle valable (carte d'identité ou passeport)
 - **Fin juillet :** attribution des places d'études par courrier (parfois recommandé) ou par e-mail
 - **Début août :** confirmer ta place d'études dans le délai fixé par l'université, en général dix jours
 
-**Compensation des désavantages :** si tu as besoin d'aides ou de conditions de test adaptées le jour du test, tu déposes une demande séparée auprès de swissuniversities – tôt et avec son propre délai (jusqu'ici le 1er mai). Plus d'informations sur la page [Compensation des désavantages](/ems/nachteilsausgleich).
+**Compensation des désavantages :** si tu as besoin d'aides ou de conditions de test adaptées le jour du test, tu déposes une demande séparée auprès de swissuniversities – à temps, car elle a son propre délai (jusqu'ici le 1er mai). Plus d'informations sur la page [Compensation des désavantages](/ems/nachteilsausgleich).
 
 ### Choisir l'université
 
 Lors de la préinscription, tu dois indiquer par ordre de priorité dans quelle université tu souhaites étudier la médecine humaine, dentaire ou vétérinaire. Fais attention à deux choses :
 
 - Si tu réussis l'AMS, ton domicile fiscal te garantit une place d'études dans ton canton, pour autant que la médecine y soit proposée. Pour l'Université de Bâle, les deux Bâle comptent comme canton universitaire et offrent cet avantage. En tant qu'école fédérale, l'EPF est la seule exception et n'accorde pas d'avantage lié au domicile cantonal. Tu trouveras les détails sur chaque université dans notre [Uniguide](/ems/uniguide).
-- Certaines universités sont plus demandées, c'est pourquoi il faut un meilleur rang que les autres candidat·e·s pour y être admis·e. Ta première priorité est toujours prise en compte en premier. Exemple : tu choisis l'EPF en premier choix et l'Université de Zurich en deuxième choix. L'EPF est moins demandée que l'Université de Zurich pour la médecine humaine. Comme tu fais partie des 1 % meilleur·e·s au test, tu es attribué·e à ton premier choix (EPF).
+- Certaines universités sont plus demandées, c'est pourquoi il faut un meilleur rang que les autres candidat·e·s pour y être admis·e. Ta première priorité est toujours prise en compte en premier. Exemple : tu choisis l'EPF en premier choix et l'Université de Zurich en deuxième choix. L'EPF est moins demandée que l'Université de Zurich pour la médecine humaine. Comme tu fais partie du 1 % des meilleur·e·s au test, tu es attribué·e à ton premier choix (EPF).
 
 ### Connaître les consignes
 
@@ -75,7 +75,7 @@ Il y a malheureusement moins de matériel d'exercices disponible pour les franco
 
 ### Nourriture
 
-Prends un bon petit-déjeuner le jour de l'AMS et bois quelque chose – mais pas trop, pour ne pas devoir aller aux toilettes pendant le test (le temps continue de s'écouler).
+Prends un bon petit-déjeuner le jour de l'AMS et bois quelque chose – mais pas trop, pour ne pas avoir à aller aux toilettes pendant le test (le temps continue de s'écouler).
 
 L'AMS dure très longtemps, il est donc utile d'emporter de quoi grignoter – par exemple des noix, des fruits secs, du chocolat ou du dextrose. Tout ce qui est emporté dans la salle d'examen doit être dans un récipient transparent (par ex. un sachet plastique refermable) et, si possible, ne pas faire de bruit.
 
@@ -87,7 +87,7 @@ Seules les personnes à l'heure peuvent participer à l'AMS – la raison d'un r
 
 Selon le lieu du test, il peut y avoir beaucoup de monde dans la salle – à l'Université de Zurich, sur le campus Irchel, par exemple jusqu'à 400 personnes dans la même salle. Ne te laisse pas déstabiliser.
 
-Les réponses doivent être inscrites sur la feuille de réponses séparée – ce qui est écrit dans le cahier d'exercices n'est pas pris en compte. Chaque exercice rapporte exactement un point, les exercices faciles et difficiles comptent donc autant. Ne t'attends pas à terminer tous les exercices – c'est normal. **Les réponses fausses ne sont pas pénalisées** (sauf au travail concentré et soigné), inscris donc aussi une réponse pour les exercices que tu n'as pas traités.
+Les réponses doivent être inscrites sur la feuille de réponses séparée – ce qui est écrit dans le cahier d'exercices n'est pas pris en compte. Chaque exercice rapporte exactement un point, les exercices faciles et difficiles comptent donc autant. Ne t'attends pas à terminer tous les exercices – c'est normal. **Les réponses fausses ne sont pas pénalisées** (sauf pour le travail concentré et soigné), inscris donc aussi une réponse pour les exercices que tu n'as pas traités.
 
 ### Checklist
 
@@ -118,7 +118,7 @@ Tu trouveras des guides pour tous les sous-tests sous [Séries d'exercices](/ems
 
 ### Compléter la feuille de réponses et deviner de façon stratégique
 
-Marque une réponse pour **chaque** question – les réponses fausses ne sont pas pénalisées (exception : travail concentré et soigné). Prévois du temps avant la remise pour vérifier la feuille de réponses et deviner les questions restées ouvertes. Tu ne peux toutefois pas revenir aux sous-tests précédents.
+Marque une réponse pour **chaque** question – les réponses fausses ne sont pas pénalisées (exception : travail concentré et soigné). Prévois du temps avant la remise pour vérifier la feuille de réponses et répondre au hasard aux questions restées ouvertes. Tu ne peux toutefois pas revenir aux sous-tests précédents.
 
 Si tu dois deviner, un système fixe augmente tes chances – par exemple toujours choisir « A », sauf si tu peux exclure A, puis « B », etc. Nous recommandons de commencer par A plutôt que par E, car E signifie souvent « Aucune / Toutes sont correctes » et peut plus rarement être exclue.
 

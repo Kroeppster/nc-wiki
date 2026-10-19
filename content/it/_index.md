@@ -14,7 +14,7 @@ hero:
   cta_secondary: "Iscriviti alla newsletter"
   bild: "testsimulationen/testsimulation-2023.jpg"
   bild_alt: "Aula magna piena durante una simulazione del test NCWiki, in primo piano un foglio delle risposte trilingue con il logo NCWiki"
-  countdown_label: "Ancora fino all'AMS, il 9 luglio 2027"
+  countdown_label: "Tempo che manca all'AMS del 9 luglio 2027"
 news:
   eyebrow: "Attualità"
   heading: "News"
@@ -126,7 +126,7 @@ weg:
           url: "ems/vorbereitungskurse/"
     - wann: "Maggio – inizio luglio"
       titel: "Esercitarsi in condizioni d'esame"
-      text: "Una volta l'intera giornata di fila: 235 minuti, undici blocchi, senza pause. A casa con orologio e annunci, oppure a inizio maggio da noi in aula."
+      text: "Fare una volta l'intera giornata del test tutta di seguito: 235 minuti, undici blocchi, senza pause. A casa con orologio e annunci, oppure a inizio maggio da noi in aula."
       von: "2027-05-01"
       bis: "2027-07-08"
       art: "angebot"
@@ -154,11 +154,11 @@ material:
     - key: uebungsaufgaben
       titel: "Serie di esercizi"
       zahlen: ["uebungen"]
-      text: "{1} serie su tutti e otto i sottotest, con le soluzioni."
+      text: "{1} serie per tutti e otto i sottotest, con le soluzioni."
     - key: testsimulationen
       titel: "Simulazioni del test"
       zahlen: ["simulationen"]
-      text: "{1} fascicoli completi di annate precedenti."
+      text: "{1} fascicoli completi degli anni precedenti."
     - key: vorbereitungskurse
       titel: "Corsi di preparazione"
       text: "Due giorni in aula, in piccoli gruppi – con dispensa del corso da scaricare."
@@ -169,7 +169,7 @@ material:
 
 subtests:
   eyebrow: "Serie di esercizi"
-  heading: "Materiale di esercizio per tutti gli otto sottotest"
+  heading: "Materiale di esercizio per tutti e otto i sottotest"
 mission:
   eyebrow: "Perché esistiamo"
   heading: "Pari opportunità nella preparazione all'AMS"

@@ -24,27 +24,27 @@ Le informazioni ufficiali sull'AMS le ricevi da swissuniversities in aprile, una
 
 ### Iscrizione
 
-Ricorda che devi **preiscriverti entro il 15 febbraio 2027** presso [swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina) (MEDON). L'iscrizione all'AMS vera e propria segue in primavera, vedi il calendario qui sotto. Pensa anche alle scadenze degli altri corsi di studio, se sono il tuo piano B.
+Ricorda che devi **preiscriverti entro il 15 febbraio 2027** presso [swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina) (MEDON). L'iscrizione all'AMS vera e propria avviene in primavera, vedi il calendario qui sotto. Pensa anche alle scadenze degli altri corsi di studio, se sono il tuo piano B.
 
 Il calendario di swissuniversities per l'inizio degli studi nell'autunno 2027:
 
 - **Settembre – novembre:** informarsi sull'offerta di studio, sull'ammissione e sul test attitudinale
 - **Dicembre – 15 febbraio 2027:** preiscrizione presso swissuniversities tramite la piattaforma MEDON (serve una SWITCH edu-ID). Controlla di aver ricevuto una conferma via e-mail, anche nella cartella spam.
 - **Gennaio – marzo:** verificare se devi iscriverti anche presso l'università desiderata
-- **Aprile – 25 maggio 2027:** iscrizione all'AMS tramite MEDON, valida solo con il pagamento entro i termini della tassa di CHF 300
+- **Aprile – 25 maggio 2027:** iscrizione all'AMS tramite MEDON, valida solo se la tassa di CHF 300 viene pagata entro i termini
 - **Giugno:** al più tardi dieci giorni prima del test ricevi via e-mail l'orario d'ingresso e il numero del posto
 - **9 luglio 2027:** test attitudinale per gli studi di medicina – porta un documento d'identità ufficiale valido (carta d'identità o passaporto)
 - **Fine luglio:** assegnazione dei posti di studio per posta (in parte raccomandata) o via e-mail
 - **Inizio agosto:** confermare il posto di studio entro il termine dell'università, di solito dieci giorni
 
-**Compensazione degli svantaggi:** se il giorno del test hai bisogno di ausili o di condizioni di test adeguate, presenti una domanda separata a swissuniversities – per tempo e con un proprio termine (finora il 1° maggio). Maggiori informazioni alla pagina [Compensazione degli svantaggi](/ems/nachteilsausgleich).
+**Compensazione degli svantaggi:** se il giorno del test hai bisogno di ausili o di condizioni di test adeguate, presenti una domanda separata a swissuniversities – per tempo, perché ha un proprio termine (finora il 1° maggio). Maggiori informazioni alla pagina [Compensazione degli svantaggi](/ems/nachteilsausgleich).
 
 ### Scegliere l'università
 
 Al momento della preiscrizione devi indicare in ordine di priorità in quale università vorresti studiare medicina umana, dentaria o veterinaria. Fai attenzione a due cose:
 
 - Se superi l'AMS, il tuo domicilio fiscale ti garantisce un posto di studio nel tuo cantone, purché lì sia offerta medicina. Per l'Università di Basilea entrambi i cantoni di Basilea valgono come cantone universitario e offrono questo vantaggio. In quanto politecnico federale, l'ETH è l'unica eccezione e non concede alcun vantaggio legato al domicilio cantonale. Trovi i dettagli sulle singole università nel nostro [Uniguide](/ems/uniguide).
-- Alcune università sono più richieste, per cui serve un rango migliore rispetto agli altri candidati. La tua prima priorità viene sempre considerata per prima. Esempio: scegli l'ETH come prima scelta e l'Università di Zurigo come seconda. Per medicina umana l'ETH è meno richiesta dell'Università di Zurigo. Dato che con il tuo risultato sei tra l'1 % migliore, vieni assegnato·a alla tua prima scelta (ETH).
+- Alcune università sono più richieste, per cui serve un rango migliore rispetto agli altri candidati. La tua prima priorità viene sempre considerata per prima. Esempio: scegli l'ETH come prima scelta e l'Università di Zurigo come seconda. Per medicina umana l'ETH è meno richiesta dell'Università di Zurigo. Dato che con il tuo risultato sei tra l'1 % dei migliori, vieni assegnato·a alla tua prima scelta (ETH).
 
 ### Conoscere le istruzioni
 
@@ -96,9 +96,9 @@ Le soluzioni vanno inserite nel foglio delle risposte separato – ciò che scri
 - Temperamatite
 - Snack
 - Bevanda/e
-- Ev. tappi per le orecchie
-- Ev. portafortuna
-- Ev. medicamenti
+- Eventuali tappi per le orecchie
+- Eventuale portafortuna
+- Eventuali medicamenti
 
 Tutto ciò che porti nella sala d'esame – comprese le bevande – deve essere in un contenitore trasparente. Cellulare e smartwatch restano nel guardaroba.
 
@@ -114,7 +114,7 @@ Trovi le guide per tutti i sottotest sotto [Serie di esercizi](/ems/uebungsaufga
 
 ### Completare il foglio delle risposte e tirare a indovinare con strategia
 
-Segna una risposta per **ogni** domanda – le risposte sbagliate non vengono penalizzate (eccezione: lavoro concentrato e accurato). Prima della consegna prevedi del tempo per controllare il foglio delle risposte e tirare a indovinare le domande rimaste aperte. Non puoi però tornare ai sottotest precedenti.
+Segna una risposta per **ogni** domanda – le risposte sbagliate non vengono penalizzate (eccezione: lavoro concentrato e accurato). Prima della consegna prevedi del tempo per controllare il foglio delle risposte e rispondere a caso alle domande rimaste aperte. Non puoi però tornare ai sottotest precedenti.
 
 Se devi tirare a indovinare, uno schema fisso aumenta le tue probabilità – per esempio scegliere sempre «A», a meno che tu non possa escludere A, poi «B» e così via. Consigliamo di iniziare da A invece che da E, perché E significa spesso «Nessuna / Tutte sono corrette» e si può escludere più raramente.
 

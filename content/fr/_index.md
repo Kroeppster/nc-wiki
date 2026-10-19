@@ -14,7 +14,7 @@ hero:
   cta_secondary: "S'abonner à la newsletter"
   bild: "testsimulationen/testsimulation-2023.jpg"
   bild_alt: "Auditoire plein lors d'une simulation de test NCWiki, au premier plan une feuille de réponses trilingue avec le logo NCWiki"
-  countdown_label: "Encore jusqu'à l'AMS, le 9 juillet 2027"
+  countdown_label: "Temps restant avant l'AMS du 9 juillet 2027"
 news:
   eyebrow: "Actualité"
   heading: "Actualités"
@@ -28,7 +28,7 @@ weg:
   modus_mit: "Avec AMS"
   modus_ohne: "Sans AMS (Genève, Lausanne, Neuchâtel)"
   legende_offiziell: "Dates officielles"
-  legende_angebot: "Notre offre pour cela"
+  legende_angebot: "Notre offre correspondante"
   hinweis_mit: "Dates selon swissuniversities, sans garantie. Seules font foi les informations officielles de swissuniversities et des universités."
   hinweis_ohne: "Sans AMS, il n'y a pas de test d'aptitudes : la 1re année est ouverte, le passage en 2e année se fait par un examen éliminatoire. Délais sans garantie, seules les universités font foi."
   hinweis_link: "Toutes les universités dans l'Uniguide →"
@@ -95,7 +95,7 @@ weg:
       fuer: "ohne"
     - wann: "Janv. au 30 avril"
       titel: "Immatriculation auprès de l'université souhaitée"
-      text: "Genève : dans certains cas déjà jusqu'au 28 février"
+      text: "Genève : dans certains cas, délai avancé au 28 février"
       von: "2027-01-01"
       bis: "2027-04-30"
       art: "offiziell"
@@ -114,7 +114,7 @@ weg:
           url: "ems/qa/"
     - wann: "Février à mai"
       titel: "Apprendre les techniques de résolution"
-      text: "Pour chaque sous-test un guide avec la stratégie et les pièges classiques, et des séries pour t'entraîner – d'abord sans chrono, puis avec."
+      text: "Pour chaque sous-test, un guide avec la stratégie et les pièges classiques, et des séries pour t'entraîner – d'abord sans chrono, puis avec."
       von: "2027-02-16"
       bis: "2027-04-30"
       art: "angebot"
@@ -126,7 +126,7 @@ weg:
           url: "ems/vorbereitungskurse/"
     - wann: "Mai à début juillet"
       titel: "S'entraîner dans les conditions du test"
-      text: "Une fois la journée entière d'affilée : 235 minutes, onze blocs, sans pause. Chez toi avec l'horloge et les annonces, ou début mai chez nous en auditoire."
+      text: "Faire une fois toute la journée de test d'une traite : 235 minutes, onze blocs, sans pause. Chez toi avec l'horloge et les annonces, ou début mai chez nous en auditoire."
       von: "2027-05-01"
       bis: "2027-07-08"
       art: "angebot"
@@ -136,7 +136,7 @@ weg:
           url: "ems/testsimulationen/"
     - wann: "9 juillet à août"
       titel: "Le jour du test"
-      text: "Quoi emporter, comment gérer le temps, comment deviner."
+      text: "Ce qu'il faut emporter, comment gérer son temps, comment répondre au hasard."
       von: "2027-07-09"
       bis: "2027-08-31"
       art: "angebot"
@@ -154,7 +154,7 @@ material:
     - key: uebungsaufgaben
       titel: "Séries d'exercices"
       zahlen: ["uebungen"]
-      text: "{1} séries sur les huit sous-tests, avec les corrigés."
+      text: "{1} séries pour les huit sous-tests, avec les corrigés."
     - key: testsimulationen
       titel: "Simulations de test"
       zahlen: ["simulationen"]
