@@ -1493,6 +1493,9 @@ body.pm-aktiv{overflow:hidden;}
 
 .pm-aktionen{display:flex;gap:var(--space-3);flex-wrap:wrap;justify-content:center;}
 .pm-fusszeile{margin:0;font-size:var(--text-xs);color:var(--color-band-text-soft);}
+/* Die Fusszeile sagt nur "Esc beendet die Übung" - auf Handy und Tablet ohne
+   Tastatur gibt es kein Esc, dort beendet der Knopf darüber. */
+@media (hover:none) and (pointer:coarse){ .pm-fusszeile{display:none;} }
 .pm-buehne .btn-ghost{border-color:var(--color-band-text-soft);color:var(--color-band-text);}
 .pm-buehne .btn-ghost:hover{background:var(--color-band-text);color:var(--color-band);}
 

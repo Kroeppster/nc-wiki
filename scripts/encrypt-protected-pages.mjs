@@ -290,6 +290,15 @@ try {
       '<head>\n        <meta name="robots" content="noindex, nofollow" />'
     );
 
+    // Sprache der Passwort-Abfrage: Die Vorlage hat kein lang-Attribut (dafür
+    // gibt es keinen StatiCrypt-Platzhalter), Vorleseprogramme läsen den
+    // französischen Text dann mit falscher Aussprache. Übernommen aus der
+    // Originalseite (<html lang=fr>).
+    const sprache = (html.match(/<html\b[^>]*\blang=["']?([a-z]{2})/i) || [])[1];
+    if (sprache) {
+      verschluesselt = verschluesselt.replace(/<html\b(?![^>]*\blang=)/i, `<html lang="${sprache}"`);
+    }
+
     // Letzte Kontrolle vor dem Überschreiben: Ist der Klartext wirklich weg?
     // Sollte sich StatiCrypt einmal anders verhalten als erwartet, bricht der
     // Build lieber ab, statt stillschweigend Klartext zu veröffentlichen.
