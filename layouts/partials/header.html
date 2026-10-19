@@ -13,10 +13,12 @@
 <header class="site">
   <div class="wrap header-inner">
     {{/* Logo/Markenname links, verlinkt immer zur Startseite der aktuellen Sprache.
-         Bildlogo aus static/images/logo.svg - NICHT ohne Rücksprache wieder durch
-         einen Text-Platzhalter ersetzen. */}}
+         Bildlogo aus static/images/logo.webp - NICHT ohne Rücksprache wieder durch
+         einen Text-Platzhalter ersetzen. logo.webp (28 KB, 360px breit) ist aus
+         der Quelldatei logo.svg zusammengesetzt; die SVG selbst enthält sechs
+         eingebettete Bildstücke und wiegt 214 KB - zu viel für jede Seite. */}}
     <a class="brand" href="{{ .Site.Home.RelPermalink }}">
-      <img class="brand-mark" src="{{ "images/logo.svg" | relURL }}" alt="" aria-hidden="true">
+      <img class="brand-mark" src="{{ "images/logo.webp" | relURL }}" width="34" height="25" alt="" aria-hidden="true">
       <span>{{ .Site.Title }}</span>
     </a>
 

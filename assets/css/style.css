@@ -1543,6 +1543,10 @@ body.pm-aktiv{overflow:hidden;}
      hier überflüssig und wird ausgeblendet. */
   .search-toggle{display:none;}
   #search{order:4;flex:1 1 100%;width:auto;max-width:none;opacity:1;overflow:visible;margin-left:0;}
+  /* Platz für das Suchfeld schon vor dem Laden von Pagefind reservieren:
+     Sonst rutschte der ganze Seiteninhalt kurz nach dem Laden um diese Höhe
+     nach unten, sobald Pagefind sein Feld einsetzt (gemessen: CLS 0.11). */
+  #search{min-height:51px;}
 
   /* Hauptmenü wird zum Hamburger-Menü: der Knopf ist jetzt sichtbar, und die
      Liste ist standardmässig eingeklappt (display:none) - sie erscheint erst,
