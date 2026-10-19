@@ -34,7 +34,7 @@ theme_toggle_aria_label: "Changer de thème"
 table_scroll_label: "Tableau, défilement horizontal"
 lang_switch_aria_label: "Langue"
 lang_switch_toggle_aria_label: "Ouvrir le sélecteur de langue"
-site_tagline: "Préparation gratuite au AMS, par des étudiant·e·s pour des étudiant·e·s."
+site_tagline: "Préparation gratuite à l'AMS, par des étudiant·e·s pour des étudiant·e·s."
 read_more: "En savoir plus →"
 
 error_404_eyebrow: "Erreur 404"

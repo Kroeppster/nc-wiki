@@ -145,7 +145,13 @@
 <meta name="description" content="{{ $ogDescription }}">
 {{- $ogImage := "" }}
 {{- with .Params.image }}{{ $ogImage = . | absURL }}{{ end }}
-{{- if not $ogImage }}{{ $ogImage = "images/og-default.png" | absURL }}{{ end }}
+{{- /* Vorschaubild ohne eigenes "image:" im Seitenkopf: je Sprache eines
+       (static/images/og-de.png usw., Titel und Testname in der Sprache der
+       Seite), sonst das allgemeine og-default.png. */ -}}
+{{- if not $ogImage }}
+{{- $sprachBild := printf "images/og-%s.png" .Site.Language.Lang }}
+{{- $ogImage = cond (fileExists (printf "static/%s" $sprachBild)) $sprachBild "images/og-default.png" | absURL }}
+{{- end }}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:title" content="{{ $ogTitle }}">
