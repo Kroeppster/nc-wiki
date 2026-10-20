@@ -450,7 +450,9 @@ weg:
 Un asse del tempo continuo da ottobre a settembre: **ogni voce si colloca automaticamente dove
 cade la sua data** (`von`/`bis`). In alto le date ufficiali di swissuniversities, sotto la
 nostra offerta; i testi che si sovrapporrebbero passano da soli su un'altra riga. Un selettore
-passa dalle date per le università con EMS a quelle senza (`fuer`). Nuova stagione: modificare
+passa dalle date per le università con EMS a quelle senza (`fuer`), anche per la nostra offerta: ciò che vale solo con
+l'EMS (tecniche, condizioni del test, giorno del test) è su `mit`; una voce con un testo proprio
+per «senza EMS» compare due volte, una volta `mit`, una volta `ohne`. Nuova stagione: modificare
 `start`, `ende` e gli anni delle date, nelle tre lingue. Tutto si trova nella cartella Excel,
 foglio «Pagina iniziale – Vista», come tabella (una riga per voce; **nuove voci**: compilare una
 delle righe vuote in basso, necessari titolo e inizio; eliminare con `!Eliminare!` nel titolo; link

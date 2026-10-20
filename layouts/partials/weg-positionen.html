@@ -11,8 +11,10 @@
     items   - die Einträge mit zusätzlich: l (Beginn in %), w (Länge in %),
               boxl (Beginn des Textfelds in %), boxw (Breite des Textfelds
               in %), spur_mit / spur_ohne (Zeile bei den offiziellen Terminen,
-              je nach Umschalter) bzw. spur (bei unserem Angebot)
-    n_mit, n_ohne, n_angebot - wie viele Zeilen jede Ebene braucht
+              je nach Umschalter) bzw. spur_angebot_mit / spur_angebot_ohne
+              (Zeile bei unserem Angebot, ebenfalls je nach Umschalter)
+    n_mit, n_ohne, n_angebot_mit, n_angebot_ohne - wie viele Zeilen jede
+              Ebene in jeder Fassung braucht
     monate  - Monatsmarken der Achse (Name, Lage in %)
 
   ZEILEN: Damit sich Texte nicht überdecken, werden die Einträge nach Beginn
@@ -42,18 +44,13 @@
 {{- /* Zeilen vergeben: einmal für jede Fassung der offiziellen Termine, einmal für das Angebot */ -}}
 {{- $ergebnis := slice -}}
 {{- $zahlen := dict -}}
-{{- range slice (dict "name" "mit" "art" "offiziell" "fuer" "mit") (dict "name" "ohne" "art" "offiziell" "fuer" "ohne") (dict "name" "angebot" "art" "angebot" "fuer" "") -}}
+{{- range slice (dict "name" "mit" "art" "offiziell" "fuer" "mit") (dict "name" "ohne" "art" "offiziell" "fuer" "ohne") (dict "name" "angebot_mit" "art" "angebot" "fuer" "mit") (dict "name" "angebot_ohne" "art" "angebot" "fuer" "ohne") -}}
   {{- $gruppe := . -}}
   {{- $enden := slice -}}
   {{- $spuren := dict -}}
   {{- $luecke := cond (eq $gruppe.art "angebot") 0.1 1.0 -}}
   {{- range $i, $e := $alle -}}
-    {{- $gehoert := false -}}
-    {{- if eq $gruppe.art "angebot" -}}
-      {{- $gehoert = eq $e.art "angebot" -}}
-    {{- else -}}
-      {{- $gehoert = and (eq $e.art "offiziell") (in (slice $gruppe.fuer "beide") $e.fuer) -}}
-    {{- end -}}
+    {{- $gehoert := and (eq $e.art $gruppe.art) (in (slice $gruppe.fuer "beide") $e.fuer) -}}
     {{- if $gehoert -}}
       {{- $spur := -1 -}}
       {{- range $k, $ende_k := $enden }}{{ if and (lt $spur 0) (le $ende_k $e.boxl) }}{{ $spur = $k }}{{ end }}{{ end -}}
@@ -85,4 +82,4 @@
   {{- $monate = $monate | append (dict "name" (time.Format "Jan" $m) "l" (mul 100.0 (div (float (sub $m.Unix $start.Unix)) $spanne))) -}}
 {{- end -}}
 
-{{- return (dict "items" $alle "n_mit" (index $zahlen "mit") "n_ohne" (index $zahlen "ohne") "n_angebot" (index $zahlen "angebot") "monate" $monate) -}}
+{{- return (dict "items" $alle "n_mit" (index $zahlen "mit") "n_ohne" (index $zahlen "ohne") "n_angebot_mit" (index $zahlen "angebot_mit") "n_angebot_ohne" (index $zahlen "angebot_ohne") "monate" $monate) -}}

@@ -447,7 +447,9 @@ Eine durchgehende Zeitachse von Oktober bis September: **Jeder Eintrag steht aut
 wo sein Datum liegt** (`von`/`bis`). Darüber die offiziellen Termine von swissuniversities,
 darunter unser Angebot; Texte, die sich überdecken würden, rutschen von selbst in eine
 eigene Zeile. Ein Umschalter wechselt zwischen den Terminen für Universitäten mit und ohne
-EMS (`fuer`). Neue Saison: `start`, `ende` und die Jahre bei den Daten ändern, in allen drei
+EMS (`fuer`), auch beim Angebot: Was nur mit EMS gilt (Lösungstechniken, Testbedingungen,
+Testtag), steht auf `mit`; ein Eintrag mit eigenem Text für «ohne EMS» steht doppelt da, einmal
+`mit`, einmal `ohne`. Neue Saison: `start`, `ende` und die Jahre bei den Daten ändern, in allen drei
 Sprachen. Alles steht in der Textmappe im Blatt „Startseite – Ansicht“ als Tabelle (eine
 Zeile je Eintrag; **neue Einträge** in einer der leeren Zeilen unten ausfüllen, nötig sind Titel
 und Beginn; Löschen mit `!Löschen!` im Titel; Links als „Titel | ems/uniguide/“, eine Zeile je

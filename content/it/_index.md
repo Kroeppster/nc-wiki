@@ -106,7 +106,19 @@ weg:
       von: "2026-09-01"
       bis: "2027-02-15"
       art: "angebot"
-      fuer: "beide"
+      fuer: "mit"
+      mittel:
+        - titel: "Uniguide"
+          url: "ems/uniguide/"
+        - titel: "Domande frequenti"
+          url: "ems/qa/"
+    - wann: "Settembre – 15 febbraio"
+      titel: "Informarsi e preiscriversi"
+      text: "Quale università fa per te – lingua, sede di studio e percorso a confronto."
+      von: "2026-09-01"
+      bis: "2027-02-15"
+      art: "angebot"
+      fuer: "ohne"
       mittel:
         - titel: "Uniguide"
           url: "ems/uniguide/"
@@ -118,7 +130,7 @@ weg:
       von: "2027-02-16"
       bis: "2027-04-30"
       art: "angebot"
-      fuer: "beide"
+      fuer: "mit"
       mittel:
         - titel: "Serie di esercizi"
           url: "ems/uebungsaufgaben/"
@@ -130,7 +142,7 @@ weg:
       von: "2027-05-01"
       bis: "2027-07-08"
       art: "angebot"
-      fuer: "beide"
+      fuer: "mit"
       mittel:
         - titel: "Simulazioni del test"
           url: "ems/testsimulationen/"
@@ -140,7 +152,7 @@ weg:
       von: "2027-07-09"
       bis: "2027-08-31"
       art: "angebot"
-      fuer: "beide"
+      fuer: "mit"
       mittel:
         - titel: "AMS"
           url: "ems/"

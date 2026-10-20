@@ -456,7 +456,9 @@ weg:
 Un axe du temps continu d'octobre à septembre : **chaque entrée se place automatiquement là où
 se trouve sa date** (`von`/`bis`). En haut les dates officielles de swissuniversities, en
 dessous notre offre ; les textes qui se chevaucheraient passent d'eux-mêmes sur une autre
-ligne. Un sélecteur bascule entre les dates pour les universités avec et sans EMS (`fuer`).
+ligne. Un sélecteur bascule entre les dates pour les universités avec et sans EMS (`fuer`), aussi pour notre offre : ce qui ne vaut qu'avec
+l'EMS (techniques, conditions du test, jour du test) est sur `mit` ; une entrée avec son propre
+texte pour « sans EMS » figure deux fois, une fois `mit`, une fois `ohne`.
 Nouvelle saison : modifier `start`, `ende` et les années des dates, dans les trois langues.
 Tout se trouve dans le classeur, feuille « Accueil – Vue », sous forme de tableau (une ligne
 par entrée ; **nouvelles entrées** : remplir une des lignes vides en bas, titre et début requis ;

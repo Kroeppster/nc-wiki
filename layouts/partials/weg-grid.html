@@ -23,7 +23,7 @@
       von: "2026-12-01"                 # Beginn: bestimmt die Lage
       bis: "2027-02-15"                 # Ende (weglassen = einzelner Tag)
       art: "offiziell"                  # offiziell | angebot
-      fuer: "mit"                       # mit | ohne | beide (EMS-Umschalter)
+      fuer: "mit"                       # mit | ohne | beide (EMS-Umschalter, auch beim Angebot)
       mittel:                           # Links, nur beim Angebot
         - titel: "Uniguide"
           url: "ems/uniguide/"
@@ -37,7 +37,7 @@
 {{- $p := partial "weg-positionen.html" $w }}
 {{- $oben := slice }}{{ $unten := slice }}
 {{- range $p.items }}{{ if eq .art "offiziell" }}{{ $oben = $oben | append . }}{{ else }}{{ $unten = $unten | append . }}{{ end }}{{ end }}
-<div class="weg-wrap" id="weg-wrap" data-modus="mit" style="--n-mit:{{ $p.n_mit }};--n-ohne:{{ $p.n_ohne }};--n-angebot:{{ $p.n_angebot }}">
+<div class="weg-wrap" id="weg-wrap" data-modus="mit" style="--n-mit:{{ $p.n_mit }};--n-ohne:{{ $p.n_ohne }};--n-angebot-mit:{{ $p.n_angebot_mit }};--n-angebot-ohne:{{ $p.n_angebot_ohne }}">
   {{- if $w.modus_mit }}
   <div class="weg-modus" id="weg-modus" hidden>
     <span class="weg-modus-label">{{ $w.modus_label }}</span>
@@ -75,7 +75,7 @@
 
     <div class="weg-ebene weg-unten">
       {{- range $unten }}
-      <div class="weg-eintrag" style="--s:{{ .spur_angebot }}">
+      <div class="weg-eintrag weg-f-{{ .fuer }}" style="--s-mit:{{ .spur_angebot_mit }};--s-ohne:{{ .spur_angebot_ohne }}">
         <span class="weg-balken weg-balken-angebot" style="left:{{ printf "%.2f" .l }}%;width:{{ printf "%.2f" .w }}%"></span>
         <div class="weg-label weg-label-angebot" style="left:{{ printf "%.2f" .boxl }}%;width:{{ printf "%.2f" .boxw }}%">
           <span class="weg-datum">{{ .wann }}</span>
