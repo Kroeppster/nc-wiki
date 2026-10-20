@@ -368,6 +368,7 @@ sponsoring_kontakt_telefon: "oder telefonisch für Sie erreichbar"
 
 # Unterrichtssprachen im Uniguide (Schlüssel = Wert in data/unis.yaml, Feld "sprache")
 sprache_Deutsch: "Deutsch"
+sprache_English: "Englisch"
 sprache_Français: "Französisch"
 sprache_Italiano: "Italienisch"
 

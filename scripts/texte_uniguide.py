@@ -52,6 +52,7 @@ EMS = ('ja', 'nein', 'teilweise')
 # Namen der Unterrichtssprachen, wie man sie auch schreiben koennte -> Wert in data/unis.yaml
 SPRACHNAMEN = {}
 for schluessel, namen in {'Deutsch': ('deutsch', 'allemand', 'tedesco', 'german'),
+                          'English': ('english', 'englisch', 'anglais', 'inglese'),
                           'Français': ('français', 'francais', 'französisch', 'franzoesisch', 'francese', 'french'),
                           'Italiano': ('italiano', 'italienisch', 'italien', 'italian')}.items():
     for n in namen + (schluessel.lower(),):
@@ -73,7 +74,7 @@ T = {
         'Nur eintragen, was auf einer offiziellen Seite steht, und dann „Stand“ und „Quelle“ mitändern. Leere Zelle '
         'löscht nichts, !Löschen! leert das Feld. Mehrere Punkte: je einer pro Zeile (Alt+Enter).',
         anzeige='Anzeige', neu='Neue Spalte', neu_hilfe='Namen hier eintragen, Werte darunter',
-        hilfe=dict(sprachen='Deutsch, Français, Italiano – mit Komma', liste='mit Komma trennen',
+        hilfe=dict(sprachen='Deutsch, English, Français, Italiano – mit Komma', liste='mit Komma trennen',
                    ems='ja / nein / teilweise', punkte='je einer pro Zeile', link='https://…'),
         fest='Diese Spalte braucht die Website – umbenennen ja, löschen nicht.',
         deutsch='Deutsch:'),
@@ -86,7 +87,7 @@ T = {
         "modifie alors aussi « État » et « Source ». Une case vide ne supprime rien, !Supprimer! vide le champ. "
         "Plusieurs points : un par ligne (Alt+Entrée).",
         anzeige='Affichage', neu='Nouvelle colonne', neu_hilfe='inscrire le nom ici, les valeurs en dessous',
-        hilfe=dict(sprachen='Deutsch, Français, Italiano – séparées par des virgules', liste='séparer par des virgules',
+        hilfe=dict(sprachen='Deutsch, English, Français, Italiano – séparées par des virgules', liste='séparer par des virgules',
                    ems='ja / nein / teilweise (oui/non/partiel)', punkte='un par ligne', link='https://…'),
         fest='Le site a besoin de cette colonne – la renommer oui, la supprimer non.',
         deutsch='Allemand :'),
@@ -99,7 +100,7 @@ T = {
         "allora anche «Stato» e «Fonte». Una casella vuota non elimina nulla, !Eliminare! svuota il campo. "
         "Più punti: uno per riga (Alt+Invio).",
         anzeige='Visualizzazione', neu='Nuova colonna', neu_hilfe='scrivere il nome qui, i valori sotto',
-        hilfe=dict(sprachen='Deutsch, Français, Italiano – separate da virgole', liste='separare con virgole',
+        hilfe=dict(sprachen='Deutsch, English, Français, Italiano – separate da virgole', liste='separare con virgole',
                    ems='ja / nein / teilweise (sì/no/in parte)', punkte='uno per riga', link='https://…'),
         fest='Il sito ha bisogno di questa colonna – rinominarla sì, eliminarla no.',
         deutsch='Tedesco:'),
@@ -240,7 +241,7 @@ def auswerten(spalte, text):
             if not t:
                 continue
             if t.lower() not in SPRACHNAMEN:
-                raise ValueError(f'„{t}“ – erlaubt sind Deutsch, Français, Italiano')
+                raise ValueError(f'„{t}“ – erlaubt sind Deutsch, English, Français, Italiano')
             werte.append(SPRACHNAMEN[t.lower()])
         return list(dict.fromkeys(werte))
     if art == 'liste':

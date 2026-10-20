@@ -275,9 +275,9 @@
     fr: ["Genève"]
     it: ["Ginevra"]
   auswahlverfahren:
-    de: "Der Studienbeginn im 1. Bachelor-Jahr ist offen, du brauchst keinen EMS. Ins 2. Jahr kommst du nur, wenn du am Ende des 1. Jahres eine Eliminationsprüfung bestehst."
-    fr: "Accès libre à la 1re année de bachelor, sans AMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
-    it: "Accesso libero al 1° anno di bachelor, senza AMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
+    de: "Der Studienbeginn im 1. Bachelor-Jahr ist offen, du brauchst keinen EMS. Ins 2. Jahr kommst du nur, wenn du am Ende des 1. Jahres eine Selektionsprüfung bestehst."
+    fr: "Accès libre à la 1re année de bachelor, sans AMS. Passage en 2e année uniquement après réussite d'un examen de sélection à la fin de la 1re année."
+    it: "Accesso libero al 1° anno di bachelor, senza AMS. Passaggio al 2° anno solo dopo aver superato un esame di selezione alla fine del 1° anno."
   anmeldefrist: "15.02.2027"
   besonderheiten: []
   studienbeginn: "20.09.2027"
@@ -316,9 +316,9 @@
     fr: ["Lausanne"]
     it: ["Losanna"]
   auswahlverfahren:
-    de: "Der Studienbeginn im 1. Bachelor-Jahr ist offen, du brauchst keinen EMS. Ins 2. Jahr kommst du nur, wenn du am Ende des 1. Jahres eine Eliminationsprüfung bestehst."
-    fr: "Accès libre à la 1re année de bachelor, sans AMS. Passage en 2e année uniquement après réussite d'un examen éliminatoire à la fin de la 1re année."
-    it: "Accesso libero al 1° anno di bachelor, senza AMS. Passaggio al 2° anno solo dopo aver superato un esame eliminatorio alla fine del 1° anno."
+    de: "Der Studienbeginn im 1. Bachelor-Jahr ist offen, du brauchst keinen EMS. Ins 2. Jahr kommst du nur, wenn du am Ende des 1. Jahres eine Selektionsprüfung bestehst."
+    fr: "Accès libre à la 1re année de bachelor, sans AMS. Passage en 2e année uniquement après réussite d'un examen de sélection à la fin de la 1re année."
+    it: "Accesso libero al 1° anno di bachelor, senza AMS. Passaggio al 2° anno solo dopo aver superato un esame di selezione alla fine del 1° anno."
   anmeldefrist: "15.02.2027"
   besonderheiten: []
   studienbeginn: "21.09.2027"
@@ -332,7 +332,7 @@
 - slug: "lugano"
   name: "Università della Svizzera italiana (USI)"
   studienort: "Lugano"
-  sprache: ["Italiano"]
+  sprache: ["English", "Italiano"]
   ems_erforderlich: "ja"
   studiengaenge: ["Master"]
   plaetze_bachelor:
@@ -348,14 +348,14 @@
     it: ["Basilea", "Berna"]
   master_orte: ["Lugano"]
   auswahlverfahren:
-    de: "Du wirst über den EMS für die national geregelten Bachelor-Plätze zugelassen. Das Bachelor-Studium absolvierst du vollständig an der Universität Basel oder Bern (dort auf Deutsch), den Master danach an der USI in Lugano auf Italienisch."
-    fr: "Admission via l'AMS pour les places de bachelor réglées au niveau national ; le bachelor se fait entièrement à l'Université de Bâle ou de Berne (en allemand), le master ensuite à l'USI à Lugano, en italien."
-    it: "Ammissione tramite l'AMS per i posti di bachelor regolati a livello nazionale; il bachelor si svolge interamente all'Università di Basilea o di Berna (in tedesco), il master poi all'USI a Lugano, in italiano."
+    de: "Du wirst über den EMS für die national geregelten Bachelor-Plätze zugelassen. Das Bachelor-Studium absolvierst du vollständig an der Universität Basel oder Bern (dort auf Deutsch), den Master danach an der USI in Lugano."
+    fr: "Admission via l'AMS pour les places de bachelor réglées au niveau national ; le bachelor se fait entièrement à l'Université de Bâle ou de Berne (en allemand), le master ensuite à l'USI à Lugano."
+    it: "Ammissione tramite l'AMS per i posti di bachelor regolati a livello nazionale; il bachelor si svolge interamente all'Università di Basilea o di Berna (in tedesco), il master poi all'USI a Lugano."
   anmeldefrist: "15.02.2027"
   besonderheiten:
-    de: ["Der Bachelor-Abschluss berechtigt zum Master an der USI.", "Im Bachelor jeweils 15 Gaststudierende in Basel und Bern.", "Im Master zusätzlich 50 Plätze für Studierende der ETH."]
-    fr: ["Le bachelor obtenu donne accès au master à l'USI.", "En bachelor, 15 étudiant·e·s hôtes à Bâle et 15 à Berne.", "En master, 50 places supplémentaires pour les étudiant·e·s de l'EPF Zurich."]
-    it: ["Il bachelor conseguito dà accesso al master all'USI.", "Nel bachelor 15 studenti ospiti a Basilea e 15 a Berna.", "Nel master altri 50 posti per studenti dell'ETH."]
+    de: ["Der Bachelor-Abschluss berechtigt zum Master an der USI.", "Unterricht im Master auf Englisch; im Kontakt mit Patient*innen sprichst du Italienisch.", "Im Bachelor jeweils 15 Gaststudierende in Basel und Bern.", "Im Master zusätzlich 50 Plätze für Studierende der ETH."]
+    fr: ["Le bachelor obtenu donne accès au master à l'USI.", "En master, les cours sont en anglais ; avec les patient·e·s, tu parles italien.", "En bachelor, 15 étudiant·e·s hôtes à Bâle et 15 à Berne.", "En master, 50 places supplémentaires pour les étudiant·e·s de l'EPF Zurich."]
+    it: ["Il bachelor conseguito dà accesso al master all'USI.", "Nel master le lezioni sono in inglese; nel contatto con i pazienti parli italiano.", "Nel bachelor 15 studenti ospiti a Basilea e 15 a Berna.", "Nel master altri 50 posti per studenti dell'ETH."]
   studienbeginn: "20.09.2027"
   semestergebuehr:
     de: "Bachelor CHF 850 (Basel oder Bern), Master CHF 2000 (USI)"
@@ -398,9 +398,9 @@
     fr: ["Genève", "Lausanne"]
     it: ["Ginevra", "Losanna"]
   auswahlverfahren:
-    de: "Neuenburg bietet nur das 1. Bachelor-Jahr an, du brauchst keinen EMS. Für das 2. Jahr an der Uni Genf oder Lausanne musst du deren Eliminationsprüfung bestehen."
-    fr: "Seule la 1re année de bachelor est proposée, sans AMS. Le passage en 2e année à Genève ou à Lausanne exige la réussite de leur examen éliminatoire."
-    it: "Offre solo il 1° anno di bachelor, senza AMS. Il passaggio al 2° anno a Ginevra o Losanna richiede il superamento del loro esame eliminatorio."
+    de: "Neuenburg bietet nur das 1. Bachelor-Jahr an, du brauchst keinen EMS. Für das 2. Jahr an der Uni Genf oder Lausanne musst du deren Selektionsprüfung bestehen."
+    fr: "Seule la 1re année de bachelor est proposée, sans AMS. Le passage en 2e année à Genève ou à Lausanne exige la réussite de leur examen de sélection."
+    it: "Offre solo il 1° anno di bachelor, senza AMS. Il passaggio al 2° anno a Ginevra o Losanna richiede il superamento del loro esame di selezione."
   anmeldefrist: "15.02.2027"
   besonderheiten:
     de: ["Nur 1. Studienjahr, danach musst du nach Genf oder Lausanne wechseln"]

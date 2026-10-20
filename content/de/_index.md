@@ -30,7 +30,7 @@ weg:
   legende_offiziell: "Offizielle Termine"
   legende_angebot: "Unser Angebot dazu"
   hinweis_mit: "Termine nach swissuniversities, ohne Gewähr. Verbindlich sind die offiziellen Angaben von swissuniversities und der Universitäten."
-  hinweis_ohne: "Ohne EMS gibt es keinen Eignungstest: Das 1. Jahr beginnt offen, der Übertritt ins 2. Jahr läuft über eine Eliminationsprüfung. Fristen ohne Gewähr, verbindlich sind die Universitäten selbst."
+  hinweis_ohne: "Ohne EMS gibt es keinen Eignungstest: Das 1. Jahr beginnt offen, der Übertritt ins 2. Jahr läuft über eine Selektionsprüfung. Fristen ohne Gewähr, verbindlich sind die Universitäten selbst."
   hinweis_link: "Alle Universitäten im Uniguide →"
   termine:
     - wann: "Sept. bis Nov."

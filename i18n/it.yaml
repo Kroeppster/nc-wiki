@@ -359,6 +359,7 @@ sponsoring_kontakt_telefon: "o raggiungibili per telefono"
 
 # Unterrichtssprachen im Uniguide (Schlüssel = Wert in data/unis.yaml, Feld "sprache")
 sprache_Deutsch: "tedesco"
+sprache_English: "inglese"
 sprache_Français: "francese"
 sprache_Italiano: "italiano"
 

@@ -30,7 +30,7 @@ weg:
   legende_offiziell: "Date ufficiali"
   legende_angebot: "La nostra offerta"
   hinweis_mit: "Date secondo swissuniversities, senza garanzia. Fanno fede solo le informazioni ufficiali di swissuniversities e delle università."
-  hinweis_ohne: "Senza AMS non c'è test attitudinale: il 1° anno è aperto, il passaggio al 2° anno avviene tramite un esame eliminatorio. Termini senza garanzia, fanno fede solo le università."
+  hinweis_ohne: "Senza AMS non c'è test attitudinale: il 1° anno è aperto, il passaggio al 2° anno avviene tramite un esame di selezione. Termini senza garanzia, fanno fede solo le università."
   hinweis_link: "Tutte le università nell'Uniguide →"
   termine:
     - wann: "Sett. – nov."

@@ -360,6 +360,7 @@ sponsoring_kontakt_telefon: "ou joignables par téléphone"
 
 # Unterrichtssprachen im Uniguide (Schlüssel = Wert in data/unis.yaml, Feld "sprache")
 sprache_Deutsch: "allemand"
+sprache_English: "anglais"
 sprache_Français: "français"
 sprache_Italiano: "italien"
 
