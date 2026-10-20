@@ -6,7 +6,7 @@ weight: 3
 
 ## Überblick
 
-Jede Aufgabe schildert in wenigen Sätzen einen medizinischen oder naturwissenschaftlichen Sachverhalt. Anschliessend beurteilst du drei oder fünf Aussagen daraufhin, ob sie sich aus den gegebenen Informationen ableiten lassen. Häufig sind die Aussagen nummeriert (I, II, III), und die Antwortoptionen A bis E geben mögliche Kombinationen vor. Fachwissen ist nicht erforderlich, da alle Fachbegriffe im Text erläutert werden.
+Jede Aufgabe schildert in wenigen Sätzen einen medizinischen oder naturwissenschaftlichen Sachverhalt. Anschliessend beurteilst du drei bis fünf Aussagen daraufhin, ob sie sich aus den gegebenen Informationen ableiten lassen. Häufig sind die Aussagen nummeriert (I, II, III), und die Antwortoptionen A bis E geben mögliche Kombinationen vor. Fachwissen ist nicht erforderlich, da alle Fachbegriffe im Text erläutert werden.
 
 - **Stellung im Testtag:** 2. Untertest, nach Muster zuordnen, danach folgt Objekte im Raum
 - **Umfang:** 18 Aufgaben, 18 Punkte

@@ -6,7 +6,7 @@ weight: 3
 
 ## Aperçu
 
-Chaque question décrit en quelques phrases un fait médical ou scientifique. Tu évalues ensuite trois ou cinq affirmations : peut-on les déduire des informations données ? Souvent, les affirmations sont numérotées (I, II, III) et les options de réponse A à E proposent des combinaisons possibles. Aucune connaissance spécialisée n'est nécessaire, car tous les termes techniques sont expliqués dans le texte.
+Chaque question décrit en quelques phrases un fait médical ou scientifique. Tu évalues ensuite trois à cinq affirmations : peut-on les déduire des informations données ? Souvent, les affirmations sont numérotées (I, II, III) et les options de réponse A à E proposent des combinaisons possibles. Aucune connaissance spécialisée n'est nécessaire, car tous les termes techniques sont expliqués dans le texte.
 
 - **Place dans la journée de test :** 2e sous-test, après l'association de motifs, suivi des objets dans l'espace
 - **Volume :** 18 questions, 18 points

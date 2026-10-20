@@ -2,7 +2,7 @@
 name: "olivervw"
 jahr: 2022
 ort: "Zürich"
-tags: ["Zweiter Anlauf", "Med-nat Grundverständnis"]
+tags: ["Zweiter Anlauf", "Med-nat. Grundverständnis"]
 draft: false
 ---
 

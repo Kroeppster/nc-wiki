@@ -6,7 +6,7 @@ weight: 3
 
 ## Panoramica
 
-Ogni domanda descrive in poche frasi un fatto medico o scientifico. Poi valuti tre o cinque affermazioni: si possono dedurre dalle informazioni date? Spesso le affermazioni sono numerate (I, II, III) e le opzioni di risposta da A a E propongono possibili combinazioni. Non servono conoscenze specialistiche, perché tutti i termini tecnici sono spiegati nel testo.
+Ogni domanda descrive in poche frasi un fatto medico o scientifico. Poi valuti da tre a cinque affermazioni: si possono dedurre dalle informazioni date? Spesso le affermazioni sono numerate (I, II, III) e le opzioni di risposta da A a E propongono possibili combinazioni. Non servono conoscenze specialistiche, perché tutti i termini tecnici sono spiegati nel testo.
 
 - **Posizione nella giornata del test:** 2° sottotest, dopo l'abbinamento di schemi, seguito dagli oggetti nello spazio
 - **Volume:** 18 domande, 18 punti

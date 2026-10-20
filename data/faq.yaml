@@ -219,9 +219,9 @@
     fr: "Le script de cours actuel sera-t-il aussi publié en ligne ?"
     it: "La dispensa del corso attuale viene pubblicata anche online?"
   answer:
-    de: "Ja. Einige Wochen nach dem Kurs kannst du das Skript kostenlos herunterladen."
-    fr: "Oui. Quelques semaines après le cours, tu peux télécharger gratuitement le script."
-    it: "Sì. Qualche settimana dopo il corso puoi scaricare gratuitamente la dispensa."
+    de: "Ja. Wer für den Kurs angemeldet ist, erhält das Skript schon vor dem Kurs per E-Mail. Einige Wochen nach dem Kurs kannst du es kostenlos herunterladen."
+    fr: "Oui. Les personnes inscrites au cours reçoivent le script par e-mail avant le cours. Quelques semaines après le cours, tu peux le télécharger gratuitement."
+    it: "Sì. Chi è iscritto·a al corso riceve la dispensa per e-mail già prima del corso. Qualche settimana dopo il corso puoi scaricarla gratuitamente."
   link:
     href: "ems/vorbereitungskurse/"
     label:
