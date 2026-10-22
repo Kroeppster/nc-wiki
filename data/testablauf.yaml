@@ -34,6 +34,11 @@
 #               Zeit als vorgesehen"). Bei allen anderen Bloecken ist es
 #               umgekehrt: Aufgabenzahl waehlen, Zeit ergibt sich daraus.
 #   punkte    - Maximalpunktzahl als Text, oder ""
+#   beginnt_teil_b - true beim ersten Block von Teil B: Die ganze Simulation im
+#               Simulationsmodus sagt davor «Ende von Teil A ...» an.
+#   instruktion - true beim Konzentrationstest: Davor liest der Simulationsmodus
+#               (ganze Simulation und dieser Block einzeln) die Instruktion vor,
+#               wie die Aufsicht im Saal (i18n pm_konz_instruktion_ansage).
 #   de/fr/it  - angezeigter Name in den drei Sprachen
 #
 # REIHENFOLGE = die echte Reihenfolge am Testtag. Der Simulationsmodus spielt die
@@ -102,6 +107,7 @@ bloecke:
 
   - key: textverstaendnis
     slug: textverstaendnis
+    beginnt_teil_b: true
     minuten: 45
     aufgaben: "18"
     punkte: "18"
@@ -140,6 +146,7 @@ bloecke:
 
   - key: konzentriertes-arbeiten
     slug: konzentriertes-arbeiten
+    instruktion: true
     minuten: 8
     aufgaben_de: "1600 Zeichen"
     aufgaben_fr: "1600 signes"
@@ -149,6 +156,12 @@ bloecke:
     de: "Konzentriertes und sorgfältiges Arbeiten"
     fr: "Travail concentré et soigné"
     it: "Lavoro concentrato e accurato"
+
+# Zusätzliche Minuten der GANZEN Simulation im Simulationsmodus für das, was
+# nur dort angesagt wird (Begrüssung, «Ende von Teil A», Instruktion zum
+# Konzentrationstest), gerundet. Zählt nur zur Dauer neben dem Startknopf,
+# nicht zur Bearbeitungszeit in der Tabelle auf /ems/.
+ansagen_minuten: 3
 
 # Text der Gesamt-Zeile in der Tabelle. Die Gesamtzeit wird NICHT hier
 # eingetragen, sondern aus den Minuten oben zusammengezählt - so kann sie gar

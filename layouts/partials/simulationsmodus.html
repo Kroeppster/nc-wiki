@@ -20,13 +20,16 @@
   Datei, aus der auch die Tagesablauf-Tabelle auf /ems/ erzeugt wird. Eine Zeit
   wird also an genau einer Stelle gepflegt.
 
-  VORLESEN: über die Sprachausgabe, die im Browser bereits eingebaut ist
-  (SpeechSynthesis). Bewusst kein externer Dienst und keine hochgeladenen
-  Audiodateien: kein fremder Server bekommt mit, wer hier übt, es sind keine
-  Dateien zu pflegen, und es funktioniert automatisch in allen drei Sprachen.
-  Die Stimme klingt dafür maschinell. Wer das später durch echte Aufnahmen
-  ersetzen will, tauscht die Funktion "sprich" unten aus - der übrige Ablauf
-  bleibt gleich.
+  VORLESEN: mit fertigen Aufnahmen (MP3 unter assets/audio/simulationsmodus/,
+  mit der Website ausgeliefert - kein fremder Dienst bekommt mit, wer hier
+  übt). Fehlt eine Aufnahme, liest die Sprachausgabe des Browsers
+  (SpeechSynthesis) denselben Text vor. Welche Datei welchen Satz enthält:
+  README.md im Audio-Ordner.
+
+  ABLAUF DER GANZEN SIMULATION wie im Saal: Begrüssung, die Untertests, vor
+  Teil B «Ende von Teil A …», vor dem Konzentrationstest die vorgelesene
+  Instruktion (auch wenn man ihn einzeln übt). Im eigenen Ablauf gibt es
+  diese Hinweise nicht.
 
   KEIN COUNTDOWN, SONDERN EINE UHR: Angezeigt wird die normale Uhrzeit in
   Stunden, Minuten und Sekunden - genau das, was im Testsaal an der Wand hängt.
@@ -58,17 +61,29 @@
   {{- $eigeneEinheit := index . (printf "aufgaben_%s" $lang) }}
   {{- $anzahl := "" }}
   {{- if and .aufgaben (not $eigeneEinheit) }}{{ $anzahl = .aufgaben }}{{ end }}
+  {{- /* Gesprochen wird teils anders als angezeigt (keine Klammern) und mit
+         einem Zusatz wie «Notizen sind nicht erlaubt» - i18n pm_sprechname_*,
+         pm_zusatz_*, pm_zusatz_kurz_* (fehlt der Schlüssel: leer). */}}
+  {{- $id := replace .key "-" "_" }}
   {{- $bloecke = $bloecke | append (dict
         "key" .key
         "name" (or (index . $lang) .de)
+        "sprechname" (i18n (printf "pm_sprechname_%s" $id))
+        "zusatz" (i18n (printf "pm_zusatz_%s" $id))
+        "zusatzKurz" (i18n (printf "pm_zusatz_kurz_%s" $id))
         "minuten" .minuten
         "aufgaben" $anzahl
         "aufgabenFest" (eq .aufgaben_fest true)
+        "teilB" (eq .beginnt_teil_b true)
+        "instruktion" (eq .instruktion true)
       ) }}
 {{- end }}
 
 {{- $total := 0 }}
 {{- range $daten.bloecke }}{{ $total = add $total .minuten }}{{ end }}
+{{- /* Neben dem Startknopf zählt auch die Zeit für Begrüssung, Teil B und die
+       Instruktion mit (data/testablauf.yaml, ansagen_minuten). */}}
+{{- $total = add $total (or $daten.ansagen_minuten 0) }}
 
 {{- /* ECHTE AUFNAHMEN STATT ROBOTERSTIMME
        Liegt unter assets/audio/simulationsmodus/<sprache>/ eine Datei mit dem
@@ -76,13 +91,15 @@
        Browsers vor. Es muss also nichts umgestellt werden: Datei hochladen
        genügt, genau wie bei den PDF-Downloads.
 
-       Erwartete Dateinamen (.mp3), je Sprachordner:
-         <key>.mp3        - die Anweisung zu diesem Block, key wie in
+       Erwartete Dateinamen (.mp3), je Sprachordner (vollständige Liste mit
+       Wortlaut im README dort):
+         <key>.mp3        - Ansage mit den echten Zahlen, key wie in
                             data/testablauf.yaml (z.B. muster-zuordnen.mp3)
-         beginne.mp3      - "Beginne jetzt."
-         stopp.mp3        - "Stopp. Leg den Stift weg."
-         fertig-einzeln.mp3  - Schlusssatz nach einem einzelnen Untertest
-         fertig-komplett.mp3 - Schlusssatz nach der ganzen Simulation
+         <key>-kurz.mp3   - nur der Name, für den eigenen Ablauf mit geänderter
+                            Zeit oder Aufgabenzahl (die Zahlen stehen dann nur
+                            auf dem Bildschirm)
+         beginne, stopp-weiter, fertig-einzeln, fertig-komplett, pause,
+         pause-vorbei, einleitung, teil-b, konz-instruktion
        Fehlt eine einzelne Datei, wird genau für diesen Satz vorgelesen - die
        Sammlung muss also nicht auf einmal vollständig sein. */ -}}
 {{- $audio := dict }}
@@ -250,7 +267,12 @@
 
     <p class="pm-custom-summe" id="pm-c-summe"></p>
     <p class="pm-hinweis">{{ i18n "pm_custom_zeit_fest" }}</p>
+    {{- /* Nur wahr, wenn es Kurzansagen gibt - ohne Aufnahmen liest das Gerät
+           ohnehin alles samt Zahlen vor. */}}
+    {{- $kurz := false }}{{ range $k, $_ := $audio }}{{ if strings.HasSuffix $k "-kurz" }}{{ $kurz = true }}{{ end }}{{ end }}
+    {{- if $kurz }}
     <p class="pm-hinweis" id="pm-c-stimme">{{ i18n "pm_custom_stimme_hinweis" }}</p>
+    {{- end }}
 
     <div class="pm-custom-aktionen">
       <button type="button" class="btn btn-primary" id="pm-c-start">{{ i18n "pm_custom_start" }}</button>
@@ -314,6 +336,13 @@
       "blockZaehler" (i18n "pm_block_zaehler")
       "ansage" (i18n "pm_ansage")
       "ansageOhne" (i18n "pm_ansage_ohne")
+      "ansageKurz" (i18n "pm_ansage_kurz")
+      "einleitungTitel" (i18n "pm_einleitung_titel")
+      "einleitung" (i18n "pm_einleitung_ansage")
+      "teilBTitel" (i18n "pm_teil_b_titel")
+      "teilB" (i18n "pm_teil_b_ansage")
+      "instruktionTitel" (i18n "pm_konz_instruktion_titel")
+      "instruktion" (i18n "pm_konz_instruktion_ansage")
       "pauseAnsage" (i18n "pm_pause_ansage")
       "pauseVorbei" (i18n "pm_pause_vorbei")
       "pauseLabel" (i18n "pm_pause_label")
@@ -363,6 +392,7 @@
   var lauf = null;
   var ticker = null;
   var wakeLock = null;
+  var ton = null;   /* die gerade laufende Aufnahme - beim Abbrechen anhalten */
 
   /* ---------------------------------------------------------------- Ton */
   /* Kurzer Piepton zu Beginn und am Ende, erzeugt im Browser - keine
@@ -399,7 +429,7 @@
     var datei = ansage && AUDIO[ansage];
     if(datei){
       try{
-        var ton = new Audio(datei);
+        ton = new Audio(datei);
         var schonWeiter = false;
         var einmal = function(){ if(!schonWeiter){ schonWeiter = true; weiter(); } };
         ton.onended = einmal;
@@ -492,33 +522,66 @@
                    : vorlage(T.dauerMinSek, { min: m, sek: s });
   }
 
+  /* {zusatz} in den Vorlagen ist ein ganzer Satz mit Leerzeichen danach -
+     oder nichts. */
+  function satz(text){ return text ? text + ' ' : ''; }
+
   function blockSchritt(b, sekunden, aufgaben){
     sekunden = sekunden || b.minuten * 60;
     if(aufgaben === undefined) aufgaben = b.aufgaben;
-    var dauer = dauerText(sekunden);
-    var ansage = aufgaben
-      ? vorlage(T.ansage, { name: b.name, aufgaben: aufgaben, dauer: dauer })
-      : vorlage(T.ansageOhne, { name: b.name, dauer: dauer });
-    /* Die Aufnahme nennt die ECHTEN EMS-Werte. Wurde an Zeit oder Aufgabenzahl
-       etwas geändert, würde sie also eine falsche Zahl ansagen - dann wird
-       stattdessen vorgelesen. */
+    var werte = { name: b.sprechname || b.name, zusatz: satz(b.zusatz),
+                  aufgaben: aufgaben, dauer: dauerText(sekunden) };
+    var ansage = (aufgaben ? vorlage(T.ansage, werte) : vorlage(T.ansageOhne, werte)).trim();
+    /* Die Aufnahme <key> nennt die ECHTEN EMS-Werte. Wurde im eigenen Ablauf
+       an Zeit oder Aufgabenzahl etwas geändert, käme eine falsche Zahl - dann
+       spielt die Kurzansage <key>-kurz (nur der Name, die Zahlen stehen auf dem
+       Bildschirm). Fehlt auch die, liest das Gerät den ganzen Satz mit den
+       richtigen Zahlen vor. */
     var unveraendert = (sekunden === b.minuten * 60) &&
                        (String(aufgaben || '') === String(b.aufgaben || ''));
+    var audio = unveraendert ? b.key : b.key + '-kurz';
+    if(!unveraendert && !AUDIO[audio]) audio = null;
     return { art: 'block', key: b.key, name: b.name, sekunden: sekunden,
-             aufgaben: aufgaben, ansage: ansage,
-             audio: unveraendert ? b.key : null };
+             aufgaben: aufgaben, ansage: ansage, audio: audio };
+  }
+
+  /* Ein Hinweis ohne Uhr (Begrüssung, «Ende von Teil A», Instruktion zum
+     Konzentrationstest): wird angesagt, danach geht es von selbst weiter. */
+  function hinweisSchritt(titel, text, audio){
+    return { art: 'hinweis', name: titel, ansage: text, audio: audio, sekunden: 0 };
+  }
+
+  /* Die ganze Simulation, wie im Saal: Begrüssung, vor Teil B der Hinweis,
+     vor dem Konzentrationstest die Instruktion. */
+  function komplettFolge(){
+    var folge = [hinweisSchritt(T.einleitungTitel, T.einleitung, 'einleitung')];
+    BLOECKE.forEach(function(b){
+      if(b.teilB) folge.push(hinweisSchritt(T.teilBTitel, T.teilB, 'teil-b'));
+      if(b.instruktion) folge.push(hinweisSchritt(b.name + ' – ' + T.instruktionTitel, T.instruktion, 'konz-instruktion'));
+      folge.push(blockSchritt(b));
+    });
+    return folge;
+  }
+
+  /* Ein einzelner Untertest - beim Konzentrationstest mit der Instruktion davor. */
+  function einzelFolge(b){
+    var folge = [];
+    if(b.instruktion) folge.push(hinweisSchritt(b.name + ' – ' + T.instruktionTitel, T.instruktion, 'konz-instruktion'));
+    folge.push(blockSchritt(b));
+    return folge;
   }
 
   function pauseSchritt(sekunden){
+    /* Auf dem Bildschirm steht die Dauer; die Aufnahme sagt nur «Pause.». */
     return { art: 'pause', name: T.pauseLabel, sekunden: sekunden,
-             ansage: vorlage(T.pauseAnsage, { dauer: dauerText(sekunden) }), audio: null };
+             ansage: vorlage(T.pauseAnsage, { dauer: dauerText(sekunden) }), audio: 'pause' };
   }
 
   function aktuellerSchritt(){ return lauf.schritte[lauf.index]; }
 
   function zeigeZaehler(){
     var bloecke = lauf.schritte.filter(function(x){ return x.art === 'block'; });
-    if(bloecke.length < 2){ el.zaehler.textContent = ''; return; }
+    if(bloecke.length < 2 || aktuellerSchritt().art === 'hinweis'){ el.zaehler.textContent = ''; return; }
     var nummer = lauf.schritte.slice(0, lauf.index + 1)
                    .filter(function(x){ return x.art === 'block'; }).length;
     el.zaehler.textContent = aktuellerSchritt().art === 'pause'
@@ -547,10 +610,28 @@
     el.los.textContent = T.start;
     el.fuss.textContent = T.escHinweis;
 
+    /* Langer Text (die Instruktion): kleiner, linksbündig, mit Absätzen. */
+    var lang = sch.ansage.length > 400;
+    el.anweisung.classList.toggle('ist-lang', lang);
+    buehne.classList.toggle('mit-langem-text', lang);
+
+    /* Hinweis: vorlesen und weiter. Ohne Ton bleibt er stehen, bis man auf
+       «Weiter» drückt - sonst wäre er sofort wieder weg. */
+    if(sch.art === 'hinweis'){
+      if(el.tts.checked){
+        el.los.hidden = true;
+        sprich(sch.ansage, function(){ if(lauf && aktuellerSchritt() === sch) weiterZumNaechsten(); }, sch.audio);
+      }else{
+        el.los.hidden = false;
+        el.los.textContent = T.weiter;
+      }
+      return;
+    }
+
     /* Ohne Klick weiter, sobald mehr als ein Schritt folgt - so wie im
        Testsaal, wo auch niemand fragt, ob man bereit ist. Ein einzelner
        Untertest wartet dagegen auf den Startknopf. */
-    var automatisch = lauf.schritte.length > 1;
+    var automatisch = lauf.schritte.filter(function(x){ return x.art !== 'hinweis'; }).length > 1;
     el.los.hidden = automatisch;
     sprich(sch.ansage, function(){
       if(automatisch && lauf) starteUhr();
@@ -604,7 +685,7 @@
     if(sch.art === 'pause'){
       el.titel.textContent = T.pauseVorbei;
       el.anweisung.textContent = '';
-      sprich(T.pauseVorbei, weiterZumNaechsten, null);
+      sprich(T.pauseVorbei, weiterZumNaechsten, 'pause-vorbei');
       return;
     }
 
@@ -652,6 +733,7 @@
   function beenden(){
     if(ticker){ clearInterval(ticker); ticker = null; }
     try{ window.speechSynthesis.cancel(); }catch(e){}
+    try{ if(ton){ ton.pause(); ton = null; } }catch(e){}
     lauf = null;
     buehne.hidden = true;
     buehne.className = 'pm-buehne';
@@ -672,9 +754,9 @@
     btn.addEventListener('click', function(){
       var wert = btn.getAttribute('data-pm-start');
       if(wert === 'alle'){
-        starteFolge(BLOECKE.map(function(b){ return blockSchritt(b); }));
+        starteFolge(komplettFolge());
       } else {
-        starteFolge([blockSchritt(BLOECKE[parseInt(wert, 10)])]);
+        starteFolge(einzelFolge(BLOECKE[parseInt(wert, 10)]));
       }
     });
   });
@@ -682,7 +764,9 @@
   el.los.addEventListener('click', function(){
     if(!lauf) return;
     /* Im Zustand "stopp" am Ende ist derselbe Knopf der Schliessen-Knopf. */
-    if(buehne.classList.contains('is-stopp')) beenden(); else starteUhr();
+    if(buehne.classList.contains('is-stopp')) beenden();
+    else if(aktuellerSchritt().art === 'hinweis') weiterZumNaechsten();
+    else starteUhr();
   });
   el.pause.addEventListener('click', pauseUmschalten);
   el.stop.addEventListener('click', function(){

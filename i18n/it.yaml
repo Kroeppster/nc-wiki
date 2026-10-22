@@ -233,12 +233,50 @@ pm_stimme_quelle: ""
 pm_uebungsseite: "Vai alla pagina degli esercizi"
 
 pm_beginne: "Via."
-pm_stopp_weiter: "Passate ora al sottotest successivo."
-pm_ansage_ohne: "{name}, avete {dauer} di tempo."
-pm_ansage: "{name}, questo sottotest comprende {aufgaben} esercizi, avete {dauer} di tempo."
+pm_stopp_weiter: "Passate al sottotest successivo."
+# {zusatz} è vuoto o una frase seguita da uno spazio (pm_zusatz_* qui sotto).
+pm_ansage_ohne: "{name}. {zusatz}Avete {dauer}."
+pm_ansage: "{name}. {zusatz}{aufgaben} esercizi, avete {dauer}."
+# Annuncio breve SENZA numeri: riprodotto quando nello svolgimento personalizzato
+# sono stati modificati il tempo o il numero di esercizi (i numeri sono sullo schermo).
+pm_ansage_kurz: "{name}. {zusatz}"
+# Nome pronunciato, dove differisce da quello mostrato (niente parentesi da leggere)
+pm_sprechname_figuren_einpraegen: "Memorizzazione di figure, fase di apprendimento"
+pm_sprechname_fakten_einpraegen: "Memorizzazione di fatti, fase di apprendimento"
+pm_sprechname_figuren_reproduktion: "Memorizzazione di figure, fase di riproduzione"
+pm_sprechname_fakten_reproduktion: "Memorizzazione di fatti, fase di riproduzione"
+# Indicazione aggiuntiva nell'annuncio (con numeri o breve)
+pm_zusatz_figuren_einpraegen: "Mettete via la matita, non è consentito prendere appunti."
+pm_zusatz_kurz_figuren_einpraegen: "Non è consentito prendere appunti."
+pm_zusatz_konzentriertes_arbeiten: "Usate un fineliner spesso nero o blu e iniziate dalla riga 1."
+pm_zusatz_kurz_konzentriertes_arbeiten: "Iniziate dalla riga 1."
+# Solo per la simulazione completa: all'inizio e prima della parte B
+pm_einleitung_titel: "Simulazione del test"
+pm_einleitung_ansage: "Benvenuti alla simulazione del test. Lavorate solo sul sottotest annunciato e segnate le risposte sul foglio delle risposte. Iniziate solo al segnale «Via» e posate subito la matita al segnale «Stop». In bocca al lupo."
+pm_teil_b_titel: "Parte B"
+pm_teil_b_ansage: "Fine della parte A. Mettete da parte la parte A e non lavorateci più. Segue la parte B."
+# Prima del test di concentrazione (simulazione completa e singolo): le istruzioni,
+# come vengono lette in aula – regola generale, paragrafi separati da una riga vuota
+pm_konz_instruktion_titel: "Istruzioni"
+pm_konz_instruktion_ansage: |-
+  Avete davanti la pagina di istruzioni per il prossimo sottotest. Non girate la pagina finché non ve lo dirò io!
+
+  Chiunque inizi prematuramente deve essere espulso da ogni ulteriore partecipazione, quindi aspettate il mio segnale di via. Inoltre, chi continua a segnare dopo che è trascorso il tempo a disposizione deve essere espulso dalla partecipazione al test.
+
+  Esamineremo insieme le istruzioni per elaborare questo sottotest. Dopodiché, vi darò esplicitamente il segnale per iniziare il lavoro.
+
+  Attenzione, in questo sottotest non sono ammessi ausili come penne o fogli di carta per evidenziare la riga.
+
+  Con questo test si tratta di rilevare la vostra capacità di lavorare in maniera veloce, accurata e concentrata. Più avanti vedrete un foglio con 40 righe, ognuna delle quali è formata da 40 dei seguenti simboli. Il vostro compito è di marcare solo i simboli a cui si applica la regola indicata nelle vostre istruzioni. Nei seguenti esempi vedete quali simboli si dovrebbero marcare. Tutti gli altri simboli non devono essere marcati. La regola vale solo per i simboli della stessa riga. Qui di seguito trovate una riga d'esempio elaborata correttamente. Guardate un attimo l'esempio.
+
+  Iniziate con l'esecuzione alla prima riga. Quando sarete giunti alla fine di una riga, ricominciate a lavorare immediatamente e senza esitare all'inizio della riga successiva; continuate in questo modo fino a quando vi verrà dato il segnale di smettere. Non saltate le righe, perché si contano tutti gli errori che si trovano prima dell'ultimo simbolo marcato sulla pagina.
+
+  Marcate i simboli in modo chiaro – fate attenzione a non segnare contemporaneamente altri simboli vicini o che si trovano su un'altra riga. Ricordate che marcature troppo deboli, troppo corte o in altro modo errate possono comportare la perdita di punti! In questo test è meglio utilizzare, al posto della matita, un fineliner spesso nero o blu. Cancellando una marcatura con la gomma o correggendola si perde troppo tempo – di solito, durante questo tempo perso, si possono marcare correttamente più simboli.
+
+  Lavorate nel modo più veloce, ma anche più preciso possibile; il numero dei simboli marcati per errore o erroneamente non marcati nella parte elaborata verrà sottratto dal numero dei simboli marcati correttamente. Probabilmente non sarete in grado di arrivare alla fine della pagina – il numero di simboli è stato infatti calcolato in modo molto abbondante rispetto al tempo di lavoro a disposizione.
 pm_stopp: "Stop."
-pm_fertig_einzeln: "L'esercizio è terminato."
-pm_fertig_komplett: "La simulazione è terminata."
+pm_fertig_einzeln: "Posate la penna. L'esercizio è terminato."
+pm_fertig_komplett: "Posate la penna. La simulazione è terminata."
 pm_block_zaehler: "Blocco {n} di {total}"
 
 pm_abbrechen: "Interrompi"
@@ -273,7 +311,7 @@ pm_custom_zuruecksetzen: "Ripristina i valori reali dell'AMS"
 pm_custom_leer: "Scegli almeno un sottotest."
 pm_custom_dauer: "Totale {std} ore e {min} min"
 pm_custom_dauer_kurz: "Totale {min} min"
-pm_custom_stimme_hinweis: "I valori modificati vengono letti dalla sintesi vocale: le registrazioni annunciano i valori reali dell'AMS."
+pm_custom_stimme_hinweis: "Se modifichi il tempo o il numero di esercizi, l'annuncio dice solo il nome del sottotest; i numeri compaiono sullo schermo."
 pm_pause_ansage: "Pausa. {dauer}."
 pm_pause_vorbei: "La pausa è finita."
 pm_pause_label: "Pausa"

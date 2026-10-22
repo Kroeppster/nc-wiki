@@ -698,12 +698,16 @@ d'entraînement avec une mauvaise durée.
 ### Annonces
 
 Textes dans `i18n/*.yaml`, préfixe `pm_` – courts, sans parenthèses ni abréviations, car
-ils sont prononcés. Vouvoiement, comme un·e surveillant·e. Pour DE et FR, 15
-enregistrements se trouvent sous `assets/audio/simulationsmodus/<langue>/` (liste dans le
-README ; voix française sous CC-BY 4.0, attribution dans le README) ; un enregistrement a
-priorité sur la synthèse vocale du navigateur. En italien, l'appareil lit. Après une
-modification d'un texte `pm_`, supprimer l'enregistrement ou le regénérer avec
-`scripts/ansagen-erzeugen.py`. Vrais enregistrements de l'association : écraser le fichier
+ils sont prononcés. Vouvoiement (IT : voi), comme un·e surveillant·e. Pour les trois
+langues, 31 enregistrements chacune se trouvent sous `assets/audio/simulationsmodus/<langue>/`
+(liste avec texte et voix dans le README, créés avec Google AI Studio) ; un enregistrement
+a priorité sur la synthèse vocale du navigateur. Déroulement de la simulation complète comme
+en salle : accueil, « Fin de la partie A » avant la partie B, lecture des instructions avant
+le test de concentration (aussi quand on l'exerce seul). Dans le déroulement personnalisé avec
+temps ou nombre d'exercices modifié, l'annonce courte est jouée (seulement le nom, les chiffres
+sont à l'écran). Après une modification d'un texte `pm_`, refaire l'enregistrement : un
+enregistrement par langue avec toutes les phrases, puis `scripts/ansagen-schneiden.py`
+(mode d'emploi dans le README). Vrais enregistrements de l'association : écraser le fichier
 de même nom.
 
 ### Technique à connaître

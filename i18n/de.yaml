@@ -237,18 +237,57 @@ pm_minuten: "{{ .min }} Min"
 pm_vorlesen: "Anweisungen vorlesen"
 pm_vorlesen_hinweis: "Nutzt die Sprachausgabe deines Geräts. Hilft, ein Gefühl für die Zeit zu bekommen, bevor die Uhr läuft."
 # Hinweis, wenn unter assets/audio/simulationsmodus/<sprache>/ Aufnahmen liegen (sonst gilt pm_vorlesen_hinweis = Gerätestimme);
-# pm_stimme_quelle = Namensnennung der Stimme, falls deren Lizenz sie verlangt (FR: SIWIS, CC BY 4.0), sonst leer.
+# pm_stimme_quelle = Namensnennung der Stimme, falls deren Lizenz sie verlangt, sonst leer (die
+# aktuellen Aufnahmen aus Google Gemini brauchen keine).
 pm_vorlesen_hinweis_aufnahmen: "Spielt vor jedem Untertest die Ansage ab. Hilft, ein Gefühl für die Zeit zu bekommen, bevor die Uhr läuft."
 pm_stimme_quelle: ""
 pm_uebungsseite: "Zur Übungsseite"
 
 pm_beginne: "Start."
-pm_stopp_weiter: "Blättern Sie jetzt zum nächsten Untertest."
-pm_ansage_ohne: "{name}, Sie haben {dauer} Zeit."
-pm_ansage: "{name}, dieser Untertest umfasst {aufgaben} Aufgaben, Sie haben {dauer} Zeit."
+pm_stopp_weiter: "Blättern Sie zum nächsten Untertest."
+# {zusatz} ist leer oder ein Satz mit Leerzeichen danach (pm_zusatz_* unten).
+pm_ansage_ohne: "{name}. {zusatz}Sie haben {dauer} Zeit."
+pm_ansage: "{name}. {zusatz}{aufgaben} Aufgaben, Sie haben {dauer} Zeit."
+# Kurze Ansage OHNE Zahlen: abgespielt, wenn im eigenen Ablauf Zeit oder
+# Aufgabenzahl geändert wurde (die Zahlen stehen dann auf dem Bildschirm).
+pm_ansage_kurz: "{name}. {zusatz}"
+# Gesprochener Name, wo er vom angezeigten abweicht (keine Klammern vorlesen)
+pm_sprechname_figuren_einpraegen: "Figuren lernen, Einprägephase"
+pm_sprechname_fakten_einpraegen: "Fakten lernen, Einprägephase"
+pm_sprechname_figuren_reproduktion: "Figuren lernen, Reproduktionsphase"
+pm_sprechname_fakten_reproduktion: "Fakten lernen, Reproduktionsphase"
+# Zusätzlicher Hinweis in der Ansage (mit Zahlen bzw. kurz)
+pm_zusatz_figuren_einpraegen: "Legen Sie den Stift weg, Notizen sind nicht erlaubt."
+pm_zusatz_kurz_figuren_einpraegen: "Notizen sind nicht erlaubt."
+pm_zusatz_konzentriertes_arbeiten: "Nehmen Sie einen dicken schwarzen oder blauen Fineliner und beginnen Sie in Zeile 1."
+pm_zusatz_kurz_konzentriertes_arbeiten: "Beginnen Sie in Zeile 1."
+# Nur bei der ganzen Simulation: zu Beginn und vor Teil B
+pm_einleitung_titel: "Testsimulation"
+pm_einleitung_ansage: "Willkommen zur Testsimulation. Bearbeiten Sie nur den angesagten Untertest und markieren Sie Ihre Antworten auf dem Antwortbogen. Beginnen Sie erst bei «Start» und legen Sie den Stift bei «Stopp» sofort weg. Viel Erfolg."
+pm_teil_b_titel: "Teil B"
+pm_teil_b_ansage: "Ende von Teil A. Legen Sie Teil A weg und bearbeiten Sie ihn nicht mehr. Es folgt Teil B."
+# Vor dem Konzentrationstest (ganze Simulation und einzeln): die Instruktion,
+# wie sie im Saal vorgelesen wird – Regel allgemein, Absätze durch Leerzeile getrennt
+pm_konz_instruktion_titel: "Instruktion"
+pm_konz_instruktion_ansage: |-
+  Sie haben jetzt die Seite mit der Instruktion für die nächste Aufgabengruppe vor sich liegen. Blättern Sie auf keinen Fall weiter, bevor ich Sie dazu auffordere!
+
+  Wer vorzeitig beginnt, muss von der weiteren Teilnahme ausgeschlossen werden; warten Sie also unbedingt mein Startzeichen ab. Auch wer nach Ablauf der Bearbeitungszeit mit der Markierung fortfährt, muss von der weiteren Testteilnahme ausgeschlossen werden.
+
+  Die Hinweise zur Bearbeitung dieser Aufgabengruppe werden wir gemeinsam durchgehen. Das Zeichen zum Beginn der Bearbeitung werde ich Ihnen danach ausdrücklich geben.
+
+  Achtung, bei dieser Aufgabengruppe sind keine Hilfsmittel, wie zum Beispiel andere Stifte oder Papier, gestattet, um die Zeile hervorzuheben.
+
+  Mit diesem Test soll Ihre Fähigkeit, rasch, sorgfältig und konzentriert zu arbeiten, erfasst werden. Sie sehen nachfolgend ein Blatt mit 40 Zeilen, die aus jeweils 40 der folgenden Zeichen bestehen. Ihre Aufgabe ist es, nur jene Zeichen zu markieren, auf die die Regel in Ihrer Instruktion zutrifft. In den folgenden Beispielen sehen Sie, welche Zeichen zu markieren wären. Alle anderen Zeichen sind nicht zu markieren. Die Regel gilt nur innerhalb der gleichen Zeile. Nachfolgend sehen Sie ein korrekt bearbeitetes Beispiel. Schauen Sie sich das Beispiel kurz an.
+
+  Beginnen Sie mit der Bearbeitung in der ersten Zeile. Wenn eine Zeile fertig bearbeitet ist, beginnen Sie unaufgefordert sofort vorn in der nächsten Zeile und tun Sie das so lange, bis das Zeichen zum Aufhören gegeben wird. Überspringen Sie keine Zeilen, weil alle Fehler vor dem letzten bearbeiteten Zeichen gezählt werden.
+
+  Markieren Sie die Zeichen deutlich – malen Sie aber nicht in andere Zeilen oder Zeichen. Denken Sie daran, dass Sie hier durch zu schwache, zu kurze oder sonstige falsche Markierungen Punkte einbüssen können! Sie sollten in diesem Test anstelle eines Bleistiftes einen dicken schwarzen oder blauen Fineliner verwenden. Durch Radieren beziehungsweise Korrigieren verlieren Sie zu viel Zeit – in dieser Zeit können Sie üblicherweise mehr Zeichen richtig bearbeiten.
+
+  Arbeiten Sie so schnell, aber auch so genau wie möglich; die Anzahl der fälschlich markierten und der fälschlich nicht markierten Zeichen im bearbeiteten Teil wird von der Gesamtzahl der richtig markierten Zeichen abgezogen. Vermutlich werden Sie nicht die ganze Seite bearbeiten können – die Menge der Zeichen ist für die zur Verfügung stehende Arbeitszeit sehr reichlich bemessen.
 pm_stopp: "Stopp."
-pm_fertig_einzeln: "Die Übung ist beendet."
-pm_fertig_komplett: "Die Simulation ist beendet."
+pm_fertig_einzeln: "Legen Sie den Stift weg. Die Übung ist beendet."
+pm_fertig_komplett: "Legen Sie den Stift weg. Die Simulation ist beendet."
 pm_block_zaehler: "Block {n} von {total}"
 
 pm_abbrechen: "Abbrechen"
@@ -283,7 +322,7 @@ pm_custom_zuruecksetzen: "Auf echte EMS-Werte zurücksetzen"
 pm_custom_leer: "Wähle mindestens einen Untertest aus."
 pm_custom_dauer: "Gesamt {std} Std. {min} Min"
 pm_custom_dauer_kurz: "Gesamt {min} Min"
-pm_custom_stimme_hinweis: "Geänderte Zahlen werden vorgelesen statt aufgenommen abgespielt – die Aufnahmen nennen die echten EMS-Werte."
+pm_custom_stimme_hinweis: "Hast du Zeit oder Aufgabenzahl geändert, nennt die Ansage nur den Untertest – die Zahlen stehen auf dem Bildschirm."
 pm_pause_ansage: "Pause. {dauer}."
 pm_pause_vorbei: "Die Pause ist vorbei."
 pm_pause_label: "Pause"

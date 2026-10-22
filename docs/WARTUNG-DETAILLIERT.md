@@ -682,12 +682,16 @@ Zahl heisst monatelanges Üben mit falscher Dauer.
 ### Ansagen
 
 Texte in `i18n/*.yaml`, Präfix `pm_` – kurz, ohne Klammern und Abkürzungen, sie werden
-gesprochen. Anrede **Sie**, wie eine Aufsichtsperson. Für DE und FR liegen 15 Aufnahmen
-unter `assets/audio/simulationsmodus/<sprache>/` (Liste im README dort; FR-Stimme CC-BY 4.0,
-Namensnennung im README); eine Aufnahme hat Vorrang vor der Sprachausgabe des Browsers.
-Italienisch liest das Gerät vor. Nach einer Änderung an einem `pm_`-Text die Aufnahme
-löschen oder mit `scripts/ansagen-erzeugen.py` neu erzeugen. Echte Aufnahmen aus dem
-Verein: Datei mit gleichem Namen überschreiben.
+gesprochen. Anrede **Sie** (FR vous, IT voi), wie eine Aufsichtsperson. Für alle drei
+Sprachen liegen je 31 Aufnahmen unter `assets/audio/simulationsmodus/<sprache>/` (Liste
+mit Wortlaut und Stimme im README dort, erzeugt mit Google AI Studio); eine Aufnahme hat
+Vorrang vor der Sprachausgabe des Browsers. Ablauf der ganzen Simulation wie im Saal:
+Begrüssung, vor Teil B «Ende von Teil A», vor dem Konzentrationstest die vorgelesene
+Instruktion (auch wenn man ihn einzeln übt). Im eigenen Ablauf mit geänderter Zeit oder
+Aufgabenzahl spielt die Kurzansage (nur der Name, die Zahlen stehen auf dem Bildschirm).
+Nach einer Änderung an einem `pm_`-Text die passende Aufnahme neu machen: pro Sprache eine
+Aufnahme mit allen Sätzen, dann `scripts/ansagen-schneiden.py` (Anleitung im README).
+Echte Aufnahmen aus dem Verein: Datei mit gleichem Namen überschreiben.
 
 ### Technisches, das man kennen muss
 

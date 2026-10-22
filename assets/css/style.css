@@ -1495,6 +1495,11 @@ body.pm-aktiv{overflow:hidden;}
 .pm-zaehler{margin:0;font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-band-text-soft);min-height:1rem;}
 .pm-titel{margin:0;font-size:var(--text-2xl);color:var(--color-band-text);}
 .pm-anweisung{margin:0;font-size:var(--text-md);color:var(--color-band-text);max-width:34rem;line-height:var(--leading-normal);}
+/* Lange Hinweise (die vorgelesene Instruktion zum Konzentrationstest): kleiner,
+   linksbündig, Absätze bleiben erhalten; die Fläche beginnt oben, damit der
+   Anfang beim Scrollen nicht abgeschnitten ist. */
+.pm-anweisung.ist-lang{font-size:var(--text-sm);text-align:left;white-space:pre-line;max-width:40rem;}
+.pm-buehne.mit-langem-text{align-items:flex-start;}
 .pm-blockhinweis{margin:0;font-size:var(--text-base);color:var(--color-band-text-soft);max-width:34rem;}
 
 /* Die Uhr ist das einzige Element, das während der Bearbeitungszeit zählt -

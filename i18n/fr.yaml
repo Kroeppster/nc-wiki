@@ -230,16 +230,54 @@ pm_minuten: "{{ .min }} min"
 pm_vorlesen: "Lire les consignes à voix haute"
 pm_vorlesen_hinweis: "Utilise la synthèse vocale de ton appareil. Cela t'aide à te faire une idée du temps avant que le chronomètre ne démarre."
 pm_vorlesen_hinweis_aufnahmen: "Joue l'annonce avant chaque sous-test. Cela t'aide à te faire une idée du temps avant que le chronomètre ne démarre."
-pm_stimme_quelle: "Voix de synthèse basée sur le [corpus SIWIS](https://datashare.is.ed.ac.uk/handle/10283/2353) (University of Edinburgh), licence [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.fr)."
+pm_stimme_quelle: ""
 pm_uebungsseite: "Vers la page d'exercices"
 
 pm_beginne: "Départ."
-pm_stopp_weiter: "Passez maintenant au sous-test suivant."
-pm_ansage_ohne: "{name}, vous disposez de {dauer}."
-pm_ansage: "{name}, ce sous-test comprend {aufgaben} exercices, vous disposez de {dauer}."
+pm_stopp_weiter: "Passez au sous-test suivant."
+# {zusatz} est vide ou une phrase suivie d'une espace (pm_zusatz_* ci-dessous).
+pm_ansage_ohne: "{name}. {zusatz}Vous disposez de {dauer}."
+pm_ansage: "{name}. {zusatz}{aufgaben} exercices, vous disposez de {dauer}."
+# Annonce courte SANS chiffres : jouée quand le temps ou le nombre d'exercices
+# a été modifié dans le déroulement personnalisé (les chiffres sont à l'écran).
+pm_ansage_kurz: "{name}. {zusatz}"
+# Nom prononcé, quand il diffère du nom affiché (pas de parenthèses à lire)
+pm_sprechname_figuren_einpraegen: "Mémorisation de figures, phase d'apprentissage"
+pm_sprechname_fakten_einpraegen: "Mémorisation de faits, phase d'apprentissage"
+pm_sprechname_figuren_reproduktion: "Mémorisation de figures, phase de reproduction"
+pm_sprechname_fakten_reproduktion: "Mémorisation de faits, phase de reproduction"
+# Consigne supplémentaire dans l'annonce (avec chiffres ou courte)
+pm_zusatz_figuren_einpraegen: "Posez votre crayon, les notes ne sont pas autorisées."
+pm_zusatz_kurz_figuren_einpraegen: "Les notes ne sont pas autorisées."
+pm_zusatz_konzentriertes_arbeiten: "Prenez un feutre épais noir ou bleu et commencez à la ligne 1."
+pm_zusatz_kurz_konzentriertes_arbeiten: "Commencez à la ligne 1."
+# Seulement pour la simulation complète : au début et avant la partie B
+pm_einleitung_titel: "Simulation de test"
+pm_einleitung_ansage: "Bienvenue à la simulation de test. Ne traitez que le sous-test annoncé et reportez vos réponses sur la feuille de réponses. Ne commencez qu'au signal « Départ » et posez immédiatement votre crayon au signal « Stop ». Bonne chance."
+pm_teil_b_titel: "Partie B"
+pm_teil_b_ansage: "Fin de la partie A. Mettez la partie A de côté et ne la traitez plus. Voici la partie B."
+# Avant le test de concentration (simulation complète et seul) : les instructions,
+# comme elles sont lues dans la salle – règle générale, paragraphes séparés par une ligne vide
+pm_konz_instruktion_titel: "Instructions"
+pm_konz_instruktion_ansage: |-
+  Vous avez maintenant devant vous la page contenant les instructions pour le prochain groupe d'exercices. Vous ne devez en aucun cas tourner la feuille pour consulter le verso avant que je ne vous en donne l'autorisation !
+
+  Toute personne qui commence prématurément le travail doit être exclue de la poursuite du test. Par conséquent, attendez impérativement que je vous donne le signal de départ. De même, le fait de continuer à marquer des réponses au-delà du temps imparti conduit également à être exclu de la poursuite du test.
+
+  Nous lirons ensemble les instructions pour le traitement de cet exercice. Ensuite, je vous donnerai expressément le signal de départ pour commencer le traitement.
+
+  Attention : pour ce travail, aucune aide n'est autorisée, comme par exemple un autre stylo ou du papier, pour mettre en évidence la ligne à traiter.
+
+  Ce test évalue votre capacité à travailler avec rapidité, soin et concentration. Vous trouverez ci-après une feuille de 40 lignes composées des caractères suivants. Votre tâche consiste à marquer uniquement les signes auxquels s'applique la règle indiquée dans vos instructions. Dans les exemples suivants, vous voyez quels signes il faudrait marquer. Tous les autres caractères ne doivent pas être marqués. Cette règle ne s'applique qu'au sein d'une même ligne. Ci-dessous, vous voyez un exemple traité correctement. Prenez un moment pour regarder l'exemple.
+
+  Vous commencerez l'exercice à la première ligne. Dès que vous aurez terminé le traitement d'une ligne, vous poursuivrez sans tarder au début de la ligne suivante. Vous devrez continuer ainsi jusqu'à ce que le signal d'arrêt soit donné. Ne sautez aucune ligne, car toutes les erreurs se trouvant avant le dernier signe marqué seront prises en compte.
+
+  Marquez les signes clairement et veillez à ce que vos traits ne débordent pas sur d'autres signes ou lignes. Gardez à l'esprit que dans cet exercice, vous risquez de perdre des points si vous marquez vos réponses avec des traits trop faibles, trop courts ou de toute autre manière erronée ! Pour ce test, il est conseillé d'utiliser un feutre épais noir ou bleu plutôt qu'un crayon à papier. Le fait d'effacer ou de corriger vous conduirait à perdre trop de temps, temps durant lequel vous pourriez traiter davantage de signes correctement.
+
+  Travaillez le plus rapidement, mais également le plus précisément possible. En effet, dans la partie traitée, le nombre de signes marqués de façon erronée ou dont le marquage manque sera déduit du nombre total de signes marqués correctement. Vous ne pourrez probablement pas traiter la totalité de la page, car la quantité de signes à examiner est conséquente par rapport au temps mis à disposition.
 pm_stopp: "Stop."
-pm_fertig_einzeln: "L'exercice est terminé."
-pm_fertig_komplett: "La simulation est terminée."
+pm_fertig_einzeln: "Posez votre crayon. L'exercice est terminé."
+pm_fertig_komplett: "Posez votre crayon. La simulation est terminée."
 pm_block_zaehler: "Bloc {n} sur {total}"
 
 pm_abbrechen: "Annuler"
@@ -274,7 +312,7 @@ pm_custom_zuruecksetzen: "Revenir aux valeurs réelles de l'AMS"
 pm_custom_leer: "Choisis au moins un sous-test."
 pm_custom_dauer: "Total {std} h {min} min"
 pm_custom_dauer_kurz: "Total {min} min"
-pm_custom_stimme_hinweis: "Les valeurs modifiées sont lues par la synthèse vocale : les enregistrements annoncent les valeurs réelles de l'AMS."
+pm_custom_stimme_hinweis: "Si tu modifies le temps ou le nombre d'exercices, l'annonce ne cite que le sous-test ; les chiffres s'affichent à l'écran."
 pm_pause_ansage: "Pause. {dauer}."
 pm_pause_vorbei: "La pause est terminée."
 pm_pause_label: "Pause"

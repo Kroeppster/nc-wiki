@@ -686,12 +686,17 @@ esercizio con la durata sbagliata.
 ### Annunci
 
 Testi in `i18n/*.yaml`, prefisso `pm_` – brevi, senza parentesi né abbreviazioni, perché
-vengono pronunciati. Forma di cortesia, come un·a sorvegliante. Per DE e FR ci sono 15
-registrazioni sotto `assets/audio/simulationsmodus/<lingua>/` (elenco nel README; voce
-francese CC-BY 4.0, attribuzione nel README); una registrazione ha la precedenza sulla
-sintesi vocale del browser. In italiano legge il dispositivo. Dopo una modifica a un testo
-`pm_`, eliminare la registrazione o rigenerarla con `scripts/ansagen-erzeugen.py`.
-Registrazioni vere dell'associazione: sovrascrivere il file con lo stesso nome.
+vengono pronunciati. Si rivolgono al gruppo (DE Sie, FR vous, IT voi), come un·a
+sorvegliante. Per tutte e tre le lingue ci sono 31 registrazioni ciascuna sotto
+`assets/audio/simulationsmodus/<lingua>/` (elenco con testo e voce nel README, create con
+Google AI Studio); una registrazione ha la precedenza sulla sintesi vocale del browser.
+Svolgimento della simulazione completa come in aula: benvenuto, «Fine della parte A» prima
+della parte B, lettura delle istruzioni prima del test di concentrazione (anche quando lo si
+esercita da solo). Nello svolgimento personalizzato con tempo o numero di esercizi modificati
+viene riprodotto l'annuncio breve (solo il nome, i numeri sono sullo schermo). Dopo una
+modifica a un testo `pm_`, rifare la registrazione: una registrazione per lingua con tutte le
+frasi, poi `scripts/ansagen-schneiden.py` (istruzioni nel README). Registrazioni vere
+dell'associazione: sovrascrivere il file con lo stesso nome.
 
 ### Tecnica da conoscere
 
