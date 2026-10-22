@@ -392,7 +392,8 @@
   var lauf = null;
   var ticker = null;
   var wakeLock = null;
-  var ton = null;   /* die gerade laufende Aufnahme - beim Abbrechen anhalten */
+  var ton = null;   /* das Abspiel-Element für alle Aufnahmen (siehe spieler) */
+  var spielNr = 0;  /* zählt hoch, damit eine überholte Aufnahme nichts mehr auslöst */
 
   /* ---------------------------------------------------------------- Ton */
   /* Kurzer Piepton zu Beginn und am Ende, erzeugt im Browser - keine
@@ -422,32 +423,45 @@
      sie, wird sie abgespielt - das ist immer besser als die Maschinenstimme.
      Fehlt sie, wird derselbe Text vorgelesen. Beides ruft am Ende dieselbe
      Funktion auf, der übrige Ablauf merkt keinen Unterschied. */
+  /* Ohne Ton bleibt ein Satz so lange stehen, dass man ihn in Ruhe lesen kann:
+     etwa 12 Zeichen pro Sekunde, mindestens 5, höchstens 20 Sekunden. */
+  function lesezeit(text){ return Math.min(20000, Math.max(5000, String(text || '').length * 80)); }
+
+  /* EIN Abspiel-Element für alle Aufnahmen. Es spielt zum ersten Mal direkt
+     beim Klick auf «Start» und ist damit auch auf iPhone und iPad für alle
+     weiteren Ansagen freigegeben - ein neues Element pro Satz blockiert Safari
+     dort ohne erneuten Klick. */
+  function spieler(){ if(!ton) ton = new Audio(); return ton; }
+
   function sprich(text, fertig, ansage){
     var weiter = fertig || function(){};
-    if(!el.tts.checked){ setTimeout(weiter, 200); return; }
+    if(!el.tts.checked){ setTimeout(weiter, lesezeit(text)); return; }
 
     var datei = ansage && AUDIO[ansage];
     if(datei){
       try{
-        ton = new Audio(datei);
-        var schonWeiter = false;
-        var einmal = function(){ if(!schonWeiter){ schonWeiter = true; weiter(); } };
-        ton.onended = einmal;
+        var a = spieler(), nr = ++spielNr, schonWeiter = false;
+        var einmal = function(){ if(nr === spielNr && !schonWeiter){ schonWeiter = true; weiter(); } };
         /* Lässt sich die Aufnahme nicht abspielen (Datei kaputt, Format vom
            Gerät nicht unterstützt), wird nicht stumm weitergemacht, sondern
            auf die Sprachausgabe zurückgefallen. */
-        ton.onerror = function(){ if(!schonWeiter){ schonWeiter = true; vorlesen(text, weiter); } };
-        var versuch = ton.play();
-        if(versuch && versuch.catch){ versuch.catch(function(){ ton.onerror(); }); }
+        var ersatz = function(){ if(nr === spielNr && !schonWeiter){ schonWeiter = true; vorlesen(text, weiter); } };
+        a.onended = einmal;
+        a.onerror = ersatz;
+        a.src = datei;
+        var versuch = a.play();
+        if(versuch && versuch.catch){ versuch.catch(ersatz); }
         return;
       }catch(e){ /* weiter unten vorlesen */ }
     }
     vorlesen(text, weiter);
   }
 
+  /* Kann das Gerät nicht vorlesen (keine Sprachausgabe, Fehler), bleibt der
+     Text wenigstens so lange stehen, dass man ihn lesen kann. */
   function vorlesen(text, weiter){
     if(!('speechSynthesis' in window) || !text){
-      setTimeout(weiter, 200); return;
+      setTimeout(weiter, lesezeit(text)); return;
     }
     try{
       window.speechSynthesis.cancel();
@@ -457,11 +471,11 @@
       var schonWeiter = false;
       function einmal(){ if(!schonWeiter){ schonWeiter = true; weiter(); } }
       satz.onend = einmal;
-      satz.onerror = einmal;
+      satz.onerror = function(){ setTimeout(einmal, lesezeit(text)); };
       /* grosszügig gerechnet: etwa 14 Zeichen pro Sekunde plus Puffer */
       setTimeout(einmal, Math.max(3000, text.length * 90));
       window.speechSynthesis.speak(satz);
-    }catch(e){ setTimeout(weiter, 200); }
+    }catch(e){ setTimeout(weiter, lesezeit(text)); }
   }
 
   /* --------------------------------------------------- Bildschirm wachhalten */
@@ -632,9 +646,11 @@
        Testsaal, wo auch niemand fragt, ob man bereit ist. Ein einzelner
        Untertest wartet dagegen auf den Startknopf. */
     var automatisch = lauf.schritte.filter(function(x){ return x.art !== 'hinweis'; }).length > 1;
-    el.los.hidden = automatisch;
+    /* Ohne Ton bleibt der Startknopf sichtbar: Wer fertig gelesen hat, startet
+       selbst, sonst läuft die Uhr nach der Lesezeit von allein los. */
+    el.los.hidden = automatisch && el.tts.checked;
     sprich(sch.ansage, function(){
-      if(automatisch && lauf) starteUhr();
+      if(automatisch && lauf && aktuellerSchritt() === sch && buehne.classList.contains('is-anweisung')) starteUhr();
     }, sch.audio);
   }
 
@@ -733,7 +749,8 @@
   function beenden(){
     if(ticker){ clearInterval(ticker); ticker = null; }
     try{ window.speechSynthesis.cancel(); }catch(e){}
-    try{ if(ton){ ton.pause(); ton = null; } }catch(e){}
+    spielNr++;
+    try{ if(ton) ton.pause(); }catch(e){}
     lauf = null;
     buehne.hidden = true;
     buehne.className = 'pm-buehne';
