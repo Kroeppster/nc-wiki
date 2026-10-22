@@ -157,12 +157,6 @@ bloecke:
     fr: "Travail concentré et soigné"
     it: "Lavoro concentrato e accurato"
 
-# Zusätzliche Minuten der GANZEN Simulation im Simulationsmodus für das, was
-# nur dort angesagt wird (Begrüssung, «Ende von Teil A», Instruktion zum
-# Konzentrationstest), gerundet. Zählt nur zur Dauer neben dem Startknopf,
-# nicht zur Bearbeitungszeit in der Tabelle auf /ems/.
-ansagen_minuten: 3
-
 # Text der Gesamt-Zeile in der Tabelle. Die Gesamtzeit wird NICHT hier
 # eingetragen, sondern aus den Minuten oben zusammengezählt - so kann sie gar
 # nicht auseinanderlaufen. Nur die Aufgaben-/Punkte-Summe steht als Text hier,

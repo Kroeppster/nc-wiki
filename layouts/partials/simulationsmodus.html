@@ -81,9 +81,6 @@
 
 {{- $total := 0 }}
 {{- range $daten.bloecke }}{{ $total = add $total .minuten }}{{ end }}
-{{- /* Neben dem Startknopf zählt auch die Zeit für Begrüssung, Teil B und die
-       Instruktion mit (data/testablauf.yaml, ansagen_minuten). */}}
-{{- $total = add $total (or $daten.ansagen_minuten 0) }}
 
 {{- /* ECHTE AUFNAHMEN STATT ROBOTERSTIMME
        Liegt unter assets/audio/simulationsmodus/<sprache>/ eine Datei mit dem
