@@ -123,3 +123,9 @@ enableRobotsTXT = true
 [markup.goldmark.extensions.typographer]
   leftDoubleQuote = '&laquo;'
   rightDoubleQuote = '&raquo;'
+
+# Ein Bild allein auf einer Zeile (![...](...)) wird nicht in einen Absatz
+# gepackt, damit render-image.html daraus ein <figure> mit Bildunterschrift
+# machen kann (ein <figure> darf nicht in einem <p> stehen).
+[markup.goldmark.parser]
+  wrapStandAloneImageWithinParagraph = false

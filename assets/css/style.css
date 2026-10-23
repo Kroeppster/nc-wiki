@@ -910,6 +910,12 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 /* Bild-Header einer Seite */
 .featured-image{margin:var(--space-6) 0 var(--space-8);}
 .featured-image img{width:100%;height:auto;max-height:480px;object-fit:cover;display:block;border-radius:var(--radius-md);}
+/* Bilder im Fliesstext (Markdown-Bild auf eigener Zeile, siehe
+   layouts/_default/_markup/render-image.html): volle Textbreite, feiner Rahmen,
+   damit helle Screenshots sich vom Hintergrund abheben, Bildunterschrift klein darunter. */
+.text-bild{margin:var(--space-6) 0 var(--space-8);}
+.text-bild img{display:block;width:100%;height:auto;border:1px solid var(--color-line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);}
+.text-bild figcaption{margin-top:var(--space-3);font-size:var(--text-sm);line-height:1.5;color:var(--color-ink-soft);}
 
 /* breites Bildband (Startseite) */
 #story-image{padding-block:0;}

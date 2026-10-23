@@ -1,0 +1,45 @@
+{{- /*
+  ============================================================================
+  BILDER IM SEITENTEXT (automatischer Umbau beim Bauen)
+  ============================================================================
+  Ein Bild im Text schreibt man als normales Markdown-Bild, auf einer eigenen
+  Zeile:
+
+      ![Was auf dem Bild zu sehen ist](news/neue-website/uniguide.png "Bildunterschrift")
+
+  - In den eckigen Klammern steht der Alt-Text (Bildbeschreibung für
+    Screenreader). Pflicht - ohne bricht der Build ab, wie bei image.html.
+  - Der Pfad ist relativ zu assets/images/ (wie bei image.html).
+  - Der Text in Anführungszeichen ist die Bildunterschrift (freiwillig).
+
+  Daraus wird ein <figure> mit Bildunterschrift, und das Bild läuft durch
+  partials/image.html: verkleinerte WebP-Kopien für Handy und grosse
+  Bildschirme, verzögertes Laden. Ein Bild mitten im Satz wird nur verkleinert,
+  ohne <figure>.
+
+  Gibt es die Datei nicht, bricht der Build mit einer Meldung ab, statt still
+  ein leeres Bild auszuliefern - wie bei den Links (render-link.html).
+
+  Wie Links überstehen solche Bilder den Web-Editor (Pages CMS) unverändert,
+  anders als Shortcodes.
+  ============================================================================
+*/ -}}
+{{- $src := strings.TrimPrefix "/" .Destination -}}
+{{- $alt := .PlainText -}}
+{{- if not (resources.Get (printf "images/%s" $src)) -}}
+  {{- errorf "Bild nicht gefunden: %q in %s. Liegt es unter assets/images/?" .Destination .Page.File.Path -}}
+{{- end -}}
+{{- if not $alt -}}
+  {{- errorf "Bild ohne Beschreibung: %q in %s. Bitte ![Beschreibung](...) ausfüllen." .Destination .Page.File.Path -}}
+{{- end -}}
+{{- $bild := partial "image.html" (dict "src" $src "alt" $alt "sizes" "(max-width:1100px) 100vw, 760px") -}}
+{{- if .IsBlock -}}
+<figure class="text-bild">
+  {{ $bild }}
+  {{- with .Title }}
+  <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>
+{{- else -}}
+{{ $bild }}
+{{- end -}}
