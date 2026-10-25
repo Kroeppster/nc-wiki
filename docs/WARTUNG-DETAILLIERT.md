@@ -911,12 +911,16 @@ Fehlermeldungen landen vorläufig im Kontakt-Postfach, mit festem Betreff „Feh
 Uebungsaufgaben (Website)“ zum Filtern. Eigene Adresse später: nur in
 `report-error-general.html` eintragen.
 
-**Die Erfahrungsbericht-Adresse nicht umhängen:** Eine Einsendung löst über
-`repository_dispatch` den Workflow `erfahrungsbericht-intake.yml` aus, der Datei und Pull
-Request baut (der dafür nötige GitHub-Token ist nur in Formspree hinterlegt). Die Datei
-landet im Ordner der Sprache, in der das Formular ausgefüllt wurde (`content/fr/…` usw.),
-mit den Zwischentiteln dieser Sprache. Wer «Früher» als Jahr wählt, bekommt keinen Eintrag
-`jahr:` - vor dem Veröffentlichen im Seitenkopf ergänzen (der PR weist darauf hin).
+**Erfahrungsberichte kommen per E-Mail:** Formspree schickt jede Einsendung ans Team,
+mit allen Feldern und zusätzlich `dateiname` (Pfad im Repo, im Ordner der Sprache, in der
+das Formular ausgefüllt wurde) und `dateiinhalt` (die fertige Datei mit den Zwischentiteln
+dieser Sprache). Bericht prüfen, dann anlegen: im Web-Editor unter «Erfahrungsberichte»
+der Sprache einen neuen Eintrag mit den Feldern aus der Mail, oder auf GitHub mit «Add
+file» unter dem Pfad aus `dateiname` und dem Inhalt aus `dateiinhalt`. Wer «Früher» als
+Jahr wählt, bekommt keinen Eintrag `jahr:` - ohne Jahr erscheint der Bericht nicht in der
+Übersicht, also nachfragen und ergänzen. Vor dem Anlegen ist nichts öffentlich. (Ein
+automatischer Pull Request über Formspree ist mit dem kostenlosen Formspree-Konto nicht
+möglich und wurde im Oktober 2026 entfernt.)
 
 Das Senden im Hintergrund erledigt ein gemeinsames Skript in
 `layouts/partials/footer.html` für alle Formulare mit der Klasse `report-error`. Ein neues
@@ -1024,7 +1028,6 @@ landen.
 | `texte-einlesen.yml` | Mappe in `redaktion/` hochgeladen | einlesen, probeweise bauen, Pull Request mit Bericht |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` in `redaktion/` hochgeladen | prüfen, einlesen, probeweise bauen, Pull Request mit Bericht; bei Fehlern kein Pull Request, Lauf rot |
 | `neue-saison.yml` | von Hand (*Run workflow*) | Saisonwechsel als Pull Request |
-| `erfahrungsbericht-intake.yml` | Formspree-Einsendung | neue Erfahrungsbericht-Datei als Pull Request |
 
 Ein fehlgeschlagener Bau nimmt die Website nicht offline; es bleibt die letzte gute
 Fassung. Hugo-Version: in `hugo.yml` fest eingetragen – beim Erhöhen auch lokal testen.

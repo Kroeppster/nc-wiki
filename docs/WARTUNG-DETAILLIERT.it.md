@@ -918,12 +918,16 @@ Le segnalazioni finiscono provvisoriamente nella casella dei contatti, con l'ogg
 «Fehlermeldung Uebungsaufgaben (Website)» per filtrare. Indirizzo proprio più avanti:
 inserirlo solo in `report-error-general.html`.
 
-**Non cambiare l'indirizzo dei resoconti:** un invio avvia tramite `repository_dispatch` il
-workflow `erfahrungsbericht-intake.yml`, che crea file e pull request (il token GitHub
-necessario è salvato solo in Formspree). Il file viene creato nella cartella della lingua
-in cui è stato compilato il modulo (`content/it/…` ecc.), con i sottotitoli di quella
-lingua. Se come anno si sceglie «Prima», manca il campo `jahr:` – da completare
-nell'intestazione prima della pubblicazione (la PR lo ricorda).
+**Le testimonianze arrivano per e-mail:** Formspree invia ogni invio al team, con tutti i
+campi e in più `dateiname` (percorso nel repository, nella cartella della lingua in cui è
+stato compilato il modulo) e `dateiinhalt` (il file pronto, con i sottotitoli di quella
+lingua). Controllare la testimonianza, poi crearla: nell'editor web sotto «Testimonianze»
+della lingua, una nuova voce con i campi dell'e-mail, oppure su GitHub con «Add file» nel
+percorso di `dateiname` e con il contenuto di `dateiinhalt`. Se come anno si sceglie
+«Prima», manca il campo `jahr:` – senza anno la testimonianza non compare nell'elenco:
+chiedere e completare. Prima della creazione non è pubblico nulla. (Una pull request
+automatica tramite Formspree non è possibile con l'account Formspree gratuito ed è stata
+rimossa nell'ottobre 2026.)
 
 L'invio in background è gestito da uno script comune in `layouts/partials/footer.html` per
 tutti i moduli con la classe `report-error`. Un nuovo modulo in un nuovo punto è un passo
@@ -1028,7 +1032,6 @@ scorre. Lo script aspetta `DOMContentLoaded`, ricostruisce l'elenco da tutti i t
 | `texte-einlesen.yml` | cartella caricata in `redaktion/` | leggere, costruire di prova, pull request con rapporto |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` caricato in `redaktion/` | controllare, leggere, costruire di prova, pull request con rapporto; in caso di errore nessuna pull request, esecuzione rossa |
 | `neue-saison.yml` | a mano (*Run workflow*) | cambio di stagione come pull request |
-| `erfahrungsbericht-intake.yml` | invio Formspree | nuovo resoconto come pull request |
 
 Una costruzione fallita non mette il sito offline; resta l'ultima versione buona. Versione
 di Hugo: fissata in `hugo.yml` – aumentandola, testare anche in locale.

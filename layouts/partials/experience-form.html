@@ -8,27 +8,23 @@
 
     1. Jemand füllt dieses Formular hier auf der Website aus und klickt
        "Bericht einreichen".
-    2. Das JavaScript weiter unten baut daraus im Hintergrund automatisch
-       eine fertige Markdown-Textdatei (die Datei, wie sie später im Repo
-       liegen würde) und schickt ALLES zusammen an Formspree (den externen
-       Formular-Dienst, der auch das normale Kontaktformular bedient).
-    3. Formspree ist so eingerichtet (nicht hier im Code, sondern in den
-       Formspree-Kontoeinstellungen!), dass es bei dieser einen Adresse
-       automatisch GitHub benachrichtigt.
-    4. Das löst die Automatisierung in
-       .github/workflows/erfahrungsbericht-intake.yml aus, die daraus einen
-       fertigen Pull Request mit der neuen Bericht-Seite baut.
-    5. Jemand aus dem Team muss diesen Pull Request nur noch kurz prüfen und
-       bestätigen (mergen) - dann ist der Bericht live.
+    2. Das JavaScript weiter unten baut daraus im Hintergrund eine fertige
+       Markdown-Datei - genau so, wie der Bericht später im Repo liegt
+       (Zwischentitel in der Sprache der Seite, Seitenkopf wie in
+       archetypes/erfahrungsbericht.md) - und schickt alles an Formspree, den
+       Formular-Dienst, der auch das Kontaktformular bedient.
+    3. Formspree schickt dem Team eine E-Mail mit allen Feldern, darunter
+       "dateiname" (Pfad im Repo) und "dateiinhalt" (die fertige Datei).
+    4. Das Team prüft den Bericht und legt ihn an: im Web-Editor unter
+       "Erfahrungsberichte" (Felder aus der Mail übernehmen) oder auf GitHub
+       mit "Add file" unter dem Pfad aus "dateiname" und dem Inhalt aus
+       "dateiinhalt". Erst dann ist er auf der Website.
 
-  Diese Datei hier ist also nur Schritt 1+2 von diesem Ablauf. Wichtig zu
-  wissen: Der Text, den das JavaScript hier zusammenbaut (siehe
-  buildDateiinhalt weiter unten), wird von Schritt 4 gar nicht direkt
-  verwendet - der Workflow in erfahrungsbericht-intake.yml baut die Datei
-  sicherheitshalber NOCHMAL selbst aus den einzelnen Formularfeldern. Die
-  Überschriften ("## Wie ich mich vorbereitet habe" usw.) sollten deshalb in
-  beiden Dateien gleich sein, auch wenn nur eine davon tatsächlich verwendet
-  wird.
+  Bis Oktober 2026 sollte Formspree die Einsendung zusätzlich an GitHub
+  weiterreichen, das daraus einen Pull Request baute. Das geht mit dem
+  kostenlosen Formspree-Konto nicht (keine Webhooks) und ist nie gelaufen;
+  der Ablauf wurde deshalb entfernt. Vor dem Anlegen ist so nichts öffentlich,
+  und es entstehen keine Nebenzweige.
   ============================================================================
 */ -}}
 {{- /* Jahre vom aktuellen rückwärts bis 2020 - wächst jedes Jahr von selbst mit
@@ -51,8 +47,8 @@
     <select name="ems_jahr" id="ef-year" required>
       <option value="" disabled selected>{{ i18n "experience_form_year_placeholder" }}</option>
       {{ range $years }}<option value="{{ . }}">{{ . }}</option>{{ end }}
-      {{- /* Fester Wert statt des übersetzten Worts: Der Workflow
-             (erfahrungsbericht-intake.yml) erkennt daran "kein genaues Jahr". */}}
+      {{- /* Fester Wert statt des übersetzten Worts: buildDateiinhalt unten
+             erkennt daran "kein genaues Jahr" und lässt "jahr:" weg. */}}
       <option value="frueher">{{ i18n "experience_form_year_earlier" }}</option>
     </select>
   </div>
@@ -145,43 +141,41 @@
       .replace(/[\r\n]/g, '\\n');
   }
 
-  {{/* Heutiges Datum im Format JJJJ-MM-TT, wie es im Frontmatter gebraucht wird */}}
-  function todayISO(){
-    var d = new Date();
-    var mm = String(d.getMonth() + 1).padStart(2, '0');
-    var dd = String(d.getDate()).padStart(2, '0');
-    return d.getFullYear() + '-' + mm + '-' + dd;
-  }
+  {{/* Zwischentitel wie in den bestehenden Berichten der jeweiligen Sprache. */}}
+  var ZWISCHENTITEL = {
+    de: ['Wie hast du dich vorbereitet?', 'Was hat dir am meisten geholfen?', 'Dein Tipp an zukünftige Teilnehmende?'],
+    fr: ["Comment t'es-tu préparé·e ?", "Qu'est-ce qui t'a le plus aidé·e ?", 'Ton conseil pour les futures candidates et futurs candidats ?'],
+    it: ['Come ti sei preparato·a?', 'Cosa ti ha aiutato·a di più?', 'Il tuo consiglio per le future candidate e i futuri candidati?']
+  };
 
-  {{/* Baut aus den Formular-Antworten eine fertige Markdown-Textdatei, wie
-       sie später als Erfahrungsbericht-Seite im Repo liegen würde (siehe
-       Erklärung ganz oben im Dateikopf - dieser Text wird zwar mitgeschickt,
-       aber der GitHub-Workflow baut die tatsächliche Datei sicherheitshalber
-       nochmal selbst aus den Rohdaten). */}}
-  function buildDateiinhalt(name, jahr, ort, vorbereitung, geholfen, tipp){
+  {{/* Baut aus den Formular-Antworten die fertige Markdown-Datei, genau so,
+       wie sie als Erfahrungsbericht im Repo liegt (siehe Dateikopf und
+       archetypes/erfahrungsbericht.md): kein title (die Überschrift entsteht
+       aus name und jahr), "jahr" nur bei einem echten Jahr, Zwischentitel in
+       der Sprache der Seite. Die E-Mail-Adresse kommt bewusst nicht hinein. */}}
+  function buildDateiinhalt(sprache, name, jahr, ort, vorbereitung, geholfen, tipp){
+    var titel = ZWISCHENTITEL[sprache] || ZWISCHENTITEL.de;
     var lines = [];
     lines.push('---');
-    lines.push('title: "Erfahrungsbericht von ' + yamlEscape(name) + '"');
     lines.push('name: "' + yamlEscape(name) + '"');
-    lines.push('jahr: ' + jahr);
-    if(ort && ort.trim()){
-      lines.push('ort: "' + yamlEscape(ort) + '"');
-    }
-    lines.push('date: ' + todayISO());
+    if(/^\d{4}$/.test(jahr)){ lines.push('jahr: ' + jahr); }
+    if(ort){ lines.push('ort: "' + yamlEscape(ort) + '"'); }
+    lines.push('tags: []');
     lines.push('draft: false');
     lines.push('---');
     lines.push('');
-    lines.push('## Wie ich mich vorbereitet habe');
+    lines.push('## ' + titel[0]);
     lines.push('');
     lines.push(vorbereitung);
     lines.push('');
-    lines.push('## Was mir am meisten geholfen hat');
+    lines.push('## ' + titel[1]);
     lines.push('');
     lines.push(geholfen);
     lines.push('');
-    lines.push('## Mein Tipp');
+    lines.push('## ' + titel[2]);
     lines.push('');
     lines.push(tipp);
+    lines.push('');
     return lines.join('\n');
   }
 
@@ -212,8 +206,10 @@
       {{/* Die drei versteckten Felder aus dem Formular (dateiname,
            dateiinhalt, _subject) jetzt mit den berechneten Werten befüllen,
            bevor die Daten verschickt werden. */}}
-      form.elements['dateiname'].value = jahr + '-' + slugify(name) + '.md';
-      form.elements['dateiinhalt'].value = buildDateiinhalt(name, jahr, ort, vorbereitung, geholfen, tipp);
+      var sprache = form.elements['sprache'].value;
+      form.elements['dateiname'].value = 'content/' + sprache + '/ems/erfahrungsberichte/bericht-'
+        + (slugify(name) || 'anonym') + (/^\d{4}$/.test(jahr) ? '-' + jahr : '') + '.md';
+      form.elements['dateiinhalt'].value = buildDateiinhalt(sprache, name, jahr, ort, vorbereitung, geholfen, tipp);
       form.elements['_subject'].value = 'Neuer Erfahrungsbericht: ' + name + ' (' + jahr + ')';
 
       error.hidden = true;
