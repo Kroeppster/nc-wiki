@@ -639,6 +639,8 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 @media (forced-colors:active){
   .filter-pill.is-active,.lang-switch .active,.pagination .active .page-link{forced-color-adjust:none;background:Highlight;color:HighlightText;border-color:Highlight;}
   nav.main-nav a[aria-current="page"],nav.main-nav>ul>li.ist-darin>a,nav.main-nav>ul>li.ist-darin>span{text-decoration:underline;text-underline-offset:4px;}
+  /* Die drei Striche des Menüknopfs sind Hintergrundfarbe - ohne das wäre der Knopf leer. */
+  .nav-toggle-bar{forced-color-adjust:none;background:ButtonText;}
 }
 .report-grid{grid-template-columns:repeat(2,1fr);}
 .report-head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);}

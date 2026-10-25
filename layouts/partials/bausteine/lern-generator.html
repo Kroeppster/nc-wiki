@@ -65,13 +65,13 @@
 <p class="fg-hinweis">{{ i18n "lg_drucken_hinweis" }}</p>
 </div>
 <div class="fg-phase" id="lg-phase" hidden>
-<div class="fg-kopf"><h3 id="lg-phase-titel"></h3><p class="fg-uhr" id="lg-uhr">--:--</p></div>
+<div class="fg-kopf"><h3 id="lg-phase-titel" tabindex="-1"></h3><p class="fg-uhr" id="lg-uhr">--:--</p></div>
 <div class="ems-blatt" id="lg-blatt"></div>
 <p class="fg-intro" id="lg-pause-text" hidden>{{ i18n "fg_pause_hinweis" }}</p>
 <button type="button" class="btn btn-primary" id="lg-weiter">{{ i18n "fg_weiter" }}</button>
 </div>
 <div class="fg-phase" id="lg-ergebnis" hidden>
-<div class="fg-kopf"><h3>{{ i18n "fg_phase_ergebnis" }}</h3><p class="fg-punkte" id="lg-punkte"></p></div>
+<div class="fg-kopf"><h3 id="lg-ergebnis-titel" tabindex="-1">{{ i18n "fg_phase_ergebnis" }}</h3><p class="fg-punkte" id="lg-punkte"></p></div>
 <div id="lg-loesungen"></div>
 <div class="fg-knoepfe">
 <button type="button" class="btn btn-primary" id="lg-nochmal">{{ i18n "fg_nochmal" }}</button>
@@ -186,6 +186,9 @@
     el('lg-pause-text').hidden = !!s.blatt;
     el('lg-weiter').textContent = jetzt === schritte.length - 1 ? T.auswerten : T.weiter;
     zeige('lg-phase');
+    // Der geklickte Knopf ist jetzt weg oder an anderer Stelle: Fokus auf die
+    // neue Überschrift, damit Tastatur und Screenreader beim neuen Blatt sind.
+    el('lg-phase-titel').focus({ preventScroll: true });
     uhr(s.sekunden, naechster);
   }
   el('lg-los').addEventListener('click', function(){
@@ -215,8 +218,9 @@
       : T.punkte.replace('{n}', summe).replace('{von}', von);
     el('lg-loesungen').innerHTML = h;
     zeige('lg-ergebnis');
+    el('lg-ergebnis-titel').focus({ preventScroll: true });
   }
-  el('lg-nochmal').addEventListener('click', function(){ clearInterval(laufend); zeige('lg-start'); });
+  el('lg-nochmal').addEventListener('click', function(){ clearInterval(laufend); zeige('lg-start'); el('lg-los').focus({ preventScroll: true }); });
   // --- Drucken: ein Testheft wie aus dem Formatierungstool ----------------------
   // Teil A: die Einpraegephasen, Teil B: die Abfragen, dann Antwortbogen und
   // Loesungsblatt mit Loesungsschluessel - bei beiden Untertests je ein Block

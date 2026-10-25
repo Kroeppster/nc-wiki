@@ -286,7 +286,7 @@
        is-anweisung - Anweisung lesen/hören, Uhr steht noch
        is-uhr       - nur die Uhr, sonst so wenig wie möglich
        is-stopp     - "Stopp", danach entweder Ende oder nächster Block  */}}
-<div class="pm-buehne" id="pm-buehne" hidden role="dialog" aria-modal="true" aria-live="polite">
+<div class="pm-buehne" id="pm-buehne" hidden role="dialog" aria-modal="true" aria-labelledby="pm-titel" aria-live="polite" tabindex="-1">
   <div class="pm-buehne-inner">
     <p class="pm-zaehler" id="pm-zaehler"></p>
     <h2 class="pm-titel" id="pm-titel"></h2>
@@ -390,6 +390,7 @@
   var ticker = null;
   var wakeLock = null;
   var ton = null;   /* das Abspiel-Element für alle Aufnahmen (siehe spieler) */
+  var rueckFokus = null;   /* der Knopf, mit dem gestartet wurde - bekommt beim Schliessen den Fokus zurück */
   var spielNr = 0;  /* zählt hoch, damit eine überholte Aufnahme nichts mehr auslöst */
 
   /* ---------------------------------------------------------------- Ton */
@@ -522,7 +523,25 @@
     });
   }
 
-  function zustand(name){ buehne.className = 'pm-buehne is-' + name; }
+  function zustand(name){ buehne.className = 'pm-buehne is-' + name; requestAnimationFrame(fokusPruefen); }
+
+  /* ----------------------------------------------------------- Tastatur */
+  /* Beim Öffnen verschwindet der angeklickte Knopf hinter der Bühne, und bei
+     jedem Zustandswechsel werden Knöpfe aus- oder eingeblendet. Ohne Hilfe
+     fiel der Fokus dann auf die leere Seite: Mit Tastatur oder Screenreader
+     war nicht mehr klar, wo man ist, und ohne Vollbild (iPhone) führte Tab in
+     die Seite dahinter. Deshalb liegt der Fokus immer auf einem sichtbaren
+     Knopf der Bühne (sonst auf der Bühne selbst), und Tab bleibt darin. */
+  function sichtbareKnoepfe(){
+    return [el.los, el.pause, el.stop].filter(function(k){ return k && !k.hidden && k.getClientRects().length > 0; });
+  }
+  function fokusPruefen(){
+    if(!lauf) return;
+    var a = document.activeElement;
+    if(a && buehne.contains(a) && (a === buehne || a.getClientRects().length > 0)) return;
+    var k = sichtbareKnoepfe();
+    (k[0] || buehne).focus();
+  }
 
   /* --------------------------------------------------------------- Schritte
      Ein Ablauf ist eine Liste von Schritten. Ein Schritt ist entweder ein
@@ -618,6 +637,7 @@
   function starteFolge(schritte){
     if(!schritte.length) return;
     lauf = { schritte: schritte, index: 0, endeMs: 0, pausiertRest: null };
+    rueckFokus = document.activeElement;
     buehne.hidden = false;
     document.body.classList.add('pm-aktiv');
     vollbildAn();
@@ -768,6 +788,9 @@
     document.body.classList.remove('pm-aktiv');
     wachEnde();
     vollbildAus();
+    /* Erst nach dem Verlassen des Vollbilds, sonst geht der Fokus wieder verloren. */
+    var zurueck = rueckFokus; rueckFokus = null;
+    if(zurueck && zurueck.focus) setTimeout(function(){ try{ zurueck.focus(); }catch(e){} }, 150);
   }
 
   function vollbildAn(){
@@ -803,6 +826,13 @@
 
   document.addEventListener('keydown', function(e){
     if(!lauf) return;
+    if(e.key === 'Tab'){
+      var k = sichtbareKnoepfe(), a = document.activeElement, i = k.indexOf(a);
+      if(!k.length){ e.preventDefault(); buehne.focus(); }
+      else if(i === -1){ e.preventDefault(); k[e.shiftKey ? k.length - 1 : 0].focus(); }
+      else if(!e.shiftKey && i === k.length - 1){ e.preventDefault(); k[0].focus(); }
+      else if(e.shiftKey && i === 0){ e.preventDefault(); k[k.length - 1].focus(); }
+    }
     if(e.key === 'Escape'){
       /* Am Ende (Knopf "Schliessen" sichtbar) gibt es nichts mehr abzubrechen. */
       if(buehne.classList.contains('is-stopp') && !el.los.hidden) beenden();
