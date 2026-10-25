@@ -51,6 +51,8 @@
        wie die Untertest-Seite (bei Google und in der Suche verwechselbar). */ -}}
 {{- if eq .Kind "term" }}{{ $pageTitle = i18n "schlagwort_titel" (dict "Titel" .Data.Term) }}{{ end }}
 {{- if eq .Kind "taxonomy" }}{{ $pageTitle = i18n "schlagwoerter" }}{{ end }}
+{{- /* Fehlerseite: Hugo nennt sie auf Englisch "404 Page not found". */ -}}
+{{- if eq .Kind "404" }}{{ $pageTitle = i18n "error_404_title" }}{{ end }}
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ $pageTitle }}{{ end }}</title>
 
 {{/* Das Aussehen der ganzen Website kommt aus GENAU dieser einen CSS-Datei -
