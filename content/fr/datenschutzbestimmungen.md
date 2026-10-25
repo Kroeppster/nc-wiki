@@ -60,6 +60,10 @@ Le fournisseur de ce site (GitHub Pages) collecte et enregistre automatiquement 
 
 Lorsque vous nous transmettez des informations via un formulaire de ce site (par ex. formulaire de contact, soumission d'un témoignage, signalement d'une erreur), celles-ci, y compris les coordonnées indiquées, sont enregistrées afin de traiter votre demande ou de publier votre témoignage. Ces formulaires sont traités via le prestataire Formspree, voir la section « Services de tiers » ci-dessous. Sans votre consentement, nous ne transmettons pas vos données à des tiers. Pour les témoignages, un consentement distinct à la publication est en outre recueilli lors de la soumission.
 
+## Évaluation par photo
+
+Sur ce site, vous pouvez faire évaluer des feuilles de réponses et des tests de concentration à partir d'une photo, d'un scan ou d'un PDF, y compris directement avec la caméra de votre appareil. Les images et les fichiers sont traités exclusivement dans votre navigateur : ils ne sont ni téléversés ni enregistrés, et aucune donnée n'est transmise ni à nous ni à des tiers. Le site n'accède à la caméra que si vous l'autorisez dans votre navigateur ; elle est arrêtée dès que vous terminez ou interrompez la prise de vue. Si vous chargez votre propre test de concentration, ses signes et sa solution sont enregistrés dans la mémoire locale de votre navigateur, afin que vous n'ayez pas à le charger à nouveau lors de votre prochaine visite. Vous pouvez supprimer cette entrée à tout moment en effaçant les données de navigation de ce site.
+
 ## Services de tiers
 
 Ce site utilise les services externes suivants :

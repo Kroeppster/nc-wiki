@@ -60,6 +60,10 @@ Il fornitore di questo sito (GitHub Pages) raccoglie e memorizza automaticamente
 
 Se ci trasmette informazioni tramite un modulo di questo sito (ad es. modulo di contatto, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, veda la sezione «Servizi di terzi» qui sotto. Senza il Suo consenso non trasmettiamo i Suoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
 
+## Valutazione tramite foto
+
+Su questo sito può far valutare fogli delle risposte e test di concentrazione a partire da una foto, da una scansione o da un PDF, anche direttamente con la fotocamera del Suo dispositivo. Le immagini e i file vengono elaborati esclusivamente nel Suo browser: non vengono né caricati né memorizzati, e nessun dato viene trasmesso a noi o a terzi. Il sito accede alla fotocamera solo se Lei lo autorizza nel Suo browser; la fotocamera viene spenta non appena Lei conclude o interrompe la ripresa. Se carica un Suo test di concentrazione, i simboli e la soluzione vengono salvati nella memoria locale del Suo browser, così non deve caricarlo di nuovo alla prossima visita. Può rimuovere questi dati in qualsiasi momento cancellando i dati di navigazione di questo sito.
+
 ## Servizi di terzi
 
 Questo sito utilizza i seguenti servizi esterni:

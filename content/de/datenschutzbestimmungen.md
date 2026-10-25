@@ -60,6 +60,10 @@ Der Provider dieser Website (GitHub Pages) erhebt und speichert automatisch Info
 
 Wenn Sie uns über ein Formular auf dieser Website (z.B. Kontaktformular, Erfahrungsbericht einreichen, Fehler melden) Angaben zukommen lassen, werden diese inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage bzw. Veröffentlichung des Berichts gespeichert. Diese Formulare werden über den Dienstleister Formspree verarbeitet, siehe Abschnitt «Dienste von Dritten» unten. Ohne Ihre Einwilligung geben wir Ihre Daten nicht an Dritte weiter. Für Erfahrungsberichte gilt zusätzlich das gesonderte Einverständnis zur Veröffentlichung, das beim Einreichen eingeholt wird.
 
+## Auswertung per Foto
+
+Antwortbögen und Konzentrationstests können Sie auf dieser Website per Foto, Scan oder PDF auswerten lassen, auch direkt mit der Kamera Ihres Geräts. Bilder und Dateien werden dabei ausschliesslich in Ihrem Browser verarbeitet: Sie werden weder hochgeladen noch gespeichert, und es werden keine Daten an uns oder an Dritte übertragen. Auf die Kamera greift die Website nur zu, wenn Sie dies in Ihrem Browser erlauben; sie wird beendet, sobald Sie die Aufnahme abschliessen oder abbrechen. Laden Sie einen eigenen Konzentrationstest hoch, werden dessen Zeichen und Lösung im lokalen Speicher Ihres Browsers abgelegt, damit Sie ihn beim nächsten Besuch nicht erneut hochladen müssen. Diesen Eintrag können Sie jederzeit durch Löschen der Browser-Daten dieser Website entfernen.
+
 ## Dienste von Dritten
 
 Diese Website nutzt folgende externe Dienste:
