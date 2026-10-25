@@ -54,7 +54,7 @@ Ti eserciti come il giorno d'esame:
 
 I tempi sono preimpostati come all'AMS, ma puoi adattarli. Preferisci la carta? Allora stampi il gruppo, impostato come un fascicolo del test con foglio delle risposte e soluzioni.
 
-![Fase di riproduzione nel generatore: in alto l'orologio a 5:00, sotto figure con le parti contrassegnate da A a E, con caselle da crociare](news/neue-website/it/figuren-generator.png "Memorizzazione di figure: nella fase di riproduzione indichi quale parte di ogni figura era annerita.")
+![Fase di riproduzione nel generatore: in alto l'orologio a 5:00, sotto figure con le parti contrassegnate da A a E, con le caselle per segnare la risposta](news/neue-website/it/figuren-generator.png "Memorizzazione di figure: nella fase di riproduzione indichi quale parte di ogni figura era annerita.")
 
 ![Fase di apprendimento nel generatore: istruzioni come nel fascicolo del test e un elenco di persone con età, professione, tratto del carattere e diagnosi](news/neue-website/it/fakten-generator.png "Memorizzazione di fatti: ogni gruppo è composto da persone nuove da memorizzare.")
 
@@ -64,7 +64,7 @@ Il generatore è ancora in fase di test e sarà presto disponibile per tutti.
 
 Se hai svolto una simulazione del test a casa, presto non dovrai più confrontare una per una le tue risposte con le soluzioni. Fotografa il tuo foglio delle risposte compilato o carica una scansione: il sito legge i tuoi segni e ti mostra i punti, in totale e per ogni sottotest. Nell'immagine vedi che cosa era giusto, che cosa era sbagliato e dove si trovava la soluzione giusta. Ciò che non si è potuto leggere con certezza è contornato in arancione, così puoi controllarlo.
 
-![Foglio delle risposte valutato: caselle crociate in verde se giuste e in rosso se sbagliate, la soluzione giusta contornata in blu](news/neue-website/it/antwortbogen.jpg "Il foglio delle risposte valutato: verde giusto, rosso sbagliato, blu la soluzione giusta.")
+![Foglio delle risposte valutato: caselle segnate in verde se giuste e in rosso se sbagliate, la soluzione giusta contornata in blu](news/neue-website/it/antwortbogen.jpg "Il foglio delle risposte valutato: verde giusto, rosso sbagliato, blu la soluzione giusta.")
 
 Il test di concentrazione funziona allo stesso modo – per le simulazioni del test, per le serie di esercizi «Lavoro concentrato e accurato» e anche per un tuo test di concentrazione con foglio delle soluzioni. Il conteggio segue la regola delle istruzioni: simboli segnati correttamente meno simboli segnati per errore meno simboli omessi. Se un segno non è giusto, tocchi il simbolo e i punti si ricalcolano subito.
 

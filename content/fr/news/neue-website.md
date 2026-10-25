@@ -64,7 +64,7 @@ Le générateur est encore en phase de test et sera bientôt ouvert à tout le m
 
 Si tu as fait une simulation de test chez toi, tu n'auras bientôt plus besoin de comparer une à une tes réponses avec les solutions. Photographie ta feuille de réponses remplie ou charge un scan : le site lit tes marques et t'affiche tes points, au total et pour chaque sous-test. Sur l'image, tu vois ce qui était juste, ce qui était faux et où se trouvait la bonne solution. Ce qui n'a pas pu être lu clairement est entouré en orange, pour que tu puisses le vérifier.
 
-![Feuille de réponses évaluée : cases cochées en vert si c'est juste et en rouge si c'est faux, la bonne solution encadrée en bleu](news/neue-website/fr/antwortbogen.jpg "La feuille de réponses évaluée : vert juste, rouge faux, bleu la bonne solution.")
+![Feuille de réponses évaluée : cases marquées en vert si c'est juste et en rouge si c'est faux, la bonne solution encadrée en bleu](news/neue-website/fr/antwortbogen.jpg "La feuille de réponses évaluée : vert juste, rouge faux, bleu la bonne solution.")
 
 Le test de concentration fonctionne de la même manière – pour les simulations de test, les séries d'exercices « Travail concentré et soigné » et même pour ton propre test de concentration avec sa feuille de solutions. Le décompte suit la règle de la consigne : signes correctement marqués moins signes marqués à tort moins signes omis. Si une marque n'est pas juste, tu touches le signe et les points se recalculent aussitôt.
 
