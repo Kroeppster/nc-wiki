@@ -1023,7 +1023,7 @@ scorre. Lo script aspetta `DOMContentLoaded`, ricostruisce l'elenco da tutti i t
 
 | Workflow | Quando | Cosa |
 | --- | --- | --- |
-| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, spazi non separabili (`scripts/typografie.mjs`: FR prima di ! ? : ;, DE in «z. B.», date, CHF), ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, pubblicare (solo `main`) |
+| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, spazi non separabili (`scripts/typografie.mjs`: FR prima di ! ? : ;, DE in «z. B.», date, CHF), ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, verificare il sito finito (`scripts/ausgabe-pruefen.py`: indirizzi senza percorso del progetto, titolo/descrizione/h1/lingua, pagine protette cifrate e mai in chiaro; blocca), pubblicare (solo `main`) |
 | `textmappen.yml` | ogni modifica a `main` | cartelle Excel recenti nella release «Textmappen» |
 | `texte-einlesen.yml` | cartella caricata in `redaktion/` | leggere, costruire di prova, pull request con rapporto |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` caricato in `redaktion/` | controllare, leggere, costruire di prova, pull request con rapporto; in caso di errore nessuna pull request, esecuzione rossa |
@@ -1037,7 +1037,8 @@ di Hugo: fissata in `hugo.yml` – aumentandola, testare anche in locale.
 
 ## 19. Verificare il sito
 
-La costruzione verifica da sé i link interni. In più ci sono script di verifica (in locale,
+La costruzione verifica da sé i link interni e il sito finito (`scripts/ausgabe-pruefen.py`,
+vedi l'intestazione del file). In più ci sono script di verifica (in locale,
 con il sito costruito sotto `public/`):
 
 ```bash
@@ -1045,6 +1046,7 @@ npm run build
 npx http-server public -p 8099 -s &
 BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs  # layout, contrasto, immagini
 python3 scripts/struktur-pruefen.py                                  # doppioni, pagine irraggiungibili, link morti
+python3 scripts/ausgabe-pruefen.py public                            # indirizzi, titoli, h1, lingua (come la costruzione)
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # uso, moduli (Formspree intercettato)
 node scripts/fakten-generator-pruefen.mjs                            # 150 set + PDF
 node scripts/fakten-generator-sprachen-pruefen.mjs                    # set FR/IT + stampa

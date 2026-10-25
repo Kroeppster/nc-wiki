@@ -242,6 +242,23 @@ jobs:
             npm run schuetzen -- --ohne-passwort-erlauben
           fi
 
+      # Prüft die fertige Website genau so, wie sie veröffentlicht wird
+      # (scripts/ausgabe-pruefen.py): Adressen ohne Projektpfad (/nc-wiki/)
+      # in HTML, Skripten und Stylesheets - die sieht lychee nicht -, Titel,
+      # Beschreibung, h1 und Sprache jeder Seite, und bei einem Push (dann
+      # ist der Mitgliederbereich verschlüsselt), dass jede geschützte Seite
+      # verschlüsselt ist und kein Satz daraus sonst irgendwo steht (andere
+      # Seiten, Suchindex, Sitemap, RSS). Ein Fund stoppt die
+      # Veröffentlichung. Dauert etwa eine Sekunde.
+      - name: Check built site (paths, page basics, protected pages)
+        run: |
+          base_path=$(echo "${{ steps.pages.outputs.base_url }}" | sed -E 's#^https?://[^/]+##; s#/$##')
+          if [ "${{ github.event_name }}" = "push" ]; then
+            python3 scripts/ausgabe-pruefen.py public --basis "$base_path" --verschluesselt
+          else
+            python3 scripts/ausgabe-pruefen.py public --basis "$base_path"
+          fi
+
       # Verpackt den fertigen "public/"-Ordner zur Übergabe an den
       # Veröffentlichungs-Schritt (den zweiten "job" unten). Nur bei einem
       # echten Push auf main nötig - bei einem Pull Request läuft der

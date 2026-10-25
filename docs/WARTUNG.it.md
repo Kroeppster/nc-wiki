@@ -243,6 +243,7 @@ l'editor web le distrugge.
 | Rosso a | Di solito | Cosa fare |
 | --- | --- | --- |
 | «Check internal links», o «Build with Hugo» con «Link» | un link punta nel vuoto | correggere il link nel file indicato |
+| «Check built site» | una pagina senza titolo, descrizione o titolo principale, un indirizzo senza `/nc-wiki/` o un testo dell'area membri visibile senza protezione | il messaggio indica il tipo e il file; correggere nel file indicato |
 | «Build with Hugo» | errore nell'intestazione (virgolette, rientro, descrizione immagine mancante) | confrontare con un file che funziona |
 
 «Check external links» è solo un avviso e non rompe nulla. Se non sai andare avanti: sotto

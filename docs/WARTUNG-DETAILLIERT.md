@@ -1019,7 +1019,7 @@ landen.
 
 | Workflow | Wann | Was |
 | --- | --- | --- |
-| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, geschützte Leerzeichen setzen (`scripts/typografie.mjs`: FR vor ! ? : ;, DE in «z. B.», Daten, CHF), Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, veröffentlichen (nur `main`) |
+| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, geschützte Leerzeichen setzen (`scripts/typografie.mjs`: FR vor ! ? : ;, DE in «z. B.», Daten, CHF), Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, fertige Website prüfen (`scripts/ausgabe-pruefen.py`: Adressen ohne Projektpfad, Titel/Beschreibung/h1/Sprache, geschützte Seiten verschlüsselt und nirgends im Klartext; bricht ab), veröffentlichen (nur `main`) |
 | `textmappen.yml` | jede Änderung an `main` | frische Textmappen und Wortliste ans Release „Textmappen“ |
 | `texte-einlesen.yml` | Mappe in `redaktion/` hochgeladen | einlesen, probeweise bauen, Pull Request mit Bericht |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` in `redaktion/` hochgeladen | prüfen, einlesen, probeweise bauen, Pull Request mit Bericht; bei Fehlern kein Pull Request, Lauf rot |
@@ -1033,7 +1033,8 @@ Fassung. Hugo-Version: in `hugo.yml` fest eingetragen – beim Erhöhen auch lok
 
 ## 19. Die Website prüfen
 
-Der Bau prüft interne Links selbst. Zusätzlich gibt es Prüfskripte (lokal, mit gebauter
+Der Bau prüft interne Links und die fertige Website (`scripts/ausgabe-pruefen.py`, siehe
+Kopf der Datei) selbst. Zusätzlich gibt es Prüfskripte (lokal, mit gebauter
 Seite unter `public/`):
 
 ```bash
@@ -1041,6 +1042,7 @@ npm run build
 npx http-server public -p 8099 -s &
 BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs  # Layout, Kontrast, Bilder
 python3 scripts/struktur-pruefen.py                                  # Duplikate, unerreichbare Seiten, tote Links
+python3 scripts/ausgabe-pruefen.py public                            # Adressen, Titel, h1, Sprache (wie im Bau)
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # Bedienung, Formulare (Formspree abgefangen)
 node scripts/fakten-generator-pruefen.mjs                            # 150 Sets + PDF
 node scripts/fakten-generator-sprachen-pruefen.mjs                    # FR/IT-Sets + Druck

@@ -1046,7 +1046,7 @@ l'en-tête.
 
 | Workflow | Quand | Quoi |
 | --- | --- | --- |
-| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, espaces insécables (`scripts/typografie.mjs` : FR avant ! ? : ;, DE dans « z. B. », dates, CHF), recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, publier (seulement `main`) |
+| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, espaces insécables (`scripts/typografie.mjs` : FR avant ! ? : ;, DE dans « z. B. », dates, CHF), recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, vérifier le site terminé (`scripts/ausgabe-pruefen.py` : adresses sans chemin du projet, titre/description/h1/langue, pages protégées chiffrées et nulle part en clair ; bloque), publier (seulement `main`) |
 | `textmappen.yml` | chaque modification de `main` | classeurs récents dans la release « Textmappen » |
 | `texte-einlesen.yml` | classeur téléversé dans `redaktion/` | lire, construire à l'essai, pull request avec rapport |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` téléversé dans `redaktion/` | vérifier, lire, construire à l'essai, pull request avec rapport ; en cas d'erreur pas de pull request, exécution rouge |
@@ -1060,7 +1060,8 @@ Version de Hugo : fixée dans `hugo.yml` – en l'augmentant, tester aussi en lo
 
 ## 19. Vérifier le site
 
-La construction vérifie elle-même les liens internes. Il existe en plus des scripts de
+La construction vérifie elle-même les liens internes et le site terminé (`scripts/ausgabe-pruefen.py`,
+voir l'en-tête du fichier). Il existe en plus des scripts de
 vérification (en local, avec le site construit sous `public/`) :
 
 ```bash
@@ -1068,6 +1069,7 @@ npm run build
 npx http-server public -p 8099 -s &
 BREITEN=1280,768,390 MODI=light,dark node scripts/seiten-pruefen.mjs  # mise en page, contraste, images
 python3 scripts/struktur-pruefen.py                                  # doublons, pages inaccessibles, liens morts
+python3 scripts/ausgabe-pruefen.py public                            # adresses, titres, h1, langue (comme la construction)
 npx pagefind --site public && node scripts/verhalten-pruefen.mjs     # utilisation, formulaires (Formspree intercepté)
 node scripts/fakten-generator-pruefen.mjs                            # 150 sets + PDF
 node scripts/fakten-generator-sprachen-pruefen.mjs                    # sets FR/IT + impression
