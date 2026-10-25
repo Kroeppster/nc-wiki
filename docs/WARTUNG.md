@@ -153,6 +153,17 @@ Jede Seite kann **ein** Titelbild haben (oben auf der Seite und als Vorschau in
 
 Grosse Bilder sind kein Problem – die Website verkleinert sie selbst.
 
+**Bilder im Text** (z. B. Screenshots in einem News-Beitrag): Bild ebenfalls nach
+`assets/images/<bereich>/` hochladen und im Text auf einer eigenen Zeile einfügen:
+
+```markdown
+![Was auf dem Bild zu sehen ist](news/neue-website/uniguide.png "Bildunterschrift")
+```
+
+Die Beschreibung in den eckigen Klammern ist Pflicht, die Bildunterschrift in
+Anführungszeichen freiwillig. Der Pfad beginnt auch hier **nach** `assets/images/`.
+Stimmt er nicht, schlägt der Bau mit einer Meldung fehl.
+
 ---
 
 ## 7. Eine neue Seite anlegen

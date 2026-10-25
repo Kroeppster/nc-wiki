@@ -158,6 +158,17 @@ negli elenchi).
 
 Le immagini grandi non sono un problema – il sito le rimpicciolisce da solo.
 
+**Immagini nel testo** (p. es. schermate in una notizia): caricare anche queste in
+`assets/images/<sezione>/` e inserirle nel testo su una riga a sé:
+
+```markdown
+![Cosa mostra l'immagine](news/neue-website/it/uniguide.png "Didascalia")
+```
+
+La descrizione tra parentesi quadre è obbligatoria, la didascalia tra virgolette
+facoltativa. Anche qui il percorso comincia **dopo** `assets/images/`. Se è sbagliato, la
+costruzione fallisce con un messaggio.
+
 ---
 
 ## 7. Creare una nuova pagina

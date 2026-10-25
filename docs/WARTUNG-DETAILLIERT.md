@@ -360,6 +360,18 @@ Sprache der Seite und bricht den Bau ab, wenn es das Ziel nicht gibt.
 **Kein `{{< ref >}}` und keine anderen Shortcodes im Text.** Der Web-Editor schreibt sie
 beim Speichern kaputt – schon, wenn jemand auf der Seite nur ein Komma ändert.
 
+### Bilder im Text
+
+Normales Markdown-Bild auf einer eigenen Zeile, Pfad relativ zu `assets/images/`:
+`![Beschreibung](news/neue-website/uniguide.png "Bildunterschrift")`. Der Render-Hook
+`layouts/_default/_markup/render-image.html` macht daraus ein `<figure>` mit
+Bildunterschrift und schickt das Bild durch `partials/image.html` (WebP in drei Grössen).
+Er bricht den Bau ab, wenn die Datei fehlt oder die Beschreibung leer ist. Damit ein Bild
+auf eigener Zeile nicht in einem Absatz landet, steht in `hugo.toml`
+`wrapStandAloneImageWithinParagraph = false`. Solche Bilder übersteht der Web-Editor
+unverändert. Beispiel: der News-Beitrag «Neue Website», Bilder je Sprache unter
+`assets/images/news/neue-website/` (DE) bzw. `…/fr/` und `…/it/`.
+
 ### Bausteine
 
 Als Code-Block mit der Sprache `baustein` (`layouts/_default/_markup/render-codeblock-baustein.html`):

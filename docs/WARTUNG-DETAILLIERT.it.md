@@ -365,6 +365,18 @@ destinazione non esiste.
 **Niente `{{< ref >}}` né altri shortcode nel testo.** L'editor web li rompe al
 salvataggio – anche se qualcuno cambia solo una virgola sulla pagina.
 
+### Immagini nel testo
+
+Immagine Markdown normale su una riga a sé, percorso relativo a `assets/images/`:
+`![Descrizione](news/neue-website/it/uniguide.png "Didascalia")`. L'hook
+`layouts/_default/_markup/render-image.html` ne fa una `<figure>` con didascalia e passa
+l'immagine attraverso `partials/image.html` (WebP in tre dimensioni). Interrompe la
+costruzione se il file manca o se la descrizione è vuota. Perché un'immagine da sola su
+una riga non finisca in un paragrafo, in `hugo.toml` c'è
+`wrapStandAloneImageWithinParagraph = false`. L'editor web conserva queste immagini così
+come sono. Esempio: la notizia «Nuovo sito», immagini per lingua in
+`assets/images/news/neue-website/` (DE) o `…/fr/` e `…/it/`.
+
 ### Blocchi
 
 Blocco di codice con la lingua `baustein` (`layouts/_default/_markup/render-codeblock-baustein.html`):

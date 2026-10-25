@@ -44,7 +44,7 @@ Ganz neu ist der **Simulationsmodus**. Er übernimmt zu Hause die Rolle der Aufs
 
 ## Generator für Figuren und Fakten lernen
 
-Neben dem Simulationsmodus kommt ein Generator dazu, der dir beliebig viele neue Übungen für Figuren und Fakten lernen erstellt. Bei diesen beiden Untertests ist Übungsmaterial nach einmal Lernen verbraucht: Was du dir eingeprägt hast, kannst du nicht nochmal zum Üben verwenden. Der Generator würfelt dir deshalb jedes Mal ein neues Set.
+Neben dem Simulationsmodus kommt bald ein Generator dazu, der dir beliebig viele neue Übungen für Figuren und Fakten lernen erstellt. Bei diesen beiden Untertests ist Übungsmaterial nach einmal Lernen verbraucht: Was du dir eingeprägt hast, kannst du nicht nochmal zum Üben verwenden. Er würfelt dir deshalb jedes Mal ein neues Set.
 
 Du übst wie am Testtag:
 
@@ -62,7 +62,7 @@ Der Generator ist im Moment noch in der Testphase und wird bald für alle freige
 
 ## Antwortbogen und Konzentrationstest per Foto auswerten
 
-Hast du eine Testsimulation zu Hause gelöst, musst du deine Antworten nicht mehr einzeln mit den Lösungen vergleichen. Fotografiere deinen ausgefüllten Antwortbogen oder lade einen Scan hoch: Die Website liest deine Markierungen und zeigt dir deine Punkte, total und für jeden Untertest. Auf dem Bild siehst du, was richtig und was falsch war und wo die richtige Lösung gewesen wäre. Was nicht eindeutig zu lesen war, ist orange umrandet, damit du es prüfen kannst.
+Hast du eine Testsimulation zu Hause gelöst, musst du deine Antworten bald nicht mehr einzeln mit den Lösungen vergleichen. Fotografiere deinen ausgefüllten Antwortbogen oder lade einen Scan hoch: Die Website liest deine Markierungen und zeigt dir deine Punkte, total und für jeden Untertest. Auf dem Bild siehst du, was richtig und was falsch war und wo die richtige Lösung gewesen wäre. Was nicht eindeutig zu lesen war, ist orange umrandet, damit du es prüfen kannst.
 
 ![Eingelesener Antwortbogen: angekreuzte Kästchen grün für richtig und rot für falsch, blau umrandet die richtige Lösung](news/neue-website/antwortbogen.jpg "Der eingelesene Antwortbogen: grün richtig, rot falsch, blau die richtige Lösung.")
 

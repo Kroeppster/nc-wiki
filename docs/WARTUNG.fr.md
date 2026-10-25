@@ -161,6 +161,18 @@ listes).
 
 Les grandes images ne posent pas de problème – le site les réduit lui-même.
 
+**Images dans le texte** (p. ex. des captures d'écran dans une actualité) : téléverser
+l'image aussi dans `assets/images/<rubrique>/` et l'insérer dans le texte, sur une ligne
+à part :
+
+```markdown
+![Ce que montre l'image](news/neue-website/fr/uniguide.png "Légende")
+```
+
+La description entre crochets est obligatoire, la légende entre guillemets facultative.
+Ici aussi, le chemin commence **après** `assets/images/`. S'il est faux, la construction
+échoue avec un message.
+
 ---
 
 ## 7. Créer une nouvelle page

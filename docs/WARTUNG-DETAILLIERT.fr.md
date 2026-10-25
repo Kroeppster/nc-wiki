@@ -371,6 +371,18 @@ n'existe pas.
 **Pas de `{{< ref >}}` ni d'autres shortcodes dans le texte.** L'éditeur web les casse à
 l'enregistrement – même si quelqu'un ne change qu'une virgule sur la page.
 
+### Images dans le texte
+
+Image Markdown normale sur une ligne à part, chemin relatif à `assets/images/` :
+`![Description](news/neue-website/fr/uniguide.png "Légende")`. Le hook
+`layouts/_default/_markup/render-image.html` en fait une `<figure>` avec légende et passe
+l'image par `partials/image.html` (WebP en trois tailles). Il arrête la construction si le
+fichier manque ou si la description est vide. Pour qu'une image seule sur sa ligne ne
+finisse pas dans un paragraphe, `hugo.toml` contient
+`wrapStandAloneImageWithinParagraph = false`. L'éditeur web conserve ces images telles
+quelles. Exemple : l'actualité « Nouveau site », images par langue sous
+`assets/images/news/neue-website/` (DE) ou `…/fr/` et `…/it/`.
+
 ### Blocs
 
 Bloc de code avec la langue `baustein` (`layouts/_default/_markup/render-codeblock-baustein.html`) :
