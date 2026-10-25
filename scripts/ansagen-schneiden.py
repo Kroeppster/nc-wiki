@@ -21,11 +21,12 @@ an.») auf gut 10 Sekunden Stille verlängert - so wie die Aufsicht im Saal wart
 Gefunden wird der Satz über dieselbe Längenrechnung, Satz für Satz (Text aus
 i18n/<sprache>.yaml, pm_konz_instruktion_ansage).
 
-Ausgabe: MP3, mono, 96 kbit/s, Lautheit -18 LUFS, vorne und hinten 0,5 s Stille.
+Ausgabe: MP3, mono, 96 kbit/s, jede Ansage für sich auf -18 LUFS (Spitzen höchstens
+-1,5 dBTP), vorne und hinten 0,5 s Stille.
 Vor dem Hochladen die Dateien anhören - das Skript prüft Längen und Klang, nicht den
 Inhalt.
 """
-import math, os, re, subprocess, sys, tempfile, wave
+import json, math, os, re, subprocess, sys, tempfile, wave
 import numpy as np
 from scipy.fft import dct
 from scipy.signal import stft
@@ -53,8 +54,22 @@ def speichere(pfad, rate, x):
         f.setnchannels(1); f.setsampwidth(2); f.setframerate(rate); f.writeframes(x.astype(np.int16).tobytes())
 
 
+def pegel(wav):
+    """Lautheit (LUFS) und Spitzenpegel (dBTP) einer Datei."""
+    r = subprocess.run(['ffmpeg', '-nostats', '-i', wav, '-af', 'loudnorm=print_format=json', '-f', 'null', '-'],
+                       capture_output=True, text=True).stderr
+    j = json.loads(r[r.rindex('{'):r.rindex('}') + 1])
+    return float(j['input_i']), float(j['input_tp'])
+
+
 def als_mp3(wav, mp3):
-    ffmpeg('-i', wav, '-af', 'adelay=500:all=1,apad=pad_dur=0.5', '-ac', '1', '-c:a', 'libmp3lame', '-b:a', '96k', mp3)
+    # Die ganze Aufnahme wird vorher als Ganzes auf -18 LUFS gebracht - die einzelnen
+    # Sätze darin sind aber verschieden laut (gemessen: bis 8 dB Unterschied). Deshalb
+    # hier jede Ansage für sich angleichen, nur mit Verstärkung (ohne Kompression), und
+    # Spitzen nie über -1,5 dBTP.
+    i, tp = pegel(wav)
+    db = min(-18 - i, -1.5 - tp)
+    ffmpeg('-i', wav, '-af', f'volume={db:.2f}dB,adelay=500:all=1,apad=pad_dur=0.5', '-ac', '1', '-c:a', 'libmp3lame', '-b:a', '96k', mp3)
 
 
 def silben(text, sprache):

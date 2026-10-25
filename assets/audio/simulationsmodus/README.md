@@ -55,7 +55,7 @@ passende Aufnahme neu – sonst sagt die Stimme etwas anderes als der Bildschirm
 
 ## Format
 
-- **MP3**, mono, 96 kbit/s, Lautheit etwa −18 LUFS
+- **MP3**, mono, 96 kbit/s, jede Ansage für sich auf etwa −18 LUFS angeglichen
 - vorne und hinten je eine halbe Sekunde Stille
 
 ---
