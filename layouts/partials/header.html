@@ -16,9 +16,13 @@
          Bildlogo aus static/images/logo.webp - NICHT ohne Rücksprache wieder durch
          einen Text-Platzhalter ersetzen. logo.webp (28 KB, 360px breit) ist aus
          der Quelldatei logo.svg zusammengesetzt; die SVG selbst enthält sechs
-         eingebettete Bildstücke und wiegt 214 KB - zu viel für jede Seite. */}}
+         eingebettete Bildstücke und wiegt 214 KB - zu viel für jede Seite.
+         Angezeigt wird es nur 34 px breit; deshalb lädt der Browser eine der
+         daraus verkleinerten Kopien logo-34/-68/-102.webp (je nach
+         Bildschirmschärfe 1,5 bis 6 KB statt 28 KB). Ändert sich logo.webp,
+         die drei Kopien neu erzeugen. */}}
     <a class="brand" href="{{ .Site.Home.RelPermalink }}">
-      <img class="brand-mark" src="{{ "images/logo.webp" | relURL }}" width="34" height="25" alt="" aria-hidden="true">
+      <img class="brand-mark" src="{{ "images/logo-34.webp" | relURL }}" srcset="{{ "images/logo-34.webp" | relURL }} 1x, {{ "images/logo-68.webp" | relURL }} 2x, {{ "images/logo-102.webp" | relURL }} 3x" width="34" height="25" alt="" aria-hidden="true">
       <span>{{ .Site.Title }}</span>
     </a>
 

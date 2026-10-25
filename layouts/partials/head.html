@@ -91,8 +91,12 @@
   {{ end }}
 {{ end }}
 {{/* Stylesheet der Suchfunktion (Pagefind) - wird separat beim Bauen der
-     Seite generiert, nicht von Hand gepflegt. */}}
-<link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">
+     Seite generiert, nicht von Hand gepflegt. Es wird erst nachgeladen und
+     hält den Seitenaufbau nicht auf (media="print", danach "all"): Das
+     Suchfeld ist ohnehin erst nach einem Klick auf die Lupe zu sehen.
+     Lighthouse hatte es als blockierend gemeldet. */}}
+<link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}"></noscript>
 
 {{- /* ============================================================================
        PASSWORTGESCHÜTZTE SEITEN (Mitgliederbereich)
