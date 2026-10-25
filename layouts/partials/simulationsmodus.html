@@ -442,7 +442,21 @@
         /* Lässt sich die Aufnahme nicht abspielen (Datei kaputt, Format vom
            Gerät nicht unterstützt), wird nicht stumm weitergemacht, sondern
            auf die Sprachausgabe zurückgefallen. */
-        var ersatz = function(){ if(nr === spielNr && !schonWeiter){ schonWeiter = true; vorlesen(text, weiter); } };
+        var ersatz = function(){
+          if(nr === spielNr && !schonWeiter){ schonWeiter = true; try{ a.pause(); }catch(e){} vorlesen(text, weiter); }
+        };
+        /* Sicherheitsnetz: Bei schlechtem Netz kann eine Aufnahme hängen,
+           ohne je "error" oder "ended" zu melden - dann stand die ganze
+           Simulation nach "Stopp" still. Startet sie nicht innert 8 s, wird
+           vorgelesen; bleibt sie unterwegs stecken, geht es spätestens 4 s
+           nach ihrer Länge weiter. Abgelaufene Wächter einer früheren
+           Ansage tun nichts (spielNr). */
+        var startWache = setTimeout(ersatz, 8000);
+        a.onplaying = function(){
+          clearTimeout(startWache);
+          var rest = isFinite(a.duration) ? (a.duration - a.currentTime) : 180;
+          setTimeout(einmal, rest * 1000 + 4000);
+        };
         a.onended = einmal;
         a.onerror = ersatz;
         a.src = datei;
