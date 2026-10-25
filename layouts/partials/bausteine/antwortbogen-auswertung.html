@@ -26,6 +26,8 @@
     4. Je Kaestchen der Anteil Tinte im Innern (Magenta zaehlt nicht), je
        Zeile die Antwort: ein Strich, leer, mehrere - oder unsicher. Abgestufte
        Dunkelheit statt Tinte ja/nein, siehe MARKIERT unten (Abweichung vom Tool).
+       Vorher, anders als im Tool, jedes Kaestchen an seinen eigenen Randlinien
+       ausgerichtet (kaestchenVersatz) - fuer kleine Videobilder der Live-Kamera.
   Wer dort etwas aendert, zieht es hier nach (und umgekehrt).
 
   QUELLEN: ein Foto (der Knopf "Foto aufnehmen" oeffnet auf dem Handy die
@@ -433,6 +435,81 @@
     fein.massstab = abb.massstab; fein.gespiegelt = abb.gespiegelt; fein.versatz = versatz;
     return fein;
   }
+  // Zuletzt je Kaestchen: Im Videobild des Handys (der Bogen gut 900 px
+  // breit) ist ein Kaestchen nur etwa 14 x 10 Bildpunkte gross und der Rand
+  // unscharf. Liegt das Messfeld (fuellung) dann einen halben pt daneben -
+  // auf dem gewoelbten Blatt, wo sich der Massstab schon innerhalb einer
+  // Zeile aendert, kommt das vor -, zaehlt der Rand als Strich, und ein
+  // leeres Kaestchen gilt als markiert (Kamera-Labor Oktober 2026). Darum
+  // werden hier die beiden waagrechten und die beiden senkrechten Randlinien
+  // jedes Kaestchens im Helligkeitsprofil gesucht (hoechstens 1 pt weit) und
+  // ueber die fuenf Kaestchen der Zeile als Gerade geglaettet - ein Strich
+  // im Kaestchen oder ein ausgemaltes Kaestchen zieht so nichts weg.
+  var KAESTCHEN_SUCHE = 1;   // pt
+  // Die Randlinie (1.07 pt) ist nach aussen gezeichnet: ihre Mitte liegt
+  // 0.38 pt ausserhalb des Kaestchens aus feldEcke (gemessen am PDF)
+  var LINIE_AUSSEN = 0.38;
+  // Helligkeit zwischen den Bildpunkten (bild.hell: Bildpunkt i deckt i bis i + 1)
+  function hellGlatt(bild, x, y){
+    x -= 0.5; y -= 0.5;
+    var ix = Math.floor(x), iy = Math.floor(y), fx = x - ix, fy = y - iy;
+    if (ix < 0 || iy < 0 || ix >= bild.w - 1 || iy >= bild.h - 1) return bild.hell(x, y);
+    var o = iy * bild.w + ix, l = bild.lum;
+    return (1 - fy) * ((1 - fx) * l[o] + fx * l[o + 1]) + fy * ((1 - fx) * l[o + bild.w] + fx * l[o + bild.w + 1]);
+  }
+  function linienVersatz(bild, abb, e, senkrecht){
+    // senkrecht: die linke und rechte Linie (Versatz in x), sonst oben/unten
+    var quer = senkrecht ? [1.5, 2.5, 3.7, 4.7] : [2, 3, 4, 5.1, 6.1, 7.1], abstand = (senkrecht ? FELD_B : FELD_H) + LINIE_AUSSEN;
+    var werte = [];
+    for (var d = -KAESTCHEN_SUCHE; d <= KAESTCHEN_SUCHE + 1e-9; d += 0.25){
+      var s = 0;
+      quer.forEach(function(q){
+        [-LINIE_AUSSEN, abstand].forEach(function(a){
+          var p = senkrecht ? abb(e[0] + a + d, e[1] + q) : abb(e[0] + q, e[1] + a + d);
+          s += Math.max(0, 1 - hellGlatt(bild, p[0], p[1]) / bild.papierBei(p[0], p[1]));
+        });
+      });
+      werte.push(s / (2 * quer.length));
+    }
+    var best = 0;
+    for (var i = 1; i < werte.length; i++) if (werte[i] > werte[best]) best = i;
+    var mittel = werte.reduce(function(a, b){ return a + b; }, 0) / werte.length;
+    var fein = best > 0 && best < werte.length - 1 ? feinMinimum(-werte[best - 1], -werte[best], -werte[best + 1]) : 0;
+    // Gewicht: wie deutlich die Linien aus dem Profil herausragen
+    return [-KAESTCHEN_SUCHE + 0.25 * (best + fein), Math.max(0, werte[best] - mittel)];
+  }
+  function feinMinimum(l, m, r){ var n = l - 2 * m + r; return n > 1e-9 ? Math.max(-0.5, Math.min(0.5, 0.5 * (l - r) / n)) : 0; }
+  // Gerade v = a + b * s durch die Werte der fuenf Kaestchen (gewichtet),
+  // der am weitesten abweichende einmal weg
+  function zeileGlaetten(werte){
+    function gerade(liste){
+      var sw = 0, sx = 0, sy = 0, sxx = 0, sxy = 0;
+      liste.forEach(function(q){ sw += q[2]; sx += q[2] * q[0]; sy += q[2] * q[1]; sxx += q[2] * q[0] * q[0]; sxy += q[2] * q[0] * q[1]; });
+      if (sw <= 1e-9) return [0, 0];
+      var n = sw * sxx - sx * sx, b = Math.abs(n) > 1e-9 ? (sw * sxy - sx * sy) / n : 0;
+      b = Math.max(-0.25, Math.min(0.25, b));
+      return [(sy - b * sx) / sw, b];
+    }
+    var liste = werte.map(function(v, s){ return [s, v[0], v[1]]; }).filter(function(q){ return q[2] > 0.02; });
+    if (liste.length < 2) return [0, 0, 0, 0, 0];
+    var g = gerade(liste);
+    if (liste.length >= 4){
+      var schlecht = liste.map(function(q){ return Math.abs(q[1] - g[0] - g[1] * q[0]); });
+      var m = schlecht.indexOf(Math.max.apply(null, schlecht));
+      if (schlecht[m] > 0.3){ liste.splice(m, 1); g = gerade(liste); }
+    }
+    return [0, 1, 2, 3, 4].map(function(s){ return Math.max(-KAESTCHEN_SUCHE, Math.min(KAESTCHEN_SUCHE, g[0] + g[1] * s)); });
+  }
+  function kaestchenVersatz(bild, abb, k, i){
+    var xs = [], ys = [];
+    for (var s = 0; s < 5; s++){
+      var e = feldEcke(k, i, s);
+      xs.push(linienVersatz(bild, abb, e, true));
+      ys.push(linienVersatz(bild, abb, e, false));
+    }
+    var dx = zeileGlaetten(xs), dy = zeileGlaetten(ys);
+    return [0, 1, 2, 3, 4].map(function(s){ return [dx[s], dy[s]]; });
+  }
   // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
   // Buchstabe, '' fuer leer oder '*' fuer mehrere Markierungen.
   function zeileLesen(werte, markiert, unsicher){
@@ -440,8 +517,12 @@
     if (grund >= VOLL) return ['*', true];
     var reihe = [0, 1, 2, 3, 4].sort(function(a, b){ return werte[b] - werte[a] || a - b; });
     var erstes = werte[reihe[0]], zweites = werte[reihe[1]];
-    if (erstes < markiert) return ['', erstes >= unsicher];
-    if (zweites < unsicher) return [BST[reihe[0]], false];
+    // Schwach, aber als einziges deutlich: im unscharfen Bild ist auch ein
+    // satter Strich blass. Gelesen wird der Buchstabe, zum Nachsehen.
+    if (erstes < markiert) return erstes >= unsicher && zweites < 0.25 * erstes ? [BST[reihe[0]], true] : ['', erstes >= unsicher];
+    // Ein Hauch neben einem kraeftigen Strich (Rest des Rands, Papierstaub)
+    // ist kein Zweifel - erst ab einem Zwanzigstel des Strichs
+    if (zweites < Math.max(unsicher, 0.06 * erstes)) return [BST[reihe[0]], false];
     if (zweites >= markiert && zweites >= 0.5 * erstes) return ['*', true];
     // Neben einem deutlichen Strich etwas Schwaches: radiert, ein Fleck oder
     // ein zaghafter zweiter Strich. Gezaehlt wird das deutliche.
@@ -465,7 +546,11 @@
         // Bogen verrutscht), ist auch eine gelesene Markierung nicht sicher.
         var da = zeileGedruckt(bild, r.abb, k, i) >= GEDRUCKT;
         if (!da) fehlend++;
-        var w = [0, 1, 2, 3, 4].map(function(s){ var e = feldEcke(k, i, s); return fuellung(bild, r.abb, e[0], e[1]); });
+        var v = kaestchenVersatz(bild, r.abb, k, i);
+        var w = [0, 1, 2, 3, 4].map(function(s){
+          var e = feldEcke(k, i, s);
+          return fuellung(bild, function(x, y){ return r.abb(x + v[s][0], y + v[s][1]); }, e[0], e[1]);
+        });
         werte.push(w); gedruckt.push(da); alle.push.apply(alle, w);
       }
     }
@@ -474,6 +559,13 @@
     alle.sort(function(a, b){ return a - b; });
     var rauschen = alle[Math.floor(alle.length * 0.75)];
     var markiert = Math.max(MARKIERT, 0.012 + 3 * rauschen), zweifel = Math.max(UNSICHER, 2 * rauschen);
+    // Und wie kraeftig ein Strich auf diesem Bogen typisch ist (Median der
+    // deutlichen Zeilen): Auf einem sauberen, gemittelten Kamerabild liegt
+    // das Rauschen fast bei null - dann waere schon ein Hauch Rand ein Zweifel.
+    var staerkste = werte.map(function(w){ return Math.max.apply(null, w); })
+      .filter(function(v){ return v >= markiert; }).sort(function(a, b){ return a - b; });
+    var typisch = staerkste.length >= 10 ? staerkste[Math.floor(staerkste.length / 2)] : 0;
+    markiert = Math.max(markiert, 0.12 * typisch); zweifel = Math.max(zweifel, 0.05 * typisch);
     if (schwellen){ markiert = schwellen[0]; zweifel = schwellen[1]; }
     werte.forEach(function(w, z){
       var a = zeileLesen(w, markiert, zweifel);
@@ -483,6 +575,7 @@
     if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: T.fehlerKein };
     if (fehlend) r.hinweise.push(T.zeilen);
     r.antworten = antworten; r.unsicher = unsicher;
+    r.werte = werte; r.schwellen = [markiert, zweifel];   // fuer die Pruefskripte
     return r;
   }
   // Die erste Seite, auf der ein Bogen zu lesen ist. Fehlt er ueberall,
@@ -715,6 +808,6 @@
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
   window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden,
-    intern: { passungScharf: passungScharf, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung } };
+    intern: { kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung } };
 })();
 </script>

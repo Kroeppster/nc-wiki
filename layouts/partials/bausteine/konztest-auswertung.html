@@ -503,6 +503,8 @@
   // Messpunkte eines Zeichens: Helligkeit und Art (0 Papier/Tinte, 1 Magenta
   // der Zeichen, 2 klar blau = Stift), Zeile fuer Zeile ueber das Messfeld.
   var NX, NY, PR, PG, PB, TMP;     // Messpunkte je Zeichen (waehlen())
+  var VIOLETT = new Float32Array(N * N);   // je Zeichen: mittlerer Magenta-Ueberschuss (blasseZeichen)
+  var HAUT = new Float32Array(N * N);      // je Zeichen: Anteil hautfarbener Messpunkte (blasseZeichen)
   var RAD = 5;                      // Messpunkte (je 0.5 pt) im Umkreis fuer das Papier
   function proben(bild, r, R, C, lum, art, o0, pap){
     var m = mitte(R, C), c = imBild(r, R, C), o = r.abb(m[0], m[1]), a = r.abb(m[0] + 1, m[1]), b = r.abb(m[0], m[1] + 1);
@@ -525,6 +527,20 @@
     // auf wenigen Millimetern, und im Schatten ist auch das Magenta dunkler.
     var ziel = 0.9 * n, s = 0, p = 255;
     for (var v = 0; v < 256; v++){ s += hist[v]; if (s >= ziel){ p = v; break; } }
+    // Fuer blasseZeichen: wie deutlich das Magenta des Zeichens ist, stetig
+    // statt je Messpunkt ja/nein (Rot und Blau ueber Gruen, gemittelt), und
+    // welcher Anteil des Messfelds hautfarben ist (warm, mittelhell: Rot
+    // deutlich ueber Gruen und Blau, Gruen nicht unter Blau - das waere
+    // Magenta) - ein Finger. Ein schwarzer oder blauer Stift ist es nicht, und
+    // ein Strich bedeckt nie ein Viertel des Messfelds.
+    var vs = 0, vn = 0, hs = 0;
+    for (q = 0; q < NX * NY; q++) if (art[o0 + q] !== 3){
+      vs += Math.max(0, Math.min(PR[q], PB[q]) - PG[q]); vn++;
+      var lq = lum[o0 + q];
+      if (PR[q] - PG[q] > 0.12 * p && PR[q] - PB[q] > 0.15 * p && PG[q] - PB[q] > -0.03 * p && lq > 0.3 * p && lq < 0.92 * p) hs++;
+    }
+    VIOLETT[R * N + C] = vn ? vs / vn / Math.max(p, 1) : 0;
+    HAUT[R * N + C] = vn ? hs / vn : 0;
     if (r.bunt) for (q = 0; q < NX * NY; q++){
       if (art[o0 + q] === 3) continue;
       // Magenta (Zeichen): Rot und Blau ueber Gruen; klar blau: Stift
@@ -643,14 +659,18 @@
     // Wo das Magenta eines Zeichens viel blasser ist als sonst (Spiegelung,
     // Rand des Fotos), ist auch ein Strich kaum zu sehen: bitte ansehen
     var verblasst = blasseZeichen(r, art);
+    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ verblasst: Array.prototype.slice.call(verblasst), v: Array.prototype.slice.call(VIOLETT), mv: verblasst.mv, haut: Array.prototype.slice.call(HAUT), markiert: e.markiert });
     // Verdeckt (Finger, Gegenstand, Rand des Fotos): dort laesst sich nichts
     // lesen - lieber melden als raten
-    var verdeckt = 0;
+    var verdeckt = [];
     // (ein markiertes Zeichen ist nicht verdeckt: ein dicker Strich ueber
     // einem kleinen Zeichen deckt dessen Magenta selbst zu. Liegt das ganze
     // Raster daneben, faengt das die Probe auf Nicht-Zielzeichen oben ab.)
-    for (i = 0; i < N * N; i++) if (verblasst[i] === 2 && !e.markiert[i]) verdeckt++;
-    if (verdeckt >= 3) return { fehler: T.verdeckt };
+    // (ausser es ist Haut: ein Finger auf dem Blatt wird als Tinte gelesen)
+    for (i = 0; i < N * N; i++) if (verblasst[i] === 2 && (!e.markiert[i] || HAUT[i] >= 0.25)) verdeckt.push(i);
+    if (verdeckt.length >= 3) return { fehler: T.verdeckt, verdeckt: verdeckt.map(function(i){   // (fuer die Pruefskripte)
+      var z = K.zeichen[Math.floor(i / N)][i % N], c = imBild(r, Math.floor(i / N), i % N);
+      return [i, z, +(VIOLETT[i] / verblasst.mv[z]).toFixed(2), +HAUT[i].toFixed(2), Math.round(c[0]), Math.round(c[1])]; }) };
     r.markiert = []; r.unsicher = []; r.roh = roh;
     if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
     for (R = 0; R < N; R++){
@@ -669,20 +689,31 @@
   function blasseZeichen(r, art){
     var aus = new Uint8Array(N * N);
     if (!r.farbe) return aus;
-    var NP = NX * NY, n = [], je = {}, rand = [], R, C, i;
+    var NP = NX * NY, rand = [], mv = {}, R, C, i;
     for (i = 0; i < N * N; i++){
-      var k = 0, aussen = 0;
-      for (var q = i * NP; q < (i + 1) * NP; q++){ if (art[q] === 1) k++; if (art[q] === 3) aussen++; }
+      var aussen = 0;
+      for (var q = i * NP; q < (i + 1) * NP; q++) if (art[q] === 3) aussen++;
       rand.push(aussen);
-      n.push(k);
       var z = K.zeichen[Math.floor(i / N)][i % N];
-      (je[z] = je[z] || []).push(k);
+      (mv[z] = mv[z] || []).push(VIOLETT[i]);
     }
-    var mitte_ = {};
-    Object.keys(je).forEach(function(z){ mitte_[z] = median(je[z]); });
-    // (nur wo das Magenta sonst deutlich zu sehen ist: bei blassem Druck
-    // schwankt es von Zeichen zu Zeichen)
-    for (R = 0; R < N; R++) for (C = 0; C < N; C++){ i = R * N + C; var m_ = mitte_[K.zeichen[R][C]]; aus[i] = m_ >= 25 && n[i] < 0.3 * m_ ? (n[i] < 0.1 * m_ || rand[i] > 0.3 * NP ? 2 : 1) : 0; }
+    Object.keys(mv).forEach(function(z){ mv[z] = median(mv[z]); });
+    // Gemessen am stetigen Mass (VIOLETT, im Verhaeltnis zum selben Zeichen
+    // anderswo), nicht an der Zahl der Messpunkte ueber der Magenta-Schwelle:
+    // Ist das Magenta nur knapp zu sehen (im Videobild des Handys: feine
+    // Zeichen, Farbe in halber Aufloesung), liegt es bei manchen Zeichen
+    // knapp unter der Schwelle und fiel dort ganz weg (Kamera-Labor Oktober
+    // 2026: 15 verstreute «verdeckte» Zeichen, die im Bild ganz normal
+    // aussahen - Foto abgelehnt). Ein nur blasses Zeichen behaelt gut 40 %
+    // des Masses, unter einem Finger, einem Gegenstand oder im Glanz bleibt
+    // fast nichts. (Nur wo das Magenta sonst deutlich zu sehen ist.)
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      i = R * N + C;
+      var z_ = K.zeichen[R][C], v_ = VIOLETT[i] / Math.max(mv[z_], 1e-6);
+      if (mv[z_] < 0.012) continue;
+      aus[i] = v_ < 0.3 || HAUT[i] >= 0.25 || (rand[i] > 0.3 * NP && v_ < 0.6) ? 2 : v_ < 0.45 ? 1 : 0;
+    }
+    aus.v = VIOLETT; aus.mv = mv; aus.haut = HAUT;   // (fuer die Pruefskripte)
     return aus;
   }
   // Tinte je Zeichen (0 bis 1): je Messpunkt, wie viel dunkler als das Papier
@@ -1006,7 +1037,10 @@
   // Ausgeloest wird ab 850 px Blattbreite (gut 1.4 px je pt: so fein
   // braucht das Suchen der Flecken das Bild, flecken()).
   function livePruefen(bild){
-    var g = rasterSuchen(bild, K.farbe).g;
+    // mit Weissabgleich wie beim Auswerten: Unter warmem Raumlicht liegt Blau
+    // kaum ueber Gruen, und der Sucher fand 0 % des Rasters (Kamera-Labor
+    // Oktober 2026), obwohl das Foto selbst lesbar gewesen waere
+    var g = rasterSuchen(weissabgleich(bild), K.farbe).g;
     var anteil = g ? g.platz.size / (N * N) : 0;
     if (!g || anteil < 0.85) return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) };
     // Eckzeichen: oben links, unten links, unten rechts, oben rechts
@@ -1031,7 +1065,7 @@
   // und wo ein Zeichen im angezeigten Bild steht (Anteil der Breite/Hoehe)
   window.NCWikiKonztestStand = function(){ return stand; };
   // Fuer die Fehlersuche an neuen Konztests (scripts/konztest-pruefen.mjs)
-  window.NCWikiKonztestIntern = { flecken: flecken, gitter: gitter, istFarbig: istFarbig, weissabgleich: weissabgleich, bogenLesen: bogenLesen, K: function(){ return K; } };
+  window.NCWikiKonztestIntern = { rasterSuchen: rasterSuchen, livePruefen: livePruefen, flecken: flecken, gitter: gitter, istFarbig: istFarbig, weissabgleich: weissabgleich, bogenLesen: bogenLesen, K: function(){ return K; } };
   window.NCWikiKonztestPunkt = function(R, C){
     var sc = alsScan(), p = zeichenPunkt(R, C), q = sc ? sc.leinwand : stand.bild.leinwand;
     return [p[0] / q.width, p[1] / q.height];
