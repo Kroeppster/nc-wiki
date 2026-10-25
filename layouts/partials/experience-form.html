@@ -207,8 +207,9 @@
            dateiinhalt, _subject) jetzt mit den berechneten Werten befüllen,
            bevor die Daten verschickt werden. */}}
       var sprache = form.elements['sprache'].value;
-      form.elements['dateiname'].value = 'content/' + sprache + '/ems/erfahrungsberichte/bericht-'
-        + (slugify(name) || 'anonym') + (/^\d{4}$/.test(jahr) ? '-' + jahr : '') + '.md';
+      {{/* Pfad im Repo (keine Webadresse), aus Teilen zusammengesetzt. */}}
+      form.elements['dateiname'].value = ['content', sprache, 'ems', 'erfahrungsberichte',
+        'bericht-' + (slugify(name) || 'anonym') + (/^\d{4}$/.test(jahr) ? '-' + jahr : '') + '.md'].join('/');
       form.elements['dateiinhalt'].value = buildDateiinhalt(sprache, name, jahr, ort, vorbereitung, geholfen, tipp);
       form.elements['_subject'].value = 'Neuer Erfahrungsbericht: ' + name + ' (' + jahr + ')';
 
