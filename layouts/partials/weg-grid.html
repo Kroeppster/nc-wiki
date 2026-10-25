@@ -112,7 +112,40 @@
 <script>
 (function(){
   var wrap = document.getElementById('weg-wrap'), modus = document.getElementById('weg-modus');
-  if(!wrap || !modus) return;
+  if(!wrap) return;
+
+  /* Die Beschriftungen stehen frei positioniert über bzw. unter der Achse; die
+     Spurhöhen in style.css (--spur-oben, --spur-unten) sind nur Richtwerte. Je
+     nach Sprache und Bildschirmbreite brechen die Texte öfter um und ragten
+     sonst in die Legende oben oder in die Quellenangabe unten (gemessen auf
+     Französisch: 44 px, bei 900 px Breite 71 px). Deshalb hier nachmessen und
+     die Spur nur wenn nötig höher machen. Unter 900 px gilt die Liste, dort
+     bleibt alles beim CSS. */
+  var oben = wrap.querySelector('.weg-oben'), unten = wrap.querySelector('.weg-unten');
+  function hoehe(){
+    if(!oben || !unten) return;
+    oben.style.height = ''; unten.style.height = '';
+    if(!window.matchMedia('(min-width:900px)').matches) return;
+    var o = oben.getBoundingClientRect(), u = unten.getBoundingClientRect();
+    var oberkante = o.top, unterkante = u.bottom;
+    oben.querySelectorAll('.weg-label').forEach(function(e){
+      var r = e.getBoundingClientRect(); if(r.height) oberkante = Math.min(oberkante, r.top - 8);
+    });
+    unten.querySelectorAll('.weg-label-angebot').forEach(function(e){
+      var r = e.getBoundingClientRect(); if(r.height) unterkante = Math.max(unterkante, r.bottom + 8);
+    });
+    if(oberkante < o.top) oben.style.height = Math.ceil(o.bottom - oberkante) + 'px';
+    if(unterkante > u.bottom) unten.style.height = Math.ceil(unterkante - u.top) + 'px';
+  }
+  hoehe();
+  var geplant = false;
+  window.addEventListener('resize', function(){
+    if(geplant) return; geplant = true;
+    requestAnimationFrame(function(){ geplant = false; hoehe(); });
+  });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(hoehe);
+
+  if(!modus) return;
   modus.hidden = false;
   modus.querySelectorAll('.filter-pill').forEach(function(b){
     b.addEventListener('click', function(){
@@ -122,6 +155,7 @@
         x.classList.toggle('is-active', an);
         x.setAttribute('aria-pressed', an ? 'true' : 'false');
       });
+      hoehe();
     });
   });
 })();
