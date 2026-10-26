@@ -600,8 +600,12 @@ window.NCWikiBild = (function(){
         var ctx = klein.getContext('2d');
         ctx.drawImage(gut, 0, 0, klein.width, klein.height);
         var r = o.pruefen(new Bild(ctx.getImageData(0, 0, klein.width, klein.height).data, klein.width, klein.height));
+        // (Liefert die Kamera fuer diesen Bogen ohnehin zu wenig, gleich der
+        // Hinweis aufs Foto - nicht erst, wenn alles gefunden ist: Der
+        // Konztest wird bei 720p gar nicht gefunden, der Sucher meldete
+        // endlos «x % des Rasters im Bild», Kamera-Labor Oktober 2026.)
         var mb = o.minBreite ? mindestBreite() : 0;
-        if (r.ok && o.minBreite && (!mb || r.breite / z < mb)){ r.ok = false; r.hinweis = mb ? T.naeher : T.aufloesung; }
+        if (o.minBreite && (!mb || (r.ok && r.breite / z < mb))){ r.ok = false; r.hinweis = mb ? T.naeher : T.aufloesung; }
         if (r.ok){
           var d = Math.hypot(klein.width, klein.height);
           var still = letzte && r.punkte.length === letzte.length && r.punkte.every(function(p, i){

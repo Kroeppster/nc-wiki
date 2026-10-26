@@ -110,6 +110,7 @@
     fehlerBild: {{ i18n "ab_fehler_bild" | jsonify | safeJS }},
     fehlerKlein: {{ i18n "ab_fehler_klein" | jsonify | safeJS }},
     fehlerKein: {{ i18n "ab_fehler_kein" | jsonify | safeJS }},
+    fehlerFlach: {{ i18n "ab_fehler_flach" | jsonify | safeJS }},
     drei: {{ i18n "ab_hinweis_drei" | jsonify | safeJS }},
     keine: {{ i18n "ab_hinweis_keine" | jsonify | safeJS }},
     verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
@@ -317,7 +318,7 @@
     var breite = s[0] * A4[0] / bild.vergroessert;
     if (!ohneGroesse && breite < 600) return { fehler: T.fehlerKlein.replace('{n}', Math.round(breite)) };
     if (Math.abs(s[0] / s[1] - 1) > 0.06) hinweise.push(T.verzerrt.replace('{n}', Math.round(Math.abs(s[0] / s[1] - 1) * 100)));
-    return { abb: beste[1], hinweise: hinweise };
+    return { abb: beste[1], hinweise: hinweise, marken: anzahl };
   }
   // --- Kaestchen lesen ---------------------------------------------------------
   function feldEcke(block, zeile, spalte){
@@ -574,7 +575,18 @@
     // erwarteten (stark gewellt, verzerrt, falsche Ecke), waeren die Markierungen
     // geraten - lieber neu fotografieren lassen.
     r.passung = passungScharf(bild, r.abb);
-    if (r.passung < PASSUNG_MIN) return { fehler: T.fehlerKein };
+    if (r.passung < PASSUNG_MIN){
+      // Knapp ueber der Mindestgroesse sind die Kaestchenraender oft schon
+      // zu fein, um sie zu treffen (720p-Kamera, Kamera-Labor Oktober 2026:
+      // «kein Antwortbogen erkannt», obwohl alle vier Ecken gefunden waren) -
+      // dann hilft «naeher heran».
+      // Sind alle vier Ecken da und der Bogen gross genug, liegt er nicht
+      // flach (Kamera-Labor: einmal gefaltet, 11 mm gewoelbt - die Kaestchen
+      // bis 8 pt neben der Stelle; «Sind alle vier Ecken zu sehen?» fuehrte
+      // da in die Irre).
+      var breite = r.abb.massstab()[0] * A4[0] / bild.vergroessert;
+      return { fehler: breite < 750 ? T.fehlerKlein.replace('{n}', Math.round(breite)) : r.marken === 4 ? T.fehlerFlach : T.fehlerKein };
+    }
     var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [], kante = [];
     for (var k = 0; k < BLOECKE; k++){
       for (var i = 0; i < ZEILEN; i++){
@@ -879,6 +891,6 @@
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
   window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden,
-    intern: { ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung } };
+    intern: { ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung, rahmenTreffer: rahmenTreffer } };
 })();
 </script>
