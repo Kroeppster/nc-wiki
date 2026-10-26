@@ -150,6 +150,25 @@ if (erwartet._kamera) {
   pruef('selbst ausgeloest und richtig gelesen', gelesen.length === 144 && falsch.length === 0, gelesen.length + ' ' + falsch.join(' '));
   pruef('Kamera danach wieder aus', await kp.evaluate(() => document.getElementById('ab-kamera-feld').hidden));
   await kb.close();
+  // Immer nur ein Kamerastrom (bild-lesen.html, aktiveKamera): Ein
+  // Doppelklick startete einen zweiten, der nach «Abbrechen» weiterlief.
+  const db = await chromium.launch({ args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream',
+    '--use-file-for-fake-video-capture=' + join(ORDNER, erwartet._kamera.datei)] });
+  const dc = await db.newContext({ viewport: { width: 420, height: 900 }, permissions: ['camera'] });
+  await dc.addInitScript(() => { try { localStorage.setItem('alpha-notice-seen', '1'); localStorage.setItem('cookie-consent', 'accepted'); } catch (e) {}
+    window.__spuren = []; const o = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+    navigator.mediaDevices.getUserMedia = c => o(c).then(s => { window.__spuren.push(...s.getTracks()); return s; }); });
+  const dp = await dc.newPage();
+  await dp.goto(ADRESSE, { waitUntil: 'networkidle' });
+  const live = () => dp.evaluate(() => window.__spuren.filter(t => t.readyState === 'live').length);
+  await dp.dblclick('#ab-live'); await dp.waitForTimeout(1500);
+  const nachDoppel = await live();
+  await dp.click('#kt-live'); await dp.waitForTimeout(1500);
+  const nachWechsel = await live();
+  await dp.click('#kt-kamera-feld .bl-kamera-knoepfe button >> nth=1'); await dp.waitForTimeout(800);
+  pruef('Doppelklick und Werkzeugwechsel: immer nur eine Kamera, nach Abbrechen keine', nachDoppel === 1 && nachWechsel === 1 && await live() === 0,
+    nachDoppel + ' / ' + nachWechsel + ' / ' + await live());
+  await db.close();
 }
 // Mehrere Videobilder mitteln (bild-lesen.html, stapeln): erst wie genau die
 // Ausrichtung eine bekannte Verschiebung und Drehung findet, dann ein

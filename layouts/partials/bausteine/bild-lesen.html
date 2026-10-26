@@ -36,6 +36,7 @@ window.NCWikiBild = (function(){
     kameraFehler: {{ i18n "bl_kamera_fehler" | jsonify | safeJS }},
     ruhig: {{ i18n "bl_kamera_ruhig" | jsonify | safeJS }},
     naeher: {{ i18n "bl_kamera_naeher" | jsonify | safeJS }},
+    aufloesung: {{ i18n "bl_kamera_aufloesung" | jsonify | safeJS }},
     ausloesen: {{ i18n "bl_kamera_ausloesen" | jsonify | safeJS }},
     abbrechen: {{ i18n "bl_kamera_abbrechen" | jsonify | safeJS }},
     aufnahme: {{ i18n "bl_kamera_aufnahme" | jsonify | safeJS }}
@@ -524,6 +525,8 @@ window.NCWikiBild = (function(){
   //             und einer Liste von Ersatzbildern (Videobild, das zuletzt
   //             gepruefte Bild), falls sich quelle nicht lesen laesst
   // o.minBreite so breit (px, volle Aufloesung) muss der Bogen sein
+  // o.minLesbar so breit mindestens, wenn die Kamera fuer o.minBreite zu
+  //             wenige Bildpunkte liefert (mindestBreite)
   // Ausgeloest wird, wenn dreimal hintereinander alles gefunden ist und
   // sich kaum bewegt hat - oder von Hand.
   function kameraMoeglich(){
@@ -575,6 +578,17 @@ window.NCWikiBild = (function(){
         ctx.closePath(); ctx.stroke();
       }
     }
+    // Wie breit der Bogen mindestens sein muss: o.minBreite - ausser die
+    // Kamera liefert so wenige Bildpunkte (720p), dass das Blatt das gar nie
+    // erreicht (der Sucher verlangte sonst endlos «naeher», Kamera-Labor
+    // Oktober 2026). Dann genuegt, was das Lesen mindestens braucht
+    // (o.minLesbar); reicht auch das nicht, 0: ein Hinweis aufs Foto.
+    function mindestBreite(){
+      var vw = video.videoWidth, vh = video.videoHeight, kurz = Math.min(vw, vh), lang = Math.max(vw, vh);
+      var hoechstens = 0.95 * Math.min(kurz, lang * A4[0] / A4[1]);
+      if (!o.minLesbar || hoechstens >= o.minBreite / 0.92) return o.minBreite;
+      return hoechstens * 0.92 >= o.minLesbar ? hoechstens * 0.92 : (hoechstens >= o.minLesbar ? o.minLesbar : 0);
+    }
     function pruefen(){
       if (!laeuft) return;
       if (video.readyState >= 2 && video.videoWidth){
@@ -586,7 +600,8 @@ window.NCWikiBild = (function(){
         var ctx = klein.getContext('2d');
         ctx.drawImage(gut, 0, 0, klein.width, klein.height);
         var r = o.pruefen(new Bild(ctx.getImageData(0, 0, klein.width, klein.height).data, klein.width, klein.height));
-        if (r.ok && o.minBreite && r.breite / z < o.minBreite){ r.ok = false; r.hinweis = T.naeher; }
+        var mb = o.minBreite ? mindestBreite() : 0;
+        if (r.ok && o.minBreite && (!mb || r.breite / z < mb)){ r.ok = false; r.hinweis = mb ? T.naeher : T.aufloesung; }
         if (r.ok){
           var d = Math.hypot(klein.width, klein.height);
           var still = letzte && r.punkte.length === letzte.length && r.punkte.every(function(p, i){

@@ -1109,7 +1109,11 @@
     el('kt-ergebnis').hidden = true;
     melden('');
     if (!K){ melden(T.eigenFehlt, true); return; }
-    B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1400, minBreite: 850,
+    // (Sucherbild bis 1920 px, also bei Full-HD unverkleinert: Feine, eng
+    // stehende Zeichen - Serie 2024, Testsimulation 2023 - fanden sich im
+    // verkleinerten Bild nur zu 40 %, und der Sucher loeste nie aus. Kaum
+    // langsamer: Die Flecken muessen dort seltener neu gesucht werden.)
+    B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1920, minBreite: 850, minLesbar: 700,
       fertig: function(q, ersatz){ auswerten([q].concat(ersatz || [])); }, fehler: function(t){ melden(t, true); } });
   });
   // Fuer die Pruefung (scripts/konztest-pruefen.mjs): der gelesene Zustand

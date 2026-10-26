@@ -1,0 +1,225 @@
+[
+ {
+  "name": "ab-normal",
+  "szene": {
+   "seed": 1,
+   "art": "antwortbogen",
+   "jahr": 2026
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   },
+   {
+    "weg": "stapel",
+    "sprache": "fr"
+   }
+  ]
+ },
+ {
+  "name": "ab-schatten-hart",
+  "szene": {
+   "seed": 103,
+   "art": "antwortbogen",
+   "jahr": 2024,
+   "kamera": {
+    "licht": {
+     "schatten": {
+      "staerke": 0.55,
+      "groesse": 0.4,
+      "weich": 0.05,
+      "bewegt": false
+     }
+    }
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "ab-wenig-licht-warm",
+  "szene": {
+   "seed": 101,
+   "art": "antwortbogen",
+   "jahr": 2026,
+   "kamera": {
+    "belichtung": 0.55,
+    "rauschen": 9,
+    "belichtungszeit_s": 0.0333,
+    "weissabgleich": [
+     1,
+     0.85,
+     0.6
+    ]
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "ab-bleistift-blass",
+  "szene": {
+   "seed": 102,
+   "art": "antwortbogen",
+   "jahr": 2023,
+   "stift": {
+    "druck": 0.3,
+    "breite_mm": 0.3,
+    "zittern": 0.5
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "ab-gedreht-geneigt",
+  "szene": {
+   "seed": 203,
+   "art": "antwortbogen",
+   "jahr": 2025,
+   "kamera": {
+    "drehung_grad": 10,
+    "neigung_grad": [
+     15,
+     8
+    ],
+    "fuellung": 0.72
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "ab-720p",
+  "szene": {
+   "seed": 206,
+   "art": "antwortbogen",
+   "jahr": 2026,
+   "kamera": {
+    "aufloesung": [
+     720,
+     1280
+    ]
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "kt-normal",
+  "szene": {
+   "seed": 301,
+   "art": "konztest",
+   "konztest": "ts2026"
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   },
+   {
+    "weg": "foto",
+    "sprache": "it"
+   }
+  ]
+ },
+ {
+  "name": "kt-2023-blau",
+  "szene": {
+   "seed": 302,
+   "art": "konztest",
+   "konztest": "ts2023",
+   "stift": {
+    "art": "fineliner",
+    "farbe": [
+     30,
+     50,
+     160
+    ]
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "kt-2024-duenn",
+  "szene": {
+   "seed": 309,
+   "art": "konztest",
+   "konztest": "s2024-02",
+   "stift": {
+    "art": "fineliner",
+    "breite_mm": 0.3
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "kt-finger",
+  "szene": {
+   "seed": 5,
+   "art": "konztest",
+   "konztest": "ts2026",
+   "kamera": {
+    "finger": {
+     "ecke": "r",
+     "groesse_mm": 22
+    }
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "stapel"
+   }
+  ],
+  "erwartet": "fehler"
+ }
+]

@@ -115,6 +115,7 @@
     verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
     zeilen: {{ i18n "ab_hinweis_zeilen" | jsonify | safeJS }},
     blass: {{ i18n "ab_hinweis_blass" | jsonify | safeJS }},
+    rauschen: {{ i18n "ab_hinweis_rauschen" | jsonify | safeJS }},
     summe: {{ i18n "ab_ergebnis" | jsonify | safeJS }},
     untertest: {{ i18n "ab_untertest" | jsonify | safeJS }},
     punkte: {{ i18n "ab_punkte" | jsonify | safeJS }},
@@ -517,6 +518,7 @@
     var dx = zeileGlaetten(xs), dy = zeileGlaetten(ys);
     return [0, 1, 2, 3, 4].map(function(s){ return [dx[s], dy[s]]; });
   }
+  function median(a){ a = a.slice().sort(function(x, y){ return x - y; }); return a[Math.floor(a.length / 2)]; }
   // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
   // Buchstabe, '' fuer leer oder '*' fuer mehrere Markierungen.
   function zeileLesen(werte, markiert, unsicher, typisch){
@@ -528,10 +530,12 @@
     // satter Strich blass. Gelesen wird der Buchstabe, zum Nachsehen.
     // Ebenso ein Strich in einem Block, dessen Schwellen eine Stoerung (Rand
     // eines harten Schattens) hochgetrieben hat: so kraeftig wie die Striche
-    // sonst auf dem Bogen (mindestens halb) und allein in der Zeile.
+    // sonst auf dem Bogen (mindestens ein Fuenftel) und allein in der Zeile.
     if (erstes < markiert){
-      var allein = zweites < 0.25 * erstes && (erstes >= unsicher || (typisch && erstes >= 0.5 * typisch));
-      return allein ? [BST[reihe[0]], true] : ['', erstes >= unsicher];
+      var allein = zweites < 0.25 * erstes && (erstes >= unsicher || (typisch && erstes >= 0.2 * typisch));
+      // (nicht eindeutig leer, wenn das staerkste Kaestchen ein Fuenftel
+      // eines typischen Strichs erreicht: bitte ansehen)
+      return allein ? [BST[reihe[0]], true] : ['', erstes >= unsicher || (typisch > 0 && erstes >= 0.2 * typisch)];
     }
     // Ein Hauch neben einem kraeftigen Strich (Rest des Rands, Papierstaub)
     // ist kein Zweifel - erst ab einem Zwanzigstel des Strichs
@@ -572,12 +576,17 @@
     // Block (90 Kaestchen) statt fuer den ganzen Bogen: Eine Stoerung an einer
     // Stelle (harter Schatten, Glanz) hob sonst die Schwellen ueberall, und
     // jeder normale Strich galt als leer (Kamera-Labor Oktober 2026).
-    var schw = [];
+    var schw = [], rauschenJe = [];
     for (k = 0; k < BLOECKE; k++){
       var block = [].concat.apply([], werte.slice(k * ZEILEN, (k + 1) * ZEILEN)).sort(function(a, b){ return a - b; });
       var rauschen = block[Math.floor(block.length * 0.75)];
       schw.push([Math.max(MARKIERT, 0.012 + 3 * rauschen), Math.max(UNSICHER, 2 * rauschen)]);
+      rauschenJe.push(rauschen);
     }
+    // Ist das ganze Bild stark verrauscht oder unscharf (wenig Licht, bewegt -
+    // im Kamera-Labor bei 0.06 bis 0.3, brauchbare Fotos hoechstens 0.012),
+    // sind viele Zeilen orange: dann sagen, woran es liegt
+    if (!schwellen && median(rauschenJe) > 0.05) r.hinweise.push(T.rauschen);
     // Und wie kraeftig ein Strich auf diesem Bogen typisch ist (Median der
     // deutlichen Zeilen): Auf einem sauberen, gemittelten Kamerabild liegt
     // das Rauschen fast bei null - dann waere schon ein Hauch Rand ein Zweifel.
@@ -816,7 +825,8 @@
   // Im Sucher: die gefundenen Passermarken als Kreise, gruen, sobald alle vier
   // da sind und der Kopfkasten an der richtigen Stelle liegt. Ausgeloest
   // wird erst, wenn der Bogen in voller Aufloesung breit genug ist (700 px:
-  // etwas mehr als die 600, die das Lesen mindestens braucht).
+  // etwas mehr als die 600, die das Lesen mindestens braucht; liefert die
+  // Kamera nur 720p, genuegen 620).
   function livePruefen(bild){
     var m = passermarken(bild), punkte = KREIS.filter(function(e){ return m[e]; }).map(function(e){ return m[e]; });
     if (punkte.length < 4) return { ok: false, punkte: punkte, hinweis: T.kameraEcken.replace('{n}', punkte.length) };
@@ -834,7 +844,7 @@
   el('ab-live').addEventListener('click', function(){
     el('ab-ergebnis').hidden = true;
     melden('ab-status', '');
-    B.kamera({ feld: el('ab-kamera-feld'), pruefen: livePruefen, minBreite: 700,
+    B.kamera({ feld: el('ab-kamera-feld'), pruefen: livePruefen, minBreite: 700, minLesbar: 620,
       fertig: function(quelle, ersatz){ bogenAus([quelle].concat(ersatz || [])); },
       fehler: function(text){ melden('ab-status', text, true); } });
   });
