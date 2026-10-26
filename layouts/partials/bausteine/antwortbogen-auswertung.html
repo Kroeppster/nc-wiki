@@ -561,14 +561,16 @@
       // eines typischen Strichs erreicht: bitte ansehen)
       return allein ? [BST[reihe[0]], true] : ['', erstes >= unsicher || (typisch > 0 && erstes >= 0.2 * typisch)];
     }
-    // Knapp ueber der Schwelle (unter dem Doppelten) und viel schwaecher als
+    // Knapp ueber der Schwelle (unter dem 2.5fachen) und viel schwaecher als
     // die Striche sonst auf dem Bogen (unter zwei Fuenfteln): ein Fleck im
     // verrauschten Bild oder ein zaghafter Strich - bitte ansehen. Kamera-
     // Labor Oktober 2026: Abendlicht, ein Rauschfleck von 0.14 in einer
     // leeren Zeile galt bei typisch 0.46 still als Strich; ueber 130 Bilder
     // 9 solche Zeilen, dafuer 10 Zeilen mehr zum Nachsehen (nur «unter zwei
-    // Fuenfteln» waeren es 49 gewesen).
-    if (typisch > 0 && erstes < 0.4 * typisch && erstes < 2 * markiert) return [BST[reihe[0]], true];
+    // Fuenfteln» waeren es 49 gewesen). Grenze danach vom Doppelten auf das
+    // 2.5fache: ein Farbfleck im Kamerabild (0.102 bei Schwelle 0.049) in
+    // einer leeren Zeile; ueber 145 Bilder 6 Zeilen mehr zum Nachsehen.
+    if (typisch > 0 && erstes < 0.4 * typisch && erstes < 2.5 * markiert) return [BST[reihe[0]], true];
     // Ein Hauch neben einem kraeftigen Strich (Rest des Rands, Papierstaub)
     // ist kein Zweifel - erst ab einem Zwanzigstel des Strichs
     if (zweites < Math.max(unsicher, 0.06 * erstes)) return [BST[reihe[0]], false];
