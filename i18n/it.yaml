@@ -472,7 +472,7 @@ bl_kamera_aufnahme: "Scatto …"
 bl_original: "Mostra la foto originale"
 ab_live_kamera: "Fotocamera dal vivo"
 ab_kamera_ecken: "{n} dei 4 angoli neri nell’immagine – inquadra tutto il foglio."
-ab_kamera_kein: "Angoli trovati, ma nessun foglio delle risposte riconosciuto. Tutto il foglio è nell’immagine?"
+ab_kamera_kein: "Angoli trovati, ma nessun foglio delle risposte riconosciuto. Tutto il foglio è steso in piano nell’immagine?"
 ab_kamera_passt: "I quattro angoli non corrispondono: il foglio è ben steso in piano e tutti e quattro gli angoli neri sono interamente nell’immagine?"
 
 # Konztest auswerten (Alpha-Seite, layouts/partials/bausteine/konztest-auswertung.html)

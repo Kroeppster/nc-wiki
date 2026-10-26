@@ -482,7 +482,7 @@ bl_kamera_aufnahme: "Aufnahme …"
 bl_original: "Originalfoto zeigen"
 ab_live_kamera: "Live-Kamera"
 ab_kamera_ecken: "{n} von 4 schwarzen Ecken im Bild – den ganzen Bogen ins Bild nehmen."
-ab_kamera_kein: "Ecken gefunden, aber kein Antwortbogen erkannt. Liegt der ganze Bogen im Bild?"
+ab_kamera_kein: "Ecken gefunden, aber kein Antwortbogen erkannt. Liegt der ganze Bogen flach im Bild?"
 ab_kamera_passt: "Die vier Ecken passen nicht zusammen – liegt der Bogen flach, und sind alle vier schwarzen Ecken ganz im Bild?"
 
 # Konztest auswerten (Alpha-Seite, layouts/partials/bausteine/konztest-auswertung.html)
