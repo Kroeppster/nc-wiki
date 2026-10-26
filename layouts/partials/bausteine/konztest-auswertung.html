@@ -764,6 +764,12 @@
     // zaehlen wie jeder Strich (auch ein versehentlicher in der letzten
     // Zeile ist die letzte Markierung), werden aber zum Ansehen gezeigt
     var dicht = bearbeitetBis(e.markiert), letzt = -1, vorher = 0, aus = 0;
+    // Ein unsicheres Zeichen hinter dem dicht bearbeiteten Teil ist eher
+    // Rauschen als ein Strich: vorgeschlagen wird leer, es bleibt orange.
+    // Sonst rueckte «bearbeitet bis» ans Ende, und alle Zielzeichen dazwischen
+    // galten als ausgelassen (Kamera-Labor Oktober 2026: ein leeres, gedruckt
+    // ausgefuelltes Quadrat knapp ueber der Grenze - Rohwert 195 statt 220).
+    for (i = dicht + 1; i < N * N; i++) if (e.markiert[i] && e.unsicher[i]) e.markiert[i] = false;
     for (i = 0; i < N * N; i++) if (e.markiert[i]){ letzt = i; if (i > dicht) e.unsicher[i] = true; }
     for (i = 0; i < letzt; i++) if (K.ziele[Math.floor(i / N)][i % N] === '1'){ vorher++; if (!e.markiert[i]) aus++; }
     // Unplausibel (fast nichts markiert, oder mehr als 30 % der Zielzeichen
@@ -997,10 +1003,22 @@
     var rausch = quantil(leer, 0.995), mitte = quantil(leer, 0.5), a = Math.max(rausch + 0.5 * (rausch - mitte), rausch + 0.5 * MARKIERT);
     var b = voll.length >= 3 ? Math.min(0.5 * quantil(voll, 0.5), Math.max(t, 3 * rausch)) : t;
     var lo = Math.max(Math.min(a, b, t), rausch, 0.5 * MARKIERT), hi = Math.max(a, b, t);
+    // Fuer die Zweifelsfaelle (orange) die Mitte der Luecke zwischen den
+    // staerksten leeren und den schwaechsten markierten Zeichen, wenn es
+    // eine gibt: Die Grenze t lag oft an deren unterem Rand, und ein leeres
+    // Zeichen knapp darueber galt als markiert, ein schwacher Strich knapp
+    // darunter als leer (Kamera-Labor Oktober 2026, Normalfall: Rohwert in 6
+    // von 125 Bildern falsch, mit dieser Mitte in 2). Nur die orangen
+    // Zeichen - die anderen bleiben, wie sie sind.
+    var mitteLuecke = t;
+    if (voll.length >= 20){
+      var la = quantil(leer, 0.995), vb = quantil(voll, 0.01);
+      if (vb > la) mitteLuecke = Math.min(Math.max((la + vb) / 2, lo), hi);
+    }
     var e = { markiert: [], unsicher: [], anzahl: voll.length, schwelle: t }, n = 0;
     for (var i = 0; i < werte.length; i++){
-      e.markiert.push(werte[i] >= t);
       var u = werte[i] > lo && werte[i] < hi;
+      e.markiert.push(werte[i] >= (u ? mitteLuecke : t));
       e.unsicher.push(u); if (u) n++;
     }
     // Zu viele Zweifelsfaelle: die Striche heben sich nicht klar ab
