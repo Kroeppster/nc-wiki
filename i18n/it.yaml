@@ -429,6 +429,7 @@ ab_hinweis_drei: "Sono stati trovati solo tre dei quattro angoli neri. Controlla
 ab_hinweis_keine: "Gli angoli neri non sono stati trovati, il foglio è stato allineato al bordo dell’immagine. Controlla attentamente le risposte lette qui sotto."
 ab_hinweis_verzerrt: "La foto è distorta ({n} % di differenza tra larghezza e altezza). Controlla le risposte lette qui sotto."
 ab_hinweis_zeilen: "Non tutte le righe del foglio sono state riconosciute. Controlla le risposte lette qui sotto."
+ab_hinweis_blass: "I tratti sono molto chiari nell’immagine – alcuni potrebbero mancare. Per questo le righe vuote sono segnate in arancione: confrontale con il foglio. La prossima volta segna con più forza con una matita morbida (HB o B) o fotografa con più luce."
 ab_ergebnis: "{n} punti su {von}"
 ab_untertest: "Sottotest"
 ab_punkte: "Punti"

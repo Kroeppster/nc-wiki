@@ -227,7 +227,10 @@
       for (var x = 0; x < w; x++){
         var pz = zeile[Math.min(Math.floor(x * f / bild.feld), bild.nx - 1)], i = (y * w + x) * 4;
         var r = d[i], g = d[i + 1], b = d[i + 2];
-        if (farbe ? Math.min(r, b) - g > art[1] * pz : 299 * r + 587 * g + 114 * b < 720 * pz) an.push(y * w + x);
+        // (Rot nicht deutlich unter Blau: Wo ein blauer Stift ueber ein
+        // Zeichen geht, entsteht Violett - das ist kein Zeichen. Alle
+        // Konztests haben Rot >= Blau, die Mischung mit Blau etwa 0.7.)
+        if (farbe ? Math.min(r, b) - g > art[1] * pz && r > 0.85 * b : 299 * r + 587 * g + 114 * b < 720 * pz) an.push(y * w + x);
       }
     }
     if (an.length < 1000) return [];
@@ -294,6 +297,7 @@
       if (gross >= 3.5 * z_ && gross <= 15 * z_ && s[0] >= 4)
         aus.push({ x: (s[1] / s[0] + 0.5) * f, y: (s[2] / s[0] + 0.5) * f, m: merkmale(s[0], s.slice(1)) });
     });
+    aus.pxk = pxk * f;   // Bildpunkte je pt (fuer gitter)
     return aus;
   }
   // Wie fein gesucht wird: [Feld in pt, Magenta ab Anteil des Papiers].
@@ -340,7 +344,14 @@
       if (beste) nn.push(beste);
     });
     if (!nn.length) return null;
-    var d0 = median(nn), e = eimerVon(punkte, d0);
+    // Zerfallen die Zeichen in Stuecke (feine, offene Boegen wie 2023 im
+    // Videobild der Live-Kamera: die beiden Arme je ein Fleck), ist der
+    // naechste Nachbar meist das andere Stueck - und das Gitter wuchs nicht
+    // (Kamera-Labor Oktober 2026). Dann gilt der Abstand, den das Raster
+    // haben muss.
+    var d0 = median(nn);
+    if (punkte.pxk && K && d0 < 0.8 * K.schrittX * punkte.pxk) d0 = K.schrittX * punkte.pxk;
+    var e = eimerVon(punkte, d0);
     // Richtung des Gitters aus den Nachbarvektoren (Winkel mal vier)
     var vek = [];
     punkte.forEach(function(p, i){
@@ -366,18 +377,41 @@
     var platz = new Map([[start, [0, 0]]]), besetzt = new Map([['0,0', start]]), schlange = [[start, hh, vv]], kopf = 0;
     while (kopf < schlange.length){
       var item = schlange[kopf++], i = item[0], lh = item[1], lv = item[2], rc = platz.get(i), p = punkte[i];
-      [[0, 1, lh], [0, -1, [-lh[0], -lh[1]]], [1, 0, lv], [-1, 0, [-lv[0], -lv[1]]]].forEach(function(t){
+      // Auch schraeg (Zeile und Spalte zugleich): Fehlen Zeichen (verdeckt von
+      // Strichen, im Videobild nicht zu sehen - Kamera-Labor Oktober 2026),
+      // waechst das Gitter so um die Luecken herum, ohne eine Stelle zu
+      // ueberspringen. Die Schritte lernt es nur aus geraden Nachbarn.
+      [[0, 1, lh], [0, -1, [-lh[0], -lh[1]]], [1, 0, lv], [-1, 0, [-lv[0], -lv[1]]],
+       [1, 1, [lv[0] + lh[0], lv[1] + lh[1]]], [1, -1, [lv[0] - lh[0], lv[1] - lh[1]]],
+       [-1, 1, [lh[0] - lv[0], lh[1] - lv[1]]], [-1, -1, [-lv[0] - lh[0], -lv[1] - lh[1]]]].forEach(function(t){
         var dr = t[0], dc = t[1], sx = t[2][0], sy = t[2][1], key = (rc[0] + dr) + ',' + (rc[1] + dc);
         if (besetzt.has(key)) return;
         var j = null, jd = Infinity;
-        inRadius(punkte, e, d0, p.x + sx, p.y + sy, 0.3 * Math.hypot(sx, sy), function(k, dd){ if (dd < jd){ jd = dd; j = k; } });
-        if (j === null || platz.has(j)) return;
+        var tol = 0.3 * (dr && dc ? Math.min(Math.hypot(lh[0], lh[1]), Math.hypot(lv[0], lv[1])) : Math.hypot(sx, sy));
+        inRadius(punkte, e, d0, p.x + sx, p.y + sy, tol, function(k, dd){ if (dd < jd){ jd = dd; j = k; } });
+        if (j === null) return;
+        if (platz.has(j)) return;
         platz.set(j, [rc[0] + dr, rc[1] + dc]); besetzt.set(key, j);
         var sch = [punkte[j].x - p.x, punkte[j].y - p.y];
+        if (dr && dc){ schlange.push([j, lh, lv]); return; }
         if (dr === 0){ var nh = [sch[0] * dc, sch[1] * dc]; schlange.push([j, [(lh[0] + nh[0]) / 2, (lh[1] + nh[1]) / 2], lv]); }
         else { var nv = [sch[0] * dr, sch[1] * dr]; schlange.push([j, lh, [(lv[0] + nv[0]) / 2, (lv[1] + nv[1]) / 2]]); }
       });
     }
+    // Mehr als N Zeilen oder Spalten (Stuecke der Randzeichen als eigene
+    // Spalte, wenn die Zeichen im Foto zerfallen): die duenner besetzte
+    // Randreihe weg, bis es passt - sonst gilt das Gitter nicht als N x N
+    // (zuordnen) und laesst sich bei aehnlichen Zeichen nicht zuordnen
+    [0, 1].forEach(function(achse){
+      for (;;){
+        var zahl = new Map();
+        platz.forEach(function(rc){ zahl.set(rc[achse], (zahl.get(rc[achse]) || 0) + 1); });
+        var lo = Math.min.apply(null, Array.from(zahl.keys())), hi = Math.max.apply(null, Array.from(zahl.keys()));
+        if (hi - lo + 1 <= N) break;
+        var weg = zahl.get(lo) < zahl.get(hi) ? lo : hi;
+        platz.forEach(function(rc, i){ if (rc[achse] === weg) platz.delete(i); });
+      }
+    });
     return { platz: platz, schritt: hl, punkte: punkte };
   }
   // --- Welcher Gitterplatz welches Zeichen ist -----------------------------------------
@@ -544,7 +578,7 @@
     if (r.bunt) for (q = 0; q < NX * NY; q++){
       if (art[o0 + q] === 3) continue;
       // Magenta (Zeichen): Rot und Blau ueber Gruen; klar blau: Stift
-      art[o0 + q] = r.farbe && PR[q] - PG[q] > 0.12 * p && PB[q] - PG[q] > 0.04 * p ? 1 : (PB[q] - Math.max(PR[q], PG[q]) > 0.06 * p ? 2 : 0);
+      art[o0 + q] = r.farbe && PR[q] - PG[q] > 0.12 * p && PB[q] - PG[q] > 0.04 * p && PR[q] > 0.85 * PB[q] ? 1 : (PB[q] - Math.max(PR[q], PG[q]) > 0.06 * p ? 2 : 0);
     }
     // Ein dunkler Strich auf einem grossen Magenta-Zeichen (2025 S05: gefuellte
     // Wuerfel) wird durch die Unschaerfe dunkles Lila und sieht aus wie das
@@ -1032,8 +1066,9 @@
     });
   });
   // --- Live-Kamera: das Raster im Sucher -------------------------------------------
-  // Gruen, sobald fast das ganze Raster (85 %) als Gitter gefunden ist; die
-  // vier Eckzeichen dienen als Merkpunkte, ob der Bogen ruhig liegt.
+  // Gruen, sobald der groesste Teil des Rasters (70 %) als Gitter gefunden
+  // ist; die vier Ecken des Rasters dienen als Merkpunkte, ob der Bogen
+  // ruhig liegt.
   // Ausgeloest wird ab 850 px Blattbreite (gut 1.4 px je pt: so fein
   // braucht das Suchen der Flecken das Bild, flecken()).
   function livePruefen(bild){
@@ -1042,14 +1077,30 @@
     // Oktober 2026), obwohl das Foto selbst lesbar gewesen waere
     var g = rasterSuchen(weissabgleich(bild), K.farbe).g;
     var anteil = g ? g.platz.size / (N * N) : 0;
-    if (!g || anteil < 0.85) return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) };
-    // Eckzeichen: oben links, unten links, unten rechts, oben rechts
-    var ecken = [null, null, null, null];
+    // Ab 70 %: Im verkleinerten Sucherbild findet sich das Raster oft nur
+    // knapp unter 85 % (der fruehere Wert) - der Sucher sprang dann zwischen
+    // «gefunden» und «nicht gefunden» und loeste erst nach einer halben
+    // Minute aus (Kamera-Labor Oktober 2026). Ausgewertet wird das Foto in
+    // voller Aufloesung (dort genuegen 60 %, MIN_GITTER).
+    if (!g || anteil < 0.7) return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) };
+    // Ecken: ein ganzes Raster (N x N) um den Schwerpunkt der gefundenen
+    // Zeichen, Schritte aus einer Ebene durch alle (Zeile, Spalte ->
+    // Bildpunkt) - nicht die einzelnen Eckzeichen oder die Grenzen des
+    // Gefundenen: Fehlt von Bild zu Bild eine andere Randzeile, sprangen die
+    // Ecken um eine Zeile, und «ruhig» kam nie zustande (Kamera-Labor).
+    // Reihenfolge: oben links, unten links, unten rechts, oben rechts.
+    var a = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], bx = [0, 0, 0], by = [0, 0, 0], mx = 0, my = 0;
     g.platz.forEach(function(rc, i){
-      var w = [rc[0] + rc[1], rc[1] - rc[0], -rc[0] - rc[1], rc[0] - rc[1]];
-      for (var k = 0; k < 4; k++) if (!ecken[k] || w[k] < ecken[k][0]) ecken[k] = [w[k], i];
+      var z = [rc[1], rc[0], 1], p = g.punkte[i];
+      for (var j = 0; j < 3; j++){ for (var k = 0; k < 3; k++) a[j][k] += z[j] * z[k]; bx[j] += z[j] * p.x; by[j] += z[j] * p.y; }
+      mx += p.x; my += p.y;
     });
-    var pts = ecken.map(function(e){ return [g.punkte[e[1]].x, g.punkte[e[1]].y]; });
+    mx /= g.platz.size; my /= g.platz.size;
+    var ux, uy;
+    try { ux = B.loesen(a.map(function(z){ return z.slice(); }), bx); uy = B.loesen(a.map(function(z){ return z.slice(); }), by); }
+    catch (e){ return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) }; }
+    var h = (N - 1) / 2, bei = function(dr, dc){ return [mx + ux[0] * dc + ux[1] * dr, my + uy[0] * dc + uy[1] * dr]; };
+    var pts = [bei(-h, -h), bei(h, -h), bei(h, h), bei(-h, h)];
     var breite = Math.hypot(pts[0][0] - pts[3][0], pts[0][1] - pts[3][1]);   // eine Zeile lang
     return { ok: true, punkte: pts, umriss: [pts[0], pts[3], pts[2], pts[1]], breite: breite * A4[0] / ((N - 1) * K.schrittX) };
   }

@@ -147,7 +147,11 @@ window.NCWikiBild = (function(){
   // Feiner als die Karte (etwa 8 pt je Feld, ohne Ausweiten): Faellt ein
   // harter Schatten mitten durch eine Zeile Kaestchen, gilt sonst der
   // Schatten am Rand als Tinte. Nie heller als die grobe Karte und nie unter
-  // 60 % davon (ein Feld voller Tinte ist kein dunkles Papier).
+  // 35 % davon (ein Feld voller Tinte ist kein dunkles Papier). Bis Oktober
+  // 2026 60 % - der Schatten von Hand oder Handy unter einer Lampe ist aber
+  // oft dunkler, und am Schattenrand (die grobe Karte nimmt dort das helle
+  // Papier daneben) galt dann jedes leere Kaestchen als markiert
+  // (Kamera-Labor: 85 Zeilen eines Antwortbogens falsch).
   Bild.prototype.papierFein = function(x, y, grob){
     if (!this.fein){
       var f = this.feinFeld = Math.max(6, Math.floor(Math.max(this.w, this.h) / 110));
@@ -162,7 +166,7 @@ window.NCWikiBild = (function(){
       }
     }
     var v = this.fein[Math.floor(y / this.feinFeld) * this.feinNx + Math.floor(x / this.feinFeld)];
-    return Math.min(grob, Math.max(v, 0.6 * grob));
+    return Math.min(grob, Math.max(v, 0.35 * grob));
   };
   Bild.prototype.rahmen = function(x, y){
     x = Math.trunc(x); y = Math.trunc(y);
@@ -525,8 +529,16 @@ window.NCWikiBild = (function(){
   function kameraMoeglich(){
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && window.isSecureContext !== false;
   }
+  // Immer nur eine Kamera: Ein Doppelklick auf «Live-Kamera» (oder die
+  // Kamera des anderen Werkzeugs auf derselben Seite) startete sonst einen
+  // zweiten Strom; der erste lief unsichtbar weiter, auch nach «Abbrechen»
+  // - das Kameralicht blieb an (Pruefung Oktober 2026).
+  var aktiveKamera = null;
   function kamera(o){
+    if (aktiveKamera) aktiveKamera.stopp();
     var feld = o.feld, laeuft = true, strom = null, uhr = null, ruhig = 0, letzte = null, abgebrochen = false;
+    var diese = { stopp: function(){ abgebrochen = true; stopp(); }, ausloesen: function(){ ausloesen(); } };
+    aktiveKamera = diese;
     // Hinweis und Knoepfe liegen IM Sucher (oben bzw. unten): Darunter
     // rutschte der Ausloeser auf dem Handy unter den Bildschirmrand, man
     // musste scrollen (Rueckmeldung Oktober 2026). Beim Start scrollt die
@@ -544,6 +556,7 @@ window.NCWikiBild = (function(){
       laeuft = false; clearTimeout(uhr);
       if (strom) strom.getTracks().forEach(function(t){ t.stop(); });
       feld.innerHTML = ''; feld.hidden = true;
+      if (aktiveKamera === diese) aktiveKamera = null;
     }
     knoepfe[1].addEventListener('click', function(){ abgebrochen = true; stopp(); if (o.abbruch) o.abbruch(); });
     knoepfe[0].addEventListener('click', ausloesen);
@@ -612,10 +625,12 @@ window.NCWikiBild = (function(){
         });
         // Mit dem Foto auch das Videobild: laesst sich das Foto nicht lesen,
         // nimmt die Auswertung das Videobild
-        foto.then(function(img){ stopp(); o.fertig(img, [c, gut]); }, function(){ stopp(); o.fertig(c, [gut]); });
+        foto.then(function(img){ if (abgebrochen) return; stopp(); o.fertig(img, [c, gut]); },
+          function(){ if (abgebrochen) return; stopp(); o.fertig(c, [gut]); });
         return;
       }
       stapeln(video, erzwungen || STAPEL, function(){ return !abgebrochen; }, function(gemittelt, info){
+        if (abgebrochen) return;
         window.NCWikiKameraStapelInfo = info;
         stopp(); o.fertig(gemittelt, [c, gut]);
       });
@@ -630,7 +645,7 @@ window.NCWikiBild = (function(){
       stopp();
       if (o.fehler) o.fehler(T.kameraFehler);
     });
-    return { stopp: stopp, ausloesen: ausloesen };
+    return diese;
   }
   // (stapelTeile: fuer scripts/antwortbogen-pruefen.mjs - misst, wie genau
   // die Ausrichtung eine bekannte Verschiebung und Drehung findet)

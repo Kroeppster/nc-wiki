@@ -430,6 +430,7 @@ ab_hinweis_drei: "Seuls trois des quatre coins noirs ont été trouvés. Merci d
 ab_hinweis_keine: "Les coins noirs n’ont pas été trouvés, la feuille a été alignée sur le bord de l’image. Merci de vérifier attentivement les réponses lues ci-dessous."
 ab_hinweis_verzerrt: "La photo est déformée ({n} % de différence entre largeur et hauteur). Merci de vérifier les réponses lues ci-dessous."
 ab_hinweis_zeilen: "Toutes les lignes de la feuille n’ont pas pu être reconnues. Merci de vérifier les réponses lues ci-dessous."
+ab_hinweis_blass: "Les traits sont très pâles sur l’image – certains peuvent manquer. Les lignes vides sont donc marquées en orange : compare-les avec la feuille. La prochaine fois, marque plus fort avec un crayon tendre (HB ou B) ou photographie avec plus de lumière."
 ab_ergebnis: "{n} points sur {von}"
 ab_untertest: "Sous-test"
 ab_punkte: "Points"
