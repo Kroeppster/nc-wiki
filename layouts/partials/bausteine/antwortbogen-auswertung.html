@@ -544,6 +544,20 @@
     return [0, 1, 2, 3, 4].map(function(s){ return [dx[s], dy[s]]; });
   }
   function median(a){ a = a.slice().sort(function(x, y){ return x - y; }); return a[Math.floor(a.length / 2)]; }
+  // Liegt eine harte Licht-Schatten-Kante durch ein Kaestchen (das Papier
+  // an seinen Ecken mehr als ein Viertel verschieden hell), gilt die
+  // beschattete Haelfte leicht als Strich: Kamera-Labor Oktober 2026, Lampe
+  // nah ueber dem Handy, Halbschatten etwa 8 mm - auf 15 Bildern mit vielen
+  // leeren Zeilen 71 leere Zeilen still als Strich gelesen (Werte 0.2 bis
+  // 0.4 wie ein satter Strich).
+  function lichtKante(bild, abb, k, i, s){
+    var e = feldEcke(k, i, s), lo = 1e9, hi = 0;
+    [[-1, -1], [FELD_B + 1, -1], [-1, FELD_H + 1], [FELD_B + 1, FELD_H + 1]].forEach(function(d){
+      var p = abb(e[0] + d[0], e[1] + d[1]), pf = bild.papierFein(p[0], p[1], bild.papierBei(p[0], p[1]));
+      lo = Math.min(lo, pf); hi = Math.max(hi, pf);
+    });
+    return hi > 1.25 * lo;
+  }
   // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
   // Buchstabe, '' fuer leer oder '*' fuer mehrere Markierungen.
   function zeileLesen(werte, markiert, unsicher, typisch){
@@ -666,7 +680,7 @@
     // geraten - lieber neu fotografieren lassen.
     r.passung = passungScharf(bild, r.abb);
     if (r.passung < PASSUNG_MIN) return { fehler: warumNicht(bild, grob, r.marken) };
-    var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [];
+    var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [], kante = [];
     for (var k = 0; k < BLOECKE; k++){
       for (var i = 0; i < ZEILEN; i++){
         // Wo die gedruckten Kaestchen nicht zu sehen sind (verdeckt, Falte,
@@ -679,6 +693,7 @@
           return fuellung(bild, function(x, y){ return r.abb(x + v[s][0], y + v[s][1]); }, e[0], e[1]);
         });
         werte.push(w); gedruckt.push(da);
+        kante.push([0, 1, 2, 3, 4].map(function(s){ return lichtKante(bild, r.abb, k, i, s); }));
       }
     }
     // Grundrauschen des Fotos (Schatten, Koernung): mindestens drei Viertel
@@ -724,14 +739,20 @@
     if (schwellen) schw = schw.map(function(){ return schwellen; });
     werte.forEach(function(w, z){
       var a = zeileLesen(w, schw[Math.floor(z / ZEILEN)][0], schw[Math.floor(z / ZEILEN)][1], schwellen ? 0 : typisch);
-      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
+      // (nur, wenn gerade das als Strich gelesene Kaestchen auf der Kante
+      // liegt: Jede Zeile mit einer Kante irgendwo zum Nachsehen - so bis
+      // Oktober 2026 eine Zeit lang - machte vor allem richtig gelesene
+      // Zeilen orange)
+      var marke = a[0] && a[0] !== '*' ? BST.indexOf(a[0]) : -1;
+      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || (marke >= 0 && kante[z][marke])
+        || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
     });
     if (blass) r.hinweise.push(T.blass);
     // Fehlt ein Viertel, lag der Bogen falsch - lieber neu fotografieren.
     if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: warumNicht(bild, grob, r.marken) };
     if (fehlend) r.hinweise.push(T.zeilen);
     r.antworten = antworten; r.unsicher = unsicher;
-    r.werte = werte; r.schwellen = schw; r.typisch = typisch; r.gedruckt = gedruckt;   // fuer die Pruefskripte
+    r.werte = werte; r.schwellen = schw; r.typisch = typisch; r.gedruckt = gedruckt; r.kante = kante;   // fuer die Pruefskripte
     return r;
   }
   // Die erste Seite, auf der ein Bogen zu lesen ist. Fehlt er ueberall,
