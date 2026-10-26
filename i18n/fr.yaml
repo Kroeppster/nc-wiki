@@ -427,6 +427,7 @@ ab_fehler_bild: "Impossible d’ouvrir l’image. Merci de choisir une photo ou 
 ab_fehler_klein: "La feuille est trop petite sur l’image (environ {n} pixels de large, il en faut au moins 700). Merci de photographier de plus près."
 ab_fehler_kein: "Aucune feuille de réponses n’a été reconnue – ou la photo est trop pâle ou coupée. Les quatre coins noirs sont-ils visibles ?"
 ab_fehler_flach: "Les quatre coins noirs ont été trouvés, mais les cases ne sont pas reconnaissables partout – reflet ou ombre marquée, ou feuille bombée ou pliée ? Pose-la bien à plat et photographie-la encore une fois d’en haut, sous une lumière uniforme et sans reflet."
+ab_fehler_unscharf: "Les quatre coins noirs ont été trouvés, mais l’image est trop floue ou bougée pour reconnaître les cases. Tiens le téléphone immobile, attends que l’image soit nette et reprends la photo – avec peu de lumière, elle bouge plus facilement : plus de lumière aide."
 ab_hinweis_drei: "Seuls trois des quatre coins noirs ont été trouvés. Merci de vérifier les réponses lues ci-dessous."
 ab_hinweis_keine: "Les coins noirs n’ont pas été trouvés, la feuille a été alignée sur le bord de l’image. Merci de vérifier attentivement les réponses lues ci-dessous."
 ab_hinweis_verzerrt: "La photo est déformée ({n} % de différence entre largeur et hauteur). Merci de vérifier les réponses lues ci-dessous."

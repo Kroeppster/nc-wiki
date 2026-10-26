@@ -111,6 +111,7 @@
     fehlerKlein: {{ i18n "ab_fehler_klein" | jsonify | safeJS }},
     fehlerKein: {{ i18n "ab_fehler_kein" | jsonify | safeJS }},
     fehlerFlach: {{ i18n "ab_fehler_flach" | jsonify | safeJS }},
+    fehlerUnscharf: {{ i18n "ab_fehler_unscharf" | jsonify | safeJS }},
     drei: {{ i18n "ab_hinweis_drei" | jsonify | safeJS }},
     keine: {{ i18n "ab_hinweis_keine" | jsonify | safeJS }},
     verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
@@ -579,30 +580,92 @@
     // ein zaghafter zweiter Strich. Gezaehlt wird das deutliche.
     return [BST[reihe[0]], true];
   }
+  // Wie unscharf das Bild ist: Breite des Uebergangs von Schwarz zu Papier
+  // (10 bis 90 %) an den Kanten der Passermarken, in pt des Bogens und in
+  // Bildpunkten (Median aus 48 Schnitten).
+  function kantenBreite(bild, abb){
+    var px = abb.massstab()[0], breiten = [];
+    function hell(x, y){
+      var x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0;
+      return (1 - fy) * ((1 - fx) * bild.hell(x0, y0) + fx * bild.hell(x0 + 1, y0))
+        + fy * ((1 - fx) * bild.hell(x0, y0 + 1) + fx * bild.hell(x0 + 1, y0 + 1));
+    }
+    KREIS.forEach(function(e){
+      var x0 = PASSER[e][0] + PASSER_RAND, y0 = PASSER[e][1] + PASSER_RAND;
+      // je Kante drei Schnitte, von 3 pt im Schwarzen bis 3 pt ins Weisse
+      [[x0, 0, -1], [x0 + PASSER_KERN, 0, 1], [y0, 1, -1], [y0 + PASSER_KERN, 1, 1]].forEach(function(k){
+        [0.3, 0.5, 0.7].forEach(function(f){
+          var prof = [], quer = (k[1] ? x0 : y0) + f * PASSER_KERN;
+          for (var s = -3; s <= 3.001; s += 0.05){
+            var u = k[0] + k[2] * s, q = k[1] ? abb(quer, u) : abb(u, quer);
+            prof.push(hell(q[0], q[1]));
+          }
+          var dunkel = Math.min.apply(null, prof.slice(0, 20)), papier = Math.max.apply(null, prof.slice(-20)), sp = papier - dunkel;
+          if (sp < 30) return;
+          var a = -1, b = -1;
+          for (var i = 0; i < prof.length; i++){
+            if (a < 0 && prof[i] > dunkel + 0.1 * sp) a = i;
+            if (b < 0 && prof[i] > dunkel + 0.9 * sp) b = i;
+          }
+          if (a >= 0 && b >= 0) breiten.push((b - a) * 0.05);
+        });
+      });
+    });
+    if (!breiten.length) return null;
+    breiten.sort(function(p, q){ return p - q; });
+    var m = breiten[Math.floor(breiten.length / 2)];
+    return { pt: m, px: m * px };
+  }
+  // Liegt eine Passermarke samt weissem Feld nach der Abbildung nicht ganz
+  // im Bild, ist der Bogen abgeschnitten, und als vierte Ecke galt etwas
+  // anderes.
+  function eckeAbgeschnitten(bild, abb){
+    var g = PASSER_KERN + 2 * PASSER_RAND;
+    return KREIS.some(function(e){
+      return [[0, 0], [g, 0], [0, g], [g, g]].some(function(d){
+        var p = abb(PASSER[e][0] + d[0], PASSER[e][1] + d[1]);
+        return p[0] < 0 || p[1] < 0 || p[0] >= bild.w || p[1] >= bild.h;
+      });
+    });
+  }
+  // Die Meldung, wenn die Kaestchen nicht zu treffen sind (abb: die
+  // Abbildung aus den Passermarken, vor der Feinausrichtung).
+  function warumNicht(bild, abb, marken){
+    // Knapp ueber der Mindestgroesse sind die Kaestchenraender oft schon
+    // zu fein, um sie zu treffen (720p-Kamera, Kamera-Labor Oktober 2026:
+    // «kein Antwortbogen erkannt», obwohl alle vier Ecken gefunden waren) -
+    // dann hilft «naeher heran».
+    var breite = abb.massstab()[0] * A4[0] / bild.vergroessert;
+    if (breite < 750) return T.fehlerKlein.replace('{n}', Math.round(breite));
+    // Eine Ecke abgeschnitten (Kamera-Labor: Bogen gedreht, eine Ecke am
+    // Bildrand - gemeldet war «die vier Ecken sind gefunden ... Glanz?»)
+    if (marken < 4 || eckeAbgeschnitten(bild, abb)) return T.fehlerKein;
+    // Unscharf oder verwackelt (Kamera-Labor Oktober 2026: scharfe Fotos
+    // 1.0 bis 1.6 pt und hoechstens 2.5 Bildpunkte, unscharfe, auf denen
+    // die Kaestchen nicht mehr zu treffen waren, ab 1.85 pt und 2.9
+    // Bildpunkten - beides noetig, weil auf einem kleinen Bogen auch ein
+    // scharfer Uebergang mehrere pt breit ist)
+    var k = kantenBreite(bild, abb);
+    if (k && k.pt > 1.7 && k.px > 2.6) return T.fehlerUnscharf;
+    // Sonst sind die Kaestchen nicht ueberall zu sehen: Glanz, harter
+    // Schatten oder der Bogen liegt nicht flach (Kamera-Labor: einmal
+    // gefaltet und 11 mm gewoelbt - die Kaestchen bis 8 pt neben der
+    // Stelle; ein Glanzfleck ueber zwei Bloecken). «Sind alle vier Ecken zu
+    // sehen?» fuehrte da in die Irre.
+    return T.fehlerFlach;
+  }
   // schwellen: fuer den Loesungsschluessel (Kaestchen ganz schwarz) feste,
   // unempfindliche Schwellen - sonst die aus dem Foto bestimmten.
   function bogenLesen(bild, schwellen){
     var r = ausrichten(bild);
     if (r.fehler) return r;
+    var grob = r.abb;
     r.abb = feinAusrichten(bild, r.abb);
     // Liegen die gedruckten Kaestchen auch danach nicht deutlich auf den
     // erwarteten (stark gewellt, verzerrt, falsche Ecke), waeren die Markierungen
     // geraten - lieber neu fotografieren lassen.
     r.passung = passungScharf(bild, r.abb);
-    if (r.passung < PASSUNG_MIN){
-      // Knapp ueber der Mindestgroesse sind die Kaestchenraender oft schon
-      // zu fein, um sie zu treffen (720p-Kamera, Kamera-Labor Oktober 2026:
-      // «kein Antwortbogen erkannt», obwohl alle vier Ecken gefunden waren) -
-      // dann hilft «naeher heran».
-      // Sind alle vier Ecken da und der Bogen gross genug, sind die
-      // Kaestchen nicht ueberall zu sehen: Glanz, harter Schatten oder der
-      // Bogen liegt nicht flach (Kamera-Labor: einmal gefaltet und 11 mm
-      // gewoelbt - die Kaestchen bis 8 pt neben der Stelle; ein Glanzfleck
-      // ueber zwei Bloecken). «Sind alle vier Ecken zu sehen?» fuehrte da in
-      // die Irre.
-      var breite = r.abb.massstab()[0] * A4[0] / bild.vergroessert;
-      return { fehler: breite < 750 ? T.fehlerKlein.replace('{n}', Math.round(breite)) : r.marken === 4 ? T.fehlerFlach : T.fehlerKein };
-    }
+    if (r.passung < PASSUNG_MIN) return { fehler: warumNicht(bild, grob, r.marken) };
     var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [];
     for (var k = 0; k < BLOECKE; k++){
       for (var i = 0; i < ZEILEN; i++){
@@ -665,7 +728,7 @@
     });
     if (blass) r.hinweise.push(T.blass);
     // Fehlt ein Viertel, lag der Bogen falsch - lieber neu fotografieren.
-    if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: r.marken === 4 ? T.fehlerFlach : T.fehlerKein };
+    if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: warumNicht(bild, grob, r.marken) };
     if (fehlend) r.hinweise.push(T.zeilen);
     r.antworten = antworten; r.unsicher = unsicher;
     r.werte = werte; r.schwellen = schw; r.typisch = typisch; r.gedruckt = gedruckt;   // fuer die Pruefskripte
@@ -916,6 +979,6 @@
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
   window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden,
-    intern: { ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung, rahmenTreffer: rahmenTreffer } };
+    intern: { ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, kantenBreite: kantenBreite, eckeAbgeschnitten: eckeAbgeschnitten, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung, rahmenTreffer: rahmenTreffer } };
 })();
 </script>

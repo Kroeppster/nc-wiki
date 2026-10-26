@@ -426,6 +426,7 @@ ab_fehler_bild: "Impossibile aprire l’immagine. Scegli una foto o una scansion
 ab_fehler_klein: "Il foglio è troppo piccolo nell’immagine (circa {n} pixel di larghezza, ne servono almeno 700). Fotografa più da vicino."
 ab_fehler_kein: "Nell’immagine non è stato riconosciuto nessun foglio delle risposte, oppure la foto è troppo chiara o tagliata. Si vedono tutti e quattro gli angoli neri?"
 ab_fehler_flach: "I quattro angoli neri sono stati trovati, ma le caselle non si riconoscono ovunque: riflessi o un’ombra marcata, oppure il foglio è curvo o piegato? Stendilo bene in piano e fotografalo di nuovo dall’alto, con luce uniforme e senza riflessi."
+ab_fehler_unscharf: "I quattro angoli neri sono stati trovati, ma l’immagine è troppo sfocata o mossa per riconoscere le caselle. Tieni fermo il telefono, aspetta che l’immagine sia nitida e scatta di nuovo – con poca luce la foto viene mossa più facilmente: più luce aiuta."
 ab_hinweis_drei: "Sono stati trovati solo tre dei quattro angoli neri. Controlla le risposte lette qui sotto."
 ab_hinweis_keine: "Gli angoli neri non sono stati trovati, il foglio è stato allineato al bordo dell’immagine. Controlla attentamente le risposte lette qui sotto."
 ab_hinweis_verzerrt: "La foto è distorta ({n} % di differenza tra larghezza e altezza). Controlla le risposte lette qui sotto."

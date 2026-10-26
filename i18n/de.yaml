@@ -436,6 +436,7 @@ ab_fehler_bild: "Das Bild lässt sich nicht öffnen. Bitte ein Foto oder einen S
 ab_fehler_klein: "Der Bogen ist auf dem Bild zu klein (etwa {n} Bildpunkte breit, nötig sind gut 700). Bitte näher heran fotografieren."
 ab_fehler_kein: "Auf dem Bild wurde kein Antwortbogen erkannt – oder das Foto ist zu blass oder abgeschnitten. Sind alle vier schwarzen Ecken zu sehen?"
 ab_fehler_flach: "Die vier schwarzen Ecken sind gefunden, aber die Kästchen sind nicht überall zu erkennen – liegt Glanz oder ein starker Schatten darauf, oder ist der Bogen gewölbt oder geknickt? Leg ihn flach hin und fotografiere ihn noch einmal von oben, bei gleichmässigem Licht ohne Spiegelung."
+ab_fehler_unscharf: "Die vier schwarzen Ecken sind gefunden, aber das Bild ist zu unscharf oder verwackelt, um die Kästchen zu erkennen. Halte das Handy ruhig, warte, bis das Bild scharf ist, und fotografiere noch einmal – bei wenig Licht verwackelt es leichter, dann hilft mehr Licht."
 ab_hinweis_drei: "Nur drei der vier schwarzen Ecken wurden gefunden. Bitte die gelesenen Antworten unten kontrollieren."
 ab_hinweis_keine: "Die schwarzen Ecken wurden nicht gefunden, der Bogen wurde am Bildrand ausgerichtet. Bitte die gelesenen Antworten unten genau kontrollieren."
 ab_hinweis_verzerrt: "Das Foto ist verzerrt (waagrecht {n} % anders als senkrecht). Bitte die gelesenen Antworten unten kontrollieren."
