@@ -116,31 +116,51 @@ async function ergebnisLesen() {
 const fertig = () => p.evaluate(P => !document.getElementById(P + '-ergebnis').hidden
   || document.getElementById(P + '-status').classList.contains('ab-fehler'), P);
 
+// Markierungen, die kein schraeger Strich sind (Vorgabe Oktober 2026): Ein
+// Strich muss erkannt werden. Kreuz, Ausmalen und Kreis werden nicht eigens
+// gefiltert - gelesen oder leer, beides richtig; dass ein Kreis ein
+// Nachbarzeichen oder -kaestchen markiert erscheinen laesst, wird hingenommen
+// (kreis_nachbar). Andere Stile (Haken, kurz, Unterstrich ...) sind nicht
+// festgelegt: Abweichungen stehen gesondert in stil_offen, nicht als Fehler.
+const STILE = w.stile || {}, DARF = ['kreuz', 'ausmalen', 'kreis'];
+const stil = i => STILE[String(i)];
 function bewerten(r) {
   const aus = {};
   if (r.fehler) { aus.ergebnis = 'fehler'; aus.fehlertext = r.fehler; return aus; }
   if (AB) {
     if (!r.antworten || r.antworten.length !== 144) { aus.ergebnis = 'kein_ergebnis'; return aus; }
-    const soll = w.antworten, radiert = w.radiert || [];
-    const falsch = [], falschMit = [], unnoetig = [];
+    const radiert = w.radiert || [], soll = w.antworten;
+    const falsch = [], falschMit = [], unnoetig = [], offen = [], kreisNachbar = [];
     for (let i = 0; i < 144; i++) {
-      const u = r.unsicherNr.includes(i);
-      if (r.antworten[i] !== soll[i]) (u ? falschMit : falsch).push((i + 1) + ':' + soll[i] + '->' + r.antworten[i]);
-      else if (u && !(soll[i] === '*') && !radiert.includes(i)) unnoetig.push((i + 1) + ':' + soll[i]);
+      const u = r.unsicherNr.includes(i), s = stil(i), ist = r.antworten[i], text = (i + 1) + ':' + soll[i] + '->' + ist + (s ? ' (' + s + ')' : '');
+      if (ist === soll[i]) { if (u && !(soll[i] === '*') && !radiert.includes(i)) unnoetig.push((i + 1) + ':' + soll[i]); continue; }
+      if (DARF.includes(s) && ist === '.') continue;                                   // Kreuz, Ausmalen, Kreis: gelesen oder leer
+      if (s === 'kreis') { kreisNachbar.push(text); continue; }                          // Kreis ragt ins Nachbarkaestchen
+      if (s && !DARF.includes(s)) { offen.push(text); continue; }                        // nicht festgelegt
+      (u ? falschMit : falsch).push(text);
     }
     const loes = LOESUNGEN;
     aus.punkte_soll = [...soll].filter((a, i) => a === loes[i] && 'ABCDE'.includes(a)).length;
     aus.punkte_ist = +((r.summe.match(/\d+/) || [])[0]);
     Object.assign(aus, { falsch_ohne_hinweis: falsch, falsch_mit_hinweis: falschMit, unnoetig_unsicher: unnoetig,
-      unsicher: r.unsicherNr.length });
+      unsicher: r.unsicherNr.length, stil_offen: offen, kreis_nachbar: kreisNachbar });
     aus.ergebnis = falsch.length ? 'FALSCH' : (unnoetig.length + falschMit.length > 6 ? 'zu_viele_unsicher' : 'ok');
   } else {
     if (!r.markiert) { aus.ergebnis = 'kein_ergebnis'; return aus; }
-    const soll = w.markiert, falsch = [], falschMit = [];
-    for (let i = 0; i < 1600; i++) if (r.markiert[i] !== soll[i]) (r.unsicherNr.includes(i) ? falschMit : falsch).push(i + ':' + soll[i] + '->' + r.markiert[i]);
+    const soll = w.markiert, falsch = [], falschMit = [], offen = [], kreisNachbar = [];
+    const kreise = Object.keys(STILE).filter(k => STILE[k] === 'kreis').map(Number);
+    for (let i = 0; i < 1600; i++) {
+      const ist = r.markiert[i], s = stil(i);
+      if (ist === soll[i]) continue;
+      const text = i + ':' + soll[i] + '->' + ist + (s ? ' (' + s + ')' : '');
+      if (DARF.includes(s)) continue;                                                     // Kreuz, Ausmalen, Kreis: gelesen oder leer
+      if (ist === '1' && kreise.some(k => k !== i && Math.abs(Math.floor(k / 40) - Math.floor(i / 40)) <= 1 && Math.abs(k % 40 - i % 40) <= 1)) { kreisNachbar.push(text); continue; }
+      if (s) { offen.push(text); continue; }                                              // nicht festgelegt
+      (r.unsicherNr.includes(i) ? falschMit : falsch).push(text);
+    }
     const wert = m => { let l = -1; for (let i = 0; i < 1600; i++) if (m[i] === '1') l = i;
       let a = 0, f = 0, x = 0; for (let i = 0; i < 1600; i++) { const mm = m[i] === '1', z = w.ziele[i] === '1'; if (mm && z) a++; else if (mm) f++; else if (z && i < l) x++; } return a - f - x; };
-    Object.assign(aus, { falsch_ohne_hinweis: falsch, falsch_mit_hinweis: falschMit, unsicher: r.unsicherNr.length,
+    Object.assign(aus, { falsch_ohne_hinweis: falsch, falsch_mit_hinweis: falschMit, unsicher: r.unsicherNr.length, stil_offen: offen, kreis_nachbar: kreisNachbar,
       rohwert_soll: wert(soll), rohwert_ist_gelesen: wert(r.markiert), summe_text: r.summe });
     aus.ergebnis = falsch.length ? 'FALSCH' : (r.unsicherNr.length > 8 ? 'zu_viele_unsicher' : 'ok');
   }

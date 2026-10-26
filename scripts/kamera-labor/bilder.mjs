@@ -49,6 +49,19 @@ async function oeffnen(site, port) {
   return { p, zu: async () => { await browser.close(); server.close(); } };
 }
 
+// Zählt eine Abweichung als Fehler? Wie in lauf.mjs (Vorgabe Oktober 2026): Ein
+// schräger Strich muss erkannt werden; Kreuz, Ausmalen und Kreis werden nicht
+// eigens gefiltert (gelesen oder leer, beides richtig), ein Konztest-Zeichen
+// neben einem Kreis darf markiert erscheinen; andere Stile sind nicht
+// festgelegt und zählen nicht.
+function zaehlt(w, i, ist, n) {
+  const stile = w.stile || {}, s = stile[String(i)];
+  if (s) return false;
+  if (n === 1600 && ist === '1') return !Object.keys(stile).some(k => stile[k] === 'kreis'
+    && Math.abs(Math.floor(k / 40) - Math.floor(i / 40)) <= 1 && Math.abs(k % 40 - i % 40) <= 1);
+  return true;
+}
+
 // Ein Bild lesen wie beim Hochladen; zurück: [unsicher, still falsch] oder die Meldung
 async function lesen(p, bild, w) {
   const daten = (bild.endsWith('.png') ? 'data:image/png;base64,' : 'data:image/jpeg;base64,') + readFileSync(bild).toString('base64');
@@ -60,7 +73,7 @@ async function lesen(p, bild, w) {
     }, daten);
     if (r.fehler) return r.fehler;
     const soll = w.antworten.split('').map(x => x === '.' ? '' : x);
-    return [r.u.filter(Boolean).length, r.a.filter((x, z) => !r.u[z] && x !== soll[z]).length];
+    return [r.u.filter(Boolean).length, r.a.filter((x, z) => !r.u[z] && x !== soll[z] && zaehlt(w, z, x === '' ? '0' : '1', 144)).length];
   }
   // Konztest: die Seite selbst (Testsimulation wählen, Bild hochladen), wie konztest-pruefen.mjs
   await p.selectOption('#kt-testsim', w.konztest);
@@ -71,7 +84,7 @@ async function lesen(p, bild, w) {
   }, daten).catch(x => ({ fehler: String(x.message).slice(0, 80) }));
   if (r.fehler) return r.fehler;
   const soll = w.markiert;
-  return [r.u.filter(Boolean).length, r.m.filter((x, i) => !r.u[i] && (x ? '1' : '0') !== soll[i]).length];
+  return [r.u.filter(Boolean).length, r.m.filter((x, i) => !r.u[i] && (x ? '1' : '0') !== soll[i] && zaehlt(w, i, x ? '1' : '0', 1600)).length];
 }
 
 const ergebnisse = SITES.map(() => []);
