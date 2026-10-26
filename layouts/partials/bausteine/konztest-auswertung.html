@@ -116,6 +116,7 @@
     nichts: {{ i18n "kt_nichts" | jsonify | safeJS }},
     unsicher: {{ i18n "kt_unsicher" | jsonify | safeJS }},
     live: {{ i18n "kt_kamera_raster" | jsonify | safeJS }},
+    liveLuecken: {{ i18n "kt_kamera_luecken" | jsonify | safeJS }},
     eigenLiest: {{ i18n "kt_eigen_liest" | jsonify | safeJS }},
     eigenOk: {{ i18n "kt_eigen_ok" | jsonify | safeJS }},
     eigenKeineAufgabe: {{ i18n "kt_eigen_keine_aufgabe" | jsonify | safeJS }},
@@ -1143,7 +1144,16 @@
     // «gefunden» und «nicht gefunden» und loeste erst nach einer halben
     // Minute aus (Kamera-Labor Oktober 2026). Ausgewertet wird das Foto in
     // voller Aufloesung (dort genuegen 60 %, MIN_GITTER).
-    if (!g || anteil < 0.7) return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) };
+    if (!g || anteil < 0.7){
+      // Reicht das Gefundene von Rand zu Rand (alle N Zeilen und Spalten),
+      // ist das Blatt ganz im Bild, und es fehlen Zeichen dazwischen: Glanz,
+      // Schatten, Unschaerfe. «Das ganze Blatt ins Bild nehmen» fuehrte da in
+      // die Irre (Kamera-Labor Oktober 2026, Glanzfleck: 65 %).
+      var zeilen = new Set(), spalten = new Set();
+      if (g) g.platz.forEach(function(rc){ zeilen.add(rc[0]); spalten.add(rc[1]); });
+      var ganz = zeilen.size === N && spalten.size === N && anteil >= 0.3;
+      return { ok: false, punkte: [], hinweis: (ganz ? T.liveLuecken : T.live).replace('{n}', Math.round(anteil * 100)) };
+    }
     // Ecken: ein ganzes Raster (N x N) um den Schwerpunkt der gefundenen
     // Zeichen, Schritte aus einer Ebene durch alle (Zeile, Spalte ->
     // Bildpunkt) - nicht die einzelnen Eckzeichen oder die Grenzen des

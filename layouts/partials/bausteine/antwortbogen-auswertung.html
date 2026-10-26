@@ -136,7 +136,8 @@
     schluesselUnsicher: {{ i18n "ab_schluessel_unsicher" | jsonify | safeJS }},
     ohneLoesung: {{ i18n "ab_ohne_loesung" | jsonify | safeJS }},
     kameraEcken: {{ i18n "ab_kamera_ecken" | jsonify | safeJS }},
-    kameraKein: {{ i18n "ab_kamera_kein" | jsonify | safeJS }}
+    kameraKein: {{ i18n "ab_kamera_kein" | jsonify | safeJS }},
+    kameraPasst: {{ i18n "ab_kamera_passt" | jsonify | safeJS }}
   };
   // --- Der Bogen (pt, A4), wie ems.typ ihn setzt ---------------------------
   var A4 = [595.2756, 841.8898];
@@ -171,6 +172,7 @@
   // Papier dunkel: dort kamen nur 20 bis 40 Stufen heraus, und der Sucher
   // meldete endlos «kein Antwortbogen» (Kamera-Labor Oktober 2026).
   var MIN_INHALT = 0.12;
+  var PASSUNG_KLAR = 0.6;  // so klar muessen die Kaestchen passen, wenn der Kopfkasten blass ist (ausrichten)
   var GEDRUCKT = 0.25;     // Anteil Rahmen, ab dem eine Zeile als gedruckt gilt
   var PASSUNG_MIN = 0.7;   // so viel Rahmen muss genau auf den Kanten liegen
   // Das Gemeinsame (Bild, Abbildung, Laden, PDF, Kamera): bausteine/bild-lesen.html
@@ -240,10 +242,15 @@
     var innen = 0, a, b, t, hell = 0, alle = 0;
     for (a = -1; a <= 1; a++) for (b = -1; b <= 1; b++) innen += bild.hell(cx + bw * a / 6, cy + bh * b / 6);
     innen /= 9;
+    // am Papier dort gemessen, wo es dunkler ist als im Mittel: Unter einer
+    // Lampe am Abend war das Papier in der Ecke nur ein Drittel so hell wie
+    // in der Mitte, die echte Marke galt nicht als weiss umrandet, und ein
+    // dunkles Quadrat im Kopf wurde zur Ecke (Kamera-Labor Oktober 2026)
+    var papier = Math.min(bild.papier, bild.papierBei(cx, cy));
     for (t = -4; t <= 4; t++){
       [[t / 4, -1], [t / 4, 1], [-1, t / 4], [1, t / 4]].forEach(function(q){
         alle++;
-        if (bild.hell(cx + q[0] * bw * 0.72, cy + q[1] * bh * 0.72) > innen + 0.3 * bild.papier) hell++;
+        if (bild.hell(cx + q[0] * bw * 0.72, cy + q[1] * bh * 0.72) > innen + 0.3 * papier) hell++;
       });
     }
     return hell >= 0.85 * alle;
@@ -293,17 +300,30 @@
         kandidaten.push(abbildung(KREIS.map(function(e, i){ return [ecken[e], bildEcken[KREIS[(i + k) % 4]]]; })));
     } else if (anzahl === 3) hinweise.push(T.drei);
     var beste = null;
-    kandidaten.forEach(function(a){ var w = inhalt(bild, a); if (!beste || w > beste[0]) beste = [w, a]; });
-    // Unter den Lagen mit erkanntem Kopfkasten die, bei der die Kaestchen
-    // am besten auf den gedruckten liegen (vier Marken bei Gleichstand).
-    if (beste[0] >= MIN_INHALT && kandidaten.length > 1){
+    kandidaten.forEach(function(a){ a.inhalt = inhalt(bild, a); if (!beste || a.inhalt > beste[0]) beste = [a.inhalt, a]; });
+    // Es gelten die Lagen mit erkanntem Kopfkasten - und die, bei denen er
+    // nur blass ist, die gedruckten Kaestchen aber klar auf den erwarteten
+    // liegen: Im verkleinerten Sucherbild eines schraeg gehaltenen Bogens
+    // ist die feine Kopflinie oft zu blass (0.09), die richtige Lage mit
+    // vier Ecken fiel weg, und eine um 90 Grad gedrehte mit drei gewann -
+    // der Sucher loeste nie aus (Kamera-Labor Oktober 2026; Passung dort
+    // 0.82, aller anderen Lagen hoechstens 0.33).
+    var gueltig = kandidaten.filter(function(a){
+      if (a.inhalt >= MIN_INHALT) return true;
+      if (a.inhalt < MIN_INHALT / 2) return false;
+      a.passung = passung(bild, a);
+      return a.passung >= PASSUNG_KLAR;
+    });
+    // Darunter die, bei der die Kaestchen am besten auf den gedruckten
+    // liegen (vier Marken bei Gleichstand).
+    if (gueltig.length){
       var passt = null;
-      kandidaten.forEach(function(a){
-        if (inhalt(bild, a) < MIN_INHALT) return;
-        var q = passung(bild, a) - (a.drei ? 0.03 : 0);
+      gueltig.forEach(function(a){
+        var q = (a.passung !== undefined ? a.passung : passung(bild, a)) - (a.drei ? 0.03 : 0);
         if (!passt || q > passt[0]) passt = [q, a];
       });
-      if (passt){ beste = [beste[0], passt[1]]; if (passt[1].drei && anzahl === 4) hinweise.push(T.drei); }
+      beste = [Math.max(beste[0], MIN_INHALT), passt[1]];
+      if (passt[1].drei && anzahl === 4) hinweise.push(T.drei);
     }
     if (beste[0] < MIN_INHALT){
       var breite = beste[1].massstab()[0] * A4[0] / bild.vergroessert;
@@ -523,22 +543,6 @@
     return [0, 1, 2, 3, 4].map(function(s){ return [dx[s], dy[s]]; });
   }
   function median(a){ a = a.slice().sort(function(x, y){ return x - y; }); return a[Math.floor(a.length / 2)]; }
-  // Liegt eine harte Schattenkante durch die Zeile (die Papierhelligkeit an
-  // den Ecken eines Kaestchens unterscheidet sich um mehr als ein Viertel)?
-  // Dort stimmt keine Schaetzung des Papiers: Die dunkle Haelfte eines leeren
-  // Kaestchens sieht aus wie ein Strich (Kamera-Labor Oktober 2026). Bitte
-  // ansehen.
-  function lichtKante(bild, abb, k, i){
-    for (var s = 0; s < 5; s++){
-      var e = feldEcke(k, i, s), lo = 1e9, hi = 0;
-      [[-1, -1], [FELD_B + 1, -1], [-1, FELD_H + 1], [FELD_B + 1, FELD_H + 1]].forEach(function(d){
-        var p = abb(e[0] + d[0], e[1] + d[1]), pf = bild.papierFein(p[0], p[1], bild.papierBei(p[0], p[1]));
-        lo = Math.min(lo, pf); hi = Math.max(hi, pf);
-      });
-      if (hi > 1.25 * lo) return true;
-    }
-    return false;
-  }
   // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
   // Buchstabe, '' fuer leer oder '*' fuer mehrere Markierungen.
   function zeileLesen(werte, markiert, unsicher, typisch){
@@ -557,6 +561,14 @@
       // eines typischen Strichs erreicht: bitte ansehen)
       return allein ? [BST[reihe[0]], true] : ['', erstes >= unsicher || (typisch > 0 && erstes >= 0.2 * typisch)];
     }
+    // Knapp ueber der Schwelle (unter dem Doppelten) und viel schwaecher als
+    // die Striche sonst auf dem Bogen (unter zwei Fuenfteln): ein Fleck im
+    // verrauschten Bild oder ein zaghafter Strich - bitte ansehen. Kamera-
+    // Labor Oktober 2026: Abendlicht, ein Rauschfleck von 0.14 in einer
+    // leeren Zeile galt bei typisch 0.46 still als Strich; ueber 130 Bilder
+    // 9 solche Zeilen, dafuer 10 Zeilen mehr zum Nachsehen (nur «unter zwei
+    // Fuenfteln» waeren es 49 gewesen).
+    if (typisch > 0 && erstes < 0.4 * typisch && erstes < 2 * markiert) return [BST[reihe[0]], true];
     // Ein Hauch neben einem kraeftigen Strich (Rest des Rands, Papierstaub)
     // ist kein Zweifel - erst ab einem Zwanzigstel des Strichs
     if (zweites < Math.max(unsicher, 0.06 * erstes)) return [BST[reihe[0]], false];
@@ -580,14 +592,16 @@
       // zu fein, um sie zu treffen (720p-Kamera, Kamera-Labor Oktober 2026:
       // «kein Antwortbogen erkannt», obwohl alle vier Ecken gefunden waren) -
       // dann hilft «naeher heran».
-      // Sind alle vier Ecken da und der Bogen gross genug, liegt er nicht
-      // flach (Kamera-Labor: einmal gefaltet, 11 mm gewoelbt - die Kaestchen
-      // bis 8 pt neben der Stelle; «Sind alle vier Ecken zu sehen?» fuehrte
-      // da in die Irre).
+      // Sind alle vier Ecken da und der Bogen gross genug, sind die
+      // Kaestchen nicht ueberall zu sehen: Glanz, harter Schatten oder der
+      // Bogen liegt nicht flach (Kamera-Labor: einmal gefaltet und 11 mm
+      // gewoelbt - die Kaestchen bis 8 pt neben der Stelle; ein Glanzfleck
+      // ueber zwei Bloecken). «Sind alle vier Ecken zu sehen?» fuehrte da in
+      // die Irre.
       var breite = r.abb.massstab()[0] * A4[0] / bild.vergroessert;
       return { fehler: breite < 750 ? T.fehlerKlein.replace('{n}', Math.round(breite)) : r.marken === 4 ? T.fehlerFlach : T.fehlerKein };
     }
-    var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [], kante = [];
+    var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [];
     for (var k = 0; k < BLOECKE; k++){
       for (var i = 0; i < ZEILEN; i++){
         // Wo die gedruckten Kaestchen nicht zu sehen sind (verdeckt, Falte,
@@ -599,7 +613,7 @@
           var e = feldEcke(k, i, s);
           return fuellung(bild, function(x, y){ return r.abb(x + v[s][0], y + v[s][1]); }, e[0], e[1]);
         });
-        werte.push(w); gedruckt.push(da); kante.push(lichtKante(bild, r.abb, k, i));
+        werte.push(w); gedruckt.push(da);
       }
     }
     // Grundrauschen des Fotos (Schatten, Koernung): mindestens drei Viertel
@@ -607,17 +621,18 @@
     // Block (90 Kaestchen) statt fuer den ganzen Bogen: Eine Stoerung an einer
     // Stelle (harter Schatten, Glanz) hob sonst die Schwellen ueberall, und
     // jeder normale Strich galt als leer (Kamera-Labor Oktober 2026).
-    // (Ohne das staerkste Kaestchen jeder Zeile - das ist meist der Strich:
-    // Ist jede Zeile beantwortet, sind schon 20 % der Kaestchen markiert, und
-    // ein paar Kaestchen am Rand eines Schattens dazu hoben das Quantil auf
-    // die Striche selbst; Kamera-Labor: Schwelle 0.72 statt 0.05.)
+    // (Alle Kaestchen, auch die Striche: Ohne das staerkste jeder Zeile lag
+    // die Schaetzung beim 75. statt etwa beim 90. Perzentil des Rauschens -
+    // die Zweifelschwelle so tief, dass gewoehnliches Rauschen neben einem
+    // Strich die Zeile orange machte, und Flecken galten still als Strich.
+    // Kamera-Labor Oktober 2026, 113 feste Bilder: 22 statt 13 still falsch,
+    // 1210 statt 782 unnoetig orange Zeilen. Ebenso wieder weg: Zeilen mit
+    // einer harten Schattenkante zum Nachsehen - auf denselben Bildern und in
+    // Live-Laeufen durch harten Schatten kein stiller Fehler weniger, nur
+    // mehr orange Zeilen.)
     var schw = [], rauschenJe = [];
     for (k = 0; k < BLOECKE; k++){
-      var block = [];
-      werte.slice(k * ZEILEN, (k + 1) * ZEILEN).forEach(function(w){
-        var ohne = w.slice().sort(function(a, b){ return a - b; }).slice(0, 4);
-        block.push.apply(block, ohne);
-      });
+      var block = [].concat.apply([], werte.slice(k * ZEILEN, (k + 1) * ZEILEN));
       block.sort(function(a, b){ return a - b; });
       var rauschen = block[Math.floor(block.length * 0.75)];
       schw.push([Math.max(MARKIERT, 0.012 + 3 * rauschen), Math.max(UNSICHER, 2 * rauschen)]);
@@ -644,14 +659,14 @@
     if (schwellen) schw = schw.map(function(){ return schwellen; });
     werte.forEach(function(w, z){
       var a = zeileLesen(w, schw[Math.floor(z / ZEILEN)][0], schw[Math.floor(z / ZEILEN)][1], schwellen ? 0 : typisch);
-      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || kante[z] || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
+      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
     });
     if (blass) r.hinweise.push(T.blass);
     // Fehlt ein Viertel, lag der Bogen falsch - lieber neu fotografieren.
-    if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: T.fehlerKein };
+    if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: r.marken === 4 ? T.fehlerFlach : T.fehlerKein };
     if (fehlend) r.hinweise.push(T.zeilen);
     r.antworten = antworten; r.unsicher = unsicher;
-    r.werte = werte; r.schwellen = schw; r.typisch = typisch;   // fuer die Pruefskripte
+    r.werte = werte; r.schwellen = schw; r.typisch = typisch; r.gedruckt = gedruckt;   // fuer die Pruefskripte
     return r;
   }
   // Die erste Seite, auf der ein Bogen zu lesen ist. Fehlt er ueberall,
@@ -877,7 +892,11 @@
     // Bildes: erst ausloesen, wenn alle vier zu sehen sind (Kamera-Labor
     // Oktober 2026: Bogen schraeg gehalten, Ecke abgeschnitten - der Sucher
     // loeste aus, das Lesen scheiterte)
-    if (r.abb.drei) return { ok: false, punkte: punkte, hinweis: T.kameraEcken.replace('{n}', 3) };
+    // (Sind alle vier gefunden, passen aber nur drei zusammen, ist entweder
+    // eine Ecke abgeschnitten und etwas anderes galt als Marke - oder der
+    // Bogen liegt nicht flach: Gewoelbt und geknickt zeigte der Sucher sonst
+    // «3 von 4 Ecken im Bild», obwohl alle vier zu sehen waren.)
+    if (r.abb.drei) return { ok: false, punkte: punkte, hinweis: T.kameraPasst };
     return { ok: true, punkte: punkte, umriss: punkte, breite: r.abb.massstab()[0] * A4[0] };
   }
   if (B.kameraMoeglich()) el('ab-live').hidden = false;
