@@ -714,7 +714,14 @@
     for (k = 0; k < BLOECKE; k++){
       var block = [].concat.apply([], werte.slice(k * ZEILEN, (k + 1) * ZEILEN));
       block.sort(function(a, b){ return a - b; });
-      var rauschen = block[Math.floor(block.length * 0.75)];
+      // Sind mehr als ein Viertel der Kaestchen deutlich markiert (der Block
+      // ganz beantwortet und einige Zeilen doppelt), traf das Quantil einen
+      // Strich: Schwelle 0.84 statt 0.02, der ganze Block orange, und die
+      // doppelt markierten Zeilen galten als leer (Kamera-Labor Oktober
+      // 2026). Dann hoechstens das staerkste der uebrigen Kaestchen.
+      var deutlich = Math.max(5 * block[Math.floor(block.length / 2)], 0.06), striche = 0;
+      block.forEach(function(v){ if (v >= deutlich) striche++; });
+      var rauschen = block[Math.max(0, Math.min(Math.floor(block.length * 0.75), block.length - striche - 1))];
       schw.push([Math.max(MARKIERT, 0.012 + 3 * rauschen), Math.max(UNSICHER, 2 * rauschen)]);
       rauschenJe.push(rauschen);
     }

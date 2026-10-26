@@ -46,6 +46,58 @@
   ]
  },
  {
+  "name": "ab-schatten-hart-leer",
+  "szene": {
+   "seed": 1400,
+   "art": "antwortbogen",
+   "jahr": 2025,
+   "antworten": {
+    "leer": 0.5,
+    "doppelt": 0.0,
+    "radiert": 0.03
+   },
+   "kamera": {
+    "licht": {
+     "schatten": {
+      "staerke": 0.65,
+      "groesse": 0.4,
+      "weich": 0.08,
+      "bewegt": false
+     }
+    }
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
+  "name": "ab-voll-doppelt",
+  "szene": {
+   "seed": 706,
+   "art": "antwortbogen",
+   "jahr": 2022,
+   "antworten": {
+    "leer": 0.1,
+    "doppelt": 0.05,
+    "radiert": 0.06
+   }
+  },
+  "laeufe": [
+   {
+    "weg": "foto"
+   },
+   {
+    "weg": "stapel"
+   }
+  ]
+ },
+ {
   "name": "ab-wenig-licht-warm",
   "szene": {
    "seed": 101,
