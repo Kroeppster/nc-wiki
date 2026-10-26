@@ -310,10 +310,46 @@
     var beste = null;
     for (var i = 0; i < (arten || FLECKEN.length); i++){
       var punkte = flecken(bild, farbe, undefined, FLECKEN[i]), g = gitter(punkte, dicht);
+      if (g && !dicht) g = stimmig(g);
       if (g && (!beste || g.platz.size > beste.g.platz.size)) beste = { punkte: punkte, g: g };
       if (beste && beste.g.platz.size >= 0.97 * N * N) break;
     }
     return beste || { punkte: [], g: null };
+  }
+  // Eine Naht im Gitter: Ist es irgendwo um eine Spalte verrutscht (im
+  // Videobild feiner Zeichen - Testsimulation 2023, Serie 2024 - in 9 von 91
+  // Bildern des Kamera-Labors, Oktober 2026), ist ein ganzer Bereich falsch
+  // nummeriert, die Abbildung dorthin gezogen, und Zeichen wurden still
+  // falsch gelesen. Benachbarte Plaetze liegen im Bild einen Schritt
+  // auseinander, ueber die Naht zwei: Nur solche Nachbarn verbinden - zerfaellt
+  // das Gitter in zwei grosse Teile, gilt nur der groessere.
+  function stimmig(g){
+    var an = new Map(), P = g.punkte, nb = new Map(), paare = [[], []];
+    g.platz.forEach(function(rc, i){ an.set(rc[0] + ',' + rc[1], i); nb.set(i, []); });
+    g.platz.forEach(function(rc, i){
+      [[0, 1], [1, 0]].forEach(function(d, k){
+        var j = an.get((rc[0] + d[0]) + ',' + (rc[1] + d[1]));
+        if (j !== undefined) paare[k].push([i, j, P[j].x - P[i].x, P[j].y - P[i].y]);
+      });
+    });
+    paare.forEach(function(liste){
+      if (!liste.length) return;
+      var mx = median(liste.map(function(q){ return q[2]; })), my = median(liste.map(function(q){ return q[3]; })), m = Math.hypot(mx, my);
+      liste.forEach(function(q){ if (Math.hypot(q[2] - mx, q[3] - my) < 0.4 * m){ nb.get(q[0]).push(q[1]); nb.get(q[1]).push(q[0]); } });
+    });
+    var gesehen = new Set(), teile = [];
+    g.platz.forEach(function(_, s){
+      if (gesehen.has(s)) return;
+      var teil = [s], stapel = [s];
+      gesehen.add(s);
+      while (stapel.length) nb.get(stapel.pop()).forEach(function(j){ if (!gesehen.has(j)){ gesehen.add(j); teil.push(j); stapel.push(j); } });
+      teile.push(teil);
+    });
+    teile.sort(function(a, b){ return b.length - a.length; });
+    if (teile.length < 2 || teile[1].length < 30) return g;
+    var platz = new Map();
+    teile[0].forEach(function(i){ platz.set(i, g.platz.get(i)); });
+    return { platz: platz, schritt: g.schritt, punkte: g.punkte, naht: true };
   }
   // --- Das Gitter -------------------------------------------------------------------
   function eimerVon(punkte, g){
@@ -711,7 +747,7 @@
     };
     var x1 = zweimal(NORMAL), roh = x1.roh, e = x1.e;
     // fuer scripts/konztest-pruefen.mjs und Fehlersuche
-    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ roh: Array.prototype.slice.call(roh), e: e, ziele: K.ziele });
+    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ roh: Array.prototype.slice.call(roh), e: e, ziele: K.ziele, punkt: function(R, C){ return imBild(r, R, C); }, teile: function(R, C){ var m = mitte(R, C); return [m, r.abb(m[0], m[1]), r.korrektur[R][C]]; } });
     if (e && e.anzahl < 10){
       // fast nichts markiert? Mit feinem, blassem Stift sieht es so aus
       var x2 = zweimal(EMPFINDLICH);
@@ -1073,6 +1109,7 @@
     zeigen();
   });
   function spaeter(f){ return new Promise(function(ok){ setTimeout(function(){ ok(f()); }, 30); }); }
+  function nichtGefunden(r){ return r.fehler === T.grau || r.fehler.indexOf(T.keinRaster.split('{n}')[0]) === 0; }
   function auswerten(liste){
     melden(T.liest);
     return spaeter(function(){
@@ -1081,7 +1118,11 @@
         var bild = B.bildAus(liste[i]), r = bogenLesen(bild);
         r.bild = r.bild || bild;
         if (!r.fehler) return r;
-        if (!erster) erster = r;
+        // (lieber die Meldung eines Bilds, auf dem das Blatt gefunden wurde:
+        // Zeigt das Foto der Live-Kamera schon den Tisch, hiess es sonst
+        // «schwarz-weiss», obwohl das Videobild davor das Blatt zeigte -
+        // Kamera-Labor Oktober 2026)
+        if (!erster || (nichtGefunden(erster) && !nichtGefunden(r))) erster = r;
       }
       return erster || { fehler: T.fehlerBild };
     }).then(function(r){

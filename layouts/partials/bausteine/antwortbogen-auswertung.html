@@ -677,7 +677,11 @@
       var bild = bildAus(liste[i]), r = bogenLesen(bild, schwellen);
       r.bild = bild;
       if (!r.fehler && (!pruefen || pruefen(r))) return r;
-      if (!erster) erster = r.fehler ? r : { fehler: T.schluesselKein };
+      // (lieber die Meldung eines Bilds, auf dem der Bogen gefunden wurde:
+      // Beim Ausloesen der Live-Kamera ist das Foto manchmal schon daneben,
+      // das Videobild davor aber zeigt den Bogen - dessen Meldung hilft)
+      var f = r.fehler ? r : { fehler: T.schluesselKein };
+      if (!erster || (erster.fehler === T.fehlerKein && f.fehler !== T.fehlerKein)) erster = f;
     }
     return erster || { fehler: T.fehlerBild };
   }

@@ -498,7 +498,7 @@ kt_kein_raster: "La grille des signes n’a pas été trouvée ({n} sur 1600 sig
 kt_passt_nicht: "La feuille ne correspond pas à ce test de concentration : les signes sont disposés autrement. Le bon test est-il choisi ?"
 kt_zu_klein: "La feuille est trop petite sur l’image. Merci de photographier de plus près."
 kt_unklar: "Les traits ne ressortent pas assez nettement sur cette image. Prends une nouvelle photo : plus près, nette, éclairée de manière égale, sans ombre ni reflet. Marqué très finement ou très clair, ou seulement souligné ? C’est presque illisible – repasse alors les traits avec un feutre épais, en oblique à travers les signes."
-kt_verdeckt: "Une partie de la feuille est masquée ou hors de l’image (doigt, objet, reflet, bord). Photographie toute la feuille, dégagée et sans reflet."
+kt_verdeckt: "Une partie de la feuille est masquée ou hors de l’image (doigt, objet, ombre, reflet, bord). Photographie toute la feuille, dégagée, uniformément éclairée et sans reflet."
 kt_unplausibel: "Attention : jusqu’au dernier signe marqué, il manque un nombre inhabituel de signes cibles ({n} sur {m}). Vérifie l’image – des traits fins ou clairs n’ont peut-être pas été reconnus. Avec un stylo foncé, un trait net et une nouvelle photo, cela fonctionne généralement."
 kt_grau: "L’image est en noir et blanc : les marques ne s’y distinguent pas de manière fiable des signes. Merci de photographier ou scanner en couleur – le test de concentration est imprimé en couleur."
 kt_summe: "Valeur brute : {n} points"

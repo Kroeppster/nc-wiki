@@ -507,7 +507,7 @@ kt_kein_raster: "Das Raster der Zeichen wurde nicht gefunden ({n} von 1600 Zeich
 kt_passt_nicht: "Das Blatt passt nicht zu diesem Konzentrationstest: Die Zeichen stehen anders. Ist der richtige Konzentrationstest gewählt?"
 kt_zu_klein: "Das Blatt ist auf dem Bild zu klein. Bitte näher heran fotografieren."
 kt_unklar: "Die Striche heben sich auf diesem Bild nicht klar genug ab. Mach ein neues Foto: näher heran, scharf, gleichmässig hell, ohne Schatten und Spiegelung. Sehr fein oder hell markiert, oder nur unterstrichen? Das lässt sich kaum lesen – zieh die Striche dann mit einem dicken Fineliner schräg durch die Zeichen nach."
-kt_verdeckt: "Ein Teil des Blatts ist verdeckt oder nicht im Bild (Finger, Gegenstand, Spiegelung, Rand). Fotografiere das ganze Blatt frei und ohne Glanz."
+kt_verdeckt: "Ein Teil des Blatts ist verdeckt oder nicht im Bild (Finger, Gegenstand, Schatten, Spiegelung, Rand). Fotografiere das ganze Blatt frei, gleichmässig hell und ohne Glanz."
 kt_unplausibel: "Achtung: Bis zum letzten markierten Zeichen fehlen auffällig viele Zielzeichen ({n} von {m}). Prüfe das Bild – vielleicht wurden feine oder helle Striche nicht erkannt. Mit kräftigem, dunklem Stift und einem neuen Foto klappt es meist."
 kt_grau: "Das Bild ist schwarz-weiss. Darin lassen sich die Striche nicht sicher von den Zeichen unterscheiden. Bitte farbig fotografieren oder scannen – der Konzentrationstest ist farbig gedruckt."
 kt_summe: "Rohwert: {n} Punkte"
