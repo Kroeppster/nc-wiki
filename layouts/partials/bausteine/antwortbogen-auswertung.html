@@ -519,6 +519,22 @@
     return [0, 1, 2, 3, 4].map(function(s){ return [dx[s], dy[s]]; });
   }
   function median(a){ a = a.slice().sort(function(x, y){ return x - y; }); return a[Math.floor(a.length / 2)]; }
+  // Liegt eine harte Schattenkante durch die Zeile (die Papierhelligkeit an
+  // den Ecken eines Kaestchens unterscheidet sich um mehr als ein Viertel)?
+  // Dort stimmt keine Schaetzung des Papiers: Die dunkle Haelfte eines leeren
+  // Kaestchens sieht aus wie ein Strich (Kamera-Labor Oktober 2026). Bitte
+  // ansehen.
+  function lichtKante(bild, abb, k, i){
+    for (var s = 0; s < 5; s++){
+      var e = feldEcke(k, i, s), lo = 1e9, hi = 0;
+      [[-1, -1], [FELD_B + 1, -1], [-1, FELD_H + 1], [FELD_B + 1, FELD_H + 1]].forEach(function(d){
+        var p = abb(e[0] + d[0], e[1] + d[1]), pf = bild.papierFein(p[0], p[1], bild.papierBei(p[0], p[1]));
+        lo = Math.min(lo, pf); hi = Math.max(hi, pf);
+      });
+      if (hi > 1.25 * lo) return true;
+    }
+    return false;
+  }
   // Fuellung der fuenf Kaestchen -> [antwort, unsicher]. antwort ist ein
   // Buchstabe, '' fuer leer oder '*' fuer mehrere Markierungen.
   function zeileLesen(werte, markiert, unsicher, typisch){
@@ -556,7 +572,7 @@
     // geraten - lieber neu fotografieren lassen.
     r.passung = passungScharf(bild, r.abb);
     if (r.passung < PASSUNG_MIN) return { fehler: T.fehlerKein };
-    var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [];
+    var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [], kante = [];
     for (var k = 0; k < BLOECKE; k++){
       for (var i = 0; i < ZEILEN; i++){
         // Wo die gedruckten Kaestchen nicht zu sehen sind (verdeckt, Falte,
@@ -568,7 +584,7 @@
           var e = feldEcke(k, i, s);
           return fuellung(bild, function(x, y){ return r.abb(x + v[s][0], y + v[s][1]); }, e[0], e[1]);
         });
-        werte.push(w); gedruckt.push(da);
+        werte.push(w); gedruckt.push(da); kante.push(lichtKante(bild, r.abb, k, i));
       }
     }
     // Grundrauschen des Fotos (Schatten, Koernung): mindestens drei Viertel
@@ -576,9 +592,18 @@
     // Block (90 Kaestchen) statt fuer den ganzen Bogen: Eine Stoerung an einer
     // Stelle (harter Schatten, Glanz) hob sonst die Schwellen ueberall, und
     // jeder normale Strich galt als leer (Kamera-Labor Oktober 2026).
+    // (Ohne das staerkste Kaestchen jeder Zeile - das ist meist der Strich:
+    // Ist jede Zeile beantwortet, sind schon 20 % der Kaestchen markiert, und
+    // ein paar Kaestchen am Rand eines Schattens dazu hoben das Quantil auf
+    // die Striche selbst; Kamera-Labor: Schwelle 0.72 statt 0.05.)
     var schw = [], rauschenJe = [];
     for (k = 0; k < BLOECKE; k++){
-      var block = [].concat.apply([], werte.slice(k * ZEILEN, (k + 1) * ZEILEN)).sort(function(a, b){ return a - b; });
+      var block = [];
+      werte.slice(k * ZEILEN, (k + 1) * ZEILEN).forEach(function(w){
+        var ohne = w.slice().sort(function(a, b){ return a - b; }).slice(0, 4);
+        block.push.apply(block, ohne);
+      });
+      block.sort(function(a, b){ return a - b; });
       var rauschen = block[Math.floor(block.length * 0.75)];
       schw.push([Math.max(MARKIERT, 0.012 + 3 * rauschen), Math.max(UNSICHER, 2 * rauschen)]);
       rauschenJe.push(rauschen);
@@ -604,7 +629,7 @@
     if (schwellen) schw = schw.map(function(){ return schwellen; });
     werte.forEach(function(w, z){
       var a = zeileLesen(w, schw[Math.floor(z / ZEILEN)][0], schw[Math.floor(z / ZEILEN)][1], schwellen ? 0 : typisch);
-      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
+      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || kante[z] || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
     });
     if (blass) r.hinweise.push(T.blass);
     // Fehlt ein Viertel, lag der Bogen falsch - lieber neu fotografieren.
