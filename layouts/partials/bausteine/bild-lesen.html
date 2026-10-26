@@ -309,6 +309,17 @@ window.NCWikiBild = (function(){
   }
   function istPdf(datei){ return datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name); }
   // Eine Datei -> Liste von Quellen (eine bei einem Bild, je Seite bei einem PDF)
+  // Ein Foto, das hochgeladen nicht zu lesen war, mit weniger als 1800
+  // Bildpunkten auf der langen Seite: oft ueber einen Messenger verschickt
+  // und dabei verkleinert (Kamera-Labor Oktober 2026: 12-MP-Fotos auf 1600
+  // Bildpunkte verkleinert - feine Konztest-Serien nicht mehr zu lesen,
+  // gemeldet war «Raster nicht gefunden» oder «passt nicht zu diesem
+  // Konzentrationstest»).
+  // Gibt den Zusatz zur Meldung zurueck, sonst ''.
+  function kleinesFoto(quelle, text){
+    var lang = quelle ? Math.max(quelle.naturalWidth || quelle.width || 0, quelle.naturalHeight || quelle.height || 0) : 0;
+    return lang && lang < 1800 ? ' ' + text.replace('{n}', lang) : '';
+  }
   function quellen(datei){
     return istPdf(datei) ? pdfSeiten(datei) : laden(datei).then(function(img){ return [img]; });
   }
@@ -671,7 +682,7 @@ window.NCWikiBild = (function(){
   return { stapelTeile: { grauKlein: grauKlein, grauKleinAus: grauKleinAus, ausrichtung: ausrichtung },
            scan: scan, A4: A4, LANGE_SEITE: LANGE_SEITE, Bild: Bild, magenta: magenta, loesen: loesen, abbildung: abbildung,
            ausgleichend: ausgleichend, laden: laden, bildAus: bildAus, istPdf: istPdf, quellen: quellen,
-           pdfOeffnen: pdfOeffnen, pdfSeite: pdfSeite,
+           pdfOeffnen: pdfOeffnen, pdfSeite: pdfSeite, kleinesFoto: kleinesFoto,
            kameraMoeglich: kameraMoeglich, kamera: kamera };
 })();
 </script>

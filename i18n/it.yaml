@@ -466,6 +466,7 @@ bl_kamera_fehler: "Impossibile aprire la fotocamera (nessuna autorizzazione o ne
 bl_kamera_ruhig: "Trovato – tieni fermo …"
 bl_kamera_naeher: "Avvicinati un po’."
 bl_kamera_aufloesung: "La fotocamera fornisce troppo pochi pixel per questo foglio. Usa invece «Scatta una foto»."
+bl_messenger: "La foto ha solo {n} pixel sul lato lungo – è stata inviata con un’app di messaggistica che l’ha ridotta? Allora carica la foto originale (per esempio direttamente dal telefono)."
 bl_kamera_ausloesen: "Scatta ora"
 bl_kamera_abbrechen: "Annulla"
 bl_kamera_aufnahme: "Scatto …"

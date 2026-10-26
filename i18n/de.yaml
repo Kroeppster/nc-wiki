@@ -476,6 +476,7 @@ bl_kamera_fehler: "Die Kamera lässt sich nicht öffnen (keine Berechtigung oder
 bl_kamera_ruhig: "Gefunden – bitte ruhig halten …"
 bl_kamera_naeher: "Bitte etwas näher heran."
 bl_kamera_aufloesung: "Die Kamera liefert hier zu wenige Bildpunkte für diesen Bogen. Nimm ihn stattdessen mit «Foto aufnehmen» auf."
+bl_messenger: "Das Foto hat auf der langen Seite nur {n} Bildpunkte – wurde es über einen Messenger verschickt und dabei verkleinert? Dann lade das Originalfoto hoch (zum Beispiel direkt vom Handy)."
 bl_kamera_ausloesen: "Jetzt auslösen"
 bl_kamera_abbrechen: "Abbrechen"
 bl_kamera_aufnahme: "Aufnahme …"

@@ -108,6 +108,7 @@
   var T = {
     liest: {{ i18n "ab_liest" | jsonify | safeJS }},
     fehlerBild: {{ i18n "ab_fehler_bild" | jsonify | safeJS }},
+    messenger: {{ i18n "bl_messenger" | jsonify | safeJS }},
     fehlerKlein: {{ i18n "ab_fehler_klein" | jsonify | safeJS }},
     fehlerKein: {{ i18n "ab_fehler_kein" | jsonify | safeJS }},
     fehlerFlach: {{ i18n "ab_fehler_flach" | jsonify | safeJS }},
@@ -888,12 +889,12 @@
     if (!datei) return;
     el('ab-ergebnis').hidden = true;
     melden('ab-status', istPdf(datei) ? T.pdfLaedt : T.liest);
-    return quellen(datei).then(bogenAus, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
+    return quellen(datei).then(function(liste){ return bogenAus(liste, !istPdf(datei)); }, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
   }
-  function bogenAus(liste){
+  function bogenAus(liste, hochgeladen){
     melden('ab-status', T.liest);
     return spaeter(function(){ return ersterBogen(liste); }).then(function(r){
-      if (r.fehler){ melden('ab-status', r.fehler, true); return; }
+      if (r.fehler){ melden('ab-status', r.fehler + (hochgeladen ? B.kleinesFoto(liste[0], T.messenger) : ''), true); return; }
       stand = { bild: r.bild, abb: r.abb, antworten: r.antworten, unsicher: r.unsicher, hinweise: r.hinweise };
       try { stand.scan = B.scan(r.bild, r.abb, [0, 0, A4[0], A4[1]], 1100); } catch (e) { stand.scan = null; }
       zeigen();

@@ -100,6 +100,7 @@
     liest: {{ i18n "ab_liest" | jsonify | safeJS }},
     pdfLaedt: {{ i18n "ab_pdf_laedt" | jsonify | safeJS }},
     fehlerBild: {{ i18n "bl_fehler_bild" | jsonify | safeJS }},
+    messenger: {{ i18n "bl_messenger" | jsonify | safeJS }},
     keinRaster: {{ i18n "kt_kein_raster" | jsonify | safeJS }},
     passtNicht: {{ i18n "kt_passt_nicht" | jsonify | safeJS }},
     zuKlein: {{ i18n "kt_zu_klein" | jsonify | safeJS }},
@@ -1110,7 +1111,7 @@
   });
   function spaeter(f){ return new Promise(function(ok){ setTimeout(function(){ ok(f()); }, 30); }); }
   function nichtGefunden(r){ return r.fehler === T.grau || r.fehler.indexOf(T.keinRaster.split('{n}')[0]) === 0; }
-  function auswerten(liste){
+  function auswerten(liste, hochgeladen){
     melden(T.liest);
     return spaeter(function(){
       var erster = null;
@@ -1126,7 +1127,7 @@
       }
       return erster || { fehler: T.fehlerBild };
     }).then(function(r){
-      if (r.fehler){ melden(r.fehler, true); return; }
+      if (r.fehler){ melden(r.fehler + (hochgeladen ? B.kleinesFoto(liste[0], T.messenger) : ''), true); return; }
       stand = r;
       scanBereit(stand);
       melden('');
@@ -1140,7 +1141,7 @@
     if (!K){ melden(T.eigenFehlt, true); return; }
     el('kt-ergebnis').hidden = true;
     melden(B.istPdf(d) ? T.pdfLaedt : T.liest);
-    B.quellen(d).then(auswerten, function(f){ melden(typeof f === 'string' ? f : T.fehlerBild, true); });
+    B.quellen(d).then(function(liste){ return auswerten(liste, !B.istPdf(d)); }, function(f){ melden(typeof f === 'string' ? f : T.fehlerBild, true); });
   }
   ['kt-kamera', 'kt-datei'].forEach(function(id){
     el(id).addEventListener('change', function(){ datei(this.files && this.files[0]); this.value = ''; });

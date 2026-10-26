@@ -467,6 +467,7 @@ bl_kamera_fehler: "Impossible d’ouvrir la caméra (pas d’autorisation ou pas
 bl_kamera_ruhig: "Trouvé – ne bouge plus …"
 bl_kamera_naeher: "Approche-toi un peu."
 bl_kamera_aufloesung: "La caméra fournit trop peu de pixels pour cette feuille. Prends-la plutôt avec « Prendre une photo »."
+bl_messenger: "La photo ne fait que {n} pixels sur le grand côté – a-t-elle été envoyée par une messagerie qui l’a réduite ? Charge alors la photo originale (par exemple directement depuis le téléphone)."
 bl_kamera_ausloesen: "Déclencher maintenant"
 bl_kamera_abbrechen: "Annuler"
 bl_kamera_aufnahme: "Prise de vue …"
