@@ -218,7 +218,10 @@
         }
         var bw = x2 - x1 + 1, bh = y2 - y1 + 1;
         if (!(kleinste * kern <= bw && bw <= 1.6 * kern && kleinste * kern <= bh && bh <= 1.6 * kern)) continue;
-        if (Math.abs(bw - bh) > 0.35 * Math.max(bw, bh) || n < 0.7 * bw * bh) continue;
+        // (ein gedrehtes Quadrat fuellt sein Rechteck nicht: bei 25 Grad nur
+        // noch 56 %, bei 45 Grad 50 % - bis Oktober 2026 waren 70 % verlangt,
+        // und ein schraeg gehaltener Bogen wurde nicht erkannt)
+        if (Math.abs(bw - bh) > 0.35 * Math.max(bw, bh) || n < 0.5 * bw * bh) continue;
         var cx = x0 + (sx / n + 0.5) * g, cy = y0 + (sy / n + 0.5) * g;
         if (!weissUmrandet(bild, cx, cy, bw * g, bh * g)) continue;
         var ex = name[1] === 'l' ? 0 : w, ey = name[0] === 'o' ? 0 : h;
