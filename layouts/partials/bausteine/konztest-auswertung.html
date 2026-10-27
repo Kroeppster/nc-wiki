@@ -101,6 +101,7 @@
     pdfLaedt: {{ i18n "ab_pdf_laedt" | jsonify | safeJS }},
     fehlerBild: {{ i18n "bl_fehler_bild" | jsonify | safeJS }},
     messenger: {{ i18n "bl_messenger" | jsonify | safeJS }},
+    aufloesung: {{ i18n "bl_kamera_aufloesung" | jsonify | safeJS }},
     keinRaster: {{ i18n "kt_kein_raster" | jsonify | safeJS }},
     passtNicht: {{ i18n "kt_passt_nicht" | jsonify | safeJS }},
     zuKlein: {{ i18n "kt_zu_klein" | jsonify | safeJS }},
@@ -1129,7 +1130,7 @@
   });
   function spaeter(f){ return new Promise(function(ok){ setTimeout(function(){ ok(f()); }, 30); }); }
   function nichtGefunden(r){ return r.fehler === T.grau || r.fehler.indexOf(T.keinRaster.split('{n}')[0]) === 0; }
-  function auswerten(liste, hochgeladen){
+  function auswerten(liste, hochgeladen, live){
     melden(T.liest);
     return spaeter(function(){
       var erster = null;
@@ -1145,7 +1146,16 @@
       }
       return erster || { fehler: T.fehlerBild };
     }).then(function(r){
-      if (r.fehler){ melden(r.fehler + (hochgeladen ? B.kleinesFoto(liste[0], T.messenger) : ''), true); return; }
+      if (r.fehler){
+        var zusatz = hochgeladen ? B.kleinesFoto(liste[0], T.messenger) : '';
+        // Live und nur ein Videobild (gut 1920 Bildpunkte): Feine Zeichen
+        // (Serie 2024-02) sind darin oft nicht zu lesen, im Foto der
+        // Kamera-App schon (Kamera-Labor Oktober 2026, Normalfall: live 0 von
+        // 2, als 12-MP-Foto 6 von 6) - also dorthin verweisen
+        var q = liste[0], lang = q ? Math.max(q.naturalWidth || q.width || 0, q.naturalHeight || q.height || 0) : 0;
+        if (live && lang && lang <= 2000 && (nichtGefunden(r) || r.fehler === T.passtNicht || r.fehler === T.unklar)) zusatz = ' ' + T.aufloesung;
+        melden(r.fehler + zusatz, true); return;
+      }
       stand = r;
       scanBereit(stand);
       melden('');
@@ -1245,7 +1255,7 @@
     // verkleinerten Bild nur zu 40 %, und der Sucher loeste nie aus. Kaum
     // langsamer: Die Flecken muessen dort seltener neu gesucht werden.)
     B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1920, minBreite: 850, minLesbar: 700,
-      fertig: function(q, ersatz){ auswerten([q].concat(ersatz || [])); }, fehler: function(t){ melden(t, true); } });
+      fertig: function(q, ersatz){ auswerten([q].concat(ersatz || []), false, true); }, fehler: function(t){ melden(t, true); } });
   });
   // Fuer die Pruefung (scripts/konztest-pruefen.mjs): der gelesene Zustand
   // und wo ein Zeichen im angezeigten Bild steht (Anteil der Breite/Hoehe)
