@@ -5,6 +5,6 @@ eyebrow: "Community"
 draft: false
 ---
 
-Da poco sulla piattaforma di chat Discord è possibile confrontarsi con altre persone di tutta la Svizzera sul test d'ammissione agli studi di medicina (EMS, NC). Discord funziona un po' come una grande chat di gruppo e basta un account gratuito.
+Da poco sulla piattaforma di chat Discord è possibile confrontarsi con altre persone di tutta la Svizzera sul test d'ammissione agli studi di medicina (AMS, NC). Discord funziona un po' come una grande chat di gruppo e basta un account gratuito.
 
 Unisciti alla [community NCWiki su Discord](https://discord.com/invite/DhgYpUGss9) per motivarti e aiutarti con gli altri!

@@ -16,7 +16,7 @@ Con 2,5 minuti per domanda, questo sottotest non punta molto sulla pressione del
 
 ## Importanza per gli studi
 
-Molti nessi biologici nel corpo seguono leggi fisiche (velocità di flusso, diffusione – la fisiologia ti saluta). Chi capisce come la variazione di una grandezza si ripercuote su un'altra ha poi vita più facile e si risparmia parecchio studio a memoria.
+Molti nessi biologici nel corpo seguono leggi fisiche (velocità di flusso, diffusione – la fisiologia ti saluta). Chi capisce come la variazione di una grandezza si ripercuote su un'altra avrà molta meno difficoltà e si risparmia molto studio a memoria.
 
 ## Tempi e frequenza dell'esercizio
 
@@ -26,16 +26,16 @@ Siccome qui conta soprattutto l'esercizio, conviene iniziare presto – idealmen
 
 1. **Leggere con attenzione:** i problemi contengono spesso informazioni superflue o nascondono l'indicazione decisiva alla fine. Leggere con attenzione all'inizio costa tempo, ma nel complesso ne fa risparmiare molto.
 2. **Annotare tutto:** usa i fogli per gli appunti per i passaggi intermedi, invece di tenere tutto a mente.
-3. **Osare arrotondare:** i risultati intermedi non devono essere esatti – con cinque opzioni di risposta di solito basta un arrotondamento sensato per riconoscere la risposta giusta.
+3. **Prova ad arrotondare:** i risultati intermedi non devono essere esatti – con cinque opzioni di risposta di solito basta un arrotondamento sensato per riconoscere la risposta giusta.
 4. **Gestire il tempo:** 45 minuti sono relativamente tanti. Se ti blocchi su una domanda, contrassegnala e vai avanti – alla fine resta il tempo per compilare comunque le risposte aperte (le risposte sbagliate non vengono penalizzate).
 
 ## Altri consigli
 
-- **Allenare il calcolo mentale e scritto:** siccome al test la calcolatrice non è ammessa, dovresti farne a meno anche durante l'esercizio. Il livello resta quello della «matematica di base» – mai integrali o simili, ma tecniche di base come la divisione scritta devi averle a portata di mano.
+- **Allenare il calcolo mentale e scritto:** siccome al test la calcolatrice non è ammessa, dovresti farne a meno anche durante l'esercitazione. Il livello resta quello della «matematica di base» – mai integrali o simili, ma tecniche di base come la divisione scritta devi averle a portata di mano.
 - **Trucco delle percentuali:** l'x % di y è uguale all'y % di x – il 7 % di 50 è quindi uguale al 50 % di 7, cioè 3,5. Funziona sempre e fa risparmiare tempo.
 - **Conoscere le frazioni:** riconoscere numeri decimali ricorrenti come 0,166 in forma di frazione (⅙) rende alcuni calcoli molto più semplici.
 - **Spostare la virgola nelle moltiplicazioni e divisioni:** per moltiplicare conti i decimali di entrambi i numeri, calcoli senza virgola e la rimetti alla fine. Per dividere sposta la virgola dello stesso numero di posizioni nel divisore e nel dividendo, finché entrambi sono interi, prima di calcolare.
-- **Esercitarsi a trasformare le formule:** alcune domande chiedono di risolvere una formula rispetto a una certa grandezza o unità – con le formule di fisica si allena bene.
+- **Esercitarsi a trasformare le formule:** alcune domande chiedono di risolvere una formula rispetto a una certa grandezza o unità – con le formule di fisica ci si allena bene.
 
 ## Errori frequenti
 

@@ -60,7 +60,7 @@ ressorts:
         rolle: "Passaggio di consegne finanze"
 ---
 
-Dietro NCWiki ci sono oltre 110 studentesse e studenti di medicina di tutta la Svizzera che si impegnano come volontari. Qui ti presentiamo l'attuale team dirigente e i responsabili di questa stagione. Chi ha contribuito a NCWiki nelle stagioni precedenti lo trovi nell'[archivio](/ueber-uns/archiv).
+Dietro NCWiki ci sono oltre 110 studentesse e studenti di medicina provenienti da tutta la Svizzera, che si impegnano come volontari. Qui ti presentiamo l'attuale team direttivo e i responsabili di questa stagione. Puoi trovare le persone che hanno contribuito a realizzare NCWiki nelle stagioni precedenti nell'[archivio](/ueber-uns/archiv).
 
 ## Team dirigente 2026/27
 

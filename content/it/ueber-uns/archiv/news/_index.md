@@ -1,6 +1,6 @@
 ---
 title: "News precedenti"
-description: "L'archivio delle news di NCWiki: pubblicazioni precedenti su simulazioni del test, corsi di preparazione, script dei corsi e sull'EMS dal 2021."
+description: "L'archivio delle news di NCWiki: pubblicazioni precedenti su simulazioni del test, corsi di preparazione, script dei corsi e sull'AMS dal 2021."
 weight: 1
 ---
 

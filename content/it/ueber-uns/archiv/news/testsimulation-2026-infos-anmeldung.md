@@ -5,9 +5,9 @@ eyebrow: "Iscrizione"
 draft: false
 ---
 
-Dopo il successo dell'anno precedente, anche nel 2026 offriamo una simulazione gratuita dell'EMS – per 1650 partecipanti in 6 sedi in Svizzera: ETH Zurigo, Università di Zurigo, Università di Basilea, Università di Berna, Università di Friburgo e Università della Svizzera italiana.
+Dopo il successo dell'anno precedente, anche nel 2026 offriamo una simulazione gratuita dell'AMS – per 1650 partecipanti in 6 sedi in Svizzera: ETH Zurigo, Università di Zurigo, Università di Basilea, Università di Berna, Università di Friburgo e Università della Svizzera italiana.
 
-La simulazione è stata elaborata da noi, non è ancora pubblicata sul sito e si svolge in un contesto il più simile possibile al vero EMS – in tedesco, in francese a Friburgo e in italiano all'USI di Lugano.
+La simulazione è stata elaborata da noi, non è ancora pubblicata sul sito e si svolge in un contesto il più simile possibile al vero AMS – in tedesco, in francese a Friburgo e in italiano all'USI di Lugano.
 
 **Data e svolgimento:** 09.05.2026, ca. 8.15–13.30 in tutte le 6 sedi.
 

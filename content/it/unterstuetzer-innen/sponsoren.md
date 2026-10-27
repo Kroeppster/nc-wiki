@@ -11,13 +11,13 @@ Con il Suo sostegno come sponsor o partner permette a giovani di iniziare la lor
 
 ## I motivi di una sponsorizzazione
 
-Ogni anno migliaia di giovani nella Svizzera tedesca, nella Svizzera romanda e in Ticino si preparano all'AMS – molti di loro tramite la nostra piattaforma.
+Ogni anno migliaia di giovani nella Svizzera tedesca, nella Svizzera romanda e in Ticino si preparano all'AMS. Molti di loro tramite la nostra piattaforma.
 
-Come sponsor raggiunge così un pubblico motivato e accademicamente ambizioso: i futuri medici e ricercatori che nei prossimi decenni plasmeranno il panorama sanitario e scientifico svizzero. Allo stesso tempo si posiziona come azienda o organizzazione che promuove attivamente la formazione, le pari opportunità e le nuove leve accademiche.
+Come sponsor raggiunge così un pubblico motivato e accademicamente ambizioso: i futuri medici e ricercatori che nei prossimi decenni plasmeranno il panorama sanitario e scientifico svizzero. Allo stesso tempo, dimostra che la Sua azienda o organizzazione promuove l'istruzione, le pari opportunità e i giovani talenti in ambito accademico.
 
 ## Cosa rende possibile il Suo impegno
 
-Il Suo sostegno confluisce direttamente nello sviluppo dei nostri esercizi gratuiti, delle simulazioni del test e delle offerte di preparazione. Aiuta le persone interessate allo studio della medicina a prepararsi al meglio all'AMS indipendentemente dalla loro situazione finanziaria – contribuendo così direttamente a maggiori pari opportunità nell'accesso allo studio della medicina.
+Il Suo sostegno confluisce direttamente nello sviluppo delle nostre serie di esercizi gratuite, delle simulazioni del test e dei corsi di preparazione. Aiuta le persone interessate allo studio in medicina a prepararsi al meglio all'AMS indipendentemente dalla loro situazione finanziaria, contribuendo così direttamente a maggiori pari opportunità nell'accesso allo studio di medicina.
 
 ## La Sua visibilità come sponsor
 
@@ -25,7 +25,7 @@ Come ringraziamento per il Suo sostegno La presentiamo sulla nostra [pagina Sost
 
 A seconda del tipo di partnership sono inoltre possibili menzioni nelle nostre notizie, nella newsletter e sui social media, nonché collaborazioni su misura – ad esempio nell'ambito di manifestazioni, eventi o progetti comuni.
 
-Ci contatti: organizziamo volentieri la collaborazione in base ai Suoi obiettivi.
+Ci contatti! Struttureremo la collaborazione in modo che sia in linea con i Suoi obiettivi.
 
 ## Contatto
 

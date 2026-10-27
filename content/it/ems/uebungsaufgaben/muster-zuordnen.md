@@ -1,18 +1,18 @@
 ---
-title: "Abbinamento di schemi"
-description: "Abbinamento di schemi all'AMS: serie di esercizi gratuite e consigli collaudati per trovare più in fretta il ritaglio giusto ed evitare gli errori tipici."
+title: "Associare le figure"
+description: "Associare le figure all'AMS: serie di esercizi gratuite e consigli collaudati per trovare più in fretta il ritaglio giusto ed evitare gli errori tipici."
 weight: 1
 ---
 
 ## Panoramica
 
-L'abbinamento di schemi è il primo sottotest dell'AMS e apre la giornata del test. Per ogni domanda ricevi uno schema complesso e cinque ritagli (da A a E). Gli schemi si trovano nella parte superiore della pagina, i ritagli corrispondenti più in basso sulla stessa pagina. Solo uno dei cinque ritagli si può sovrapporre allo schema in modo esatto e completo, in un punto qualsiasi. Negli altri quattro un dettaglio è stato aggiunto, tolto o modificato. I ritagli non sono né ingranditi né rimpiccioliti, né ruotati né specchiati. Le differenze sono sempre univoche; puntini o imperfezioni di stampa non contano come errori.
+Associare le figure è il primo sottotest dell'AMS e apre la giornata del test. Per ogni domanda ricevi uno schema complesso e cinque ritagli (da A a E). Gli schemi si trovano nella parte superiore della pagina, i ritagli corrispondenti più in basso sulla stessa pagina. Solo uno dei cinque ritagli si può sovrapporre allo schema in modo esatto e completo, in un punto qualsiasi. Negli altri quattro un dettaglio è stato aggiunto, tolto o modificato. I ritagli non sono né ingranditi né rimpiccioliti, né ruotati né specchiati. Le differenze sono sempre univoche; puntini o imperfezioni di stampa non contano come errori.
 
-- **Posizione nella giornata del test:** 1° sottotest, seguito dalla comprensione medico-scientifica
+- **Posizione nella giornata del test:** 1° sottotest, seguito dalla comprensione di questioni medico-scientifiche
 - **Volume:** 18 domande, 18 punti
 - **Tempo:** 16 minuti, cioè poco più di 53 secondi per domanda
 
-Il sottotest è pensato apposta perché nel tempo a disposizione di solito non si riescono a svolgere tutte le domande. Se non finisci, quindi, non significa che sia andata male.
+Il sottotest è pensato in modo che nel tempo a disposizione di solito non si riescono a svolgere tutte le domande. Se non finisci, quindi, non significa che sia andata male.
 
 ## Importanza per gli studi
 
@@ -20,9 +20,9 @@ Si verifica la capacità di confrontare con precisione immagini e strutture e di
 
 ## Tempi e frequenza dell'esercizio
 
-L'abbinamento di schemi si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1,5–2 mesi prima dell'AMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza la pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
+L'associazione di figure si allena bene e in tempi relativamente brevi. Di solito basta iniziare circa 1,5–2 mesi prima dell'AMS. Consigliamo 3–4 serie a settimana. All'inizio esercitati senza la pressione del tempo, finché non ti senti sicuro·a con le domande e hai sviluppato una tua strategia. Solo dopo dovresti lavorare con il tempo reale.
 
-Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anche le sessioni di esercizio con questo sottotest. In condizioni realistiche, con cronometro e istruzioni, ti eserciti nella [modalità simulazione](/ems/testsimulationen#simulationsmodus).
+Siccome l'associazione di figure apre la giornata del test, conviene iniziare anche le sessioni di esercizio con questo sottotest. Per esercitarti con il cronometro, nelle condizioni come all'esame puoi utilizzare la [modalità simulazione](/ems/testsimulationen#simulationsmodus).
 
 ## Come procedere
 
@@ -44,14 +44,14 @@ Siccome l'abbinamento di schemi apre la giornata del test, conviene iniziare anc
 - **Modifiche minime:** alcune differenze sono così sottili da non notarsi a un primo sguardo. Si trovano in modo affidabile solo con un procedimento sistematico, che costa tempo in più.
 - **Ritagli che non stanno affatto nello schema:** alcuni ritagli non si ritrovano per intero nello schema, oppure un errore si trova appena fuori dalla parte visibile ma si può dedurre logicamente. Già nella visione d'insieme controlla quindi se un ritaglio corrisponde davvero a un punto dello schema.
 - **Decidere troppo in fretta:** chi si decide alla prima caratteristica che coincide si lascia sfuggire facilmente una differenza in un altro punto del ritaglio.
-- **Nervosismo all'inizio:** essendo il primo sottotest, l'abbinamento di schemi ti coglie nel momento di massima tensione. Un inizio difficile dice poco sul tuo risultato complessivo.
+- **Nervosismo all'inizio:** essendo il primo sottotest, l'associazione di figure ti coglie nel momento di massima tensione. Un inizio difficile dice poco sul tuo risultato complessivo.
 
 ## Dalle testimonianze
 
-*«Prima delle sessioni di esercizio risolvevo sempre qualche confronto di schemi, per preparare il cervello al primo (e più difficile) compito del vero NC.»*
+*«Prima delle sessioni di esercizio risolvevo sempre qualche associazione di figure, per preparare il cervello al primo (e più difficile) compito del vero NC.»*
 
-*«Il primo compito di confronto di schemi l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciarti scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di te non devi mai arrenderti prima dell'ultimo compito.»* Questa persona ha superato l'AMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
+*«Il primo compito di associazione di figure l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciarti scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di te non devi mai arrenderti prima dell'ultimo compito.»* Questa persona ha superato l'AMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
 
-*«Gli schemi con lo sguardo incrociato valgono davvero tantissimo, per quanto difficili siano gli schemi.»* Un'altra persona ha invece abbandonato lo sguardo incrociato dopo due ore. Quale metodo funziona per te lo scopri solo esercitandoti.
+*«Gli esercizi risolti con lo sguardo incrociato valgono davvero tantissimo, per quanto difficili siano gli schemi.»* Un'altra persona ha invece abbandonato lo sguardo incrociato dopo due ore. Quale metodo funziona per te lo scopri solo esercitandoti.
 
 Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

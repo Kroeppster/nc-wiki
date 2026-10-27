@@ -73,7 +73,12 @@ Der Geist ist derselbe. Folgendes gilt übersetzt:
 - Durchgehend «tu» (FR und IT), auf der Sponsoring-Seite und bei Rechtlichem «vous» (FR) bzw. «Lei» (IT).
 - Keine Nummerierung in Überschriften, kein Ausrufezeichen und kein Punkt am Ende von Titeln.
 - Gleiche Begriffe wie auf Deutsch: «Uniguide», «Questions fréquentes» / «Domande frequenti»,
-  «Séries d'exercices» / «Serie di esercizi», «Apprendre figures et faits» / «Imparare figure e fatti».
+  «Séries d'exercices» / «Serie di esercizi», «Apprendre figures et faits» / «Memorizzazione di figure e fatti».
+- Untertests auf Italienisch überall mit ihrem offiziellen Namen: «Associare le figure», «Comprensione
+  di questioni medico-scientifiche», «Oggetti nello spazio», «Problemi quantitativi e formali»,
+  «Memorizzazione di figure e fatti» (einzeln «Memorizzazione di figure» / «Memorizzazione di fatti»),
+  «Comprensione di testi», «Diagrammi e tabelle», «Lavorare accuratamente e concentrati». Im
+  Fliesstext mit Artikel: «l'associazione di figure», «la comprensione di testi» usw.
 - Der Test heisst auf Französisch und Italienisch **AMS**, beim ersten Mal pro Seite
   ausgeschrieben: «test d'aptitudes pour les études de médecine (AMS)» bzw. «test attitudinale
   per gli studi di medicina (AMS)»; nie «EMS» oder «NC». Die Adressen (`/fr/ems/…`) bleiben.

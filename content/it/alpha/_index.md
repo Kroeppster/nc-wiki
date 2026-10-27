@@ -15,7 +15,7 @@ motori di ricerca ricevono inoltre un `noindex`.
 
 *Ciò che si trova qui può sparire o cambiare in qualsiasi momento.*
 
-## Generatore di esercizi (imparare figure e fatti)
+## Generatore di esercizi (memorizzazione di figure e fatti)
 
 Genera nuovi set per «Memorizzazione di figure» (18 figure) e «Memorizzazione
 di fatti» (15 pazienti, 18 domande) – separatamente o entrambi insieme come il

@@ -1,6 +1,6 @@
 ---
 title: "Corsi di preparazione"
-description: "Corso di preparazione all'AMS gratuito: due giorni in piccoli gruppi con studenti di medicina esperti, dispensa del corso con strategie ed esercizi inclusa."
+description: "Corso di preparazione all'AMS gratuito: due giorni in piccoli gruppi con studenti di medicina esperti, comprese le dispense con strategie ed esercizi."
 menu:
   main:
     parent: ems
@@ -17,4 +17,4 @@ I corsi si svolgono in diverse sedi universitarie svizzere, tra cui Basilea, Ber
 
 Non appena le iscrizioni per la prossima edizione sono aperte, lo annunciamo su questa pagina, su [Instagram](https://www.instagram.com/ncwiki.ch/) e nella nostra [community Discord](https://discord.com/invite/DhgYpUGss9). I posti sono limitati e vengono sorteggiati tra tutte le iscrizioni. Non conta quindi quanto in fretta ti iscrivi, ma che tu lo faccia entro il termine d'iscrizione.
 
-Qui puoi scaricare gratuitamente la dispensa attuale del corso. Contiene strategie e consigli per tutti i sottotest, indicazioni generali sulla preparazione e sulla situazione d'esame, oltre a numerosi esercizi. L'edizione 2026 tiene già conto della nuova versione del sottotest «Abbinamento di schemi». Se sei iscritto·a al nostro corso di preparazione, ricevi la dispensa in anticipo per e-mail. Portala il giorno del corso, in formato digitale o stampato.
+Qui puoi scaricare gratuitamente la dispensa attuale del corso. Contiene strategie e consigli per tutti i sottotest, indicazioni generali sulla preparazione e sulla situazione d'esame, oltre a numerosi esercizi. L'edizione 2026 tiene già conto della nuova versione del sottotest «Associare le figure». Se sei iscritto·a al nostro corso di preparazione, ricevi la dispensa in anticipo per e-mail. Portala il giorno del corso, in formato digitale o stampato.

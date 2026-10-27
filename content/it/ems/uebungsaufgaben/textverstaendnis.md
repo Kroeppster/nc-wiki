@@ -1,12 +1,12 @@
 ---
-title: "Comprensione del testo"
-description: "Comprensione del testo all'AMS: serie di esercizi gratuite e consigli per cogliere in fretta testi complessi e valutare le affermazioni."
+title: "Comprensione di testi"
+description: "Comprensione di testi all'AMS: serie di esercizi gratuite e consigli per cogliere in fretta testi complessi e valutare le affermazioni."
 weight: 6
 ---
 
 ## Panoramica
 
-Questo sottotest verifica quanto bene riesci a cogliere ed elaborare testi lunghi e complessi. Ricevi tre testi di circa una pagina ciascuno su temi di medicina o scienze naturali, ognuno seguito da sei domande. Si tratta di valutare quali affermazioni si possono dedurre dal testo, a volte come risposta singola, a volte come combinazione di affermazioni numerate. Non servono conoscenze preliminari.
+Questo sottotest verifica quanto bene riesci a comprendere ed elaborare testi lunghi e complessi. Ricevi tre testi di circa una pagina ciascuno su temi di medicina o scienze naturali, ognuno seguito da sei domande. Si tratta di valutare quali affermazioni si possono dedurre dal testo, a volte come risposta singola, a volte come combinazione di affermazioni numerate. Non servono conoscenze preliminari.
 
 - **Posizione nella giornata del test:** 7° sottotest, tra le fasi di apprendimento e le fasi di riproduzione della memorizzazione di figure e fatti
 - **Volume:** 3 testi con 6 domande ciascuno, cioè 18 domande, 18 punti
@@ -20,7 +20,7 @@ Durante gli studi ti troverai di fronte a una marea di nuova materia. Una buona 
 
 ## Tempi e frequenza dell'esercizio
 
-La comprensione del testo va allenata a lungo termine – inizia circa 2–3 mesi prima della data del test. Durante l'esercizio risolvi un solo testo alla volta, così puoi analizzare i tuoi errori man mano e tenerne conto subito nel testo successivo. Un testo ogni due giorni distribuisce bene l'allenamento sulla settimana.
+La comprensione di testi va allenata a lungo termine – inizia circa 2–3 mesi prima della data del test. Durante l'esercizio risolvi un solo testo alla volta, così puoi analizzare i tuoi errori man mano e tenerne conto subito nel testo successivo. Un testo ogni due giorni distribuisce bene l'allenamento sulla settimana.
 
 ## Come procedere
 
@@ -40,10 +40,10 @@ La comprensione del testo va allenata a lungo termine – inizia circa 2–3 mes
 
 ## Dalle testimonianze
 
-*«Nella comprensione del testo la mia strategia era risolvere solo due dei tre testi – così potevo scegliere i testi e lavorare con più precisione, con uno schizzo e le parole chiave evidenziate già durante la lettura.»*
+*«Nella comprensione di testi la mia strategia era risolvere solo due dei tre testi – così potevo scegliere i testi e lavorare con più precisione, con uno schizzo e le parole chiave evidenziate già durante la lettura.»*
 
 *«Se un testo della comprensione è troppo complicato, saltatelo piuttosto (segnate una risposta qualsiasi) invece di finire a corto di tempo.»*
 
-*«Nella comprensione del testo è arrivato un testo per me assolutamente incomprensibile, con domande difficili; l'unica cosa che aiutava era dirsi che anche agli altri stava sicuramente succedendo lo stesso, e continuare a lavorare con ostinazione.»*
+*«Nella comprensione di testi è arrivato un testo per me assolutamente incomprensibile, con domande difficili; l'unica cosa che aiutava era dirsi che anche agli altri stava sicuramente succedendo lo stesso, e continuare a lavorare con ostinazione.»*
 
 Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

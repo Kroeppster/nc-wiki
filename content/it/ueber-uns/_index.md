@@ -1,6 +1,6 @@
 ---
 title: "Chi siamo"
-description: "Chi siamo: dal 2021 oltre 110 studentesse e studenti di medicina di tutta la Svizzera si impegnano affinché la preparazione all'AMS sia gratuita per tutti."
+description: "Dal 2021 oltre 110 studentesse e studenti di medicina di tutta la Svizzera si impegnano affinché la preparazione all'AMS sia gratuita per tutti."
 menu:
   main:
     identifier: ueber-uns
@@ -9,11 +9,11 @@ menu:
 
 ## La nostra missione
 
-Siamo un team di studentesse e studenti di medicina e vogliamo facilitarti la preparazione al test attitudinale per gli studi di medicina (AMS).
+Siamo un team di studentesse e studenti di medicina e cerchiamo di facilitarti la preparazione al test attitudinale per gli studi di medicina (AMS).
 
-Il tuo risultato il giorno del test e la possibilità di iniziare a settembre gli studi che desideri non devono dipendere dalle tue possibilità economiche. Per questo ti mettiamo a disposizione gratuitamente tutto ciò che ti serve per prepararti bene.
+Il fatto che tu ottenga un buon risultato il giorno del test e possa iniziare a settembre il corso di laurea che desideri non dovrebbe dipendere dalle tue disponibilità economiche. Per questo ti offriamo gratuitamente tutto ciò di cui hai bisogno per prepararti al meglio.
 
-Dalla fondazione nel 2021 NCWiki è cresciuto molto: oggi nel team si impegnano oltre 110 studentesse e studenti di medicina di tutta la Svizzera. Chi c'è dietro lo scopri alla pagina [Team](/ueber-uns/team).
+Dalla fondazione nel 2021 NCWiki è cresciuto molto: oggi nel team si impegnano oltre 110 studentesse e studenti di medicina di tutta la Svizzera. Scopri chi c'è dietro alla pagina [Team](/ueber-uns/team).
 
 ## Partecipare
 

@@ -8,7 +8,7 @@ weight: 7
 
 Per ogni domanda ricevi un diagramma o una tabella, di solito con un breve testo di accompagnamento. Si tratta di stabilire quale di cinque affermazioni si può dedurre dalle informazioni, oppure quale non si può dedurre. In alcune domande scegli al contrario il diagramma che rappresenta correttamente un fatto descritto. Non servono conoscenze specialistiche, tutte le informazioni necessarie sono contenute nella domanda.
 
-- **Posizione nella giornata del test:** 10° sottotest, dopo le fasi di riproduzione della memorizzazione di figure e fatti, seguito dal lavoro concentrato e accurato
+- **Posizione nella giornata del test:** 10° sottotest, dopo le fasi di riproduzione della memorizzazione di figure e fatti, seguito da «Lavorare accuratamente e concentrati»
 - **Volume:** 18 domande, 18 punti
 - **Tempo:** 45 minuti, cioè circa 2,5 minuti per domanda
 

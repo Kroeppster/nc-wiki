@@ -1,7 +1,7 @@
 ---
 name: "Lia"
 jahr: 2025
-tags: ["Kreuzblick", "Comprensione del testo"]
+tags: ["Kreuzblick", "Comprensione di testi"]
 draft: false
 ---
 
@@ -11,7 +11,7 @@ Ho iniziato la preparazione ad aprile e ho studiato in media circa 4 ore al gior
 
 ## Cosa ti ha aiutata di più?
 
-Per la comprensione del testo, la mia strategia era risolvere solo due dei tre testi – così potevo scegliere i testi e lavorare con più precisione, facendo uno schizzo e sottolineando le parole chiave già durante la lettura. Per gli altri sottotest mi ha aiutata pensare per gruppi (ad esempio per le figure: ci sono sempre circa 4 gruppi di figure simili tra loro – bisogna concentrarsi sulle differenze all'interno di questi gruppi).
+Per la comprensione di testi, la mia strategia era risolvere solo due dei tre testi – così potevo scegliere i testi e lavorare con più precisione, facendo uno schizzo e sottolineando le parole chiave già durante la lettura. Per gli altri sottotest mi ha aiutata pensare per gruppi (ad esempio per le figure: ci sono sempre circa 4 gruppi di figure simili tra loro – bisogna concentrarsi sulle differenze all'interno di questi gruppi).
 
 ## Il tuo consiglio per le future candidate e i futuri candidati?
 

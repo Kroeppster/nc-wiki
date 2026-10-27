@@ -1,6 +1,6 @@
 ---
-title: "Comprensione medico-scientifica"
-description: "Comprensione medico-scientifica all'AMS: serie di esercizi gratuite e consigli per cogliere i fatti descritti e verificare le affermazioni con sicurezza."
+title: "Comprensione di questioni medico-scientifiche"
+description: "Comprensione di questioni medico-scientifiche all'AMS: serie di esercizi gratuite e consigli per cogliere i fatti descritti e verificare le affermazioni con sicurezza."
 weight: 3
 ---
 
@@ -8,7 +8,7 @@ weight: 3
 
 Ogni domanda descrive in poche frasi un fatto medico o scientifico. Poi valuti da tre a cinque affermazioni: si possono dedurre dalle informazioni date? Spesso le affermazioni sono numerate (I, II, III) e le opzioni di risposta da A a E propongono possibili combinazioni. Non servono conoscenze specialistiche, perché tutti i termini tecnici sono spiegati nel testo.
 
-- **Posizione nella giornata del test:** 2° sottotest, dopo l'abbinamento di schemi, seguito dagli oggetti nello spazio
+- **Posizione nella giornata del test:** 2° sottotest, dopo l'associazione di figure, seguito dagli oggetti nello spazio
 - **Volume:** 18 domande, 18 punti
 - **Tempo:** 45 minuti, cioè circa 2,5 minuti per domanda
 
@@ -52,10 +52,10 @@ Questo sottotest va allenato su un periodo piuttosto lungo; è consigliabile ini
 
 ## Dalle testimonianze
 
-*«Per la comprensione medico-scientifica e la comprensione del testo aiuta solo una cosa: iniziare presto.»*
+*«Per la comprensione di questioni medico-scientifiche e la comprensione di testi aiuta solo una cosa: iniziare presto.»*
 
-*«La comprensione medico-scientifica e la comprensione del testo le ho comunque trovate particolarmente difficili, proprio perché le risposte erano così intrecciate nel testo che bisognava raccogliere informazioni da passaggi diversi.»*
+*«La comprensione di questioni medico-scientifiche e la comprensione di testi le ho comunque trovate particolarmente difficili, proprio perché le risposte erano così intrecciate nel testo che bisognava raccogliere informazioni da passaggi diversi.»*
 
-*«Da fine marzo ho lavorato quasi esclusivamente sui miei punti deboli (comprensione medico-scientifica, comprensione del testo), 2–3 volte a settimana, concentrandomi sul capire perché sbagliavo invece di contare solo i punti.»*
+*«Da fine marzo ho lavorato quasi esclusivamente sui miei punti deboli (comprensione di questioni medico-scientifiche, comprensione di testi), 2–3 volte a settimana, concentrandomi sul capire perché sbagliavo invece di contare solo i punti.»*
 
 Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

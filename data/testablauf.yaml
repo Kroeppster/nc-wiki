@@ -56,7 +56,7 @@ bloecke:
     punkte: "18"
     de: "Muster zuordnen"
     fr: "Association de motifs"
-    it: "Abbinamento di schemi"
+    it: "Associare le figure"
 
   - key: med-nat-grundverstaendnis
     slug: med-nat-grundverstaendnis
@@ -65,7 +65,7 @@ bloecke:
     punkte: "18"
     de: "Medizinisch-naturwissenschaftliches Grundverständnis"
     fr: "Compréhension médico-scientifique"
-    it: "Comprensione medico-scientifica"
+    it: "Comprensione di questioni medico-scientifiche"
 
   - key: objekte-im-raum
     slug: objekte-im-raum
@@ -113,7 +113,7 @@ bloecke:
     punkte: "18"
     de: "Textverständnis"
     fr: "Compréhension de texte"
-    it: "Comprensione del testo"
+    it: "Comprensione di testi"
 
   - key: figuren-reproduktion
     slug: figuren-fakten-lernen
@@ -155,7 +155,7 @@ bloecke:
     punkte: "18"
     de: "Konzentriertes und sorgfältiges Arbeiten"
     fr: "Travail concentré et soigné"
-    it: "Lavoro concentrato e accurato"
+    it: "Lavorare accuratamente e concentrati"
 
 # Text der Gesamt-Zeile in der Tabelle. Die Gesamtzeit wird NICHT hier
 # eingetragen, sondern aus den Minuten oben zusammengezählt - so kann sie gar

@@ -15,4 +15,4 @@ Ero decisamente meno nervosa del previsto – merito della buona preparazione e 
 
 ## Il tuo consiglio per le future candidate e i futuri candidati?
 
-Iniziate abbastanza presto, così evitate lo stress da tempo – meglio un po' ogni giorno che tanto tutto insieme alla fine. Imparate il Kreuzblick, con quello potete arrivare senza problemi a 18 punti. Va bene non essere brave in tutti i sottotest, potete compensare con un altro. L'EMS fa meno paura di quanto sembri – prendetevi il tempo per prepararvi e non siate troppo nervose.
+Iniziate abbastanza presto, così evitate lo stress da tempo – meglio un po' ogni giorno che tanto tutto insieme alla fine. Imparate il Kreuzblick, con quello potete arrivare senza problemi a 18 punti. Va bene non essere brave in tutti i sottotest, potete compensare con un altro. L'AMS fa meno paura di quanto sembri – prendetevi il tempo per prepararvi e non siate troppo nervose.

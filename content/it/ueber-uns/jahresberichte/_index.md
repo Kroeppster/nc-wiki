@@ -1,6 +1,6 @@
 ---
 title: "Rapporti annuali"
-description: "I rapporti annuali di NCWiki: uno sguardo a un anno dell'associazione con le nostre offerte, i numeri, i progetti e tutti coloro che ci hanno sostenuto."
+description: "I resoconti annuali di NCWiki: uno sguardo sull' anno dell'associazione con le nostre iniziative, i numeri, i progetti e tutti coloro che ci hanno sostenuto."
 menu:
   main:
     parent: ueber-uns

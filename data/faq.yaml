@@ -63,7 +63,7 @@
   answer:
     de: "Der EMS besteht aus neun Untertests, die kognitive Fähigkeiten und schulisches Grundlagenwissen prüfen. Auf unserer Website führen wir Figuren lernen und Fakten lernen zusammen auf, deshalb zeigt die Liste unten acht Einträge."
     fr: "L'AMS comprend neuf sous-tests qui évaluent des capacités cognitives et des connaissances scolaires de base. Sur notre site, nous regroupons « Apprendre des figures » et « Apprendre des faits », c'est pourquoi la liste ci-dessous compte huit entrées."
-    it: "L'AMS è composto da nove sottotest che valutano capacità cognitive e conoscenze scolastiche di base. Sul nostro sito riuniamo «Imparare figure» e «Imparare fatti», per questo l'elenco qui sotto ha otto voci."
+    it: "L'AMS è composto da nove sottotest che valutano capacità cognitive e conoscenze scolastiche di base. Sul nostro sito riuniamo «Memorizzazione di figure» e «Memorizzazione di fatti», per questo l'elenco qui sotto ha otto voci."
   dynamic: "subtests"
 
 - id: "punkte-noetig"

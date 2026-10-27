@@ -14,13 +14,13 @@ Qui trovi ciò che resta degli anni precedenti di NCWiki: i team delle stagioni 
 
 ### Team dirigente
 
-- **Presidenza:** Alessio Iseli (Coordinazione generale)
-- **Coordinamento Romandia e Ticino:** Selina Buchser (Coordinatrice Francofona), Margherita Bernasconi (Coordinatrice Italofona)
-- **Offerta:** Francesca Serra (Corso di Preparazione), Matthias Schütz (Esercizi), Olivia Schiess (Simulazione del Test), Sabrina Zeller (Simulazione del Test), Kron Mustafa (Eventi e Controlli di Qualità)
+- **Presidenza:** Alessio Iseli (Coordinatore generale)
+- **Coordinamento Svizzera romanda e Ticino:** Selina Buchser (Coordinatrice Francofona), Margherita Bernasconi (Coordinatrice Italofona)
+- **Offerta:** Francesca Serra (Corso di Preparazione), Matthias Schütz (Esercizi), Olivia Schiess (Simulazione del Test), Sabrina Zeller (Simulazione del Test), Kron Mustafa (Eventi e Controllo Qualità)
 - **Comunicazione:** Valentina Nocito (Marketing), Isabel Kretschi (Public Relations), Johanna Denz (Social & Onboarding), Edgar Brändle (Sito Web)
 - **Associazione e amministrazione:** Lea Meyer (Finanze), Kilian Belohlavek (Protocollo & Dati)
 
-### Responsabili – Romandia
+### Responsabili – Svizzera romanda
 
 - **Coordinamento:** Selina Buchser
 - **Relazioni pubbliche:** Lucie Duperrex e Julie Eschmann
@@ -92,7 +92,7 @@ Ringraziamo i nostri ex responsabili per il loro particolare impegno nelle loro 
 - Abeelan Rasadurai (Fondatore, Coordinatore 2021–2023, Handover 2024)
 - Ramona Dötsch (Esercizi)
 - Clemens Yang (Protocollo & dati)
-- Thorald Stolte (Controlli di qualità & eventi)
+- Thorald Stolte (Controllo qualità & eventi)
 - Chiara P. (Simulazione del test)
 - Elena Robinson (Public Relations 2021–2024)
 - Stefania Huber (Coordinatrice Italofona 2021–2024)
@@ -111,8 +111,8 @@ Ringraziamo i nostri ex responsabili per il loro particolare impegno nelle loro 
 - Livia Biri (Finanze 2021–2024)
 - Alessia R. (Marketing 2021–2024)
 - Aline Turpin (Coordinatrice francofona 2024–2025)
-- Diego Ryf (Controlli di qualità & eventi)
+- Diego Ryf (Controllo qualità & eventi)
 
 ## Script dei corsi meno recenti
 
-Puoi continuare a usare gli script dei corsi meno recenti per esercitarti. Tieni però presente che in parte sono superati: l'abbinamento di schemi è stato modificato nel 2026 e le vecchie figure a tubo sono state sostituite dagli oggetti nello spazio. Lo script aggiornato si trova sempre alla pagina [Corsi di preparazione](/ems/vorbereitungskurse).
+Puoi continuare a usare gli script dei corsi meno recenti per esercitarti. Tieni però presente che in parte sono superati: l'associazione di figure è stata modificata nel 2026 e le vecchie figure a tubo sono state sostituite dagli oggetti nello spazio. Lo script aggiornato si trova sempre alla pagina [Corsi di preparazione](/ems/vorbereitungskurse).

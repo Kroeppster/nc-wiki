@@ -40,11 +40,11 @@ Novità: la **modalità simulazione**. A casa assume il ruolo della persona che 
 - **Singoli sottotest** con il vero tempo a disposizione.
 - **Uno svolgimento personalizzato:** scegli i sottotest e il numero di esercizi, il tempo si calcola al ritmo del test reale. In modalità esperto imposti tu tempi e pause. Puoi condividere il tuo svolgimento come link con il tuo gruppo di studio.
 
-![Modalità simulazione a schermo intero: in alto il nome del sottotest «Abbinamento di schemi», al centro l'ora in grande, in basso i pulsanti Pausa e Interrompi](news/neue-website/it/simulationsmodus.png "Come nella sala d'esame, l'orologio mostra solo l'ora, senza il tempo rimanente.")
+![Modalità simulazione a schermo intero: in alto il nome del sottotest «Associare le figure», al centro l'ora in grande, in basso i pulsanti Pausa e Interrompi](news/neue-website/it/simulationsmodus.png "Come nella sala d'esame, l'orologio mostra solo l'ora, senza il tempo rimanente.")
 
-## Generatore per imparare figure e fatti
+## Generatore per la memorizzazione di figure e fatti
 
-Accanto alla modalità simulazione arriva presto un generatore che ti crea tutti i nuovi esercizi che vuoi per imparare figure e fatti. Per questi due sottotest il materiale si usa una sola volta: ciò che hai memorizzato non serve più per esercitarti. Per questo il generatore estrae ogni volta un nuovo gruppo.
+Accanto alla modalità simulazione arriva presto un generatore che ti crea tutti i nuovi esercizi che vuoi per la memorizzazione di figure e fatti. Per questi due sottotest il materiale si usa una sola volta: ciò che hai memorizzato non serve più per esercitarti. Per questo il generatore estrae ogni volta un nuovo gruppo.
 
 Ti eserciti come il giorno d'esame:
 
@@ -66,7 +66,7 @@ Se hai svolto una simulazione del test a casa, presto non dovrai più confrontar
 
 ![Foglio delle risposte valutato: caselle segnate in verde se giuste e in rosso se sbagliate, la soluzione giusta contornata in blu](news/neue-website/it/antwortbogen.jpg "Il foglio delle risposte valutato: verde giusto, rosso sbagliato, blu la soluzione giusta.")
 
-Il test di concentrazione funziona allo stesso modo – per le simulazioni del test, per le serie di esercizi «Lavoro concentrato e accurato» e anche per un tuo test di concentrazione con foglio delle soluzioni. Il conteggio segue la regola delle istruzioni: simboli segnati correttamente meno simboli segnati per errore meno simboli omessi. Se un segno non è giusto, tocchi il simbolo e i punti si ricalcolano subito.
+Il test di concentrazione funziona allo stesso modo – per le simulazioni del test, per le serie di esercizi «Lavorare accuratamente e concentrati» e anche per un tuo test di concentrazione con foglio delle soluzioni. Il conteggio segue la regola delle istruzioni: simboli segnati correttamente meno simboli segnati per errore meno simboli omessi. Se un segno non è giusto, tocchi il simbolo e i punti si ricalcolano subito.
 
 ![Test di concentrazione valutato: valore grezzo di 239 punti con il dettaglio del calcolo, sotto il foglio con simboli cerchiati in verde, rosso e blu](news/neue-website/it/konzentrationstest.jpg "Test di concentrazione: il valore grezzo e, sul foglio, ogni simbolo segnato giusto, segnato per errore oppure omesso.")
 

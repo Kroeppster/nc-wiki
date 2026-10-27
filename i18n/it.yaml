@@ -480,7 +480,7 @@ ab_kamera_passt: "I quattro angoli non corrispondono: il foglio è ben steso in 
 # Konztest auswerten (Alpha-Seite, layouts/partials/bausteine/konztest-auswertung.html)
 kt_konztest: "Test di concentrazione"
 kt_gruppe_testsim: "Simulazioni del test"
-kt_gruppe_serien: "Serie di esercizi «Lavoro concentrato»"
+kt_gruppe_serien: "Serie di esercizi «Lavorare accuratamente e concentrati»"
 kt_serie: "{jahr}, serie {nr}"
 kt_eigen: "Test di concentrazione proprio (caricare un PDF)"
 kt_eigen_feld: "Test di concentrazione in PDF: compito e foglio delle soluzioni"

@@ -10,7 +10,7 @@ layout: spenden
 
 ## Dona ora
 
-Siamo grati per ogni donazione. Finanzia le serie di esercizi, le simulazioni del test e i corsi di preparazione gratuiti. Senza donazioni e sponsorizzazioni, la nostra offerta non esisterebbe.
+Siamo grati per ogni donazione. Finanzia le serie di esercizi, le simulazioni del test e i corsi di preparazione gratuiti. Senza donazioni e sponsorizzazioni, le nostre offerte non sarebbero possibili.
 
 ## Diventa sponsor
 

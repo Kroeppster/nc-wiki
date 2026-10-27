@@ -1,12 +1,12 @@
 ---
-title: "Lavoro concentrato e accurato"
-description: "Lavoro concentrato e accurato all'AMS: serie di esercizi gratuite e consigli per marcare più in fretta e fare meno errori."
+title: "Lavorare accuratamente e concentrati"
+description: "Lavorare accuratamente e concentrati all'AMS: serie di esercizi gratuite e consigli per marcare più in fretta e fare meno errori."
 weight: 8
 ---
 
 ## Panoramica
 
-Ricevi un foglio con 40 righe di 40 simboli ciascuna e marchi determinati simboli bersaglio secondo una regola data. Si lavora rigorosamente riga per riga e senza omissioni. Fino all'ultimo simbolo marcato, ogni simbolo marcato per errore o tralasciato conta come errore e viene sottratto dalle marcature corrette. Simboli e regola cambiano ogni anno e non vengono comunicati in anticipo.
+Ti verrà fornito un foglio con 40 righe da 40 caratteri ciascuna e dovrai evidenziare determinati caratteri secondo una regola data. Si lavora rigorosamente riga per riga e senza omissioni. Fino all'ultimo simbolo marcato, ogni simbolo marcato per errore o tralasciato conta come errore e viene sottratto dalle marcature corrette. Simboli e regola cambiano ogni anno e non vengono comunicati in anticipo.
 
 - **Posizione nella giornata del test:** 11° e ultimo sottotest, dopo diagrammi e tabelle
 - **Volume:** 40 righe di 40 simboli (1600 simboli), 18 punti
@@ -26,7 +26,7 @@ Come medico è importante riuscire a lavorare in modo concentrato e preciso anch
 
 ## Tempi e frequenza dell'esercizio
 
-In questo sottotest i progressi si vedono in fretta – di solito basta iniziare 1,5–2 mesi prima, però con 4–5 sessioni a settimana, perché ogni sessione dura poco. Per simulare in modo realistico la situazione del test, conviene non risolvere il test di concentrazione per primo durante l'esercizio, ma solo dopo alcuni altri sottotest – così, come il giorno del test, sei già un po' stanco·a quando lo affronti.
+In questo sottotest i progressi si vedono in fretta – di solito basta iniziare 1,5–2 mesi prima, però con 4–5 sessioni a settimana, perché ogni sessione dura poco. Per simulare in modo realistico la situazione del test, conviene non risolvere il test di concentrazione per primo durante l'esercitazione, ma solo dopo gli altri sottotest – così, come il giorno del test, sei già un po' stanco·a quando lo affronti.
 
 ## Come procedere
 

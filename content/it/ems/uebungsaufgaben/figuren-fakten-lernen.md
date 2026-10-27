@@ -1,6 +1,6 @@
 ---
-title: "Imparare figure e fatti"
-description: "Imparare figure e fatti all'AMS: serie di esercizi gratuite e tecniche di memorizzazione per ricordare in modo affidabile 18 figure e 15 casi di pazienti."
+title: "Memorizzazione di figure e fatti"
+description: "Memorizzazione di figure e fatti all'AMS: serie di esercizi gratuite e tecniche di memorizzazione per ricordare in modo affidabile 18 figure e 15 casi di pazienti."
 weight: 5
 ---
 
@@ -12,11 +12,11 @@ Nella fase di apprendimento ti vengono mostrate 18 figure, in ognuna delle quali
 
 ### Fatti
 
-Nella fase di apprendimento ti vengono presentati 15 pazienti, ciascuno con nome, fascia d'età, professione, un'altra caratteristica come lo stato d'animo o il luogo in cui si trova e una diagnosi. Le 15 persone sono suddivise in cinque fasce d'età di tre persone ciascuna. Per memorizzarle hai 6 minuti. Nella successiva fase di riproduzione rispondi a 18 domande a scelta multipla su queste persone, con cinque risposte possibili ciascuna. L'ordine è cambiato, e le informazioni vengono chieste in combinazioni diverse, per esempio «Di professione, la persona con il diabete è …». Anche qui hai 6 minuti.
+Nella fase di apprendimento ti vengono presentati 15 pazienti, ciascuno con nome, fascia d'età, professione, un'altra caratteristica come lo stato d'animo o il luogo in cui si trova e una diagnosi. Le 15 persone sono suddivise in cinque fasce d'età di tre persone ciascuna. Per memorizzarle hai 6 minuti. Nella successiva fase di riproduzione rispondi a 18 domande a scelta multipla su queste persone, con cinque risposte possibili ciascuna. L'ordine è cambiato, e le informazioni vengono chieste in combinazioni diverse, per esempio «La persona con il diabete è di professione …». Anche qui hai 6 minuti.
 
 Esempio (abbreviato): *Maier, 20 anni, mugnaio, sposato, Covid-19* – *Keller, 30 anni, veterinaria, ansiosa, mal di testa*.
 
-- **Posizione nella giornata del test:** le fasi di apprendimento seguono i problemi quantitativi e formali, le fasi di riproduzione seguono la comprensione del testo
+- **Posizione nella giornata del test:** le fasi di apprendimento seguono i problemi quantitativi e formali, le fasi di riproduzione seguono la comprensione di testi
 - **Volume:** figure 18 domande, 18 punti; fatti 18 domande, 18 punti
 - **Tempo:** figure 4 minuti di apprendimento e 5 minuti di riproduzione; fatti 6 minuti ciascuna
 
@@ -26,7 +26,7 @@ In entrambi i casi si tratta della tua memoria. Durante gli studi di medicina de
 
 ## Tempi e frequenza dell'esercizio
 
-Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare ogni giorno. Inizia presto, circa 3 mesi prima dell'AMS, con 3–4 sessioni a settimana. All'inizio concediti volutamente più tempo del previsto (per es. 10 invece di 6 minuti per i fatti), per provare diverse strategie, e riduci il tempo solo gradualmente, man mano che diventi più sicuro·a. Nell'ultimo mese esercitati nelle condizioni reali dell'AMS: prima memorizzare figure e fatti, poi la comprensione del testo, infine riprodurre figure e fatti. Interrompi l'esercizio mirato qualche giorno prima dell'AMS, per avere la testa libera.
+La memorizzazione di figure e fatti è un esercizio di memoria che non ha senso fare ogni giorno. Inizia presto, circa 3 mesi prima dell'AMS, con 3–4 sessioni a settimana. All'inizio concediti volutamente più tempo del previsto (per es. 10 invece di 6 minuti per i fatti), per provare diverse strategie, e riduci il tempo solo gradualmente, man mano che diventi più sicuro·a. Nell'ultimo mese esercitati nelle condizioni reali dell'AMS: prima memorizzare figure e fatti, poi la comprensione di testi, infine riprodurre figure e fatti. Interrompi l'esercizio mirato qualche giorno prima dell'AMS, per avere la testa libera.
 
 ## Come procedere
 
@@ -48,7 +48,7 @@ Imparare figure e fatti sono entrambi esercizi di memoria che non ha senso fare 
 - **Non puntare a 18 su 18:** spesso conviene memorizzare davvero bene 12–15 figure invece di tutte e 18 in modo superficiale – non ti serve il punteggio pieno.
 - **Mnemotecniche fisse:** dopo qualche prova noterai che alcune caratteristiche e diagnosi si ripetono – preparati per queste una lista fissa di mnemotecniche.
 - **Provare strategie diverse:** non esiste un unico metodo giusto per tutti. Non lasciarti scoraggiare se una strategia funziona meglio per altri che per te – conta ciò che funziona per te.
-- **Raccogliere punti in modo mirato:** imparare figure e fatti e il test di concentrazione si possono allenare bene fino a 16–18 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi il tempo necessario per questi sottotest che si allenano bene, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per es. comprensione del testo), che comunque porta pochi punti – l'AMS è pura gestione dei punti.
+- **Raccogliere punti in modo mirato:** la memorizzazione di figure e fatti e il test di concentrazione si possono allenare bene fino a 16–18 punti – all'inizio è irrealistico, ma con la tecnica giusta diventa fattibile. Prenditi il tempo necessario per questi sottotest che si allenano bene, invece di affrettarti sull'ultimo testo dei sottotest più lunghi (per es. comprensione del testo), che comunque porta pochi punti – l'AMS è pura gestione dei punti.
 
 ## Errori frequenti
 

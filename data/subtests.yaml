@@ -50,12 +50,12 @@
   slug: muster-zuordnen
   de: "Muster zuordnen"
   fr: "Association de motifs"
-  it: "Abbinamento di schemi"
+  it: "Associare le figure"
 - number: "02"
   slug: med-nat-grundverstaendnis
   de: "Medizinisch-naturwissenschaftliches Grundverständnis"
   fr: "Compréhension médico-scientifique"
-  it: "Comprensione medico-scientifica"
+  it: "Comprensione di questioni medico-scientifiche"
 - number: "03"
   slug: objekte-im-raum
   de: "Objekte im Raum"
@@ -70,12 +70,12 @@
   slug: figuren-fakten-lernen
   de: "Figuren und Fakten lernen"
   fr: "Apprendre figures et faits"
-  it: "Imparare figure e fatti"
+  it: "Memorizzazione di figure e fatti"
 - number: "06"
   slug: textverstaendnis
   de: "Textverständnis"
   fr: "Compréhension de texte"
-  it: "Comprensione del testo"
+  it: "Comprensione di testi"
 - number: "07"
   slug: diagramme-tabellen
   de: "Diagramme und Tabellen"
@@ -85,4 +85,4 @@
   slug: konzentriertes-arbeiten
   de: "Konzentriertes und sorgfältiges Arbeiten"
   fr: "Travail concentré et soigné"
-  it: "Lavoro concentrato e accurato"
+  it: "Lavorare accuratamente e concentrati"

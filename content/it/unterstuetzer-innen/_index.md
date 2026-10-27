@@ -7,7 +7,7 @@ menu:
     weight: 4
 ---
 
-Tutta la nostra offerta è gratuita. A renderlo possibile sono le donazioni, le sponsorizzazioni e l'impegno delle nostre sostenitrici e dei nostri sostenitori. Un sentito grazie ai nostri sponsor:
+Tutti i nostri servizi sono gratuiti. A renderlo possibile sono le donazioni, le sponsorizzazioni e l'impegno delle nostre sostenitrici e dei nostri sostenitori. Un sentito grazie ai nostri sponsor:
 
 - [VSAO ASMAC](https://vsao.ch/it/): Associazione svizzera dei medici assistenti e capiclinica
 - [SAMW/ASSM](https://www.assm.ch/en.html): Accademia Svizzera delle Scienze Mediche

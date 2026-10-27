@@ -7,7 +7,7 @@ menu:
     weight: 3
 ---
 
-Questa pagina ti guida attraverso il test attitudinale per gli studi di medicina (AMS): dall'iscrizione al giorno del test fino all'assegnazione dei posti di studio.
+Questa pagina ti guida attraverso il test attitudinale per gli studi di medicina (AMS): dall'iscrizione, al giorno del test, fino all'assegnazione dei posti di studio.
 
 ## Panoramica
 
@@ -34,56 +34,56 @@ Il calendario di swissuniversities per l'inizio degli studi nell'autunno 2027:
 - **Aprile – 25 maggio 2027:** iscrizione all'AMS tramite MEDON, valida solo se la tassa di CHF 300 viene pagata entro i termini
 - **Giugno:** al più tardi dieci giorni prima del test ricevi via e-mail l'orario d'ingresso e il numero del posto
 - **9 luglio 2027:** test attitudinale per gli studi di medicina – porta un documento d'identità ufficiale valido (carta d'identità o passaporto)
-- **Fine luglio:** assegnazione dei posti di studio per posta (in parte raccomandata) o via e-mail
+- **Fine luglio:** assegnazione dei posti di studio per posta (spesso raccomandata) o via e-mail
 - **Inizio agosto:** confermare il posto di studio entro il termine dell'università, di solito dieci giorni
 
-**Compensazione degli svantaggi:** se il giorno del test hai bisogno di ausili o di condizioni di test adeguate, presenti una domanda separata a swissuniversities – per tempo, perché ha un proprio termine (finora il 1° maggio). Maggiori informazioni alla pagina [Compensazione degli svantaggi](/ems/nachteilsausgleich).
+**Compensazione degli svantaggi:** se il giorno del test hai bisogno di ausili o di condizioni di test adeguate, presenta una domanda separata a swissuniversities entro la scadenza (finora era il 1° maggio). Maggiori informazioni alla pagina [Compensazione degli svantaggi](/ems/nachteilsausgleich).
 
 ### Scegliere l'università
 
 Al momento della preiscrizione devi indicare in ordine di priorità in quale università vorresti studiare medicina umana, dentaria o veterinaria. Fai attenzione a due cose:
 
-- Se superi l'AMS, il tuo domicilio fiscale ti garantisce un posto di studio nel tuo cantone, purché lì sia offerta medicina. Per l'Università di Basilea entrambi i cantoni di Basilea valgono come cantone universitario e offrono questo vantaggio. In quanto politecnico federale, l'ETH è l'unica eccezione e non concede alcun vantaggio legato al domicilio cantonale. Trovi i dettagli sulle singole università nel nostro [Uniguide](/ems/uniguide).
+- Se superi l'AMS, il tuo domicilio fiscale ti garantisce un posto di studio nel tuo cantone, purché lì sia offerta medicina. Per l'Università di Basilea entrambi i cantoni di Basilea valgono assieme come cantone universitario. In quanto politecnico federale, l'ETH è l'unica eccezione e non concede alcun vantaggio legato al domicilio cantonale. Trovi i dettagli sulle singole università nel nostro [Uniguide](/ems/uniguide).
 - Alcune università sono più richieste, per cui serve un rango migliore rispetto agli altri candidati. La tua prima priorità viene sempre considerata per prima. Esempio: scegli l'ETH come prima scelta e l'Università di Zurigo come seconda. Per medicina umana l'ETH è meno richiesta dell'Università di Zurigo. Dato che con il tuo risultato sei tra l'1 % dei migliori, vieni assegnato·a alla tua prima scelta (ETH).
 
-### Conoscere le istruzioni
+### Conoscere gli esercizi
 
-Risparmi tempo prezioso all'AMS se conosci già le istruzioni – per leggerle non è previsto tempo aggiuntivo, e quel tempo potresti già usarlo per risolvere gli esercizi. Familiarizzati con le regole per compilare le risposte, per girare pagina e con lo svolgimento del test.
+Risparmi tempo prezioso all'AMS se conosci già le consegne – per leggerle non è previsto tempo aggiuntivo, e quel tempo potresti già usarlo per risolvere gli esercizi. Familiarizza con le regole per compilare le risposte, per girare pagina e con lo svolgimento del test.
 
 ### Tempo di preparazione
 
-- Impegno alto: problemi quantitativi e formali, comprensione del testo, comprensione medico-scientifica, diagrammi e tabelle
-- Impegno medio: imparare figure e fatti, abbinamento di schemi, oggetti nello spazio
-- Impegno basso: lavoro concentrato e accurato
+- Impegno alto: problemi quantitativi e formali, comprensione di testi, comprensione di questioni medico-scientifiche, diagrammi e tabelle
+- Impegno medio: memorizzazione di figure e fatti, associazione di figure, oggetti nello spazio
+- Impegno basso: lavorare accuratamente e concentrati
 
 | Sottotest | Inizio (mesi prima del test) | Volte a settimana | Serie per seduta |
 | :--- | :---: | :---: | :---: |
-| Abbinamento di schemi | 1,5–2 | 3–4 | 1 |
-| Comprensione medico-scientifica | 1–2 | 2–3 | 1 |
+| Associare le figure | 1,5–2 | 3–4 | 1 |
+| Comprensione di questioni medico-scientifiche | 1–2 | 2–3 | 1 |
 | Oggetti nello spazio | 1–1,5 | 2–3 | 1 |
 | Problemi quantitativi e formali | 2–3 | 2–3 | 1 |
-| Lavoro concentrato e accurato | 1,5–2 | 4–5 | 1 |
-| Imparare figure e fatti | 3 | 3–4 | 1 |
-| Comprensione del testo | 2–3 | 2–3 | 1 |
+| Lavorare accuratamente e concentrati | 1,5–2 | 4–5 | 1 |
+| Memorizzazione di figure e fatti | 3 | 3–4 | 1 |
+| Comprensione di testi | 2–3 | 2–3 | 1 |
 | Diagrammi e tabelle | 1–1,5 | 2–3 | 1 |
 
 ## Il giorno dell'AMS
 
 ### Alimentazione
 
-Fai una buona colazione il giorno dell'AMS e bevi qualcosa – ma non troppo, per non dover andare in bagno durante il test (nel frattempo il tempo continua a scorrere).
+Fai una buona colazione il giorno dell'AMS e bevi qualcosa – ma non troppo, per non dover andare in bagno durante il test (il tempo continua a scorrere).
 
-L'AMS dura molto, quindi è utile portare qualcosa da sgranocchiare – ad esempio noci, frutta secca, cioccolato o destrosio. Tutto ciò che porti nella sala d'esame deve essere in un contenitore trasparente (per es. un sacchetto di plastica con chiusura zip) e possibilmente non fare rumore.
+L'AMS dura molto, quindi è utile portare qualcosa da sgranocchiare – ad esempio noci, frutta secca, cioccolato o destrosio. Tutto ciò che porti nella sala d'esame deve essere in un contenitore trasparente (per es. un sacchetto di plastica con chiusura zip) e possibilmente senza che faccia rumore.
 
 ### Arrivo
 
-All'AMS può partecipare solo chi è puntuale – il motivo del ritardo non conta, e non c'è una data di recupero. Conviene visitare il luogo del test qualche giorno prima e il giorno stesso prevedere un buon margine di tempo.
+All'AMS si può partecipare solo se si è puntuali – il motivo del ritardo non conta, e non c'è una data di recupero. Conviene visitare il luogo del test qualche giorno prima e il giorno stesso prevedere un buon margine di tempo.
 
 ### Situazione d'esame
 
-A seconda della sede, nella sala del test possono esserci moltissime persone – all'Università di Zurigo, nel campus Irchel, per esempio fino a 400 persone nella stessa sala. Non lasciarti confondere.
+A seconda della sede, nella sala del test possono esserci moltissime persone – all'Università di Zurigo, nel campus Irchel, per esempio fino a 400 persone nella stessa sala. Non lasciarti intimorire.
 
-Le soluzioni vanno inserite nel foglio delle risposte separato – ciò che scrivi nel fascicolo degli esercizi non viene considerato nella valutazione. Ogni esercizio vale esattamente un punto, quindi esercizi facili e difficili contano allo stesso modo. Non aspettarti di riuscire a svolgerli tutti – è normale. **Le risposte sbagliate non vengono penalizzate** (tranne nel lavoro concentrato e accurato), inserisci quindi una soluzione anche per gli esercizi che non hai svolto.
+Le soluzioni vanno inserite nel foglio delle risposte separato – ciò che scrivi nel fascicolo degli esercizi non viene considerato nella valutazione. Ogni esercizio vale esattamente un punto, quindi esercizi facili e difficili contano allo stesso modo. Non aspettarti di riuscire a svolgerli tutti – è normale. **Le risposte sbagliate non vengono penalizzate** (tranne in «Lavorare accuratamente e concentrati»), inserisci quindi una soluzione anche per gli esercizi che non hai svolto.
 
 ### Checklist
 
@@ -93,7 +93,7 @@ Le soluzioni vanno inserite nel foglio delle risposte separato – ciò che scri
 - Matite morbide (HB, 2 o 2B)
 - Evidenziatori
 - Gomma
-- Temperamatite
+- Temperino
 - Snack
 - Bevanda/e
 - Eventuali tappi per le orecchie
@@ -114,14 +114,14 @@ Trovi le guide per tutti i sottotest sotto [Serie di esercizi](/ems/uebungsaufga
 
 ### Completare il foglio delle risposte e tirare a indovinare con strategia
 
-Segna una risposta per **ogni** domanda – le risposte sbagliate non vengono penalizzate (eccezione: lavoro concentrato e accurato). Prima della consegna prevedi del tempo per controllare il foglio delle risposte e rispondere a caso alle domande rimaste aperte. Non puoi però tornare ai sottotest precedenti.
+Segna una risposta per **ogni** domanda – le risposte sbagliate non vengono penalizzate (eccezione: lavorare accuratamente e concentrati). Prima della consegna prevedi del tempo per controllare il foglio delle risposte e rispondi a caso alle domande rimaste aperte. Non puoi però tornare ai sottotest precedenti nel fascicolo.
 
 Se devi tirare a indovinare, uno schema fisso aumenta le tue probabilità – per esempio scegliere sempre «A», a meno che tu non possa escludere A, poi «B» e così via. Consigliamo di iniziare da A invece che da E, perché E significa spesso «Nessuna / Tutte sono corrette» e si può escludere più raramente.
 
 ## Dopo l'AMS
 
-Hai terminato il test attitudinale – è un grande risultato, concediti qualcosa. A fine luglio l'università desiderata ti informa per posta (in parte raccomandata) o via e-mail sull'assegnazione dei posti di studio – assicurati di poter ricevere la posta. Se hai ottenuto un posto, devi confermarlo a inizio agosto entro il termine dell'università, di solito entro dieci giorni.
+Hai terminato il test attitudinale – è un grande risultato, concediti qualcosa. A fine luglio l'università desiderata ti informa per posta (spesso raccomandata) o via e-mail sull'assegnazione dei posti di studio – assicurati di poter ricevere la posta. Se hai ottenuto un posto, devi confermarlo a inizio agosto entro il termine dell'università (di solito entro dieci giorni).
 
 ## Ulteriori informazioni
 
-Qui trovi tutte le pagine dedicate all'AMS. Come altri hanno vissuto il test lo leggi nelle [testimonianze](/ems/erfahrungsberichte) – puoi anche [inviare la tua](/ems/erfahrungsberichte/bericht-einreichen).
+Qui trovi tutte le pagine dedicate all'AMS. Come gli altri hanno vissuto il test lo leggi nelle [testimonianze](/ems/erfahrungsberichte) – puoi anche [inviare la tua](/ems/erfahrungsberichte/bericht-einreichen).

@@ -7,7 +7,7 @@ Hai una disabilità, una malattia cronica o un disturbo come l'ADHD, l'autismo o
 
 ## Panoramica
 
-- **Competenza:** swissuniversities (segreteria generale). La decisione viene presa d'intesa con le scuole universitarie.
+- **Responsabile:** swissuniversities (segreteria generale). La decisione viene presa d'intesa con le scuole universitarie.
 - **Quando:** le domande sono possibili solo dopo l'invio delle informazioni sull'iscrizione da parte di swissuniversities, all'inizio di aprile. Finora il termine era ogni anno il **1° maggio**. Verifica la data esatta per il tuo anno di test nel promemoria aggiornato.
 - **Documenti:** un certificato medico che non risalga a **più di sei mesi** prima.
 - **Invio:** per e-mail a swissuniversities. I documenti inviati per posta non vengono presi in considerazione. L'indirizzo esatto si trova sulla pagina ufficiale.
@@ -52,7 +52,7 @@ Dal punto di vista giuridico la questione non è definitivamente chiarita: nel 2
 
 ## Dopo l'AMS: compensazione degli svantaggi durante gli studi
 
-La compensazione degli svantaggi all'AMS vale solo per il test. Per gli esami durante gli studi la chiedi separatamente alla tua università, di solito al servizio «studio e disabilità». Informati dopo l'attribuzione del posto di studio, perché anche lì valgono dei termini.
+La compensazione degli svantaggi all'AMS vale solo per il test. Per gli esami durante gli studi la chiedi separatamente alla tua università, di solito al servizio «studio e disabilità». Informati dopo l'attribuzione del posto di studio, perché anche lì vigono delle scadenze.
 
 ## Domande
 
