@@ -587,6 +587,14 @@ Feld erklärt):
 Reihenfolge in der Datei = Reihenfolge der Kacheln. Entfernen: Eintrag löschen. Dunkle
 Logos bekommen automatisch einen hellen Hintergrund-Chip (`.sponsor-logo`).
 
+**Hauptsponsoren in der Fusszeile:** Die Zeile „Unterstützt von“ über „© NCWiki“ (auf jeder
+Seite) zeigt alle Einträge mit `hauptsponsor: <Zahl>`, sortiert nach dieser Zahl. Zeile
+`hauptsponsor` löschen = Sponsor nur noch auf „Unterstützer:innen“; fehlt sie bei allen,
+verschwindet die Zeile. Dort sind alle Logos weiss eingefärbt und gleich gross nach Fläche
+(Datei `layouts/partials/hauptsponsoren.html`). Ein PNG/JPG mit weissem Hintergrund würde
+dabei zum weissen Kasten – dafür mit `logo_einfarbig: "datei.png"` eine Fassung mit
+durchsichtigem Hintergrund angeben (wie bei swimsa).
+
 ---
 
 ## 9. FAQ, Uniguide, Untertests, Download-Namen

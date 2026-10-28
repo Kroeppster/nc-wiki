@@ -1,0 +1,50 @@
+{{- /*
+  ============================================================================
+  HAUPTSPONSOREN in der Fusszeile («Unterstützt von» + Logos)
+  ============================================================================
+  Zeigt alle Sponsoren aus data/sponsors.yaml, die eine Angabe
+  "hauptsponsor: <Zahl>" haben, sortiert nach dieser Zahl. Hat keiner diese
+  Angabe, fällt die ganze Zeile weg.
+
+  Die Logos stehen einfarbig weiss auf dem dunklen Hintergrund. Weil ein
+  weisses PNG-Rechteck dabei zu einem weissen Kasten würde, kann ein Sponsor
+  mit "logo_einfarbig:" eine Fassung mit durchsichtigem Hintergrund bekommen
+  (sonst gilt "logo:").
+
+  Grösse: Alle Logos bekommen ungefähr dieselbe Fläche statt dieselbe Höhe -
+  sonst wirken breite Schriftzüge riesig und fast quadratische Logos winzig.
+  Das Seitenverhältnis kommt bei SVG aus der viewBox, bei PNG/JPG aus der
+  Bildgrösse.
+  ============================================================================
+*/ -}}
+{{- $flaeche := 2400.0 }}
+{{- $liste := sort (where hugo.Data.sponsors "hauptsponsor" "!=" nil) "hauptsponsor" }}
+{{- with $liste }}
+<div class="hauptsponsoren">
+  <p class="hauptsponsoren-titel">{{ i18n "hauptsponsoren_titel" }}</p>
+  <ul class="hauptsponsoren-logos">
+    {{- range . }}
+    {{- $name := .name }}
+    {{- $datei := .logo_einfarbig | default .logo }}
+    <li>
+      <a href="{{ .website }}" target="_blank" rel="noopener" title="{{ $name }}">
+        {{- with resources.Get (printf "images/sponsors/%s" $datei) }}
+        {{- $verhaeltnis := 2.0 }}
+        {{- if eq .MediaType.SubType "svg" }}
+          {{- with findRESubmatch `viewBox="\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)` .Content 1 }}
+            {{- $verhaeltnis = div (float (index (index . 0) 1)) (float (index (index . 0) 2)) }}
+          {{- end }}
+        {{- else }}
+          {{- $verhaeltnis = div (float .Width) .Height }}
+        {{- end }}
+        {{- $breite := math.Min 140 (math.Sqrt (mul $flaeche $verhaeltnis)) }}
+        <img src="{{ .RelPermalink }}" alt="{{ $name }}" width="{{ math.Round $breite }}" height="{{ math.Round (div $breite $verhaeltnis) }}" loading="lazy">
+        {{- else }}
+        <span>{{ $name }}</span>
+        {{- end }}
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</div>
+{{- end }}

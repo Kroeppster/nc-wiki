@@ -1258,6 +1258,20 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .social-discord:hover{background:#4752C4;}
 .social-linkedin{background:#0A66C2;}
 .social-linkedin:hover{background:#084E96;}
+/* Hauptsponsoren («Unterstützt von», layouts/partials/hauptsponsoren.html):
+   Logos einfarbig weiss und leicht gedämpft, beim Darüberfahren voll.
+   Die Grösse jedes Logos steht im width/height des Bildes (gleiche Fläche). */
+.hauptsponsoren{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:var(--space-4) var(--space-8);border-top:1px solid var(--color-band-line);padding-block:var(--space-6);}
+.hauptsponsoren-titel{margin:0;font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-band-text-soft);}
+.hauptsponsoren-logos{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--space-6) var(--space-10);}
+.hauptsponsoren-logos a{display:flex;align-items:center;justify-content:center;opacity:.72;transition:opacity .2s;}
+.hauptsponsoren-logos a:hover,.hauptsponsoren-logos a:focus-visible{opacity:1;}
+.hauptsponsoren-logos img{display:block;max-width:100%;height:auto;filter:brightness(0) invert(1);}
+.hauptsponsoren-logos span{color:var(--color-band-text);font-size:var(--text-sm);}
+@media (max-width:640px){
+  .hauptsponsoren{flex-direction:column;}
+  .hauptsponsoren-logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6) var(--space-8);justify-items:center;}
+}
 .footer-bottom{border-top:1px solid var(--color-band-line);padding-top:var(--space-5);display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;font-size:var(--text-xs);color:var(--color-band-text-soft);}
 
 /* ==========================================================================

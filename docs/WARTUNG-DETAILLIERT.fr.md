@@ -601,6 +601,14 @@ dans le fichier) :
 L'ordre dans le fichier = l'ordre des tuiles. Retirer : supprimer l'entrée. Les logos
 sombres reçoivent automatiquement un fond clair (`.sponsor-logo`).
 
+**Sponsors principaux dans le pied de page :** la ligne « Avec le soutien de » au-dessus de
+« © NCWiki » (sur chaque page) affiche toutes les entrées avec `hauptsponsor: <nombre>`,
+triées selon ce nombre. Supprimer la ligne `hauptsponsor` = le sponsor n'apparaît plus que
+sur « Nos soutiens » ; si aucune entrée ne l'a, la ligne disparaît. Les logos y sont colorés
+en blanc et de même taille selon leur surface (fichier `layouts/partials/hauptsponsoren.html`).
+Un PNG/JPG à fond blanc deviendrait un rectangle blanc : indiquer alors avec
+`logo_einfarbig: "fichier.png"` une version à fond transparent (comme pour swimsa).
+
 ---
 
 ## 9. FAQ, Uniguide, sous-tests, noms de téléchargement

@@ -590,6 +590,15 @@ campo nel file):
 Ordine nel file = ordine dei riquadri. Togliere: eliminare la voce. I loghi scuri ricevono
 automaticamente uno sfondo chiaro (`.sponsor-logo`).
 
+**Sponsor principali nel piè di pagina:** la riga «Con il sostegno di» sopra «© NCWiki» (su
+ogni pagina) mostra tutte le voci con `hauptsponsor: <numero>`, ordinate secondo questo
+numero. Eliminare la riga `hauptsponsor` = lo sponsor compare solo su «Sostenitori e
+sostenitrici»; se nessuna voce ce l'ha, la riga scompare. Lì tutti i loghi sono colorati di
+bianco e della stessa grandezza in base alla superficie (file
+`layouts/partials/hauptsponsoren.html`). Un PNG/JPG con sfondo bianco diventerebbe un
+rettangolo bianco: in quel caso indicare con `logo_einfarbig: "file.png"` una versione con
+sfondo trasparente (come per swimsa).
+
 ---
 
 ## 9. FAQ, Uniguide, subtest, nomi dei download

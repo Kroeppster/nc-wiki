@@ -8,23 +8,36 @@
 #             liegen (SVG bevorzugt, geht aber auch als PNG/JPG)
 #   website - wohin die Logo-Kachel verlinkt (mit https:// davor)
 #
+# Freiwillig, für die Zeile «Unterstützt von» in der Fusszeile (jede Seite):
+#   hauptsponsor   - Zahl = Reihenfolge in der Fusszeile (1 = zuerst). Ohne
+#                    diese Angabe erscheint der Sponsor nur auf der Seite
+#                    "Unterstützer:innen".
+#   logo_einfarbig - Logo mit durchsichtigem Hintergrund für die Fusszeile
+#                    (dort wird jedes Logo weiss eingefärbt). Nur nötig, wenn
+#                    "logo" ein PNG/JPG mit weissem Hintergrund ist.
+#
 # Neuen Sponsor hinzufügen: hier einen neuen Eintrag ergänzen UND die
 # Logo-Datei unter assets/images/sponsors/ hochladen (Dateiname muss exakt
 # mit dem "logo:"-Wert hier übereinstimmen). Ohne hochgeladene Logo-Datei
 # wird automatisch nur der Name als Text angezeigt - kein kaputtes Bild.
 # ============================================================================
 - name: "VSAO"
+  hauptsponsor: 2
   logo: "vsao.svg"
   website: "https://vsao.ch/"
 - name: "SAMW"
   logo: "samw.svg"
   website: "https://www.samw.ch/"
 - name: "swimsa"
+  hauptsponsor: 4
   logo: "swimsa.png"
+  logo_einfarbig: "swimsa-transparent.png"
   website: "https://swimsa.ch/"
 - name: "chirosuisse"
+  hauptsponsor: 3
   logo: "chirosuisse.svg"
   website: "https://www.chirosuisse.ch/"
 - name: "ASSA ABLOY"
+  hauptsponsor: 1
   logo: "assa-abloy.svg"
   website: "https://www.assaabloy.com/ch/de"

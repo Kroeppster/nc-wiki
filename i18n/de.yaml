@@ -47,6 +47,7 @@ footer_legal_heading: "Rechtliches"
 footer_newsletter_heading: "Newsletter"
 footer_newsletter_text: "Bleib informiert über Termine und neues Material."
 footer_built_with: "Gebaut mit Hugo · gehostet auf GitHub Pages"
+hauptsponsoren_titel: "Unterstützt von"
 
 alpha_notice_aria_label: "Wichtiger Hinweis"
 alpha_notice_title: "Alpha-Version"
