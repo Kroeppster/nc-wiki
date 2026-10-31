@@ -337,20 +337,16 @@ window.NCWikiBild = (function(){
   }
   function istPdf(datei){ return datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name); }
   // Eine Datei -> Liste von Quellen (eine bei einem Bild, je Seite bei einem PDF)
-  // Ein Foto, das hochgeladen nicht zu lesen war, mit weniger als 2100
+  // Ein Foto, das hochgeladen nicht zu lesen war, mit weniger als 1800
   // Bildpunkten auf der langen Seite: oft ueber einen Messenger verschickt
   // und dabei verkleinert (Kamera-Labor Oktober 2026: 12-MP-Fotos auf 1600
   // Bildpunkte verkleinert - feine Konztest-Serien nicht mehr zu lesen,
   // gemeldet war «Raster nicht gefunden» oder «passt nicht zu diesem
-  // Konzentrationstest»). Bis Ende Oktober 2026 unter 1800 - echte
-  // Antwortboegen aus einem Chat mit 2000 Bildpunkten und blassen
-  // Kaestchenraendern wurden ohne den Hinweis abgelehnt, die Meldung sprach
-  // nur von Glanz und Schatten. (Die Schwellen der Passung dafuer zu senken
-  // half nicht: im Kamera-Labor 64 statt 14 still falsch gelesene Zeilen.)
+  // Konzentrationstest»).
   // Gibt den Zusatz zur Meldung zurueck, sonst ''.
   function kleinesFoto(quelle, text){
     var lang = quelle ? Math.max(quelle.naturalWidth || quelle.width || 0, quelle.naturalHeight || quelle.height || 0) : 0;
-    return lang && lang < 2100 ? ' ' + text.replace('{n}', lang) : '';
+    return lang && lang < 1800 ? ' ' + text.replace('{n}', lang) : '';
   }
   function quellen(datei){
     return istPdf(datei) ? pdfSeiten(datei) : laden(datei).then(function(img){ return [img]; });

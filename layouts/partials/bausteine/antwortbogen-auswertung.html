@@ -177,6 +177,8 @@
   var PASSUNG_KLAR = 0.6;  // so klar muessen die Kaestchen passen, wenn der Kopfkasten blass ist (ausrichten)
   var GEDRUCKT = 0.25;     // Anteil Rahmen, ab dem eine Zeile als gedruckt gilt
   var PASSUNG_MIN = 0.7;   // so viel Rahmen muss genau auf den Kanten liegen
+  var PASSUNG_LINIE = 0.84; // ... oder so viel mit dem Linientest (erkannt())
+  var ECKE_NAH = 15;       // pt - so nah muss im Sucher eine nicht passende vierte Marke bei ihrer Ecke liegen
   // Das Gemeinsame (Bild, Abbildung, Laden, PDF, Kamera): bausteine/bild-lesen.html
   var B = window.NCWikiBild, Bild = B.Bild, abbildung = B.abbildung, bildAus = B.bildAus,
       quellen = B.quellen, istPdf = B.istPdf, laden = B.laden, pdfOeffnen = B.pdfOeffnen;
@@ -316,6 +318,22 @@
       a.passung = passung(bild, a);
       return a.passung >= PASSUNG_KLAR;
     });
+    // Vier Ecken gefunden, aber keine Lage gilt: Ist das Blatt an einer
+    // Ecke aufgebogen (gelochte Boegen aus dem Ordner), passt die Lage aus
+    // vier Ecken nicht, die aus den drei anderen erst mit gesuchter vierter
+    // Ecke - und der Kopfkasten liegt knapp unter der Grenze (Oktober 2026,
+    // Foto eines echten Bogens mit Glanz: 0.116, die Ecke oben links 5 pt
+    // daneben). Dann gilt eine solche Lage, wenn die Kaestchen mit der
+    // gesuchten Ecke nach der Feinausrichtung so gut passen, wie es
+    // bogenLesen ohnehin verlangt (mit dem Linientest dort 0.91; vor der
+    // Feinausrichtung erst 0.58).
+    if (!gueltig.length && anzahl === 4) kandidaten.forEach(function(a){
+      if (!a.drei || a.inhalt < MIN_INHALT / 2) return;
+      a.vierte = vierteEcke(bild, a);
+      if (!erkannt(bild, feinAusrichten(bild, a.vierte))) return;
+      a.passung = passung(bild, a.vierte);
+      gueltig.push(a);
+    });
     // Darunter die, bei der die Kaestchen am besten auf den gedruckten
     // liegen (vier Marken bei Gleichstand).
     if (gueltig.length){
@@ -332,8 +350,17 @@
       if (anzahl >= 3 && breite < 600) return { fehler: T.fehlerKlein.replace('{n}', Math.round(breite)) };
       return { fehler: T.fehlerKein };
     }
-    if (beste[1].drei) beste[1] = vierteEcke(bild, beste[1]);
+    if (beste[1].drei) beste[1] = beste[1].vierte || vierteEcke(bild, beste[1]);
     var s = beste[1].massstab();
+    // Sind alle vier Marken da, aber nur drei passen: wie weit (pt) liegt die
+    // am schlechtesten passende von der Ecke, die die anderen und die
+    // Kaestchen erwarten? Fuer livePruefen.
+    if (beste[1].drei && anzahl === 4) beste[1].eckeAbstand = Math.max.apply(null, KREIS.map(function(e){
+      return Math.min.apply(null, KREIS.map(function(f){
+        var q = beste[1](MARKEN[f][0], MARKEN[f][1]);
+        return Math.hypot(q[0] - marken[e][0], q[1] - marken[e][1]);
+      }));
+    })) / s[0];
     // Anders als im Tool auch dann, wenn der Kopfkasten noch zu erkennen
     // war: Ein Handyfoto aus zwei Metern zeigt ihn, aber die Kaestchen sind
     // dann wenige Bildpunkte gross, und gelesen wuerde Unsinn.
@@ -362,6 +389,33 @@
     var anteil = t / n, breite = belegt / spalten;
     return breite >= 0.4 ? anteil : anteil * breite / 0.4;
   }
+  // Liegt bei (x, y) (pt des Bogens) eine feine gedruckte Linie? Blass
+  // gedruckte Kaestchenraender sind auf dem Foto weder kraeftig Magenta noch
+  // deutlich dunkler als das Papier - aber dunkler als das Papier gleich
+  // daneben, auf beiden Seiten. (Oktober 2026, Fotos echter Boegen aus
+  // Testsimulationen mit 2000 Bildpunkten: rahmen() traf nur 54 bis 59 %
+  // der Raender, die Boegen wurden abgelehnt, auch mit der Live-Kamera; mit
+  // dem Linientest 87 bis 98 %, eine halbe Zeile oder Spalte daneben trifft
+  // er allein um 30 %.)
+  // quer: 0 fuer eine waagrechte Linie (verglichen mit darueber und
+  // darunter), 1 fuer eine senkrechte.
+  // Erst ab LINIE_AB Bildpunkten je pt: Darunter ist der feine Rand kaum
+  // eine Linie, und die so zusaetzlich angenommenen Fotos (im Kamera-Labor
+  // Messenger-Bilder mit 1.04 bis 1.31) wurden mit 21 still falschen Zeilen
+  // gelesen - frueher abgelehnt. Die echten Fotos: 1.64 bis 1.82.
+  var LINIE = 0.08;   // so viel dunkler als beide Seiten (Anteil des Papiers)
+  var LINIE_AB = 1.45;
+  function linie(bild, abb, x, y, quer){
+    if (abb.linieOk === undefined) abb.linieOk = abb.massstab()[0] / bild.vergroessert >= LINIE_AB;
+    if (!abb.linieOk) return false;
+    function hell(t){ var p = quer ? abb(x + t, y) : abb(x, y + t); return bild.hell(p[0], p[1]); }
+    var p = abb(x, y), mitte = Math.min(hell(-0.4), hell(0), hell(0.4));
+    return Math.min(hell(-1.6), hell(1.6)) - mitte >= LINIE * bild.papierBei(p[0], p[1]);
+  }
+  function rand(bild, abb, x, y, quer){
+    var p = abb(x, y);
+    return bild.rahmen(p[0], p[1]) || linie(bild, abb, x, y, quer);
+  }
   function zeileGedruckt(bild, abb, block, zeile){
     var n = 0, t = 0;
     for (var s = 0; s < 5; s++){
@@ -369,7 +423,8 @@
       [0.8, 2.5, 4.5, 6.5, 8.3].forEach(function(dx){
         [e[1], e[1] + FELD_H].forEach(function(y){
           n++;
-          if ([-0.7, 0, 0.7].some(function(d){ var p = abb(e[0] + dx, y + d); return bild.rahmen(p[0], p[1]); })) t++;
+          if ([-0.7, 0, 0.7].some(function(d){ var p = abb(e[0] + dx, y + d); return bild.rahmen(p[0], p[1]); })
+            || linie(bild, abb, e[0] + dx, y, 0)) t++;
         });
       });
     }
@@ -387,19 +442,27 @@
   // wird die Verschiebung, bei der am meisten gedruckter Rahmen genau auf
   // den Kanten der Kaestchen liegt - je fuer die obere und die untere
   // Haelfte des Blocks, dazwischen gleitend.
+  // (mitLinie: auch der Linientest, nur fuer die Entscheidung, ob der Bogen
+  // erkannt ist - die Suche nach der besten Lage bleibt bei rahmen(): Mit
+  // dem Linientest verschob sie sich um Bruchteile eines pt, und auf einem
+  // Laborbild fiel ein Strich knapp neben dem Kaestchen still als leer.)
   var FEIN_OBEN = [0, 1, 2, 4, 6, 8], FEIN_UNTEN = [9, 11, 13, 15, 16, 17];
-  function rahmenTreffer(bild, abb, k, zeilen, dx, dy){
+  function rahmenTreffer(bild, abb, k, zeilen, dx, dy, mitLinie){
     var t = 0;
+    function treffer(x, y, quer){
+      if (mitLinie) return rand(bild, abb, x, y, quer);
+      var p = abb(x, y); return bild.rahmen(p[0], p[1]);
+    }
     zeilen.forEach(function(i){
       for (var sp = 0; sp < 5; sp++){
-        var e = feldEcke(k, i, sp), x = e[0] + dx, y = e[1] + dy, p;
+        var e = feldEcke(k, i, sp), x = e[0] + dx, y = e[1] + dy;
         [1.5, 4.5, 7.5].forEach(function(a){
-          p = abb(x + a, y); if (bild.rahmen(p[0], p[1])) t++;
-          p = abb(x + a, y + FELD_H); if (bild.rahmen(p[0], p[1])) t++;
+          if (treffer(x + a, y, 0)) t++;
+          if (treffer(x + a, y + FELD_H, 0)) t++;
         });
         [1.5, 3.1, 4.7].forEach(function(b){
-          p = abb(x, y + b); if (bild.rahmen(p[0], p[1])) t++;
-          p = abb(x + FELD_B, y + b); if (bild.rahmen(p[0], p[1])) t++;
+          if (treffer(x, y + b, 1)) t++;
+          if (treffer(x + FELD_B, y + b, 1)) t++;
         });
       }
     });
@@ -423,10 +486,18 @@
   // Ecke im Bild so, dass die gedruckten Kaestchen ueber den ganzen Bogen am
   // besten passen (das bindet alle Bloecke zusammen - anders als je Block
   // kann so nichts um eine Zeile oder Spalte verrutschen).
-  function passungScharf(bild, abb){
+  function passungScharf(bild, abb, mitLinie){
     var t = 0;
-    for (var k = 0; k < BLOECKE; k++) t += rahmenTreffer(bild, abb, k, [0, 9, 17], 0, 0);
+    for (var k = 0; k < BLOECKE; k++) t += rahmenTreffer(bild, abb, k, [0, 9, 17], 0, 0, mitLinie);
     return t / BLOECKE;
+  }
+  // Ist der Bogen erkannt (Abbildung nach der Feinausrichtung)? Mit dem
+  // Linientest trifft die Passung auf jedem Foto mehr, darum dort eine
+  // hoehere Grenze: Ein Laborbild mit hochgebogener Ecke, ein Block um eine
+  // Spalte verrutscht, kam mit 0.72 durch (5 Zeilen still falsch, mit
+  // rahmen() allein 0.62); echte Fotos mit blassen Raendern 0.87 bis 0.98.
+  function erkannt(bild, abb){
+    return passungScharf(bild, abb) >= PASSUNG_MIN || passungScharf(bild, abb, true) >= PASSUNG_LINIE;
   }
   function vierteEcke(bild, abb){
     var da = abb.paare.map(function(q){ return q[0]; });
@@ -679,8 +750,7 @@
     // Liegen die gedruckten Kaestchen auch danach nicht deutlich auf den
     // erwarteten (stark gewellt, verzerrt, falsche Ecke), waeren die Markierungen
     // geraten - lieber neu fotografieren lassen.
-    r.passung = passungScharf(bild, r.abb);
-    if (r.passung < PASSUNG_MIN) return { fehler: warumNicht(bild, grob, r.marken) };
+    if (!erkannt(bild, r.abb)) return { fehler: warumNicht(bild, grob, r.marken) };
     var antworten = [], unsicher = [], fehlend = 0, werte = [], gedruckt = [], kante = [];
     for (var k = 0; k < BLOECKE; k++){
       for (var i = 0; i < ZEILEN; i++){
@@ -994,7 +1064,12 @@
     // eine Ecke abgeschnitten und etwas anderes galt als Marke - oder der
     // Bogen liegt nicht flach: Gewoelbt und geknickt zeigte der Sucher sonst
     // «3 von 4 Ecken im Bild», obwohl alle vier zu sehen waren.)
-    if (r.abb.drei) return { ok: false, punkte: punkte, hinweis: T.kameraPasst };
+    // Ausser die vierte liegt nah bei ihrer Ecke: Bei gelochten Boegen aus
+    // dem Ordner ist eine Ecke oft leicht aufgebogen (Oktober 2026, Fotos
+    // echter Boegen: 6 bis 10 pt daneben) - der Sucher loeste nie aus. Ein
+    // Kaestchen, das als Marke durchgeht, liegt weit weg (Kamera-Labor: 35
+    // bis 130 pt in allen Faellen mit nur drei passenden Ecken).
+    if (r.abb.drei && !(r.abb.eckeAbstand <= ECKE_NAH)) return { ok: false, punkte: punkte, hinweis: T.kameraPasst };
     return { ok: true, punkte: punkte, umriss: punkte, breite: r.abb.massstab()[0] * A4[0] };
   }
   if (B.kameraMoeglich()) el('ab-live').hidden = false;
@@ -1008,6 +1083,6 @@
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
   window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden,
-    intern: { ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, kantenBreite: kantenBreite, eckeAbgeschnitten: eckeAbgeschnitten, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung, rahmenTreffer: rahmenTreffer } };
+    intern: { ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, kantenBreite: kantenBreite, eckeAbgeschnitten: eckeAbgeschnitten, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung, rahmenTreffer: rahmenTreffer, vierteEcke: vierteEcke, livePruefen: livePruefen } };
 })();
 </script>
