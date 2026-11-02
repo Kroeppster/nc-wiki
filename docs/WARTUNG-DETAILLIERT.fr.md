@@ -102,7 +102,7 @@ pas de fichier de menu propre. Premier niveau aujourd'hui :
 | Actualités | `news` | – |
 | EMS | `ems` | Séries d'exercices, Simulations de test (avec le mode simulation), Cours de préparation, Uniguide, Questions fréquentes, Témoignages |
 | Nos soutiens | `unterstuetzer-innen` | Soutenir maintenant |
-| À propos de nous | `ueber-uns` | Équipe, Rapports annuels, Archives |
+| À propos de nous | `ueber-uns` | Équipe, S'engager, Rapports annuels, Archives |
 | Contact | `kontakt` | – |
 
 Toutes les pages n'ont pas besoin d'une entrée de menu : la compensation des désavantages
@@ -396,6 +396,8 @@ Bloc de code avec la langue `baustein` (`layouts/_default/_markup/render-codeblo
 | `sponsoring-kontakt` | bouton e-mail/téléphone | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | évaluer la feuille de réponses par photo (Alpha) | `data/antwortbogen.yaml` |
 | `konztest-auswertung` | évaluer le test de concentration par photo (Alpha) | `data/konztest.yaml` |
+| `mitmachen-aufgaben` | cartes « Ce que tu peux faire chez nous » | `aufgaben:` dans l'en-tête de la page S'engager |
+| `offene-rollen` | rôles ouverts (pas intégré pour l'instant, voir section 7) | rôles avec le nom « Vakant » sur la page équipe |
 
 Une faute de frappe dans le nom arrête la construction. Nouveaux blocs : créer un partial
 sous `layouts/partials/bausteine/` et ajouter le nom à la liste `$erlaubt` du hook.
@@ -550,6 +552,32 @@ section « Saison … » ; sur la page équipe, les titres portent la nouvelle s
 section « Autres responsables » commence avec une phrase provisoire.
 L'équipe dirigeante elle-même reste ; les changements se font ensuite. Une seconde
 exécution avec la même saison ne fait rien.
+
+### Page S'engager
+
+`content/<langue>/ueber-uns/mitmachen.md` : les cartes « Ce que tu peux faire chez nous » se
+trouvent dans l'en-tête sous `aufgaben:` (chacune avec `titel` et `text`, aussi dans le
+classeur de textes), suivies du formulaire d'inscription (`mitmachen_form: true`, voir
+section 13).
+
+**Afficher les rôles ouverts :** le bloc `offene-rollen` liste tous les rôles de la page
+équipe dont le nom est `Vakant` (rôle et ressort). Pour l'instant, tous les rôles sont
+pourvus ; il n'est donc pas sur la page. S'il le faut à nouveau : inscrire le rôle ouvert
+avec le nom `Vakant` sur la page équipe et ajouter sur la page S'engager (dans les trois
+langues), par exemple après les cartes :
+
+````markdown
+## Rôles ouverts 2027/28
+
+Pour cette saison, nous cherchons encore des responsables pour :
+
+```baustein
+offene-rollen
+```
+````
+
+Si le rôle est pourvu (un nom au lieu de `Vakant`), il disparaît tout seul ; si plus aucun
+n'est ouvert, une phrase indique que tous les rôles sont pourvus.
 
 ### Archives
 
@@ -937,6 +965,7 @@ Le site n'a pas de serveur ; les formulaires passent par **Formspree**.
 | Formulaire | Où | ID Formspree | Fichier |
 | --- | --- | --- | --- |
 | Contact | `/kontakt/` | `mvkpgrpl` | `layouts/partials/contact-form.html` |
+| S'engager (inscription) | `/fr/ueber-uns/mitmachen/` | aussi `mvkpgrpl`, objet « S'engager chez NCWiki » | `layouts/partials/mitmachen-form.html` |
 | Signaler une erreur (exercices) | pages d'exercices | aussi `mvkpgrpl` | `layouts/partials/report-error-general.html` |
 | Témoignage | `/ems/erfahrungsberichte/` | `xaewqwoj` | `layouts/partials/experience-form.html` |
 

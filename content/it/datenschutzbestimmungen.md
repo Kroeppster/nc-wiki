@@ -58,7 +58,7 @@ Il fornitore di questo sito (GitHub Pages) raccoglie e memorizza automaticamente
 
 ## Modulo di contatto e testimonianze
 
-Se ci trasmette informazioni tramite un modulo di questo sito (ad es. modulo di contatto, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, veda la sezione «Servizi di terzi» qui sotto. Senza il Suo consenso non trasmettiamo i Suoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
+Se ci trasmette informazioni tramite un modulo di questo sito (ad es. modulo di contatto, iscrizione per partecipare, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, veda la sezione «Servizi di terzi» qui sotto. Senza il Suo consenso non trasmettiamo i Suoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
 
 ## Valutazione tramite foto
 
@@ -68,7 +68,7 @@ Su questo sito può far valutare fogli delle risposte e test di concentrazione a
 
 Questo sito utilizza i seguenti servizi esterni:
 
-- **Formspree** (invio dei moduli di contatto, testimonianze e segnalazioni di errori) – i dati inseriti vengono trasmessi a Formspree Inc. (USA).
+- **Formspree** (invio dei moduli di contatto, iscrizione per partecipare, testimonianze e segnalazioni di errori) – i dati inseriti vengono trasmessi a Formspree Inc. (USA).
 - **Pagefind** (funzione di ricerca) e font ospitati sul nostro server – funzionano interamente nel browser o vengono forniti dal nostro stesso hosting, senza trasmissione di dati a terzi.
 - **Google Analytics** (misurazione dell'audience) – viene caricato solo se sceglie attivamente «Accetta» nel banner dei cookie (veda la sezione «Cookie» qui sotto). Senza questo consenso non viene caricato alcuno script Google e non viene impostato alcun cookie corrispondente. In caso di consenso, Google Analytics raccoglie tra l'altro informazioni sulle pagine visitate, la durata della visita e un'origine geografica approssimativa (paese/regione, non la posizione esatta), trattate su server di Google Ireland Limited o Google LLC (USA). Il consenso può essere revocato in qualsiasi momento: tramite il link «Impostazioni dei cookie» in fondo a ogni pagina e poi «Rifiuta», oppure cancellando i dati del browser relativi a questo sito, dopodiché il banner dei cookie ricomparirà.
 

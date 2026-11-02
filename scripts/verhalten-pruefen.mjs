@@ -245,6 +245,7 @@ console.log('\n=== Simulationsmodus: Figuren/Fakten nur Zeit, nicht Aufgabenzahl
 console.log('\n=== Formulare: Pflichtfelder und Absenden ===');
 for (const [name, url, sel, fuellen] of [
   ['Kontakt','/kontakt/','form.contact-form', async p=>{ await p.fill('#cf-name','Testperson'); await p.fill('#cf-email','test@example.org'); await p.fill('#cf-message','Testnachricht.'); }],
+  ['Mitmachen','/ueber-uns/mitmachen/','form.mitmachen-form', async p=>{ await p.fill('#mf-name','Testperson'); await p.fill('#mf-email','test@example.org'); await p.fill('#mf-uni','Universität Bern, 2. Jahr'); await p.check('input[name=interesse_qualitaet]'); }],
   ['Fehlermeldung','/ems/uebungsaufgaben/','form.report-error-general', async p=>{ await p.fill('#ef-item','Muster zuordnen'); await p.fill('#ef-desc','Aufgabe 3 hat zwei richtige Antworten.'); }],
 ]) {
   const {ctx,p,js}=await neu();

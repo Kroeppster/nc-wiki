@@ -1,0 +1,26 @@
+{{- /*
+  Offene Rollen: alle Rollen der Team-Seite (ueber-uns/team, ressorts:), bei
+  denen als Name «Vakant» eingetragen ist. Wird dort jemand eingetragen,
+  verschwindet die Rolle hier von selbst. Ist keine offen, ein Satz dazu.
+  Im Moment (November 2026) nicht eingebunden - alle Rollen sind besetzt.
+  Bei Bedarf auf der Seite ueber-uns/mitmachen einen Abschnitt mit
+  ```baustein / offene-rollen / ``` einfuegen (docs/WARTUNG-DETAILLIERT.md 7).
+*/ -}}
+{{- $offen := slice }}
+{{- with site.GetPage "/ueber-uns/team" }}
+  {{- range .Params.ressorts }}
+    {{- $ressort := .titel }}
+    {{- range .mitglieder }}
+      {{- if eq (lower .name) "vakant" }}{{ $offen = $offen | append (dict "rolle" .rolle "ressort" $ressort) }}{{ end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- if $offen }}
+<ul class="offene-rollen">
+  {{- range $offen }}
+  <li><strong>{{ .rolle }}</strong><span>{{ .ressort }}</span></li>
+  {{- end }}
+</ul>
+{{- else }}
+<p>{{ i18n "mitmachen_keine_offen" }}</p>
+{{- end }}

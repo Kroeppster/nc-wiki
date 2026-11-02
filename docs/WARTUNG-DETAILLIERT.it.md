@@ -101,7 +101,7 @@ di menu proprio. Primo livello oggi:
 | News | `news` | – |
 | EMS | `ems` | Serie di esercizi, Simulazioni del test (con la modalità simulazione), Corsi di preparazione, Uniguide, Domande frequenti, Testimonianze |
 | Sostenitori e sostenitrici | `unterstuetzer-innen` | Sostienici ora |
-| Chi siamo | `ueber-uns` | Team, Rapporti annuali, Archivio |
+| Chi siamo | `ueber-uns` | Team, Partecipare, Rapporti annuali, Archivio |
 | Contatto | `kontakt` | – |
 
 Non ogni pagina ha bisogno di una voce di menu: la compensazione degli svantaggi
@@ -390,6 +390,8 @@ Blocco di codice con la lingua `baustein` (`layouts/_default/_markup/render-code
 | `sponsoring-kontakt` | pulsante e-mail/telefono | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | valutare il foglio delle risposte da foto (Alpha) | `data/antwortbogen.yaml` |
 | `konztest-auswertung` | valutare il test di concentrazione da foto (Alpha) | `data/konztest.yaml` |
+| `mitmachen-aufgaben` | schede «Cosa puoi fare con noi» | `aufgaben:` nell'intestazione della pagina Partecipare |
+| `offene-rollen` | ruoli aperti (al momento non inserito, vedi sezione 7) | ruoli con il nome «Vakant» sulla pagina del team |
 
 Un errore di battitura nel nome interrompe la costruzione. Nuovi blocchi: creare un partial
 sotto `layouts/partials/bausteine/` e aggiungere il nome alla lista `$erlaubt` dell'hook.
@@ -540,6 +542,31 @@ sulla pagina del team i titoli riportano la nuova stagione e la sezione «Altri 
 inizia con una frase provvisoria. Il team dirigente
 stesso resta; i cambi si fanno dopo. Una seconda esecuzione con la stessa stagione non fa
 nulla.
+
+### Pagina Partecipare
+
+`content/<lingua>/ueber-uns/mitmachen.md`: le schede «Cosa puoi fare con noi» si trovano
+nell'intestazione sotto `aufgaben:` (ognuna con `titel` e `text`, anche nella cartella dei
+testi), seguite dal modulo d'iscrizione (`mitmachen_form: true`, vedi sezione 13).
+
+**Mostrare i ruoli aperti:** il blocco `offene-rollen` elenca tutti i ruoli della pagina del
+team con il nome `Vakant` (ruolo e ressort). Al momento tutti i ruoli sono occupati, perciò
+non è sulla pagina. Se serve di nuovo: inserire il ruolo aperto con il nome `Vakant` sulla
+pagina del team e aggiungere sulla pagina Partecipare (in tutte e tre le lingue), per
+esempio dopo le schede:
+
+````markdown
+## Ruoli aperti 2027/28
+
+Per questa stagione cerchiamo ancora responsabili per:
+
+```baustein
+offene-rollen
+```
+````
+
+Quando il ruolo è occupato (un nome invece di `Vakant`), scompare da solo; se non ce n'è più
+nessuno aperto, compare una frase che dice che tutti i ruoli sono occupati.
 
 ### Archivio
 
@@ -920,6 +947,7 @@ Il sito non ha un server; i moduli passano per **Formspree**.
 | Modulo | Dove | ID Formspree | File |
 | --- | --- | --- | --- |
 | Contatto | `/kontakt/` | `mvkpgrpl` | `layouts/partials/contact-form.html` |
+| Partecipare (iscrizione) | `/it/ueber-uns/mitmachen/` | anche `mvkpgrpl`, oggetto «Partecipare a NCWiki» | `layouts/partials/mitmachen-form.html` |
 | Segnalare un errore (esercizi) | pagine degli esercizi | anche `mvkpgrpl` | `layouts/partials/report-error-general.html` |
 | Resoconto | `/ems/erfahrungsberichte/` | `xaewqwoj` | `layouts/partials/experience-form.html` |
 

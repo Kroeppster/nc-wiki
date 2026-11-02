@@ -58,7 +58,7 @@ Le fournisseur de ce site (GitHub Pages) collecte et enregistre automatiquement 
 
 ## Formulaire de contact et témoignages
 
-Lorsque vous nous transmettez des informations via un formulaire de ce site (par ex. formulaire de contact, soumission d'un témoignage, signalement d'une erreur), celles-ci, y compris les coordonnées indiquées, sont enregistrées afin de traiter votre demande ou de publier votre témoignage. Ces formulaires sont traités via le prestataire Formspree, voir la section « Services de tiers » ci-dessous. Sans votre consentement, nous ne transmettons pas vos données à des tiers. Pour les témoignages, un consentement distinct à la publication est en outre recueilli lors de la soumission.
+Lorsque vous nous transmettez des informations via un formulaire de ce site (par ex. formulaire de contact, inscription pour s'engager, soumission d'un témoignage, signalement d'une erreur), celles-ci, y compris les coordonnées indiquées, sont enregistrées afin de traiter votre demande ou de publier votre témoignage. Ces formulaires sont traités via le prestataire Formspree, voir la section « Services de tiers » ci-dessous. Sans votre consentement, nous ne transmettons pas vos données à des tiers. Pour les témoignages, un consentement distinct à la publication est en outre recueilli lors de la soumission.
 
 ## Évaluation par photo
 
@@ -68,7 +68,7 @@ Sur ce site, vous pouvez faire évaluer des feuilles de réponses et des tests d
 
 Ce site utilise les services externes suivants :
 
-- **Formspree** (envoi des formulaires de contact, de témoignages et de signalement d'erreurs) – les données saisies sont alors transmises à Formspree Inc. (États-Unis).
+- **Formspree** (envoi des formulaires de contact, d'inscription pour s'engager, de témoignages et de signalement d'erreurs) – les données saisies sont alors transmises à Formspree Inc. (États-Unis).
 - **Pagefind** (fonction de recherche) et polices auto-hébergées – fonctionnent entièrement dans le navigateur ou sont fournies par notre propre hébergement, aucune donnée n'est transmise à des tiers à cette occasion.
 - **Google Analytics** (mesure d'audience) – n'est chargé que si vous choisissez activement « Accepter » dans la bannière de cookies (voir la section « Cookies » ci-dessous). Sans ce consentement, aucun script Google n'est chargé et aucun cookie correspondant n'est déposé. En cas de consentement, Google Analytics collecte notamment des informations sur les pages visitées, la durée de visite et une origine géographique approximative (pays/région, pas la position exacte), traitées sur des serveurs de Google Ireland Limited ou de Google LLC (États-Unis). Le consentement peut être révoqué à tout moment : via le lien « Paramètres des cookies » en bas de chaque page puis « Refuser », ou en supprimant les données de navigateur de ce site, ce qui fera réapparaître la bannière de cookies.
 

@@ -532,3 +532,24 @@ lg_drucken_hinweis: "Zum Üben auf Papier: Der Druck ist aufgebaut wie ein Testh
 
 # Kurzform des Tests in Titeln wie «Anna K. – EMS 2027» (Erfahrungsberichte)
 ems_kurz: "EMS"
+
+# Mitmachen-Seite (ueber-uns/mitmachen)
+mitmachen_uni: "Universität und Studienjahr"
+mitmachen_sprachen: "In welchen Sprachen möchtest du mitarbeiten?"
+mitmachen_sprache_de: "Deutsch"
+mitmachen_sprache_fr: "Französisch"
+mitmachen_sprache_it: "Italienisch"
+mitmachen_interessen: "Was interessiert dich?"
+mitmachen_interesse_aufgaben: "Aufgaben schreiben"
+mitmachen_interesse_qualitaet: "Qualitätskontrolle"
+mitmachen_interesse_uebersetzen: "Übersetzen"
+mitmachen_interesse_kurse: "Kurse halten"
+mitmachen_interesse_testsimulationen: "Testsimulationen betreuen"
+mitmachen_interesse_ressort: "Verantwortung in einem Ressort übernehmen"
+mitmachen_interesse_offen: "Weiss ich noch nicht"
+mitmachen_nachricht: "Möchtest du uns noch etwas sagen? (freiwillig)"
+mitmachen_betreff: "Mitmachen bei NCWiki"
+mitmachen_senden: "Ich möchte mitmachen"
+mitmachen_danke: "Danke für deine Anmeldung"
+mitmachen_danke_text: "Wir haben sie erhalten und melden uns bei dir."
+mitmachen_keine_offen: "Im Moment sind alle Rollen besetzt. Melde dich trotzdem – es gibt immer etwas zu tun."

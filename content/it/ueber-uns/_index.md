@@ -17,7 +17,7 @@ Dalla fondazione nel 2021 NCWiki è cresciuto molto: oggi nel team si impegnano 
 
 ## Partecipare
 
-Studi medicina e vuoi impegnarti con noi? Oppure hai domande e suggerimenti? Allora scrivici tramite il nostro [modulo di contatto](/kontakt).
+Studi medicina e vuoi impegnarti con noi? Alla pagina [Partecipare](/ueber-uns/mitmachen) scopri cosa puoi fare con noi e ti iscrivi direttamente. Per domande e suggerimenti scrivici tramite il nostro [modulo di contatto](/kontakt).
 
 ## Sostegno
 

@@ -19,7 +19,7 @@ Depuis sa fondation en 2021, NCWiki a beaucoup grandi : aujourd'hui, plus de 110
 
 ## S'engager
 
-Tu étudies la médecine et tu souhaites t'engager avec nous ? Ou tu as des questions et des suggestions ? Alors contacte-nous via notre [formulaire de contact](/kontakt).
+Tu étudies la médecine et tu souhaites t'engager avec nous ? Sur la page [S'engager](/ueber-uns/mitmachen), tu découvres ce que tu peux faire chez nous et tu t'inscris directement. Pour les questions et suggestions, utilise notre [formulaire de contact](/kontakt).
 
 ## Soutien
 

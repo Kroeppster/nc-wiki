@@ -17,7 +17,7 @@ Seit der Gründung 2021 ist NCWiki stark gewachsen: Heute engagieren sich über 
 
 ## Mitmachen
 
-Du studierst Medizin und möchtest dich bei uns engagieren? Oder hast du Fragen und Anregungen? Dann melde dich über unser [Kontaktformular](/kontakt).
+Du studierst Medizin und möchtest dich bei uns engagieren? Auf der Seite [Mitmachen](/ueber-uns/mitmachen) erfährst du, was du bei uns machen kannst, und meldest dich direkt an. Fragen und Anregungen nehmen wir gern über das [Kontaktformular](/kontakt) entgegen.
 
 ## Unterstützung
 

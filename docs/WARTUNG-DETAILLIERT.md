@@ -99,7 +99,7 @@ Menüdatei. Oberste Ebene heute:
 | News | `news` | – |
 | EMS | `ems` | Übungsserien, Testsimulationen (mit dem Simulationsmodus), Vorbereitungskurse, Uniguide, Häufige Fragen, Erfahrungsberichte |
 | Unterstützer\*innen | `unterstuetzer-innen` | Jetzt unterstützen |
-| Über uns | `ueber-uns` | Team, Jahresberichte, Archiv |
+| Über uns | `ueber-uns` | Team, Mitmachen, Jahresberichte, Archiv |
 | Kontakt | `kontakt` | – |
 
 Nicht jede Seite braucht einen Menüpunkt: Der Nachteilsausgleich (`/ems/nachteilsausgleich/`)
@@ -385,6 +385,8 @@ Als Code-Block mit der Sprache `baustein` (`layouts/_default/_markup/render-code
 | `sponsoring-kontakt` | E-Mail-/Telefon-Knopf | `data/sponsoring.yaml` |
 | `antwortbogen-auswertung` | Antwortbogen per Foto auswerten (Alpha) | `data/antwortbogen.yaml` |
 | `konztest-auswertung` | Konzentrationstest per Foto auswerten (Alpha) | `data/konztest.yaml` |
+| `mitmachen-aufgaben` | Karten „Was du bei uns machen kannst“ | `aufgaben:` im Kopf der Seite Mitmachen |
+| `offene-rollen` | offene Rollen (im Moment nicht eingebunden, siehe [7](#7-team-und-neue-saison)) | Rollen mit Name „Vakant“ auf der Team-Seite |
 
 Ein Tippfehler im Namen bricht den Bau ab. Neue Bausteine: Partial unter
 `layouts/partials/bausteine/` anlegen und den Namen in die Liste `$erlaubt` im Render-Hook
@@ -536,6 +538,31 @@ und auf der Team-Seite tragen die Überschriften die neue Saison; der Abschnitt 
 Verantwortliche“ beginnt mit einem Platzhalter-Satz. Das Leitungsteam
 selbst bleibt stehen; wer wechselt, wird danach geändert. Ein zweiter Lauf mit derselben
 Saison tut nichts.
+
+### Seite Mitmachen
+
+`content/<sprache>/ueber-uns/mitmachen.md`: Die Karten „Was du bei uns machen kannst“ stehen im
+Kopf unter `aufgaben:` (je `titel` und `text`, auch in der Textmappe), darunter das
+Anmeldeformular (`mitmachen_form: true`, siehe [13](#13-formulare)).
+
+**Offene Rollen zeigen:** Der Baustein `offene-rollen` listet alle Rollen der Team-Seite, bei
+denen als Name `Vakant` steht (Rolle und Ressort). Im Moment sind alle Rollen besetzt, er ist
+deshalb nicht auf der Seite. Braucht es ihn wieder: auf der Team-Seite die offene Rolle mit
+Name `Vakant` eintragen und auf der Seite Mitmachen (alle drei Sprachen) zum Beispiel nach
+den Karten einfügen:
+
+````markdown
+## Offene Rollen 2027/28
+
+Für diese Saison suchen wir noch Verantwortliche für:
+
+```baustein
+offene-rollen
+```
+````
+
+Wird die Rolle besetzt (Name statt `Vakant`), verschwindet sie von selbst; ist keine mehr
+offen, steht dort ein Satz, dass alle Rollen besetzt sind.
 
 ### Archiv
 
@@ -912,6 +939,7 @@ Die Website hat keinen Server; Formulare laufen über **Formspree**.
 | Formular | Wo | Formspree-ID | Datei |
 | --- | --- | --- | --- |
 | Kontakt | `/kontakt/` | `mvkpgrpl` | `layouts/partials/contact-form.html` |
+| Mitmachen (Anmeldung) | `/ueber-uns/mitmachen/` | ebenfalls `mvkpgrpl`, Betreff „Mitmachen bei NCWiki“ | `layouts/partials/mitmachen-form.html` |
 | Fehlermeldung Übungsaufgaben | Übungsaufgaben-Seiten | ebenfalls `mvkpgrpl` | `layouts/partials/report-error-general.html` |
 | Erfahrungsbericht | `/ems/erfahrungsberichte/` | `xaewqwoj` | `layouts/partials/experience-form.html` |
 

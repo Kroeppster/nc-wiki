@@ -206,6 +206,7 @@
            ein Kontaktformular, nicht jede Seite der Website. */}}
       {{ if .Params.contact_form }}{{ partial "contact-form.html" . }}{{ end }}
       {{ if .Params.experience_form }}{{ partial "experience-form.html" . }}{{ end }}
+      {{ if .Params.mitmachen_form }}{{ partial "mitmachen-form.html" . }}{{ end }}
       {{ $uniDetail }}
       {{ $simulation }}
         </div>

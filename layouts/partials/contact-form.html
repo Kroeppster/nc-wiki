@@ -45,42 +45,4 @@
   </div>
 </form>
 
-{{/* Senden im Hintergrund statt Seitenwechsel zu Formspree: Man bleibt auf
-     der Website, sieht gleich, ob es geklappt hat, und bei einem Fehler
-     (z. B. kein Netz) bleibt die Nachricht im Feld stehen. Ohne JavaScript
-     schickt der Browser das Formular wie früher direkt an Formspree. */}}
-<script>
-(function(){
-  var sendingLabel = {{ i18n "experience_form_sending" }};
-  document.querySelectorAll('form.contact-form').forEach(function(form){
-    var success = form.querySelector('.form-success');
-    var error = form.querySelector('.form-error');
-    var submitBtn = form.querySelector('button[type="submit"]');
-    var submitLabel = submitBtn.textContent;
-    form.setAttribute('novalidate', '');
-    form.addEventListener('submit', function(evt){
-      evt.preventDefault();
-      if(!form.checkValidity()){ form.reportValidity(); return; }
-      error.hidden = true;
-      submitBtn.disabled = true;
-      submitBtn.textContent = sendingLabel;
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      }).then(function(response){
-        if(!response.ok){ throw new Error('request failed'); }
-        form.querySelectorAll('input, textarea, button').forEach(function(el){ el.disabled = true; });
-        submitBtn.textContent = submitLabel;
-        success.hidden = false;
-        success.focus();
-      }).catch(function(){
-        error.hidden = false;
-        error.focus();
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitLabel;
-      });
-    });
-  });
-})();
-</script>
+{{ partial "formular-senden.html" . }}

@@ -74,4 +74,4 @@ Die weiteren Verantwortlichen dieser Saison stellen wir hier bald vor.
 
 ## Mitmachen
 
-Du hast Fragen oder Anregungen, oder du möchtest dich als Medizinstudent*in bei uns engagieren? Dann melde dich über unser [Kontaktformular](/kontakt).
+Du möchtest dich als Medizinstudent*in bei uns engagieren? Auf der Seite [Mitmachen](/ueber-uns/mitmachen) siehst du, was du bei uns machen kannst, und meldest dich direkt an. Fragen und Anregungen nimmt unser [Kontaktformular](/kontakt) entgegen.

@@ -74,4 +74,4 @@ Presto presenteremo qui gli altri responsabili di questa stagione.
 
 ## Partecipare
 
-Per domande, suggerimenti o se studi medicina e vuoi impegnarti con noi, contattaci tramite il nostro [modulo di contatto](/kontakt).
+Studi medicina e vuoi impegnarti con noi? Alla pagina [Partecipare](/ueber-uns/mitmachen) vedi cosa puoi fare con noi e ti iscrivi direttamente. Per domande e suggerimenti scrivici tramite il nostro [modulo di contatto](/kontakt).

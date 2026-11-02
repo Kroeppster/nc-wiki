@@ -74,4 +74,4 @@ Nous présenterons bientôt ici les autres responsables de cette saison.
 
 ## S'engager
 
-Pour toute question, suggestion ou si tu souhaites t'engager avec nous en tant qu'étudiant·e en médecine, contacte-nous via notre [formulaire de contact](/kontakt) !
+Tu souhaites t'engager avec nous en tant qu'étudiant·e en médecine ? Sur la page [S'engager](/ueber-uns/mitmachen), tu vois ce que tu peux faire chez nous et tu t'inscris directement. Pour les questions et suggestions, utilise notre [formulaire de contact](/kontakt).

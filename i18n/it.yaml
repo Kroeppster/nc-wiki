@@ -522,3 +522,24 @@ lg_drucken_hinweis: "Per esercitarsi su carta: la stampa è strutturata come un 
 
 # Kurzform des Tests in Titeln wie «Anna K. – AMS 2027» (Erfahrungsberichte)
 ems_kurz: "AMS"
+
+# Pagina Partecipare (ueber-uns/mitmachen)
+mitmachen_uni: "Università e anno di studio"
+mitmachen_sprachen: "In quali lingue vorresti collaborare?"
+mitmachen_sprache_de: "Tedesco"
+mitmachen_sprache_fr: "Francese"
+mitmachen_sprache_it: "Italiano"
+mitmachen_interessen: "Che cosa ti interessa?"
+mitmachen_interesse_aufgaben: "Scrivere esercizi"
+mitmachen_interesse_qualitaet: "Controllo qualità"
+mitmachen_interesse_uebersetzen: "Tradurre"
+mitmachen_interesse_kurse: "Tenere corsi"
+mitmachen_interesse_testsimulationen: "Seguire le simulazioni"
+mitmachen_interesse_ressort: "Assumere responsabilità in un ressort"
+mitmachen_interesse_offen: "Non lo so ancora"
+mitmachen_nachricht: "Vuoi dirci ancora qualcosa? (facoltativo)"
+mitmachen_betreff: "Partecipare a NCWiki"
+mitmachen_senden: "Voglio partecipare"
+mitmachen_danke: "Grazie per la tua iscrizione"
+mitmachen_danke_text: "L'abbiamo ricevuta e ti contatteremo."
+mitmachen_keine_offen: "Al momento tutti i ruoli sono occupati. Iscriviti comunque – c'è sempre qualcosa da fare."

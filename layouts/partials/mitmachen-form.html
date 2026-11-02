@@ -1,0 +1,57 @@
+{{- /*
+  ============================================================================
+  MITMACHEN-FORMULAR (Seite /ueber-uns/mitmachen, "mitmachen_form: true")
+  ============================================================================
+  Geht an dasselbe Formspree-Formular wie das Kontaktformular; der Betreff
+  (_subject) zeigt im Postfach, dass es eine Anmeldung zum Mitmachen ist.
+  Die Interessen sind je ein eigenes Feld (ja/leer), damit sie in der E-Mail
+  von Formspree einzeln lesbar sind.
+  ============================================================================
+*/ -}}
+<form class="contact-form mitmachen-form" action="https://formspree.io/f/mvkpgrpl" method="POST">
+  <div>
+    <label for="mf-name">{{ i18n "form_name" }}</label>
+    <input type="text" name="name" id="mf-name" autocomplete="name" required>
+  </div>
+  <div>
+    <label for="mf-email">{{ i18n "form_email" }}</label>
+    <input type="email" name="email" id="mf-email" autocomplete="email" required>
+  </div>
+  <div>
+    <label for="mf-uni">{{ i18n "mitmachen_uni" }}</label>
+    <input type="text" name="universitaet" id="mf-uni" required>
+  </div>
+  <fieldset class="form-wahl">
+    <legend>{{ i18n "mitmachen_sprachen" }}</legend>
+    {{- range slice "de" "fr" "it" }}
+    <label><input type="checkbox" name="sprache_{{ . }}" value="ja"> <span>{{ i18n (printf "mitmachen_sprache_%s" .) }}</span></label>
+    {{- end }}
+  </fieldset>
+  <fieldset class="form-wahl">
+    <legend>{{ i18n "mitmachen_interessen" }}</legend>
+    {{- range slice "aufgaben" "qualitaet" "uebersetzen" "kurse" "testsimulationen" "ressort" "offen" }}
+    <label><input type="checkbox" name="interesse_{{ . }}" value="ja"> <span>{{ i18n (printf "mitmachen_interesse_%s" .) }}</span></label>
+    {{- end }}
+  </fieldset>
+  <div>
+    <label for="mf-message">{{ i18n "mitmachen_nachricht" }}</label>
+    <textarea name="message" id="mf-message"></textarea>
+  </div>
+  <input type="hidden" name="_subject" value="{{ i18n "mitmachen_betreff" }}">
+  <input type="hidden" name="sprache" value="{{ site.Language.Lang }}">
+  <div class="visually-hidden-field" aria-hidden="true">
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+  </div>
+
+  <button type="submit" class="btn btn-primary">{{ i18n "mitmachen_senden" }}</button>
+
+  <div class="form-success" role="status" tabindex="-1" hidden>
+    <strong>{{ i18n "mitmachen_danke" }}</strong>
+    <p>{{ i18n "mitmachen_danke_text" }}</p>
+  </div>
+  <div class="form-error" role="alert" tabindex="-1" hidden>
+    <strong>{{ i18n "experience_form_error_heading" }}</strong>
+    <p>{{ i18n "experience_form_error_body" }}</p>
+  </div>
+</form>
+{{ partial "formular-senden.html" . }}

@@ -11,7 +11,8 @@
   Beim Bauen wird daraus der jeweilige Teil aus layouts/partials/bausteine/.
   Erlaubt sind: testablauf, team-leitung, lern-generator (Figuren und Fakten
   lernen; die alten Namen fakten-generator und figuren-generator zeigen ihn auch),
-  sponsoring-kontakt, antwortbogen-auswertung, konztest-auswertung.
+  sponsoring-kontakt, antwortbogen-auswertung, konztest-auswertung,
+  mitmachen-aufgaben, offene-rollen.
 
   WARUM EIN CODE-BLOCK und nicht mehr {{< testablauf >}}: Der Web-Editor
   (Pages CMS) macht aus der Shortcode-Klammer beim Speichern {{&lt; ... &gt;}},
@@ -25,7 +26,7 @@
   ============================================================================
 */ -}}
 {{- $name := trim .Inner " \n\r\t" -}}
-{{- $erlaubt := slice "testablauf" "team-leitung" "lern-generator" "fakten-generator" "figuren-generator" "sponsoring-kontakt" "antwortbogen-auswertung" "konztest-auswertung" -}}
+{{- $erlaubt := slice "testablauf" "team-leitung" "lern-generator" "fakten-generator" "figuren-generator" "sponsoring-kontakt" "antwortbogen-auswertung" "konztest-auswertung" "mitmachen-aufgaben" "offene-rollen" -}}
 {{- /* fakten-generator und figuren-generator sind seit Oktober 2026 nur noch
        die Maschinen hinter dem Lern-Generator; die alten Namen zeigen ihn. */ -}}
 {{- if in (slice "fakten-generator" "figuren-generator") $name }}{{ $name = "lern-generator" }}{{ end -}}

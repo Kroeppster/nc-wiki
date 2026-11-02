@@ -58,7 +58,7 @@ Der Provider dieser Website (GitHub Pages) erhebt und speichert automatisch Info
 
 ## Kontaktformular und Erfahrungsberichte
 
-Wenn Sie uns über ein Formular auf dieser Website (z.B. Kontaktformular, Erfahrungsbericht einreichen, Fehler melden) Angaben zukommen lassen, werden diese inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage bzw. Veröffentlichung des Berichts gespeichert. Diese Formulare werden über den Dienstleister Formspree verarbeitet, siehe Abschnitt «Dienste von Dritten» unten. Ohne Ihre Einwilligung geben wir Ihre Daten nicht an Dritte weiter. Für Erfahrungsberichte gilt zusätzlich das gesonderte Einverständnis zur Veröffentlichung, das beim Einreichen eingeholt wird.
+Wenn Sie uns über ein Formular auf dieser Website (z.B. Kontaktformular, Anmeldung zum Mitmachen, Erfahrungsbericht einreichen, Fehler melden) Angaben zukommen lassen, werden diese inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage bzw. Veröffentlichung des Berichts gespeichert. Diese Formulare werden über den Dienstleister Formspree verarbeitet, siehe Abschnitt «Dienste von Dritten» unten. Ohne Ihre Einwilligung geben wir Ihre Daten nicht an Dritte weiter. Für Erfahrungsberichte gilt zusätzlich das gesonderte Einverständnis zur Veröffentlichung, das beim Einreichen eingeholt wird.
 
 ## Auswertung per Foto
 
@@ -68,7 +68,7 @@ Antwortbögen und Konzentrationstests können Sie auf dieser Website per Foto, S
 
 Diese Website nutzt folgende externe Dienste:
 
-- **Formspree** (Formularversand für Kontaktformular, Erfahrungsberichte und Fehlermeldungen) – dabei werden die eingegebenen Daten an Formspree Inc. (USA) übermittelt.
+- **Formspree** (Formularversand für Kontaktformular, Anmeldung zum Mitmachen, Erfahrungsberichte und Fehlermeldungen) – dabei werden die eingegebenen Daten an Formspree Inc. (USA) übermittelt.
 - **Pagefind** (Suchfunktion) und selbst gehostete Schriftarten – laufen vollständig im Browser bzw. werden von unserem eigenen Hosting ausgeliefert, es werden dabei keine Daten an Dritte übertragen.
 - **Google Analytics** (Reichweitenmessung) – wird ausschliesslich dann geladen, wenn Sie im Cookie-Banner aktiv "Akzeptieren" wählen (siehe Abschnitt «Cookies» unten). Ohne diese Einwilligung wird kein Google-Skript nachgeladen und kein entsprechendes Cookie gesetzt. Bei Einwilligung erhebt Google Analytics u.a. Angaben zu besuchten Seiten, Verweildauer und grober geografischer Herkunft (Land/Region, nicht der genaue Standort) und verarbeitet diese auf Servern von Google Ireland Limited bzw. Google LLC (USA). Die Einwilligung kann jederzeit widerrufen werden: über den Link «Cookie-Einstellungen» unten auf jeder Seite und dort «Ablehnen», oder durch Löschen der Browser-Daten dieser Website, wonach der Cookie-Banner erneut erscheint.
 
