@@ -18,7 +18,7 @@ aufgaben:
   - titel: "Testsimulationen betreuen"
     text: "Du hilfst mit, wenn wir die Testsimulationen an den Universitäten durchführen."
   - titel: "Verantwortung übernehmen"
-    text: "In einem Ressort – Angebot, Kommunikation oder Verein und Administration – übernimmst du eine Aufgabe für die ganze Saison."
+    text: "Als Verantwortliche*r eines Ressorts übernimmst du eine Aufgabe für die ganze Saison."
 ---
 
 Hinter NCWiki stehen über 110 Medizinstudierende aus der ganzen Schweiz. Alle engagieren sich ehrenamtlich, damit die Vorbereitung auf den Eignungstest für das Medizinstudium (EMS) für alle kostenlos ist. Du studierst Medizin und möchtest mithelfen? Dann melde dich bei uns.

@@ -18,7 +18,7 @@ aufgaben:
   - titel: "Seguire le simulazioni"
     text: "Dai una mano quando svolgiamo le simulazioni del test nelle università."
   - titel: "Assumere responsabilità"
-    text: "In un ressort – Offerta, Comunicazione oppure Associazione e amministrazione – ti occupi di un compito per tutta la stagione."
+    text: "Come responsabile di un ressort ti occupi di un compito per tutta la stagione."
 ---
 
 Dietro NCWiki ci sono oltre 110 studentesse e studenti di medicina di tutta la Svizzera. Tutti si impegnano come volontari, affinché la preparazione al test attitudinale per gli studi di medicina (AMS) sia gratuita per tutti. Studi medicina e vuoi dare una mano? Allora iscriviti.

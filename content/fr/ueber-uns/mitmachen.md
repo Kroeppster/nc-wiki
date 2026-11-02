@@ -18,7 +18,7 @@ aufgaben:
   - titel: "Encadrer les simulations"
     text: "Tu donnes un coup de main lorsque nous organisons les simulations de test dans les universités."
   - titel: "Prendre des responsabilités"
-    text: "Dans un ressort – Offre, Communication ou Association et administration – tu assumes une tâche pendant toute la saison."
+    text: "En tant que responsable d'un ressort, tu assumes une tâche pendant toute la saison."
 ---
 
 Derrière NCWiki, il y a plus de 110 étudiant·e·s en médecine de toute la Suisse. Toutes et tous s'engagent bénévolement pour que la préparation au test d'aptitudes pour les études de médecine (AMS) soit gratuite pour tout le monde. Tu étudies la médecine et tu aimerais donner un coup de main ? Alors inscris-toi.
