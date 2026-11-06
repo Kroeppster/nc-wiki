@@ -198,6 +198,29 @@ mit_loesung:
   - fr/2022_textverstaendnis_S02
   - fr/2022_diagramme-tabellen_S02
   - fr/2021_quantitative-probleme_S02
+  # Italienisch (Unterordner it/)
+  - it/2022_muster-zuordnen_S01
+  - it/2022_muster-zuordnen_S02
+  - it/2025_diagramme-tabellen_S02
+  - it/2025_fakten-einpraegen_S03
+  - it/2025_med-nat-grundverstaendnis_S02
+  - it/2025_muster-zuordnen_S01
+  - it/2025_muster-zuordnen_S02
+  - it/2025_muster-zuordnen_S03
+  - it/2025_muster-zuordnen_S04
+  - it/2025_muster-zuordnen_S05
+  - it/2025_objekte-im-raum_S02
+  - it/2025_objekte-im-raum_S03
+  - it/2025_objekte-im-raum_S04
+  - it/2025_objekte-im-raum_S05
+  - it/2025_objekte-im-raum_S07
+  - it/2025_objekte-im-raum_S08
+  - it/2025_objekte-im-raum_S09
+  - it/2025_objekte-im-raum_S10
+  - it/2025_quantitative-probleme_S02
+  - it/2025_quantitative-probleme_S03
+  - it/2025_textverstaendnis_S02
+  - it/2025_textverstaendnis_S03
 
 overrides:
   NCWiki_Kursskript_2026_deutsch:
