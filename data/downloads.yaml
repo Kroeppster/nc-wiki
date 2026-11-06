@@ -6,6 +6,12 @@
 # layouts/partials/download-list.html und download-gruppen.html) - ohne dass
 # man dafür etwas in einer Textdatei eintragen müsste.
 #
+# SPRACHEN: Deutsche Dateien liegen direkt im Ordner, französische im
+#   Unterordner fr/, italienische in it/ (z.B.
+#   assets/downloads/uebungsaufgaben/muster-zuordnen/fr/). Jede Sprachfassung
+#   der Website zeigt nur die Dateien ihrer Sprache. Gilt für Übungsserien,
+#   Testsimulationen, Kursskripte und das Kursskript-Archiv.
+#
 # ÜBUNGSSERIEN (assets/downloads/uebungsaufgaben/<untertest>/):
 #   Dateiname "<Jahr>_<Untertest-Ordnername>_S<Nummer>.pdf" - daraus entsteht
 #   automatisch "Serie 2" unter der Überschrift des Jahres. Eigene Lösungsdatei:
@@ -15,6 +21,7 @@
 # mit_loesung:
 #   Dateinamen (ohne ".pdf") von Serien, bei denen die Lösung im selben PDF
 #   steckt. Sie erhalten den Knopf "Aufgaben mit Lösung" statt "Aufgaben".
+#   Französische/italienische Dateien mit "fr/" bzw. "it/" davor.
 #
 # overrides:
 #   Anzeigenamen für alle anderen Dateien (Testhefte, Auswertungen,
@@ -104,24 +111,114 @@ mit_loesung:
   - 2025_konzentriertes-arbeiten_S19
   - 2024_konzentriertes-arbeiten_S02
   - 2024_konzentriertes-arbeiten_S03
+  # Französisch (Unterordner fr/)
+  - fr/2025_muster-zuordnen_S02
+  - fr/2025_muster-zuordnen_S03
+  - fr/2025_muster-zuordnen_S04
+  - fr/2025_muster-zuordnen_S05
+  - fr/2025_med-nat-grundverstaendnis_S02
+  - fr/2025_med-nat-grundverstaendnis_S03
+  - fr/2025_med-nat-grundverstaendnis_S04
+  - fr/2025_med-nat-grundverstaendnis_S05
+  - fr/2025_objekte-im-raum_S02
+  - fr/2025_objekte-im-raum_S03
+  - fr/2025_objekte-im-raum_S04
+  - fr/2025_objekte-im-raum_S05
+  - fr/2025_objekte-im-raum_S06
+  - fr/2025_objekte-im-raum_S07
+  - fr/2025_objekte-im-raum_S08
+  - fr/2025_objekte-im-raum_S09
+  - fr/2025_objekte-im-raum_S10
+  - fr/2025_quantitative-probleme_S02
+  - fr/2025_quantitative-probleme_S03
+  - fr/2025_quantitative-probleme_S04
+  - fr/2025_quantitative-probleme_S05
+  - fr/2025_figuren-einpraegen_S02
+  - fr/2025_figuren-einpraegen_S03
+  - fr/2025_figuren-einpraegen_S04
+  - fr/2025_figuren-einpraegen_S05
+  - fr/2025_fakten-einpraegen_S02
+  - fr/2025_fakten-einpraegen_S03
+  - fr/2025_fakten-einpraegen_S04
+  - fr/2025_fakten-einpraegen_S05
+  - fr/2025_textverstaendnis_S02
+  - fr/2025_textverstaendnis_S03
+  - fr/2025_textverstaendnis_S04
+  - fr/2025_textverstaendnis_S05
+  - fr/2025_diagramme-tabellen_S02
+  - fr/2025_diagramme-tabellen_S03
+  - fr/2025_diagramme-tabellen_S04
+  - fr/2025_diagramme-tabellen_S05
+  - fr/2025_konzentriertes-arbeiten_S02
+  - fr/2025_konzentriertes-arbeiten_S03
+  - fr/2025_konzentriertes-arbeiten_S04
+  - fr/2025_konzentriertes-arbeiten_S05
+  - fr/2025_konzentriertes-arbeiten_S06
+  - fr/2025_konzentriertes-arbeiten_S07
+  - fr/2025_konzentriertes-arbeiten_S08
+  - fr/2025_konzentriertes-arbeiten_S09
+  - fr/2025_konzentriertes-arbeiten_S10
+  - fr/2025_konzentriertes-arbeiten_S11
+  - fr/2025_konzentriertes-arbeiten_S12
+  - fr/2025_konzentriertes-arbeiten_S13
+  - fr/2025_konzentriertes-arbeiten_S14
+  - fr/2025_konzentriertes-arbeiten_S15
+  - fr/2025_konzentriertes-arbeiten_S16
+  - fr/2025_konzentriertes-arbeiten_S17
+  - fr/2024_muster-zuordnen_S02
+  - fr/2024_muster-zuordnen_S03
+  - fr/2024_med-nat-grundverstaendnis_S02
+  - fr/2024_med-nat-grundverstaendnis_S03
+  - fr/2024_schlauchfiguren_S02
+  - fr/2024_schlauchfiguren_S03
+  - fr/2024_quantitative-probleme_S02
+  - fr/2024_quantitative-probleme_S03
+  - fr/2024_figuren-einpraegen_S02
+  - fr/2024_figuren-einpraegen_S03
+  - fr/2024_fakten-einpraegen_S02
+  - fr/2024_fakten-einpraegen_S03
+  - fr/2024_textverstaendnis_S02
+  - fr/2024_textverstaendnis_S03
+  - fr/2024_diagramme-tabellen_S02
+  - fr/2024_diagramme-tabellen_S03
+  - fr/2024_konzentriertes-arbeiten_S02
+  - fr/2024_konzentriertes-arbeiten_S03
+  - fr/2022_med-nat-grundverstaendnis_S02
+  - fr/2022_schlauchfiguren_S01
+  - fr/2022_schlauchfiguren_S02
+  - fr/2022_schlauchfiguren_S03
+  - fr/2022_quantitative-probleme_S02
+  - fr/2022_figuren-einpraegen_S02
+  - fr/2022_fakten-einpraegen_S02
+  - fr/2022_fakten-einpraegen_S03
+  - fr/2022_fakten-einpraegen_S04
+  - fr/2022_textverstaendnis_S02
+  - fr/2022_diagramme-tabellen_S02
+  - fr/2021_quantitative-probleme_S02
 
 overrides:
   NCWiki_Kursskript_2026_deutsch:
-    de: "Kursskript 2026 (Deutsch)"
-    fr: "Script de cours 2026 (allemand)"
-    it: "Dispensa del corso 2026 (tedesco)"
+    de: "Kursskript 2026 (PDF)"
+  2026_Kursskript:
+    de: "Kursskript 2026 (PDF)"
+    fr: "Script de cours 2026 (PDF)"
+    it: "Dispensa del corso 2026 (PDF)"
   2025_Kursskript:
     de: "Kursskript 2025 (PDF)"
-    fr: "Script de cours 2025 (PDF, allemand)"
-    it: "Dispensa del corso 2025 (PDF, tedesco)"
+    fr: "Script de cours 2025 (PDF)"
+    it: "Dispensa del corso 2025 (PDF)"
   2024_Kursskript:
     de: "Kursskript 2024 (PDF)"
-    fr: "Script de cours 2024 (PDF, allemand)"
-    it: "Dispensa del corso 2024 (PDF, tedesco)"
+    fr: "Script de cours 2024 (PDF)"
+    it: "Dispensa del corso 2024 (PDF)"
   2024_Kursskript_Loesung:
     de: "Kursskript 2024 – Lösungen (PDF)"
-    fr: "Script de cours 2024 – solutions (PDF, allemand)"
-    it: "Dispensa del corso 2024 – soluzioni (PDF, tedesco)"
+    fr: "Script de cours 2024 – solutions (PDF)"
+    it: "Dispensa del corso 2024 – soluzioni (PDF)"
+  2023_Kursskript:
+    de: "Kursskript 2023 (PDF)"
+    fr: "Script de cours 2023 (PDF)"
+    it: "Dispensa del corso 2023 (PDF)"
   2026_testsimulationen_Testsimulation:
     de: "Testheft"
     fr: "Cahier de test"

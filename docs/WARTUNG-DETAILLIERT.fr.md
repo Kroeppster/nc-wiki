@@ -708,6 +708,16 @@ dans le même PDF, le nom du fichier va sous `mit_loesung:` – le bouton s'appe
 de cours) reçoivent sous `overrides:` un nom avec traductions, sans l'année pour les
 simulations de test. Le format est expliqué en tête du fichier.
 
+**Des fichiers par langue :** les séries d'exercices, les simulations de test, les scripts de
+cours et les archives des scripts existent par langue. Les fichiers allemands sont
+directement dans le dossier, les français dans le sous-dossier `fr/`, les italiens dans
+`it/` – avec le même nom. Chaque version linguistique n'affiche que ses propres fichiers
+(`layouts/partials/download-list.html`), et les chiffres de la page d'accueil ne comptent
+que ceux-ci (`angebot-zahlen.html`). Sous `mit_loesung:`, les fichiers français et italiens
+sont précédés de `fr/` ou `it/`. Les anciennes séries de figures tubulaires (sous-test
+jusqu'en 2024) se trouvent sous Objets dans l'espace, nommées
+`<année>_schlauchfiguren_S<numéro>.pdf`, et apparaissent avec leur propre intitulé.
+
 ---
 
 ## 10. Mode simulation

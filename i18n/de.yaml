@@ -82,7 +82,6 @@ contact_form_success_body: "Wir haben sie erhalten und melden uns so bald wie m�
 
 downloads_empty: "Aktuell kein Material verfügbar."
 # Hinweis über den Download-Listen der Übungsserien/Testsimulationen; leer = kein Hinweis (die PDFs sind deutsch).
-downloads_sprache: ""
 downloads_report_sending: "Wird gemeldet…"
 downloads_report_sent: "Danke, gemeldet"
 downloads_report_failed: "Fehlgeschlagen – bitte per E-Mail melden"
@@ -423,6 +422,7 @@ downloads_einpraegephase: "Einprägephase"
 downloads_reproduktionsphase: "Reproduktionsphase"
 downloads_figuren: "Figuren"
 downloads_fakten: "Fakten"
+downloads_schlauchfiguren: "Schlauchfiguren (alter Untertest)"
 list_empty: "Hier gibt es noch keine Beiträge. Sobald etwas veröffentlicht ist, erscheint es an dieser Stelle."
 
 # Antwortbogen auswerten (Alpha-Seite, layouts/partials/bausteine/antwortbogen-auswertung.html)

@@ -697,6 +697,15 @@ sotto `mit_loesung:` – il pulsante si chiama allora «Esercizi con soluzione»
 file (fascicoli del test, valutazioni, dispense) ricevono sotto `overrides:` un nome con
 traduzioni, per le simulazioni del test senza l'anno. Il formato è spiegato in testa al file.
 
+**File per lingua:** serie di esercizi, simulazioni del test, dispense e archivio delle
+dispense esistono per lingua. I file tedeschi stanno direttamente nella cartella, quelli
+francesi nella sottocartella `fr/`, quelli italiani in `it/` – con lo stesso nome. Ogni
+versione linguistica mostra solo i propri file (`layouts/partials/download-list.html`), e
+anche i numeri della pagina iniziale contano solo questi (`angebot-zahlen.html`). Sotto
+`mit_loesung:` i file francesi e italiani hanno davanti `fr/` o `it/`. Le vecchie serie
+delle figure tubulari (subtest fino al 2024) stanno in Oggetti nello spazio, con il nome
+`<anno>_schlauchfiguren_S<numero>.pdf`, e compaiono con una propria dicitura.
+
 ---
 
 ## 10. Modalità simulazione

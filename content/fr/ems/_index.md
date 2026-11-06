@@ -69,7 +69,7 @@ Tu gagnes un temps précieux à l'AMS si tu connais déjà les consignes – auc
 
 ### Matériel d'entraînement
 
-Il y a malheureusement moins de matériel d'exercices disponible pour les francophones que pour les germanophones. Nos séries d'exercices gratuites sont pour la plupart en allemand ; celles des sous-tests sans texte (par ex. reconnaissance de fragments de figure, objets dans l'espace) s'utilisent toutefois sans bien connaître l'allemand. Nous recommandons aussi le « Test Info » officiel de swissuniversities (sous « Documents »), qui contient des exemples d'exercices et des conseils de résolution.
+Il y a malheureusement moins de matériel d'exercices disponible pour les francophones que pour les germanophones. Nos séries d'exercices gratuites existent en français pour 2022, 2024 et 2025 ; les séries plus récentes ne sont pour l'instant disponibles qu'en allemand, sur la version allemande du site. Celles des sous-tests sans texte (par ex. reconnaissance de fragments de figure, objets dans l'espace) s'utilisent toutefois sans bien connaître l'allemand. Nous recommandons aussi le « Test Info » officiel de swissuniversities (sous « Documents »), qui contient des exemples d'exercices et des conseils de résolution.
 
 ## Le jour de l'AMS
 

@@ -26,13 +26,19 @@
                   obwohl es fünf sind. Gezählt werden die Jahreszahlen in den
                   Dateinamen, jede nur einmal - das bleibt auch dann richtig,
                   wenn zu einem Jahrgang eine Datei mehr oder weniger kommt.
+  - Übungsserien und Testsimulationen zählen nur die Dateien der AKTUELLEN
+                  Sprache (deutsch direkt im Ordner, französisch/italienisch im
+                  Unterordner fr/ bzw. it/, siehe download-list.html) - gezählt
+                  wird, was auf dieser Sprachfassung auch zu finden ist.
   - berichte:     nur die der AKTUELLEN Sprache, und nur Seiten mit "jahr" im
                   Frontmatter (die Seite "Bericht einreichen" liegt im selben
                   Ordner, ist aber kein Bericht).
   ============================================================================
 */ -}}
+{{- $lang := .Site.Language.Lang }}
+{{- $unter := cond (eq $lang "de") "" (printf "%s/" $lang) }}
 {{- $serien := slice }}
-{{- range resources.Match "downloads/uebungsaufgaben/**/*.pdf" }}
+{{- range resources.Match (printf "downloads/uebungsaufgaben/*/%s*.pdf" $unter) }}
   {{- with findRESubmatch `^(\d{4}_[a-z-]+_S\d+)(_Einpraegephase|_Loesung)?$` (strings.TrimSuffix ".pdf" (path.Base .Name)) 1 }}
     {{- $serien = $serien | append (index (index . 0) 1) }}
   {{- end }}
@@ -40,7 +46,7 @@
 {{- $uebungen := len (uniq $serien) }}
 
 {{- $jahre := slice }}
-{{- range resources.Match "downloads/testsimulationen/*.pdf" }}
+{{- range resources.Match (printf "downloads/testsimulationen/%s*.pdf" $unter) }}
   {{- with findRE "20[0-9]{2}" (path.Base .Name) 1 }}{{ $jahre = $jahre | append (index . 0) }}{{ end }}
 {{- end }}
 

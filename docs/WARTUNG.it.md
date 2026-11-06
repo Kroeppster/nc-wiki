@@ -134,6 +134,10 @@ changes*. Le serie si chiamano `<anno>_<nome-cartella>_S<numero>.pdf`, p. es.
 `2027_muster-zuordnen_S02.pdf`; la soluzione ha lo stesso nome con `_Loesung` alla fine. Il
 nome sul sito ne viene ricavato automaticamente.
 
+**Francese e italiano:** i file di queste lingue vanno nella sottocartella `fr/` o `it/`
+della cartella in questione (p. es. `assets/downloads/uebungsaufgaben/muster-zuordnen/it/`),
+con lo stesso nome. Ogni versione linguistica del sito mostra solo i file della sua lingua.
+
 **Rapporto annuale e altri documenti singoli** hanno bisogno di una pagina propria – vedi
 guida dettagliata, [sezione 2](WARTUNG-DETAILLIERT.it.md#2-pagine-menu-e-navigazione).
 

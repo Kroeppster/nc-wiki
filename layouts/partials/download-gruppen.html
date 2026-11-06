@@ -17,7 +17,9 @@
     <Jahr>_<thema>_S<Nr>_Loesung            eigene Lösungsdatei
     <Jahr>_<thema>_S<Nr>_Einpraegephase     Einprägephase (Figuren/Fakten)
   Steckt die Lösung im selben PDF, steht der Dateiname in data/downloads.yaml
-  unter "mit_loesung". Alle anderen Dateien (Testhefte, Auswertungen, ...)
+  unter "mit_loesung" (französische/italienische Dateien mit "fr/" bzw. "it/"
+  davor, z.B. "fr/2025_muster-zuordnen_S02" - sie liegen im Unterordner der
+  Sprache, siehe download-list.html). Alle anderen Dateien (Testhefte, Auswertungen, ...)
   erscheinen als einzelner Knopf; ihr Name steht in data/downloads.yaml unter
   "overrides" (ohne Jahreszahl - die steht in der Überschrift des Blocks).
 
@@ -28,6 +30,7 @@
 {{- $lang := $page.Site.Language.Lang }}
 {{- $overrides := hugo.Data.downloads.overrides }}
 {{- $mitLoesung := hugo.Data.downloads.mit_loesung | default slice }}
+{{- $vorsatz := cond (eq $lang "de") "" (printf "%s/" $lang) }}
 {{- $sc := newScratch }}
 
 {{- /* 1. Jede Datei einer Zeile zuordnen */ -}}
@@ -39,7 +42,7 @@
     {{- $g := index $m 0 }}
     {{- $year := index $g 1 }}{{ $thema := index $g 2 }}{{ $nr := index $g 3 }}{{ $var := index $g 4 }}
     {{- $prio := "3" }}
-    {{- if eq $thema "figuren-einpraegen" }}{{ $prio = "1" }}{{ else if eq $thema "fakten-einpraegen" }}{{ $prio = "2" }}{{ end }}
+    {{- if eq $thema "figuren-einpraegen" }}{{ $prio = "1" }}{{ else if eq $thema "fakten-einpraegen" }}{{ $prio = "2" }}{{ else if eq $thema "schlauchfiguren" }}{{ $prio = "4" }}{{ end }}
     {{- $key := printf "%s|%s|%s|%s" $year $prio $thema $nr }}
     {{- $feld := "main" }}
     {{- if eq $var "_Loesung" }}{{ $feld = "loesung" }}{{ else if eq $var "_Einpraegephase" }}{{ $feld = "einp" }}{{ end }}
@@ -64,10 +67,7 @@
 {{- $jahre := slice }}
 {{- range $keys }}{{ $jahre = $jahre | append (substr . 0 4) }}{{ end }}
 {{- $jahre = sort ($jahre | uniq) "value" "desc" }}
-{{- $themaNamen := dict "figuren-einpraegen" (i18n "downloads_figuren") "fakten-einpraegen" (i18n "downloads_fakten") }}
-
-{{- /* Auf FR/IT: Hinweis, dass die PDFs (fast) alle deutsch sind */ -}}
-{{- with i18n "downloads_sprache" }}<p class="download-sprache">{{ . }}</p>{{ end }}
+{{- $themaNamen := dict "figuren-einpraegen" (i18n "downloads_figuren") "fakten-einpraegen" (i18n "downloads_fakten") "schlauchfiguren" (i18n "downloads_schlauchfiguren") }}
 <div class="download-jahre">
   {{- range $i, $jahr := $jahre }}
   <details class="download-jahr"{{ if eq $i 0 }} open{{ end }}>
@@ -101,7 +101,7 @@
           {{- if $einp }}
           <a class="download-link" href="{{ $einp.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_einpraegephase" }}</span></a>
           <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_reproduktionsphase" }}</span></a>
-          {{- else if in $mitLoesung $stem }}
+          {{- else if in $mitLoesung (printf "%s%s" $vorsatz $stem) }}
           <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_aufgaben_loesung" }}</span><span class="download-size">{{ $sizeStr }}</span></a>
           {{- else }}
           <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_aufgaben" }}</span><span class="download-size">{{ $sizeStr }}</span></a>

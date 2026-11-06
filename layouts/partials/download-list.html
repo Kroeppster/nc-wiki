@@ -38,6 +38,17 @@
 {{- $lang := $site.Language.Lang }}
 {{- $overrides := hugo.Data.downloads.overrides }}
 
+{{- /* SPRACHEN: Übungsserien, Testsimulationen und Kursskripte gibt es je
+       Sprache. Die deutschen Dateien liegen direkt im Ordner, die
+       französischen im Unterordner "fr/", die italienischen in "it/" - z.B.
+       downloads/uebungsaufgaben/muster-zuordnen/fr/2025_muster-zuordnen_S02.pdf.
+       Jede Sprachfassung der Website zeigt nur die Dateien ihrer Sprache.
+       (Andere Ordner, etwa downloads/mitglieder, sind nicht nach Sprache
+       getrennt.) */ -}}
+{{- $jeSprache := or (hasPrefix $folder "downloads/uebungsaufgaben/") (in (slice "downloads/testsimulationen" "downloads/kursskripte" "downloads/archiv-kursskripte") $folder) }}
+{{- $gruppiert := or (hasPrefix $folder "downloads/uebungsaufgaben/") (eq $folder "downloads/testsimulationen") }}
+{{- if and $jeSprache (ne $lang "de") }}{{ $folder = printf "%s/%s" $folder $lang }}{{ end }}
+
 {{- /* Alle PDF-Dateien im angegebenen Ordner finden, neueste (alphabetisch
        letzte, meist die mit der höchsten Jahreszahl im Namen) zuerst. */ -}}
 {{- $files := resources.Match (printf "%s/*.pdf" $folder) }}
@@ -46,7 +57,7 @@
 {{- if eq (len $files) 0 }}
   {{- /* Kein Fehler, wenn der Ordner leer ist - einfach ein freundlicher Hinweistext */}}
   <p class="download-empty">{{ i18n "downloads_empty" }}</p>
-{{- else if or (hasPrefix $folder "downloads/uebungsaufgaben/") (eq $folder "downloads/testsimulationen") }}
+{{- else if $gruppiert }}
   {{- /* Übungsserien und Testsimulationen: nach Jahr gruppiert, siehe download-gruppen.html */}}
   {{ partial "download-gruppen.html" (dict "files" $files "page" $page) }}
 {{- else }}

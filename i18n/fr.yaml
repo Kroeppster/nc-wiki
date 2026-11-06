@@ -81,7 +81,6 @@ contact_form_success_heading: "Merci pour ton message"
 contact_form_success_body: "Nous l’avons bien reçu et te répondrons dès que possible."
 
 downloads_empty: "Aucun document disponible pour le moment."
-downloads_sprache: "La plupart des documents sont en allemand."
 downloads_report_sending: "Signalement en cours…"
 downloads_report_sent: "Merci, signalé !"
 downloads_report_failed: "Échec – merci de nous écrire par e-mail"
@@ -414,6 +413,7 @@ downloads_einpraegephase: "Phase d'apprentissage"
 downloads_reproduktionsphase: "Phase de reproduction"
 downloads_figuren: "Figures"
 downloads_fakten: "Faits"
+downloads_schlauchfiguren: "Figures tubulaires (ancien sous-test)"
 list_empty: "Il n'y a pas encore de contenu ici. Dès que quelque chose est publié, cela apparaîtra à cet endroit."
 
 # Antwortbogen auswerten (Alpha-Seite, layouts/partials/bausteine/antwortbogen-auswertung.html)

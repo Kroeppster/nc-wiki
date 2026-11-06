@@ -13,6 +13,11 @@ Aufgabe, braucht es keine zweite Datei - dann den Dateinamen (ohne ".pdf") in
 "Aufgaben mit Lösung". Bei Figuren und Fakten lernen: Einprägephase als Datei mit
 der Endung `_Einpraegephase`.
 
+Französische und italienische Serien kommen gleich benannt in den Unterordner `fr/`
+bzw. `it/` (z. B. `muster-zuordnen/fr/2025_muster-zuordnen_S02.pdf`); jede Sprachfassung
+der Website zeigt nur die Dateien ihrer Sprache. In `mit_loesung:` steht dann
+`fr/2025_muster-zuordnen_S02`.
+
 # Lizenz
 
 Die Übungsaufgaben in diesem Ordner (sowie die zugehörigen Übungsseiten unter

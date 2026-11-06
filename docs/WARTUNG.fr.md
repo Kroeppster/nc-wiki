@@ -137,6 +137,10 @@ changes*. Les séries s'appellent `<année>_<nom-du-dossier>_S<numéro>.pdf`, p.
 `2027_muster-zuordnen_S02.pdf` ; la solution porte le même nom avec `_Loesung` à la fin. Le
 nom affiché sur le site en est tiré automatiquement.
 
+**Français et italien :** les fichiers de ces langues vont dans le sous-dossier `fr/` ou
+`it/` du dossier concerné (p. ex. `assets/downloads/uebungsaufgaben/muster-zuordnen/fr/`),
+avec le même nom. Chaque version linguistique du site n'affiche que les fichiers de sa langue.
+
 **Rapport annuel et autres documents isolés** : ils ont besoin d'une page à eux – voir le
 guide détaillé, [section 2](WARTUNG-DETAILLIERT.fr.md#2-pages-menu-et-navigation).
 

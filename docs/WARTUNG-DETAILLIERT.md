@@ -692,6 +692,15 @@ Dateiname unter `mit_loesung:` – der Knopf heisst dann „Aufgaben mit Lösung
 Dateien (Testhefte, Auswertungen, Kursskripte) bekommen unter `overrides:` einen Namen mit
 Übersetzungen, bei Testsimulationen ohne Jahreszahl. Das Format steht im Kopf der Datei.
 
+**Je Sprache eigene Dateien:** Übungsserien, Testsimulationen, Kursskripte und das
+Kursskript-Archiv gibt es je Sprache. Deutsche Dateien liegen direkt im Ordner,
+französische im Unterordner `fr/`, italienische in `it/` – gleich benannt. Jede
+Sprachfassung zeigt nur ihre eigenen Dateien (`layouts/partials/download-list.html`), und
+die Zahlen auf der Startseite zählen ebenfalls nur diese (`angebot-zahlen.html`). Unter
+`mit_loesung:` stehen französische und italienische Dateien mit `fr/` bzw. `it/` davor.
+Alte Serien zu den Schlauchfiguren (Untertest bis 2024) liegen bei Objekte im Raum als
+`<Jahr>_schlauchfiguren_S<Nummer>.pdf` und erscheinen mit eigener Beschriftung.
+
 ---
 
 ## 10. Simulationsmodus

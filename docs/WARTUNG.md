@@ -129,6 +129,10 @@ changes*. Übungsserien heissen `<Jahr>_<Ordnername>_S<Nummer>.pdf`, z. B.
 `2027_muster-zuordnen_S02.pdf`; die Lösung gleich mit `_Loesung` am Ende. Daraus entsteht
 der Name auf der Website automatisch.
 
+**Französisch und Italienisch:** Die Dateien dieser Sprachen kommen in den Unterordner
+`fr/` bzw. `it/` des jeweiligen Ordners (z. B. `assets/downloads/uebungsaufgaben/muster-zuordnen/fr/`),
+gleich benannt. Jede Sprachfassung der Website zeigt nur die Dateien ihrer Sprache.
+
 **Jahresbericht und andere Einzeldokumente** brauchen eine eigene Seite – siehe
 ausführliche Anleitung, [Abschnitt 2](WARTUNG-DETAILLIERT.md#2-seiten-menü-und-navigation).
 
