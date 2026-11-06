@@ -5,6 +5,6 @@ eyebrow: "Mise à jour"
 draft: false
 ---
 
-Le script de cours 2026, avec le sous-test « Association de motifs » adapté, est disponible dès maintenant. Il te donne un aperçu des contenus de l'EMS et des stratégies de résolution, et contient de nombreux exercices.
+Le script de cours 2026, avec le sous-test « Reconnaissance de fragments de figure » adapté, est disponible dès maintenant. Il te donne un aperçu des contenus de l'EMS et des stratégies de résolution, et contient de nombreux exercices.
 
 Le téléchargement se trouve sur la page [Cours de préparation](/ems/vorbereitungskurse).

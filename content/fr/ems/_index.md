@@ -43,8 +43,8 @@ Le calendrier de swissuniversities pour une rentrée à l'automne 2027 :
 
 Lors de la préinscription, tu dois indiquer par ordre de priorité dans quelle université tu souhaites étudier la médecine humaine, dentaire ou vétérinaire. Fais attention à deux choses :
 
-- Si tu réussis l'AMS, ton domicile fiscal te garantit une place d'études dans ton canton, pour autant que la médecine y soit proposée. Pour l'Université de Bâle, les deux Bâle comptent comme canton universitaire et offrent cet avantage. En tant qu'école fédérale, l'EPF est la seule exception et n'accorde pas d'avantage lié au domicile cantonal. Tu trouveras les détails sur chaque université dans notre [Uniguide](/ems/uniguide).
-- Certaines universités sont plus demandées, c'est pourquoi il faut un meilleur rang que les autres candidat·e·s pour y être admis·e. Ta première priorité est toujours prise en compte en premier. Exemple : tu choisis l'EPF en premier choix et l'Université de Zurich en deuxième choix. L'EPF est moins demandée que l'Université de Zurich pour la médecine humaine. Comme tu fais partie du 1 % des meilleur·e·s au test, tu es attribué·e à ton premier choix (EPF).
+- Si tu réussis l'AMS, ton domicile fiscal te garantit une place d'études dans ton canton, pour autant que la médecine y soit proposée. Pour l'Université de Bâle, les deux Bâle comptent comme canton universitaire et offrent cet avantage. En tant qu'école fédérale, l'ETH est la seule exception et n'accorde pas d'avantage lié au domicile cantonal. Tu trouveras les détails sur chaque université dans notre [Uniguide](/ems/uniguide).
+- Certaines universités sont plus demandées, c'est pourquoi il faut un meilleur rang que les autres candidat·e·s pour y être admis·e. Ta première priorité est toujours prise en compte en premier. Exemple : tu choisis l'ETH en premier choix et l'Université de Zurich en deuxième choix. L'ETH est moins demandée que l'Université de Zurich pour la médecine humaine. Comme tu fais partie du 1 % des meilleur·e·s au test, tu es attribué·e à ton premier choix (ETH).
 
 ### Connaître les consignes
 
@@ -52,32 +52,32 @@ Tu gagnes un temps précieux à l'AMS si tu connais déjà les consignes – auc
 
 ### Temps de préparation
 
-- Effort élevé : problèmes quantitatifs et formels, compréhension de texte, compréhension médico-scientifique, diagrammes et tableaux
-- Effort moyen : apprendre figures et faits, association de motifs, objets dans l'espace
-- Effort faible : travail concentré et soigné
+- Effort élevé : problèmes quantitatifs et formels, compréhension de texte, compréhension de questions fondamentales de la médecine et des sciences naturelles, diagrammes et tableaux
+- Effort moyen : mémorisation de figures et faits, reconnaissance de fragments de figure, objets dans l'espace
+- Effort faible : travail avec soin et concentration
 
 | Sous-test | Début (mois avant le test) | Fois par semaine | Séries par séance |
 | :--- | :---: | :---: | :---: |
-| Association de motifs | 1,5–2 | 3–4 | 1 |
-| Compréhension médico-scientifique | 1–2 | 2–3 | 1 |
+| Reconnaissance de fragments de figure | 1,5–2 | 3–4 | 1 |
+| Compréhension de questions fondamentales de la médecine et des sciences naturelles | 1–2 | 2–3 | 1 |
 | Objets dans l'espace | 1–1,5 | 2–3 | 1 |
 | Problèmes quantitatifs et formels | 2–3 | 2–3 | 1 |
-| Travail concentré et soigné | 1,5–2 | 4–5 | 1 |
-| Apprendre figures et faits | 3 | 3–4 | 1 |
+| Travail avec soin et concentration | 1,5–2 | 4–5 | 1 |
+| Mémorisation de figures et faits | 3 | 3–4 | 1 |
 | Compréhension de texte | 2–3 | 2–3 | 1 |
 | Diagrammes et tableaux | 1–1,5 | 2–3 | 1 |
 
 ### Matériel d'entraînement
 
-Il y a malheureusement moins de matériel d'exercices disponible pour les francophones que pour les germanophones. Nos séries d'exercices gratuites sont pour la plupart en allemand ; celles des sous-tests sans texte (par ex. association de motifs, objets dans l'espace) s'utilisent toutefois sans bien connaître l'allemand. Nous recommandons aussi le « Test Info » officiel de swissuniversities (sous « Documents »), qui contient des exemples d'exercices et des conseils de résolution.
+Il y a malheureusement moins de matériel d'exercices disponible pour les francophones que pour les germanophones. Nos séries d'exercices gratuites sont pour la plupart en allemand ; celles des sous-tests sans texte (par ex. reconnaissance de fragments de figure, objets dans l'espace) s'utilisent toutefois sans bien connaître l'allemand. Nous recommandons aussi le « Test Info » officiel de swissuniversities (sous « Documents »), qui contient des exemples d'exercices et des conseils de résolution.
 
 ## Le jour de l'AMS
 
 ### Nourriture
 
-Prends un bon petit-déjeuner le jour de l'AMS et bois quelque chose – mais pas trop, pour ne pas avoir à aller aux toilettes pendant le test (le temps continue de s'écouler).
+Prends un bon petit-déjeuner le jour de l'AMS et bois quelque chose – mais pas trop, pour ne pas devoir aller aux toilettes pendant le test (ce temps n'est pas compensé).
 
-L'AMS dure très longtemps, il est donc utile d'emporter de quoi grignoter – par exemple des noix, des fruits secs, du chocolat ou du dextrose. Tout ce qui est emporté dans la salle d'examen doit être dans un récipient transparent (par ex. un sachet plastique refermable) et, si possible, ne pas faire de bruit.
+L'AMS dure très longtemps, il est donc utile d'emporter de quoi grignoter – par exemple des noix, des fruits secs, du chocolat ou des sucres de raisins. Tout ce qui est emporté dans la salle d'examen doit être dans un récipient transparent (par ex. un sachet plastique refermable) et, si possible, ne pas faire de bruit.
 
 ### Arrivée
 
@@ -87,7 +87,7 @@ Seules les personnes à l'heure peuvent participer à l'AMS – la raison d'un r
 
 Selon le lieu du test, il peut y avoir beaucoup de monde dans la salle – à l'Université de Zurich, sur le campus Irchel, par exemple jusqu'à 400 personnes dans la même salle. Ne te laisse pas déstabiliser.
 
-Les réponses doivent être inscrites sur la feuille de réponses séparée – ce qui est écrit dans le cahier d'exercices n'est pas pris en compte. Chaque exercice rapporte exactement un point, les exercices faciles et difficiles comptent donc autant. Ne t'attends pas à terminer tous les exercices – c'est normal. **Les réponses fausses ne sont pas pénalisées** (sauf pour le travail concentré et soigné), inscris donc aussi une réponse pour les exercices que tu n'as pas traités.
+Les réponses doivent être inscrites sur la feuille de réponses séparée – ce qui est écrit dans le cahier d'exercices n'est pas pris en compte. Chaque exercice rapporte exactement un point, les exercices faciles et difficiles ont donc la même pondération. Ne t'attends pas à terminer tous les exercices – c'est normal. **Les réponses fausses ne sont pas pénalisées** (sauf pour le travail avec soin et concentration), inscris donc aussi une réponse pour les exercices que tu n'as pas traités.
 
 ### Checklist
 
@@ -98,7 +98,7 @@ Les réponses doivent être inscrites sur la feuille de réponses séparée – 
 - Surligneurs
 - Gomme
 - Taille-crayon
-- En-cas
+- Collation
 - Boisson(s)
 - Év. bouchons d'oreilles
 - Év. porte-bonheur
@@ -118,7 +118,7 @@ Tu trouveras des guides pour tous les sous-tests sous [Séries d'exercices](/ems
 
 ### Compléter la feuille de réponses et deviner de façon stratégique
 
-Marque une réponse pour **chaque** question – les réponses fausses ne sont pas pénalisées (exception : travail concentré et soigné). Prévois du temps avant la remise pour vérifier la feuille de réponses et répondre au hasard aux questions restées ouvertes. Tu ne peux toutefois pas revenir aux sous-tests précédents.
+Marque une réponse pour **chaque** question – les réponses fausses ne sont pas pénalisées (exception : travail avec soin et concentration). Prévois du temps avant la remise pour vérifier la feuille de réponses et répondre au hasard aux questions restées ouvertes. Tu ne peux toutefois pas revenir aux sous-tests précédents.
 
 Si tu dois deviner, un système fixe augmente tes chances – par exemple toujours choisir « A », sauf si tu peux exclure A, puis « B », etc. Nous recommandons de commencer par A plutôt que par E, car E signifie souvent « Aucune / Toutes sont correctes » et peut plus rarement être exclue.
 
@@ -126,6 +126,6 @@ Si tu dois deviner, un système fixe augmente tes chances – par exemple toujou
 
 Tu as terminé le test d'aptitudes – c'est une belle performance, fais-toi plaisir. Fin juillet, l'université souhaitée t'informe par courrier (parfois recommandé) ou par e-mail de l'attribution des places d'études – assure-toi de pouvoir réceptionner ton courrier. Si tu as obtenu une place, tu dois la confirmer début août dans le délai fixé par l'université, en général dans les dix jours.
 
-## Pour aller plus loin
+## Informations supplémentaires
 
-Tu trouveras ici toutes les pages consacrées à l'AMS. Comment d'autres ont vécu le test, tu le découvres dans les [témoignages](/ems/erfahrungsberichte) – tu peux aussi [soumettre le tien](/ems/erfahrungsberichte/bericht-einreichen).
+Tu trouveras ici toutes les pages consacrées à l'AMS. Pour découvrir comment d'autres ont vécu le test, rends-toi dans les [témoignages](/ems/erfahrungsberichte) – tu peux aussi [soumettre le tien](/ems/erfahrungsberichte/bericht-einreichen).

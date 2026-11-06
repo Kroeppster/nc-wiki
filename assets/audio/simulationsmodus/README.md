@@ -100,10 +100,15 @@ passende Aufnahme neu – sonst sagt die Stimme etwas anderes als der Bildschirm
 
 ## Français (`fr/`)
 
+> **Neu aufnehmen:** Seit November 2026 heissen drei Untertests auf Französisch anders. Die sechs
+> Dateien `muster-zuordnen`, `med-nat-grundverstaendnis` und `konzentriertes-arbeiten` (je lang und
+> `-kurz`) sagen noch die alten Namen («Association de motifs», «Compréhension médico-scientifique»,
+> «Travail concentré et soigné»). Die Tabelle zeigt schon den neuen Wortlaut.
+
 | Datei | Gesprochener Text |
 | --- | --- |
-| `muster-zuordnen.mp3` | Association de motifs. 18 exercices, vous disposez de 16 minutes. |
-| `med-nat-grundverstaendnis.mp3` | Compréhension médico-scientifique. 18 exercices, vous disposez de 45 minutes. |
+| `muster-zuordnen.mp3` | Reconnaissance de fragments de figure. 18 exercices, vous disposez de 16 minutes. |
+| `med-nat-grundverstaendnis.mp3` | Compréhension de questions fondamentales de la médecine et des sciences naturelles. 18 exercices, vous disposez de 45 minutes. |
 | `objekte-im-raum.mp3` | Objets dans l'espace. 18 exercices, vous disposez de 10 minutes. |
 | `quantitative-probleme.mp3` | Problèmes quantitatifs et formels. 18 exercices, vous disposez de 45 minutes. |
 | `figuren-einpraegen.mp3` | Mémorisation de figures, phase d'apprentissage. Posez votre crayon, les notes ne sont pas autorisées. Vous disposez de 4 minutes. |
@@ -112,13 +117,13 @@ passende Aufnahme neu – sonst sagt die Stimme etwas anderes als der Bildschirm
 | `figuren-reproduktion.mp3` | Mémorisation de figures, phase de reproduction. 18 exercices, vous disposez de 5 minutes. |
 | `fakten-reproduktion.mp3` | Mémorisation de faits, phase de reproduction. 18 exercices, vous disposez de 6 minutes. |
 | `diagramme-tabellen.mp3` | Diagrammes et tableaux. 18 exercices, vous disposez de 45 minutes. |
-| `konzentriertes-arbeiten.mp3` | Travail concentré et soigné. Prenez un feutre épais noir ou bleu et commencez à la ligne 1. Vous disposez de 8 minutes. |
+| `konzentriertes-arbeiten.mp3` | Travail avec soin et concentration. Prenez un feutre épais noir ou bleu et commencez à la ligne 1. Vous disposez de 8 minutes. |
 | `beginne.mp3` | Départ. |
 | `stopp-weiter.mp3` | Stop. Passez au sous-test suivant. |
 | `fertig-einzeln.mp3` | Stop. Posez votre crayon. L'exercice est terminé. |
 | `fertig-komplett.mp3` | Stop. Posez votre crayon. La simulation est terminée. |
-| `muster-zuordnen-kurz.mp3` | Association de motifs. |
-| `med-nat-grundverstaendnis-kurz.mp3` | Compréhension médico-scientifique. |
+| `muster-zuordnen-kurz.mp3` | Reconnaissance de fragments de figure. |
+| `med-nat-grundverstaendnis-kurz.mp3` | Compréhension de questions fondamentales de la médecine et des sciences naturelles. |
 | `objekte-im-raum-kurz.mp3` | Objets dans l'espace. |
 | `quantitative-probleme-kurz.mp3` | Problèmes quantitatifs et formels. |
 | `figuren-einpraegen-kurz.mp3` | Mémorisation de figures, phase d'apprentissage. Les notes ne sont pas autorisées. |
@@ -127,7 +132,7 @@ passende Aufnahme neu – sonst sagt die Stimme etwas anderes als der Bildschirm
 | `figuren-reproduktion-kurz.mp3` | Mémorisation de figures, phase de reproduction. |
 | `fakten-reproduktion-kurz.mp3` | Mémorisation de faits, phase de reproduction. |
 | `diagramme-tabellen-kurz.mp3` | Diagrammes et tableaux. |
-| `konzentriertes-arbeiten-kurz.mp3` | Travail concentré et soigné. Commencez à la ligne 1. |
+| `konzentriertes-arbeiten-kurz.mp3` | Travail avec soin et concentration. Commencez à la ligne 1. |
 | `pause.mp3` | Pause. |
 | `pause-vorbei.mp3` | La pause est terminée. |
 | `einleitung.mp3` | Bienvenue à la simulation de test. Ne traitez que le sous-test annoncé et reportez vos réponses sur la feuille de réponses. Ne commencez qu'au signal « Départ » et posez immédiatement votre crayon au signal « Stop ». Bonne chance. |

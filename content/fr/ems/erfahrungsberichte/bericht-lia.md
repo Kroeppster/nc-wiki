@@ -1,13 +1,13 @@
 ---
 name: "Lia"
 jahr: 2025
-tags: ["Kreuzblick", "Compréhension de texte"]
+tags: ["Regard croisé", "Compréhension de texte"]
 draft: false
 ---
 
 ## Comment t'es-tu préparée ?
 
-J'ai commencé la préparation en avril et j'ai étudié en moyenne environ 4 heures par jour, en me reposant au moins deux jours par semaine. J'ai aussi suivi un cours que je recommande vivement. J'ai commencé par le Kreuzblick, que je maîtrisais assez bien après environ 2 semaines d'entraînement. À partir de mai, j'ai résolu quotidiennement deux sous-tests longs et un sous-test court, et j'ai fait au total quatre simulations complètes.
+J'ai commencé la préparation en avril et j'ai étudié en moyenne environ 4 heures par jour, en me reposant au moins deux jours par semaine. J'ai aussi suivi un cours que je recommande vivement. J'ai commencé par le regard croisé, que je maîtrisais assez bien après environ 2 semaines d'entraînement. À partir de mai, j'ai résolu quotidiennement deux sous-tests longs et un sous-test court, et j'ai fait au total quatre simulations complètes.
 
 ## Qu'est-ce qui t'a le plus aidée ?
 
@@ -15,4 +15,4 @@ Pour la compréhension de texte, ma stratégie était de ne résoudre que deux d
 
 ## Ton conseil pour les futur·e·s participant·e·s ?
 
-Le Kreuzblick vaut la peine d'être travaillé. Pour les problèmes quantitatifs et formels, entraînez-vous toujours sans calculatrice et simplifiez autant que possible. Pour les faits, mieux vaut apprendre moins de blocs mais les maîtriser vraiment – acceptez d'avoir des lacunes. Avant et pendant l'examen, j'étais assez sereine, car j'avais déjà en tête une bonne filière d'études alternative – cela a nettement réduit la pression.
+Le regard croisé vaut la peine d'être travaillé. Pour les problèmes quantitatifs et formels, entraînez-vous toujours sans calculatrice et simplifiez autant que possible. Pour les faits, mieux vaut apprendre moins de blocs mais les maîtriser vraiment – acceptez d'avoir des lacunes. Avant et pendant l'examen, j'étais assez sereine, car j'avais déjà en tête une bonne filière d'études alternative – cela a nettement réduit la pression.

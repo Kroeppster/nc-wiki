@@ -40,9 +40,9 @@ Nouveauté : le **mode simulation**. Chez toi, il joue le rôle de la personne q
 - **Des sous-tests individuels** avec le vrai temps imparti.
 - **Un déroulement personnalisé :** tu choisis les sous-tests et le nombre d'exercices, le temps se calcule au rythme du test réel. En mode expert, tu fixes toi-même les temps et les pauses. Tu peux partager ton déroulement sous forme de lien avec ton groupe de révision.
 
-![Mode simulation en plein écran : en haut le nom du sous-test « Association de motifs », au milieu l'heure en grand, en bas les boutons Pause et Annuler](news/neue-website/fr/simulationsmodus.png "Comme dans la salle d'examen, l'horloge n'affiche que l'heure, sans le temps restant.")
+![Mode simulation en plein écran : en haut le nom du sous-test « Reconnaissance de fragments de figure », au milieu l'heure en grand, en bas les boutons Pause et Annuler](news/neue-website/fr/simulationsmodus.png "Comme dans la salle d'examen, l'horloge n'affiche que l'heure, sans le temps restant.")
 
-## Générateur pour apprendre figures et faits
+## Générateur pour la mémorisation de figures et faits
 
 À côté du mode simulation arrive bientôt un générateur qui te crée autant de nouveaux exercices que tu veux pour l'apprentissage des figures et des faits. Pour ces deux sous-tests, le matériel d'exercice ne sert qu'une fois : ce que tu as mémorisé ne peut plus servir pour t'entraîner. Le générateur tire donc à chaque fois un nouveau jeu.
 
@@ -54,9 +54,9 @@ Tu t'entraînes comme le jour de l'examen :
 
 Les temps sont préréglés comme à l'AMS, mais tu peux les adapter. Tu préfères le papier ? Alors imprime le jeu, présenté comme un cahier de test avec feuille de réponses et solutions.
 
-![Phase de reproduction dans le générateur : en haut l'horloge à 5:00, en dessous des figures dont les parties sont marquées de A à E, avec des cases à cocher](news/neue-website/fr/figuren-generator.png "Apprendre des figures : dans la phase de reproduction, tu indiques quelle partie de chaque figure était noircie.")
+![Phase de reproduction dans le générateur : en haut l'horloge à 5:00, en dessous des figures dont les parties sont marquées de A à E, avec des cases à cocher](news/neue-website/fr/figuren-generator.png "Mémorisation de figures : dans la phase de reproduction, tu indiques quelle partie de chaque figure était noircie.")
 
-![Phase d'apprentissage dans le générateur : consigne comme dans le cahier de test et liste de personnes avec âge, profession, trait de caractère et diagnostic](news/neue-website/fr/fakten-generator.png "Apprendre des faits : chaque jeu se compose de nouvelles personnes à mémoriser.")
+![Phase d'apprentissage dans le générateur : consigne comme dans le cahier de test et liste de personnes avec âge, profession, trait de caractère et diagnostic](news/neue-website/fr/fakten-generator.png "Mémorisation de faits : chaque jeu se compose de nouvelles personnes à mémoriser.")
 
 Le générateur est encore en phase de test et sera bientôt ouvert à tout le monde.
 
@@ -66,7 +66,7 @@ Si tu as fait une simulation de test chez toi, tu n'auras bientôt plus besoin d
 
 ![Feuille de réponses évaluée : cases marquées en vert si c'est juste et en rouge si c'est faux, la bonne solution encadrée en bleu](news/neue-website/fr/antwortbogen.jpg "La feuille de réponses évaluée : vert juste, rouge faux, bleu la bonne solution.")
 
-Le test de concentration fonctionne de la même manière – pour les simulations de test, les séries d'exercices « Travail concentré et soigné » et même pour ton propre test de concentration avec sa feuille de solutions. Le décompte suit la règle de la consigne : signes correctement marqués moins signes marqués à tort moins signes omis. Si une marque n'est pas juste, tu touches le signe et les points se recalculent aussitôt.
+Le test de concentration fonctionne de la même manière – pour les simulations de test, les séries d'exercices « Travail avec soin et concentration » et même pour ton propre test de concentration avec sa feuille de solutions. Le décompte suit la règle de la consigne : signes correctement marqués moins signes marqués à tort moins signes omis. Si une marque n'est pas juste, tu touches le signe et les points se recalculent aussitôt.
 
 ![Test de concentration évalué : valeur brute de 239 points avec le détail du calcul, en dessous la feuille avec des signes entourés en vert, rouge et bleu](news/neue-website/fr/konzentrationstest.jpg "Test de concentration : la valeur brute et, sur la feuille, chaque signe marqué juste, marqué à tort ou omis.")
 
@@ -90,7 +90,7 @@ Autre nouveauté : la page sur la [compensation des désavantages](/ems/nachteil
 
 ## Témoignages
 
-Dans les [témoignages](/ems/erfahrungsberichte), des étudiant·e·s racontent comment ils et elles se sont préparé·e·s et ce qui les a le plus aidé·e·s. Tu peux filtrer les témoignages par année de test et trouver des témoignages semblables grâce à des mots-clés comme « Kreuzblick » ou « Deuxième tentative ». Tu as déjà passé l'AMS ? Alors tu peux envoyer ton propre témoignage directement via le site.
+Dans les [témoignages](/ems/erfahrungsberichte), des étudiant·e·s racontent comment ils et elles se sont préparé·e·s et ce qui les a le plus aidé·e·s. Tu peux filtrer les témoignages par année de test et trouver des témoignages semblables grâce à des mots-clés comme « regard croisé » ou « Deuxième tentative ». Tu as déjà passé l'AMS ? Alors tu peux envoyer ton propre témoignage directement via le site.
 
 ## Page d'accueil
 

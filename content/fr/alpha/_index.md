@@ -16,10 +16,10 @@ la recherche. Les moteurs de recherche reçoivent en plus un `noindex`.
 
 *Ce qui figure ici peut disparaître ou changer à tout moment.*
 
-## Générateur d'exercices (apprendre figures et faits)
+## Générateur d'exercices (mémorisation de figures et faits)
 
-Tire de nouveaux sets pour « Apprendre des figures » (18 figures) et
-« Apprendre des faits » (15 patient·e·s, 18 questions) – séparément ou les deux
+Tire de nouveaux sets pour « Mémorisation de figures » (18 figures) et
+« Mémorisation de faits » (15 patient·e·s, 18 questions) – séparément ou les deux
 ensemble comme le jour du test : d'abord mémoriser les deux, puis la phase
 intermédiaire, puis répondre aux deux. Les cases à cocher permettent de choisir
 ce qu'on exerce ; les durées s'adaptent au jour du test.

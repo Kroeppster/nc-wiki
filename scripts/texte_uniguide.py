@@ -49,6 +49,14 @@ SCHRIFT = 'Arial'
 PAPIER, NAVY, GRAU, LINIE, WEISS, GRUEN, HELL = 'F5F7FB', '101A33', '636D88', 'DDE2EC', 'FFFFFF', '1C6B3F', 'E4E8F1'
 NEUE = 3                  # so viele leere Spalten fuer neue Angaben
 EMS = ('ja', 'nein', 'teilweise')
+# So stehen EMS-Pflicht und Unterrichtssprachen in der Mappe einer Sprache -
+# wie auf der Website (i18n ems_status_* und sprache_*). Eingelesen wird jede
+# dieser Schreibweisen (auswerten).
+EMS_ANZEIGE = {'de': dict(zip(EMS, EMS)),
+               'fr': {'ja': 'oui', 'nein': 'non', 'teilweise': 'partiellement'},
+               'it': {'ja': 'sì', 'nein': 'no', 'teilweise': 'parzialmente'}}
+SPRACHEN_ANZEIGE = {'fr': {'Deutsch': 'allemand', 'English': 'anglais', 'Français': 'français', 'Italiano': 'italien'},
+                    'it': {'Deutsch': 'tedesco', 'English': 'inglese', 'Français': 'francese', 'Italiano': 'italiano'}}
 # Namen der Unterrichtssprachen, wie man sie auch schreiben koennte -> Wert in data/unis.yaml
 SPRACHNAMEN = {}
 for schluessel, namen in {'Deutsch': ('deutsch', 'allemand', 'tedesco', 'german'),
@@ -87,9 +95,11 @@ T = {
         "modifie alors aussi « État » et « Source ». Une case vide ne supprime rien, !Supprimer! vide le champ. "
         "Plusieurs points : un par ligne (Alt+Entrée).",
         anzeige='Affichage', neu='Nouvelle colonne', neu_hilfe='inscrire le nom ici, les valeurs en dessous',
-        hilfe=dict(sprachen='Deutsch, English, Français, Italiano – séparées par des virgules', liste='séparer par des virgules',
-                   ems='ja / nein / teilweise (oui/non/partiel)', punkte='un par ligne', link='https://…'),
+        hilfe=dict(sprachen='allemand, anglais, français, italien – séparées par des virgules', liste='séparer par des virgules',
+                   ems='oui / non / partiellement', punkte='un par ligne', link='https://…'),
         fest='Le site a besoin de cette colonne – la renommer oui, la supprimer non.',
+        name="Le nom figure dans le titre de la page de l'université : le modifier sur la feuille « Uniguide › … » "
+        "de cette université, ligne « Titre ».",
         deutsch='Allemand :'),
     'it': dict(
         hinweis="Una riga per università. Scrivi solo nelle caselle bianche. Rinominare una colonna: sovrascrivere il "
@@ -100,9 +110,11 @@ T = {
         "allora anche «Stato» e «Fonte». Una casella vuota non elimina nulla, !Eliminare! svuota il campo. "
         "Più punti: uno per riga (Alt+Invio).",
         anzeige='Visualizzazione', neu='Nuova colonna', neu_hilfe='scrivere il nome qui, i valori sotto',
-        hilfe=dict(sprachen='Deutsch, English, Français, Italiano – separate da virgole', liste='separare con virgole',
-                   ems='ja / nein / teilweise (sì/no/in parte)', punkte='uno per riga', link='https://…'),
+        hilfe=dict(sprachen='tedesco, inglese, francese, italiano – separate da virgole', liste='separare con virgole',
+                   ems='sì / no / parzialmente', punkte='uno per riga', link='https://…'),
         fest='Il sito ha bisogno di questa colonna – rinominarla sì, eliminarla no.',
+        name="Il nome è il titolo della pagina dell'università: modificarlo nel foglio «Uniguide › …» di questa "
+        "università, riga «Titolo».",
         deutsch='Tedesco:'),
 }
 
@@ -200,13 +212,20 @@ def _sprachwert(w, sprache):
     return w
 
 
-def anzeige(uni, spalte, sprache):
-    """So steht ein Feld in der Zelle."""
+def anzeige(uni, spalte, sprache, mappe=None):
+    """So steht ein Feld in der Zelle. mappe = Sprache der Mappe: EMS-Pflicht
+    und Unterrichtssprachen stehen darin uebersetzt (Vorgabe: sprache)."""
+    mappe = mappe or sprache or 'de'
     w = uni.get(spalte['feld'])
     if spalte.get('sprachabhaengig'):
         w = _sprachwert(w, sprache)
     if w is None:
         return ''
+    art = spalte.get('art')
+    if art == 'ems':
+        w = EMS_ANZEIGE.get(mappe, {}).get(w, w)
+    elif art == 'sprachen' and isinstance(w, list):
+        w = [SPRACHEN_ANZEIGE.get(mappe, {}).get(x, x) for x in w]
     if isinstance(w, list):
         return ('\n' if spalte.get('art') == 'punkte' else ', ').join(str(x) for x in w)
     return str(w)
@@ -230,7 +249,7 @@ def auswerten(spalte, text):
     if art == 'ems':
         t = text.strip().lower()
         t = {'oui': 'ja', 'sì': 'ja', 'si': 'ja', 'non': 'nein', 'no': 'nein', 'partiel': 'teilweise',
-             'partiellement': 'teilweise', 'in parte': 'teilweise'}.get(t, t)
+             'partiellement': 'teilweise', 'in parte': 'teilweise', 'parzialmente': 'teilweise'}.get(t, t)
         if t not in EMS:
             raise ValueError(f'„{text}“ – erlaubt sind ja, nein, teilweise')
         return t
@@ -303,7 +322,8 @@ def blatt(ws, sprache, projekt, merker):
         c.alignment = Alignment(vertical='top')
     ws.row_dimensions[4].height = 44
     auswahl = DataValidation(type='list', formula1='"%s"' % ','.join(ANZEIGE[sprache]), allow_blank=True)
-    ems = DataValidation(type='list', formula1='"ja,nein,teilweise"', allow_blank=True)
+    ems = DataValidation(type='list', formula1='"%s"' % ','.join(EMS_ANZEIGE[sprache][w] for w in EMS),
+                         allow_blank=True)
     ws.add_data_validation(auswahl)
     ws.add_data_validation(ems)
 
@@ -349,6 +369,15 @@ def blatt(ws, sprache, projekt, merker):
         hoehe = 18
         for i, s in enumerate(spalten):
             feld = s['feld']
+            if feld == 'name' and sprache != 'de':
+                # Uebersetzt steht der Name im Titel der Uni-Seite (wie auf der
+                # Website, partial uni-name.html) - dort wird er auch geaendert.
+                wert = _seitentitel(projekt, sprache, slug) or anzeige(uni, s, sprache)
+                c = zelle(r, 2 + i, wert, fett=True, farbe=NAVY, hg=HELL)
+                c.protection = Protection(locked=True)
+                c.comment = Comment(L['name'], 'NCWiki')
+                hoehe = max(hoehe, _hoehe(wert, s.get('breite', 20)))
+                continue
             wert = anzeige(uni, s, sprache)
             c = zelle(r, 2 + i, wert, fett=feld == 'name', farbe=NAVY if feld == 'name' else '3A4460')
             if s.get('art') == 'ems':
@@ -357,7 +386,7 @@ def blatt(ws, sprache, projekt, merker):
                 de = anzeige(uni, s, 'de')
                 if de and de != wert:
                     c.comment = Comment(f'{L["deutsch"]} {de}', 'NCWiki')
-            pfad = [slug, feld, sprache if s.get('sprachabhaengig') else None]
+            pfad = [slug, feld, sprache if s.get('sprachabhaengig') else None, sprache]
             merker.append(['uni', ws.title, c.coordinate, UNIS, json.dumps(pfad, ensure_ascii=False), wert])
             hoehe = max(hoehe, _hoehe(wert, s.get('breite', 20)))
         for n in range(NEUE):
@@ -370,6 +399,16 @@ def blatt(ws, sprache, projekt, merker):
     ws.protection.sheet = True
     ws.protection.formatColumns = False
     ws.protection.formatRows = False
+
+
+def _seitentitel(projekt, sprache, slug):
+    pfad = os.path.join(projekt, 'content', sprache, 'ems', 'uniguide', slug + '.md')
+    try:
+        with open(pfad, encoding='utf-8') as f:
+            kopf = tb.kopf_trennen(f.read())[0]
+    except OSError:
+        return ''
+    return tb.kopf_feld(kopf, 'title')[0] or ''
 
 
 def _spalte(n):
@@ -549,7 +588,8 @@ def anwenden(projekt, eintraege, melde, probe=False):
     for art, p, original, wert, wo in eintraege:
         if art != 'uni':
             continue
-        slug, feld, sprache = p
+        slug, feld, sprache = p[:3]
+        mappe = p[3] if len(p) > 3 else sprache      # aeltere Mappen: ohne Sprache der Mappe
         wert, original = zelle_lesen(wert), zelle_lesen(original)
         if wert == original or not wert or feld in geloescht:   # unveraendert, oder geleert (loescht nichts)
             continue
@@ -558,7 +598,7 @@ def anwenden(projekt, eintraege, melde, probe=False):
         if uni is None or s is None:
             melde(f'{wo}: „{slug}“ / „{feld}“ gibt es nicht mehr - nicht übernommen.')
             continue
-        ist = anzeige(uni, s, sprache or 'de')
+        ist = anzeige(uni, s, sprache or 'de', mappe)
         if ist == wert:
             continue
         if ist != original:

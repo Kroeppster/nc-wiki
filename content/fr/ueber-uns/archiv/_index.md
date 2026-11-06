@@ -115,4 +115,4 @@ Nous remercions tou·te·s nos ancien·ne·s responsables pour leur engagement p
 
 ## Anciens scripts de cours
 
-Tu peux continuer à utiliser les anciens scripts de cours pour t'entraîner. Attention toutefois, ils sont en partie dépassés : l'association de motifs a été modifiée en 2026, et les anciennes figures de tuyaux ont été remplacées par les objets dans l'espace. Le script de cours à jour se trouve toujours sur la page [Cours de préparation](/ems/vorbereitungskurse).
+Tu peux continuer à utiliser les anciens scripts de cours pour t'entraîner. Attention toutefois, ils sont en partie dépassés : la reconnaissance de fragments de figure a été modifiée en 2026, et les anciennes figures de tuyaux ont été remplacées par les objets dans l'espace. Le script de cours à jour se trouve toujours sur la page [Cours de préparation](/ems/vorbereitungskurse).

@@ -16,4 +16,4 @@ Le fait d'avoir persévéré malgré une motivation en baisse et d'avoir vraimen
 
 ## Ton conseil pour les futur·e·s participant·e·s ?
 
-Osez aussi prendre une pause de temps en temps pour recharger vos batteries. Apprenez le Kreuzblick, cela donne un grand avantage pour l'association de motifs. Regardez absolument les informations officielles sur le test et faites les exercices officiels. Je n'ai visiblement aucun talent particulier pour le NC, mais grâce au travail acharné et à la discipline, j'y suis arrivé aussi – n'abandonnez pas et persévérez.
+Osez aussi prendre une pause de temps en temps pour recharger vos batteries. Apprenez le regard croisé, cela donne un grand avantage pour la reconnaissance de fragments de figure. Regardez absolument les informations officielles sur le test et faites les exercices officiels. Je n'ai visiblement aucun talent particulier pour le NC, mais grâce au travail acharné et à la discipline, j'y suis arrivé aussi – n'abandonnez pas et persévérez.

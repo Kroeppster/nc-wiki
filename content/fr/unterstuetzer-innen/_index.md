@@ -15,7 +15,7 @@ Toute notre offre est gratuite. Cela est possible grâce aux dons, au sponsoring
 - [ASSA ABLOY](https://www.assaabloy.com/ch/fr) : premier fabricant et fournisseur mondial de systèmes de fermeture et de sécurité pour portes
 - [swimsa](https://swimsa.ch/) : Swiss Medical Students' Association
 
-Nous remercions également les universités suisses où ont lieu nos simulations de test : l'Université de Bâle, l'Université de Berne, l'EPF Zurich, l'Université de Fribourg, l'Università della Svizzera italiana à Lugano et l'Université de Zurich.
+Nous remercions également les universités suisses où ont lieu nos simulations de test : l'Université de Bâle, l'Université de Berne, l'ETH Zurich, l'Université de Fribourg, l'Università della Svizzera italiana à Lugano et l'Université de Zurich.
 
 NCWiki est accrédité par l'[UZH Impulsfabrik](https://impulsfabrik.vsuzh.ch/de/portfolio/ncwiki).
 

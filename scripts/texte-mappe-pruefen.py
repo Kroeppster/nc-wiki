@@ -879,7 +879,7 @@ def uniguide_pruefen(projekt, ordner):
         z = {}
         for r in m['_ansicht'].iter_rows(min_row=2, values_only=True):
             if r[0] == 'uni':
-                slug, feld, _ = json.loads(r[4])
+                slug, feld = json.loads(r[4])[:2]
                 z[(slug, feld)] = (m[r[1]], r[2])
             elif r[0] in ('unikopf', 'unizeigen', 'unineu', 'unineuzeigen'):
                 z[(r[0], json.loads(r[4])[0])] = (m[r[1]], r[2])
@@ -965,13 +965,25 @@ def uniguide_pruefen(projekt, ordner):
 
     # Franzoesisch: eigener Text, der deutsche bleibt
     m, z = zellen(ausgeben(projekt, os.path.join(ordner, 'uni-fr'))['fr'])
+    ws = m[[n for n in m.sheetnames if n.startswith('Uniguide') and n.endswith('Vue')][0]]
+    zeile = {ws.cell(row=r, column=1).value: [ws.cell(row=r, column=c).value for c in range(2, 6)]
+             for r in range(6, ws.max_row + 1)}
+    pruef('Uniguide FR: Name, Sprache und AMS auf Französisch',
+          zeile.get('basel', [])[:1] == ['Université de Bâle'] and zeile['basel'][2:4] == ['allemand', 'oui']
+          and zeile['lugano'][2] == 'anglais, italien' and zeile['genf'][3] == 'non', zeile.get('basel'))
     setze('basel', 'anmeldefrist', '15 février')
+    setze('genf', 'sprache', 'français, anglais')
+    setze('genf', 'ems_erforderlich', 'oui')
     p = os.path.join(ordner, 'uni-fr.xlsx')
     m.save(p)
     einlesen(projekt, p)
     neu = {u['slug']: u for u in yaml.safe_load(lesen(projekt, 'data/unis.yaml'))}
     pruef('Uniguide FR: franzoesischer Text dazu, deutscher bleibt',
           neu['basel']['anmeldefrist'] == {'de': '15. Februar', 'fr': '15 février', 'it': '15.02.2027'}, neu['basel']['anmeldefrist'])
+    pruef('Uniguide FR: Sprache und AMS auf Französisch eingelesen',
+          neu['genf']['sprache'] == ['Français', 'English'] and neu['genf']['ems_erforderlich'] == 'ja'
+          and neu['basel']['sprache'] == alt['basel']['sprache'] and neu['basel']['name'] == alt['basel']['name'],
+          (neu['genf']['sprache'], neu['genf']['ems_erforderlich']))
     bauen(projekt, ordner)
 
     # Konflikt: dasselbe Feld inzwischen anderswo geaendert

@@ -1,6 +1,6 @@
 ---
-title: "Compréhension médico-scientifique"
-description: "Compréhension médico-scientifique à l'AMS : séries d'exercices gratuites et conseils pour saisir les faits décrits et vérifier les affirmations avec assurance."
+title: "Compréhension de questions fondamentales de la médecine et des sciences naturelles"
+description: "Compréhension de questions fondamentales de la médecine et des sciences naturelles à l'AMS : séries d'exercices gratuites et conseils pour saisir les faits décrits et vérifier les affirmations avec assurance."
 weight: 3
 ---
 
@@ -8,7 +8,7 @@ weight: 3
 
 Chaque question décrit en quelques phrases un fait médical ou scientifique. Tu évalues ensuite trois à cinq affirmations : peut-on les déduire des informations données ? Souvent, les affirmations sont numérotées (I, II, III) et les options de réponse A à E proposent des combinaisons possibles. Aucune connaissance spécialisée n'est nécessaire, car tous les termes techniques sont expliqués dans le texte.
 
-- **Place dans la journée de test :** 2e sous-test, après l'association de motifs, suivi des objets dans l'espace
+- **Place dans la journée de test :** 2e sous-test, après la reconnaissance de fragments de figure, suivi des objets dans l'espace
 - **Volume :** 18 questions, 18 points
 - **Temps :** 45 minutes, soit environ 2,5 minutes par question
 
@@ -52,10 +52,10 @@ Ce sous-test devrait être entraîné sur une assez longue période ; il est rec
 
 ## Extraits de témoignages
 
-*« Pour la compréhension médico-scientifique et la compréhension de texte, seule une chose aide : commencer tôt. »*
+*« Pour la compréhension de questions fondamentales de la médecine et des sciences naturelles et la compréhension de texte, seule une chose aide : commencer tôt. »*
 
-*« J'ai quand même trouvé la compréhension médico-scientifique et la compréhension de texte particulièrement difficiles, justement parce que les réponses étaient si imbriquées dans le texte qu'il fallait rassembler des informations de différents passages. »*
+*« J'ai quand même trouvé la compréhension de questions fondamentales de la médecine et des sciences naturelles et la compréhension de texte particulièrement difficiles, justement parce que les réponses étaient si imbriquées dans le texte qu'il fallait rassembler des informations de différents passages. »*
 
-*« À partir de fin mars, j'ai presque exclusivement travaillé sur mes points faibles (compréhension médico-scientifique, compréhension de texte), 2 à 3 fois par semaine, en me concentrant sur la compréhension de mes erreurs plutôt que sur le simple comptage des points. »*
+*« À partir de fin mars, j'ai presque exclusivement travaillé sur mes points faibles (compréhension de questions fondamentales de la médecine et des sciences naturelles, compréhension de texte), 2 à 3 fois par semaine, en me concentrant sur la compréhension de mes erreurs plutôt que sur le simple comptage des points. »*
 
 Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

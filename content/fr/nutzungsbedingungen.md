@@ -51,7 +51,7 @@ En cas d'infraction aux présentes conditions d'utilisation, nous nous réservon
 
 ## Droit applicable et for juridique
 
-Le droit suisse est exclusivement applicable. Le for juridique est Zurich.
+Seul le droit suisse est applicable. Le for juridique est Zurich.
 
 ## Modifications et contact
 

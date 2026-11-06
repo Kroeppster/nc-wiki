@@ -49,12 +49,12 @@
 - number: "01"
   slug: muster-zuordnen
   de: "Muster zuordnen"
-  fr: "Association de motifs"
+  fr: "Reconnaissance de fragments de figure"
   it: "Associare le figure"
 - number: "02"
   slug: med-nat-grundverstaendnis
   de: "Medizinisch-naturwissenschaftliches Grundverständnis"
-  fr: "Compréhension médico-scientifique"
+  fr: "Compréhension de questions fondamentales de la médecine et des sciences naturelles"
   it: "Comprensione di questioni medico-scientifiche"
 - number: "03"
   slug: objekte-im-raum
@@ -69,7 +69,7 @@
 - number: "05"
   slug: figuren-fakten-lernen
   de: "Figuren und Fakten lernen"
-  fr: "Apprendre figures et faits"
+  fr: "Mémorisation de figures et faits"
   it: "Memorizzazione di figure e fatti"
 - number: "06"
   slug: textverstaendnis
@@ -84,5 +84,5 @@
 - number: "08"
   slug: konzentriertes-arbeiten
   de: "Konzentriertes und sorgfältiges Arbeiten"
-  fr: "Travail concentré et soigné"
+  fr: "Travail avec soin et concentration"
   it: "Lavorare accuratamente e concentrati"

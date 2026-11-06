@@ -8,7 +8,7 @@ weight: 7
 
 Pour chaque question, tu reçois un diagramme ou un tableau, généralement complété par un court texte d'accompagnement. Il s'agit de déterminer laquelle de cinq affirmations peut être déduite des informations, ou laquelle ne peut pas l'être. Dans certaines questions, tu choisis à l'inverse le diagramme qui représente correctement un fait décrit. Aucune connaissance spécialisée n'est nécessaire, toutes les informations requises figurent dans la question.
 
-- **Place dans la journée de test :** 10e sous-test, après les phases de reproduction de la mémorisation de figures et de faits, suivi du travail concentré et soigné
+- **Place dans la journée de test :** 10e sous-test, après les phases de reproduction de la mémorisation de figures et de faits, suivi du travail avec soin et concentration
 - **Volume :** 18 questions, 18 points
 - **Temps :** 45 minutes, soit environ 2,5 minutes par question
 

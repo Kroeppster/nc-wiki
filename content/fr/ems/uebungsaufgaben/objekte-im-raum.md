@@ -8,7 +8,7 @@ weight: 2
 
 Ce sous-test évalue ta capacité de représentation spatiale. Tu vois un cube transparent contenant des objets, à gauche dans sa position de départ et à droite après deux mouvements successifs. Sont possibles des rotations de 90° vers la gauche ou la droite ainsi que des basculements de 90° vers le haut ou le bas. Ta tâche est de déterminer la combinaison qui mène à la vue de droite. L'ordre des mouvements est lui aussi déterminant.
 
-- **Place dans la journée de test :** 3e sous-test, après la compréhension médico-scientifique, suivi des problèmes quantitatifs et formels
+- **Place dans la journée de test :** 3e sous-test, après la compréhension de questions fondamentales de la médecine et des sciences naturelles, suivi des problèmes quantitatifs et formels
 - **Volume :** 18 questions, 18 points
 - **Temps :** 10 minutes, soit environ 33 secondes par question
 

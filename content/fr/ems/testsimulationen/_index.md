@@ -18,7 +18,7 @@ Tu trouveras ici toutes les informations sur nos simulations de test.
 
 **Inscription :** l'inscription se fait en ligne. Dès que les dates de la prochaine session sont fixées, nous les annonçons sur notre site web et sur Instagram.
 
-**Dates :** nos simulations de test ont lieu chaque année début mai, environ deux mois avant le test d'aptitudes pour les études de médecine (AMS). Elles se déroulent dans toutes les universités qui utilisent l'AMS : à Bâle, Berne, Fribourg, Lugano ainsi qu'à l'Université et à l'EPF de Zurich.
+**Dates :** nos simulations de test ont lieu chaque année début mai, environ deux mois avant le test d'aptitudes pour les études de médecine (AMS). Elles se déroulent dans toutes les universités qui utilisent l'AMS : à Bâle, Berne, Fribourg, Lugano ainsi qu'à l'Université et à l'ETH de Zurich.
 
 ## Cahiers de test à télécharger
 

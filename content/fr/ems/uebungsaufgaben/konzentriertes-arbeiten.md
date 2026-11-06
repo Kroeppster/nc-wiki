@@ -1,6 +1,6 @@
 ---
-title: "Travail concentré et soigné"
-description: "Travail concentré et soigné à l'AMS : séries d'exercices gratuites et conseils pour marquer plus vite et faire moins d'erreurs."
+title: "Travail avec soin et concentration"
+description: "Travail avec soin et concentration à l'AMS : séries d'exercices gratuites et conseils pour marquer plus vite et faire moins d'erreurs."
 weight: 8
 ---
 

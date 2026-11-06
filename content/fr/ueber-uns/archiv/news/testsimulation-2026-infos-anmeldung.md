@@ -5,7 +5,7 @@ eyebrow: "Inscription"
 draft: false
 ---
 
-Après le succès de l'année précédente, nous proposons de nouveau en 2026 une simulation de test EMS gratuite – pour 1650 participant·e·s sur 6 sites en Suisse : EPF Zurich, Université de Zurich, Université de Bâle, Université de Berne, Université de Fribourg et Università della Svizzera italiana.
+Après le succès de l'année précédente, nous proposons de nouveau en 2026 une simulation de test EMS gratuite – pour 1650 participant·e·s sur 6 sites en Suisse : ETH Zurich, Université de Zurich, Université de Bâle, Université de Berne, Université de Fribourg et Università della Svizzera italiana.
 
 Nous avons nous-mêmes élaboré la simulation de test ; elle n'est pas encore publiée sur le site et se déroule dans un cadre aussi proche que possible du vrai EMS – en allemand, en français à Fribourg et en italien à l'USI de Lugano.
 
