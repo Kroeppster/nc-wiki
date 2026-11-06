@@ -286,3 +286,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Die Website ist mit allen PDFs (DE/FR/IT) gut 700 MB gross; das
+          # Verteilen bei GitHub Pages dauert dann länger als die Vorgabe von
+          # 10 Minuten. 30 Minuten lassen genug Luft.
+          timeout: 1800000
