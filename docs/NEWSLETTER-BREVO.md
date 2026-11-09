@@ -15,9 +15,10 @@ Für Schritt 2 braucht es die Person mit Zugang zur Domain nc-wiki.ch.
 
 Abhaken, was erledigt ist (direkt in dieser Datei auf GitHub, Stift-Symbol):
 
-- [ ] 1. Konto angelegt (mit info@nc-wiki.ch)
-- [ ] 2. Absender und Domain bestätigt
-- [ ] 3. Drei Listen angelegt (DE, FR, IT)
+- [x] 1. Konto angelegt (mit info@nc-wiki.ch)
+- [ ] 2. Absender und Domain bestätigt – **Domain-Bestätigung (2b) noch offen, vor dem
+  Live-Schalten der Anmeldung nötig** (sonst landen schon die Bestätigungsmails im Spam)
+- [x] 3. Drei Listen angelegt (DE, FR, IT)
 - [ ] 4. Drei Anmeldeformulare angelegt, Adressen notiert
 - [ ] 5. Adressen weitergegeben → Einbau auf der Website
 - [ ] 6. Abmeldeseite geprüft
