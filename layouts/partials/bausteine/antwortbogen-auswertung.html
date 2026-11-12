@@ -88,6 +88,7 @@
 <div class="ab-kamera" id="ab-kamera-feld" hidden></div>
 <p class="ab-hinweis">{{ i18n "ab_tipps" }}</p>
 <p class="ab-status" id="ab-status" role="status" aria-live="polite"></p>
+<p class="nur-vorlesen" id="ab-ansage" role="status" aria-live="polite"></p>
 <div class="ab-ergebnis" id="ab-ergebnis" hidden>
 <p class="ab-summe" id="ab-summe"></p>
 <ul class="ab-meldungen" id="ab-meldungen"></ul>
@@ -908,6 +909,9 @@
         + '</th><th>' + T.loesung + '</th><th></th></tr></thead><tbody>' + h + '</tbody></table></details>';
     });
     el('ab-summe').textContent = T.summe.replace('{n}', richtig).replace('{von}', von);
+    // Das Ergebnis auch ansagen: Die Statuszeile wird geleert, ein
+    // Screenreader hoerte nach «wird gelesen …» sonst nichts mehr.
+    el('ab-ansage').textContent = el('ab-summe').textContent;
     el('ab-punkte').innerHTML = '<thead><tr><th>' + T.untertest + '</th><th>' + T.punkte + '</th></tr></thead><tbody>' + tabelle
       + '<tr class="ab-total"><td>' + T.total + '</td><td>' + richtig + ' / ' + von + '</td></tr></tbody>';
     el('ab-zeilen').innerHTML = zeilen;
@@ -961,6 +965,7 @@
   function bogenWaehlen(datei){
     if (!datei) return;
     el('ab-ergebnis').hidden = true;
+    el('ab-ansage').textContent = '';
     melden('ab-status', istPdf(datei) ? T.pdfLaedt : T.liest);
     return quellen(datei).then(function(liste){ return bogenAus(liste, !istPdf(datei)); }, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
   }
@@ -1036,8 +1041,18 @@
   el('ab-zeilen').addEventListener('change', function(ev){
     var w = ev.target;
     if (!w.matches('select[data-nr]')) return;
-    stand.antworten[+w.getAttribute('data-nr')] = w.value;
+    var n = +w.getAttribute('data-nr');
+    stand.antworten[n] = w.value;
+    // Wer die Antwort selbst gesetzt hat, hat sie angesehen: nicht mehr «bitte pruefen»
+    stand.unsicher[n] = false;
+    // zeigen() baut die Liste neu: Welche Bloecke offen waren und wo der
+    // Fokus stand, bleibt - sonst klappte der Block zu, und die Tastatur
+    // landete am Seitenanfang.
+    var offen = Array.prototype.map.call(el('ab-zeilen').querySelectorAll('details'), function(d){ return d.open; });
     zeigen();
+    Array.prototype.forEach.call(el('ab-zeilen').querySelectorAll('details'), function(d, i){ if (i < offen.length) d.open = offen[i]; });
+    var feld = el('ab-zeilen').querySelector('select[data-nr="' + n + '"]');
+    if (feld) feld.focus({ preventScroll: true });
   });
   el('ab-original').addEventListener('change', function(){ if (stand) zeigen(); });
   el('ab-testsim').addEventListener('change', function(){

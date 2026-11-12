@@ -102,6 +102,22 @@ console.log('\n=== Korrigieren durch Tippen ===');
     pruef('angetippt -> markiert, Rohwert +2', nachher.markiert[i] === '1' && n(nachher.summe) === n(vorher.summe) + 2, vorher.summe + ' -> ' + nachher.summe);
   }
 }
+// Dasselbe ohne Bild: die Liste unter dem Bild, mit der Tastatur
+console.log('\n=== Korrigieren ueber die Liste ===');
+{
+  const vorher = await lesen(p), anzahl = await p.locator('#kt-liste-eintraege button').count();
+  pruef('Liste mit Eintraegen (' + anzahl + ')', anzahl > 0 && !(await p.evaluate(() => document.getElementById('kt-liste').hidden)));
+  if (anzahl) {
+    await p.evaluate(() => { document.getElementById('kt-liste').open = true; });
+    const eintrag = p.locator('#kt-liste-eintraege button').first();
+    const rc = await eintrag.evaluate(k => [+k.dataset.r, +k.dataset.c]), i = rc[0] * 40 + rc[1];
+    await eintrag.focus(); await p.keyboard.press('Enter');
+    const nachher = await lesen(p);
+    pruef('Eintrag mit der Tastatur umgeschaltet', nachher.markiert[i] !== vorher.markiert[i] && nachher.summe !== vorher.summe, vorher.summe + ' -> ' + nachher.summe);
+    pruef('Fokus bleibt in der Liste', await p.evaluate(() => !!(document.activeElement && document.activeElement.closest('#kt-liste'))));
+    pruef('Ergebnis steht in der Ansage fuer Screenreader', await p.evaluate(() => document.getElementById('kt-ansage').textContent === document.getElementById('kt-summe').textContent));
+  }
+}
 await b.close();
 
 console.log('\n=== Live-Kamera ===');

@@ -600,13 +600,23 @@ window.NCWikiBild = (function(){
     // musste scrollen (Rueckmeldung Oktober 2026). Beim Start scrollt die
     // Seite zum Sucher.
     feld.innerHTML = '<div class="bl-kamera"><div class="bl-sucher"><video playsinline muted autoplay></video><canvas></canvas>'
-      + '<p class="bl-kamera-hinweis" role="status" aria-live="polite">' + T.startet + '</p>'
+      + '<p class="bl-kamera-hinweis">' + T.startet + '</p>'
+      + '<p class="nur-vorlesen" role="status" aria-live="polite">' + T.startet + '</p>'
       + '<div class="bl-kamera-knoepfe"><button type="button" class="btn btn-primary">' + T.ausloesen + '</button>'
       + '<button type="button" class="btn btn-ghost">' + T.abbrechen + '</button></div></div></div>';
     feld.hidden = false;
     try { feld.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) { feld.scrollIntoView(); }
     var video = feld.querySelector('video'), ueber = feld.querySelector('canvas'), hinweis = feld.querySelector('.bl-kamera-hinweis');
     var knoepfe = feld.querySelectorAll('button');
+    // Fuer Screenreader ein eigener, gebremster Text: Der sichtbare Hinweis
+    // wechselt viermal in der Sekunde («63 % des Rasters», «65 % …») und
+    // wuerde ununterbrochen vorgelesen.
+    var ansage = feld.querySelector('.nur-vorlesen'), angesagt = 0;
+    function sagen(text, sofort){
+      var t = Date.now();
+      if (text === ansage.textContent || (!sofort && t - angesagt < 3000)) return;
+      ansage.textContent = text; angesagt = t;
+    }
     var klein = document.createElement('canvas'), gut = document.createElement('canvas'), analyse = o.analyse || 960;
     function stopp(){
       laeuft = false; clearTimeout(uhr);
@@ -621,15 +631,21 @@ window.NCWikiBild = (function(){
     function zeichnen(r, z){
       var w = video.clientWidth, h = video.clientHeight;
       ueber.width = w; ueber.height = h;
-      var ctx = ueber.getContext('2d'), s = w / (video.videoWidth * z);
+      // Das Videobild fuellt seinen Kasten nicht immer aus: Ist es in der
+      // Hoehe begrenzt (Hochformat auf einem kleinen Handy), steht es mit
+      // Raendern links und rechts in der Mitte (object-fit: contain). Nur aus
+      // der Breite gerechnet lagen Kreise und Umriss dann neben dem Blatt.
+      var k = Math.min(w / video.videoWidth, h / video.videoHeight), s = k / z;
+      var ox = (w - video.videoWidth * k) / 2, oy = (h - video.videoHeight * k) / 2;
+      var ctx = ueber.getContext('2d');
       ctx.clearRect(0, 0, w, h);
       if (!r) return;
       ctx.lineWidth = 3;
       ctx.strokeStyle = ctx.fillStyle = r.ok ? '#1e9e4a' : '#e8710a';
-      (r.punkte || []).forEach(function(p){ ctx.beginPath(); ctx.arc(p[0] * s, p[1] * s, r.ok ? 9 : 7, 0, 2 * Math.PI); ctx.stroke(); });
+      (r.punkte || []).forEach(function(p){ ctx.beginPath(); ctx.arc(ox + p[0] * s, oy + p[1] * s, r.ok ? 9 : 7, 0, 2 * Math.PI); ctx.stroke(); });
       if (r.umriss){
         ctx.beginPath();
-        r.umriss.forEach(function(p, i){ ctx[i ? 'lineTo' : 'moveTo'](p[0] * s, p[1] * s); });
+        r.umriss.forEach(function(p, i){ ctx[i ? 'lineTo' : 'moveTo'](ox + p[0] * s, oy + p[1] * s); });
         ctx.closePath(); ctx.stroke();
       }
     }
@@ -675,7 +691,9 @@ window.NCWikiBild = (function(){
           letzte = r.punkte;
         } else { ruhig = 0; letzte = null; }
         zeichnen(r, z);
-        hinweis.textContent = r.ok ? T.ruhig : r.hinweis;
+        var text = r.ok ? T.ruhig : r.hinweis;
+        if (hinweis.textContent !== text) hinweis.textContent = text;
+        sagen(text);
         if (ruhig >= 3){ ausloesen(); return; }
       }
       uhr = setTimeout(pruefen, 250);
@@ -690,7 +708,7 @@ window.NCWikiBild = (function(){
       // nicht auslesen, und der Sucher blieb bei «Aufnahme …» haengen.
       if (!laeuft || !video.videoWidth) return;
       laeuft = false; clearTimeout(uhr);
-      hinweis.textContent = T.aufnahme;
+      hinweis.textContent = T.aufnahme; sagen(T.aufnahme, true);
       var c = document.createElement('canvas');
       c.width = video.videoWidth; c.height = video.videoHeight;
       c.getContext('2d').drawImage(video, 0, 0);

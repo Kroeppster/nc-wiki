@@ -81,6 +81,7 @@
 <div class="ab-kamera" id="kt-kamera-feld" hidden></div>
 <p class="ab-hinweis">{{ i18n "kt_tipps" }}</p>
 <p class="ab-status" id="kt-status" role="status" aria-live="polite"></p>
+<p class="nur-vorlesen" id="kt-ansage" role="status" aria-live="polite"></p>
 <div class="ab-ergebnis" id="kt-ergebnis" hidden>
 <p class="ab-summe" id="kt-summe"></p>
 <ul class="ab-meldungen" id="kt-meldungen"></ul>
@@ -90,6 +91,14 @@
 <label class="ab-schalter"><input type="checkbox" id="kt-original"> {{ i18n "bl_original" }}</label>
 <canvas class="ab-bild kt-bild" id="kt-bild"></canvas>
 <p class="ab-hinweis" id="kt-unsicher" hidden></p>
+{{- /* Dasselbe als Liste: Auf dem Handy ist ein Zeichen im Bild nur wenige
+       Millimeter gross, und mit der Tastatur oder einem Screenreader laesst
+       sich das Bild gar nicht bedienen. */ -}}
+<details class="kt-liste" id="kt-liste" hidden>
+<summary id="kt-liste-titel"></summary>
+<p class="ab-hinweis">{{ i18n "kt_liste_hinweis" }}</p>
+<ul id="kt-liste-eintraege"></ul>
+</details>
 </div>
 </div>
 <script>
@@ -118,6 +127,12 @@
     bis: {{ i18n "kt_bis" | jsonify | safeJS }},
     nichts: {{ i18n "kt_nichts" | jsonify | safeJS }},
     unsicher: {{ i18n "kt_unsicher" | jsonify | safeJS }},
+    listeTitel: {{ i18n "kt_liste_titel" | jsonify | safeJS }},
+    listeOrt: {{ i18n "kt_liste_ort" | jsonify | safeJS }},
+    listeFalsch: {{ i18n "kt_liste_falsch" | jsonify | safeJS }},
+    listeAusgelassen: {{ i18n "kt_liste_ausgelassen" | jsonify | safeJS }},
+    listePruefenAn: {{ i18n "kt_liste_pruefen_an" | jsonify | safeJS }},
+    listePruefenAus: {{ i18n "kt_liste_pruefen_aus" | jsonify | safeJS }},
     live: {{ i18n "kt_kamera_raster" | jsonify | safeJS }},
     liveLuecken: {{ i18n "kt_kamera_luecken" | jsonify | safeJS }},
     eigenLiest: {{ i18n "kt_eigen_liest" | jsonify | safeJS }},
@@ -1055,6 +1070,7 @@
   function zeigen(){
     var w = wertung(stand.markiert);
     el('kt-summe').textContent = T.summe.replace('{n}', w.punkte);
+    el('kt-ansage').textContent = el('kt-summe').textContent;   // fuer Screenreader, siehe Antwortbogen
     el('kt-punkte').innerHTML = '<tbody>'
       + '<tr><td>' + T.richtig + '</td><td>' + w.richtig + '</td></tr>'
       + '<tr><td>' + T.falsch + '</td><td>− ' + w.falsch + '</td></tr>'
@@ -1066,7 +1082,39 @@
     el('kt-unsicher').textContent = T.unsicher.replace('{n}', offen);
     el('kt-meldungen').innerHTML = stand.hinweise.map(function(h){ return '<li>' + h + '</li>'; }).join('');
     zeichnen(w);
+    listeZeigen(w);
   }
+  // Alles, was im Bild farbig umrandet ist und nicht einfach «richtig» heisst,
+  // als Knopf: falsch markiert, ausgelassen, bitte pruefen.
+  function listeZeigen(w){
+    var h = '', n = 0;
+    for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+      var i = R * N + C, m = stand.markiert[R][C], z = K.ziele[R][C] === '1';
+      var art = stand.unsicher[i] ? (m ? T.listePruefenAn : T.listePruefenAus) : m && !z ? T.listeFalsch : !m && z && i < w.letztes ? T.listeAusgelassen : '';
+      if (!art) continue;
+      n++;
+      h += '<li><button type="button" class="kt-eintrag" data-r="' + R + '" data-c="' + C + '" aria-pressed="' + (m ? 'true' : 'false') + '">'
+        + T.listeOrt.replace('{z}', R + 1).replace('{s}', C + 1) + ': ' + art + '</button></li>';
+    }
+    el('kt-liste').hidden = !n;
+    el('kt-liste-titel').textContent = T.listeTitel.replace('{n}', n);
+    el('kt-liste-eintraege').innerHTML = h;
+  }
+  function umschalten(R, C){
+    stand.markiert[R][C] = !stand.markiert[R][C];
+    stand.unsicher[R * N + C] = false;
+    zeigen();
+  }
+  el('kt-liste-eintraege').addEventListener('click', function(ev){
+    var k = ev.target.closest ? ev.target.closest('button[data-r]') : null;
+    if (!k || !stand) return;
+    var R = +k.getAttribute('data-r'), C = +k.getAttribute('data-c');
+    umschalten(R, C);
+    // Die Liste ist neu gebaut: zurueck auf denselben Eintrag, oder (ist er
+    // jetzt in Ordnung und deshalb weg) auf den Titel der Liste
+    var neu = el('kt-liste-eintraege').querySelector('button[data-r="' + R + '"][data-c="' + C + '"]');
+    (neu || el('kt-liste-titel')).focus({ preventScroll: true });
+  });
   // Scan-Ansicht (gerade, weisses Papier, nur der Bereich der Zeichen) oder
   // das Foto selbst. In der Scan-Ansicht sitzt jedes Zeichen dort, wo die
   // Abbildung es hinlegt, plus seine Korrektur - umgerechnet in pt.
@@ -1107,7 +1155,19 @@
       var m = stand.markiert[R][C], z = K.ziele[R][C] === '1', farbe = null;
       if (m && z) farbe = '#1e9e4a'; else if (m) farbe = '#c5221f'; else if (z && R * N + C < w.letztes) farbe = '#1a56db';
       var p = zeichenPunkt(R, C);
-      if (farbe){ ctx.beginPath(); ctx.arc(p[0] * s, p[1] * s, rad, 0, 2 * Math.PI); ctx.strokeStyle = farbe; ctx.lineWidth = 2; ctx.stroke(); }
+      if (farbe){
+        // Nicht nur die Farbe unterscheidet (Rot-Gruen-Schwaeche): falsch
+        // markiert mit Kreuz, ausgelassen gestrichelt
+        var x0 = p[0] * s, y0 = p[1] * s, kreuz = m && !z, strich = !m;
+        ctx.strokeStyle = farbe; ctx.lineWidth = 2;
+        if (strich) ctx.setLineDash([Math.max(2, rad * 0.6), Math.max(2, rad * 0.45)]);
+        ctx.beginPath(); ctx.arc(x0, y0, rad, 0, 2 * Math.PI); ctx.stroke();
+        if (strich) ctx.setLineDash([]);
+        if (kreuz){
+          var d = rad * 0.7071;
+          ctx.beginPath(); ctx.moveTo(x0 - d, y0 - d); ctx.lineTo(x0 + d, y0 + d); ctx.moveTo(x0 + d, y0 - d); ctx.lineTo(x0 - d, y0 + d); ctx.stroke();
+        }
+      }
       if (stand.unsicher[R * N + C]){ ctx.strokeStyle = '#e8710a'; ctx.lineWidth = 2; ctx.strokeRect(p[0] * s - rad * 1.2, p[1] * s - rad * 1.2, rad * 2.4, rad * 2.4); }
     }
     // Das letzte markierte Zeichen: ein Balken gleich dahinter. Bis dorthin
@@ -1136,9 +1196,7 @@
       if (!beste || d < beste[0]) beste = [d, R, C];
     }
     if (!beste || beste[0] > 0.6 * K.schrittX * pxptAnzeige()) return;
-    stand.markiert[beste[1]][beste[2]] = !stand.markiert[beste[1]][beste[2]];
-    stand.unsicher[beste[1] * N + beste[2]] = false;
-    zeigen();
+    umschalten(beste[1], beste[2]);
   });
   // (Wirft f, muss das als Fehler ankommen: Ohne try bliebe das Versprechen
   // fuer immer offen und die Seite bei «wird gelesen …» stehen.)

@@ -87,6 +87,20 @@ console.log('\n=== Korrigieren ===');
   await p.selectOption(`#ab-zeilen select[data-nr="${nr}"]`, loesung[nr]);
   const nachher = +(await p.textContent('#ab-summe')).match(/\d+/)[0];
   pruef('Antwort korrigiert -> ein Punkt mehr', nachher === vorher + 1, vorher + ' -> ' + nachher);
+  // In einem aufgeklappten Block korrigieren (so wie von Hand): Der Block
+  // bleibt offen und der Fokus auf dem Feld - frueher klappte er zu.
+  const nr2 = await p.evaluate(l => { const s = [...document.querySelectorAll('#ab-zeilen select[data-nr]')]
+    .find(s => s.value !== l[+s.dataset.nr]); if (!s) return -1; s.closest('details').open = true; return +s.dataset.nr; }, loesung);
+  if (nr2 < 0) pruef('zweite falsche Antwort zum Korrigieren gefunden', false);
+  else {
+    await p.focus(`#ab-zeilen select[data-nr="${nr2}"]`);
+    await p.selectOption(`#ab-zeilen select[data-nr="${nr2}"]`, loesung[nr2]);
+    const danach = await p.evaluate(n => { const s = document.querySelector('#ab-zeilen select[data-nr="' + n + '"]');
+      return { offen: s.closest('details').open, fokus: document.activeElement === s,
+        ansage: document.getElementById('ab-ansage').textContent === document.getElementById('ab-summe').textContent }; }, nr2);
+    pruef('Block bleibt offen, Fokus bleibt auf dem Feld', danach.offen && danach.fokus, JSON.stringify(danach));
+    pruef('Ergebnis steht in der Ansage fuer Screenreader', danach.ansage);
+  }
 }
 // Eigener Loesungsschluessel (wie aus dem Tool): erst der Bogen, dann der
 // Schluessel; Aufgaben ohne Loesung zaehlen nicht mit.

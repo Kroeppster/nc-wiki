@@ -26,6 +26,7 @@
 <script>
 window.NCWikiKonztestLesen = (function(){
   var B = window.NCWikiBild, N = 40, S = 4;
+  var SEITE = {{ i18n "kt_seite_kurz" | jsonify | safeJS }};   // «S.» / «p.»
   var KLASSEN = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   function median(a){
     var s = Array.prototype.slice.call(a).sort(function(x, y){ return x - y; }), n = s.length;
@@ -282,7 +283,7 @@ window.NCWikiKonztestLesen = (function(){
         return k4.then(function(){
           if (!ziele) throw 'keineLoesung';
           return { id: 'eigen', art: 'eigen', farbe: aufg.farbe, x: aufg.x, y: aufg.y, zeichen: aufg.zeichen, ziele: ziele,
-            quelle: aufg.seite.datei + ', S. ' + aufg.seite.nr + ' / ' + aufg.loesungSeite.datei + ', S. ' + aufg.loesungSeite.nr };
+            quelle: aufg.seite.datei + ', ' + SEITE + ' ' + aufg.seite.nr + ' / ' + aufg.loesungSeite.datei + ', ' + SEITE + ' ' + aufg.loesungSeite.nr };
         });
       });
     });
