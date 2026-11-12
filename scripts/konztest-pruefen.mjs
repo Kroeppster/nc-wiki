@@ -113,7 +113,11 @@ if (erwartet._kamera) {
   const kp = await kc.newPage(); fehlerSammeln(kp);
   await kp.goto(ADRESSE, { waitUntil: 'networkidle' });
   pruef('Knopf «Live-Kamera» sichtbar', await kp.isVisible('#kt-live'));
-  await kp.click('#kt-live');
+  // Klick und Blick auf den Ausloeser in einem Zug: Solange die Kamera noch
+  // kein Bild liefert, ist er gesperrt (frueher: Absturz, Sucher hing).
+  const gesperrt = await kp.evaluate(() => { document.getElementById('kt-live').click();
+    const k = document.querySelector('#kt-kamera-feld button'); return !!k && k.disabled; });
+  pruef('Ausloeser gesperrt, bis die Kamera ein Bild liefert', gesperrt);
   const hinweise = new Set();
   for (let i = 0; i < 300; i++) {
     await kp.waitForTimeout(100);
@@ -127,6 +131,12 @@ if (erwartet._kamera) {
   const soll = erwartet._kamera.markiert;
   const falsch = r ? [...Array(1600).keys()].filter(i => r.markiert[i] !== soll[i] && !r.unsicher.includes(i)) : null;
   pruef('selbst ausgeloest und richtig gelesen', r && falsch.length === 0, r ? falsch.length + ' falsch' : 'kein Ergebnis: ' + await kp.evaluate(() => document.getElementById('kt-status').textContent));
+  // Bei laufender Kamera auf «eigener Konztest» wechseln, ohne dass einer
+  // gespeichert ist: Die Kamera muss enden (frueher riss die Pruefschleife
+  // ab, der Sucher stand still und die Kamera lief weiter).
+  await kp.click('#kt-live'); await kp.waitForTimeout(800);
+  await kp.selectOption('#kt-testsim', 'eigen'); await kp.waitForTimeout(600);
+  pruef('Wechsel der Auswahl beendet die Kamera', await kp.evaluate(() => document.getElementById('kt-kamera-feld').hidden && !document.querySelector('#kt-kamera-feld video')));
   await kb.close();
 }
 // Eigener Konztest: Aufgabe und Loesung als PDF hochladen. Der Browser muss
@@ -179,7 +189,34 @@ console.log('\n=== Eigener Konztest aus PDF (wie das Skript?) ===');
   const re = await lesen(ep), se = erwartet['foto-schraeg.jpg'].markiert;
   const fe = re ? [...Array(1600).keys()].filter(i => re.markiert[i] !== se[i] && !re.unsicher.includes(i)).length : -1;
   pruef('eigener Konztest: Foto richtig gelesen', fe === 0, re ? fe + ' falsch' : await ep.evaluate(() => document.getElementById('kt-status').textContent));
+  // Der eigene Konztest bleibt im Browser gespeichert - und laesst sich loeschen
+  pruef('Knopf «Gespeicherten Konztest löschen» sichtbar', await ep.isVisible('#kt-eigen-loeschen'));
+  await ep.click('#kt-eigen-loeschen');
+  pruef('geloescht: Speicher leer, Knopf weg', await ep.evaluate(() => localStorage.getItem('ncwiki-kt-eigen') === null && document.getElementById('kt-eigen-loeschen').hidden));
   await eb.close();
+}
+// Fehlerfaelle: Die Seite darf nie bei «wird gelesen …» stehen bleiben.
+console.log('\n=== Fehlerfaelle ===');
+{
+  const fb = await chromium.launch();
+  // 1) Unbrauchbarer Stand im Browser-Speicher (aeltere Fassung, fremder Inhalt)
+  const fc = await fb.newContext({ viewport: { width: 1200, height: 1000 } });
+  await vorbereiten(fc);
+  await fc.addInitScript(() => { try { if (!sessionStorage.getItem('einmal')){ sessionStorage.setItem('einmal', '1'); localStorage.setItem('ncwiki-kt-eigen', '{"ziele":5,"zeichen":"x"}'); } } catch (e) {} });
+  const fp = await fc.newPage(); const vorher = js.length; fehlerSammeln(fp);
+  await fp.goto(ADRESSE, { waitUntil: 'networkidle' });
+  pruef('unbrauchbarer gespeicherter Konztest: verworfen, Seite laeuft', js.length === vorher
+    && await fp.evaluate(() => localStorage.getItem('ncwiki-kt-eigen') === null) && await fp.isVisible('#kt-live'), js.slice(vorher).join(' | '));
+  // 2) Ausnahme mitten im Lesen (hier: die Leinwand laesst sich nicht anlegen)
+  await fp.evaluate(() => { window.__gc = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function(){ throw new Error('Probe: keine Leinwand'); }; });
+  await fp.setInputFiles('#kt-datei', join(ORDNER, 'scan.png'));
+  const gemeldet = await fp.waitForFunction(() => document.getElementById('kt-status').classList.contains('ab-fehler'), null, { timeout: 8000 }).then(() => true, () => false);
+  pruef('Ausnahme beim Lesen: Fehlermeldung statt Haenger', gemeldet, await fp.evaluate(() => document.getElementById('kt-status').textContent));
+  await fp.evaluate(() => { HTMLCanvasElement.prototype.getContext = window.__gc; });
+  await fp.setInputFiles('#kt-datei', join(ORDNER, 'scan.png'));
+  await fp.waitForFunction(() => !document.getElementById('kt-ergebnis').hidden || document.getElementById('kt-status').classList.contains('ab-fehler'), null, { timeout: 120000 });
+  pruef('danach wieder lesbar', await fp.evaluate(() => !document.getElementById('kt-ergebnis').hidden));
+  await fb.close();
 }
 pruef('keine JS-Fehler', js.length === 0, js.join(' | '));
 console.log(`\n==== ${ok} bestanden, ${fail} nicht ====`);

@@ -490,6 +490,8 @@ kt_eigen_ok: "Test letto: {z} simboli bersaglio, {k} simboli diversi ({quelle}).
 kt_eigen_keine_aufgabe: "Non è stata trovata nessuna pagina con 40 righe di 40 simboli stampati a colori. Il compito del test è incluso – in PDF, con i simboli a colori (magenta), non in nero? Un foglio delle soluzioni da solo non basta. I test di concentrazione delle nostre simulazioni e serie di esercizi si scelgono direttamente qui sopra, senza caricare nulla."
 kt_eigen_keine_loesung: "Il compito è stato letto, ma non è stato trovato nessun foglio delle soluzioni (caselle riempite sui simboli bersaglio). Seleziona compito e soluzione insieme."
 kt_eigen_fehlt: "Scegli prima il test di concentrazione in PDF (compito e foglio delle soluzioni)."
+kt_privat: "La foto non lascia il tuo dispositivo: la lettura e la valutazione avvengono direttamente nel browser, nulla viene caricato. Viene salvato solo un tuo test di concentrazione, e solo in questo browser."
+kt_eigen_loeschen: "Elimina il test salvato"
 kt_intro: "Fotografa il tuo test di concentrazione svolto (o carica una scansione). I segni vengono letti e contati secondo la regola delle istruzioni."
 kt_foto: "Foto o scansione del test di concentrazione"
 kt_tipps: "Per un buon risultato: segna come richiesto in alto sul foglio – con un fineliner spesso nero o blu, un tratto obliquo attraverso il simbolo. Foglio steso in piano, tutte le 40 righe intere e libere nell’immagine (nessun dito sopra), luce il più uniforme possibile senza riflessi; un angolo leggermente obliquo va bene."

@@ -45,7 +45,7 @@
 <div class="ab kt" id="kt-wurzel" data-pagefind-ignore>
 <script type="application/json" id="kt-daten">{{ $d | jsonify | safeJS }}</script>
 <p class="ab-intro">{{ i18n "kt_intro" }}</p>
-<p class="ab-privat">{{ i18n "ab_privat" }}</p>
+<p class="ab-privat">{{ i18n "kt_privat" }}</p>
 <div class="ab-eingabe">
 <label class="ab-feld">{{ i18n "kt_konztest" }}
 <select id="kt-testsim">
@@ -70,6 +70,7 @@
 <label class="btn btn-ghost ab-knopf">{{ i18n "ab_datei_waehlen" }}<input type="file" id="kt-eigen-datei" accept="application/pdf,.pdf" multiple></label>
 <p class="ab-hinweis">{{ i18n "kt_eigen_hinweis" }}</p>
 <p class="ab-status" id="kt-eigen-status" role="status" aria-live="polite"></p>
+<button type="button" class="btn btn-ghost" id="kt-eigen-loeschen" hidden>{{ i18n "kt_eigen_loeschen" }}</button>
 </div>
 <p class="ab-feld">{{ i18n "kt_foto" }}</p>
 <div class="ab-knoepfe">
@@ -136,7 +137,18 @@
   var VORSPRUNG = 2.5;             // und das Mehrfache gegenueber dem naechstbesten Platz
   var K = null;                    // der gewaehlte Konztest aus data/konztest.yaml (oder ein eigener)
   var EIGEN = null;                // ein eigener Konztest, aus PDF gelesen (konztest-lesen.html)
-  try { EIGEN = JSON.parse(localStorage.getItem('ncwiki-kt-eigen')); } catch (e) {}
+  // Was gespeichert ist, nur uebernehmen, wenn es aussieht wie ein Konztest:
+  // Ein Stand aus einer aelteren Fassung (oder sonst etwas unter diesem
+  // Namen) liess das Skript sonst beim Laden abbrechen - Live-Kamera und
+  // Hochladen gingen dann nicht mehr.
+  function eigenGueltig(e){
+    var liste = function(a, text){ return Array.isArray(a) && a.length === N && a.every(function(v){ return text ? typeof v === 'string' && v.length === N : typeof v === 'number' && isFinite(v); }); };
+    return !!e && typeof e === 'object' && liste(e.x) && liste(e.y) && liste(e.zeichen, true) && liste(e.ziele, true) && typeof e.quelle === 'string';
+  }
+  try {
+    EIGEN = JSON.parse(localStorage.getItem('ncwiki-kt-eigen'));
+    if (!eigenGueltig(EIGEN)){ EIGEN = null; localStorage.removeItem('ncwiki-kt-eigen'); }
+  } catch (e) { EIGEN = null; }
   function waehlen(){
     var id = el('kt-testsim').value;
     el('kt-eigen').hidden = id !== 'eigen';
@@ -1128,7 +1140,10 @@
     stand.unsicher[beste[1] * N + beste[2]] = false;
     zeigen();
   });
-  function spaeter(f){ return new Promise(function(ok){ setTimeout(function(){ ok(f()); }, 30); }); }
+  // (Wirft f, muss das als Fehler ankommen: Ohne try bliebe das Versprechen
+  // fuer immer offen und die Seite bei «wird gelesen …» stehen.)
+  function spaeter(f){ return new Promise(function(ok, nein){ setTimeout(function(){ try { ok(f()); } catch (e) { nein(e); } }, 30); }); }
+  function unerwartet(e){ try { console.error(e); } catch (e2) {} return typeof e === 'string' ? e : T.fehlerBild; }
   function nichtGefunden(r){ return r.fehler === T.grau || r.fehler.indexOf(T.keinRaster.split('{n}')[0]) === 0; }
   function auswerten(liste, hochgeladen, live){
     melden(T.liest);
@@ -1162,7 +1177,7 @@
       el('kt-ergebnis').hidden = false;
       zeigen();
       el('kt-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
-    });
+    }).then(null, function(e){ melden(unerwartet(e), true); });
   }
   function datei(d){
     if (!d) return;
@@ -1175,14 +1190,24 @@
     el(id).addEventListener('change', function(){ datei(this.files && this.files[0]); this.value = ''; });
   });
   waehlen();
-  el('kt-testsim').addEventListener('change', function(){ waehlen(); if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); } });
+  // Eine laufende Live-Kamera gehoert zum bisher gewaehlten Konztest: beenden.
+  var kam = null;
+  function kameraAus(){ if (kam){ kam.stopp(); kam = null; } }
+  el('kt-testsim').addEventListener('change', function(){ kameraAus(); waehlen(); if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); } });
   // Eigener Konztest: Aufgabe und Loesung als PDF
   function eigenMelden(text, fehler){ el('kt-eigen-status').textContent = text; el('kt-eigen-status').className = 'ab-status' + (fehler ? ' ab-fehler' : ''); }
   function eigenZeigen(){
+    el('kt-eigen-loeschen').hidden = !EIGEN;
     if (EIGEN) eigenMelden(T.eigenOk.replace('{z}', EIGEN.ziele.join('').split('1').length - 1)
       .replace('{k}', new Set(EIGEN.zeichen.join('')).size).replace('{quelle}', EIGEN.quelle));
   }
   eigenZeigen();
+  el('kt-eigen-loeschen').addEventListener('click', function(){
+    try { localStorage.removeItem('ncwiki-kt-eigen'); } catch (e) {}
+    EIGEN = null;
+    kameraAus(); waehlen(); eigenZeigen(); eigenMelden('');
+    if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); }
+  });
   el('kt-eigen-datei').addEventListener('change', function(){
     var dateien = Array.prototype.slice.call(this.files || []);
     this.value = '';
@@ -1204,6 +1229,7 @@
   // Ausgeloest wird ab 850 px Blattbreite (gut 1.4 px je pt: so fein
   // braucht das Suchen der Flecken das Bild, flecken()).
   function livePruefen(bild){
+    if (!K) return { ok: false, punkte: [], hinweis: T.eigenFehlt };
     // mit Weissabgleich wie beim Auswerten: Unter warmem Raumlicht liegt Blau
     // kaum ueber Gruen, und der Sucher fand 0 % des Rasters (Kamera-Labor
     // Oktober 2026), obwohl das Foto selbst lesbar gewesen waere
@@ -1254,7 +1280,7 @@
     // stehende Zeichen - Serie 2024, Testsimulation 2023 - fanden sich im
     // verkleinerten Bild nur zu 40 %, und der Sucher loeste nie aus. Kaum
     // langsamer: Die Flecken muessen dort seltener neu gesucht werden.)
-    B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1920, minBreite: 850, minLesbar: 700,
+    kam = B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1920, minBreite: 850, minLesbar: 700,
       fertig: function(q, ersatz){ auswerten([q].concat(ersatz || []), false, true); }, fehler: function(t){ melden(t, true); } });
   });
   // Fuer die Pruefung (scripts/konztest-pruefen.mjs): der gelesene Zustand

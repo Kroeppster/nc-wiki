@@ -283,6 +283,9 @@ window.NCWikiBild = (function(){
   // quelle: ein <img> oder eine Leinwand (gerenderte PDF-Seite)
   function bildAus(quelle){
     var qw = quelle.naturalWidth || quelle.width, qh = quelle.naturalHeight || quelle.height;
+    // Ein Bild ohne Flaeche (kaputte Datei, Videobild vor dem Start der
+    // Kamera): als Meldung enden, nicht mit einem Absturz beim Auslesen
+    if (!qw || !qh) throw T.fehlerBild;
     var lang = Math.max(qw, qh);
     var ziel = Math.min(Math.max(LANGE_SEITE, lang), 2 * LANGE_SEITE), z = ziel / lang;
     var c = document.createElement('canvas');
@@ -315,7 +318,11 @@ window.NCWikiBild = (function(){
           return seite.render({ canvasContext: ctx, viewport: vp }).promise.then(function(){ seiten.push(c); });
         });
       })(i);
-      return kette.then(function(){ return seiten; });
+      // Das PDF wieder schliessen: Jedes offene PDF haelt einen eigenen
+      // Hintergrundprozess mit der ganzen Datei im Speicher, bis die Seite
+      // verlassen wird. Die gerenderten Seiten bleiben.
+      var zu = function(){ try { pdf.destroy(); } catch (e) {} };
+      return kette.then(function(){ zu(); return seiten; }, function(f){ zu(); throw f; });
     }, function(){ throw T.fehlerPdf; });
   }
   // Ein PDF fuer eigene Zwecke (Konztest aus Aufgabe und Loesung lesen):
@@ -531,7 +538,14 @@ window.NCWikiBild = (function(){
         if (m){ dazuzaehlen(summe, ref, d, w, h, m, fm); genutzt++; }
       }
       if (versucht < anzahl && Date.now() - start < STAPEL_ZEIT){
-        if (video.requestVideoFrameCallback) video.requestVideoFrameCallback(function(){ naechstes(); });
+        // Kommt kein neues Videobild mehr (Tab im Hintergrund, Kamera vom
+        // System angehalten), meldet sich requestVideoFrameCallback nie - die
+        // Aufnahme blieb dann fuer immer bei «Aufnahme …». Nach einer Sekunde
+        // geht es deshalb auch ohne neues Bild weiter, bis STAPEL_ZEIT um ist.
+        if (video.requestVideoFrameCallback){
+          var dran = false, not = setTimeout(function(){ if (!dran){ dran = true; naechstes(); } }, 1000);
+          video.requestVideoFrameCallback(function(){ if (!dran){ dran = true; clearTimeout(not); naechstes(); } });
+        }
         else setTimeout(naechstes, 80);
         return;
       }
@@ -602,6 +616,8 @@ window.NCWikiBild = (function(){
     }
     knoepfe[1].addEventListener('click', function(){ abgebrochen = true; stopp(); if (o.abbruch) o.abbruch(); });
     knoepfe[0].addEventListener('click', ausloesen);
+    // Ausloesen geht erst, wenn die Kamera ein Bild liefert (siehe ausloesen)
+    knoepfe[0].disabled = true;
     function zeichnen(r, z){
       var w = video.clientWidth, h = video.clientHeight;
       ueber.width = w; ueber.height = h;
@@ -638,7 +654,13 @@ window.NCWikiBild = (function(){
         gut.width = vw; gut.height = vh; gut.getContext('2d').drawImage(video, 0, 0);
         var ctx = klein.getContext('2d');
         ctx.drawImage(gut, 0, 0, klein.width, klein.height);
-        var r = o.pruefen(new Bild(ctx.getImageData(0, 0, klein.width, klein.height).data, klein.width, klein.height));
+        knoepfe[0].disabled = false;
+        // Wirft die Pruefung des Werkzeugs, darf die Schleife nicht abreissen:
+        // Der Sucher stand sonst still, und die Kamera lief weiter.
+        var r = null;
+        try { r = o.pruefen(new Bild(ctx.getImageData(0, 0, klein.width, klein.height).data, klein.width, klein.height)); }
+        catch (e) { try { console.error(e); } catch (e2) {} }
+        if (!r) r = { ok: false, punkte: [], hinweis: T.startet };
         // (Liefert die Kamera fuer diesen Bogen ohnehin zu wenig, gleich der
         // Hinweis aufs Foto - nicht erst, wenn alles gefunden ist: Der
         // Konztest wird bei 720p gar nicht gefunden, der Sucher meldete
@@ -663,7 +685,10 @@ window.NCWikiBild = (function(){
     // Autofokus - das ist oft viermal so gross. Kommt es nicht in drei
     // Sekunden, gilt das Videobild.
     function ausloesen(){
-      if (!laeuft) return;
+      // Noch kein Videobild (die Kamera startet erst, oder die Erlaubnis ist
+      // noch nicht erteilt): nichts tun. Ein Bild ohne Flaeche liess sich
+      // nicht auslesen, und der Sucher blieb bei «Aufnahme …» haengen.
+      if (!laeuft || !video.videoWidth) return;
       laeuft = false; clearTimeout(uhr);
       hinweis.textContent = T.aufnahme;
       var c = document.createElement('canvas');
@@ -700,6 +725,9 @@ window.NCWikiBild = (function(){
       var p = video.play(); if (p && p.catch) p.catch(function(){});
       pruefen();
     }, function(){
+      // Schon abgebrochen oder von einer neueren Kamera abgeloest: weder
+      // deren Sucher wegraeumen noch eine Fehlermeldung zeigen
+      if (abgebrochen) return;
       stopp();
       if (o.fehler) o.fehler(T.kameraFehler);
     });

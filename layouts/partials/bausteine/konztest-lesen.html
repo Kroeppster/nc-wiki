@@ -230,11 +230,18 @@ window.NCWikiKonztestLesen = (function(){
     }
     return { mag: mag, voll: voll };
   }
+  // Die geoeffneten PDFs am Ende wieder schliessen (auch im Fehlerfall):
+  // Jedes haelt sonst einen Hintergrundprozess mit der ganzen Datei im Speicher.
   function ausPdfs(dateien, fortschritt){
+    var offen = [], zu = function(){ offen.forEach(function(pdf){ try { pdf.destroy(); } catch (e) {} }); };
+    return lesen(dateien, fortschritt, offen).then(function(k){ zu(); return k; }, function(f){ zu(); throw f; });
+  }
+  function lesen(dateien, fortschritt, offen){
     var seiten = [];
     var kette = Promise.resolve();
     dateien.forEach(function(datei){
       kette = kette.then(function(){ return B.pdfOeffnen(datei); }).then(function(pdf){
+        offen.push(pdf);
         for (var nr = 1; nr <= Math.min(pdf.numPages, 200); nr++) seiten.push({ pdf: pdf, nr: nr, datei: datei.name });
       });
     });

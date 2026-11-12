@@ -235,6 +235,18 @@ console.log('\n=== Live-Kamera: mehrere Bilder mitteln ===');
   }
 }
 pruef('keine JS-Fehler', js.length === 0, js.join(' | '));
+// Fehlerfall: Eine Ausnahme mitten im Lesen (hier: die Leinwand laesst sich
+// nicht anlegen) muss als Meldung enden - frueher blieb die Seite fuer immer
+// bei «Der Bogen wird gelesen …» stehen.
+console.log('\n=== Fehlerfall: Ausnahme beim Lesen ===');
+{
+  await p.evaluate(() => { document.getElementById('ab-status').textContent = ''; document.getElementById('ab-status').className = 'ab-status';
+    window.__gc = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function(){ throw new Error('Probe: keine Leinwand'); }; });
+  await p.setInputFiles('#ab-datei', join(ORDNER, 'scan.png'));
+  const gemeldet = await p.waitForFunction(() => document.getElementById('ab-status').classList.contains('ab-fehler'), null, { timeout: 8000 }).then(() => true, () => false);
+  pruef('Fehlermeldung statt Haenger', gemeldet, await p.evaluate(() => document.getElementById('ab-status').textContent));
+  await p.evaluate(() => { HTMLCanvasElement.prototype.getContext = window.__gc; });
+}
 console.log(`\n==== ${ok} bestanden, ${fail} nicht ====`);
 await b.close();
 process.exit(fail ? 1 : 0);

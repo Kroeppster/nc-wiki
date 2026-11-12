@@ -500,6 +500,8 @@ kt_eigen_ok: "Konzentrationstest gelesen: {z} Zielzeichen, {k} verschiedene Zeic
 kt_eigen_keine_aufgabe: "Darin wurde keine Seite mit 40 Zeilen zu 40 farbig gedruckten Zeichen gefunden. Ist die Aufgabe des Konzentrationstests dabei – als PDF, mit den Zeichen in Farbe (Magenta), nicht schwarz? Ein Lösungsblatt allein genügt nicht. Die Konzentrationstests unserer Testsimulationen und Übungsserien kannst du oben direkt auswählen, ohne etwas hochzuladen."
 kt_eigen_keine_loesung: "Die Aufgabe ist gelesen, aber kein Lösungsblatt gefunden (ausgefüllte Kästchen auf den Zielzeichen). Wähle Aufgabe und Lösung zusammen aus."
 kt_eigen_fehlt: "Wähle zuerst den Konzentrationstest als PDF (Aufgabe und Lösungsblatt)."
+kt_privat: "Das Foto verlässt dein Gerät nicht: Gelesen und ausgewertet wird direkt in deinem Browser, nichts wird hochgeladen. Gespeichert wird nur ein eigener Konzentrationstest, und nur in diesem Browser."
+kt_eigen_loeschen: "Gespeicherten Konzentrationstest löschen"
 kt_intro: "Fotografiere deinen bearbeiteten Konzentrationstest (oder lade einen Scan hoch). Die Markierungen werden gelesen und nach der Regel der Anleitung gezählt."
 kt_foto: "Foto oder Scan des Konzentrationstests"
 kt_tipps: "So klappt es am besten: markieren wie oben auf dem Blatt verlangt – mit einem dicken schwarzen oder blauen Fineliner ein schräger Strich durch das Zeichen. Blatt flach hinlegen, alle 40 Zeilen ganz und frei im Bild (kein Finger darauf), möglichst gleichmässiges Licht ohne Spiegelung; ein leicht schräger Winkel geht."

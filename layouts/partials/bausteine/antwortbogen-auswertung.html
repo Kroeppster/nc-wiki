@@ -954,7 +954,10 @@
     el(id).className = 'ab-status' + (fehler ? ' ab-fehler' : '');
   }
   // Erst die Meldung zeigen lassen, dann rechnen (das dauert einen Moment)
-  function spaeter(f){ return new Promise(function(ok){ setTimeout(function(){ ok(f()); }, 30); }); }
+  // (Wirft f, muss das als Fehler ankommen: Ohne try bliebe das Versprechen
+  // fuer immer offen und die Seite bei «wird gelesen …» stehen.)
+  function spaeter(f){ return new Promise(function(ok, nein){ setTimeout(function(){ try { ok(f()); } catch (e) { nein(e); } }, 30); }); }
+  function unerwartet(e){ try { console.error(e); } catch (e2) {} return typeof e === 'string' ? e : T.fehlerBild; }
   function bogenWaehlen(datei){
     if (!datei) return;
     el('ab-ergebnis').hidden = true;
@@ -969,13 +972,14 @@
       try { stand.scan = B.scan(r.bild, r.abb, [0, 0, A4[0], A4[1]], 1100); } catch (e) { stand.scan = null; }
       zeigen();
       if (!el('ab-ergebnis').hidden) el('ab-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
-    });
+    }).then(null, function(e){ melden('ab-status', unerwartet(e), true); });
   }
   // Ein Loesungs-PDF mit Liste («27 D», wie die offiziellen und die des Tools):
   // die Loesungen aus dem Text, wie scripts/antwortbogen-loesungen.py. Nur wenn
   // jede gefundene Nummer genau einen Buchstaben hat - sonst lieber das Bild.
   function textSchluessel(datei){
     return pdfOeffnen(datei).then(function(pdf){
+      var zu = function(){ try { pdf.destroy(); } catch (e) {} };   // sonst bleibt die Datei im Speicher
       var texte = [], kette = Promise.resolve();
       for (var i = 1; i <= Math.min(pdf.numPages, 12); i++) (function(i){
         kette = kette.then(function(){ return pdf.getPage(i); }).then(function(s){ return s.getTextContent(); })
@@ -994,7 +998,7 @@
         var l = [];
         for (var n = 1; n <= Math.max.apply(null, nummern); n++) l.push(je[n] ? je[n][0] : '');
         return l;
-      });
+      }).then(function(l){ zu(); return l; }, function(f){ zu(); throw f; });
     }).then(null, function(){ return null; });
   }
   function schluesselWaehlen(datei){
@@ -1040,6 +1044,9 @@
     el('ab-schluessel').hidden = !eigen();
     if (stand) zeigen();
   });
+  // Auch beim Laden: Stellt der Browser nach dem Neuladen die Auswahl
+  // «eigener Schluessel» wieder her, blieb das Feld dafuer sonst verborgen.
+  el('ab-schluessel').hidden = !eigen();
   ['ab-kamera', 'ab-datei'].forEach(function(id){
     el(id).addEventListener('change', function(){ bogenWaehlen(this.files && this.files[0]); this.value = ''; });
   });

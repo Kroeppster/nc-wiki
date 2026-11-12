@@ -491,6 +491,8 @@ kt_eigen_ok: "Test lu : {z} signes cibles, {k} signes différents ({quelle}). P
 kt_eigen_keine_aufgabe: "Aucune page avec 40 lignes de 40 signes imprimés en couleur n’a été trouvée. L’énoncé du test est-il inclus – en PDF, avec les signes en couleur (magenta), pas en noir ? Une feuille de solutions seule ne suffit pas. Les tests de concentration de nos simulations et séries d’exercices se choisissent directement ci-dessus, sans rien charger."
 kt_eigen_keine_loesung: "L’énoncé est lu, mais aucune feuille de solutions n’a été trouvée (cases remplies sur les signes cibles). Sélectionne l’énoncé et la solution ensemble."
 kt_eigen_fehlt: "Choisis d’abord le test de concentration en PDF (énoncé et feuille de solutions)."
+kt_privat: "La photo ne quitte pas ton appareil : la lecture et l’évaluation se font directement dans ton navigateur, rien n’est envoyé. Seul ton propre test de concentration est enregistré, et uniquement dans ce navigateur."
+kt_eigen_loeschen: "Supprimer le test enregistré"
 kt_intro: "Photographie ton test de concentration rempli (ou charge un scan). Les marques sont lues et comptées selon la règle de la consigne."
 kt_foto: "Photo ou scan du test de concentration"
 kt_tipps: "Pour un bon résultat : marque comme demandé en haut de la feuille – avec un feutre épais noir ou bleu, un trait oblique à travers le signe. Feuille posée à plat, les 40 lignes entières et dégagées dans l’image (pas de doigt dessus), lumière aussi uniforme que possible sans reflet ; un angle légèrement oblique fonctionne."
