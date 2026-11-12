@@ -47,7 +47,6 @@ footer_newsletter_heading: "Newsletter"
 footer_newsletter_text: "Resta aggiornato·a su date e nuovo materiale."
 hauptsponsoren_titel: "Con il sostegno di"
 
-alpha_notice_aria_label: "Avviso importante"
 alpha_notice_title: "Versione alpha"
 alpha_notice_text: "Questo sito è ancora in fase di sviluppo. Alcuni contenuti sono provvisori e alcune funzionalità potrebbero cambiare o essere incomplete. Grazie per la comprensione!"
 alpha_notice_dismiss: "Capito"
@@ -118,18 +117,7 @@ experience_form_success_body: "Abbiamo ricevuto la tua testimonianza e ti ricont
 experience_form_error_heading: "Invio non riuscito"
 experience_form_error_body: "Riprova oppure scrivici direttamente a info@nc-wiki.ch."
 
-label_sprache: "Lingua"
-label_studiengaenge: "Corsi di laurea"
-label_studienplaetze: "Posti di studio"
 
-uni_detail_kanton: "Cantone"
-uni_detail_ems: "AMS richiesto"
-uni_detail_auswahlverfahren: "Procedura di selezione"
-uni_detail_places_unknown: "In verifica"
-uni_detail_besonderheiten: "Particolarità"
-uni_detail_website: "Sito dell'università"
-uni_detail_stand: "Ultima verifica"
-uni_detail_quelle: "Fonte"
 uni_detail_report: "Informazione superata? Segnalacelo"
 uni_detail_not_found: "Nessun dato è stato trovato per questa pagina."
 
@@ -142,16 +130,10 @@ uniguide_table_all: "Tutte"
 uniguide_table_leer: "Nessuna università corrisponde a questa selezione."
 uniguide_table_with_ems: "Con AMS"
 uniguide_table_without_ems: "Senza AMS"
-uniguide_table_th_uni: "Università"
-uniguide_table_th_ems: "AMS"
 uniguide_table_places_unknown: "in verifica"
 uniguide_table_empty: "Nessuna università disponibile al momento."
 
 # --- Pagina di dettaglio di un'università: informazioni aggiuntive ----------
-uni_detail_website_medizin: "Facoltà di medicina"
-uni_detail_anmeldefrist: "Termine d'iscrizione"
-uni_detail_studienbeginn: "Inizio degli studi"
-uni_detail_semestergebuehr: "Tassa semestrale"
 uni_detail_section_zulassung: "Ammissione"
 uni_detail_section_studium: "Studi e sede"
 uni_detail_section_quellen: "Fonti"
@@ -317,7 +299,6 @@ pm_pause_label: "Pausa"
 
 # --- Fakten-Generator (aktuell nur auf der Alpha-Seite) ---
 fg_keine_liste: "Per questa lingua non esistono ancora gli elenchi di parole."
-fg_intro: "Questo generatore crea ogni volta un nuovo gruppo di 15 persone. Il materiale di questo sottotest si usa una sola volta: ciò che hai già imparato a memoria non serve più per esercitarti."
 fg_zeit_einpraegen: "Memorizzazione"
 fg_zeit_pause: "Distrazione"
 fg_zeit_abfrage: "Riproduzione"
@@ -331,19 +312,13 @@ fg_phase_pause: "Distrazione"
 fg_phase_abfrage: "Fase di riproduzione"
 fg_phase_ergebnis: "Risultato"
 fg_pause_hinweis: "Nel test vero qui si inserisce un sottotest del tutto diverso. Alzati un attimo o fai un calcolo – senza questa pausa alleni solo la memoria a breve termine."
-fg_das_war_das_set: "Questo era il gruppo"
 fg_punkte_von: "{n} su {von} corretti"
 
 # --- Drucken / als PDF sichern ---
 fg_drucken: Salva come PDF / stampa
 fg_drucken_dieses: Stampa questo gruppo
-fg_drucken_hinweis: "Per esercitarsi su carta: la stampa è costruita come un fascicolo di test – fase di apprendimento (parte A), fase di riproduzione (parte B), foglio delle risposte e soluzioni. Nella finestra di stampa si può scegliere anche «Salva come PDF» invece di una stampante."
 
 # --- Figuren-Generator (Alpha) ---
-fig_intro: Questo generatore crea 18 nuove figure. Ognuna è divisa in cinque campi
-  di grandezza diversa, di cui esattamente uno è nero. Dopo la pausa le stesse figure vengono
-  riproposte in un altro ordine – indica quale campo era nero.
-fig_drucken_hinweis: "Per esercitarsi su carta: la stampa è costruita come un fascicolo di test – fase di apprendimento (parte A), fase di riproduzione (parte B), foglio delle risposte e soluzioni. Nella finestra di stampa si può scegliere anche «Salva come PDF» invece di una stampante."
 
 # --- Testheft-Format der beiden Generatoren (bausteine/ems-heft.html) ---
 # EIGENE ÜBERSETZUNG des deutschen Testhefts. Sobald ein italienisches

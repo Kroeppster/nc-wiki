@@ -9,7 +9,13 @@
 <script>
 (function(){
   var sendingLabel = {{ i18n "experience_form_sending" }};
-  document.querySelectorAll('form.contact-form').forEach(function(form){
+  /* Nur Kontakt- und Mitmachen-Formular: Die Klasse "contact-form" tragen
+     (wegen des Aussehens) auch Newsletter-, Erfahrungsbericht- und
+     Fehlerformular - die senden mit ihrem eigenen Skript. Und jedes Formular
+     nur einmal, auch wenn dieses Skript zweimal auf einer Seite steht. */
+  document.querySelectorAll('form.contact-form:not(.newsletter-form):not(.experience-form):not(.report-error)').forEach(function(form){
+    if(form.getAttribute('data-senden-bereit')) return;
+    form.setAttribute('data-senden-bereit', '1');
     var success = form.querySelector('.form-success');
     var error = form.querySelector('.form-error');
     var submitBtn = form.querySelector('button[type="submit"]');

@@ -34,8 +34,10 @@
                "parent" (die Kinder hängen an ".Children"), das "if .URL" ist
                nur eine zusätzliche Absicherung für den Fall, dass mal ein
                reiner Gruppen-Punkt ohne eigene Seite dazukäme. */}}
+          {{/* «Kontakt» steht im Hauptmenü UND im Menü «legal» gleich daneben -
+               hier deshalb ausgelassen, sonst stand es zweimal in der Fusszeile. */}}
           {{ range .Site.Menus.main }}
-          {{ if .URL }}
+          {{ if and .URL (ne .Identifier "kontakt") }}
           <li><a href="{{ .URL }}">{{ .Name }}</a></li>
           {{ end }}
           {{ end }}

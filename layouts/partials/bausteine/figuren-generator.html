@@ -328,6 +328,14 @@
       if(drin(x+0.5,y+0.5,form.punkte)) drinnen.push(x*G+y);
     if(drinnen.length < G*G*0.14) return null;
     var saat=[], bandwinkel=null;
+    // Das Feld der Figur, das einem Punkt am naechsten liegt (fuer die Saatpunkte)
+    function naechstesFeld(zx,zy){
+      var best=drinnen[0], bd=1e9;
+      drinnen.forEach(function(k){
+        var d=Math.hypot(Math.floor(k/G)-zx, k%G-zy);
+        if(d<bd){ bd=d; best=k; } });
+      return best;
+    }
     if(stil.bauart==='band'){
       // BAENDER: Die Saatpunkte liegen auf einer Linie. Daraus werden fuenf
       // breite Baender quer durch die Figur - jedes Feld hat dann nur zwei
@@ -339,16 +347,9 @@
       // Voronoi-Zellen und sind damit von sich aus zusammenhaengend.
       var bw=Z(0,Math.PI), bx=Math.cos(bw), by=Math.sin(bw);
       bandwinkel=bw;
-      var naechste1=function(zx,zy){
-        var best=drinnen[0], bd=1e9;
-        drinnen.forEach(function(k){
-          var d=Math.hypot(Math.floor(k/G)-zx, k%G-zy);
-          if(d<bd){ bd=d; best=k; } });
-        return best;
-      };
       for(var i=0;i<5;i++){
         var t=(i-2)/2*form.R*Z(1.1,1.6);
-        saat.push(naechste1(G/2+bx*t+Z(-3,3), G/2+by*t+Z(-3,3)));
+        saat.push(naechstesFeld(G/2+bx*t+Z(-3,3), G/2+by*t+Z(-3,3)));
       }
     } else if(stil.bauart==='nabe'){
 
@@ -356,18 +357,11 @@
       // Erfindung - unsere Serie 2026 ist durchgehend so gebaut, waehrend
       // 2025 frei aufgeteilt ist. Eine ganze Serie in dieser Bauart sieht
       // sofort anders aus als eine freie.
-      var naechste=function(zx,zy){
-        var best=drinnen[0], bd=1e9;
-        drinnen.forEach(function(k){
-          var d=Math.hypot(Math.floor(k/G)-zx, k%G-zy);
-          if(d<bd){ bd=d; best=k; } });
-        return best;
-      };
-      saat.push(naechste(G/2+Z(-6,6), G/2+Z(-6,6)));
+      saat.push(naechstesFeld(G/2+Z(-6,6), G/2+Z(-6,6)));
       var dreh0=Z(0,6.3);
       for(var i=0;i<4;i++){
         var w=dreh0+i*Math.PI/2+Z(-0.35,0.35), r=form.R*Z(0.55,0.80);
-        saat.push(naechste(G/2+Math.cos(w)*r, G/2+Math.sin(w)*r));
+        saat.push(naechstesFeld(G/2+Math.cos(w)*r, G/2+Math.sin(w)*r));
       }
     } else {
       // Wie streng die Saatpunkte auseinandergehalten werden, kommt aus dem

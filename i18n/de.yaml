@@ -48,7 +48,6 @@ footer_newsletter_heading: "Newsletter"
 footer_newsletter_text: "Bleib informiert über Termine und neues Material."
 hauptsponsoren_titel: "Unterstützt von"
 
-alpha_notice_aria_label: "Wichtiger Hinweis"
 alpha_notice_title: "Alpha-Version"
 alpha_notice_text: "Diese Website befindet sich noch im Aufbau. Manche Inhalte sind Platzhalter, und Funktionen können sich noch ändern oder unvollständig sein. Danke für dein Verständnis!"
 alpha_notice_dismiss: "Verstanden"
@@ -120,18 +119,7 @@ experience_form_success_body: "Wir haben deinen Bericht erhalten und melden uns 
 experience_form_error_heading: "Übermittlung fehlgeschlagen"
 experience_form_error_body: "Bitte versuch es nochmal oder schreib uns direkt an info@nc-wiki.ch."
 
-label_sprache: "Sprache"
-label_studiengaenge: "Studiengänge"
-label_studienplaetze: "Studienplätze"
 
-uni_detail_kanton: "Kanton"
-uni_detail_ems: "EMS erforderlich"
-uni_detail_auswahlverfahren: "Auswahlverfahren"
-uni_detail_places_unknown: "Wird geprüft"
-uni_detail_besonderheiten: "Besonderheiten"
-uni_detail_website: "Website der Universität"
-uni_detail_stand: "Stand"
-uni_detail_quelle: "Quelle"
 uni_detail_report: "Angabe veraltet? Melde es uns"
 uni_detail_not_found: "Für diese Seite wurden keine Daten gefunden."
 
@@ -144,16 +132,10 @@ uniguide_table_all: "Alle"
 uniguide_table_leer: "Keine Universität passt zu dieser Auswahl."
 uniguide_table_with_ems: "Mit EMS"
 uniguide_table_without_ems: "Ohne EMS"
-uniguide_table_th_uni: "Universität"
-uniguide_table_th_ems: "EMS"
 uniguide_table_places_unknown: "wird geprüft"
 uniguide_table_empty: "Noch keine Universitäten hinterlegt."
 
 # --- Detailseite einer Universität: zusätzliche Angaben ---------------------
-uni_detail_website_medizin: "Medizinische Fakultät"
-uni_detail_anmeldefrist: "Anmeldefrist"
-uni_detail_studienbeginn: "Studienbeginn"
-uni_detail_semestergebuehr: "Semestergebühr"
 uni_detail_section_zulassung: "Zulassung"
 uni_detail_section_studium: "Studium und Standort"
 uni_detail_section_quellen: "Quellen"
@@ -328,7 +310,6 @@ pm_pause_label: "Pause"
 
 # --- Fakten-Generator (aktuell nur auf der Alpha-Seite) ---
 fg_keine_liste: "Für diese Sprache gibt es noch keine Wortlisten."
-fg_intro: "Dieser Generator würfelt dir immer ein neues Set aus 15 Personen. Übungsmaterial für diesen Untertest ist einmalig: Was du einmal auswendig gelernt hast, kannst du nicht nochmal zum Üben verwenden."
 fg_zeit_einpraegen: "Einprägen"
 fg_zeit_pause: "Ablenkung"
 fg_zeit_abfrage: "Abfrage"
@@ -342,19 +323,13 @@ fg_phase_pause: "Ablenkung"
 fg_phase_abfrage: "Reproduktionsphase"
 fg_phase_ergebnis: "Ergebnis"
 fg_pause_hinweis: "Im echten Test liegt hier ein ganz anderer Untertest dazwischen. Steh kurz auf oder rechne etwas – ohne diese Lücke übst du nur das Kurzzeitgedächtnis."
-fg_das_war_das_set: "Das war das Set"
 fg_punkte_von: "{n} von {von} richtig"
 
 # --- Drucken / als PDF sichern ---
 fg_drucken: Set als PDF / drucken
 fg_drucken_dieses: Dieses Set drucken
-fg_drucken_hinweis: "Zum Üben auf Papier: Der Druck ist aufgebaut wie ein Testheft – Einprägephase (Testteil A), Reproduktionsphase (Testteil B), Antwortbogen und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch «Als PDF sichern» wählen."
 
 # --- Figuren-Generator (Alpha) ---
-fig_intro: Dieser Generator würfelt 18 neue Figuren. Jede ist in fünf verschieden
-  grosse Felder geteilt, genau eines ist schwarz. Nach der Pause werden dieselben
-  Figuren in anderer Reihenfolge abgefragt – du gibst an, welches Feld schwarz war.
-fig_drucken_hinweis: "Zum Üben auf Papier: Der Druck ist aufgebaut wie ein Testheft – Einprägephase (Testteil A), Reproduktionsphase (Testteil B), Antwortbogen und Lösungen. Im Druckdialog lässt sich statt eines Druckers auch «Als PDF sichern» wählen."
 
 # --- Testheft-Format der beiden Generatoren (bausteine/ems-heft.html) ---
 # Wortlaut wie in unserem Testheft 2026 (Anleitungen, Marken, Überschriften).

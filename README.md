@@ -45,17 +45,14 @@ Vorlagen für neue Inhaltstypen (News, Erfahrungsbericht, Jahresbericht) liegen 
 
 ## Lizenz
 
-Die **Übungsaufgaben** (Inhalte unter `content/*/ems/uebungsaufgaben/` sowie die
-zugehörigen Aufgabenblätter unter `assets/downloads/uebungsaufgaben/`) stehen unter
-[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.de) –
-Weitergabe mit Namensnennung erlaubt, keine kommerzielle Nutzung. Siehe auch
-[`assets/downloads/uebungsaufgaben/README.md`](assets/downloads/uebungsaufgaben/README.md).
+Massgebend ist die Datei [LICENSE](LICENSE). Kurz:
 
-Für den Rest der Website (Code, Layouts, übrige Inhalte) gibt es aktuell keine
-gesonderte Lizenz.
-
-## Lizenz
-
-Der Quellcode der Website darf angesehen, aber ohne Zustimmung des Vereins nicht
-weiterverwendet werden; die Übungsaufgaben stehen unter CC BY-NC 4.0, Fremdsoftware
-und Schriften unter ihren eigenen Lizenzen. Details: [LICENSE](LICENSE).
+- **Quellcode der Website** (Vorlagen, Stylesheets, Skripte, Workflows, Konfiguration):
+  darf angesehen, aber ohne Zustimmung des Vereins nicht weiterverwendet werden.
+- **Texte, Bilder, Logo, Daten und übrige Inhalte**: alle Rechte vorbehalten.
+- **Übungsaufgaben** (Inhalte unter `content/*/ems/uebungsaufgaben/` sowie die zugehörigen
+  Aufgabenblätter unter `assets/downloads/uebungsaufgaben/`): stehen unter
+  [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.de) – Weitergabe mit
+  Namensnennung erlaubt, keine kommerzielle Nutzung. Siehe auch
+  [`assets/downloads/uebungsaufgaben/README.md`](assets/downloads/uebungsaufgaben/README.md).
+- **Fremdsoftware und Schriften**: stehen unter ihren eigenen Lizenzen.
