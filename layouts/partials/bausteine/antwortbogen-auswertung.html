@@ -823,26 +823,26 @@
       // Oktober 2026 eine Zeit lang - machte vor allem richtig gelesene
       // Zeilen orange)
       var marke = a[0] && a[0] !== '*' ? BST.indexOf(a[0]) : -1;
-      // Zwei enge Ergaenzungen dazu (November 2026). Eine schraege Schattenkante
-      // wird oft am Nachbarkaestchen erkannt, waehrend der Schatten schon auf
-      // dem gelesenen liegt (Kamera-Labor, harter Schatten auf fast leerem
-      // Bogen: leere Zeile mit 0.31 still als «D» gelesen, Kante bei C):
+      // Zwei Ergaenzungen dazu (November 2026). Eine schraege Schattenkante
+      // wird oft am Nachbarkaestchen oder in der Nachbarzeile erkannt,
+      // waehrend der Schatten schon auf dem gelesenen Kaestchen liegt
+      // (Kamera-Labor, harter Schatten auf fast leerem Bogen: leere Zeile mit
+      // 0.31 still als «D» gelesen, Kante bei C). Zum Nachsehen deshalb auch:
       //  1. die Kante liegt auf dem Kaestchen links oder rechts vom gelesenen;
-      //  2. der gelesene Strich ist schwach (unter zwei Fuenfteln eines
-      //     typischen) und in der Zeile darueber oder darunter liegt eine
-      //     Kante auf derselben oder einer benachbarten Spalte.
-      // Gemessen auf 50 festen Bildern (24 mit hartem Schatten): still falsch
-      // 4 -> 0, orange Zeilen 747 -> 826 (ohne Schatten 275 -> 284). Jede
-      // Kante irgendwo in der Zeile haette 113 orange Zeilen mehr gekostet
-      // und zwei der vier nicht gefunden.
-      var i18 = z % ZEILEN, nebenKante = false, schwachBeiKante = false;
+      //  2. in der Zeile darueber oder darunter liegt eine Kante auf derselben
+      //     oder einer benachbarten Spalte.
+      // Gemessen: siehe die Zahlen im Commit (drei Bildsaetze, der dritte erst
+      // nach dem Festlegen der Regel gerendert). Eine Grenze fuer die
+      // Strichstaerke (nur schwache Striche) liess auf den frischen Bildern
+      // einzelne Zeilen durch; jede Kante irgendwo in der Zeile kostete
+      // deutlich mehr orange Zeilen und fand weniger.
+      var i18 = z % ZEILEN, nebenKante = false;
       if (marke >= 0){
-        nebenKante = !!(kante[z][marke - 1] || kante[z][marke + 1]);
         var nah = function(y){ return !!(kante[y][marke - 1] || kante[y][marke] || kante[y][marke + 1]); };
-        schwachBeiKante = typisch > 0 && Math.max.apply(null, w) < 0.4 * typisch
-          && ((i18 > 0 && nah(z - 1)) || (i18 < ZEILEN - 1 && nah(z + 1)));
+        nebenKante = !!(kante[z][marke - 1] || kante[z][marke + 1])
+          || (i18 > 0 && nah(z - 1)) || (i18 < ZEILEN - 1 && nah(z + 1));
       }
-      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || (marke >= 0 && kante[z][marke]) || nebenKante || schwachBeiKante
+      antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || (marke >= 0 && kante[z][marke]) || nebenKante
         || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
     });
     if (blass) r.hinweise.push(T.blass);
