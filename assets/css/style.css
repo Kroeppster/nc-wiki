@@ -1596,6 +1596,7 @@ body.pm-aktiv{overflow:hidden;}
 .form-hint{margin:.35rem 0 0;font-size:var(--text-xs);color:var(--color-ink-faint);}
 .form-consent label{display:flex;gap:var(--space-3);align-items:flex-start;font-size:var(--text-sm);color:var(--color-ink-soft);cursor:pointer;margin-bottom:0;}
 .form-consent input[type="checkbox"]{margin-top:.2rem;flex-shrink:0;width:auto;}
+.form-consent a{color:var(--color-signal);text-decoration:underline;}
 .visually-hidden-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 .form-success,.form-error{border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);}
 .form-success strong,.form-error strong{display:block;margin-bottom:.3rem;}

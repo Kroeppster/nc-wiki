@@ -35,7 +35,7 @@
 {{/* Kopfzeile mit Logo, Hauptmenü, Suche, Hell/Dunkel-Umschalter und Sprachwahl */}}
 {{ partial "header.html" . }}
 
-<main id="main"{{ if not .Params.geschuetzt }} data-pagefind-body{{ end }}>
+<main id="main"{{ if not (or .Params.geschuetzt .Params.noindex (and .Params.newsletter_seite (not site.Params.newsletter_url))) }} data-pagefind-body{{ end }}>
 {{/* Hier kommt der eigentliche Inhalt der jeweiligen Seite hinein. Jede Seite
      "definiert" an anderer Stelle einen Block namens "main" (z.B. in
      layouts/index.html für die Startseite, oder layouts/_default/single.html
@@ -54,7 +54,9 @@
      fällt die Seite also automatisch aus der Suche heraus, statt dass ihr
      Inhalt über das Suchfeld oben rechts auffindbar wäre (der Suchindex
      wird gebaut, BEVOR die Seiten verschlüsselt werden, also würde er sonst
-     den Klartext enthalten). */}}
+     den Klartext enthalten).
+     Ebenso ohne Attribut: Seiten mit "noindex: true" und die Newsletter-
+     Seiten, solange der Newsletter nicht live ist (siehe head.html). */}}
 {{ block "main" . }}{{ end }}
 </main>
 

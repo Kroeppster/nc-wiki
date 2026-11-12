@@ -1,10 +1,10 @@
 # Newsletter mit Brevo einrichten
 
 Anleitung, um den Newsletter von NCWiki mit **Brevo** (früher Sendinblue) aufzusetzen.
-Solange das nicht erledigt ist, zeigen die Seiten «Einschreiben» und «Abmelden» im Footer
-nur einen Platzhalter.
+Der Einbau auf der Website ist fertig, bleibt aber verborgen, bis `newsletter_url` in
+`hugo.toml` gesetzt ist (siehe Schritt 5, «Live schalten»).
 
-Die Menünamen beschreiben den Stand von Oktober 2026. Brevo ändert sie ab und zu – wenn
+Die Menünamen beschreiben den Stand von Oktober/November 2026. Brevo ändert sie ab und zu – wenn
 etwas leicht anders heisst, den sinngemässen Punkt suchen. Zeitaufwand: etwa 45 Minuten.
 Für Schritt 2 braucht es die Person mit Zugang zur Domain nc-wiki.ch.
 
@@ -19,18 +19,15 @@ Abhaken, was erledigt ist (direkt in dieser Datei auf GitHub, Stift-Symbol):
 - [ ] 2. Absender und Domain bestätigt – **Domain-Bestätigung (2b) noch offen, vor dem
   Live-Schalten der Anmeldung nötig** (sonst landen schon die Bestätigungsmails im Spam)
 - [x] 3. Drei Listen angelegt (DE, FR, IT)
-- [ ] 4. Drei Anmeldeformulare angelegt, Adressen notiert
-- [ ] 5. Adressen weitergegeben → Einbau auf der Website
+- [x] 4. Drei Anmeldeformulare angelegt (mit doppelter Bestätigung und Weiterleitung)
+- [x] 5. Einbau auf der Website – **noch verborgen**; live schalten erst nach 2b und einem
+  Test mit eigener Adresse (siehe Schritt 5)
 - [ ] 6. Abmeldeseite geprüft
 - [ ] 7. Erster Newsletter verschickt
 
-Formular-Adressen (sobald vorhanden, hier eintragen):
-
-| Sprache | Liste | Formular-Adresse (`…sibforms.com/serve/…`) |
-| --- | --- | --- |
-| Deutsch | Newsletter DE | |
-| Französisch | Newsletter FR | |
-| Italienisch | Newsletter IT | |
+Die drei Formular-Adressen (`…sibforms.com/serve/…`) stehen in **`data/newsletter.yaml`**
+(je eine für DE, FR, IT). Legt ihr ein Formular in Brevo neu an, dort die neue Adresse
+eintragen.
 
 ---
 
@@ -88,12 +85,14 @@ So geht jede Ausgabe gezielt an eine Sprache.
 
 Zuerst für Deutsch, danach gleich für FR und IT.
 
-1. **Kontakte → Formulare → Anmeldeformular erstellen**, Name `Newsletter DE`.
+1. **Marketing → Formulare**, Reiter **«Anmeldung»** → **«Anmeldeformular erstellen»**,
+   Name `Newsletter DE`. (Früher lag das unter «Kontakte → Formulare».)
 2. **Felder:**
    - E-Mail (schon da)
-   - Vorname (Attribut `VORNAME` bzw. `FIRSTNAME`), freiwillig
    - **Einwilligungs-Häkchen** (DSGVO): «Ich möchte den Newsletter von NCWiki erhalten und
      habe die Datenschutzerklärung gelesen.»
+   - Weitere Felder (z. B. Vorname) braucht es nicht: Das Formular auf der Website fragt nur
+     die E-Mail-Adresse und das Häkchen ab.
    - Gestaltung egal – das Aussehen auf der Website wird dort gebaut.
 3. **Liste:** `Newsletter DE`.
 4. **Bestätigung:** **Doppelte Bestätigung (Double Opt-in)**.
@@ -109,23 +108,35 @@ Zuerst für Deutsch, danach gleich für FR und IT.
    Website zeigt eigene Texte).
 6. **Speichern** → **Teilen → HTML-Code einbetten**.
 7. Im Code steht eine Adresse wie `https://xxxxxxx.sibforms.com/serve/MUIFA…`.
-   **Nur diese Adresse kopieren** und oben in die Tabelle eintragen.
+   **Nur diese Adresse kopieren** und in `data/newsletter.yaml` bei der Sprache eintragen.
 
 ## Schritt 5: Einbau auf der Website
 
-Sind alle drei Adressen in der Tabelle oben, wird auf der Website gebaut:
+Erledigt, aber noch **verborgen**:
 
-- Seiten «Einschreiben» (DE/FR/IT) mit Formular und Einwilligungs-Häkchen; die Sprache
-  der Seite bestimmt die Liste.
-- Seiten «Anmeldung bestätigt» (DE/FR/IT) – Ziel der Weiterleitung aus Schritt 4.
+- Seiten «Einschreiben» (DE/FR/IT, `newsletter_form: true` im Seitenkopf) mit eigenem
+  Formular (`layouts/partials/newsletter-form.html`). Es schickt E-Mail-Adresse,
+  Einwilligung und Sprache an das Brevo-Formular der Seitensprache aus
+  `data/newsletter.yaml` – so landet die Person in der richtigen Liste und bekommt die
+  Bestätigungsmail in ihrer Sprache.
+- Seiten «Anmeldung bestätigt» (`newsletter-bestaetigt.md`, DE/FR/IT) – Ziel der
+  Weiterleitung aus Schritt 4. Sie tragen `noindex: true`: nie in Suchmaschinen, Sitemap
+  oder Website-Suche, man erreicht sie nur über den Link in der Bestätigungsmail.
 - Seiten «Abmelden» mit Erklärung zum Abmeldelink in jedem Newsletter.
-- In `hugo.toml` `newsletter_url` setzen: erst dann erscheint der Newsletter-Teil in der
-  Fusszeile (solange das Feld leer ist, bleibt er weg, weil die Seiten noch Platzhalter sind).
-  Dasselbe Feld gibt die Newsletter-Seiten (`newsletter_seite: true` im Seitenkopf) für
-  Suchmaschinen und die Sitemap frei – bis dahin tragen sie «noindex».
-- Abschnitt «Newsletter» in der Datenschutzerklärung (DE/FR/IT): Dienstleister Brevo,
-  doppelte Bestätigung, jederzeitige Abmeldung.
-- Test mit einer Testadresse, bevor es live geht.
+- Abschnitt «Newsletter» in der Datenschutzerklärung (DE/FR/IT) und Brevo unter «Dienste
+  von Dritten».
+- Prüfung in `scripts/verhalten-pruefen.mjs`: Die Anfrage an Brevo wird abgefangen, es geht
+  nie eine echte Anmeldung raus.
+
+**Live schalten** (erst, wenn Schritt 2b erledigt ist):
+
+1. Mit einer eigenen Adresse testen, je Sprache: Die Seiten sind schon jetzt direkt
+   erreichbar, z. B. `https://kroeppster.github.io/nc-wiki/newsletter-einschreiben/`
+   (bzw. `/fr/…`, `/it/…`). Prüfen: Bestätigungsmail kommt an (nicht im Spam), der Link
+   darin führt auf «Anmeldung bestätigt», der Kontakt steht danach in der richtigen Liste.
+2. In `hugo.toml` `newsletter_url = '/newsletter-einschreiben/'` setzen. Dann erscheinen
+   der Newsletter-Teil in der Fusszeile und der Knopf «Newsletter abonnieren» auf der
+   Startseite, und die Seiten «Einschreiben»/«Abmelden» kommen in Suche und Sitemap.
 
 ## Schritt 6: Abmelden einrichten (einmalig)
 
@@ -134,7 +145,9 @@ Sind alle drei Adressen in der Tabelle oben, wird auf der Website gebaut:
 2. Texte möglichst neutral oder dreisprachig, z. B. «Du bist abgemeldet / Tu es
    désinscrit·e / Sei disiscritto·a».
 
-Den Abmeldelink unten in jedem Newsletter fügt Brevo automatisch ein.
+Den Abmeldelink unten in jedem Newsletter fügt Brevo automatisch ein. Ein eigenes
+Abmeldeformular braucht es deshalb nicht; die Seite «Abmelden» auf der Website erklärt das
+und nennt info@nc-wiki.ch für Fälle, in denen der Link nicht weiterhilft.
 
 ## Schritt 7: Ersten Newsletter verschicken
 
@@ -153,6 +166,10 @@ Den Abmeldelink unten in jedem Newsletter fügt Brevo automatisch ein.
   Tage verteilen (z. B. eine Sprache pro Tag). Unten im Mail steht ein kleines Brevo-Logo.
 - **Mehrere Personen:** **Einstellungen → Benutzer** – im Gratis-Plan evtl. begrenzt, dann
   das Vereinskonto teilen.
+- **Öffnungs- und Klickstatistik:** Die Datenschutzerklärung sagt, dass Brevo erfasst, ob
+  ein Newsletter geöffnet und welche Links angeklickt werden (so ist Brevo eingestellt,
+  wenn man nichts ändert). Schaltet ihr das in Brevo ab, den Satz im Abschnitt
+  «Newsletter» der Datenschutzerklärung (DE/FR/IT) streichen.
 - **Datenschutz:** Kontakte **nie** von Hand importieren, wenn die Personen nicht selbst
   zugestimmt haben (z. B. aus alten Kurs-Anmeldelisten). Nur wer sich über das Formular
   angemeldet und bestätigt hat, bekommt den Newsletter.

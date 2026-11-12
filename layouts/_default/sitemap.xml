@@ -16,7 +16,8 @@
   in einer öffentlich abrufbaren Liste.
 
   Ebenso fehlen die Newsletter-Seiten (newsletter_seite: true), solange
-  newsletter_url in hugo.toml leer ist - sie sind bis dahin Platzhalter.
+  newsletter_url in hugo.toml leer ist - bis dahin sind sie verborgen - und
+  Seiten mit "noindex: true" (z.B. «Anmeldung bestätigt»).
 
   Ausser diesem Filter macht die Datei dasselbe wie Hugos eingebaute
   Version: pro Seite die Adresse, das Datum der letzten Änderung und
@@ -31,7 +32,7 @@
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   {{- range .Pages }}
-  {{- if not (or .Params.geschuetzt (and .Params.newsletter_seite (not site.Params.newsletter_url))) }}
+  {{- if not (or .Params.geschuetzt .Params.noindex (and .Params.newsletter_seite (not site.Params.newsletter_url))) }}
   <url>
     <loc>{{ .Permalink }}</loc>
     {{- if not .Lastmod.IsZero }}

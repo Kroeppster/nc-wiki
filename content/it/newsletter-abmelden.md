@@ -1,6 +1,7 @@
 ---
 newsletter_seite: true
 title: "Annullare l'iscrizione alla newsletter"
+description: "Come annullare l'iscrizione alla newsletter di NCWiki."
 menu:
   newsletter:
     name: "Disiscriviti"
@@ -8,4 +9,6 @@ menu:
     weight: 2
 ---
 
-Testo segnaposto: vuoi disiscriverti dalla nostra newsletter? Scrivici semplicemente a info@nc-wiki.ch.
+In fondo a ogni newsletter trovi un link per disiscriverti. Tramite questo link ti disiscrivi direttamente; dopodiché non riceverai più la nostra newsletter.
+
+Se non funziona o non hai una newsletter a portata di mano, scrivici a info@nc-wiki.ch. Ti disiscriveremo noi. Se desideri che cancelliamo completamente il tuo indirizzo, scrivici pure.

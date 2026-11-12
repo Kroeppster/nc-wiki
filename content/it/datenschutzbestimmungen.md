@@ -60,6 +60,16 @@ Il fornitore di questo sito (GitHub Pages) raccoglie e memorizza automaticamente
 
 Se ci trasmette informazioni tramite un modulo di questo sito (ad es. modulo di contatto, iscrizione per partecipare, invio di una testimonianza, segnalazione di un errore), queste, inclusi i dati di contatto forniti, vengono memorizzate ai fini della gestione della richiesta ovvero della pubblicazione della testimonianza. Questi moduli vengono elaborati tramite il fornitore Formspree, veda la sezione «Servizi di terzi» qui sotto. Senza il Suo consenso non trasmettiamo i Suoi dati a terzi. Per le testimonianze viene inoltre richiesto un consenso separato alla pubblicazione al momento dell'invio.
 
+## Newsletter
+
+Se si iscrive alla nostra newsletter, utilizziamo il Suo indirizzo e-mail esclusivamente per inviarLe la newsletter. La base giuridica è il Suo consenso, che Lei esprime spuntando la casella nel modulo di iscrizione.
+
+Per l'iscrizione utilizziamo la procedura di doppia conferma (double opt-in): dopo l'invio del modulo riceve un'e-mail con un link di conferma. L'iscrizione è valida solo dopo aver cliccato su questo link. In questo modo ci assicuriamo che nessuno possa inserire l'indirizzo e-mail di un'altra persona. Per poter dimostrare il consenso vengono memorizzate informazioni sull'iscrizione, ad esempio la data e l'ora dell'iscrizione e della conferma.
+
+L'invio della newsletter e la gestione degli indirizzi sono affidati al fornitore Brevo, veda la sezione «Servizi di terzi» qui sotto. Brevo rileva se una newsletter viene aperta e quali link vengono cliccati (statistiche di apertura e di clic).
+
+Può revocare il Suo consenso in qualsiasi momento: tramite il link di disiscrizione presente in ogni newsletter o per e-mail a info@nc-wiki.ch. Da quel momento non riceverà più la newsletter. Su richiesta cancelliamo completamente il Suo indirizzo.
+
 ## Valutazione tramite foto
 
 Su questo sito può far valutare fogli delle risposte e test di concentrazione a partire da una foto, da una scansione o da un PDF, anche direttamente con la fotocamera del Suo dispositivo. Le immagini e i file vengono elaborati esclusivamente nel Suo browser: non vengono né caricati né memorizzati, e nessun dato viene trasmesso a noi o a terzi. Il sito accede alla fotocamera solo se Lei lo autorizza nel Suo browser; la fotocamera viene spenta non appena Lei conclude o interrompe la ripresa. Se carica un Suo test di concentrazione, i simboli e la soluzione vengono salvati nella memoria locale del Suo browser, così non deve caricarlo di nuovo alla prossima visita. Può rimuovere questi dati in qualsiasi momento cancellando i dati di navigazione di questo sito.
@@ -69,6 +79,7 @@ Su questo sito può far valutare fogli delle risposte e test di concentrazione a
 Questo sito utilizza i seguenti servizi esterni:
 
 - **Formspree** (invio dei moduli di contatto, iscrizione per partecipare, testimonianze e segnalazioni di errori) – i dati inseriti vengono trasmessi a Formspree Inc. (USA).
+- **Brevo** (invio della newsletter e gestione delle iscrizioni) – il Suo indirizzo e-mail e le informazioni sull'iscrizione vengono trasmessi a Sendinblue SAS (Francia), che gestisce Brevo.
 - **Pagefind** (funzione di ricerca) e font ospitati sul nostro server – funzionano interamente nel browser o vengono forniti dal nostro stesso hosting, senza trasmissione di dati a terzi.
 - **Google Analytics** (misurazione dell'audience) – viene caricato solo se sceglie attivamente «Accetta» nel banner dei cookie (veda la sezione «Cookie» qui sotto). Senza questo consenso non viene caricato alcuno script Google e non viene impostato alcun cookie corrispondente. In caso di consenso, Google Analytics raccoglie tra l'altro informazioni sulle pagine visitate, la durata della visita e un'origine geografica approssimativa (paese/regione, non la posizione esatta), trattate su server di Google Ireland Limited o Google LLC (USA). Il consenso può essere revocato in qualsiasi momento: tramite il link «Impostazioni dei cookie» in fondo a ogni pagina e poi «Rifiuta», oppure cancellando i dati del browser relativi a questo sito, dopodiché il banner dei cookie ricomparirà.
 

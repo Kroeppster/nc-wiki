@@ -990,7 +990,7 @@ Sotto `[params]`:
 | `ems_exam_date = '2027-07-09T08:00:00+02:00'` | obiettivo del conto alla rovescia sulla pagina iniziale (fuso orario obbligatorio). Passata la data, il conto alla rovescia scompare e la costruzione avvisa finché non si inserisce la data successiva. |
 | `google_analytics_id` | Google Analytics; vuoto = disattivato |
 | `social_instagram`, `social_discord`, `social_linkedin` | pulsanti nel piè di pagina; vuoto = nessun pulsante |
-| `newsletter_url` | iscrizione alla newsletter; vuoto = nessun blocco newsletter |
+| `newsletter_url` | interruttore della newsletter: vuoto = nascosta (nessun blocco nel piè di pagina, nessun pulsante nella pagina iniziale, pagine newsletter escluse da ricerca e sitemap); compilato (ad es. `'/newsletter-einschreiben/'`) = online. Vedi `docs/NEWSLETTER-BREVO.md` |
 
 Google Analytics si carica **solo** se nel banner dei cookie è stato scelto «Accetta». Il
 link «Impostazioni dei cookie» sotto «Informazioni legali» riapre il banner; «Rifiuta»
@@ -1108,9 +1108,9 @@ python3 scripts/wortliste-pruefen.py                                 # elenco di
 node scripts/editor-rundlauf.mjs                                     # editor web
 ```
 
-Altra porta: `ADRESSE=http://127.0.0.1:8123` davanti. Atteso: esattamente 18 pagine
-irraggiungibili (area membri, Alpha e, finché la newsletter non è configurata, le sei
-pagine della newsletter). Provare una nuova verifica prima su un errore vero e
+Altra porta: `ADRESSE=http://127.0.0.1:8123` davanti. Atteso: esattamente 21 pagine
+irraggiungibili (area membri, Alpha, le tre pagine «Iscrizione confermata» e, finché la
+newsletter non è online, le sei pagine «Iscriviti»/«Disiscriviti»; dopo 15). Provare una nuova verifica prima su un errore vero e
 noto, e togliere i falsi allarmi – altrimenti presto nessuno la legge più.
 
 ---

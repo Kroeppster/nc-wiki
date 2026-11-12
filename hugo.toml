@@ -50,8 +50,12 @@ enableRobotsTXT = true
   social_discord = 'https://discord.com/invite/DhgYpUGss9'
   social_linkedin = ''
 
-  # Newsletter-Anmeldelink für den Footer-Block - genauso: bleibt das Feld
-  # leer, wird der ganze Newsletter-Bereich in der Fusszeile ausgeblendet.
+  # Schalter für den Newsletter (Brevo, siehe docs/NEWSLETTER-BREVO.md).
+  # Leer = verborgen: kein Newsletter-Block in der Fusszeile, kein Knopf
+  # «Newsletter abonnieren» auf der Startseite, und die Newsletter-Seiten
+  # stehen nicht in Suche, Sitemap und RSS. Zum Live-Schalten die Adresse der
+  # Anmeldeseite eintragen: newsletter_url = '/newsletter-einschreiben/'
+  # (erst, wenn in Brevo die Domain bestätigt ist).
   newsletter_url = ''
 
   # Datum und Uhrzeit des nächsten EMS-Prüfungstermins, für die Countdown-Uhr

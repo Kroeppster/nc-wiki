@@ -1009,7 +1009,7 @@ Sous `[params]` :
 | `ems_exam_date = '2027-07-09T08:00:00+02:00'` | cible du compte à rebours de l'accueil (fuseau obligatoire). Une fois la date passée, le compte à rebours disparaît et la construction avertit jusqu'à ce que la prochaine date soit saisie. |
 | `google_analytics_id` | Google Analytics ; vide = désactivé |
 | `social_instagram`, `social_discord`, `social_linkedin` | boutons du pied de page ; vide = pas de bouton |
-| `newsletter_url` | inscription à la newsletter ; vide = pas de bloc newsletter |
+| `newsletter_url` | interrupteur de la newsletter : vide = masquée (pas de bloc dans le pied de page, pas de bouton sur la page d'accueil, pages newsletter absentes de la recherche et du sitemap) ; rempli (par ex. `'/newsletter-einschreiben/'`) = en ligne. Voir `docs/NEWSLETTER-BREVO.md` |
 
 Google Analytics ne se charge **que** si « Accepter » a été choisi dans la bannière cookies.
 Le lien « Paramètres des cookies » sous « Mentions légales » rouvre la bannière ; « Refuser »
@@ -1132,9 +1132,10 @@ python3 scripts/wortliste-pruefen.py                                 # liste de 
 node scripts/editor-rundlauf.mjs                                     # éditeur web
 ```
 
-Autre port : `ADRESSE=http://127.0.0.1:8123` devant. Attendu : exactement 18 pages
-inaccessibles (espace membres, Alpha et, tant que la newsletter n'est pas configurée, les
-six pages de la newsletter). Tester d'abord une nouvelle vérification sur une
+Autre port : `ADRESSE=http://127.0.0.1:8123` devant. Attendu : exactement 21 pages
+inaccessibles (espace membres, Alpha, les trois pages « Inscription confirmée » et, tant
+que la newsletter n'est pas en ligne, les six pages « S'inscrire »/« Se désinscrire » ;
+ensuite 15). Tester d'abord une nouvelle vérification sur une
 vraie erreur connue et supprimer les fausses alertes – sinon plus personne ne la lit.
 
 ---

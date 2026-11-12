@@ -1,6 +1,8 @@
 ---
 newsletter_seite: true
+newsletter_form: true
 title: "Newsletter abonnieren"
+description: "Abonniere den Newsletter von NCWiki und verpasse nichts rund um Testsimulationen, Vorbereitungskurse und neues Übungsmaterial für den EMS."
 menu:
   newsletter:
     name: "Einschreiben"
@@ -8,4 +10,6 @@ menu:
     weight: 1
 ---
 
-Platzhaltertext: Hier kannst du dich bald für unseren Newsletter anmelden, um nichts rund um Testsimulationen, Vorbereitungskurse und News zu verpassen.
+Mit unserem Newsletter verpasst du nichts rund um Testsimulationen, Vorbereitungskurse und neues Übungsmaterial.
+
+Du bekommst ihn auf Deutsch. Auf Französisch oder Italienisch meldest du dich über die entsprechende Sprachversion dieser Seite an.

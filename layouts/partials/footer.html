@@ -62,9 +62,9 @@
              Abmelden sind zwei echte Seiten (newsletter-einschreiben.md und
              newsletter-abmelden.md, je Sprache) mit "menu: newsletter: ..."
              im Frontmatter, keine feste Liste hier in der Vorlage. */}}
-        {{/* Solange der Newsletter nicht eingerichtet ist (newsletter_url in
-             hugo.toml leer, siehe docs/NEWSLETTER-BREVO.md), zeigen die beiden
-             Seiten nur Platzhaltertext - dann bleibt dieser Teil weg. */}}
+        {{/* Solange der Newsletter nicht live ist (newsletter_url in
+             hugo.toml leer, siehe docs/NEWSLETTER-BREVO.md), bleibt dieser
+             Teil weg. */}}
         {{ if .Site.Params.newsletter_url }}
         <h2 class="footer-titel">{{ i18n "footer_newsletter_heading" }}</h2>
         <p class="footer-lead">{{ i18n "footer_newsletter_text" }}</p>

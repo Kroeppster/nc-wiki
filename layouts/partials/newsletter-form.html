@@ -1,0 +1,91 @@
+{{- /*
+  ============================================================================
+  NEWSLETTER-ANMELDUNG (Seite «Einschreiben», "newsletter_form: true")
+  ============================================================================
+  Schickt die Anmeldung an das Brevo-Formular der Seitensprache
+  (data/newsletter.yaml). Brevo legt die Person in die Liste dieser Sprache
+  und schickt ihr die Bestätigungsmail (doppelte Bestätigung); erst nach dem
+  Klick darauf ist sie angemeldet. Danach leitet Brevo auf die Seite
+  «Anmeldung bestätigt» (newsletter-bestaetigt.md) weiter.
+
+  Feldnamen wie im Brevo-Formular: EMAIL, OPT_IN (Einwilligung, Wert 1),
+  email_address_check (Falle für Spam-Roboter, muss leer bleiben), locale.
+
+  Gesendet wird per fetch im Modus "no-cors": Die Anfrage geht ganz normal an
+  Brevo, nur kann die Seite Brevos Antwort nicht lesen. So hängt nichts davon
+  ab, ob Brevo Anfragen von fremden Websites zulässt, und man bleibt auf
+  unserer Seite. Kommt Brevo an, zeigt das Formular die eigene Meldung
+  («Fast geschafft …»); ist das Netz weg oder Brevo nicht erreichbar, die
+  Fehlermeldung. Die E-Mail-Adresse und das Häkchen prüft der Browser vorher.
+  Ohne JavaScript geht das Formular ganz normal an Brevo, und man sieht
+  Brevos eigene Bestätigungsseite.
+  ============================================================================
+*/ -}}
+{{- $lang := site.Language.Lang }}
+{{- with index (hugo.Data.newsletter.formulare | default dict) $lang }}
+<form class="contact-form newsletter-form" action="{{ . }}" method="POST">
+  <div>
+    <label for="nl-email">{{ i18n "newsletter_form_email" }}</label>
+    <input type="email" name="EMAIL" id="nl-email" autocomplete="email" placeholder="{{ i18n "newsletter_form_platzhalter" }}" required>
+  </div>
+  <div class="form-consent">
+    <label>
+      <input type="checkbox" name="OPT_IN" value="1" required>
+      {{- $link := i18n "newsletter_form_datenschutz" }}
+      {{- with site.GetPage "/datenschutzbestimmungen" }}{{ $link = printf "<a href=\"%s#newsletter\">%s</a>" .RelPermalink (i18n "newsletter_form_datenschutz") }}{{ end }}
+      <span>{{ replace (i18n "newsletter_form_einwilligung") "{link}" $link | safeHTML }}</span>
+    </label>
+    <p class="form-hint">{{ i18n "newsletter_form_hinweis" }}</p>
+  </div>
+  <div class="visually-hidden-field" aria-hidden="true">
+    <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off">
+  </div>
+  <input type="hidden" name="locale" value="{{ $lang }}">
+
+  <button type="submit" class="btn btn-primary">{{ i18n "newsletter_form_senden" }}</button>
+
+  <div class="form-success" role="status" tabindex="-1" hidden>
+    <strong>{{ i18n "newsletter_form_danke" }}</strong>
+    <p>{{ i18n "newsletter_form_danke_text" }}</p>
+  </div>
+  <div class="form-error" role="alert" tabindex="-1" hidden>
+    <strong>{{ i18n "experience_form_error_heading" }}</strong>
+    <p>{{ i18n "newsletter_form_fehler" }}</p>
+  </div>
+</form>
+<script>
+(function(){
+  var form = document.querySelector('form.newsletter-form');
+  if(!form || !window.fetch || !window.URLSearchParams) return;
+  var success = form.querySelector('.form-success');
+  var error = form.querySelector('.form-error');
+  var knopf = form.querySelector('button[type="submit"]');
+  var knopfText = knopf.textContent;
+  form.setAttribute('novalidate', '');
+  form.addEventListener('submit', function(evt){
+    evt.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    var daten = new URLSearchParams(new FormData(form));
+    var abbruch = window.AbortController ? new AbortController() : null;
+    var uhr = setTimeout(function(){ if(abbruch) abbruch.abort(); }, 20000);
+    error.hidden = true;
+    knopf.disabled = true;
+    knopf.textContent = {{ i18n "experience_form_sending" }};
+    fetch(form.action, { method: 'POST', mode: 'no-cors', body: daten, signal: abbruch ? abbruch.signal : undefined })
+      .then(function(){
+        form.querySelectorAll('input, button').forEach(function(el){ el.disabled = true; });
+        knopf.textContent = knopfText;
+        success.hidden = false;
+        success.focus();
+      })
+      .catch(function(){
+        knopf.disabled = false;
+        knopf.textContent = knopfText;
+        error.hidden = false;
+        error.focus();
+      })
+      .then(function(){ clearTimeout(uhr); });
+  });
+})();
+</script>
+{{- end }}

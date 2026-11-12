@@ -60,6 +60,16 @@ Le fournisseur de ce site (GitHub Pages) collecte et enregistre automatiquement 
 
 Lorsque vous nous transmettez des informations via un formulaire de ce site (par ex. formulaire de contact, inscription pour s'engager, soumission d'un témoignage, signalement d'une erreur), celles-ci, y compris les coordonnées indiquées, sont enregistrées afin de traiter votre demande ou de publier votre témoignage. Ces formulaires sont traités via le prestataire Formspree, voir la section « Services de tiers » ci-dessous. Sans votre consentement, nous ne transmettons pas vos données à des tiers. Pour les témoignages, un consentement distinct à la publication est en outre recueilli lors de la soumission.
 
+## Newsletter
+
+Si vous vous abonnez à notre newsletter, nous utilisons votre adresse e-mail uniquement pour vous envoyer la newsletter. La base juridique est votre consentement, que vous donnez en cochant la case du formulaire d'inscription.
+
+L'inscription se fait selon la procédure de double confirmation (double opt-in) : après l'envoi du formulaire, vous recevez un e-mail contenant un lien de confirmation. Vous n'êtes inscrit·e qu'après avoir cliqué sur ce lien. Nous nous assurons ainsi que personne ne peut inscrire l'adresse e-mail d'une autre personne. Afin que votre consentement puisse être prouvé, des informations sur l'inscription sont enregistrées, par exemple l'heure de l'inscription et de la confirmation.
+
+L'envoi de la newsletter et la gestion des adresses sont assurés par le prestataire Brevo, voir la section « Services de tiers » ci-dessous. Brevo enregistre à cette occasion si une newsletter est ouverte et quels liens y sont cliqués (statistiques d'ouverture et de clics).
+
+Vous pouvez retirer votre consentement à tout moment : via le lien de désinscription figurant dans chaque newsletter ou par e-mail à info@nc-wiki.ch. Vous ne recevez ensuite plus de newsletter. Sur demande, nous supprimons entièrement votre adresse.
+
 ## Évaluation par photo
 
 Sur ce site, vous pouvez faire évaluer des feuilles de réponses et des tests de concentration à partir d'une photo, d'un scan ou d'un PDF, y compris directement avec la caméra de votre appareil. Les images et les fichiers sont traités exclusivement dans votre navigateur : ils ne sont ni téléversés ni enregistrés, et aucune donnée n'est transmise ni à nous ni à des tiers. Le site n'accède à la caméra que si vous l'autorisez dans votre navigateur ; elle est arrêtée dès que vous terminez ou interrompez la prise de vue. Si vous chargez votre propre test de concentration, ses signes et sa solution sont enregistrés dans la mémoire locale de votre navigateur, afin que vous n'ayez pas à le charger à nouveau lors de votre prochaine visite. Vous pouvez supprimer cette entrée à tout moment en effaçant les données de navigation de ce site.
@@ -69,6 +79,7 @@ Sur ce site, vous pouvez faire évaluer des feuilles de réponses et des tests d
 Ce site utilise les services externes suivants :
 
 - **Formspree** (envoi des formulaires de contact, d'inscription pour s'engager, de témoignages et de signalement d'erreurs) – les données saisies sont alors transmises à Formspree Inc. (États-Unis).
+- **Brevo** (envoi de la newsletter et gestion des inscriptions) – votre adresse e-mail et les informations sur l'inscription sont alors transmises à Sendinblue SAS (France), l'exploitant de Brevo.
 - **Pagefind** (fonction de recherche) et polices auto-hébergées – fonctionnent entièrement dans le navigateur ou sont fournies par notre propre hébergement, aucune donnée n'est transmise à des tiers à cette occasion.
 - **Google Analytics** (mesure d'audience) – n'est chargé que si vous choisissez activement « Accepter » dans la bannière de cookies (voir la section « Cookies » ci-dessous). Sans ce consentement, aucun script Google n'est chargé et aucun cookie correspondant n'est déposé. En cas de consentement, Google Analytics collecte notamment des informations sur les pages visitées, la durée de visite et une origine géographique approximative (pays/région, pas la position exacte), traitées sur des serveurs de Google Ireland Limited ou de Google LLC (États-Unis). Le consentement peut être révoqué à tout moment : via le lien « Paramètres des cookies » en bas de chaque page puis « Refuser », ou en supprimant les données de navigateur de ce site, ce qui fera réapparaître la bannière de cookies.
 

@@ -982,7 +982,7 @@ Unter `[params]`:
 | `ems_exam_date = '2027-07-09T08:00:00+02:00'` | Ziel des Countdowns auf der Startseite (Zeitzone Pflicht). Ist der Termin vorbei, verschwindet der Countdown, und der Bau warnt, bis das nächste Datum eingetragen ist. |
 | `google_analytics_id` | Google Analytics; leer = aus |
 | `social_instagram`, `social_discord`, `social_linkedin` | Knöpfe in der Fusszeile; leer = kein Knopf |
-| `newsletter_url` | Newsletter-Anmeldung; leer = kein Newsletter-Block |
+| `newsletter_url` | Schalter für den Newsletter: leer = verborgen (kein Block in der Fusszeile, kein Knopf auf der Startseite, Newsletter-Seiten nicht in Suche und Sitemap); gesetzt (z. B. `'/newsletter-einschreiben/'`) = live. Siehe `docs/NEWSLETTER-BREVO.md` |
 
 Google Analytics lädt **nur**, wenn im Cookie-Banner „Akzeptieren“ gewählt wurde. Der Link
 „Cookie-Einstellungen“ unter „Rechtliches“ öffnet den Banner wieder; „Ablehnen“ schaltet
@@ -1103,9 +1103,9 @@ python3 scripts/wortliste-pruefen.py                                 # Wortliste
 node scripts/editor-rundlauf.mjs                                     # Web-Editor
 ```
 
-Anderer Port: `ADRESSE=http://127.0.0.1:8123` davor. Erwartet: genau 18 unerreichbare
-Seiten (Mitgliederbereich, Alpha und, solange der Newsletter nicht eingerichtet ist, die
-sechs Newsletter-Seiten). Eine neue Prüfung zuerst an einem echten, bekannten
+Anderer Port: `ADRESSE=http://127.0.0.1:8123` davor. Erwartet: genau 21 unerreichbare
+Seiten (Mitgliederbereich, Alpha, die drei Seiten «Anmeldung bestätigt» und, solange der
+Newsletter nicht live ist, die sechs Seiten «Einschreiben»/«Abmelden»; danach 15). Eine neue Prüfung zuerst an einem echten, bekannten
 Fehler testen und Fehlalarme abschalten – sonst liest sie bald niemand mehr.
 
 ---

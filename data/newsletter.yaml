@@ -1,0 +1,22 @@
+# ============================================================================
+# NEWSLETTER: ANMELDEFORMULARE BEI BREVO (eines je Sprache)
+# ============================================================================
+# Die Seite «Einschreiben» (content/<sprache>/newsletter-einschreiben.md,
+# «newsletter_form: true») zeigt ein eigenes Formular, das die Anmeldung an
+# das Brevo-Formular ihrer Sprache schickt - damit landet die Person in der
+# richtigen Liste (Newsletter DE/FR/IT) und bekommt die Bestätigungsmail in
+# ihrer Sprache. Siehe docs/NEWSLETTER-BREVO.md.
+#
+# Woher die Adresse kommt: in Brevo das Formular öffnen → «Teilen» → «HTML»;
+# im Code steht <form ... action="https://…sibforms.com/serve/…">. Genau diese
+# Adresse hier eintragen. Sie ist nicht geheim (sie steht ohnehin im
+# Quelltext jeder Seite mit Formular).
+#
+# Fehlt die Adresse einer Sprache, zeigt die Seite dort kein Formular, sondern
+# nur ihren Text.
+# ============================================================================
+
+formulare:
+  de: "https://48d5d232.sibforms.com/serve/MUIFALIQn3F9FqBb-2g0f4mg8YZOKHdZlAcXuoll0Z3rbkykrd8SJhrWTMERm_-SZomwJxzGZfrDB0j5w_g-4TmDcGQQfsPj2HRuEDtOvWk0YJouCGuSja6olqqDEDT3GabHeJHkoPp7Xf2dwdRPNApVS3rN-W0dKfrgr11zCv6KiFwhxEM8h8_OPRxHDOfpZUx5hXwE8G6FQAZtJg=="
+  fr: "https://48d5d232.sibforms.com/serve/MUIFAII7EKGtsk833WvIjbno_kyJ_lSclw2BcsJ2Ih37LayjjmEnDEHBUDQmWULg38CalY5re1VCD2HC6I5VQWMTPGEWx96JjySasAGXzoO-0f-UyxNBvvdlFKPPd3X0Aq0gkH-efkhJhIz7E0rUi0ve2xr5QnyDGOtTsNL4LzhU1O9W1EpTLG3emTWpNK5Zd_g5aM-8IzJ_yUTiXQ=="
+  it: "https://48d5d232.sibforms.com/serve/MUIFAOBuSH-YCrAzWnMbhGIgIqzLPc2UHpkKkdpzMCIn-0SWrltfiMlBsfEdM0VbvFbj8x7GOtMHmZR3nOLdQKlc2GLOkUEDZ-sB0a2S1YluXrOLDHezB2TZ8-zoxKFhxChJG2mOTDELzVjb5BcoILhQvAx_pe3heHGGiXvG_QA54Jfmo4sMc1by6BiHnYTkafqo4l4PbH6gBSW7Xg=="

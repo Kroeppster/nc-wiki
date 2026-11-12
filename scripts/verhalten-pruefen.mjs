@@ -38,8 +38,8 @@
  *     einen Timeout. Deshalb nur echte Kennungen aus dem Markup verwenden
  *     (data-pm-start, #pm-los, .pm-c-aufgaben ...).
  *
- * Formspree wird abgefangen und beantwortet - es geht NIE eine echte
- * Nachricht raus.
+ * Formspree und Brevo (sibforms.com, Newsletter) werden abgefangen und
+ * beantwortet - es geht NIE eine echte Nachricht oder Anmeldung raus.
  * ============================================================================
  */
 import pw from '/opt/node22/lib/node_modules/playwright/index.js';
@@ -265,6 +265,56 @@ for (const [name, url, sel, fuellen] of [
     pruef(`${name}: ausgefuellt wird gesendet`, gesendet!==null, String(gesendet).slice(0,70));
   }
   pruef(`${name}: keine JS-Fehler`, js.length===0, js.join(' | '));
+  await ctx.close();
+}
+
+
+console.log('\n=== Newsletter: Anmeldung an Brevo (je Sprache) ===');
+for (const [lang, vorsatz] of [['de',''],['fr','/fr'],['it','/it']]) {
+  const {ctx,p,js}=await neu();
+  let gesendet=null, ziel=null;
+  await p.route(/^https:\/\/[^/]*sibforms\.com\//, r=>{ gesendet=r.request().postData(); ziel=r.request().url(); r.fulfill({status:200,contentType:'text/html',body:'<!doctype html><p>ok</p>'}); });
+  await p.goto(B+vorsatz+'/newsletter-einschreiben/',{waitUntil:'networkidle'});
+  const f=await p.$('form.newsletter-form');
+  pruef(`Newsletter ${lang}: Formular vorhanden`, !!f);
+  if(f){
+    const action = await f.getAttribute('action');
+    await p.click('form.newsletter-form [type=submit]').catch(()=>{});
+    await p.waitForTimeout(400);
+    pruef(`Newsletter ${lang}: leer wird nicht gesendet`, gesendet===null);
+    await p.fill('#nl-email','test@example.org');
+    await p.click('form.newsletter-form [type=submit]').catch(()=>{});
+    await p.waitForTimeout(400);
+    pruef(`Newsletter ${lang}: ohne Haekchen wird nicht gesendet`, gesendet===null);
+    await p.check('form.newsletter-form input[name=OPT_IN]');
+    await p.click('form.newsletter-form [type=submit]');
+    await p.waitForSelector('form.newsletter-form .form-success:not([hidden])',{timeout:5000}).catch(()=>{});
+    const felder = new URLSearchParams(gesendet||'');
+    pruef(`Newsletter ${lang}: an das Brevo-Formular der Sprache gesendet`, ziel===action, String(ziel).slice(0,60));
+    pruef(`Newsletter ${lang}: Felder EMAIL/OPT_IN/locale`, felder.get('EMAIL')==='test@example.org' && felder.get('OPT_IN')==='1' && felder.get('locale')===lang && felder.get('email_address_check')==='', String(gesendet).slice(0,90));
+    pruef(`Newsletter ${lang}: Dankesmeldung sichtbar, Fehler nicht`, await p.isVisible('form.newsletter-form .form-success') && !(await p.isVisible('form.newsletter-form .form-error')));
+    pruef(`Newsletter ${lang}: Seite bleibt dieselbe`, p.url().endsWith(vorsatz+'/newsletter-einschreiben/'), p.url());
+  }
+  pruef(`Newsletter ${lang}: keine JS-Fehler`, js.length===0, js.join(' | '));
+  await ctx.close();
+}
+{
+  const {ctx,p}=await neu();
+  await p.route(/^https:\/\/[^/]*sibforms\.com\//, r=>r.abort());
+  await p.goto(B+'/newsletter-einschreiben/',{waitUntil:'networkidle'});
+  await p.fill('#nl-email','test@example.org');
+  await p.check('form.newsletter-form input[name=OPT_IN]');
+  await p.click('form.newsletter-form [type=submit]');
+  await p.waitForSelector('form.newsletter-form .form-error:not([hidden])',{timeout:5000}).catch(()=>{});
+  pruef('Newsletter: Brevo nicht erreichbar -> Fehlermeldung statt Dank', await p.isVisible('form.newsletter-form .form-error') && !(await p.isVisible('form.newsletter-form .form-success')));
+  pruef('Newsletter: danach erneut absendbar', !(await p.isDisabled('form.newsletter-form [type=submit]')));
+  await ctx.close();
+}
+{
+  const {ctx,p}=await neu();
+  await p.goto(B+'/newsletter-bestaetigt/',{waitUntil:'networkidle'});
+  pruef('Newsletter: «Anmeldung bestaetigt» mit noindex', (await p.$$eval('meta[name=robots]', ms=>ms.map(m=>m.content))).some(c=>/noindex/.test(c)));
+  pruef('Newsletter: «Anmeldung bestaetigt» nicht in der Suche', !(await p.$('main[data-pagefind-body]')));
   await ctx.close();
 }
 

@@ -51,6 +51,7 @@
 {{- /* Der eigentliche Zweck dieser Datei: geschützte Seiten rauswerfen. */ -}}
 {{- $pages = where $pages "Params.geschuetzt" "!=" true -}}
 {{- if not site.Params.newsletter_url }}{{ $pages = where $pages "Params.newsletter_seite" "!=" true }}{{ end -}}
+{{- $pages = where $pages "Params.noindex" "!=" true -}}
 {{- if not (hasPrefix $.Path "/ueber-uns/archiv") -}}
 {{- $ohneArchiv := slice -}}
 {{- range $pages }}{{ if not (hasPrefix .Path "/ueber-uns/archiv") }}{{ $ohneArchiv = $ohneArchiv | append . }}{{ end }}{{ end -}}

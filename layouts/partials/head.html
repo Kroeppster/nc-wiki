@@ -124,11 +124,15 @@
        Nach dem Verschlüsseln sind alle diese Angaben verschwunden - sie
        stecken dann zusammen mit dem Rest der Seite im verschlüsselten Teil,
        den nur mit Passwort jemand zu sehen bekommt. */ -}}
-{{- /* Newsletter-Seiten (newsletter_seite: true) sind Platzhalter, solange der
-       Newsletter nicht eingerichtet ist (newsletter_url in hugo.toml leer) -
-       bis dahin nicht in Suchmaschinen und nicht in der Sitemap. Sobald die
-       Adresse eingetragen ist, gilt das automatisch nicht mehr. */ -}}
-{{- if and .Params.newsletter_seite (not site.Params.newsletter_url) }}
+{{- /* Newsletter-Seiten (newsletter_seite: true) bleiben verborgen, solange der
+       Newsletter nicht live ist (newsletter_url in hugo.toml leer) - bis
+       dahin nicht in Suchmaschinen, nicht in der Sitemap, nicht im RSS und
+       nicht in der Suche der Website. Sobald die Adresse eingetragen ist,
+       gilt das automatisch nicht mehr.
+       "noindex: true" im Seitenkopf hält eine Seite dagegen IMMER aus
+       Suchmaschinen, Sitemap und Suche heraus (z.B. «Anmeldung bestätigt»,
+       die man nur über den Link in der Bestätigungsmail erreichen soll). */ -}}
+{{- if or .Params.noindex (and .Params.newsletter_seite (not site.Params.newsletter_url)) }}
 <meta name="robots" content="noindex">
 {{- end }}
 {{- if .Params.geschuetzt }}
