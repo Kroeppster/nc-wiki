@@ -1,8 +1,8 @@
 # Newsletter mit Brevo einrichten
 
 Anleitung, um den Newsletter von NCWiki mit **Brevo** (früher Sendinblue) aufzusetzen.
-Der Einbau auf der Website ist fertig, bleibt aber verborgen, bis `newsletter_url` in
-`hugo.toml` gesetzt ist (siehe Schritt 5, «Live schalten»).
+Der Einbau auf der Website ist fertig und live (`newsletter_url` in `hugo.toml` ist
+gesetzt, siehe Schritt 5).
 
 Die Menünamen beschreiben den Stand von Oktober/November 2026. Brevo ändert sie ab und zu – wenn
 etwas leicht anders heisst, den sinngemässen Punkt suchen. Zeitaufwand: etwa 45 Minuten.
@@ -20,8 +20,9 @@ Abhaken, was erledigt ist (direkt in dieser Datei auf GitHub, Stift-Symbol):
   Live-Schalten der Anmeldung nötig** (sonst landen schon die Bestätigungsmails im Spam)
 - [x] 3. Drei Listen angelegt (DE, FR, IT)
 - [x] 4. Drei Anmeldeformulare angelegt (mit doppelter Bestätigung und Weiterleitung)
-- [x] 5. Einbau auf der Website – **noch verborgen**; live schalten erst nach 2b und einem
-  Test mit eigener Adresse (siehe Schritt 5)
+- [x] 5. Einbau auf der Website – live seit November 2026 (Test mit eigener Adresse
+  erfolgreich). Offen: Weiterleitung nach der Bestätigung in allen drei Brevo-Formularen
+  eintragen (Schritt 4.4), sonst zeigt Brevo nach dem Klick seine eigene Seite
 - [ ] 6. Abmeldeseite geprüft
 - [ ] 7. Erster Newsletter verschickt
 
@@ -102,8 +103,9 @@ Zuerst für Deutsch, danach gleich für FR und IT.
      - FR: `https://kroeppster.github.io/nc-wiki/fr/newsletter-bestaetigt/`
      - IT: `https://kroeppster.github.io/nc-wiki/it/newsletter-bestaetigt/`
 
-     (Diese Seiten werden beim Einbau auf der Website angelegt. Zieht die Website auf eine
-     eigene Domain um, hier die Adressen anpassen.)
+     (Diese Seiten gibt es auf der Website. Bleibt das Feld leer, klappt die Anmeldung
+     trotzdem, Brevo zeigt nach dem Klick dann aber seine eigene graue Seite. Zieht die
+     Website auf eine eigene Domain um, hier die Adressen anpassen.)
 5. **Meldungen:** Erfolgs- und Fehlermeldung kurz in der Sprache anpassen (nur Ersatz – die
    Website zeigt eigene Texte).
 6. **Speichern** → **Teilen → HTML-Code einbetten**.
@@ -112,7 +114,7 @@ Zuerst für Deutsch, danach gleich für FR und IT.
 
 ## Schritt 5: Einbau auf der Website
 
-Erledigt, aber noch **verborgen**:
+Erledigt und live:
 
 - Seiten «Einschreiben» (DE/FR/IT, `newsletter_form: true` im Seitenkopf) mit eigenem
   Formular (`layouts/partials/newsletter-form.html`). Es schickt E-Mail-Adresse,
@@ -128,7 +130,8 @@ Erledigt, aber noch **verborgen**:
 - Prüfung in `scripts/verhalten-pruefen.mjs`: Die Anfrage an Brevo wird abgefangen, es geht
   nie eine echte Anmeldung raus.
 
-**Live schalten** (erst, wenn Schritt 2b erledigt ist):
+**Live schalten** (so wurde es gemacht; gilt auch, falls der Newsletter einmal
+vorübergehend ausgeblendet war – dafür `newsletter_url = ''` setzen):
 
 1. Mit einer eigenen Adresse testen, je Sprache: Die Seiten sind schon jetzt direkt
    erreichbar, z. B. `https://kroeppster.github.io/nc-wiki/newsletter-einschreiben/`

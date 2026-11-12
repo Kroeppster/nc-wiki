@@ -1108,9 +1108,10 @@ python3 scripts/wortliste-pruefen.py                                 # elenco di
 node scripts/editor-rundlauf.mjs                                     # editor web
 ```
 
-Altra porta: `ADRESSE=http://127.0.0.1:8123` davanti. Atteso: esattamente 21 pagine
-irraggiungibili (area membri, Alpha, le tre pagine «Iscrizione confermata» e, finché la
-newsletter non è online, le sei pagine «Iscriviti»/«Disiscriviti»; dopo 15). Provare una nuova verifica prima su un errore vero e
+Altra porta: `ADRESSE=http://127.0.0.1:8123` davanti. Atteso: esattamente 15 pagine
+irraggiungibili (area membri, Alpha e le tre pagine «Iscrizione confermata»; se la
+newsletter è nascosta, `newsletter_url` vuoto, si aggiungono le sei pagine
+«Iscriviti»/«Disiscriviti», quindi 21). Provare una nuova verifica prima su un errore vero e
 noto, e togliere i falsi allarmi – altrimenti presto nessuno la legge più.
 
 ---

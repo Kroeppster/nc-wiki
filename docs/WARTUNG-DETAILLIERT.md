@@ -1103,9 +1103,10 @@ python3 scripts/wortliste-pruefen.py                                 # Wortliste
 node scripts/editor-rundlauf.mjs                                     # Web-Editor
 ```
 
-Anderer Port: `ADRESSE=http://127.0.0.1:8123` davor. Erwartet: genau 21 unerreichbare
-Seiten (Mitgliederbereich, Alpha, die drei Seiten «Anmeldung bestätigt» und, solange der
-Newsletter nicht live ist, die sechs Seiten «Einschreiben»/«Abmelden»; danach 15). Eine neue Prüfung zuerst an einem echten, bekannten
+Anderer Port: `ADRESSE=http://127.0.0.1:8123` davor. Erwartet: genau 15 unerreichbare
+Seiten (Mitgliederbereich, Alpha und die drei Seiten «Anmeldung bestätigt»; ist der
+Newsletter ausgeblendet, `newsletter_url` leer, zusätzlich die sechs Seiten
+«Einschreiben»/«Abmelden», also 21). Eine neue Prüfung zuerst an einem echten, bekannten
 Fehler testen und Fehlalarme abschalten – sonst liest sie bald niemand mehr.
 
 ---

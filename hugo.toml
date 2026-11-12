@@ -51,12 +51,11 @@ enableRobotsTXT = true
   social_linkedin = ''
 
   # Schalter für den Newsletter (Brevo, siehe docs/NEWSLETTER-BREVO.md).
-  # Leer = verborgen: kein Newsletter-Block in der Fusszeile, kein Knopf
-  # «Newsletter abonnieren» auf der Startseite, und die Newsletter-Seiten
-  # stehen nicht in Suche, Sitemap und RSS. Zum Live-Schalten die Adresse der
-  # Anmeldeseite eintragen: newsletter_url = '/newsletter-einschreiben/'
-  # (erst, wenn in Brevo die Domain bestätigt ist).
-  newsletter_url = ''
+  # Gesetzt (Adresse der Anmeldeseite) = live: Newsletter-Block in der
+  # Fusszeile, Knopf «Newsletter abonnieren» auf der Startseite, Seiten in
+  # Suche, Sitemap und RSS. Leer ('') = alles davon verborgen, z.B. um den
+  # Newsletter vorübergehend auszublenden.
+  newsletter_url = '/newsletter-einschreiben/'
 
   # Datum und Uhrzeit des nächsten EMS-Prüfungstermins, für die Countdown-Uhr
   # auf der Startseite (siehe layouts/index.html und das Countdown-Skript in

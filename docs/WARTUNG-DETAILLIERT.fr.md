@@ -1132,10 +1132,10 @@ python3 scripts/wortliste-pruefen.py                                 # liste de 
 node scripts/editor-rundlauf.mjs                                     # éditeur web
 ```
 
-Autre port : `ADRESSE=http://127.0.0.1:8123` devant. Attendu : exactement 21 pages
-inaccessibles (espace membres, Alpha, les trois pages « Inscription confirmée » et, tant
-que la newsletter n'est pas en ligne, les six pages « S'inscrire »/« Se désinscrire » ;
-ensuite 15). Tester d'abord une nouvelle vérification sur une
+Autre port : `ADRESSE=http://127.0.0.1:8123` devant. Attendu : exactement 15 pages
+inaccessibles (espace membres, Alpha et les trois pages « Inscription confirmée » ; si la
+newsletter est masquée, `newsletter_url` vide, s'y ajoutent les six pages
+« S'inscrire »/« Se désinscrire », soit 21). Tester d'abord une nouvelle vérification sur une
 vraie erreur connue et supprimer les fausses alertes – sinon plus personne ne la lit.
 
 ---
