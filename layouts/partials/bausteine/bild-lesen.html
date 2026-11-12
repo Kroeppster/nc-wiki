@@ -184,7 +184,7 @@ window.NCWikiBild = (function(){
   Bild.prototype.papierFein = function(x, y, grob){
     if (!this.fein){
       var f = this.feinFeld = Math.max(6, Math.floor(Math.max(this.w, this.h) / 110));
-      var nx = this.feinNx = Math.ceil(this.w / f), ny = Math.ceil(this.h / f), k = this.fein = new Float32Array(nx * ny);
+      var nx = this.feinNx = Math.ceil(this.w / f), ny = this.feinNy = Math.ceil(this.h / f), k = this.fein = new Float32Array(nx * ny);
       var schritt = Math.max(1, Math.floor(f / 6));
       for (var j = 0; j < ny; j++) for (var i = 0; i < nx; i++){
         var werte = [];
@@ -194,7 +194,11 @@ window.NCWikiBild = (function(){
         k[j * nx + i] = werte.length ? werte[Math.floor(werte.length * 0.9)] : 255;
       }
     }
-    var v = this.fein[Math.floor(y / this.feinFeld) * this.feinNx + Math.floor(x / this.feinFeld)];
+    // Auf das Bild begrenzt, wie papierBei: Knapp ausserhalb (eine Ecke am
+    // Bildrand) kam sonst kein Wert oder der eines Feldes der Nachbarzeile.
+    var fi = Math.min(Math.max(Math.floor(x / this.feinFeld), 0), this.feinNx - 1);
+    var fj = Math.min(Math.max(Math.floor(y / this.feinFeld), 0), this.feinNy - 1);
+    var v = this.fein[fj * this.feinNx + fi];
     return Math.min(grob, Math.max(v, 0.35 * grob));
   };
   Bild.prototype.rahmen = function(x, y){
