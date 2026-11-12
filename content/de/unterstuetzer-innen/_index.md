@@ -7,7 +7,7 @@ menu:
     weight: 4
 ---
 
-Unser ganzes Angebot ist kostenlos. Das ermöglichen Spenden, Sponsoring und das Engagement unserer Unterstützer*innen. Ein herzliches Dankeschön geht an unsere Sponsor*innen:
+Unser ganzes Angebot ist kostenlos. Das ermöglichen Spenden, Sponsoring und das Engagement unserer Unterstützer\*innen. Ein herzliches Dankeschön geht an unsere Sponsor\*innen:
 
 - [VSAO](https://vsao.ch/): Verband Schweizerischer Assistenz- und Oberärztinnen und -ärzte
 - [SAMW/ASSM](https://www.samw.ch/): Schweizerische Akademie der Medizinischen Wissenschaften

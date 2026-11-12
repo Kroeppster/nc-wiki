@@ -18,6 +18,6 @@ Wir haben alle Tipps und Übungsaufgaben nach bestem Wissen und Gewissen zusamme
 
 Wir legen grossen Wert darauf, dass unsere Informationen zum EMS korrekt sind. Verbindlich sind aber immer die offiziellen Angaben von [swissuniversities](https://www.swissuniversities.ch/service/anmeldung-zum-medizinstudium) und vom [Zentrum für Testentwicklung und Diagnostik (ZTD)](https://www.unifr.ch/ztd/de/ems).
 
-Die Erfahrungsberichte geben die persönlichen Erfahrungen und Meinungen ihrer Verfasser*innen wieder.
+Die Erfahrungsberichte geben die persönlichen Erfahrungen und Meinungen ihrer Verfasser\*innen wieder.
 
 Wir behalten uns vor, eingereichte Erfahrungsberichte zu kürzen oder nicht zu veröffentlichen, insbesondere wenn sie beleidigende oder unangemessene Inhalte enthalten.

@@ -18,7 +18,7 @@ gefunden. Suchmaschinen bekommen zusätzlich ein `noindex`.
 ## Lern-Generator (Figuren und Fakten lernen)
 
 Würfelt neue Sets für «Figuren lernen» (18 Figuren) und «Fakten lernen»
-(15 Patient*innen, 18 Fragen) – einzeln oder beide zusammen wie am Testtag:
+(15 Patient\*innen, 18 Fragen) – einzeln oder beide zusammen wie am Testtag:
 erst beide einprägen, dann die Ablenkung, dann beide abfragen. Per Häkchen
 wählen, was geübt wird; die Zeiten passen sich dem Testtag an.
 

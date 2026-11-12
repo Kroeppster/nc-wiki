@@ -21,7 +21,7 @@ Die Übungsaufgaben stehen unter der Lizenz [Creative Commons BY-NC 4.0](https:/
 
 ## Kommerzielle Nutzung
 
-Als kommerzielle Anbieter gelten in diesen Bedingungen alle Personen und Unternehmen, die entgeltliche Angebote zur Vorbereitung auf den EMS, den TMS oder vergleichbare Eignungstests anbieten, etwa Kurse, Lernmaterialien, Nachhilfe, Apps oder Online-Plattformen. Dazu zählen auch deren Mitarbeitende, Tutor*innen und Beauftragte.
+Als kommerzielle Anbieter gelten in diesen Bedingungen alle Personen und Unternehmen, die entgeltliche Angebote zur Vorbereitung auf den EMS, den TMS oder vergleichbare Eignungstests anbieten, etwa Kurse, Lernmaterialien, Nachhilfe, Apps oder Online-Plattformen. Dazu zählen auch deren Mitarbeitende, Tutor\*innen und Beauftragte.
 
 Ohne vorgängige schriftliche Zustimmung von NCWiki ist insbesondere untersagt:
 

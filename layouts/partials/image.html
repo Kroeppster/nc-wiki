@@ -20,6 +20,11 @@
     class - zusätzliche CSS-Klasse(n) auf dem Bild (optional)
     sizes - wie breit das Bild ungefähr im Layout dargestellt wird
             (optional, Standardwert: "100vw" = volle Bildschirmbreite)
+    sofort - true für das EINE grosse Bild ganz oben auf einer Seite (das Foto
+            im Kopf der Startseite): Es wird dann sofort und mit Vorrang
+            geladen. Alle anderen Bilder lädt der Browser erst, wenn man in
+            ihre Nähe scrollt - beim obersten Bild bremste genau das den
+            Seitenaufbau. (optional)
 
   Fehlt die Bilddatei (z.B. weil ein Foto noch nicht hochgeladen wurde),
   wird einfach GAR NICHTS angezeigt (nur eine Warnung beim Bauen der Seite,
@@ -36,6 +41,7 @@
 {{- $alt := .alt }}
 {{- $class := .class }}
 {{- $sizes := .sizes }}
+{{- $sofort := .sofort }}
 {{- if not $sizes }}{{ $sizes = "100vw" }}{{ end }}
 
 {{- $img := "" }}
@@ -92,7 +98,7 @@
   srcset="{{ delimit $srcsetParts ", " }}"
   sizes="{{ $sizes }}"
   alt="{{ $alt }}"
-  loading="lazy"
+  {{ if $sofort }}loading="eager" fetchpriority="high"{{ else }}loading="lazy"{{ end }}
   width="{{ $fallback.res.Width }}"
   height="{{ $fallback.res.Height }}"
   {{- with $class }} class="{{ . }}"{{ end -}}

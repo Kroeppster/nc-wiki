@@ -12,6 +12,6 @@ layout: spenden
 
 Wir sind dankbar für jede Spende. Damit finanzieren wir die kostenlosen Übungsserien, Testsimulationen und Vorbereitungskurse. Ohne Spenden und Sponsoring gäbe es unser Angebot nicht.
 
-## Sponsor*in werden
+## Sponsor\*in werden
 
-Wir arbeiten gerne mit Organisationen zusammen. Alle Informationen für Sponsor*innen und Partnerorganisationen stehen auf der Seite [Sponsor*innen](/unterstuetzer-innen/sponsoren).
+Wir arbeiten gerne mit Organisationen zusammen. Alle Informationen für Sponsor\*innen und Partnerorganisationen stehen auf der Seite [Sponsor\*innen](/unterstuetzer-innen/sponsoren).

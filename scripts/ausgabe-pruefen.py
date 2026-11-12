@@ -12,7 +12,9 @@ statt unter "/nc-wiki/" liegt und der Mitgliederbereich nicht verschlüsselt ist
      kroeppster.github.io/nc-wiki/ aber nicht. Die Linkprüfung (lychee) sieht
      nur Links im HTML, nicht Adressen in Skripten und Stylesheets.
   2. Grundangaben jeder Seite: Titel, Beschreibung, genau eine Hauptüberschrift
-     (h1) und die richtige Sprache im <html lang>.
+     (h1) und die richtige Sprache im <html lang>. Dazu: kein Genderstern,
+     aus dem Markdown Kursivschrift gemacht hat (zwei «*innen» im selben
+     Absatz - im Text dann \\* schreiben).
   3. Mitgliederbereich und Alpha-Seite (geschuetzt: true): Jede dieser Seiten
      muss verschlüsselt sein, und kein Satz daraus darf sonst irgendwo stehen
      (in anderen Seiten, im Suchindex, in Sitemap oder RSS).
@@ -99,6 +101,12 @@ for p, t in dateien.items():
     n = len(re.findall(r'<h1[\s>]', t))
     if n != 1:
         fund(f'{n} statt einer h1', url)
+    # Genderstern als Kursivschrift: Stehen in einem Absatz zwei Sterne
+    # («Tutor*innen … Sponsor*innen»), liest Markdown sie als Anfang und Ende
+    # einer kursiven Stelle - die Sterne verschwinden. Abhilfe im Text: \*
+    m = re.search(r'\w<em>(?:innen|in)\b', t)
+    if m:
+        fund('Genderstern wurde kursiv (im Text \\* schreiben)', f'{url}: …{t[max(0, m.start() - 25):m.end()]}')
     lang = gruppe(r'<html[^>]*\slang="?([a-zA-Z-]+)', t)[:2]
     soll = 'fr' if url.startswith('/fr/') else 'it' if url.startswith('/it/') else 'de'
     if lang != soll:

@@ -11,4 +11,4 @@ Gemeinsam mit Medizinstudierenden wurden in Gruppen die Untertests und Lösungss
 
 **Platzvergabe:** Aufgrund der hohen Nachfrage in den Vorjahren wurden die Plätze 2026 ausgelost. Die Bewerbung war am 2. März 2026 während 24 Stunden möglich, die Zusage erfolgte bis spätestens 8. März 2026.
 
-In Zusammenarbeit mit dem Verband ChiroSuisse waren zusätzlich 25 Plätze für Chiropraktik-Kandidat*innen reserviert.
+In Zusammenarbeit mit dem Verband ChiroSuisse waren zusätzlich 25 Plätze für Chiropraktik-Kandidat\*innen reserviert.

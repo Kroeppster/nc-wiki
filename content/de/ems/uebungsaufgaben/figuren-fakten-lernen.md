@@ -12,7 +12,7 @@ In der Einprägephase werden dir 18 Figuren gezeigt, bei denen jeweils eine Flä
 
 ### Fakten
 
-In der Einprägephase werden dir 15 Patient*innen vorgestellt, jeweils mit Name, Altersgruppe, Beruf, einem weiteren Merkmal wie Gemütszustand oder Aufenthaltsort sowie einer Diagnose. Die 15 Personen sind in fünf Altersgruppen zu je drei Personen eingeteilt. Für das Einprägen hast du 6 Minuten Zeit. In der späteren Reproduktionsphase beantwortest du 18 Multiple-Choice-Fragen zu diesen Personen, mit je fünf Antwortmöglichkeiten. Die Reihenfolge ist dabei verändert, und die Angaben werden in unterschiedlichen Kombinationen abgefragt, beispielsweise «Die Person mit Diabetes ist von Beruf …». Auch hierfür stehen dir 6 Minuten zur Verfügung.
+In der Einprägephase werden dir 15 Patient\*innen vorgestellt, jeweils mit Name, Altersgruppe, Beruf, einem weiteren Merkmal wie Gemütszustand oder Aufenthaltsort sowie einer Diagnose. Die 15 Personen sind in fünf Altersgruppen zu je drei Personen eingeteilt. Für das Einprägen hast du 6 Minuten Zeit. In der späteren Reproduktionsphase beantwortest du 18 Multiple-Choice-Fragen zu diesen Personen, mit je fünf Antwortmöglichkeiten. Die Reihenfolge ist dabei verändert, und die Angaben werden in unterschiedlichen Kombinationen abgefragt, beispielsweise «Die Person mit Diabetes ist von Beruf …». Auch hierfür stehen dir 6 Minuten zur Verfügung.
 
 Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Keller, 30 Jahre, Tierärztin, ängstlich, Kopfschmerzen*.
 
@@ -22,7 +22,7 @@ Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Kel
 
 ## Bedeutung für das Studium
 
-Bei beiden geht es um deine Gedächtnisleistung. Im Medizinstudium musst du dir nicht nur Fakten, sondern gerade in Anatomie und Histopathologie auch viele bildliche Strukturen merken können – und später stellst du Patient*innen anderen Fachpersonen kurz und präzise vor, mit den wichtigsten Merkmalen, Diagnose und Prozedere. Eine gute Merktechnik hilft dir bei beidem enorm.
+Bei beiden geht es um deine Gedächtnisleistung. Im Medizinstudium musst du dir nicht nur Fakten, sondern gerade in Anatomie und Histopathologie auch viele bildliche Strukturen merken können – und später stellst du Patient\*innen anderen Fachpersonen kurz und präzise vor, mit den wichtigsten Merkmalen, Diagnose und Prozedere. Eine gute Merktechnik hilft dir bei beidem enorm.
 
 ## Zeitpunkt und Häufigkeit des Übens
 

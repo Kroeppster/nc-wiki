@@ -43,6 +43,10 @@
 
   /* ---- Farben: Akzent (sparsam einsetzen: Fokus-Ring, einzelne Hervorhebungen) ---- */
   --color-accent:#F5813C;
+  /* Fokus-Rahmen: das Akzent-Orange kommt auf hellem Grund nur auf 2.4:1,
+     verlangt sind 3:1. Dieses dunklere Orange erreicht 4.2:1 auf dem
+     Seitenhintergrund und ebenso auf dem dunklen Band (Footer). */
+  --color-focus:#C4560F;
   --color-accent-soft:#FDF1E6;
   --color-accent-soft-line:#F3D9BB;
 
@@ -224,6 +228,7 @@
   --color-signal-soft:#161E3C;
   --color-signal-soft-line:#2A3560;
   --color-accent:#FF9A57;
+  --color-focus:#FF9A57;
   --color-accent-soft:#2E2013;
   --color-accent-soft-line:#4A331B;
   --color-band:#050813;
@@ -312,8 +317,8 @@ body::before{
     radial-gradient(52rem 30rem at 92% 4rem, var(--glow-accent), transparent 66%);
 }
 a{color:inherit;text-decoration:none;}
-:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;border-radius:2px;}
-#search :focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
+:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px;border-radius:2px;}
+#search :focus-visible{outline:2px solid var(--color-focus);outline-offset:2px;}
 h1,h2,h3,h4{
   font-family:var(--font-display);font-weight:600;line-height:var(--leading-tight);
   letter-spacing:var(--tracking-tight);margin:0;
@@ -1423,6 +1428,17 @@ footer.site{background:linear-gradient(180deg,var(--color-band),var(--band-top))
 .seite-inhalt>ul ul,.seite-inhalt>ol ul,.seite-inhalt>ul ol{margin:var(--space-3) 0 0;padding-left:1.25rem;}
 .seite-inhalt>blockquote{margin:0 0 var(--space-6);padding:var(--space-3) var(--space-5);border-left:3px solid var(--color-line);color:var(--color-ink-soft);}
 .seite-inhalt>blockquote p:last-child{margin-bottom:0;}
+/* Links im Fliesstext: Ohne diese Regel erben sie Farbe und Schrift des Textes
+   (a{color:inherit;text-decoration:none}) und sind nicht als Links zu erkennen.
+   Unterstrichen, weil Farbe allein nicht genügt. Gilt nur für Text aus dem
+   Seiteninhalt - Karten, Knöpfe und Listen von Bausteinen haben eine eigene
+   Klasse und bleiben, wie sie sind. */
+.seite-inhalt>:is(p,ul,ol,blockquote):not([class]) a:not([class]),
+.seite-inhalt>.table-scroll a:not([class]),
+.uebungsaufgaben-intro p a:not([class]){color:var(--color-signal);text-decoration:underline;text-underline-offset:.15em;}
+.seite-inhalt>:is(p,ul,ol,blockquote):not([class]) a:not([class]):hover,
+.seite-inhalt>.table-scroll a:not([class]):hover,
+.uebungsaufgaben-intro p a:not([class]):hover{color:var(--color-signal-strong);}
 
 
 /* Zugeklappte Form (Handy, Tablet): eine Zeile, die sich auftippen lässt. */
