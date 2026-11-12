@@ -432,7 +432,11 @@
   function spieler(){ if(!ton) ton = new Audio(); return ton; }
 
   function sprich(text, fertig, ansage){
-    var weiter = fertig || function(){};
+    /* Wird die Übung abgebrochen, laufen Zeitgeber dieser Ansage noch aus
+       (Lesezeit ohne Ton, Rückfall der Sprachausgabe). Sie dürfen dann nichts
+       mehr auslösen - sonst schalten sie im NÄCHSTEN Lauf einen Schritt weiter. */
+    var meinLauf = lauf;
+    var weiter = function(){ if(fertig && lauf === meinLauf) fertig(); };
     if(!el.tts.checked){ setTimeout(weiter, lesezeit(text)); return; }
 
     var datei = ansage && AUDIO[ansage];
@@ -636,7 +640,7 @@
   /* -------------------------------------------------------------- Ablauf */
   function starteFolge(schritte){
     if(!schritte.length) return;
-    lauf = { schritte: schritte, index: 0, endeMs: 0, pausiertRest: null };
+    lauf = { schritte: schritte, index: 0, endeMs: 0, pausiertRest: null, fertig: false };
     rueckFokus = document.activeElement;
     buehne.hidden = false;
     document.body.classList.add('pm-aktiv');
@@ -713,6 +717,7 @@
   function weiterZumNaechsten(){
     if(!lauf) return;
     if(ticker){ clearInterval(ticker); ticker = null; }
+    if(lauf.index >= lauf.schritte.length - 1){ beenden(); return; }
     lauf.index++;
     zeigeAnsage();
   }
@@ -724,6 +729,10 @@
     zustand('stopp');
     piep(440, 0.5);
     el.uhrLabel.textContent = '';
+    /* Zwischen zwei Schritten geht es von allein weiter: kein Knopf. Stünde
+       hier noch «Starten» (ohne Ton bleibt er in der Ansage sichtbar), schlösse
+       ein Klick darauf die ganze Simulation. Erst am Ende wird er zu «Schliessen». */
+    el.los.hidden = true;
 
     /* Die Uhr läuft weiter - sie hängt im Testsaal ja auch weiter an der Wand. */
     ticker = setInterval(function(){ el.uhr.textContent = uhrzeit(new Date()); }, 250);
@@ -745,6 +754,7 @@
     if(istLetzter){
       sprich(T.stopp + ' ' + el.anweisung.textContent, null,
              mehrereBloecke ? 'fertig-komplett' : 'fertig-einzeln');
+      lauf.fertig = true;
       el.los.hidden = false;
       el.los.textContent = T.schliessen;
       return;
@@ -815,7 +825,7 @@
   el.los.addEventListener('click', function(){
     if(!lauf) return;
     /* Im Zustand "stopp" am Ende ist derselbe Knopf der Schliessen-Knopf. */
-    if(buehne.classList.contains('is-stopp')) beenden();
+    if(buehne.classList.contains('is-stopp')){ if(lauf.fertig) beenden(); }
     else if(aktuellerSchritt().art === 'hinweis') weiterZumNaechsten();
     else starteUhr();
   });
@@ -835,7 +845,7 @@
     }
     if(e.key === 'Escape'){
       /* Am Ende (Knopf "Schliessen" sichtbar) gibt es nichts mehr abzubrechen. */
-      if(buehne.classList.contains('is-stopp') && !el.los.hidden) beenden();
+      if(lauf.fertig) beenden();
       else if(window.confirm(T.abbrechenFrage)) beenden();
     }
     if(e.key === ' ' && buehne.classList.contains('is-uhr')){ e.preventDefault(); pauseUmschalten(); }

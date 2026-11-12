@@ -128,7 +128,13 @@
   el('lg-mit-figuren').addEventListener('change', wahlGeaendert);
   el('lg-mit-fakten').addEventListener('change', wahlGeaendert);
   wahlGeaendert();
-  function minuten(u, art){ return +el('lg-' + u.name + '-' + art).value || u.m[art === 'lernen' ? 'minLern' : 'minAbfrage']; }
+  // Was im Feld steht, gilt nur innerhalb seiner Grenzen (min/max): Mit «-5»
+  // war die Phase sofort vorbei und wurde stillschweigend uebersprungen.
+  function minuten(u, art){
+    var feld = el('lg-' + u.name + '-' + art);
+    var wert = +feld.value || u.m[art === 'lernen' ? 'minLern' : 'minAbfrage'];
+    return Math.min(+feld.max || wert, Math.max(+feld.min || 1, wert));
+  }
   // --- Der getaktete Durchlauf -------------------------------------------------
   // Eine Liste von Schritten (einpraegen, Ablenkung, abfragen), abgearbeitet
   // mit einer Uhr; "Weiter" springt zum naechsten Schritt.
@@ -204,7 +210,15 @@
     jetzt = -1;
     naechster();
   });
-  el('lg-weiter').addEventListener('click', naechster);
+  // Der Knopf bleibt beim Wechsel an derselben Stelle: Ein Doppelklick
+  // uebersprang sonst eine ganze Phase. Die Uhr ruft naechster() direkt auf.
+  var letzterKlick = 0;
+  el('lg-weiter').addEventListener('click', function(){
+    var t = Date.now();
+    if (t - letzterKlick < 600) return;
+    letzterKlick = t;
+    naechster();
+  });
   function auswerten(){
     clearInterval(laufend);
     var summe = 0, von = 0, h = '';

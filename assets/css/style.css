@@ -458,6 +458,10 @@ nav.main-nav>ul>li>span:hover{color:var(--color-signal);}
 /* ==========================================================================
    Buttons
    ========================================================================== */
+/* Ohne diese Regel überstimmt display:inline-flex das Attribut "hidden" - ein
+   per Skript verborgener Knopf blieb sichtbar (Simulationsmodus «Starten»,
+   Live-Kamera ohne Kamera). */
+.btn[hidden]{display:none;}
 .btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:.85rem 1.6rem;font-size:var(--text-sm);font-weight:600;font-family:var(--font-body);border-radius:var(--radius-full);border:1px solid transparent;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s;}
 .btn-primary{background:var(--color-btn-bg);color:var(--color-on-signal);}
 .btn-primary:hover{background:var(--color-btn-bg-hover);}
@@ -1007,6 +1011,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    --------------------------------------------------------------------------- */
 .weg-wrap{--spur-oben:5.4rem;--spur-unten:12rem;--grau:var(--color-ink-faint);}
 .weg-modus{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3) var(--space-4);margin-top:var(--space-6);}
+.weg-modus[hidden]{display:none;}
 .weg-modus-label{font-family:var(--font-body);font-size:var(--text-xs);text-transform:uppercase;
   letter-spacing:var(--tracking-wide);color:var(--color-ink-faint);}
 .weg-legende{list-style:none;display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-6);margin:var(--space-5) 0 0;padding:0;
@@ -1812,6 +1817,7 @@ body.pm-aktiv{overflow:hidden;}
 .fg .lg-regler,#lg-start .fg-regler{flex-direction:column;gap:0;}
 .fg-set-nochmal{margin-top:var(--space-5);}
 .lg-zeile{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;margin:0 0 .5rem;}
+.lg-zeile[hidden]{display:none;}
 .lg-zeile b{min-width:11rem;}
 .fg-fehler{color:var(--color-fehler,#b3261e);font-weight:600;}
 .fig-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:14pt 10pt;margin:14pt 0 0;}

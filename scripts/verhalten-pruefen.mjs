@@ -194,6 +194,76 @@ console.log('\n=== Simulationsmodus: Uhr laeuft und laesst sich stoppen ===');
   await ctx.close();
 }
 
+// Ohne «Anweisungen vorlesen» blieb beim Stopp ZWISCHEN zwei Untertests der
+// Knopf «Starten» stehen - ein Klick darauf (oder Esc) schloss die ganze
+// Simulation ohne Rueckfrage. Und: Ein Zeitgeber des abgebrochenen Laufs
+// schaltete im naechsten Lauf einen Schritt weiter (Buehne blieb haengen).
+// Die Uhr des Browsers wird hier vorgespult, sonst dauerte der Test eine Stunde.
+console.log('\n=== Simulationsmodus: ohne Ton, ganze Simulation ===');
+{
+  const {ctx,p,js}=await neu();
+  let rueckfragen = 0; p.on('dialog', () => rueckfragen++);
+  await p.clock.install();
+  await p.goto(B+'/ems/testsimulationen/',{waitUntil:'networkidle'});
+  await p.uncheck('#pm-tts');
+  await p.click('[data-pm-start="alle"]');
+  const zustand = () => p.$eval('#pm-buehne', e => (e.className.match(/is-(anweisung|uhr|stopp)/)||[])[1] || '');
+  // Hinweise («Weiter») und die erste Ansage («Starten») von Hand durchklicken
+  for (let i = 0; i < 6 && await zustand() === 'anweisung'; i++) { await p.click('#pm-los'); await p.clock.runFor(100); }
+  pruef('erster Untertest laeuft', await zustand() === 'uhr');
+  for (let i = 0; i < 240 && await zustand() === 'uhr'; i++) await p.clock.fastForward(60000);
+  pruef('Stopp nach dem ersten Untertest', await zustand() === 'stopp');
+  pruef('beim Zwischen-Stopp kein Knopf «Starten»', !(await p.isVisible('#pm-los')));
+  await p.keyboard.press('Escape'); await p.clock.runFor(300);
+  pruef('Esc beim Zwischen-Stopp fragt nach', rueckfragen === 1, `Rueckfragen: ${rueckfragen}`);
+  pruef('nach der Rueckfrage geschlossen', await p.$eval('#pm-buehne', e => e.hidden));
+  // sofort ein neuer Lauf: der alte Zeitgeber («weiter nach dem Stopp») darf nichts mehr tun
+  await p.click('[data-pm-start="0"]'); await p.clock.runFor(100);
+  const titel = await p.$eval('#pm-titel', e => e.textContent);
+  try { await p.clock.fastForward(21000); await p.clock.runFor(100); } catch (e) { js.push(String(e.message).split('\n')[0].slice(0,90)); }
+  pruef('neuer Lauf bleibt bei seiner Ansage', await zustand() === 'anweisung' && await p.$eval('#pm-titel', e => e.textContent) === titel);
+  await p.click('#pm-los'); await p.clock.runFor(300);
+  pruef('neuer Lauf laesst sich starten', await zustand() === 'uhr');
+  pruef('keine JS-Fehler', js.length===0, js.join(' | '));
+  await ctx.close();
+}
+
+// Lern-Generator (Alpha-Seite): Zeitzeile eines abgewaehlten Untertests,
+// Doppelklick auf «Weiter», unsinnige Minuten.
+console.log('\n=== Lern-Generator: Auswahl, Doppelklick, Minuten ===');
+{
+  const {ctx,p,js}=await neu();
+  await p.goto(B+'/alpha/',{waitUntil:'networkidle'});
+  await p.uncheck('#lg-mit-figuren');
+  pruef('abgewaehlt: Zeitzeile Figuren verborgen', !(await p.isVisible('#lg-zeile-figuren')));
+  pruef('gewaehlt: Zeitzeile Fakten sichtbar', await p.isVisible('#lg-zeile-fakten'));
+  await p.check('#lg-mit-figuren');
+  await p.fill('#lg-figuren-lernen', '-5');
+  await p.click('#lg-los'); await p.waitForTimeout(700);
+  const t1 = await p.$eval('#lg-phase-titel', e => e.textContent);
+  const uhr = await p.$eval('#lg-uhr', e => e.textContent.trim());
+  pruef('negative Minuten: Phase laeuft trotzdem', uhr !== '0:00', uhr);
+  await p.dblclick('#lg-weiter'); await p.waitForTimeout(700);
+  const t2 = await p.$eval('#lg-phase-titel', e => e.textContent);
+  await p.click('#lg-weiter'); await p.waitForTimeout(300);
+  const t3 = await p.$eval('#lg-phase-titel', e => e.textContent);
+  pruef('Doppelklick geht genau einen Schritt weiter', t1 !== t2 && t2 !== t3 && /Fakten|faits|fatti/i.test(t2), `${t1} | ${t2} | ${t3}`);
+  pruef('keine JS-Fehler', js.length===0, js.join(' | '));
+  await ctx.close();
+}
+
+// Der Umschalter des Zeitstrahls wird erst vom Skript eingeblendet - ohne
+// JavaScript duerfen keine Knoepfe ohne Wirkung dastehen.
+console.log('\n=== Zeitstrahl: Umschalter ohne JavaScript ===');
+{
+  const ctx = await b.newContext({ javaScriptEnabled:false, viewport:{width:1280,height:900} });
+  const p = await ctx.newPage();
+  await p.goto(B+'/',{waitUntil:'load'});
+  const da = await p.$('#weg-modus');
+  pruef('Umschalter ohne JavaScript verborgen', !da || !(await da.isVisible()));
+  await ctx.close();
+}
+
 console.log('\n=== Simulationsmodus: Zeit folgt der Aufgabenzahl ===');
 {
   const {ctx,p,js}=await neu();
