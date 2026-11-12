@@ -52,6 +52,6 @@ Dans ce sous-test, les progrès sont vite visibles – il suffit généralement 
 
 *« Le moment du test est un peu méchamment choisi, car tu as déjà résolu d'autres tests pendant plusieurs heures. C'est dur, mais c'est pareil pour tout le monde. La tâche est en outre conçue de sorte qu'on ne la termine pratiquement jamais en 8 minutes – ne t'inquiète donc pas si tu n'arrives pas au bout. Sans erreur, tu peux quand même obtenir le score maximal. »*
 
-*« Lors de mon premier NC, je n'ai misé que sur la vitesse et j'ai ainsi omis beaucoup de caractères. Au deuxième NC, je savais que je devais faire attention aux deux : vitesse et précision. Pour simuler cette sensation, j'ai toujours résolu le test de concentration à la fin à l'entraînement. »*
+*« Lors de mon premier AMS, je n'ai misé que sur la vitesse et j'ai ainsi omis beaucoup de caractères. Au deuxième AMS, je savais que je devais faire attention aux deux : vitesse et précision. Pour simuler cette sensation, j'ai toujours résolu le test de concentration à la fin à l'entraînement. »*
 
 Tu trouveras d'autres récits dans les [témoignages](/ems/erfahrungsberichte).

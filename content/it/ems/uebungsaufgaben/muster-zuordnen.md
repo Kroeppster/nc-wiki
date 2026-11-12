@@ -48,7 +48,7 @@ Siccome l'associazione di figure apre la giornata del test, conviene iniziare an
 
 ## Dalle testimonianze
 
-*«Prima delle sessioni di esercizio risolvevo sempre qualche associazione di figure, per preparare il cervello al primo (e più difficile) compito del vero NC.»*
+*«Prima delle sessioni di esercizio risolvevo sempre qualche associazione di figure, per preparare il cervello al primo (e più difficile) compito del vero AMS.»*
 
 *«Il primo compito di associazione di figure l'ho completamente sbagliato, non sono arrivato·a neanche a metà […] non lasciarti scoraggiare, di solito non tutto dipende da un singolo compito, e dentro di te non devi mai arrenderti prima dell'ultimo compito.»* Questa persona ha superato l'AMS con un rango percentile di 97 e ha ottenuto il posto di studio nella sua prima scelta.
 

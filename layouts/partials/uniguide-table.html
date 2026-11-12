@@ -137,9 +137,9 @@
      angekreuzten Universitäten das "hidden" weg. Die erste Spalte (die
      Bezeichnung der Angabe) bleibt beim seitlichen Scrollen stehen, siehe
      .compare-table th[scope=row] in style.css. */}}
-<section class="uniguide-compare" id="uniguide-compare" hidden aria-live="polite">
+<section class="uniguide-compare" id="uniguide-compare" hidden>
   <div class="section-head">
-    <h2>{{ i18n "uniguide_compare_heading" }}</h2>
+    <h2 id="compare-heading" tabindex="-1">{{ i18n "uniguide_compare_heading" }}</h2>
     <button type="button" class="filter-pill" id="compare-close">{{ i18n "uniguide_compare_close" }}</button>
   </div>
   <div class="table-scroll">
@@ -230,6 +230,22 @@
   var zaehler = document.getElementById('compare-count');
   var panel = document.getElementById('uniguide-compare');
 
+  /* Der Cookie-Hinweis liegt beim ersten Besuch an derselben Stelle unten am
+     Rand und verdeckte die Leiste samt Knopf «Vergleichen»: Solange er
+     sichtbar ist, rückt die Leiste über ihn. */
+  /* (Der Hinweis steht weiter unten im Dokument als dieses Skript - deshalb
+     erst suchen, wenn er gebraucht wird.) */
+  var hinweis = null;
+  function leisteLage(){
+    if(!hinweis){
+      hinweis = document.getElementById('cookieBanner');
+      if(hinweis) hinweis.addEventListener('click', function(){ setTimeout(leisteLage, 50); });
+    }
+    var da = hinweis && !hinweis.classList.contains('hidden') && hinweis.offsetHeight;
+    bar.style.bottom = da ? (hinweis.offsetHeight + 28) + 'px' : '';
+  }
+  window.addEventListener('resize', leisteLage);
+
   function gewaehlt(){
     return boxen.filter(function(b){ return b.checked; }).map(function(b){ return b.value; });
   }
@@ -258,6 +274,7 @@
        dem Handy sonst einen guten Teil davon - der Vergleich hat seinen
        eigenen Schliessen-Knopf. */
     bar.hidden = !panel.hidden;
+    leisteLage();
     var vorlage = slugs.length === 1 ? bar.getAttribute('data-selected-one') : bar.getAttribute('data-selected-other');
     zaehler.textContent = vorlage.replace('{count}', slugs.length) + (amLimit ? ' · ' + bar.getAttribute('data-max-message') : '');
 
@@ -274,12 +291,19 @@
   document.getElementById('compare-open').addEventListener('click', function(){
     panel.hidden = false;
     bar.hidden = true;
-    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    /* Der geklickte Knopf steckt in der Leiste, die eben verschwunden ist:
+       Der Fokus geht auf die Überschrift des Vergleichs, sonst landet die
+       Tastatur am Seitenanfang. Weich scrollen nur, wenn Bewegung erwünscht ist. */
+    var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('compare-heading').focus({ preventScroll: true });
+    panel.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
   });
 
   document.getElementById('compare-close').addEventListener('click', function(){
     panel.hidden = true;
     zeichnen();
+    /* zurück auf den Knopf, mit dem der Vergleich geöffnet wurde */
+    if(!bar.hidden) document.getElementById('compare-open').focus({ preventScroll: true });
   });
 
   document.getElementById('compare-reset').addEventListener('click', function(){

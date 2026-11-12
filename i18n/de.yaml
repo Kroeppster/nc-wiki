@@ -423,6 +423,10 @@ downloads_figuren: "Figuren"
 downloads_fakten: "Fakten"
 downloads_schlauchfiguren: "Schlauchfiguren (alter Untertest)"
 list_empty: "Hier gibt es noch keine Beiträge. Sobald etwas veröffentlicht ist, erscheint es an dieser Stelle."
+blaettern_label: "Weitere Seiten"
+blaettern_zurueck: "Vorherige Seite"
+blaettern_weiter: "Nächste Seite"
+blaettern_seite: "Seite {n}"
 
 # Antwortbogen auswerten (Alpha-Seite, layouts/partials/bausteine/antwortbogen-auswertung.html)
 ab_intro: "Fotografiere deinen ausgefüllten Antwortbogen einer Testsimulation oder lade einen Scan hoch (Bild oder PDF). Die Markierungen werden gelesen und mit den Lösungen verglichen – heraus kommen deine Punkte je Untertest."

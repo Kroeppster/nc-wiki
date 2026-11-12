@@ -41,6 +41,11 @@
       <p class="lede">{{ i18n "error_404_text" }}</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="{{ .Site.Home.RelPermalink }}">{{ i18n "error_404_cta" }}</a>
+        {{/* Die im Text versprochenen «folgenden Seiten»: die Punkte des
+             Hauptmenüs (ohne die Startseite, die steht schon davor). */}}
+        {{ range .Site.Menus.main }}{{ if and .URL (ne .URL $.Site.Home.RelPermalink) }}
+        <a class="btn btn-ghost" href="{{ .URL }}">{{ .Name }}</a>
+        {{ end }}{{ end }}
       </div>
     </div>
   </section>

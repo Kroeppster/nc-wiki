@@ -79,10 +79,11 @@
        noch keine hat. Hugo vergibt die nur für Überschriften aus dem
        Fliesstext, nicht für die aus einer Vorlage. */
     function marke(text){
-      return text.toLowerCase()
-        .replace(/[äàâ]/g,'a').replace(/[öô]/g,'o').replace(/[üû]/g,'u')
-        .replace(/[éèêë]/g,'e').replace(/[ìî]/g,'i').replace(/ç/g,'c').replace(/ß/g,'ss')
-        .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'abschnitt';
+      /* Akzente aller drei Sprachen fallen weg («più» -> «piu»; bis November
+         2026 fehlten ò, ù, ó, í, ú, ï und œ, daraus wurde «pi»). */
+      var t = text.toLowerCase().replace(/ß/g,'ss').replace(/œ/g,'oe').replace(/æ/g,'ae');
+      if(t.normalize) t = t.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      return t.replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'abschnitt';
     }
 
     var abschnitte = [];

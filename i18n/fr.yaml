@@ -414,6 +414,10 @@ downloads_figuren: "Figures"
 downloads_fakten: "Faits"
 downloads_schlauchfiguren: "Figures tubulaires (ancien sous-test)"
 list_empty: "Il n'y a pas encore de contenu ici. Dès que quelque chose est publié, cela apparaîtra à cet endroit."
+blaettern_label: "Autres pages"
+blaettern_zurueck: "Page précédente"
+blaettern_weiter: "Page suivante"
+blaettern_seite: "Page {n}"
 
 # Antwortbogen auswerten (Alpha-Seite, layouts/partials/bausteine/antwortbogen-auswertung.html)
 ab_intro: "Photographie ta feuille de réponses remplie d’une simulation de test ou charge un scan (image ou PDF). Les marques sont lues et comparées aux solutions – tu obtiens tes points par sous-test."

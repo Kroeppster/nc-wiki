@@ -1,0 +1,35 @@
+{{- /*
+  ============================================================================
+  BLÄTTERN: «Seite 1 / 2 / 3» unter einer Kartenliste
+  ============================================================================
+  Erscheint nur, wenn es mehr Karten gibt, als auf eine Seite passen (News-
+  Archiv, Schlagwörter). Aufruf aus list.html mit der Seite als Kontext:
+  {{ partial "blaettern.html" . }}
+
+  Ersetzt Hugos eingebaute Vorlage (_internal/pagination.html): Die beschriftet
+  ihre Knöpfe für Screenreader fest auf Englisch («Previous», «Page 2») - auch
+  auf den deutschen, französischen und italienischen Seiten. Hier kommen die
+  Texte aus i18n/. Die CSS-Klassen sind dieselben geblieben (.pagination,
+  .page-item, .page-link in style.css).
+  ============================================================================
+*/ -}}
+{{- $p := .Paginator }}
+{{- if gt $p.TotalPages 1 }}
+<nav aria-label="{{ i18n "blaettern_label" }}">
+  <ul class="pagination">
+    <li class="page-item{{ if not $p.HasPrev }} disabled{{ end }}">
+      {{- if $p.HasPrev }}<a class="page-link" href="{{ $p.Prev.URL }}" rel="prev" aria-label="{{ i18n "blaettern_zurueck" }}"><span aria-hidden="true">&laquo;</span></a>
+      {{- else }}<span class="page-link" aria-hidden="true">&laquo;</span>{{ end -}}
+    </li>
+    {{- range $p.Pagers }}
+    <li class="page-item{{ if eq . $p }} active{{ end }}">
+      <a class="page-link" href="{{ .URL }}" aria-label="{{ replace (i18n "blaettern_seite") "{n}" (string .PageNumber) }}"{{ if eq . $p }} aria-current="page"{{ end }}>{{ .PageNumber }}</a>
+    </li>
+    {{- end }}
+    <li class="page-item{{ if not $p.HasNext }} disabled{{ end }}">
+      {{- if $p.HasNext }}<a class="page-link" href="{{ $p.Next.URL }}" rel="next" aria-label="{{ i18n "blaettern_weiter" }}"><span aria-hidden="true">&raquo;</span></a>
+      {{- else }}<span class="page-link" aria-hidden="true">&raquo;</span>{{ end -}}
+    </li>
+  </ul>
+</nav>
+{{- end }}

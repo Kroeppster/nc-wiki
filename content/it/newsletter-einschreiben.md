@@ -2,7 +2,7 @@
 newsletter_seite: true
 newsletter_form: true
 title: "Iscriversi alla newsletter"
-description: "Iscriviti alla newsletter di NCWiki per non perderti nulla su simulazioni del test, corsi di preparazione e nuovo materiale di esercitazione per l'EMS."
+description: "Iscriviti alla newsletter di NCWiki per non perderti nulla su simulazioni del test, corsi di preparazione e nuovo materiale di esercitazione per l'AMS."
 menu:
   newsletter:
     name: "Iscriviti"

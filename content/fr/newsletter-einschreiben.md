@@ -2,7 +2,7 @@
 newsletter_seite: true
 newsletter_form: true
 title: "S'abonner à la newsletter"
-description: "Abonne-toi à la newsletter de NCWiki pour ne rien manquer des simulations de test, des cours de préparation et du nouveau matériel d'entraînement pour l'EMS."
+description: "Abonne-toi à la newsletter de NCWiki pour ne rien manquer des simulations de test, des cours de préparation et du nouveau matériel d'entraînement pour l'AMS."
 menu:
   newsletter:
     name: "S'inscrire"

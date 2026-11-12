@@ -48,7 +48,7 @@ Comme la reconnaissance de fragments de figure ouvre la journée de test, il vau
 
 ## Extraits de témoignages
 
-*« Avant les séances d'entraînement, je résolvais toujours quelques comparaisons de motifs pour préparer mon cerveau à la première (et la plus difficile) tâche du vrai NC. »*
+*« Avant les séances d'entraînement, je résolvais toujours quelques comparaisons de motifs pour préparer mon cerveau à la première (et la plus difficile) tâche du vrai AMS. »*
 
 *« J'ai complètement raté la première tâche de comparaison de motifs, je ne suis même pas arrivé·e à la moitié […] ne te laisse pas déstabiliser, en général tout ne dépend pas d'une seule tâche, et intérieurement, tu ne dois jamais abandonner avant la dernière tâche. »* Cette personne a réussi l'AMS avec un rang centile de 97 et a obtenu sa place d'études dans son premier choix.
 

@@ -588,7 +588,7 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    Grundverstaendnis"), die damit auf schmalen Bildschirmen aus der Seite
    ragten. Umbrechen ist dort das kleinere Uebel als Ueberstehen. */
 .more{font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-signal);overflow-wrap:break-word;}
-/* Seitennavigation unter Kartenlisten (Hugo: _internal/pagination.html).
+/* Seitennavigation unter Kartenlisten (layouts/partials/blaettern.html).
    Gebraucht erst, seit ein Bereich mehr als eine Seite hat (News-Archiv) -
    vorher stand sie als ungestaltete Aufzaehlung da. Runde Knoepfe wie die
    Filter, aktuelle Seite gefuellt, gesperrte (erste/vorherige auf Seite 1)

@@ -52,6 +52,6 @@ In questo sottotest i progressi si vedono in fretta – di solito basta iniziare
 
 *«Il momento del test è scelto in modo un po' crudele, perché prima hai già risolto altri test per diverse ore. È dura, ma vale per tutti. Il compito è inoltre pensato in modo che negli 8 minuti praticamente non si finisca mai – quindi non preoccuparti se non arrivi alla fine. Senza errori puoi comunque ottenere il punteggio pieno.»*
 
-*«Al mio primo NC ho puntato solo sulla velocità e così ho tralasciato molti simboli. Al secondo NC sapevo di dover badare a entrambe le cose: velocità e precisione. Per simulare questa sensazione, durante l'esercizio ho sempre risolto il test di concentrazione alla fine.»*
+*«Al mio primo AMS ho puntato solo sulla velocità e così ho tralasciato molti simboli. Al secondo AMS sapevo di dover badare a entrambe le cose: velocità e precisione. Per simulare questa sensazione, durante l'esercizio ho sempre risolto il test di concentrazione alla fine.»*
 
 Trovi altri resoconti tra le [testimonianze](/ems/erfahrungsberichte).

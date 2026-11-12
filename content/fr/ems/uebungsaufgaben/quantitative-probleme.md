@@ -45,7 +45,7 @@ Comme il s'agit ici surtout d'entraînement, un début précoce vaut la peine �
 
 ## Extraits de témoignages
 
-*« Avant de commencer à résoudre des exercices, je me suis d'abord fait une vue d'ensemble et j'ai regardé quels types de questions me posaient le plus de difficultés. J'ai commencé par là et j'ai essayé d'élaborer une technique de résolution avant d'établir un plan d'entraînement. Pendant le NC, je recommanderais de noter les étapes de calcul et les résultats intermédiaires, pour éviter le chaos dans un test aussi long – et de ne pas se laisser stresser par le temps. »*
+*« Avant de commencer à résoudre des exercices, je me suis d'abord fait une vue d'ensemble et j'ai regardé quels types de questions me posaient le plus de difficultés. J'ai commencé par là et j'ai essayé d'élaborer une technique de résolution avant d'établir un plan d'entraînement. Pendant l'AMS, je recommanderais de noter les étapes de calcul et les résultats intermédiaires, pour éviter le chaos dans un test aussi long – et de ne pas se laisser stresser par le temps. »*
 
 *« Pour les problèmes quantitatifs et formels, entraîne-toi toujours sans calculatrice et simplifie autant que possible. »*
 

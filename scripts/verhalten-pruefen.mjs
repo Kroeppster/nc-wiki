@@ -156,6 +156,12 @@ console.log('\n=== Uniguide: Vergleich ===');
     await p.waitForTimeout(600);
     const spalten = await p.$$eval('.compare-col, [class*=compare]', e => e.filter(x=>x.offsetParent!==null).length);
     pruef('Vergleichsansicht erscheint', spalten > 0, `${spalten} Elemente`);
+    // Tastatur: Der Knopf «Vergleichen» verschwindet beim Oeffnen samt seiner
+    // Leiste - der Fokus muss im Vergleich landen und beim Schliessen zurueck.
+    await p.click('#compare-open'); await p.waitForTimeout(300);
+    pruef('Vergleich offen: Fokus auf seiner Ueberschrift', await p.evaluate(() => document.activeElement && document.activeElement.id === 'compare-heading'));
+    await p.click('#compare-close'); await p.waitForTimeout(300);
+    pruef('Vergleich zu: Fokus zurueck auf «Vergleichen»', await p.evaluate(() => document.activeElement && document.activeElement.id === 'compare-open'));
   }
   pruef('keine JS-Fehler', jsFehler.length===0, jsFehler.join(' | '));
   await ctx.close();
@@ -225,6 +231,46 @@ console.log('\n=== Simulationsmodus: ohne Ton, ganze Simulation ===');
   await p.click('#pm-los'); await p.clock.runFor(300);
   pruef('neuer Lauf laesst sich starten', await zustand() === 'uhr');
   pruef('keine JS-Fehler', js.length===0, js.join(' | '));
+  await ctx.close();
+}
+
+// Beim ersten Besuch liegt der Cookie-Hinweis unten am Rand - genau dort, wo
+// die Leiste «Vergleichen» des Uniguides erscheint. Sie darf nicht darunter liegen.
+console.log('\n=== Uniguide: Vergleichsleiste und Cookie-Hinweis ===');
+{
+  const ctx = await b.newContext({ viewport:{width:1280,height:900} });
+  await ctx.addInitScript(() => { try{ localStorage.setItem('alpha-notice-seen','1'); }catch(e){} });
+  const p = await ctx.newPage();
+  await p.goto(B + '/ems/uniguide/', { waitUntil:'networkidle' });
+  const boxen = await p.$$('.compare-box');
+  await boxen[0].check(); await boxen[1].check(); await p.waitForTimeout(400);
+  const lage = await p.evaluate(() => { const r = id => document.getElementById(id).getBoundingClientRect();
+    const h = document.getElementById('cookieBanner'); return { hinweis: !h.classList.contains('hidden'), leisteUnten: r('compare-bar').bottom, hinweisOben: r('cookieBanner').top }; });
+  pruef('Cookie-Hinweis ist da', lage.hinweis);
+  pruef('Leiste liegt ueber dem Cookie-Hinweis', lage.leisteUnten <= lage.hinweisOben, JSON.stringify(lage));
+  await ctx.close();
+}
+
+// Blaettern unter dem News-Archiv, Schlagwoerter, 404-Seite: je Sprache beschriftet
+console.log('\n=== Blaettern, Schlagwoerter, Seite nicht gefunden ===');
+{
+  const { ctx, p, jsFehler } = await neu();
+  for (const [sp, soll] of [['', 'Nächste Seite'], ['/fr', 'Page suivante'], ['/it', 'Pagina successiva']]) {
+    await p.goto(B + sp + '/ueber-uns/archiv/news/', { waitUntil:'load' });
+    const labels = await p.$$eval('.pagination [aria-label]', e => e.map(x => x.getAttribute('aria-label')));
+    pruef(`Blaettern ${sp || '/de'}: in der Sprache der Seite beschriftet`, labels.includes(soll) && !labels.some(l => /^(First|Previous|Next|Last)$/.test(l)), labels.join(', '));
+  }
+  await p.click('.pagination a[rel=next]'); await p.waitForLoadState('load');
+  pruef('Blaettern: «Naechste Seite» fuehrt auf Seite 2', /\/page\/2\//.test(p.url()) && (await p.$$('.card-grid .card')).length > 0, p.url());
+  await p.goto(B + '/tags/', { waitUntil:'load' });
+  const titel = await p.$$eval('.card h2', e => e.map(x => x.textContent.trim()));
+  pruef('Schlagwoerter: Titel nicht in englischer Grossschreibung', titel.length > 0 && !titel.some(t => /\s(Der|Die|Das|Und|Im|Mit|Zur|Zum|Vor|Nach)\s/.test(t)), titel.filter(t => /\s(Der|Die|Das|Und|Im|Mit|Zur|Zum|Vor|Nach)\s/.test(t)).join(' | '));
+  for (const sp of ['', '/fr', '/it']) {
+    await p.goto(B + sp + '/404.html', { waitUntil:'load' });
+    const links = await p.$$eval('.hero-actions a', e => e.map(x => x.getAttribute('href')));
+    pruef(`404 ${sp || '/de'}: Links auf weitere Seiten`, links.length >= 4 && links.every(h => sp ? h.startsWith(sp + '/') : !/^\/(fr|it)\//.test(h)), links.join(' '));
+  }
+  pruef('keine JS-Fehler', jsFehler.length===0, jsFehler.join(' | '));
   await ctx.close();
 }
 
