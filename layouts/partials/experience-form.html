@@ -227,6 +227,8 @@
       }).then(function(response){
         if(!response.ok){ throw new Error('request failed'); }
         form.querySelectorAll('input, textarea, select, button').forEach(function(el){ el.disabled = true; });
+        {{/* nicht für immer «Wird gesendet …» auf dem (jetzt gesperrten) Knopf */}}
+        if(submitBtn) submitBtn.textContent = submitLabel;
         success.hidden = false;
         success.focus();
       }).catch(function(){

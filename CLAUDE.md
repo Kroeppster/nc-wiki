@@ -31,7 +31,7 @@ sonst fehl.
 | `data/*.yaml` | Tabellarische Daten statt Hardcoding: `subtests.yaml` (Untertest-Liste), `unis.yaml`, `faq.yaml`, `sponsors.yaml`, `downloads.yaml`, `antwortbogen.yaml` (Lösungen der Testsimulationen für «Antwortbogen auswerten», erzeugt von `scripts/antwortbogen-loesungen.py`, nie von Hand), `konztest.yaml` (Raster und Lösung aller Konztests der Webseite mit Lösungsblatt, erzeugt von `scripts/konztest-loesungen.py`; dasselbe Verfahren liest im Browser einen hochgeladenen eigenen Konztest, `layouts/partials/bausteine/konztest-lesen.html`). |
 | `i18n/de\|fr\|it.yaml` | Feste UI-Texte (Buttons, Menüs, Labels) — jede neue UI-Zeichenkette in allen drei Dateien ergänzen. |
 | `layouts/` | Templates: `_default/baseof.html` (Grundgerüst), `partials/` (header, footer, head, Formulare, Grids), `_default/list.html` + `single.html` (generisch für alle Bereiche), `index.html` (Startseite). |
-| `assets/css/style.css`, `static/css/style.css` | Design, unverändert aus der ursprünglichen HTML-Vorlage übernommen. |
+| `assets/css/style.css` | Das ganze Design in einer Datei (geladen über `resources.Get` in `layouts/partials/head.html`); ursprünglich aus der HTML-Vorlage übernommen, seither erweitert. |
 | `archetypes/`, `docs/vorlage-*.md` | Copy-Paste-Vorlagen für neue Seiten (News, Erfahrungsbericht, Jahresbericht). |
 | `scripts/playwright.mjs` | Lädt Playwright für alle Prüfstände (`*-pruefen.mjs`, Kamera-Labor): Umgebungsvariable `PLAYWRIGHT`, sonst das npm-Paket, sonst der bisherige feste Pfad. Playwright steht bewusst nicht in `package.json`. |
 | `docs/STYLEGUIDE.md` | Schreibregeln für alle Texte (Anrede, Ton, Titel, Begriffe, Schreibweisen). |

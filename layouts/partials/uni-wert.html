@@ -15,7 +15,9 @@
     {{- $raus = printf "<span class=\"badge badge-%s\">%s</span>" (htmlEscape $w) (i18n (printf "ems_status_%s" $w)) -}}
   {{- else if eq $art "sprachen" -}}
     {{- $raus = htmlEscape (partial "uni-sprachen.html" $w) -}}
-  {{- else if eq $art "link" -}}
+  {{- else if and (eq $art "link") (findRE `^https?://` (string $w)) -}}
+    {{- /* nur echte Webadressen werden zum Link - alles andere (Tippfehler in
+           der Textmappe, «javascript:…») steht als blosser Text da */ -}}
     {{- $raus = printf "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">%s</a>" (htmlEscape $w) (htmlEscape $w) -}}
   {{- else if and (eq $art "punkte") (reflect.IsSlice $w) -}}
     {{- $li := "" -}}

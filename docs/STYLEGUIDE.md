@@ -52,6 +52,11 @@ steht unter [Französisch und Italienisch](#französisch-und-italienisch).
 - Beträge: CHF 300.
 - Datum: 9. Juli 2027.
 - Gendern: Genderstern (Unterstützer\*innen).
+  Im Seitentext (Markdown) vor den Stern einen Rückstrich setzen: `Unterstützer\*innen`.
+  Stehen in einem Absatz zwei Sterne ohne Rückstrich, macht Markdown daraus Kursivschrift,
+  und die Sterne verschwinden. Der Bau der Website bricht dann mit einem Hinweis ab
+  (`scripts/ausgabe-pruefen.py`). In Titel und Beschreibung im Seitenkopf braucht es
+  keinen Rückstrich.
 - Anführungszeichen: «Guillemets», darin ‹einfache›.
 - «und» statt «&» im Text, in Überschriften und Namen.
 

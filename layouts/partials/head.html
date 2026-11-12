@@ -132,7 +132,9 @@
        "noindex: true" im Seitenkopf hält eine Seite dagegen IMMER aus
        Suchmaschinen, Sitemap und Suche heraus (z.B. «Anmeldung bestätigt»,
        die man nur über den Link in der Bestätigungsmail erreichen soll). */ -}}
-{{- if or .Params.noindex (and .Params.newsletter_seite (not site.Params.newsletter_url)) }}
+{{- /* Auch die Seite «nicht gefunden»: Sie wird als gewöhnliche Datei
+       ausgeliefert (/fr/404.html) und soll nicht als Inhalt in Suchmaschinen landen. */ -}}
+{{- if or .Params.noindex (eq .Kind "404") (and .Params.newsletter_seite (not site.Params.newsletter_url)) }}
 <meta name="robots" content="noindex">
 {{- end }}
 {{- if .Params.geschuetzt }}
@@ -183,7 +185,8 @@
 <meta property="og:description" content="{{ $ogDescription }}">
 <meta property="og:image" content="{{ $ogImage }}">
 <meta property="og:url" content="{{ .Permalink }}">
-<meta property="og:locale" content="{{ .Site.Language.Lang }}">
+{{- /* Open Graph erwartet Sprache_Land («de_CH»), nicht nur «de» */}}
+<meta property="og:locale" content="{{ replace .Site.Language.Locale "-" "_" }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ $ogTitle }}">
 <meta name="twitter:description" content="{{ $ogDescription }}">
@@ -215,7 +218,7 @@
     {{- range $page.Translations }}
       {{- if eq .Language.Lang $lang }}
 <link rel="alternate" hreflang="{{ $lang }}" href="{{ .Permalink }}">
-<meta property="og:locale:alternate" content="{{ $lang }}">
+<meta property="og:locale:alternate" content="{{ replace .Language.Locale "-" "_" }}">
       {{- end }}
     {{- end }}
   {{- end }}

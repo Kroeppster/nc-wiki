@@ -194,7 +194,7 @@
       if(target - Date.now() <= 0){
         if(panel) panel.hidden = true;
         clearTimeout(timer);
-        return;
+        return false;
       }
       var diff = target - Date.now();
       var d = Math.floor(diff/86400000);
@@ -217,10 +217,14 @@
     var timer;
     function planen(){
       clearTimeout(timer);
-      tick();
+      /* Ist der Termin vorbei, ist Schluss - vorher lief der Takt jede
+         Sekunde weiter, obwohl nichts mehr anzuzeigen war. */
+      if(tick() === false) return;
       timer = setTimeout(planen, 1000 - (Date.now() % 1000));
     }
-    planen();
+    /* Nur auf Seiten mit Countdown (Startseite) - dieses Skript steht im
+       Fuss jeder Seite. */
+    if(document.getElementById('cd-d')) planen();
 
     /* Beim Zurueckwechseln in den Tab: erst alle Kacheln auf ihren wahren
        Stand zuruecksetzen (im Hintergrund kann eine halb gelaufene
@@ -462,10 +466,16 @@
       var btn = form.querySelector('button[type="submit"]');
       if(!btn) return;
       var originalLabel = btn.textContent;
+      /* Der Knopftext wechselt («Wird gesendet …», «Gesendet»), ein
+         Screenreader bekommt davon nichts mit: dasselbe als Statusmeldung. */
+      var status = document.createElement('span');
+      status.className = 'nur-vorlesen'; status.setAttribute('role', 'status');
+      form.appendChild(status);
       form.addEventListener('submit', function(evt){
         evt.preventDefault();
         btn.disabled = true;
         btn.textContent = '{{ i18n "downloads_report_sending" }}';
+        status.textContent = '';
         fetch(form.action, {
           method: 'POST',
           body: new FormData(form),
@@ -473,8 +483,10 @@
         }).then(function(response){
           if(!response.ok){ throw new Error('request failed'); }
           btn.textContent = '{{ i18n "downloads_report_sent" }}';
+          status.textContent = btn.textContent;
         }).catch(function(){
           btn.textContent = '{{ i18n "downloads_report_failed" }}';
+          status.textContent = btn.textContent;
           btn.disabled = false;
           setTimeout(function(){ btn.textContent = originalLabel; }, 5000);
         });

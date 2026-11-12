@@ -11,7 +11,8 @@
   {{- range .Params.ressorts }}
     {{- $ressort := .titel }}
     {{- range .mitglieder }}
-      {{- if eq (lower .name) "vakant" }}{{ $offen = $offen | append (dict "rolle" .rolle "ressort" $ressort) }}{{ end }}
+      {{- /* wie in team-leitung.html: «Vakant», «Poste vacant», «Posto vacante» */ -}}
+      {{- if findRE "(?i)vakant|vacant" .name }}{{ $offen = $offen | append (dict "rolle" .rolle "ressort" $ressort) }}{{ end }}
     {{- end }}
   {{- end }}
 {{- end }}
