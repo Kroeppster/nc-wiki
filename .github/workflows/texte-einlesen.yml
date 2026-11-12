@@ -114,7 +114,17 @@ jobs:
         if: steps.mappen.outputs.anzahl != '0'
         run: |
           if hugo --minify -d "$RUNNER_TEMP/public" > "$RUNNER_TEMP/hugo.txt" 2>&1; then
-            BAU="✅ Die Website baut mit diesen Änderungen fehlerfrei."
+            # Die Prüfung, die sonst erst nach dem Übernehmen läuft
+            # (scripts/ausgabe-pruefen.py: Titel, Beschreibung, h1, Sprache,
+            # Genderstern als Kursivschrift) - ein Pull Request aus diesem
+            # Ablauf startet hugo.yml nämlich nicht von selbst.
+            if PRUEF=$(python3 scripts/ausgabe-pruefen.py "$RUNNER_TEMP/public" 2>&1); then
+              BAU="✅ Die Website baut mit diesen Änderungen fehlerfrei."
+            else
+              BAU=$(printf '%s\n\n```\n%s\n```' \
+                "❌ **Die Website baut, aber die Prüfung der fertigen Seiten meldet Funde** – bitte vor dem Übernehmen beheben:" \
+                "$(printf '%s' "$PRUEF" | tail -15)")
+            fi
           else
             BAU=$(printf '%s\n\n```\n%s\n```' \
               "❌ **Die Website baut mit diesen Änderungen NICHT** – bitte vor dem Übernehmen beheben (oft ein Link auf eine gelöschte Seite):" \

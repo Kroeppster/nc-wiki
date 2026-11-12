@@ -42,7 +42,7 @@
  * beantwortet - es geht NIE eine echte Nachricht oder Anmeldung raus.
  * ============================================================================
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from './playwright.mjs';
 const { chromium } = pw;
 const B = 'http://127.0.0.1:8123';
 const b = await chromium.launch();

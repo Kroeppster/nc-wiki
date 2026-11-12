@@ -6,7 +6,7 @@
  * einem Bildschirmfoto sehen wuerde. Er ersetzt kein Auge, aber er findet die
  * Fehlerarten, die sonst erst jemandem auf dem Handy auffallen.
  *
- *   npm run bauen                 # public/ erzeugen
+ *   npm run build                 # public/ erzeugen
  *   npx http-server public -p 8099 -s &      (oder ein anderer Server)
  *   node scripts/seiten-pruefen.mjs
  *
@@ -49,7 +49,7 @@
  * ist schlimmer als keine - sie macht ruhig.
  * ============================================================================
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from './playwright.mjs';
 import { readdirSync } from 'node:fs';
 import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';

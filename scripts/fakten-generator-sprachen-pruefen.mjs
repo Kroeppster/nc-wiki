@@ -19,7 +19,7 @@
  * nur, dass der Generator mit sich selbst uebereinstimmt.
  * ============================================================================
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from './playwright.mjs';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';

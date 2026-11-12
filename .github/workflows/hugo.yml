@@ -13,7 +13,9 @@
 # auch direkt auf jedem Pull Request gegen "main" - man sieht die rote/grüne
 # Markierung (inkl. kaputter interner Links) also schon VOR dem Mergen,
 # direkt im Pull Request. Veröffentlicht (auf GitHub Pages deployt) wird
-# trotzdem ausschliesslich bei einem echten Push auf "main", NIE bei einem
+# trotzdem ausschliesslich bei einem echten Push auf "main" (oder wenn dieser
+# Ablauf von Hand auf "main" gestartet wird - so lässt sich die Website neu
+# veröffentlichen, ohne etwas zu ändern), NIE bei einem
 # Pull Request (siehe die "if"-Bedingung beim "deploy"-Job weiter unten) -
 # ein Pull Request kann also nie versehentlich etwas live schalten. Und:
 # schlägt dieser Ablauf bei einem Push auf main fehl, heisst das NICHT, dass
@@ -104,7 +106,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
 
       - name: Install npm dependencies
@@ -235,8 +237,9 @@ jobs:
       - name: Protect members-only pages with a password
         env:
           STATICRYPT_PASSWORD: ${{ secrets.MITGLIEDER_PASSWORT }}
+          VEROEFFENTLICHEN: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
+          if [ "$VEROEFFENTLICHEN" = "true" ]; then
             npm run schuetzen
           else
             npm run schuetzen -- --ohne-passwort-erlauben
@@ -251,9 +254,11 @@ jobs:
       # Seiten, Suchindex, Sitemap, RSS). Ein Fund stoppt die
       # Veröffentlichung. Dauert etwa eine Sekunde.
       - name: Check built site (paths, page basics, protected pages)
+        env:
+          VEROEFFENTLICHEN: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
         run: |
           base_path=$(echo "${{ steps.pages.outputs.base_url }}" | sed -E 's#^https?://[^/]+##; s#/$##')
-          if [ "${{ github.event_name }}" = "push" ]; then
+          if [ "$VEROEFFENTLICHEN" = "true" ]; then
             python3 scripts/ausgabe-pruefen.py public --basis "$base_path" --verschluesselt
           else
             python3 scripts/ausgabe-pruefen.py public --basis "$base_path"
@@ -265,7 +270,7 @@ jobs:
       # "deploy"-Job ohnehin nicht (siehe dessen "if"-Bedingung), das
       # Artefakt würde also nie gebraucht.
       - name: Upload artifact
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
@@ -276,7 +281,7 @@ jobs:
   # Request wird nur geprüft/gebaut, nie veröffentlicht).
   # ---------------------------------------------------------------------------
   deploy:
-    if: github.event_name == 'push'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

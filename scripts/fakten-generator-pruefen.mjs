@@ -30,7 +30,7 @@
  *    Gefragt ist getClientRects().length.
  * ============================================================================
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from './playwright.mjs';
 import { mkdtempSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';

@@ -20,7 +20,7 @@
  * orange da), aber hoechstens eine Handvoll je Blatt.
  * ============================================================================
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from './playwright.mjs';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 const { chromium } = pw;

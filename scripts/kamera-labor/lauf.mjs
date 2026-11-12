@@ -26,7 +26,7 @@
  * falsch_ohne_hinweis = falsch gelesen und NICHT orange markiert (der Fehler,
  * den niemand sieht); unsicher = orange markiert (darf sein, aber wenige).
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from '../playwright.mjs';
 import { createServer } from 'node:http';
 import { readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { join, extname, dirname } from 'node:path';

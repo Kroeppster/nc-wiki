@@ -18,7 +18,7 @@
  * Normalerweise ruft das Vergleichsskript dieses hier selbst auf.
  * ============================================================================
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from './playwright.mjs';
 import { writeFileSync, unlinkSync } from 'node:fs';
 const ziel = process.argv[2];
 if (!ziel) { console.error('Kein Zielpfad angegeben.'); process.exit(2); }

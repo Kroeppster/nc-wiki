@@ -22,7 +22,7 @@
  *   hugo --minify -d /tmp/site-neu
  *   node scripts/kamera-labor/bilder.mjs /tmp/site-alt /tmp/site-neu -- labor/*\/standbild.jpg
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from '../playwright.mjs';
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, extname, dirname, resolve } from 'node:path';

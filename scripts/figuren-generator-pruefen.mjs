@@ -25,7 +25,7 @@
  *     wartet dann 30 Sekunden auf ein Feld, das niemand sehen kann.
  * ============================================================================
  */
-import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+import pw from './playwright.mjs';
 const { chromium } = pw;
 const ADRESSE = (process.env.ADRESSE || 'http://127.0.0.1:8123') + '/alpha/';
 const RUNDEN = Number(process.env.RUNDEN || 12);
