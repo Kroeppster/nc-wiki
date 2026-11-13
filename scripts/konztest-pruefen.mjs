@@ -118,6 +118,19 @@ console.log('\n=== Korrigieren ueber die Liste ===');
     pruef('Ergebnis steht in der Ansage fuer Screenreader', await p.evaluate(() => document.getElementById('kt-ansage').textContent === document.getElementById('kt-summe').textContent));
   }
 }
+// Bild vergroessern (auf dem Handy ist es sonst zu klein zum Kontrollieren):
+// in schmalem Fenster wird das Bild breiter als sein Rahmen, die Seite nicht.
+console.log('\n=== Bild vergroessern ===');
+{
+  await p.setViewportSize({ width: 390, height: 844 });
+  const breite = () => p.evaluate(() => [document.getElementById('kt-bild').getBoundingClientRect().width, document.getElementById('kt-bild-rahmen').clientWidth, document.documentElement.scrollWidth]);
+  const vor = await breite();
+  await p.check('#kt-gross');
+  const nach = await breite();
+  pruef('vergroessert: Bild breiter als der Rahmen, Seite nicht breiter', vor[0] <= vor[1] + 1 && nach[0] > 2 * nach[1] && nach[2] <= 391, JSON.stringify([vor, nach]));
+  await p.uncheck('#kt-gross');
+  await p.setViewportSize({ width: 1200, height: 1000 });
+}
 await b.close();
 
 console.log('\n=== Live-Kamera ===');

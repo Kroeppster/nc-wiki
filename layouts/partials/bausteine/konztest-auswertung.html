@@ -89,7 +89,11 @@
 <p class="ab-hinweis">{{ i18n "kt_regel" }}</p>
 <p class="ab-legende">{{ i18n "kt_legende" }}</p>
 <label class="ab-schalter"><input type="checkbox" id="kt-original"> {{ i18n "bl_original" }}</label>
-<canvas class="ab-bild kt-bild" id="kt-bild"></canvas>
+{{- /* Auf dem Handy ist das Bild nur gut 300 Bildpunkte breit - zu klein, um
+       eine Zeile oder ein Zeichen zu kontrollieren. Vergroessert laesst es
+       sich in seinem Rahmen seitlich schieben. */ -}}
+<label class="ab-schalter"><input type="checkbox" id="kt-gross"> {{ i18n "bl_gross" }}</label>
+<div class="ab-bild-rahmen" id="kt-bild-rahmen"><canvas class="ab-bild kt-bild" id="kt-bild"></canvas></div>
 <p class="ab-hinweis" id="kt-unsicher" hidden></p>
 {{- /* Dasselbe als Liste: Auf dem Handy ist ein Zeichen im Bild nur wenige
        Millimeter gross, und mit der Tastatur oder einem Screenreader laesst
@@ -1186,6 +1190,7 @@
   }
   // Tippen auf ein Zeichen schaltet seine Markierung um
   el('kt-original').addEventListener('change', function(){ if (stand) zeigen(); });
+  el('kt-gross').addEventListener('change', function(){ el('kt-bild-rahmen').classList.toggle('ist-gross', this.checked); });
   el('kt-bild').addEventListener('click', function(ev){
     if (!stand) return;
     var c = this, b = c.getBoundingClientRect();

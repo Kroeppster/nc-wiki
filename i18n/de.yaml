@@ -462,6 +462,7 @@ bl_kamera_abbrechen: "Abbrechen"
 bl_kamera_aufnahme: "Aufnahme …"
 # Ergebnis: gerade gerückte «Scan-Ansicht» oder das Foto selbst
 bl_original: "Originalfoto zeigen"
+bl_gross: "Bild vergrössern"
 ab_live_kamera: "Live-Kamera"
 ab_kamera_ecken: "{n} von 4 schwarzen Ecken im Bild – den ganzen Bogen ins Bild nehmen."
 ab_kamera_kein: "Ecken gefunden, aber kein Antwortbogen erkannt. Liegt der ganze Bogen flach im Bild?"

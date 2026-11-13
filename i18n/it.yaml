@@ -452,6 +452,7 @@ bl_kamera_abbrechen: "Annulla"
 bl_kamera_aufnahme: "Scatto …"
 # Ergebnis: gerade gerückte «Scan-Ansicht» oder das Foto selbst
 bl_original: "Mostra la foto originale"
+bl_gross: "Ingrandisci l’immagine"
 ab_live_kamera: "Fotocamera dal vivo"
 ab_kamera_ecken: "{n} dei 4 angoli neri nell’immagine – inquadra tutto il foglio."
 ab_kamera_kein: "Angoli trovati, ma nessun foglio delle risposte riconosciuto. Tutto il foglio è steso in piano nell’immagine?"
