@@ -740,7 +740,14 @@
       var allein = zweites < 0.25 * erstes && (erstes >= unsicher || (typisch && erstes >= 0.2 * typisch));
       // (nicht eindeutig leer, wenn das staerkste Kaestchen ein Fuenftel
       // eines typischen Strichs erreicht: bitte ansehen)
-      return allein ? [BST[reihe[0]], true] : ['', erstes >= unsicher || (typisch > 0 && erstes >= 0.2 * typisch)];
+      // (und: ein einzelner Wert, der allein in der Zeile steht, schon ab 15 %
+      // eines typischen Strichs - in einem Block, dessen Schwellen ein
+      // Schatten hochgetrieben hat, galt ein blasser echter Strich (0.061 bei
+      // typisch 0.35) sonst still als leer. November 2026, 144 Bilder: die
+      // letzte still falsche Zeile weg, 7 Zeilen mehr zum Nachsehen, auf
+      // Bildern ohne Schatten keine.)
+      return allein ? [BST[reihe[0]], true] : ['', erstes >= unsicher || (typisch > 0 && erstes >= 0.2 * typisch)
+        || (typisch > 0 && zweites < 0.25 * erstes && erstes >= 0.15 * typisch)];
     }
     // Knapp ueber der Schwelle (unter dem 2.5fachen) und viel schwaecher als
     // die Striche sonst auf dem Bogen (unter zwei Fuenfteln): ein Fleck im

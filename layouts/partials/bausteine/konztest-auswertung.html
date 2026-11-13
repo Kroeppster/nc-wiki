@@ -151,6 +151,9 @@
   var MARKIERT = 0.012;            // Anteil Tinte im Messfeld: mindestens so viel ist markiert
   var KANTE_STRICH = 1.6;          // Papier im Messfeld so viel heller als an seiner dunkelsten Stelle: Schattenkante
   var KNAPP_STRICH = 1.3;          // ein «falsch markiert» unter diesem Vielfachen der Schwelle: bitte ansehen
+  var KNAPP_ZIEL = 1.2;            // ein markiertes Zielzeichen unter diesem Vielfachen der Schwelle: bitte ansehen
+  var FAST_ZIEL = 0.7;             // ein nicht markiertes Zielzeichen ab diesem Anteil der Schwelle: bitte ansehen
+  var UMGEBUNG = 3;                // so viele orange Nachbarn machen eine Markierung selbst orange
   var MAX_UNSICHER = 30;           // mehr Zweifelsfaelle: lieber ein neues Foto
   var MIN_GITTER = 0.6;            // so viel des Rasters muss gefunden sein
   var MIN_GLEICH = 0.035;          // wie deutlich gleiche Zeichen einander gleichen muessen,
@@ -854,7 +857,7 @@
     if (verdeckt.length >= 3) return { fehler: T.verdeckt, verdeckt: verdeckt.map(function(i){   // (fuer die Pruefskripte)
       var z = K.zeichen[Math.floor(i / N)][i % N], c = imBild(r, Math.floor(i / N), i % N);
       return [i, z, +(VIOLETT[i] / verblasst.mv[z]).toFixed(2), +HAUT[i].toFixed(2), Math.round(c[0]), Math.round(c[1])]; }) };
-    r.markiert = []; r.unsicher = []; r.roh = roh; r.kante = kante; r.schwelle = e.schwelle;
+    r.markiert = []; r.unsicher = []; r.roh = roh; r.kante = kante; r.schwelle = e.schwelle; r.papier = hell;
     // Der Rand eines harten Schattens quer durch ein Zeichen wird als Strich
     // gelesen, und tief im Schatten liegt ein leeres Zeichen manchmal knapp
     // ueber der Schwelle (Kamera-Labor November 2026: die erfundenen
@@ -868,16 +871,37 @@
     var schattenStrich = function(i, R, C){
       return e.markiert[i] && K.ziele[R][C] !== '1' && (kante[i] >= KANTE_STRICH || roh[i] < KNAPP_STRICH * e.schwelle);
     };
+    // Dasselbe bei den Zielzeichen, enger: knapp UNTER der Schwelle (ein
+    // blasser Strich galt still als ausgelassen) und knapp DARUEBER (ein
+    // leeres Zielzeichen im Schatten galt still als richtig markiert).
+    var zielKnapp = function(i, R, C){
+      if (K.ziele[R][C] !== '1') return false;
+      return e.markiert[i] ? roh[i] < KNAPP_ZIEL * e.schwelle : (i < letzt && roh[i] >= FAST_ZIEL * e.schwelle);
+    };
     if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
     for (R = 0; R < N; R++){
       var zeile = [];
       for (C = 0; C < N; C++){
         i = R * N + C;
         zeile.push(e.markiert[i]);
-        r.unsicher.push(e.unsicher[i] || schattenStrich(i, R, C) || (verblasst[i] && !e.markiert[i]) || (!e.markiert[i] && i < letzt && !!(roh.verdacht && roh.verdacht[K.zeichen[R][C]]))
+        r.unsicher.push(e.unsicher[i] || schattenStrich(i, R, C) || zielKnapp(i, R, C) || (verblasst[i] && !e.markiert[i]) || (!e.markiert[i] && i < letzt && !!(roh.verdacht && roh.verdacht[K.zeichen[R][C]]))
           || (!e.markiert[i] && i < letzt && K.ziele[R][C] === '1' && !!schlecht[K.zeichen[R][C]]));
       }
       r.markiert.push(zeile);
+    }
+    // Eine Markierung mitten zwischen Zweifelsfaellen (mindestens drei der
+    // acht Nachbarn orange) liegt in einer gestoerten Stelle - tiefer
+    // Schatten, Glanz - und ist selbst nicht sicher.
+    var vorher2 = r.unsicher.slice();
+    for (i = 0; i < N * N; i++){
+      if (vorher2[i] || !e.markiert[i]) continue;
+      var Ri = Math.floor(i / N), Ci = i % N, um = 0;
+      for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++){
+        if (!dr && !dc) continue;
+        var Rn = Ri + dr, Cn = Ci + dc;
+        if (Rn >= 0 && Rn < N && Cn >= 0 && Cn < N && vorher2[Rn * N + Cn]) um++;
+      }
+      if (um >= UMGEBUNG) r.unsicher[i] = true;
     }
     if (r.unsicher.filter(Boolean).length > MAX_UNSICHER) return { fehler: T.unklar };
     return r;
