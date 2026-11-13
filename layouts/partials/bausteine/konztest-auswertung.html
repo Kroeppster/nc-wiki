@@ -149,6 +149,8 @@
   var FELD_X = 5.2, FELD_Y = 6.4;  // Messfeld je Zeichen um seine Mitte (pt), aus dem Abstand der Zeichen
   var SCHRITT = 0.5;               // pt zwischen zwei Messpunkten
   var MARKIERT = 0.012;            // Anteil Tinte im Messfeld: mindestens so viel ist markiert
+  var KANTE_STRICH = 1.6;          // Papier im Messfeld so viel heller als an seiner dunkelsten Stelle: Schattenkante
+  var KNAPP_STRICH = 1.3;          // ein «falsch markiert» unter diesem Vielfachen der Schwelle: bitte ansehen
   var MAX_UNSICHER = 30;           // mehr Zweifelsfaelle: lieber ein neues Foto
   var MIN_GITTER = 0.6;            // so viel des Rasters muss gefunden sein
   var MIN_GLEICH = 0.035;          // wie deutlich gleiche Zeichen einander gleichen muessen,
@@ -767,6 +769,16 @@
     if (r.pxpt / (bild.vergroessert || 1) < 1.1) return { fehler: T.zuKlein };
     var NP = NX * NY, lum = new Uint8Array(N * N * NP), art = new Uint8Array(N * N * NP), pap = new Uint8Array(N * N * NP), hell = [], R, C, i;
     for (R = 0; R < N; R++){ hell.push([]); for (C = 0; C < N; C++) hell[R].push(proben(bild, r, R, C, lum, art, (R * N + C) * NP, pap)); }
+    // Licht-Schatten-Kante je Zeichen: wie verschieden hell das Papier
+    // innerhalb des Messfelds ist (hellste durch dunkelste Stelle). «pap» ist
+    // schon das Hellste im Umkreis von 2.5 pt - ein Strich faellt darin
+    // heraus, der Rand eines Schattens bleibt.
+    var kante = new Float32Array(N * N);
+    for (i = 0; i < N * N; i++){
+      var lo = 255, hi = 0, q0 = i * NP;
+      for (var q = 0; q < NP; q++) if (art[q0 + q] !== 3){ var pv = pap[q0 + q]; if (pv < lo) lo = pv; if (pv > hi) hi = pv; }
+      kante[i] = hi > 0 && lo > 0 ? hi / lo : 1;
+    }
     // Zweimal: Im ersten Durchgang kennt die Vorlage je Zeichen alle
     // Stellen. Haengt die Regel nur vom Zeichen ab (2025 S07-S12), ist ein
     // Zeichen fast ueberall markiert - dann enthielte die Vorlage den Strich
@@ -842,14 +854,27 @@
     if (verdeckt.length >= 3) return { fehler: T.verdeckt, verdeckt: verdeckt.map(function(i){   // (fuer die Pruefskripte)
       var z = K.zeichen[Math.floor(i / N)][i % N], c = imBild(r, Math.floor(i / N), i % N);
       return [i, z, +(VIOLETT[i] / verblasst.mv[z]).toFixed(2), +HAUT[i].toFixed(2), Math.round(c[0]), Math.round(c[1])]; }) };
-    r.markiert = []; r.unsicher = []; r.roh = roh;
+    r.markiert = []; r.unsicher = []; r.roh = roh; r.kante = kante; r.schwelle = e.schwelle;
+    // Der Rand eines harten Schattens quer durch ein Zeichen wird als Strich
+    // gelesen, und tief im Schatten liegt ein leeres Zeichen manchmal knapp
+    // ueber der Schwelle (Kamera-Labor November 2026: die erfundenen
+    // Markierungen lagen wie auf einer Linie entlang der Schattenkante).
+    // Zum Nachsehen deshalb ein als markiert gelesenes Zeichen, das KEIN
+    // Zielzeichen ist (ein «falsch markiert» kostet einen Punkt), wenn durch
+    // sein Messfeld eine Kante laeuft oder sein Wert nur knapp ueber der
+    // Schwelle liegt. Bei Zielzeichen nicht: Ein echter Strich zieht das
+    // Kantenmass selbst hoch (bei 10 % der richtig gelesenen ueber 1.3), und
+    // dort waere fast jede Markierung orange.
+    var schattenStrich = function(i, R, C){
+      return e.markiert[i] && K.ziele[R][C] !== '1' && (kante[i] >= KANTE_STRICH || roh[i] < KNAPP_STRICH * e.schwelle);
+    };
     if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
     for (R = 0; R < N; R++){
       var zeile = [];
       for (C = 0; C < N; C++){
         i = R * N + C;
         zeile.push(e.markiert[i]);
-        r.unsicher.push(e.unsicher[i] || (verblasst[i] && !e.markiert[i]) || (!e.markiert[i] && i < letzt && !!(roh.verdacht && roh.verdacht[K.zeichen[R][C]]))
+        r.unsicher.push(e.unsicher[i] || schattenStrich(i, R, C) || (verblasst[i] && !e.markiert[i]) || (!e.markiert[i] && i < letzt && !!(roh.verdacht && roh.verdacht[K.zeichen[R][C]]))
           || (!e.markiert[i] && i < letzt && K.ziele[R][C] === '1' && !!schlecht[K.zeichen[R][C]]));
       }
       r.markiert.push(zeile);
