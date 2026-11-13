@@ -118,6 +118,7 @@
     keine: {{ i18n "ab_hinweis_keine" | jsonify | safeJS }},
     verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
     zeilen: {{ i18n "ab_hinweis_zeilen" | jsonify | safeJS }},
+    versetzt: {{ i18n "ab_hinweis_versetzt" | jsonify | safeJS }},
     blass: {{ i18n "ab_hinweis_blass" | jsonify | safeJS }},
     rauschen: {{ i18n "ab_hinweis_rauschen" | jsonify | safeJS }},
     summe: {{ i18n "ab_ergebnis" | jsonify | safeJS }},
@@ -523,12 +524,13 @@
     for (var c = 1; c < 4; c++) if (x >= BLOCK_X[c] - 6) sp = c;
     return z * 4 + sp;
   }
-  function feinAusrichten(bild, abb){
+  // (start: je Block ein anderer Ausgangspunkt der Suche, siehe feinMitStreifen)
+  function feinAusrichten(bild, abb, start){
     var versatz = [];
     for (var k = 0; k < BLOECKE; k++){
       // Erst der ganze Block, dann jede Haelfte fuer sich - nur wenige pt,
       // sonst passt der um eine Zeile oder Spalte verrutschte Block ebenso.
-      var ganz = versatzSuchen(bild, abb, k, FEIN_OBEN.concat(FEIN_UNTEN), [0, 0], 3);
+      var ganz = versatzSuchen(bild, abb, k, FEIN_OBEN.concat(FEIN_UNTEN), (start && start[k]) || [0, 0], 3);
       versatz.push([versatzSuchen(bild, abb, k, FEIN_OBEN, ganz, 3), versatzSuchen(bild, abb, k, FEIN_UNTEN, ganz, 3)]);
     }
     var fein = function(x, y){
@@ -539,6 +541,93 @@
       return abb(x + v[0][0] + t * (v[1][0] - v[0][0]), y + v[0][1] + t * (v[1][1] - v[0][1]));
     };
     fein.massstab = abb.massstab; fein.gespiegelt = abb.gespiegelt; fein.versatz = versatz;
+    return fein;
+  }
+  // Liegt ein Block um eine ganze Zeile daneben, merkt das keine der
+  // Kontrollen oben: Die Kaestchen aller Zeilen sehen gleich aus. Der Bogen
+  // hat aber ein Merkmal, das eine Zeile von der naechsten unterscheidet -
+  // jede zweite Zeile ist rosa hinterlegt (die erste, dritte ... jedes
+  // Blocks). Gemessen wird in den Luecken zwischen den Kaestchen (dort steht
+  // nie ein Strich), je Paar benachbarter Zeilen: wie viel rosa und wie viel
+  // dunkler die hinterlegte ist. Zurueck: 1 = Muster wie erwartet, -1 =
+  // umgekehrt (Block um eine Zeile versetzt), 0 = nicht zu erkennen (Ausdruck
+  // ohne Hinterlegung).
+  // Kamera-Labor November 2026, 992 Bloecke auf 124 Bildern: bei allen 990
+  // richtig liegenden rosa mindestens 0.049 (Median 0.24) und jedes einzelne
+  // Zeilenpaar richtig herum; bei den zwei versetzten -0.23, jedes Paar
+  // verkehrt. Ohne Farbe bleibt das Hell-Dunkel (-0.13 gegen +0.12).
+  var STREIFEN_KLAR = 0.03, STREIFEN_EINIG = 0.8;
+  function streifen(bild, abb, k){
+    function zeile(i){
+      var hell = [], rosa = [];
+      for (var s = 0; s < 4; s++){
+        var e = feldEcke(k, i, s);
+        [1.5, 3, 4.5, 6, 7.5, 9, 10.5].forEach(function(t){
+          [1, FELD_H / 2, FELD_H - 1].forEach(function(dy){
+            var q = abb(e[0] + FELD_B + t, e[1] + dy), x = Math.round(q[0]), y = Math.round(q[1]);
+            if (x < 0 || y < 0 || x >= bild.w || y >= bild.h) return;
+            var j = (y * bild.w + x) * 4, r = bild.rgba[j], g = bild.rgba[j + 1], b = bild.rgba[j + 2];
+            hell.push((299 * r + 587 * g + 114 * b) / 1000);
+            rosa.push(((r + b) / 2 - g) / Math.max(1, (r + g + b) / 3));
+          });
+        });
+      }
+      if (hell.length < 20) return null;
+      // (hell: das 80. Perzentil - die Buchstaben A bis E in den Luecken zaehlen so nicht)
+      hell.sort(function(a, b){ return a - b; });
+      return [hell[Math.floor(hell.length * 0.8)], median(rosa)];
+    }
+    var z = [], dh = [], dr = [];
+    for (var i = 0; i < ZEILEN; i++) z.push(zeile(i));
+    // jedes Paar benachbarter Zeilen: hinterlegte minus nicht hinterlegte
+    for (i = 0; i + 1 < ZEILEN; i++){
+      var a = z[i % 2 ? i + 1 : i], b = z[i % 2 ? i : i + 1];
+      if (!a || !b) continue;
+      dh.push((a[0] - b[0]) / Math.max(1, (a[0] + b[0]) / 2)); dr.push(a[1] - b[1]);
+    }
+    if (dr.length < 8) return 0;
+    function urteil(d, richtig){
+      var m = median(d);
+      if (Math.abs(m) < STREIFEN_KLAR) return 0;
+      var einig = d.filter(function(v){ return v * m > 0; }).length / d.length;
+      return einig < STREIFEN_EINIG ? 0 : (m * richtig > 0 ? 1 : -1);
+    }
+    return urteil(dr, 1) || urteil(dh, -1);
+  }
+  // Feinausrichtung mit dieser Kontrolle. Ein versetzter Block wird um eine
+  // Zeile zurueckgeschoben - in die Richtung, die gegenueber der Grundlage
+  // die kleinere Korrektur braucht (ein Block rastet eine Zeile daneben ein,
+  // wenn die Grundlage etwa eine halbe Zeile danebenliegt: Schatten ueber
+  // einer Eckmarke, der Bogen dazu geneigt) - und neu ausgerichtet. Stimmt
+  // das Muster danach, gilt die neue Lage. Sonst, und wenn das Muster nicht
+  // zu erkennen ist und der Block eine ungewoehnlich grosse Korrektur
+  // brauchte (auf richtig liegenden Bloecken hoechstens 5 pt hoch und 5.5 pt
+  // quer; eine halbe Zeile sind 6.7), ist der Block «verdaechtig»: alle
+  // seine Zeilen zum Nachsehen.
+  var FEIN_WEIT_Y = 5.5, FEIN_WEIT_X = 7;
+  function feinMitStreifen(bild, abb){
+    var fein = feinAusrichten(bild, abb), urteil = [], start = null, k;
+    function mittel(v, j){ return (v[0][j] + v[1][j]) / 2; }
+    for (k = 0; k < BLOECKE; k++){
+      urteil.push(streifen(bild, fein, k));
+      if (urteil[k] < 0){
+        var vy = mittel(fein.versatz[k], 1);
+        start = start || {};
+        start[k] = [mittel(fein.versatz[k], 0), vy + (vy < 0 ? ZEILE : -ZEILE)];
+      }
+    }
+    if (start){
+      fein = feinAusrichten(bild, abb, start);
+      for (k in start) urteil[k] = streifen(bild, fein, +k) > 0 ? 1 : -1;
+    }
+    fein.verdacht = [];
+    for (k = 0; k < BLOECKE; k++){
+      var v = fein.versatz[k];
+      var weit = Math.max(Math.abs(v[0][1]), Math.abs(v[1][1])) >= FEIN_WEIT_Y || Math.max(Math.abs(v[0][0]), Math.abs(v[1][0])) >= FEIN_WEIT_X;
+      // (ein zurueckgeschobener Block hat zwangslaeufig eine grosse Korrektur: Er gilt, wenn das Muster stimmt)
+      if (urteil[k] < 0 || (urteil[k] === 0 && weit)) fein.verdacht.push(k);
+    }
+    fein.streifen = urteil; fein.verschoben = start ? Object.keys(start).map(Number) : [];
     return fein;
   }
   // Zuletzt je Kaestchen: Im Videobild des Handys (der Bogen gut 900 px
@@ -747,7 +836,7 @@
     var r = ausrichten(bild);
     if (r.fehler) return r;
     var grob = r.abb;
-    r.abb = feinAusrichten(bild, r.abb);
+    r.abb = feinMitStreifen(bild, r.abb);
     // Liegen die gedruckten Kaestchen auch danach nicht deutlich auf den
     // erwarteten (stark gewellt, verzerrt, falsche Ecke), waeren die Markierungen
     // geraten - lieber neu fotografieren lassen.
@@ -843,12 +932,14 @@
           || (i18 > 0 && nah(z - 1)) || (i18 < ZEILEN - 1 && nah(z + 1));
       }
       antworten.push(a[0]); unsicher.push(a[1] || !gedruckt[z] || (marke >= 0 && kante[z][marke]) || nebenKante
+        || r.abb.verdacht.indexOf(Math.floor(z / ZEILEN)) >= 0
         || (blass && (a[0] === '' || Math.max.apply(null, w) < 0.5 * typisch)));
     });
     if (blass) r.hinweise.push(T.blass);
     // Fehlt ein Viertel, lag der Bogen falsch - lieber neu fotografieren.
     if (fehlend > 0.25 * BLOECKE * ZEILEN) return { fehler: warumNicht(bild, grob, r.marken) };
     if (fehlend) r.hinweise.push(T.zeilen);
+    if (r.abb.verdacht.length) r.hinweise.push(T.versetzt);
     r.antworten = antworten; r.unsicher = unsicher;
     r.werte = werte; r.schwellen = schw; r.typisch = typisch; r.gedruckt = gedruckt; r.kante = kante;   // fuer die Pruefskripte
     return r;
@@ -1124,6 +1215,6 @@
   // Fuer die Pruefung (scripts/antwortbogen-pruefen.mjs): dieselben Schritte
   // ohne Oberflaeche.
   window.NCWikiAntwortbogen = { bildAus: bildAus, bogenLesen: bogenLesen, laden: laden,
-    intern: { ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, kantenBreite: kantenBreite, eckeAbgeschnitten: eckeAbgeschnitten, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung, rahmenTreffer: rahmenTreffer, vierteEcke: vierteEcke, livePruefen: livePruefen } };
+    intern: { streifen: streifen, feinMitStreifen: feinMitStreifen, ausrichten: ausrichten, inhalt: inhalt, feinAusrichten: feinAusrichten, kaestchenVersatz: kaestchenVersatz, linienVersatz: linienVersatz, passungScharf: passungScharf, kantenBreite: kantenBreite, eckeAbgeschnitten: eckeAbgeschnitten, passermarken: passermarken, fuellung: fuellung, feldEcke: feldEcke, zeileGedruckt: zeileGedruckt, passung: passung, rahmenTreffer: rahmenTreffer, vierteEcke: vierteEcke, livePruefen: livePruefen } };
 })();
 </script>

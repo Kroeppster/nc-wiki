@@ -420,6 +420,7 @@ ab_hinweis_drei: "Nur drei der vier schwarzen Ecken wurden gefunden. Bitte die g
 ab_hinweis_keine: "Die schwarzen Ecken wurden nicht gefunden, der Bogen wurde am Bildrand ausgerichtet. Bitte die gelesenen Antworten unten genau kontrollieren."
 ab_hinweis_verzerrt: "Das Foto ist verzerrt (waagrecht {n} % anders als senkrecht). Bitte die gelesenen Antworten unten kontrollieren."
 ab_hinweis_zeilen: "Nicht alle Zeilen des Bogens waren auf dem Bild zu erkennen. Bitte die gelesenen Antworten unten kontrollieren."
+ab_hinweis_versetzt: "Bei einem Teil des Bogens ist nicht sicher, welche Zeile zu welcher Aufgabe gehört (Schatten oder Wölbung). Diese Zeilen sind orange markiert – bitte kontrollieren oder den Bogen flach und gleichmässig beleuchtet neu fotografieren."
 ab_hinweis_blass: "Die Striche sind auf dem Bild sehr blass – einzelne können fehlen. Deshalb sind die leeren Zeilen orange markiert: Bitte mit dem Bogen vergleichen. Beim nächsten Mal mit weichem Bleistift (HB oder B) kräftiger markieren oder bei mehr Licht fotografieren."
 ab_hinweis_rauschen: "Das Bild ist stark verrauscht oder unscharf (wenig Licht oder bewegt) – deshalb sind viele Zeilen zum Nachsehen markiert. Ein neues Foto bei mehr Licht und ruhig gehalten wird genauer."
 ab_ergebnis: "{n} von {von} Punkten"
