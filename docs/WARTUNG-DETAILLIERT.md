@@ -850,7 +850,7 @@ Ist sie freigegeben, wandert der Baustein auf die echte Seite.
 Ein Foto des ausgefüllten Antwortbogens einer Testsimulation wird im Browser gelesen und mit
 den Lösungen verglichen – das Foto verlässt das Gerät nicht. Das Verfahren ist das des
 Formatierungstools (`werkzeug/auswertung.py`), nach JavaScript übertragen
-(`layouts/partials/bausteine/antwortbogen-auswertung.html`, Kommentarkopf lesen; das
+(`layouts/partials/bausteine/antwortbogen-auswertung.html`, Kommentarkopf lesen; die Skripte aller Auswertungs-Bausteine liegen gleichnamig unter `assets/js/bausteine/*.js`; das
 Gemeinsame – Bild, Laden, PDF, Live-Kamera – steht in `bausteine/bild-lesen.html`). Die
 **Live-Kamera** sucht die vier schwarzen Ecken schon im Sucher und löst selbst aus, sobald
 der Bogen ruhig liegt; wo sie nicht geht, bleibt «Foto aufnehmen» (Kamera-App). Beim Auslösen

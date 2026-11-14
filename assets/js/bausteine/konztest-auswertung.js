@@ -1,0 +1,1303 @@
+/* Skript des Bausteins «konztest-auswertung» - eingebunden und erklaert in
+   layouts/partials/bausteine/konztest-auswertung.html. Diese Datei laeuft beim Bauen durch
+   Hugo (resources.ExecuteAsTemplate): Die Ausdruecke in doppelten geschweiften
+   Klammern setzen die Texte der jeweiligen Sprache (i18n/) und Adressen ein. */
+(function(){
+  var el = function(id){ return document.getElementById(id); };
+  var B = window.NCWikiBild, A4 = B.A4;
+  var D = JSON.parse(el('kt-daten').textContent);
+  var T = {
+    liest: {{ i18n "ab_liest" | jsonify | safeJS }},
+    pdfLaedt: {{ i18n "ab_pdf_laedt" | jsonify | safeJS }},
+    fehlerBild: {{ i18n "bl_fehler_bild" | jsonify | safeJS }},
+    messenger: {{ i18n "bl_messenger" | jsonify | safeJS }},
+    aufloesung: {{ i18n "bl_kamera_aufloesung" | jsonify | safeJS }},
+    keinRaster: {{ i18n "kt_kein_raster" | jsonify | safeJS }},
+    passtNicht: {{ i18n "kt_passt_nicht" | jsonify | safeJS }},
+    zuKlein: {{ i18n "kt_zu_klein" | jsonify | safeJS }},
+    unklar: {{ i18n "kt_unklar" | jsonify | safeJS }},
+    verdeckt: {{ i18n "kt_verdeckt" | jsonify | safeJS }},
+    unplausibel: {{ i18n "kt_unplausibel" | jsonify | safeJS }},
+    grau: {{ i18n "kt_grau" | jsonify | safeJS }},
+    verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
+    summe: {{ i18n "kt_summe" | jsonify | safeJS }},
+    richtig: {{ i18n "kt_richtig" | jsonify | safeJS }},
+    falsch: {{ i18n "kt_falsch" | jsonify | safeJS }},
+    ausgelassen: {{ i18n "kt_ausgelassen" | jsonify | safeJS }},
+    bis: {{ i18n "kt_bis" | jsonify | safeJS }},
+    nichts: {{ i18n "kt_nichts" | jsonify | safeJS }},
+    unsicher: {{ i18n "kt_unsicher" | jsonify | safeJS }},
+    listeTitel: {{ i18n "kt_liste_titel" | jsonify | safeJS }},
+    listeOrt: {{ i18n "kt_liste_ort" | jsonify | safeJS }},
+    listeFalsch: {{ i18n "kt_liste_falsch" | jsonify | safeJS }},
+    listeAusgelassen: {{ i18n "kt_liste_ausgelassen" | jsonify | safeJS }},
+    listePruefenAn: {{ i18n "kt_liste_pruefen_an" | jsonify | safeJS }},
+    listePruefenAus: {{ i18n "kt_liste_pruefen_aus" | jsonify | safeJS }},
+    live: {{ i18n "kt_kamera_raster" | jsonify | safeJS }},
+    liveLuecken: {{ i18n "kt_kamera_luecken" | jsonify | safeJS }},
+    eigenLiest: {{ i18n "kt_eigen_liest" | jsonify | safeJS }},
+    eigenOk: {{ i18n "kt_eigen_ok" | jsonify | safeJS }},
+    eigenKeineAufgabe: {{ i18n "kt_eigen_keine_aufgabe" | jsonify | safeJS }},
+    eigenKeineLoesung: {{ i18n "kt_eigen_keine_loesung" | jsonify | safeJS }},
+    eigenFehlt: {{ i18n "kt_eigen_fehlt" | jsonify | safeJS }}
+  };
+  var N = 40;
+  var FELD_X = 5.2, FELD_Y = 6.4;  // Messfeld je Zeichen um seine Mitte (pt), aus dem Abstand der Zeichen
+  var SCHRITT = 0.5;               // pt zwischen zwei Messpunkten
+  var MARKIERT = 0.012;            // Anteil Tinte im Messfeld: mindestens so viel ist markiert
+  var KANTE_STRICH = 1.6;          // Papier im Messfeld so viel heller als an seiner dunkelsten Stelle: Schattenkante
+  var KNAPP_STRICH = 1.3;          // ein «falsch markiert» unter diesem Vielfachen der Schwelle: bitte ansehen
+  var KNAPP_ZIEL = 1.2;            // ein markiertes Zielzeichen unter diesem Vielfachen der Schwelle: bitte ansehen
+  var FAST_ZIEL = 0.7;             // ein nicht markiertes Zielzeichen ab diesem Anteil der Schwelle: bitte ansehen
+  var UMGEBUNG = 3;                // so viele orange Nachbarn machen eine Markierung selbst orange
+  var MAX_UNSICHER = 30;           // mehr Zweifelsfaelle: lieber ein neues Foto
+  var MIN_GITTER = 0.6;            // so viel des Rasters muss gefunden sein
+  var MIN_GLEICH = 0.035;          // wie deutlich gleiche Zeichen einander gleichen muessen,
+  var MIN_GLEICH_VOLL = 0.01;      // ebenso, wenn das Gitter genau N x N gross ist (zuordnen)
+  var VORSPRUNG = 2.5;             // und das Mehrfache gegenueber dem naechstbesten Platz
+  var K = null;                    // der gewaehlte Konztest aus data/konztest.yaml (oder ein eigener)
+  var EIGEN = null;                // ein eigener Konztest, aus PDF gelesen (konztest-lesen.html)
+  // Was gespeichert ist, nur uebernehmen, wenn es aussieht wie ein Konztest:
+  // Ein Stand aus einer aelteren Fassung (oder sonst etwas unter diesem
+  // Namen) liess das Skript sonst beim Laden abbrechen - Live-Kamera und
+  // Hochladen gingen dann nicht mehr.
+  function eigenGueltig(e){
+    var liste = function(a, text){ return Array.isArray(a) && a.length === N && a.every(function(v){ return text ? typeof v === 'string' && v.length === N : typeof v === 'number' && isFinite(v); }); };
+    return !!e && typeof e === 'object' && liste(e.x) && liste(e.y) && liste(e.zeichen, true) && liste(e.ziele, true) && typeof e.quelle === 'string';
+  }
+  try {
+    EIGEN = JSON.parse(localStorage.getItem('ncwiki-kt-eigen'));
+    if (!eigenGueltig(EIGEN)){ EIGEN = null; localStorage.removeItem('ncwiki-kt-eigen'); }
+  } catch (e) { EIGEN = null; }
+  function waehlen(){
+    var id = el('kt-testsim').value;
+    el('kt-eigen').hidden = id !== 'eigen';
+    K = id === 'eigen' ? EIGEN : D.konztests.filter(function(t){ return t.id === id; })[0];
+    if (!K) return;
+    K.schrittX = (K.x[N - 1] - K.x[0]) / (N - 1);
+    K.schrittY = (K.y[N - 1] - K.y[0]) / (N - 1);
+    // Messfeld je Zeichen: 2026 (13.5 x 15.2 pt Abstand) 5.2 x 6.4 pt um die Mitte
+    FELD_X = 0.385 * K.schrittX; FELD_Y = 0.42 * K.schrittY;
+    NX = Math.floor(2 * FELD_X / SCHRITT) + 1; NY = Math.floor(2 * FELD_Y / SCHRITT) + 1;
+    PR = new Uint8Array(NX * NY); PG = new Uint8Array(NX * NY); PB = new Uint8Array(NX * NY); TMP = new Uint8Array(NX * NY);
+  }
+  function mitte(R, C){ return [K.x[C], K.y[R]]; }
+  function median(a){ a = a.slice().sort(function(x, y){ return x - y; }); return a[Math.floor(a.length / 2)]; }
+  // --- Farben ------------------------------------------------------------------
+  // Ein Farbscan hat viele Bildpunkte in Blindfarbe, auch blass auf einem
+  // unscharfen Foto; ein Graustufenscan keinen einzigen.
+  function istFarbig(bild){
+    var farbig = 0, bedruckt = 0;
+    for (var j = 0; j < 80; j++) for (var i = 0; i < 80; i++){
+      var x = Math.trunc(bild.w * (0.15 + 0.7 * i / 79)), y = Math.trunc(bild.h * (0.25 + 0.6 * j / 79));
+      var k = (y * bild.w + x) * 4, r = bild.rgba[k], g = bild.rgba[k + 1], b = bild.rgba[k + 2], p = bild.papierBei(x, y);
+      var blass = Math.min(r, b) - g > 0.06 * p;
+      if ((299 * r + 587 * g + 114 * b) / 1000 < 0.85 * p || blass){ bedruckt++; if (blass) farbig++; }
+    }
+    // Absolut gezaehlt, nicht als Anteil des Bedruckten: Fuellt das Blatt das
+    // Foto nicht, zaehlten dunkler Tisch, Schatten und Striche als «bedruckt
+    // und nicht farbig», und ein Farbfoto galt als schwarz-weiss - dann
+    // wurde streng gelesen und keine einzige Markierung gefunden (Testfotos,
+    // Oktober 2026). Ein Graustufenbild hat praktisch keinen farbigen Punkt.
+    return farbig >= 40;
+  }
+  // --- Weissabgleich -----------------------------------------------------------
+  // Unter Gluehbirnenlicht ist das Papier gelb: dann liegt Blau kaum ueber
+  // Gruen, und das Magenta der Zeichen gilt nicht mehr als Magenta. Das
+  // Papier ist ueberall weiss - aus seiner Farbe folgt je Kanal ein Faktor.
+  function weissabgleich(bild){
+    var rs = [], gs = [], bs = [];
+    for (var j = 0; j < 60; j++) for (var i = 0; i < 60; i++){
+      var x = Math.trunc(bild.w * (0.1 + 0.8 * i / 59)), y = Math.trunc(bild.h * (0.1 + 0.8 * j / 59));
+      var k = (y * bild.w + x) * 4;
+      if (bild.lum[y * bild.w + x] >= 0.9 * bild.papierBei(x, y)){ rs.push(bild.rgba[k]); gs.push(bild.rgba[k + 1]); bs.push(bild.rgba[k + 2]); }
+    }
+    if (rs.length < 200) return bild;
+    var m = [median(rs), median(gs), median(bs)], hoch = Math.max(m[0], m[1], m[2]);
+    var f = m.map(function(v){ return hoch / Math.max(1, v); });
+    if (Math.max(f[0], f[1], f[2]) < 1.04) return bild;
+    var d = new Uint8ClampedArray(bild.rgba.length);
+    for (var q = 0; q < d.length; q += 4){ d[q] = bild.rgba[q] * f[0]; d[q + 1] = bild.rgba[q + 1] * f[1]; d[q + 2] = bild.rgba[q + 2] * f[2]; d[q + 3] = 255; }
+    var c = document.createElement('canvas'); c.width = bild.w; c.height = bild.h;
+    c.getContext('2d').putImageData(new ImageData(d, bild.w, bild.h), 0, 0);
+    var neu = new B.Bild(d, bild.w, bild.h);
+    neu.leinwand = c; neu.vergroessert = bild.vergroessert;
+    return neu;
+  }
+  // --- Flecken: ein Fleck je Zeichen ----------------------------------------------
+  function merkmale(n, s){
+    var mx = s[0] / n, my = s[1] / n;
+    var mu20 = s[2] / n - mx * mx, mu02 = s[3] / n - my * my, mu11 = s[4] / n - mx * my;
+    var mu30 = s[5] / n - 3 * mx * s[2] / n + 2 * mx * mx * mx;
+    var mu03 = s[6] / n - 3 * my * s[3] / n + 2 * my * my * my;
+    var g = Math.max(mu20 + mu02, 1e-6);
+    return [Math.log(n), (mu20 - mu02) / g, mu11 / g, mu30 / Math.pow(g, 1.5), mu03 / Math.pow(g, 1.5)];
+  }
+  // n: wie oft halbieren. Ohne Angabe aus der Bildgroesse geschaetzt - das
+  // stimmt nur, wenn das Blatt das Bild fuellt. Liegt es klein oder gedreht
+  // im Bild, wird danach mit dem Massstab des gefundenen Rasters neu gesucht
+  // (sonst zerfielen die Zeichen: «Raster nicht gefunden» bei gueltigen Fotos).
+  function flecken(bild, farbe, nFest, art){
+    art = art || FLECKEN[0];
+    var px = Math.min(Math.max(bild.w, bild.h) / A4[1], Math.min(bild.w, bild.h) / A4[0]);
+    var n = 0;
+    if (nFest !== undefined) n = nFest; else while (px / Math.pow(2, n + 1) >= 1.4) n++;
+    var f = Math.pow(2, n), w = Math.round(bild.w / f), h = Math.round(bild.h / f), d;
+    if (f === 1) d = bild.rgba;
+    else {
+      // verkleinern mit Mittelung (drawImage), wie pymupdf.shrink im Tool
+      var quelle = bild.leinwand;
+      if (!quelle){
+        quelle = document.createElement('canvas'); quelle.width = bild.w; quelle.height = bild.h;
+        quelle.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(bild.rgba), bild.w, bild.h), 0, 0);
+      }
+      var c = document.createElement('canvas'); c.width = w; c.height = h;
+      var cx = c.getContext('2d'); cx.imageSmoothingQuality = 'high';
+      cx.drawImage(quelle, 0, 0, w, h);
+      d = cx.getImageData(0, 0, w, h).data;
+    }
+    var an = [];
+    for (var y = 0; y < h; y++){
+      var zeile = bild.karte[Math.min(Math.floor(y * f / bild.feld), bild.ny - 1)];
+      for (var x = 0; x < w; x++){
+        var pz = zeile[Math.min(Math.floor(x * f / bild.feld), bild.nx - 1)], i = (y * w + x) * 4;
+        var r = d[i], g = d[i + 1], b = d[i + 2];
+        // (Rot nicht deutlich unter Blau: Wo ein blauer Stift ueber ein
+        // Zeichen geht, entsteht Violett - das ist kein Zeichen. Alle
+        // Konztests haben Rot >= Blau, die Mischung mit Blau etwa 0.7.)
+        if (farbe ? Math.min(r, b) - g > art[1] * pz && r > 0.85 * b : 299 * r + 587 * g + 114 * b < 720 * pz) an.push(y * w + x);
+      }
+    }
+    if (an.length < 1000) return [];
+    // Wie gross das Raster im Bild ist (die Diagonale): Bildpunkte je pt
+    var xs = an.map(function(k){ return k % w; }).sort(function(a, b){ return a - b; });
+    var ys = an.map(function(k){ return Math.floor(k / w); }).sort(function(a, b){ return a - b; });
+    var lo = Math.floor(an.length * 0.02), hi = Math.floor(an.length * 0.98);
+    var soll = Math.hypot((N - 1) * K.schrittX, (N - 1) * K.schrittY);
+    var pxk = Math.max(0.3, Math.hypot(xs[hi] - xs[lo], ys[hi] - ys[lo]) / soll);
+    if (nFest === undefined && n > 0){
+      var besser = Math.max(0, Math.floor(Math.log2(pxk * f / 1.4)));
+      if (besser < n) return flecken(bild, farbe, besser, art);
+    }
+    var q = Math.max(1, Math.ceil(art[0] * pxk));
+    // Felder von q x q Bildpunkten mit den Summen fuer Schwerpunkt und Form
+    var felder = new Map(), BREIT = 100000;
+    an.forEach(function(k){
+      var yy = Math.floor(k / w), xx = k % w, key = Math.floor(xx / q) * BREIT + Math.floor(yy / q);
+      var z = felder.get(key);
+      if (!z){ z = [0, 0, 0, 0, 0, 0, 0, 0]; felder.set(key, z); }
+      z[0]++; z[1] += xx; z[2] += yy; z[3] += xx * xx; z[4] += yy * yy; z[5] += xx * yy; z[6] += xx * xx * xx; z[7] += yy * yy * yy;
+    });
+    var gesehen = new Set(), stuecke = [];
+    felder.forEach(function(_, start){
+      if (gesehen.has(start)) return;
+      gesehen.add(start);
+      var stapel = [start], summe = [0, 0, 0, 0, 0, 0, 0, 0], x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
+      while (stapel.length){
+        var c = stapel.pop(), z = felder.get(c), fx = Math.floor(c / BREIT), fy = c % BREIT;
+        for (var t = 0; t < 8; t++) summe[t] += z[t];
+        if (fx < x0) x0 = fx; if (fx > x1) x1 = fx; if (fy < y0) y0 = fy; if (fy > y1) y1 = fy;
+        for (var dx = -1; dx <= 1; dx++) for (var dy = -1; dy <= 1; dy++){
+          var nb = (fx + dx) * BREIT + fy + dy;
+          if (felder.has(nb) && !gesehen.has(nb)){ gesehen.add(nb); stapel.push(nb); }
+        }
+      }
+      stuecke.push([summe, [x0, y0, x1, y1]]);
+    });
+    // Stuecke desselben Zeichens: Mitten hoechstens 4.5 pt auseinander (bei
+    // 13.5 pt Zeichenabstand; die Groessen unten ebenso im Verhaeltnis)
+    var z_ = K.schrittX / 13.5, nah = 4.5 * z_ * pxk, eimer = new Map(), zeichen = [];
+    stuecke.sort(function(a, b){ return b[0][0] - a[0][0]; });
+    stuecke.forEach(function(st){
+      var summe = st[0], box = st[1], mx = summe[1] / summe[0], my = summe[2] / summe[0];
+      var ex = Math.floor(mx / nah), ey = Math.floor(my / nah), ziel = null;
+      for (var a = ex - 1; a <= ex + 1; a++) for (var b = ey - 1; b <= ey + 1; b++)
+        (eimer.get(a * BREIT + b) || []).forEach(function(z){
+          var dd = Math.hypot(z[2] - mx, z[3] - my);
+          if (dd < nah && (!ziel || dd < ziel[0])) ziel = [dd, z];
+        });
+      if (ziel){
+        var z = ziel[1];
+        for (var t = 0; t < 8; t++) z[0][t] += summe[t];
+        z[1] = [Math.min(z[1][0], box[0]), Math.min(z[1][1], box[1]), Math.max(z[1][2], box[2]), Math.max(z[1][3], box[3])];
+      } else {
+        var neu = [summe.slice(), box.slice(), mx, my], key = ex * BREIT + ey;
+        if (!eimer.has(key)) eimer.set(key, []);
+        eimer.get(key).push(neu); zeichen.push(neu);
+      }
+    });
+    var aus = [];
+    zeichen.forEach(function(z){
+      var s = z[0], bx = z[1], gross = Math.max(bx[2] - bx[0] + 1, bx[3] - bx[1] + 1) * q / pxk;
+      if (gross >= 3.5 * z_ && gross <= 15 * z_ && s[0] >= 4)
+        aus.push({ x: (s[1] / s[0] + 0.5) * f, y: (s[2] / s[0] + 0.5) * f, m: merkmale(s[0], s.slice(1)) });
+    });
+    aus.pxk = pxk * f;   // Bildpunkte je pt (fuer gitter)
+    return aus;
+  }
+  // Wie fein gesucht wird: [Feld in pt, Magenta ab Anteil des Papiers].
+  // Je nach Zeichen verschmelzen Nachbarn (eng gesetzte Bildzeichen 2023/24)
+  // oder ein Zeichen zerfaellt (2025 S13, S17) - deshalb nacheinander, bis
+  // das Raster fast ganz gefunden ist; sonst das vollstaendigste.
+  var FLECKEN = [[1.6, 0.06], [1.0, 0.1], [1.0, 0.06]];
+  function rasterSuchen(bild, farbe, arten, dicht){
+    var beste = null;
+    for (var i = 0; i < (arten || FLECKEN.length); i++){
+      var punkte = flecken(bild, farbe, undefined, FLECKEN[i]), g = gitter(punkte, dicht);
+      if (g && !dicht) g = stimmig(g);
+      if (g && (!beste || g.platz.size > beste.g.platz.size)) beste = { punkte: punkte, g: g };
+      if (beste && beste.g.platz.size >= 0.97 * N * N) break;
+    }
+    return beste || { punkte: [], g: null };
+  }
+  // Eine Naht im Gitter: Ist es irgendwo um eine Spalte verrutscht (im
+  // Videobild feiner Zeichen - Testsimulation 2023, Serie 2024 - in 9 von 91
+  // Bildern des Kamera-Labors, Oktober 2026), ist ein ganzer Bereich falsch
+  // nummeriert, die Abbildung dorthin gezogen, und Zeichen wurden still
+  // falsch gelesen. Benachbarte Plaetze liegen im Bild einen Schritt
+  // auseinander, ueber die Naht zwei: Nur solche Nachbarn verbinden - zerfaellt
+  // das Gitter in zwei grosse Teile, gilt nur der groessere.
+  function stimmig(g){
+    var an = new Map(), P = g.punkte, nb = new Map(), paare = [[], []];
+    g.platz.forEach(function(rc, i){ an.set(rc[0] + ',' + rc[1], i); nb.set(i, []); });
+    g.platz.forEach(function(rc, i){
+      [[0, 1], [1, 0]].forEach(function(d, k){
+        var j = an.get((rc[0] + d[0]) + ',' + (rc[1] + d[1]));
+        if (j !== undefined) paare[k].push([i, j, P[j].x - P[i].x, P[j].y - P[i].y]);
+      });
+    });
+    paare.forEach(function(liste){
+      if (!liste.length) return;
+      var mx = median(liste.map(function(q){ return q[2]; })), my = median(liste.map(function(q){ return q[3]; })), m = Math.hypot(mx, my);
+      liste.forEach(function(q){ if (Math.hypot(q[2] - mx, q[3] - my) < 0.4 * m){ nb.get(q[0]).push(q[1]); nb.get(q[1]).push(q[0]); } });
+    });
+    var gesehen = new Set(), teile = [];
+    g.platz.forEach(function(_, s){
+      if (gesehen.has(s)) return;
+      var teil = [s], stapel = [s];
+      gesehen.add(s);
+      while (stapel.length) nb.get(stapel.pop()).forEach(function(j){ if (!gesehen.has(j)){ gesehen.add(j); teil.push(j); stapel.push(j); } });
+      teile.push(teil);
+    });
+    teile.sort(function(a, b){ return b.length - a.length; });
+    if (teile.length < 2 || teile[1].length < 30) return g;
+    var platz = new Map();
+    teile[0].forEach(function(i){ platz.set(i, g.platz.get(i)); });
+    return { platz: platz, schritt: g.schritt, punkte: g.punkte, naht: true };
+  }
+  // --- Das Gitter -------------------------------------------------------------------
+  function eimerVon(punkte, g){
+    var e = new Map();
+    punkte.forEach(function(p, i){
+      var k = Math.floor(p.x / g) * 100000 + Math.floor(p.y / g);
+      if (!e.has(k)) e.set(k, []);
+      e.get(k).push(i);
+    });
+    return e;
+  }
+  function inRadius(punkte, e, g, x, y, radius, f){
+    var ex = Math.floor(x / g), ey = Math.floor(y / g), weit = Math.floor(radius / g) + 1;
+    for (var a = ex - weit; a <= ex + weit; a++) for (var b = ey - weit; b <= ey + weit; b++)
+      (e.get(a * 100000 + b) || []).forEach(function(j){
+        var d = Math.hypot(punkte[j].x - x, punkte[j].y - y);
+        if (d <= radius) f(j, d);
+      });
+  }
+  // Das Gitter von Nachbar zu Nachbar bleibt stecken, wo die Flecken nicht
+  // auf der Mitte der Zeichen liegen: Im Videobild zerfallen feine Zeichen
+  // (Serie 2024: duenner Rahmen um ein Zeichen), oft bleibt nur das innere
+  // Zeichen, um einen Fuenftel Schritt versetzt - der Sucher fand je nach
+  // Bild 18 bis 85 % des Rasters und loeste nie aus (Kamera-Labor Oktober
+  // 2026). Darum danach: eine Abbildung durch alles Gefundene, und fuer
+  // jeden leeren Platz neben einem besetzten der Fleck nahe der Stelle, wo
+  // ihn Abbildung und Nachbarn erwarten - Ring um Ring, nie ueber N x N.
+  // Nur fuer den Sucher (dicht): Beim Lesen zog ein so zugeordneter Fleck
+  // neben dem Zeichen die Feinkorrektur am Rand mit, und Zeichen galten
+  // still als markiert (Kamera-Labor, Testsimulation 2023).
+  function verdichten(punkte, e, d0, platz, besetzt, schritt){
+    for (var runde = 0; runde < 2 * N && platz.size >= 12; runde++){
+      var paare = [], r0 = Infinity, r1 = -Infinity, c0 = Infinity, c1 = -Infinity;
+      platz.forEach(function(rc, i){
+        paare.push([[rc[1], rc[0]], [punkte[i].x, punkte[i].y]]);
+        r0 = Math.min(r0, rc[0]); r1 = Math.max(r1, rc[0]); c0 = Math.min(c0, rc[1]); c1 = Math.max(c1, rc[1]);
+      });
+      var abb;
+      try { abb = B.ausgleichend(paare); } catch (x){ return; }
+      var treffer = [];
+      for (var r = Math.max(r0 - 1, r1 - N + 1); r <= Math.min(r1 + 1, r0 + N - 1); r++)
+        for (var c = Math.max(c0 - 1, c1 - N + 1); c <= Math.min(c1 + 1, c0 + N - 1); c++){
+          if (besetzt.has(r + ',' + c)) continue;
+          var dx = [], dy = [];
+          for (var a = r - 2; a <= r + 2; a++) for (var b = c - 2; b <= c + 2; b++){
+            var j = besetzt.get(a + ',' + b);
+            if (j === undefined || !platz.has(j)) continue;
+            var u = abb(b, a); dx.push(punkte[j].x - u[0]); dy.push(punkte[j].y - u[1]);
+          }
+          if (dx.length < 2) continue;
+          var v = abb(c, r), x = v[0] + median(dx), y = v[1] + median(dy), k = null, kd = Infinity;
+          inRadius(punkte, e, d0, x, y, 0.3 * schritt, function(i, dd){ if (dd < kd && !platz.has(i)){ kd = dd; k = i; } });
+          if (k !== null) treffer.push([kd, r, c, k]);
+        }
+      treffer.sort(function(p, q){ return p[0] - q[0]; });
+      var neu = 0;
+      treffer.forEach(function(t){
+        var key = t[1] + ',' + t[2];
+        if (platz.has(t[3]) || besetzt.has(key)) return;
+        platz.set(t[3], [t[1], t[2]]); besetzt.set(key, t[3]); neu++;
+      });
+      if (!neu) return;
+    }
+  }
+  function gitter(punkte, dicht){
+    if (punkte.length < 50) return null;
+    // Abstand zum naechsten Nachbarn: meist der waagrechte Schritt
+    var xs = punkte.map(function(p){ return p.x; }), ys = punkte.map(function(p){ return p.y; });
+    var flaeche = Math.max(1, (Math.max.apply(null, xs) - Math.min.apply(null, xs)) * (Math.max.apply(null, ys) - Math.min.apply(null, ys)));
+    var gr = Math.max(4, Math.sqrt(flaeche / punkte.length) * 1.5), eg = eimerVon(punkte, gr), nn = [];
+    punkte.forEach(function(p, i){
+      var beste = null;
+      inRadius(punkte, eg, gr, p.x, p.y, gr, function(j, d){ if (j !== i && d > 0 && (beste === null || d < beste)) beste = d; });
+      if (beste) nn.push(beste);
+    });
+    if (!nn.length) return null;
+    // Zerfallen die Zeichen in Stuecke (feine, offene Boegen wie 2023 im
+    // Videobild der Live-Kamera: die beiden Arme je ein Fleck), ist der
+    // naechste Nachbar meist das andere Stueck - und das Gitter wuchs nicht
+    // (Kamera-Labor Oktober 2026). Dann gilt der Abstand, den das Raster
+    // haben muss.
+    var d0 = median(nn);
+    if (punkte.pxk && K && d0 < 0.8 * K.schrittX * punkte.pxk) d0 = K.schrittX * punkte.pxk;
+    var e = eimerVon(punkte, d0);
+    // Richtung des Gitters aus den Nachbarvektoren (Winkel mal vier)
+    var vek = [];
+    punkte.forEach(function(p, i){
+      inRadius(punkte, e, d0, p.x, p.y, 1.35 * d0, function(j){ if (j !== i) vek.push([punkte[j].x - p.x, punkte[j].y - p.y]); });
+    });
+    if (!vek.length) return null;
+    var cs = 0, sn = 0;
+    vek.forEach(function(v){ var a = 4 * Math.atan2(v[1], v[0]); cs += Math.cos(a); sn += Math.sin(a); });
+    var winkel = Math.atan2(sn, cs) / 4, ux = Math.cos(winkel), uy = Math.sin(winkel), laengs = [], quer = [];
+    vek.forEach(function(v){
+      var a = v[0] * ux + v[1] * uy, b = -v[0] * uy + v[1] * ux;
+      (Math.abs(a) > Math.abs(b) ? laengs : quer).push(Math.hypot(v[0], v[1]));
+    });
+    var la = laengs.length ? median(laengs) : d0, qu = quer.length ? median(quer) : d0 * 1.13;
+    // Die kuerzere Richtung ist die Zeile des Bogens
+    var hh, vl;
+    if (la <= qu){ hh = [ux * la, uy * la]; vl = qu; } else { hh = [-uy * qu, ux * qu]; vl = la; }
+    if (hh[0] < -1e-9 || (Math.abs(hh[0]) <= 1e-9 && hh[1] < 0)) hh = [-hh[0], -hh[1]];
+    var hl = Math.hypot(hh[0], hh[1]), vv = [-hh[1] / hl * vl, hh[0] / hl * vl];
+    // Von der Mitte aus Nachbar fuer Nachbar. Bleibt das Gitter dort gleich
+    // stecken (ein verschobener Fleck als Start: im Videobild fand der Sucher
+    // so von 1500 Zeichen eines - Kamera-Labor Oktober 2026), noch von vier
+    // Stellen um die Mitte; es gilt das groesste.
+    var mx = median(xs), my = median(ys), sx0 = xs.slice().sort(function(a, b){ return a - b; }), sy0 = ys.slice().sort(function(a, b){ return a - b; });
+    var vx = 0.25 * (sx0[Math.floor(0.9 * sx0.length)] - sx0[Math.floor(0.1 * sx0.length)]), vy = 0.25 * (sy0[Math.floor(0.9 * sy0.length)] - sy0[Math.floor(0.1 * sy0.length)]);
+    var bestes = null;
+    [[0, 0], [-vx, -vy], [vx, vy], [vx, -vy], [-vx, vy]].some(function(o){
+      var start = 0, bd = Infinity;
+      punkte.forEach(function(p, i){ var dd = Math.hypot(p.x - mx - o[0], p.y - my - o[1]); if (dd < bd){ bd = dd; start = i; } });
+      var g = wachsen(start);
+      if (!bestes || g[0].size > bestes[0].size) bestes = g;
+      return bestes[0].size >= 0.5 * punkte.length;
+    });
+    var platz = bestes[0], besetzt = bestes[1];
+    function wachsen(start){
+      var platz = new Map([[start, [0, 0]]]), besetzt = new Map([['0,0', start]]), schlange = [[start, hh, vv]], kopf = 0;
+      while (kopf < schlange.length){
+        var item = schlange[kopf++], i = item[0], lh = item[1], lv = item[2], rc = platz.get(i), p = punkte[i];
+        // Auch schraeg (Zeile und Spalte zugleich): Fehlen Zeichen (verdeckt von
+        // Strichen, im Videobild nicht zu sehen - Kamera-Labor Oktober 2026),
+        // waechst das Gitter so um die Luecken herum, ohne eine Stelle zu
+        // ueberspringen. Die Schritte lernt es nur aus geraden Nachbarn.
+        [[0, 1, lh], [0, -1, [-lh[0], -lh[1]]], [1, 0, lv], [-1, 0, [-lv[0], -lv[1]]],
+         [1, 1, [lv[0] + lh[0], lv[1] + lh[1]]], [1, -1, [lv[0] - lh[0], lv[1] - lh[1]]],
+         [-1, 1, [lh[0] - lv[0], lh[1] - lv[1]]], [-1, -1, [-lv[0] - lh[0], -lv[1] - lh[1]]]].forEach(function(t){
+          var dr = t[0], dc = t[1], sx = t[2][0], sy = t[2][1], key = (rc[0] + dr) + ',' + (rc[1] + dc);
+          if (besetzt.has(key)) return;
+          var j = null, jd = Infinity;
+          var tol = 0.3 * (dr && dc ? Math.min(Math.hypot(lh[0], lh[1]), Math.hypot(lv[0], lv[1])) : Math.hypot(sx, sy));
+          inRadius(punkte, e, d0, p.x + sx, p.y + sy, tol, function(k, dd){ if (dd < jd){ jd = dd; j = k; } });
+          if (j === null) return;
+          if (platz.has(j)) return;
+          platz.set(j, [rc[0] + dr, rc[1] + dc]); besetzt.set(key, j);
+          var sch = [punkte[j].x - p.x, punkte[j].y - p.y];
+          if (dr && dc){ schlange.push([j, lh, lv]); return; }
+          if (dr === 0){ var nh = [sch[0] * dc, sch[1] * dc]; schlange.push([j, [(lh[0] + nh[0]) / 2, (lh[1] + nh[1]) / 2], lv]); }
+          else { var nv = [sch[0] * dr, sch[1] * dr]; schlange.push([j, lh, [(lv[0] + nv[0]) / 2, (lv[1] + nv[1]) / 2]]); }
+        });
+      }
+      return [platz, besetzt];
+    }
+    if (dicht) verdichten(punkte, e, d0, platz, besetzt, hl);
+    // Mehr als N Zeilen oder Spalten (Stuecke der Randzeichen als eigene
+    // Spalte, wenn die Zeichen im Foto zerfallen): die duenner besetzte
+    // Randreihe weg, bis es passt - sonst gilt das Gitter nicht als N x N
+    // (zuordnen) und laesst sich bei aehnlichen Zeichen nicht zuordnen
+    [0, 1].forEach(function(achse){
+      for (;;){
+        var zahl = new Map();
+        platz.forEach(function(rc){ zahl.set(rc[achse], (zahl.get(rc[achse]) || 0) + 1); });
+        var lo = Math.min.apply(null, Array.from(zahl.keys())), hi = Math.max.apply(null, Array.from(zahl.keys()));
+        if (hi - lo + 1 <= N) break;
+        var weg = zahl.get(lo) < zahl.get(hi) ? lo : hi;
+        platz.forEach(function(rc, i){ if (rc[achse] === weg) platz.delete(i); });
+      }
+    });
+    return { platz: platz, schritt: hl, punkte: punkte };
+  }
+  // --- Welcher Gitterplatz welches Zeichen ist -----------------------------------------
+  function gleichheit(merk, gruppen){
+    if (merk.length < 20) return 0;
+    var werte = [];
+    for (var d = 0; d < merk[0].length; d++){
+      var alle = merk.map(function(m){ return m[d]; });
+      var mittel = alle.reduce(function(s, x){ return s + x; }, 0) / alle.length;
+      var gesamt = alle.reduce(function(s, x){ return s + (x - mittel) * (x - mittel); }, 0);
+      if (gesamt <= 1e-12) continue;
+      var je = {};
+      alle.forEach(function(x, k){ (je[gruppen[k]] = je[gruppen[k]] || []).push(x); });
+      var innen = 0, kk = 0;
+      Object.keys(je).forEach(function(g){
+        kk++;
+        var xs = je[g], m = xs.reduce(function(s, x){ return s + x; }, 0) / xs.length;
+        innen += xs.reduce(function(s, x){ return s + (x - m) * (x - m); }, 0);
+      });
+      var n = alle.length;
+      if (n - kk <= 0) continue;
+      werte.push(1 - (innen / (n - kk)) / (gesamt / (n - 1)));
+    }
+    return werte.length ? Math.max(0, werte.reduce(function(s, x){ return s + x; }, 0) / werte.length) : 0;
+  }
+  function zuordnen(punkte, platz){
+    var rs = [], cs = [], nachPlatz = new Map();
+    platz.forEach(function(rc, i){ rs.push(rc[0]); cs.push(rc[1]); nachPlatz.set(rc[0] + ',' + rc[1], i); });
+    var rmin = Math.min.apply(null, rs), rmax = Math.max.apply(null, rs), cmin = Math.min.apply(null, cs), cmax = Math.max.apply(null, cs);
+    // Merkmale abzueglich des Ueblichen in der Nachbarschaft (5 x 5)
+    var merkVon = new Map();
+    platz.forEach(function(rc, i){
+      var nb = [];
+      for (var a = rc[0] - 2; a <= rc[0] + 2; a++) for (var b = rc[1] - 2; b <= rc[1] + 2; b++){
+        var j = nachPlatz.get(a + ',' + b); if (j !== undefined) nb.push(punkte[j].m);
+      }
+      merkVon.set(i, punkte[i].m.map(function(x, d){ return x - median(nb.map(function(m){ return m[d]; })); }));
+    });
+    var kandidaten = [];
+    [false, true].forEach(function(verkehrt){
+      for (var r0 = rmin - 3; r0 < rmax - N + 5; r0++) for (var c0 = cmin - 3; c0 < cmax - N + 5; c0++){
+        var zuordnung = [], merk = [], gruppen = [];
+        for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+          var key = verkehrt ? (r0 + N - 1 - R) + ',' + (c0 + N - 1 - C) : (r0 + R) + ',' + (c0 + C);
+          var i = nachPlatz.get(key);
+          if (i !== undefined){ zuordnung.push([R, C, i]); merk.push(merkVon.get(i)); gruppen.push(K.zeichen[R][C]); }
+        }
+        if (zuordnung.length < MIN_GITTER * N * N) continue;
+        var kand = [gleichheit(merk, gruppen), zuordnung];
+        kand.genau = r0 === rmin && c0 === cmin;
+        kandidaten.push(kand);
+      }
+    });
+    kandidaten.sort(function(a, b){ return b[0] - a[0]; });
+    // Ist das gefundene Gitter genau N x N gross, passt es nur an einem Platz
+    // ganz hinein (gerade oder kopfueber) - alle anderen lassen eine Zeile
+    // oder Spalte draussen
+    kandidaten.voll = rmax - rmin + 1 === N && cmax - cmin + 1 === N;
+    return kandidaten;
+  }
+  // --- Ausrichten -------------------------------------------------------------------
+  function massstab(abb){
+    var m = mitte(N / 2, N / 2), o = abb(m[0], m[1]), a = abb(m[0] + 1, m[1]), b = abb(m[0], m[1] + 1);
+    return [Math.hypot(a[0] - o[0], a[1] - o[1]), Math.hypot(b[0] - o[0], b[1] - o[1])];
+  }
+  function ausrichten(bild){
+    // farbe: Zeichen in Magenta und das Foto farbig - dann trennt die Farbe
+    // Zeichen und Striche (ein Konztest hat sie immer in Farbe; K.farbe ist
+    // nur der Vollstaendigkeit halber da). Bunt: blaue Striche sind klar Stift.
+    var hinweise = [], bunt = istFarbig(bild), farbe = K.farbe && bunt;
+    // Schwarz-weiss (Kopie, Graustufen-Scan): ohne das Magenta sind Striche
+    // und Zeichen nicht sicher zu trennen - in den Tests oft still falsch
+    if (K.farbe && !bunt) return { fehler: T.grau };
+    var such = rasterSuchen(bild, farbe), punkte = such.punkte, g = such.g;
+    if (!g || g.platz.size < MIN_GITTER * N * N) return { fehler: T.keinRaster.replace('{n}', g ? g.platz.size : 0) };
+    var k = zuordnen(punkte, g.platz);
+    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ gleich: k.slice(0, 3).map(function(x){ var t = x[1][0], q = x[1][x[1].length - 1]; return [x[0], t[0], t[1], g.platz.get(t[2]), q[0], q[1], g.platz.get(q[2])]; }), platz: g.platz.size });
+    // Bei Zeichen, die sich auf dem Foto wenig unterscheiden (Pfeile, Linien,
+    // Wuerfel), ist die Gleichheit klein - dann genuegt, wenn das Gitter
+    // genau N x N ist, ein klarer Vorsprung vor dem kopfueber liegenden Platz
+    var gilt = k.length && k[0][0] >= MIN_GLEICH && (!k[1] || k[0][0] >= VORSPRUNG * Math.max(k[1][0], 0.01));
+    if (!gilt && k.voll && k.length && k[0].genau){
+      var anders = k.filter(function(x){ return x.genau && x !== k[0]; })[0], weiter = k[1];
+      gilt = k[0][0] >= MIN_GLEICH_VOLL && (!anders || k[0][0] >= VORSPRUNG * Math.max(anders[0], 0.003))
+        && (!weiter || k[0][0] >= 1.3 * weiter[0]);
+    }
+    if (!gilt) return { fehler: T.passtNicht };
+    var zuordnung = k[0][1];
+    var paare = zuordnung.map(function(t){ return [mitte(t[0], t[1]), [punkte[t[2]].x, punkte[t[2]].y]]; });
+    var abb = B.ausgleichend(paare);
+    // Ausreisser (falsch zugeordnete Flecken) weglassen und neu rechnen
+    for (var runde = 0; runde < 2; runde++){
+      var rest = paare.map(function(p){ var u = abb(p[0][0], p[0][1]); return Math.hypot(p[1][0] - u[0], p[1][1] - u[1]); });
+      var grenze = Math.max(3 * median(rest), 0.15 * K.schrittX * massstab(abb)[0]);
+      var gut = paare.filter(function(_, i){ return rest[i] <= grenze; });
+      if (gut.length === paare.length || gut.length < 0.5 * paare.length) break;
+      paare = gut; abb = B.ausgleichend(paare);
+    }
+    // Verschiebung je Zelle: Median der Abweichungen in der Nachbarschaft
+    var abw = {};
+    zuordnung.forEach(function(t){ var m = mitte(t[0], t[1]), u = abb(m[0], m[1]); abw[t[0] + ',' + t[1]] = [punkte[t[2]].x - u[0], punkte[t[2]].y - u[1]]; });
+    var gk = 0.25 * K.schrittX * massstab(abb)[0], korrektur = [];
+    for (var R = 0; R < N; R++){
+      var zeile = [];
+      for (var C = 0; C < N; C++){
+        var dx = [], dy = [];
+        for (var a = R - 2; a <= R + 2; a++) for (var b = C - 2; b <= C + 2; b++){
+          var w = abw[a + ',' + b]; if (w){ dx.push(w[0]); dy.push(w[1]); }
+        }
+        zeile.push(dx.length >= 5 ? [Math.max(-gk, Math.min(gk, median(dx))), Math.max(-gk, Math.min(gk, median(dy)))] : [0, 0]);
+      }
+      korrektur.push(zeile);
+    }
+    var s = massstab(abb);
+    if (Math.abs(s[0] / s[1] - 1) > 0.06) hinweise.push(T.verzerrt.replace('{n}', Math.round(Math.abs(s[0] / s[1] - 1) * 100)));
+    return { abb: abb, korrektur: korrektur, hinweise: hinweise, farbe: farbe, bunt: bunt, pxpt: s[0] };
+  }
+  // Wo die Mitte eines Zeichens im Bild liegt (mit der Korrektur je Zelle)
+  function imBild(r, R, C){
+    var m = mitte(R, C), u = r.abb(m[0], m[1]), k = r.korrektur[R][C];
+    return [u[0] + k[0], u[1] + k[1]];
+  }
+  // Messpunkte eines Zeichens: Helligkeit und Art (0 Papier/Tinte, 1 Magenta
+  // der Zeichen, 2 klar blau = Stift), Zeile fuer Zeile ueber das Messfeld.
+  var NX, NY, PR, PG, PB, TMP;     // Messpunkte je Zeichen (waehlen())
+  var VIOLETT = new Float32Array(N * N);   // je Zeichen: mittlerer Magenta-Ueberschuss (blasseZeichen)
+  var HAUT = new Float32Array(N * N);      // je Zeichen: Anteil hautfarbener Messpunkte (blasseZeichen)
+  var RAD = 5;                      // Messpunkte (je 0.5 pt) im Umkreis fuer das Papier
+  function proben(bild, r, R, C, lum, art, o0, pap){
+    var m = mitte(R, C), c = imBild(r, R, C), o = r.abb(m[0], m[1]), a = r.abb(m[0] + 1, m[1]), b = r.abb(m[0], m[1] + 1);
+    var ex = [a[0] - o[0], a[1] - o[1]], ey = [b[0] - o[0], b[1] - o[1]];
+    var d = bild.rgba, w = bild.w, h = bild.h, hist = new Uint16Array(256), n = 0, i, j, q;
+    for (j = 0; j < NY; j++){
+      var bb = -FELD_Y + j * SCHRITT;
+      for (i = 0; i < NX; i++){
+        var aa = -FELD_X + i * SCHRITT, x = Math.trunc(c[0] + aa * ex[0] + bb * ey[0]), y = Math.trunc(c[1] + aa * ex[1] + bb * ey[1]);
+        q = j * NX + i;
+        if (x < 0 || y < 0 || x >= w || y >= h){ lum[o0 + q] = 255; art[o0 + q] = 3; continue; }
+        var k = (y * w + x) * 4;
+        PR[q] = d[k]; PG[q] = d[k + 1]; PB[q] = d[k + 2]; art[o0 + q] = 0;
+        var l = lum[o0 + q] = Math.floor((299 * d[k] + 587 * d[k + 1] + 114 * d[k + 2]) / 1000);
+        hist[l]++; n++;
+      }
+    }
+    // Papier hier: das Helle im Messfeld. Auf das Zeichen bezogen, nicht auf
+    // die grobe Papierkarte: Der Schatten einer Hand aendert die Helligkeit
+    // auf wenigen Millimetern, und im Schatten ist auch das Magenta dunkler.
+    var ziel = 0.9 * n, s = 0, p = 255;
+    for (var v = 0; v < 256; v++){ s += hist[v]; if (s >= ziel){ p = v; break; } }
+    // Fuer blasseZeichen: wie deutlich das Magenta des Zeichens ist, stetig
+    // statt je Messpunkt ja/nein (Rot und Blau ueber Gruen, gemittelt), und
+    // welcher Anteil des Messfelds hautfarben ist (warm, mittelhell: Rot
+    // deutlich ueber Gruen und Blau, Gruen nicht unter Blau - das waere
+    // Magenta) - ein Finger. Ein schwarzer oder blauer Stift ist es nicht, und
+    // ein Strich bedeckt nie ein Viertel des Messfelds.
+    var vs = 0, vn = 0, hs = 0;
+    for (q = 0; q < NX * NY; q++) if (art[o0 + q] !== 3){
+      vs += Math.max(0, Math.min(PR[q], PB[q]) - PG[q]); vn++;
+      var lq = lum[o0 + q];
+      if (PR[q] - PG[q] > 0.12 * p && PR[q] - PB[q] > 0.15 * p && PG[q] - PB[q] > -0.03 * p && lq > 0.3 * p && lq < 0.92 * p) hs++;
+    }
+    VIOLETT[R * N + C] = vn ? vs / vn / Math.max(p, 1) : 0;
+    HAUT[R * N + C] = vn ? hs / vn : 0;
+    if (r.bunt) for (q = 0; q < NX * NY; q++){
+      if (art[o0 + q] === 3) continue;
+      // Magenta (Zeichen): Rot und Blau ueber Gruen; klar blau: Stift
+      art[o0 + q] = r.farbe && PR[q] - PG[q] > 0.12 * p && PB[q] - PG[q] > 0.04 * p && PR[q] > 0.85 * PB[q] ? 1 : (PB[q] - Math.max(PR[q], PG[q]) > 0.06 * p ? 2 : 0);
+    }
+    // Ein dunkler Strich auf einem grossen Magenta-Zeichen (2025 S05: gefuellte
+    // Wuerfel) wird durch die Unschaerfe dunkles Lila und sieht aus wie das
+    // Zeichen. Magenta, das deutlich dunkler ist als das uebliche Magenta
+    // dieses Zeichens, ist Strich.
+    if (r.farbe){
+      var ml = [];
+      for (q = 0; q < NX * NY; q++) if (art[o0 + q] === 1) ml.push(lum[o0 + q]);
+      if (ml.length >= 10){
+        ml.sort(function(x, y){ return x - y; });
+        var typisch = ml[Math.floor(ml.length * 0.6)];
+        for (q = 0; q < NX * NY; q++) if (art[o0 + q] === 1 && lum[o0 + q] < 0.45 * typisch) art[o0 + q] = 0;
+      }
+    }
+    // Papier je Messpunkt: das Hellste im Umkreis von 2.5 pt (ohne Magenta).
+    // Ein Strich ist schmaler und faellt so heraus; die Kante eines Schattens
+    // ist weich und bleibt.
+    for (j = 0; j < NY; j++) for (i = 0; i < NX; i++){
+      var mx = 0;
+      for (var u = Math.max(0, i - RAD); u <= Math.min(NX - 1, i + RAD); u++){ q = j * NX + u; if (art[o0 + q] !== 1 && art[o0 + q] !== 3 && lum[o0 + q] > mx) mx = lum[o0 + q]; }
+      TMP[j * NX + i] = mx;
+    }
+    for (j = 0; j < NY; j++) for (i = 0; i < NX; i++){
+      var my = 0;
+      for (var t = Math.max(0, j - RAD); t <= Math.min(NY - 1, j + RAD); t++) if (TMP[t * NX + i] > my) my = TMP[t * NX + i];
+      pap[o0 + j * NX + i] = my || p;
+    }
+    return p;
+  }
+  // Empfindlichkeit: ab welcher Helligkeit (Anteil des Papiers) ein Messpunkt
+  // anteilig als Tinte zaehlt, und ueber welche Spanne bis ganz. Farbbild /
+  // Graustufen (dort sind die Zeichen selbst grau). Normal und - falls so fast
+  // nichts markiert scheint - empfindlich fuer sehr feine, blasse Striche.
+  var NORMAL = { farbe: [0.80, 0.30], grau: [0.70, 0.30] };
+  var EMPFINDLICH = { farbe: [0.88, 0.30], grau: [0.75, 0.30] };
+  // Wo die Bearbeitung endet: das letzte markierte Zeichen, vor dem innerhalb
+  // einer Zeile (40 Zeichen) mindestens zwei weitere markiert sind. Wer
+  // bearbeitet, markiert dicht; einzelne «Striche» weit dahinter sind Schmutz,
+  // Schatten oder Rauschen.
+  function bearbeitetBis(markiert){
+    var bis = -1, zahl = 0;
+    for (var i = 0; i < markiert.length; i++){
+      if (markiert[i]) zahl++;
+      if (i >= N && markiert[i - N]) zahl--;
+      if (markiert[i] && zahl >= 3) bis = i;
+    }
+    return bis;
+  }
+  function bogenLesen(bild){
+    bild = weissabgleich(bild);
+    var r = ausrichten(bild);
+    r.bild = bild;
+    if (r.fehler) return r;
+    // Bildpunkte je pt: zu klein gelesen gibt Unsinn
+    if (r.pxpt / (bild.vergroessert || 1) < 1.1) return { fehler: T.zuKlein };
+    var NP = NX * NY, lum = new Uint8Array(N * N * NP), art = new Uint8Array(N * N * NP), pap = new Uint8Array(N * N * NP), hell = [], R, C, i;
+    for (R = 0; R < N; R++){ hell.push([]); for (C = 0; C < N; C++) hell[R].push(proben(bild, r, R, C, lum, art, (R * N + C) * NP, pap)); }
+    // Licht-Schatten-Kante je Zeichen: wie verschieden hell das Papier
+    // innerhalb des Messfelds ist (hellste durch dunkelste Stelle). «pap» ist
+    // schon das Hellste im Umkreis von 2.5 pt - ein Strich faellt darin
+    // heraus, der Rand eines Schattens bleibt.
+    var kante = new Float32Array(N * N);
+    for (i = 0; i < N * N; i++){
+      var lo = 255, hi = 0, q0 = i * NP;
+      for (var q = 0; q < NP; q++) if (art[q0 + q] !== 3){ var pv = pap[q0 + q]; if (pv < lo) lo = pv; if (pv > hi) hi = pv; }
+      kante[i] = hi > 0 && lo > 0 ? hi / lo : 1;
+    }
+    // Zweimal: Im ersten Durchgang kennt die Vorlage je Zeichen alle
+    // Stellen. Haengt die Regel nur vom Zeichen ab (2025 S07-S12), ist ein
+    // Zeichen fast ueberall markiert - dann enthielte die Vorlage den Strich
+    // und zoege ihn wieder ab. Im zweiten nur noch die nicht markierten.
+    var zweimal = function(stufe){
+      var roh = tintenwerte(r, lum, art, hell, pap, stufe), e = entscheiden(roh);
+      var ohne = e ? e.markiert.map(function(m, i){ return m || e.unsicher[i]; }) : roh.map(function(v){ return v >= 2 * MARKIERT; });
+      var letzt = bearbeitetBis(ohne);
+      roh = tintenwerte(r, lum, art, hell, pap, stufe, ohne, letzt);
+      return { roh: roh, e: entscheiden(roh) };
+    };
+    var x1 = zweimal(NORMAL), roh = x1.roh, e = x1.e;
+    // fuer scripts/konztest-pruefen.mjs und Fehlersuche
+    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ roh: Array.prototype.slice.call(roh), e: e, ziele: K.ziele, punkt: function(R, C){ return imBild(r, R, C); }, teile: function(R, C){ var m = mitte(R, C); return [m, r.abb(m[0], m[1]), r.korrektur[R][C]]; } });
+    if (e && e.anzahl < 10){
+      // fast nichts markiert? Mit feinem, blassem Stift sieht es so aus
+      var x2 = zweimal(EMPFINDLICH);
+      if (!x2.e || x2.e.anzahl >= 10){ roh = x2.roh; e = x2.e; }
+    }
+    if (!e) return { fehler: T.unklar };
+    // Plausibel? Wer einen Konztest bearbeitet, findet die meisten Zielzeichen,
+    // an denen er vorbeikommt. Fehlen bis zum letzten markierten Zeichen mehr
+    // als 30 %, oder ist fast nichts markiert, hat das Lesen die Striche
+    // nicht gesehen (zu fein, zu unscharf) - lieber ein neues Foto als ein
+    // falscher Rohwert ohne Warnung.
+    // Einzelne Striche hinter dem dicht bearbeiteten Teil (bearbeitetBis)
+    // zaehlen wie jeder Strich (auch ein versehentlicher in der letzten
+    // Zeile ist die letzte Markierung), werden aber zum Ansehen gezeigt
+    var dicht = bearbeitetBis(e.markiert), letzt = -1, vorher = 0, aus = 0;
+    // Ein unsicheres Zeichen hinter dem dicht bearbeiteten Teil ist eher
+    // Rauschen als ein Strich: vorgeschlagen wird leer, es bleibt orange.
+    // Sonst rueckte «bearbeitet bis» ans Ende, und alle Zielzeichen dazwischen
+    // galten als ausgelassen (Kamera-Labor Oktober 2026: ein leeres, gedruckt
+    // ausgefuelltes Quadrat knapp ueber der Grenze - Rohwert 195 statt 220).
+    for (i = dicht + 1; i < N * N; i++) if (e.markiert[i] && e.unsicher[i]) e.markiert[i] = false;
+    for (i = 0; i < N * N; i++) if (e.markiert[i]){ letzt = i; if (i > dicht) e.unsicher[i] = true; }
+    for (i = 0; i < letzt; i++) if (K.ziele[Math.floor(i / N)][i % N] === '1'){ vorher++; if (!e.markiert[i]) aus++; }
+    // Unplausibel (fast nichts markiert, oder mehr als 30 % der Zielzeichen
+    // bis zum letzten Strich ausgelassen): Ergebnis zeigen, aber warnen -
+    // vielleicht wurden feine Striche nicht erkannt
+    var warnung = e.anzahl < 10 || (vorher >= 20 && aus > 0.3 * vorher);
+    // Mehr als ein Viertel der Nicht-Zielzeichen markiert: so markiert
+    // niemand - das Raster liegt daneben oder die Striche sind nicht zu trennen
+    var nicht = 0, nichtM = 0;
+    for (i = 0; i < letzt; i++) if (K.ziele[Math.floor(i / N)][i % N] !== '1'){ nicht++; if (e.markiert[i]) nichtM++; }
+    if (nicht >= 50 && nichtM > 0.25 * nicht) return { fehler: T.unklar };
+    // Fehlen mehr als 70 % der Zielzeichen, hat das Lesen versagt (nicht der
+    // Kandidat) - dann keine Zahl, sondern ein neues Foto
+    if (vorher >= 40 && aus > 0.7 * vorher) return { fehler: T.unklar };
+    // Je Zeichenart: Fehlen bei einer Art auffaellig viele Zielzeichen (der
+    // Strich ist auf diesem Zeichen schlecht zu sehen), bitte ansehen
+    var zArt = {};
+    for (i = 0; i < letzt; i++){
+      var R0 = Math.floor(i / N), C0 = i % N;
+      if (K.ziele[R0][C0] !== '1') continue;
+      var za = zArt[K.zeichen[R0][C0]] = zArt[K.zeichen[R0][C0]] || [0, 0];
+      za[0]++; if (!e.markiert[i]) za[1]++;
+    }
+    var schlecht = {};
+    Object.keys(zArt).forEach(function(z){ var za = zArt[z]; if (za[0] >= 5 && za[1] / za[0] > Math.max(0.25, 2 * aus / Math.max(1, vorher) + 0.1)) schlecht[z] = true; });
+    // Wo das Magenta eines Zeichens viel blasser ist als sonst (Spiegelung,
+    // Rand des Fotos), ist auch ein Strich kaum zu sehen: bitte ansehen
+    var verblasst = blasseZeichen(r, art);
+    if (window.NCWikiKonztestDebug) window.NCWikiKonztestDebug({ verblasst: Array.prototype.slice.call(verblasst), v: Array.prototype.slice.call(VIOLETT), mv: verblasst.mv, haut: Array.prototype.slice.call(HAUT), markiert: e.markiert });
+    // Verdeckt (Finger, Gegenstand, Rand des Fotos): dort laesst sich nichts
+    // lesen - lieber melden als raten
+    var verdeckt = [];
+    // (ein markiertes Zeichen ist nicht verdeckt: ein dicker Strich ueber
+    // einem kleinen Zeichen deckt dessen Magenta selbst zu. Liegt das ganze
+    // Raster daneben, faengt das die Probe auf Nicht-Zielzeichen oben ab.)
+    // (ausser es ist Haut: ein Finger auf dem Blatt wird als Tinte gelesen)
+    for (i = 0; i < N * N; i++) if (verblasst[i] === 2 && (!e.markiert[i] || HAUT[i] >= 0.25)) verdeckt.push(i);
+    if (verdeckt.length >= 3) return { fehler: T.verdeckt, verdeckt: verdeckt.map(function(i){   // (fuer die Pruefskripte)
+      var z = K.zeichen[Math.floor(i / N)][i % N], c = imBild(r, Math.floor(i / N), i % N);
+      return [i, z, +(VIOLETT[i] / verblasst.mv[z]).toFixed(2), +HAUT[i].toFixed(2), Math.round(c[0]), Math.round(c[1])]; }) };
+    r.markiert = []; r.unsicher = []; r.roh = roh; r.kante = kante; r.schwelle = e.schwelle; r.papier = hell;
+    // Der Rand eines harten Schattens quer durch ein Zeichen wird als Strich
+    // gelesen, und tief im Schatten liegt ein leeres Zeichen manchmal knapp
+    // ueber der Schwelle (Kamera-Labor November 2026: die erfundenen
+    // Markierungen lagen wie auf einer Linie entlang der Schattenkante).
+    // Zum Nachsehen deshalb ein als markiert gelesenes Zeichen, das KEIN
+    // Zielzeichen ist (ein «falsch markiert» kostet einen Punkt), wenn durch
+    // sein Messfeld eine Kante laeuft oder sein Wert nur knapp ueber der
+    // Schwelle liegt. Bei Zielzeichen nicht: Ein echter Strich zieht das
+    // Kantenmass selbst hoch (bei 10 % der richtig gelesenen ueber 1.3), und
+    // dort waere fast jede Markierung orange.
+    var schattenStrich = function(i, R, C){
+      return e.markiert[i] && K.ziele[R][C] !== '1' && (kante[i] >= KANTE_STRICH || roh[i] < KNAPP_STRICH * e.schwelle);
+    };
+    // Dasselbe bei den Zielzeichen, enger: knapp UNTER der Schwelle (ein
+    // blasser Strich galt still als ausgelassen) und knapp DARUEBER (ein
+    // leeres Zielzeichen im Schatten galt still als richtig markiert).
+    var zielKnapp = function(i, R, C){
+      if (K.ziele[R][C] !== '1') return false;
+      return e.markiert[i] ? roh[i] < KNAPP_ZIEL * e.schwelle : (i < letzt && roh[i] >= FAST_ZIEL * e.schwelle);
+    };
+    if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
+    for (R = 0; R < N; R++){
+      var zeile = [];
+      for (C = 0; C < N; C++){
+        i = R * N + C;
+        zeile.push(e.markiert[i]);
+        r.unsicher.push(e.unsicher[i] || schattenStrich(i, R, C) || zielKnapp(i, R, C) || (verblasst[i] && !e.markiert[i]) || (!e.markiert[i] && i < letzt && !!(roh.verdacht && roh.verdacht[K.zeichen[R][C]]))
+          || (!e.markiert[i] && i < letzt && K.ziele[R][C] === '1' && !!schlecht[K.zeichen[R][C]]));
+      }
+      r.markiert.push(zeile);
+    }
+    // Eine Markierung mitten zwischen Zweifelsfaellen (mindestens drei der
+    // acht Nachbarn orange) liegt in einer gestoerten Stelle - tiefer
+    // Schatten, Glanz - und ist selbst nicht sicher.
+    var vorher2 = r.unsicher.slice();
+    for (i = 0; i < N * N; i++){
+      if (vorher2[i] || !e.markiert[i]) continue;
+      var Ri = Math.floor(i / N), Ci = i % N, um = 0;
+      for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++){
+        if (!dr && !dc) continue;
+        var Rn = Ri + dr, Cn = Ci + dc;
+        if (Rn >= 0 && Rn < N && Cn >= 0 && Cn < N && vorher2[Rn * N + Cn]) um++;
+      }
+      if (um >= UMGEBUNG) r.unsicher[i] = true;
+    }
+    if (r.unsicher.filter(Boolean).length > MAX_UNSICHER) return { fehler: T.unklar };
+    return r;
+  }
+  function blasseZeichen(r, art){
+    var aus = new Uint8Array(N * N);
+    if (!r.farbe) return aus;
+    var NP = NX * NY, rand = [], mv = {}, R, C, i;
+    for (i = 0; i < N * N; i++){
+      var aussen = 0;
+      for (var q = i * NP; q < (i + 1) * NP; q++) if (art[q] === 3) aussen++;
+      rand.push(aussen);
+      var z = K.zeichen[Math.floor(i / N)][i % N];
+      (mv[z] = mv[z] || []).push(VIOLETT[i]);
+    }
+    Object.keys(mv).forEach(function(z){ mv[z] = median(mv[z]); });
+    // Gemessen am stetigen Mass (VIOLETT, im Verhaeltnis zum selben Zeichen
+    // anderswo), nicht an der Zahl der Messpunkte ueber der Magenta-Schwelle:
+    // Ist das Magenta nur knapp zu sehen (im Videobild des Handys: feine
+    // Zeichen, Farbe in halber Aufloesung), liegt es bei manchen Zeichen
+    // knapp unter der Schwelle und fiel dort ganz weg (Kamera-Labor Oktober
+    // 2026: 15 verstreute «verdeckte» Zeichen, die im Bild ganz normal
+    // aussahen - Foto abgelehnt). Ein nur blasses Zeichen behaelt gut 40 %
+    // des Masses, unter einem Finger, einem Gegenstand oder im Glanz bleibt
+    // fast nichts. (Nur wo das Magenta sonst deutlich zu sehen ist.)
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      i = R * N + C;
+      var z_ = K.zeichen[R][C], v_ = VIOLETT[i] / Math.max(mv[z_], 1e-6);
+      if (mv[z_] < 0.012) continue;
+      aus[i] = v_ < 0.3 || HAUT[i] >= 0.25 || (rand[i] > 0.3 * NP && v_ < 0.6) ? 2 : v_ < 0.45 ? 1 : 0;
+    }
+    aus.v = VIOLETT; aus.mv = mv; aus.haut = HAUT;   // (fuer die Pruefskripte)
+    return aus;
+  }
+  // Tinte je Zeichen (0 bis 1): je Messpunkt, wie viel dunkler als das Papier
+  // dort (abgestuft: ein feiner, blasser Strich wird nach Unschaerfe und JPG
+  // nie ganz dunkel), minus was dasselbe Zeichen ohne Markierung an diesem
+  // Punkt hat (Median ueber alle Stellen mit diesem Zeichen). So bleibt nur,
+  // was jemand dazugeschrieben hat - auch in einer Schwarz-Weiss-Kopie, wo die
+  // Zeichen selbst grau sind.
+  function tintenwerte(r, lum, art, hell, pap, stufe, ohne, letzt){
+    var NP = NX * NY, R, C, i, a, b, st = r.farbe ? stufe.farbe : stufe.grau, hellF = st[0], spanneF = st[1];
+    // Papier je Zeichen: Median der Nachbarn (eine dicke Markierung macht ein
+    // einzelnes Messfeld dunkler); je Messpunkt hoechstens wenig heller
+    var wert = new Float32Array(N * N * NP);
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var w = [];
+      for (a = Math.max(0, R - 1); a <= Math.min(N - 1, R + 1); a++) for (b = Math.max(0, C - 1); b <= Math.min(N - 1, C + 1); b++) w.push(hell[a][b]);
+      var p0 = Math.max(40, median(w)), o = (R * N + C) * NP;
+      for (i = 0; i < NP; i++){
+        var t = art[o + i], p = Math.max(40, Math.min(pap[o + i], 1.1 * p0));
+        wert[o + i] = t === 1 || t === 3 ? 0 : t === 2 && lum[o + i] < 0.95 * p ? 1 : Math.max(0, Math.min(1, (hellF * p - lum[o + i]) / (spanneF * p)));
+      }
+    }
+    // Was das Zeichen selbst mitbringt, je Messpunkt
+    var je = {};
+    // (ohne: diese Stellen nicht - sie sind markiert; bleiben von einem
+    // Zeichen keine drei, dann doch alle, aber das untere Zehntel statt der Mitte)
+    var alle = {};
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var z = K.zeichen[R][C];
+      (alle[z] = alle[z] || []).push((R * N + C) * NP);
+      if (!ohne || !ohne[R * N + C]) (je[z] = je[z] || []).push((R * N + C) * NP);
+    }
+    Object.keys(alle).forEach(function(z){ if (!je[z] || je[z].length < 3){ je[z] = alle[z]; je[z].unten = true; } });
+    // Zeichen, die meist Ziele sind (Regel nur nach dem Zeichen): bei einem
+    // guten Kandidaten fast ueberall markiert. Ihre Vorlage dann aus den
+    // Stellen hinter dem letzten markierten Zeichen - dort hat niemand markiert.
+    var ziel = {}, zahl = {};
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){ var zz = K.zeichen[R][C]; zahl[zz] = (zahl[zz] || 0) + 1; if (K.ziele[R][C] === '1') ziel[zz] = (ziel[zz] || 0) + 1; }
+    var meistZiel = {};
+    if (letzt !== undefined) Object.keys(alle).forEach(function(z){
+      if ((ziel[z] || 0) < 0.5 * zahl[z]) return;
+      var dahinter = alle[z].filter(function(o){ return o / NP > letzt; });
+      if (dahinter.length >= 3) je[z] = dahinter; else meistZiel[z] = true;
+    });
+    var vorlage = {};
+    Object.keys(je).forEach(function(z){
+      var v = new Float32Array(NP), liste = je[z], tmp = new Float32Array(liste.length);
+      for (i = 0; i < NP; i++){
+        for (var k = 0; k < liste.length; k++) tmp[k] = wert[liste[k] + i];
+        tmp.sort(); v[i] = tmp[Math.floor(tmp.length * (liste.unten ? 0.1 : 0.5))];
+      }
+      // Ohne Magenta (schwarz gedruckt, Graustufen) zaehlen die Zeichen selbst
+      // als Tinte: dann das Hoechste der Vorlage im Umkreis eines Messpunkts,
+      // sonst bleibt an jeder Kante ein Rest, wenn das Zeichen um einen
+      // Bruchteil verschoben ist
+      if (!r.farbe){
+        var d = new Float32Array(NP);
+        for (i = 0; i < NP; i++){
+          var ci = i % NX, cj = (i - ci) / NX, m = 0;
+          for (var vj = Math.max(0, cj - 1); vj <= Math.min(NY - 1, cj + 1); vj++)
+            for (var vi = Math.max(0, ci - 1); vi <= Math.min(NX - 1, ci + 1); vi++) m = Math.max(m, v[vj * NX + vi]);
+          d[i] = m;
+        }
+        v = d;
+      }
+      vorlage[z] = v;
+    });
+    // Ist ein Zeichen ueberall markiert (Regel nur nach dem Zeichen, und
+    // jemand hat alle gefunden), enthaelt seine Vorlage den Strich. Solche
+    // Vorlagen tragen viel mehr «Tinte» als die anderen - im Farbbild dann
+    // ohne Vorlage (das Magenta zaehlt ohnehin nicht).
+    // Im Graubild geht das nicht (das Zeichen selbst ist dunkel): dort sind
+    // diese Zeichen verdaechtig und werden, wo nicht markiert, zum Ansehen
+    // markiert (bogenLesen).
+    var verdacht = {}, energie = {}, liste2 = [];
+    Object.keys(vorlage).forEach(function(z){ var e = 0; for (i = 0; i < NP; i++) e += vorlage[z][i]; energie[z] = e / NP; liste2.push(e / NP); });
+    var em = median(liste2);
+    Object.keys(vorlage).forEach(function(z){
+      if (energie[z] > 3 * em + 0.01 || meistZiel[z]){ if (r.farbe) vorlage[z] = new Float32Array(NP); else verdacht[z] = true; }
+    });
+    var aus = [];
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var o2 = (R * N + C) * NP, vl = vorlage[K.zeichen[R][C]], sum = 0, frei = 0;
+      var spalten = new Uint8Array(NX), zeilen = new Uint8Array(NY);
+      for (i = 0; i < NP; i++){
+        // Ohne Farbe (Graustufen): wo das Zeichen selbst dunkel ist, ist ein
+        // Strich nicht zu sehen - wie das Magenta im Farbbild nicht zaehlen
+        if (art[o2 + i] === 1 || art[o2 + i] === 3 || (!r.farbe && vl[i] > 0.5)) continue;
+        frei++;
+        var x = wert[o2 + i] - vl[i];
+        if (x > 0){ sum += x; if (x > 0.2){ spalten[i % NX] = 1; zeilen[Math.floor(i / NX)] = 1; } }
+      }
+      var ns = 0, nz = 0;
+      for (i = 0; i < NX; i++) ns += spalten[i];
+      for (i = 0; i < NY; i++) nz += zeilen[i];
+      // ein Staubkorn belegt nur wenige Spalten und Zeilen und zaehlt weniger
+      // je Flaeche, die nicht vom Magenta des Zeichens bedeckt ist: auf einem
+      // grossen Zeichen (2025 S05, S08) liegt ein Teil jedes Strichs unsichtbar
+      // auf dem Zeichen
+      aus.push(sum / Math.max(frei, 0.4 * NP) * Math.min(1, ns / NX / 0.4) * Math.min(1, nz / NY / 0.4));
+    }
+    aus.verdacht = verdacht;
+    return aus;
+  }
+  // --- Markiert oder nicht ------------------------------------------------------------
+  // Die Schwelle ergibt sich aus dem Bild selbst (Otsu: die Trennung, bei der
+  // beide Gruppen in sich am einheitlichsten sind), mindestens MARKIERT. Wer
+  // mal ein Kreuz und mal einen kurzen Strich macht, hat zwei Gruppen
+  // Markierter: Hebt sich die schwaechere klar vom Rest ab, zaehlt sie mit.
+  function quantil(sortiert, q){
+    var x = q * (sortiert.length - 1), i = Math.floor(x), f = x - i;
+    return i + 1 < sortiert.length ? sortiert[i] * (1 - f) + sortiert[i + 1] * f : sortiert[i];
+  }
+  function otsu(sortiert, lo, hi){
+    var n = sortiert.length, praefix = [0], i;
+    for (i = 0; i < n; i++) praefix.push(praefix[i] + sortiert[i]);
+    var beste = null, bestwert = -1, k = 0;
+    for (var s = 0; s < 100; s++){
+      var t = lo + (hi - lo) * s / 99;
+      while (k < n && sortiert[k] < t) k++;
+      if (k < 10 || n - k < 3) continue;
+      var ma = praefix[k] / k, mb = (praefix[n] - praefix[k]) / (n - k), v = k * (n - k) * (ma - mb) * (ma - mb);
+      if (v > bestwert){ bestwert = v; beste = t; }
+    }
+    return beste;
+  }
+  function entscheiden(werte){
+    var alle = Array.prototype.slice.call(werte).sort(function(a, b){ return a - b; });
+    var t = Math.max(otsu(alle, MARKIERT, 0.6) || MARKIERT, MARKIERT);
+    var unten = alle.filter(function(v){ return v < t; }), t2 = otsu(unten, MARKIERT, t);
+    if (t2 && t2 < t){
+      var gruppe = unten.filter(function(v){ return v >= t2; }), rest = unten.filter(function(v){ return v < t2; });
+      // (und nicht bloss Rauschen: im Schatten bilden die leeren Zeichen
+      // eine «Gruppe» knapp ueber null - ein echter schwacher Strich hat
+      // mindestens ein Fuenftel der Tinte eines ueblichen)
+      var ueblich = quantil(alle.filter(function(v){ return v >= t; }), 0.5);
+      if (gruppe.length >= 10 && quantil(gruppe, 0.5) >= 2 * Math.max(quantil(rest, 0.99), 0.004) && quantil(gruppe, 0.5) >= 0.2 * ueblich) t = t2;
+    }
+    var leer = alle.filter(function(v){ return v < t; }), voll = alle.filter(function(v){ return v >= t; });
+    // Bitte ansehen: was ueber dem Rauschen der leeren Zeichen, aber unter dem
+    // Ueblichen der markierten liegt
+    // (b: die Haelfte des Ueblichen - aber nicht hoeher, als das Rauschen
+    // es verlangt: auf einem sauberen Scan ist ein schwacher Strich eindeutig)
+    // (a: so weit ueber dem Rauschen, wie dieses ueber dem Ueblichen liegt -
+    // nicht das 1.5-fache: sonst ragt bei hohem Grundwert (viel Schatten,
+    // ungenaue Vorlage) die Zone bis in die markierten hinein. Darunter ist
+    // nichts zu unterscheiden, unsicher erst ab dem Rauschen.)
+    var rausch = quantil(leer, 0.995), mitte = quantil(leer, 0.5), a = Math.max(rausch + 0.5 * (rausch - mitte), rausch + 0.5 * MARKIERT);
+    var b = voll.length >= 3 ? Math.min(0.5 * quantil(voll, 0.5), Math.max(t, 3 * rausch)) : t;
+    var lo = Math.max(Math.min(a, b, t), rausch, 0.5 * MARKIERT), hi = Math.max(a, b, t);
+    // Fuer die Zweifelsfaelle (orange) die Mitte der Luecke zwischen den
+    // staerksten leeren und den schwaechsten markierten Zeichen, wenn es
+    // eine gibt: Die Grenze t lag oft an deren unterem Rand, und ein leeres
+    // Zeichen knapp darueber galt als markiert, ein schwacher Strich knapp
+    // darunter als leer (Kamera-Labor Oktober 2026, Normalfall: Rohwert in 6
+    // von 125 Bildern falsch, mit dieser Mitte in 2). Nur die orangen
+    // Zeichen - die anderen bleiben, wie sie sind.
+    var mitteLuecke = t;
+    if (voll.length >= 20){
+      var la = quantil(leer, 0.995), vb = quantil(voll, 0.01);
+      if (vb > la) mitteLuecke = Math.min(Math.max((la + vb) / 2, lo), hi);
+    }
+    var e = { markiert: [], unsicher: [], anzahl: voll.length, schwelle: t }, n = 0;
+    for (var i = 0; i < werte.length; i++){
+      var u = werte[i] > lo && werte[i] < hi;
+      e.markiert.push(werte[i] >= (u ? mitteLuecke : t));
+      e.unsicher.push(u); if (u) n++;
+    }
+    // Zu viele Zweifelsfaelle: die Striche heben sich nicht klar ab
+    return n > MAX_UNSICHER ? null : e;
+  }
+  // --- Zaehlen (nach der Anleitung) --------------------------------------------------
+  function wertung(markiert){
+    var letztes = -1, R, C;
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++) if (markiert[R][C]) letztes = R * N + C;
+    var w = { richtig: 0, falsch: 0, ausgelassen: 0, letztes: letztes };
+    for (R = 0; R < N; R++) for (C = 0; C < N; C++){
+      var m = markiert[R][C], z = K.ziele[R][C] === '1';
+      if (m && z) w.richtig++; else if (m) w.falsch++; else if (z && R * N + C < letztes) w.ausgelassen++;
+    }
+    w.punkte = w.richtig - w.falsch - w.ausgelassen;
+    return w;
+  }
+  // --- Zeigen -------------------------------------------------------------------------
+  var stand = null;
+  function melden(text, fehler){ el('kt-status').textContent = text; el('kt-status').className = 'ab-status' + (fehler ? ' ab-fehler' : ''); }
+  function zeigen(){
+    var w = wertung(stand.markiert);
+    el('kt-summe').textContent = T.summe.replace('{n}', w.punkte);
+    el('kt-ansage').textContent = el('kt-summe').textContent;   // fuer Screenreader, siehe Antwortbogen
+    el('kt-punkte').innerHTML = '<tbody>'
+      + '<tr><td>' + T.richtig + '</td><td>' + w.richtig + '</td></tr>'
+      + '<tr><td>' + T.falsch + '</td><td>− ' + w.falsch + '</td></tr>'
+      + '<tr><td>' + T.ausgelassen + '</td><td>− ' + w.ausgelassen + '</td></tr>'
+      + '<tr class="ab-total"><td>' + (w.letztes < 0 ? T.nichts : T.bis.replace('{z}', Math.floor(w.letztes / N) + 1).replace('{s}', w.letztes % N + 1))
+      + '</td><td>' + w.punkte + '</td></tr></tbody>';
+    var offen = stand.unsicher.filter(Boolean).length;
+    el('kt-unsicher').hidden = !offen;
+    el('kt-unsicher').textContent = T.unsicher.replace('{n}', offen);
+    el('kt-meldungen').innerHTML = stand.hinweise.map(function(h){ return '<li>' + h + '</li>'; }).join('');
+    zeichnen(w);
+    listeZeigen(w);
+  }
+  // Alles, was im Bild farbig umrandet ist und nicht einfach «richtig» heisst,
+  // als Knopf: falsch markiert, ausgelassen, bitte pruefen.
+  function listeZeigen(w){
+    var h = '', n = 0;
+    for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+      var i = R * N + C, m = stand.markiert[R][C], z = K.ziele[R][C] === '1';
+      var art = stand.unsicher[i] ? (m ? T.listePruefenAn : T.listePruefenAus) : m && !z ? T.listeFalsch : !m && z && i < w.letztes ? T.listeAusgelassen : '';
+      if (!art) continue;
+      n++;
+      h += '<li><button type="button" class="kt-eintrag" data-r="' + R + '" data-c="' + C + '" aria-pressed="' + (m ? 'true' : 'false') + '">'
+        + T.listeOrt.replace('{z}', R + 1).replace('{s}', C + 1) + ': ' + art + '</button></li>';
+    }
+    el('kt-liste').hidden = !n;
+    el('kt-liste-titel').textContent = T.listeTitel.replace('{n}', n);
+    el('kt-liste-eintraege').innerHTML = h;
+  }
+  function umschalten(R, C){
+    stand.markiert[R][C] = !stand.markiert[R][C];
+    stand.unsicher[R * N + C] = false;
+    zeigen();
+  }
+  el('kt-liste-eintraege').addEventListener('click', function(ev){
+    var k = ev.target.closest ? ev.target.closest('button[data-r]') : null;
+    if (!k || !stand) return;
+    var R = +k.getAttribute('data-r'), C = +k.getAttribute('data-c');
+    umschalten(R, C);
+    // Die Liste ist neu gebaut: zurueck auf denselben Eintrag, oder (ist er
+    // jetzt in Ordnung und deshalb weg) auf den Titel der Liste
+    var neu = el('kt-liste-eintraege').querySelector('button[data-r="' + R + '"][data-c="' + C + '"]');
+    (neu || el('kt-liste-titel')).focus({ preventScroll: true });
+  });
+  // Scan-Ansicht (gerade, weisses Papier, nur der Bereich der Zeichen) oder
+  // das Foto selbst. In der Scan-Ansicht sitzt jedes Zeichen dort, wo die
+  // Abbildung es hinlegt, plus seine Korrektur - umgerechnet in pt.
+  function scanBereit(r){
+    var sx = K.schrittX, sy = K.schrittY;
+    try {
+      r.scan = B.scan(r.bild, r.abb, [K.x[0] - 1.5 * sx, K.y[0] - 1.5 * sy, K.x[N - 1] + 1.5 * sx, K.y[N - 1] + 1.5 * sy], 1100);
+    } catch (e) { r.scan = null; return; }
+    r.scanKorr = [];
+    for (var R = 0; R < N; R++){
+      var zeile = [];
+      for (var C = 0; C < N; C++){
+        var m = mitte(R, C), o = r.abb(m[0], m[1]), a = r.abb(m[0] + 1, m[1]), b = r.abb(m[0], m[1] + 1), k = r.korrektur[R][C];
+        var j11 = a[0] - o[0], j21 = a[1] - o[1], j12 = b[0] - o[0], j22 = b[1] - o[1], det = j11 * j22 - j12 * j21;
+        zeile.push(det ? [(j22 * k[0] - j12 * k[1]) / det, (-j21 * k[0] + j11 * k[1]) / det] : [0, 0]);
+      }
+      r.scanKorr.push(zeile);
+    }
+  }
+  function alsScan(){ return !el('kt-original').checked && stand.scan; }
+  function zeichenPunkt(R, C){
+    var sc = alsScan();
+    if (!sc) return imBild(stand, R, C);
+    var m = mitte(R, C), d = stand.scanKorr[R][C];
+    return [(m[0] + d[0] - sc.x0) * sc.k, (m[1] + d[1] - sc.y0) * sc.k];
+  }
+  function pxptAnzeige(){ var sc = alsScan(); return sc ? sc.k : stand.pxpt; }
+  // Gruen richtig markiert, rot falsch markiert, blau ausgelassen (vor dem
+  // letzten markierten Zeichen), orange bitte ansehen.
+  var anzeige = 1;
+  function zeichnen(w){
+    var sc = alsScan(), c = el('kt-bild'), q = sc ? sc.leinwand : stand.bild.leinwand, s = anzeige = Math.min(1, 1100 / q.width);
+    c.width = Math.round(q.width * s); c.height = Math.round(q.height * s);
+    var ctx = c.getContext('2d');
+    ctx.drawImage(q, 0, 0, c.width, c.height);
+    var rad = 0.42 * K.schrittX * pxptAnzeige() * s;
+    for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+      var m = stand.markiert[R][C], z = K.ziele[R][C] === '1', farbe = null;
+      if (m && z) farbe = '#1e9e4a'; else if (m) farbe = '#c5221f'; else if (z && R * N + C < w.letztes) farbe = '#1a56db';
+      var p = zeichenPunkt(R, C);
+      if (farbe){
+        // Nicht nur die Farbe unterscheidet (Rot-Gruen-Schwaeche): falsch
+        // markiert mit Kreuz, ausgelassen gestrichelt
+        var x0 = p[0] * s, y0 = p[1] * s, kreuz = m && !z, strich = !m;
+        ctx.strokeStyle = farbe; ctx.lineWidth = 2;
+        if (strich) ctx.setLineDash([Math.max(2, rad * 0.6), Math.max(2, rad * 0.45)]);
+        ctx.beginPath(); ctx.arc(x0, y0, rad, 0, 2 * Math.PI); ctx.stroke();
+        if (strich) ctx.setLineDash([]);
+        if (kreuz){
+          var d = rad * 0.7071;
+          ctx.beginPath(); ctx.moveTo(x0 - d, y0 - d); ctx.lineTo(x0 + d, y0 + d); ctx.moveTo(x0 + d, y0 - d); ctx.lineTo(x0 - d, y0 + d); ctx.stroke();
+        }
+      }
+      if (stand.unsicher[R * N + C]){ ctx.strokeStyle = '#e8710a'; ctx.lineWidth = 2; ctx.strokeRect(p[0] * s - rad * 1.2, p[1] * s - rad * 1.2, rad * 2.4, rad * 2.4); }
+    }
+    // Das letzte markierte Zeichen: ein Balken gleich dahinter. Bis dorthin
+    // zaehlt jedes nicht markierte Zielzeichen als ausgelassen - eine falsch
+    // gelesene Markierung weit hinten kostet viele Punkte.
+    if (w.letztes >= 0){
+      // in Richtung der Zeile (das Foto kann gedreht sein)
+      var LR = Math.floor(w.letztes / N), LC = w.letztes % N, e = zeichenPunkt(LR, LC), m = mitte(LR, LC);
+      var o = sc ? [0, 0] : stand.abb(m[0], m[1]), dx = sc ? [sc.k, 0] : stand.abb(m[0] + 1, m[1]), dy = sc ? [0, sc.k] : stand.abb(m[0], m[1] + 1);
+      var bx = 0.6 * K.schrittX, hy = 0.6 * K.schrittY;
+      var punkt = function(a, b){ return [(e[0] + a * (dx[0] - o[0]) + b * (dy[0] - o[0])) * s, (e[1] + a * (dx[1] - o[1]) + b * (dy[1] - o[1])) * s]; };
+      var p1 = punkt(bx, -hy), p2 = punkt(bx, hy);
+      ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]);
+      ctx.strokeStyle = '#7e3af2'; ctx.lineWidth = Math.max(3, 0.35 * rad); ctx.stroke();
+    }
+  }
+  // Tippen auf ein Zeichen schaltet seine Markierung um
+  el('kt-original').addEventListener('change', function(){ if (stand) zeigen(); });
+  el('kt-gross').addEventListener('change', function(){ el('kt-bild-rahmen').classList.toggle('ist-gross', this.checked); });
+  el('kt-bild').addEventListener('click', function(ev){
+    if (!stand) return;
+    var c = this, b = c.getBoundingClientRect();
+    var x = (ev.clientX - b.left) * c.width / b.width / anzeige, y = (ev.clientY - b.top) * c.height / b.height / anzeige;
+    var beste = null;
+    for (var R = 0; R < N; R++) for (var C = 0; C < N; C++){
+      var p = zeichenPunkt(R, C), d = Math.hypot(p[0] - x, p[1] - y);
+      if (!beste || d < beste[0]) beste = [d, R, C];
+    }
+    if (!beste || beste[0] > 0.6 * K.schrittX * pxptAnzeige()) return;
+    umschalten(beste[1], beste[2]);
+  });
+  // (Wirft f, muss das als Fehler ankommen: Ohne try bliebe das Versprechen
+  // fuer immer offen und die Seite bei «wird gelesen …» stehen.)
+  function spaeter(f){ return new Promise(function(ok, nein){ setTimeout(function(){ try { ok(f()); } catch (e) { nein(e); } }, 30); }); }
+  function unerwartet(e){ try { console.error(e); } catch (e2) {} return typeof e === 'string' ? e : T.fehlerBild; }
+  function nichtGefunden(r){ return r.fehler === T.grau || r.fehler.indexOf(T.keinRaster.split('{n}')[0]) === 0; }
+  function auswerten(liste, hochgeladen, live){
+    melden(T.liest);
+    return spaeter(function(){
+      var erster = null;
+      for (var i = 0; i < liste.length; i++){
+        var bild = B.bildAus(liste[i]), r = bogenLesen(bild);
+        r.bild = r.bild || bild;
+        if (!r.fehler) return r;
+        // (lieber die Meldung eines Bilds, auf dem das Blatt gefunden wurde:
+        // Zeigt das Foto der Live-Kamera schon den Tisch, hiess es sonst
+        // «schwarz-weiss», obwohl das Videobild davor das Blatt zeigte -
+        // Kamera-Labor Oktober 2026)
+        if (!erster || (nichtGefunden(erster) && !nichtGefunden(r))) erster = r;
+      }
+      return erster || { fehler: T.fehlerBild };
+    }).then(function(r){
+      if (r.fehler){
+        var zusatz = hochgeladen ? B.kleinesFoto(liste[0], T.messenger) : '';
+        // Live und nur ein Videobild (gut 1920 Bildpunkte): Feine Zeichen
+        // (Serie 2024-02) sind darin oft nicht zu lesen, im Foto der
+        // Kamera-App schon (Kamera-Labor Oktober 2026, Normalfall: live 0 von
+        // 2, als 12-MP-Foto 6 von 6) - also dorthin verweisen
+        var q = liste[0], lang = q ? Math.max(q.naturalWidth || q.width || 0, q.naturalHeight || q.height || 0) : 0;
+        if (live && lang && lang <= 2000 && (nichtGefunden(r) || r.fehler === T.passtNicht || r.fehler === T.unklar)) zusatz = ' ' + T.aufloesung;
+        melden(r.fehler + zusatz, true); return;
+      }
+      stand = r;
+      scanBereit(stand);
+      melden('');
+      el('kt-ergebnis').hidden = false;
+      zeigen();
+      el('kt-ergebnis').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }).then(null, function(e){ melden(unerwartet(e), true); });
+  }
+  function datei(d){
+    if (!d) return;
+    if (!K){ melden(T.eigenFehlt, true); return; }
+    el('kt-ergebnis').hidden = true;
+    melden(B.istPdf(d) ? T.pdfLaedt : T.liest);
+    B.quellen(d).then(function(liste){ return auswerten(liste, !B.istPdf(d)); }, function(f){ melden(typeof f === 'string' ? f : T.fehlerBild, true); });
+  }
+  ['kt-kamera', 'kt-datei'].forEach(function(id){
+    el(id).addEventListener('change', function(){ datei(this.files && this.files[0]); this.value = ''; });
+  });
+  waehlen();
+  // Eine laufende Live-Kamera gehoert zum bisher gewaehlten Konztest: beenden.
+  var kam = null;
+  function kameraAus(){ if (kam){ kam.stopp(); kam = null; } }
+  el('kt-testsim').addEventListener('change', function(){ kameraAus(); waehlen(); if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); } });
+  // Eigener Konztest: Aufgabe und Loesung als PDF
+  function eigenMelden(text, fehler){ el('kt-eigen-status').textContent = text; el('kt-eigen-status').className = 'ab-status' + (fehler ? ' ab-fehler' : ''); }
+  function eigenZeigen(){
+    el('kt-eigen-loeschen').hidden = !EIGEN;
+    if (EIGEN) eigenMelden(T.eigenOk.replace('{z}', EIGEN.ziele.join('').split('1').length - 1)
+      .replace('{k}', new Set(EIGEN.zeichen.join('')).size).replace('{quelle}', EIGEN.quelle));
+  }
+  eigenZeigen();
+  el('kt-eigen-loeschen').addEventListener('click', function(){
+    try { localStorage.removeItem('ncwiki-kt-eigen'); } catch (e) {}
+    EIGEN = null;
+    kameraAus(); waehlen(); eigenZeigen(); eigenMelden('');
+    if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); }
+  });
+  el('kt-eigen-datei').addEventListener('change', function(){
+    var dateien = Array.prototype.slice.call(this.files || []);
+    this.value = '';
+    if (!dateien.length) return;
+    eigenMelden(T.eigenLiest.replace('{n}', 0).replace('{m}', '…'));
+    window.NCWikiKonztestLesen.ausPdfs(dateien, function(n, m){ eigenMelden(T.eigenLiest.replace('{n}', n).replace('{m}', m)); }).then(function(k){
+      EIGEN = k;
+      try { localStorage.setItem('ncwiki-kt-eigen', JSON.stringify(k)); } catch (e) {}
+      waehlen(); eigenZeigen();
+      if (stand){ el('kt-ergebnis').hidden = true; stand = null; melden(''); }
+    }, function(f){
+      eigenMelden(f === 'keineAufgabe' ? T.eigenKeineAufgabe : f === 'keineLoesung' ? T.eigenKeineLoesung : typeof f === 'string' ? f : T.fehlerBild, true);
+    });
+  });
+  // --- Live-Kamera: das Raster im Sucher -------------------------------------------
+  // Gruen, sobald der groesste Teil des Rasters (70 %) als Gitter gefunden
+  // ist; die vier Ecken des Rasters dienen als Merkpunkte, ob der Bogen
+  // ruhig liegt.
+  // Ausgeloest wird ab 850 px Blattbreite (gut 1.4 px je pt: so fein
+  // braucht das Suchen der Flecken das Bild, flecken()).
+  function livePruefen(bild){
+    if (!K) return { ok: false, punkte: [], hinweis: T.eigenFehlt };
+    // mit Weissabgleich wie beim Auswerten: Unter warmem Raumlicht liegt Blau
+    // kaum ueber Gruen, und der Sucher fand 0 % des Rasters (Kamera-Labor
+    // Oktober 2026), obwohl das Foto selbst lesbar gewesen waere
+    var g = rasterSuchen(weissabgleich(bild), K.farbe, undefined, true).g;
+    var anteil = g ? g.platz.size / (N * N) : 0;
+    // Ab 70 %: Im verkleinerten Sucherbild findet sich das Raster oft nur
+    // knapp unter 85 % (der fruehere Wert) - der Sucher sprang dann zwischen
+    // «gefunden» und «nicht gefunden» und loeste erst nach einer halben
+    // Minute aus (Kamera-Labor Oktober 2026). Ausgewertet wird das Foto in
+    // voller Aufloesung (dort genuegen 60 %, MIN_GITTER).
+    if (!g || anteil < 0.7){
+      // Reicht das Gefundene von Rand zu Rand (alle N Zeilen und Spalten),
+      // ist das Blatt ganz im Bild, und es fehlen Zeichen dazwischen: Glanz,
+      // Schatten, Unschaerfe. «Das ganze Blatt ins Bild nehmen» fuehrte da in
+      // die Irre (Kamera-Labor Oktober 2026, Glanzfleck: 65 %).
+      var zeilen = new Set(), spalten = new Set();
+      if (g) g.platz.forEach(function(rc){ zeilen.add(rc[0]); spalten.add(rc[1]); });
+      var ganz = zeilen.size === N && spalten.size === N && anteil >= 0.3;
+      return { ok: false, punkte: [], hinweis: (ganz ? T.liveLuecken : T.live).replace('{n}', Math.round(anteil * 100)) };
+    }
+    // Ecken: ein ganzes Raster (N x N) um den Schwerpunkt der gefundenen
+    // Zeichen, Schritte aus einer Ebene durch alle (Zeile, Spalte ->
+    // Bildpunkt) - nicht die einzelnen Eckzeichen oder die Grenzen des
+    // Gefundenen: Fehlt von Bild zu Bild eine andere Randzeile, sprangen die
+    // Ecken um eine Zeile, und «ruhig» kam nie zustande (Kamera-Labor).
+    // Reihenfolge: oben links, unten links, unten rechts, oben rechts.
+    var a = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], bx = [0, 0, 0], by = [0, 0, 0], mx = 0, my = 0;
+    g.platz.forEach(function(rc, i){
+      var z = [rc[1], rc[0], 1], p = g.punkte[i];
+      for (var j = 0; j < 3; j++){ for (var k = 0; k < 3; k++) a[j][k] += z[j] * z[k]; bx[j] += z[j] * p.x; by[j] += z[j] * p.y; }
+      mx += p.x; my += p.y;
+    });
+    mx /= g.platz.size; my /= g.platz.size;
+    var ux, uy;
+    try { ux = B.loesen(a.map(function(z){ return z.slice(); }), bx); uy = B.loesen(a.map(function(z){ return z.slice(); }), by); }
+    catch (e){ return { ok: false, punkte: [], hinweis: T.live.replace('{n}', Math.round(anteil * 100)) }; }
+    var h = (N - 1) / 2, bei = function(dr, dc){ return [mx + ux[0] * dc + ux[1] * dr, my + uy[0] * dc + uy[1] * dr]; };
+    var pts = [bei(-h, -h), bei(h, -h), bei(h, h), bei(-h, h)];
+    var breite = Math.hypot(pts[0][0] - pts[3][0], pts[0][1] - pts[3][1]);   // eine Zeile lang
+    return { ok: true, punkte: pts, umriss: [pts[0], pts[3], pts[2], pts[1]], breite: breite * A4[0] / ((N - 1) * K.schrittX) };
+  }
+  if (B.kameraMoeglich()) el('kt-live').hidden = false;
+  el('kt-live').addEventListener('click', function(){
+    el('kt-ergebnis').hidden = true;
+    melden('');
+    if (!K){ melden(T.eigenFehlt, true); return; }
+    // (Sucherbild bis 1920 px, also bei Full-HD unverkleinert: Feine, eng
+    // stehende Zeichen - Serie 2024, Testsimulation 2023 - fanden sich im
+    // verkleinerten Bild nur zu 40 %, und der Sucher loeste nie aus. Kaum
+    // langsamer: Die Flecken muessen dort seltener neu gesucht werden.)
+    kam = B.kamera({ feld: el('kt-kamera-feld'), pruefen: livePruefen, analyse: 1920, minBreite: 850, minLesbar: 700,
+      fertig: function(q, ersatz){ auswerten([q].concat(ersatz || []), false, true); }, fehler: function(t){ melden(t, true); } });
+  });
+  // Fuer die Pruefung (scripts/konztest-pruefen.mjs): der gelesene Zustand
+  // und wo ein Zeichen im angezeigten Bild steht (Anteil der Breite/Hoehe)
+  window.NCWikiKonztestStand = function(){ return stand; };
+  // Fuer die Fehlersuche an neuen Konztests (scripts/konztest-pruefen.mjs)
+  window.NCWikiKonztestIntern = { rasterSuchen: rasterSuchen, livePruefen: livePruefen, flecken: flecken, gitter: gitter, istFarbig: istFarbig, weissabgleich: weissabgleich, bogenLesen: bogenLesen, K: function(){ return K; } };
+  window.NCWikiKonztestPunkt = function(R, C){
+    var sc = alsScan(), p = zeichenPunkt(R, C), q = sc ? sc.leinwand : stand.bild.leinwand;
+    return [p[0] / q.width, p[1] / q.height];
+  };
+})();

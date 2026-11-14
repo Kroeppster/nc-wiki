@@ -872,7 +872,7 @@ Actuellement : générateur de figures, générateur de faits, « Antwortbogen a
 Une photo de la feuille de réponses remplie d'une simulation est lue dans le navigateur et
 comparée aux solutions – la photo ne quitte pas l'appareil. Le procédé est celui de l'outil
 de formatage (`werkzeug/auswertung.py`), transposé en JavaScript
-(`layouts/partials/bausteine/antwortbogen-auswertung.html`, lire le commentaire d'en-tête ;
+(`layouts/partials/bausteine/antwortbogen-auswertung.html`, lire le commentaire d'en-tête ; les scripts de tous ces blocs se trouvent sous le même nom dans `assets/js/bausteine/*.js` ;
 le commun – image, chargement, PDF, caméra en direct – est dans `bausteine/bild-lesen.html`).
 La **caméra en direct** cherche les quatre coins noirs dès le viseur et déclenche seule dès que
 la feuille ne bouge plus ; sinon reste « Prendre une photo » (appli caméra). Au déclenchement,
