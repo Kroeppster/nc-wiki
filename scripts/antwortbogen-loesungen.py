@@ -12,6 +12,11 @@ ein Foto des ausgefüllten Antwortbogens damit.
     python3 scripts/antwortbogen-loesungen.py            # nur prüfen und zeigen
     python3 scripts/antwortbogen-loesungen.py --schreiben
 
+Dabei werden die französische und die italienische Fassung jedes Lösungs-PDFs
+(Unterordner fr/, it/) mit der deutschen verglichen; eine Abweichung steht als
+«ACHTUNG» in der Ausgabe. November 2026: 2026, Aufgabe 26 - deutsch und
+italienisch D, französisch C.
+
 Für eine neue Testsimulation: das Lösungs-PDF wie gewohnt hochladen, unten in
 DATEIEN eintragen und das Skript mit --schreiben laufen lassen. Es bricht ab,
 wenn nicht genau eine Lösung für jede der 144 Aufgaben gefunden wird - lieber
@@ -102,11 +107,33 @@ def lesen(pfad):
     return ''.join(gefunden[nr][0] for nr in range(1, AUFGABEN + 1))
 
 
+def abgleichen(jahr, datei, deutsch):
+    """Die französische und die italienische Fassung desselben Lösungs-PDFs
+    (Unterordner fr/, it/) müssen dieselben Buchstaben nennen: Die Auswertung
+    rechnet in allen Sprachen mit den deutschen. Eine Abweichung wird gemeldet
+    (kein Abbruch) - dann stimmt eines der PDFs nicht, oder die Aufgabe ist in
+    der anderen Sprache anders gestellt; beides muss jemand ansehen."""
+    for sprache in ('fr', 'it'):
+        pfad = os.path.join(ORDNER, sprache, datei)
+        if not os.path.exists(pfad):
+            continue
+        try:
+            andere = lesen(pfad)
+        except SystemExit as fehler:
+            print('  ACHTUNG %s: nicht lesbar (%s)' % (sprache, fehler))
+            continue
+        anders = [nr for nr in range(1, AUFGABEN + 1) if andere[nr - 1] != deutsch[nr - 1]]
+        if anders:
+            print('  ACHTUNG %d %s: andere Lösung als im deutschen PDF bei Aufgabe %s' % (
+                jahr, sprache, ', '.join('%d (de %s, %s %s)' % (nr, deutsch[nr - 1], sprache, andere[nr - 1]) for nr in anders)))
+
+
 def main():
     aus = KOPF
     for jahr, datei in DATEIEN.items():
         loesungen = lesen(os.path.join(ORDNER, datei))
         print(jahr, loesungen)
+        abgleichen(jahr, datei, loesungen)
         aus += '  - jahr: %d\n    quelle: "%s"\n    loesungen:\n' % (jahr, datei)
         for b in range(0, AUFGABEN, BLOCK):
             aus += '      - "%s"\n' % loesungen[b:b + BLOCK]
