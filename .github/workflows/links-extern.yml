@@ -72,8 +72,8 @@ jobs:
             --scheme https
             --scheme http
             --exclude "^https?://localhost"
-            --exclude "^https://formspree\\.io/"
-            --exclude "sibforms\\.com"
+            --exclude "^https://formspree\.io/"
+            --exclude "sibforms\.com"
             "./public/**/*.html"
           fail: true
           jobSummary: true
