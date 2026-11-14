@@ -63,6 +63,9 @@ jobs:
       #  - die Empfänger der Formulare (Formspree, Brevo): Sie nehmen nur
       #    abgeschickte Formulare an und antworten auf einen blossen Aufruf
       #    mit einem Fehler (405), obwohl alles in Ordnung ist.
+      #  - die Università della Svizzera italiana (usi.ch): Sie weist
+      #    automatische Abrufe von GitHub mit 403 ab, im Browser gehen die
+      #    Seiten. Diese Links ab und zu von Hand anklicken.
       - name: Check external links
         uses: lycheeverse/lychee-action@v2
         timeout-minutes: 20
@@ -76,6 +79,7 @@ jobs:
             --exclude "^https?://localhost"
             --exclude "^https://formspree\.io/"
             --exclude "sibforms\.com"
+            --exclude "^https://(www\.biomed\.|www\.)usi\.ch/"
             --root-dir "${{ github.workspace }}/public"
             "./public/**/*.html"
           fail: true
