@@ -1068,7 +1068,9 @@ landen.
 
 | Workflow | Wann | Was |
 | --- | --- | --- |
-| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, geschützte Leerzeichen setzen (`scripts/typografie.mjs`: FR vor ! ? : ;, DE in «z. B.», Daten, CHF), Suche (Pagefind), interne Links prüfen (bricht ab), externe Links (nur Warnung), Mitgliederbereich verschlüsseln, fertige Website prüfen (`scripts/ausgabe-pruefen.py`: Adressen ohne Projektpfad, Titel/Beschreibung/h1/Sprache, geschützte Seiten verschlüsselt und nirgends im Klartext; bricht ab), veröffentlichen (nur `main`) |
+| `hugo.yml` | jede Änderung an `main`, jeder Pull Request | bauen, geschützte Leerzeichen setzen (`scripts/typografie.mjs`: FR vor ! ? : ;, DE in «z. B.», Daten, CHF), Suche (Pagefind), interne Links prüfen (bricht ab), Mitgliederbereich verschlüsseln, fertige Website prüfen (`scripts/ausgabe-pruefen.py`: Adressen ohne Projektpfad, Titel/Beschreibung/h1/Sprache, geschützte Seiten verschlüsselt und nirgends im Klartext; bricht ab), veröffentlichen (nur `main`) |
+| `links-extern.yml` | einmal pro Woche, von Hand (*Run workflow*) | Links auf fremde Websites prüfen; rot, wenn einer kaputt ist (ändert nichts an der Website) |
+| `pruefstand.yml` | jede Nacht, von Hand (*Run workflow*) | bauen und die Website im Browser durchklicken (`scripts/verhalten-pruefen.mjs`, `seiten-pruefen.mjs`, `antwortbogen-pruefen.mjs`, `konztest-pruefen.mjs`); rot, wenn etwas nicht tut, was es soll (ändert nichts an der Website) |
 | `textmappen.yml` | jede Änderung an `main` | frische Textmappen und Wortliste ans Release „Textmappen“ |
 | `texte-einlesen.yml` | Mappe in `redaktion/` hochgeladen | einlesen, probeweise bauen, Pull Request mit Bericht |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` in `redaktion/` hochgeladen | prüfen, einlesen, probeweise bauen, Pull Request mit Bericht; bei Fehlern kein Pull Request, Lauf rot |

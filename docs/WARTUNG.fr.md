@@ -255,7 +255,10 @@ texte – l'éditeur web les détruit.
 | « Check built site » | une page sans titre, description ou titre principal, une adresse sans `/nc-wiki/` ou un texte de l'espace membres visible sans protection | le message indique le type et le fichier ; corriger dans le fichier indiqué |
 | « Build with Hugo » | erreur dans l'en-tête (guillemets, indentation, description d'image manquante) | comparer avec un fichier qui fonctionne |
 
-« Check external links » n'est qu'un avertissement et ne casse rien. Si tu es bloqué·e :
+Les liens vers d'autres sites sont vérifiés une fois par semaine par un déroulement à
+part (« Externe Links prüfen ») ; s'il est rouge, un tel lien est cassé, le site
+lui-même fonctionne normalement. De même « Prüfstand » (chaque nuit) : il parcourt le
+site dans un navigateur et n'y change rien. Si tu es bloqué·e :
 sous *Issues → New issue*, poster le lien vers l'exécution rouge.
 
 Pour une pull request, la même vérification tourne déjà avant l'acceptation – un ✗ rouge

@@ -1073,7 +1073,9 @@ scorre. Lo script aspetta `DOMContentLoaded`, ricostruisce l'elenco da tutti i t
 
 | Workflow | Quando | Cosa |
 | --- | --- | --- |
-| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, spazi non separabili (`scripts/typografie.mjs`: FR prima di ! ? : ;, DE in «z. B.», date, CHF), ricerca (Pagefind), verificare i link interni (blocca), link esterni (avviso), cifrare l'area membri, verificare il sito finito (`scripts/ausgabe-pruefen.py`: indirizzi senza percorso del progetto, titolo/descrizione/h1/lingua, pagine protette cifrate e mai in chiaro; blocca), pubblicare (solo `main`) |
+| `hugo.yml` | ogni modifica a `main`, ogni pull request | costruire, spazi non separabili (`scripts/typografie.mjs`: FR prima di ! ? : ;, DE in «z. B.», date, CHF), ricerca (Pagefind), verificare i link interni (blocca), cifrare l'area membri, verificare il sito finito (`scripts/ausgabe-pruefen.py`: indirizzi senza percorso del progetto, titolo/descrizione/h1/lingua, pagine protette cifrate e mai in chiaro; blocca), pubblicare (solo `main`) |
+| `links-extern.yml` | una volta alla settimana, a mano (*Run workflow*) | verificare i link verso altri siti; rossa se uno è rotto (non modifica il sito) |
+| `pruefstand.yml` | ogni notte, a mano (*Run workflow*) | costruire e percorrere il sito in un browser (`scripts/verhalten-pruefen.mjs`, `seiten-pruefen.mjs`, `antwortbogen-pruefen.mjs`, `konztest-pruefen.mjs`); rossa se qualcosa non fa ciò che deve (non modifica il sito) |
 | `textmappen.yml` | ogni modifica a `main` | cartelle Excel recenti nella release «Textmappen» |
 | `texte-einlesen.yml` | cartella caricata in `redaktion/` | leggere, costruire di prova, pull request con rapporto |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` caricato in `redaktion/` | controllare, leggere, costruire di prova, pull request con rapporto; in caso di errore nessuna pull request, esecuzione rossa |

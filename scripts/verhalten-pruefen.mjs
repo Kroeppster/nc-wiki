@@ -437,3 +437,5 @@ for (const [lang, vorsatz] of [['de',''],['fr','/fr'],['it','/it']]) {
 
 console.log(`\n==== ${ok} bestanden, ${fail} nicht ====`);
 await b.close();
+// Schlaegt eine Pruefung fehl, endet der Lauf mit Code 1 (fuer .github/workflows/pruefstand.yml)
+process.exit(fail ? 1 : 0);

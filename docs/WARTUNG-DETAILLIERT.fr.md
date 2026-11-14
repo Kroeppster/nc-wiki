@@ -1097,7 +1097,9 @@ l'en-tête.
 
 | Workflow | Quand | Quoi |
 | --- | --- | --- |
-| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, espaces insécables (`scripts/typografie.mjs` : FR avant ! ? : ;, DE dans « z. B. », dates, CHF), recherche (Pagefind), vérifier les liens internes (bloque), liens externes (avertissement), chiffrer l'espace membres, vérifier le site terminé (`scripts/ausgabe-pruefen.py` : adresses sans chemin du projet, titre/description/h1/langue, pages protégées chiffrées et nulle part en clair ; bloque), publier (seulement `main`) |
+| `hugo.yml` | chaque modification de `main`, chaque pull request | construire, espaces insécables (`scripts/typografie.mjs` : FR avant ! ? : ;, DE dans « z. B. », dates, CHF), recherche (Pagefind), vérifier les liens internes (bloque), chiffrer l'espace membres, vérifier le site terminé (`scripts/ausgabe-pruefen.py` : adresses sans chemin du projet, titre/description/h1/langue, pages protégées chiffrées et nulle part en clair ; bloque), publier (seulement `main`) |
+| `links-extern.yml` | une fois par semaine, à la main (*Run workflow*) | vérifier les liens vers d'autres sites ; rouge si l'un est cassé (ne change rien au site) |
+| `pruefstand.yml` | chaque nuit, à la main (*Run workflow*) | construire et parcourir le site dans un navigateur (`scripts/verhalten-pruefen.mjs`, `seiten-pruefen.mjs`, `antwortbogen-pruefen.mjs`, `konztest-pruefen.mjs`) ; rouge si quelque chose ne fait pas ce qu'il doit (ne change rien au site) |
 | `textmappen.yml` | chaque modification de `main` | classeurs récents dans la release « Textmappen » |
 | `texte-einlesen.yml` | classeur téléversé dans `redaktion/` | lire, construire à l'essai, pull request avec rapport |
 | `wortliste-einlesen.yml` | `ncwiki-wortliste*.xlsx` téléversé dans `redaktion/` | vérifier, lire, construire à l'essai, pull request avec rapport ; en cas d'erreur pas de pull request, exécution rouge |

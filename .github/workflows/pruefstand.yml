@@ -1,0 +1,121 @@
+# ==============================================================================
+# PRÜFSTAND: DIE WEBSITE IM BROWSER DURCHKLICKEN (jede Nacht und auf Knopfdruck)
+# ==============================================================================
+# hugo.yml prüft bei jeder Veröffentlichung, ob die Website baut und ob alle
+# internen Links stimmen. Ob die beweglichen Teile TUN, was sie sollen, sieht es
+# nicht - dafür gibt es die Prüfstände unter scripts/, die einen echten Browser
+# steuern. Bis November 2026 liefen sie nur von Hand; so blieb zum Beispiel
+# unbemerkt, dass im Simulationsmodus ein Klick zur falschen Zeit die ganze
+# Simulation schloss.
+#
+# Dieser Ablauf baut die Website und lässt laufen:
+#   - scripts/struktur-pruefen.py        doppelte Inhalte, tote interne Links
+#   - scripts/verhalten-pruefen.mjs      Dunkelmodus, Sprachwahl, Suche, Filter,
+#                                        Uniguide, Simulationsmodus, Formulare,
+#                                        Newsletter (es geht nie etwas hinaus)
+#   - scripts/seiten-pruefen.mjs         jede Seite in zwei Breiten: läuft etwas
+#                                        über den Rand, fehlt ein Bild?
+#   - scripts/antwortbogen-pruefen.mjs   «Antwortbogen auswerten» mit Testbildern
+#   - scripts/konztest-pruefen.mjs       «Konztest auswerten» mit Testbildern
+#
+# Schlägt etwas fehl, ist der Lauf rot, und im Log des Schritts steht die Zeile
+# mit "FEHLT". An der veröffentlichten Website ändert dieser Ablauf nichts.
+#
+# Nicht dabei: das Kamera-Labor (scripts/kamera-labor/batch.mjs, eine halbe
+# Stunde Rechenzeit) - das läuft weiterhin von Hand nach Änderungen an den
+# Auswertungs-Tools.
+#
+# Von Hand starten: Tab "Actions" -> "Prüfstand" -> "Run workflow".
+# ==============================================================================
+
+name: Prüfstand
+
+on:
+  # Jede Nacht um 02:43 Uhr (UTC)
+  schedule:
+    - cron: "43 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pruefstand
+  cancel-in-progress: true
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Dieselbe Hugo-Version wie in hugo.yml - beim Erhöhen dort auch hier.
+      - name: Install Hugo (Extended)
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.164.0"
+          extended: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          pip install pymupdf pillow numpy pyyaml
+
+      # Playwright steht bewusst nicht in package.json (siehe
+      # scripts/playwright.mjs): Hier wird es nur für diesen Lauf dazugeholt,
+      # samt dem Browser Chromium.
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      # Wie lokal: ohne die Adresse der veröffentlichten Website, die
+      # Prüfstände rufen die Seiten unter http://127.0.0.1 auf.
+      - name: Build site and search index
+        run: |
+          hugo --minify
+          node scripts/typografie.mjs public
+          npx pagefind --site public
+
+      # (nur zur Ansicht im Log: dieses Skript meldet, bricht aber nicht ab)
+      - name: Structure report (duplicates, unreachable pages)
+        run: python3 scripts/struktur-pruefen.py
+
+      # Zwei kleine Webserver auf den fertigen Ordner: Die Prüfstände erwarten
+      # ihn unter Port 8123 bzw. 8099 (siehe den Kopf der jeweiligen Datei).
+      - name: Start local web servers
+        run: |
+          python3 -m http.server 8123 --bind 127.0.0.1 --directory public > /dev/null 2>&1 &
+          python3 -m http.server 8099 --bind 127.0.0.1 --directory public > /dev/null 2>&1 &
+          sleep 2
+          curl -sf -o /dev/null http://127.0.0.1:8123/
+          curl -sf -o /dev/null http://127.0.0.1:8099/
+
+      - name: Behaviour (click through the site)
+        run: node scripts/verhalten-pruefen.mjs
+
+      - name: Rendering (every page, two widths)
+        run: node scripts/seiten-pruefen.mjs
+
+      - name: Answer sheet evaluation (test images)
+        run: |
+          python3 scripts/antwortbogen-testbilder.py "$RUNNER_TEMP/ab"
+          node scripts/antwortbogen-pruefen.mjs "$RUNNER_TEMP/ab"
+
+      - name: Concentration test evaluation (test images)
+        run: |
+          python3 scripts/konztest-testbilder.py "$RUNNER_TEMP/kt"
+          node scripts/konztest-pruefen.mjs "$RUNNER_TEMP/kt"

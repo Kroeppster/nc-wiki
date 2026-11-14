@@ -1,0 +1,71 @@
+# ==============================================================================
+# EXTERNE LINKS PRÜFEN (einmal pro Woche und auf Knopfdruck)
+# ==============================================================================
+# Prüft alle Links der Website, die auf ANDERE Websites zeigen (z.B. auf
+# swissuniversities.ch oder die Seiten der Universitäten). Ist einer kaputt -
+# weil sich die andere Website geändert hat -, steht er in der Zusammenfassung
+# dieses Laufs (Tab "Actions" -> dieser Lauf -> "Summary"), und der Lauf ist rot.
+#
+# Bis November 2026 lief diese Prüfung bei JEDER Veröffentlichung mit
+# (hugo.yml). Sie fragt echte fremde Websites an und brauchte dafür regelmässig
+# gegen zehn Minuten - der grösste Teil der Wartezeit, bis eine Änderung live
+# war -, ohne die Veröffentlichung je aufhalten zu dürfen (nur Warnung). Darum
+# jetzt getrennt: Die Veröffentlichung ist schneller, und kaputte externe Links
+# fallen trotzdem auf, einmal pro Woche.
+#
+# Interne Links (auf Seiten DIESER Website) prüft weiterhin hugo.yml bei jeder
+# Veröffentlichung - ein kaputter interner Link stoppt sie.
+#
+# Von Hand starten: Tab "Actions" -> "Externe Links prüfen" -> "Run workflow".
+# ==============================================================================
+
+name: Externe Links prüfen
+
+on:
+  # Jeden Montag um 05:17 Uhr (UTC) - eine krumme Minute, weil zur vollen
+  # Stunde sehr viele Abläufe auf GitHub gleichzeitig starten.
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: links-extern
+  cancel-in-progress: true
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Dieselbe Hugo-Version wie in hugo.yml - beim Erhöhen dort auch hier.
+      - name: Install Hugo (Extended)
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.164.0"
+          extended: true
+
+      - name: Build with Hugo
+        run: hugo --minify
+
+      # Ohne die Adresse der Website gebaut, stehen in den Seiten einige
+      # Verweise auf "localhost" (die eigene Adresse der Seite) - die gehören
+      # nicht zu den externen Links und werden ausgelassen.
+      - name: Check external links
+        uses: lycheeverse/lychee-action@v2
+        timeout-minutes: 20
+        with:
+          args: >-
+            --no-progress
+            --timeout 10
+            --max-retries 1
+            --exclude "^https?://localhost"
+            --root-dir "${{ github.workspace }}/public"
+            "./public/**/*.html"
+          fail: true
+          jobSummary: true

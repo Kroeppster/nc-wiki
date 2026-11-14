@@ -250,7 +250,10 @@ l'editor web le distrugge.
 | «Check built site» | una pagina senza titolo, descrizione o titolo principale, un indirizzo senza `/nc-wiki/` o un testo dell'area membri visibile senza protezione | il messaggio indica il tipo e il file; correggere nel file indicato |
 | «Build with Hugo» | errore nell'intestazione (virgolette, rientro, descrizione immagine mancante) | confrontare con un file che funziona |
 
-«Check external links» è solo un avviso e non rompe nulla. Se non sai andare avanti: sotto
+I link verso altri siti sono controllati una volta alla settimana da un'esecuzione a
+parte («Externe Links prüfen»); se è rossa, uno di questi link è rotto, il sito stesso
+funziona normalmente. Lo stesso vale per «Prüfstand» (ogni notte): percorre il sito in
+un browser e non lo modifica. Se non sai andare avanti: sotto
 *Issues → New issue* pubblicare il link all'esecuzione rossa.
 
 Per una pull request lo stesso controllo gira già prima dell'accettazione – una ✗ rossa

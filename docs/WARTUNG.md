@@ -246,8 +246,10 @@ ist.
 | „Build with Hugo“ | Fehler im Seitenkopf (Anführungszeichen, Einrückung, fehlende Bildbeschreibung) | mit einer funktionierenden Datei vergleichen |
 | „Check built site“ | eine Seite ohne Titel, Beschreibung oder Hauptüberschrift, eine Adresse ohne `/nc-wiki/` oder Text aus dem Mitgliederbereich, der ungeschützt irgendwo steht | die Meldung nennt Art und Datei; das in der genannten Datei korrigieren |
 
-„Check external links“ ist nur eine Warnung und macht nichts kaputt. Kommst du nicht
-weiter: unter *Issues → New issue* den Link zum roten Lauf posten.
+Links auf fremde Websites prüft ein eigener Ablauf einmal pro Woche („Externe Links
+prüfen“); ist er rot, ist ein solcher Link kaputt, die Website selbst läuft normal.
+Ebenso „Prüfstand“ (jede Nacht): Er klickt die Website im Browser durch und ändert
+nichts an ihr. Kommst du nicht weiter: unter *Issues → New issue* den Link zum roten Lauf posten.
 
 Bei einem Pull Request läuft dieselbe Prüfung schon vor dem Übernehmen – ein rotes ✗
 dort heisst: noch nicht mergen.

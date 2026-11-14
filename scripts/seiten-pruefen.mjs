@@ -324,3 +324,5 @@ if (jsFehler.length) {
 }
 if (weitergeleitet.length) console.log(`(${weitergeleitet.length} Aufrufe uebersprungen, weil die Seite weiterleitet: ${[...new Set(weitergeleitet)].slice(0,6).join(', ')}${weitergeleitet.length>6?' ...':''})`);
 await browser.close();
+// Mit Funden oder JavaScript-Fehlern endet der Lauf mit Code 1 (fuer .github/workflows/pruefstand.yml)
+process.exit(gesamt || jsFehler.length ? 1 : 0);

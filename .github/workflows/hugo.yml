@@ -70,8 +70,8 @@ jobs:
     # Absicherung: ohne diese Zeile darf ein einzelner Lauf bis zu 6 Stunden
     # dauern, bevor GitHub ihn von selbst abbricht - das ist viel zu lange,
     # falls (wie am 2026-08-08 passiert) ein einzelner Schritt aus
-    # irgendeinem Grund hängen bleibt (siehe Hinweis beim externen
-    # Link-Check weiter unten). Bricht der ganze Ablauf hier nach 15 Minuten
+    # irgendeinem Grund hängen bleibt (damals die Prüfung der externen
+    # Links, die inzwischen getrennt läuft, siehe weiter unten). Bricht der ganze Ablauf hier nach 15 Minuten
     # ab, blockiert das wegen der "concurrency"-Einstellung oben auch nicht
     # mehr stundenlang alle nachfolgenden Veröffentlichungen.
     timeout-minutes: 15
@@ -154,7 +154,7 @@ jobs:
       # gelöschte Seite), schlägt dieser Schritt fehl und die ganze
       # Veröffentlichung wird gestoppt (fail: true), damit keine kaputte
       # Version live geht. "--offline" heisst: es werden dabei bewusst KEINE
-      # externen Websites angefragt (dafür ist der nächste Schritt da).
+      # externen Websites angefragt (das macht links-extern.yml einmal pro Woche).
       - name: Check internal links (fails build if broken)
         uses: lycheeverse/lychee-action@v2
         with:
@@ -165,48 +165,13 @@ jobs:
             "./public/**/*.html"
           fail: true
 
-      # Prüft ZUSÄTZLICH auch Links zu ANDEREN Websites (z.B. zu
-      # swissuniversities.ch) - aber rein informativ: ist so ein externer
-      # Link kaputt (weil sich die andere Website geändert hat, was wir
-      # nicht beeinflussen können), wird das nur im Job-Summary auf GitHub
-      # angezeigt, die Veröffentlichung läuft trotzdem normal weiter.
-      #
-      # WICHTIG (Lehre aus ZWEI echten Vorfällen am 2026-08-08): dieser
-      # Schritt fragt echte, fremde Websites im Internet an - blockiert eine
-      # davon Anfragen von GitHub (z.B. als Bot-Schutz) oder antwortet sehr
-      # langsam, kann das lange dauern. "--timeout"/"--max-retries" begrenzen
-      # das pro einzelner Adresse, "timeout-minutes" ist eine zusätzliche
-      # Notbremse von GitHub selbst für den ganzen Schritt.
-      #
-      # Erster Vorfall: ganz ohne diese Bremsen hat ein einzelner Lauf über
-      # 30 Minuten gehangen und wegen der "concurrency"-Einstellung oben
-      # dadurch auch alle nachfolgenden Veröffentlichungen blockiert.
-      #
-      # Zweiter Vorfall, direkt durch den Fix des ersten verursacht: "fail:
-      # false" lässt den Schritt zwar nicht fehlschlagen, WENN lychee kaputte
-      # externe Links findet - aber wenn GitHub den Schritt selbst wegen
-      # "timeout-minutes" abwürgt (weil das Prüfen aller externen Links
-      # länger dauert, als die Zahl unten erlaubt), zählt das als eigener,
-      # davon unabhängiger Fehlschlag, den "fail: false" NICHT abfängt. Das
-      # hat prompt den nächsten Lauf komplett rot gemacht und das Deployment
-      # übersprungen - genau das, was dieser ganze externe Check eigentlich
-      # nie tun sollte. "continue-on-error: true" fängt das jetzt zusätzlich
-      # ab: WAS AUCH IMMER in diesem Schritt passiert (kaputte Links,
-      # Timeout, Absturz), der Rest des Ablaufs (Veröffentlichen!) läuft so
-      # oder so weiter.
-      - name: Check external links (warn only)
-        uses: lycheeverse/lychee-action@v2
-        timeout-minutes: 10
-        continue-on-error: true
-        with:
-          args: >-
-            --no-progress
-            --timeout 10
-            --max-retries 1
-            --root-dir "${{ steps.linkcheck.outputs.root }}"
-            "./public/**/*.html"
-          fail: false
-          jobSummary: true
+      # Links zu ANDEREN Websites (z.B. zu swissuniversities.ch) werden hier
+      # NICHT mehr geprüft: Das fragt echte fremde Websites an, dauerte bei
+      # jeder Veröffentlichung gegen zehn Minuten und durfte sie doch nie
+      # aufhalten (nur Warnung). Zweimal hat genau dieser Schritt am
+      # 2026-08-08 Veröffentlichungen blockiert bzw. rot gemacht. Seit
+      # November 2026 läuft die Prüfung getrennt, einmal pro Woche und auf
+      # Knopfdruck: .github/workflows/links-extern.yml.
 
       # Legt eine Passwort-Abfrage vor alle Seiten des Mitgliederbereichs
       # (alles mit "geschuetzt: true" im Frontmatter, siehe
