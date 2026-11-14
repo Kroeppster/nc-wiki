@@ -70,6 +70,7 @@ content:
             name: title
             label: Titel
             type: string
+            description: "Beim Anlegen einer neuen Seite: den Dateinamen in allen drei Sprachen GLEICH wählen (z. B. testsimulation-2027.md) – der Editor schlägt ihn aus dem Titel vor, und der lautet je Sprache anders. Nur bei gleichem Dateinamen findet die Sprachwahl die anderen Fassungen."
           - &beschreibung
             name: description
             label: Beschreibung
