@@ -78,7 +78,11 @@
       <div class="hero-panel"{{ if $vorbei }} hidden{{ end }}>
         <p class="ticket-label" aria-hidden="true">{{ .Params.hero.ticket_label }}</p>
 
-        <p class="countdown-label">{{ .Params.hero.countdown_label }}</p>
+        {{- /* «{datum}» im Text wird durch das Datum aus hugo.toml ersetzt
+               (ems_exam_date), ausgeschrieben in der Sprache der Seite - so
+               steht es nur an EINER Stelle und kann nicht vom Countdown
+               abweichen. Ein Text ohne «{datum}» bleibt, wie er ist. */ -}}
+        <p class="countdown-label">{{ replace .Params.hero.countdown_label "{datum}" (time.AsTime site.Params.ems_exam_date | time.Format ":date_long") }}</p>
 
         {{/* Flip-Clock-Countdown (Kacheln mit Ziffern, die beim Wechsel
              "umklappen") statt einer grossen Zahl + drei kleinen Feldern -

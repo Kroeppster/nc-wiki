@@ -14,7 +14,7 @@ hero:
   cta_secondary: "Newsletter abonnieren"
   bild: "testsimulationen/testsimulation-2023.jpg"
   bild_alt: "Voller Hörsaal während einer NCWiki-Testsimulation, im Vordergrund ein dreisprachiger Antwortbogen mit NCWiki-Logo"
-  countdown_label: "Noch bis zum EMS am 9. Juli 2027"
+  countdown_label: "Noch bis zum EMS am {datum}"
 news:
   eyebrow: "Aktuell"
   heading: "News"

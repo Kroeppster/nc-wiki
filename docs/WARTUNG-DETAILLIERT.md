@@ -979,7 +979,7 @@ Unter `[params]`:
 
 | Feld | Wirkung |
 | --- | --- |
-| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | Ziel des Countdowns auf der Startseite (Zeitzone Pflicht). Ist der Termin vorbei, verschwindet der Countdown, und der Bau warnt, bis das nächste Datum eingetragen ist. |
+| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | Ziel des Countdowns auf der Startseite (Zeitzone Pflicht). Ist der Termin vorbei, verschwindet der Countdown, und der Bau warnt, bis das nächste Datum eingetragen ist. Der Text über dem Countdown übernimmt das Datum von hier: Steht darin `{datum}` (Textmappe, Startseite, «Countdown»), wird es ausgeschrieben eingesetzt. Zeitstrahl, Q&A und die Seite «EMS» nennen das Datum eigens – dort von Hand anpassen. |
 | `google_analytics_id` | Google Analytics; leer = aus |
 | `social_instagram`, `social_discord`, `social_linkedin` | Knöpfe in der Fusszeile; leer = kein Knopf |
 | `newsletter_url` | Schalter für den Newsletter: leer = verborgen (kein Block in der Fusszeile, kein Knopf auf der Startseite, Newsletter-Seiten nicht in Suche und Sitemap); gesetzt (z. B. `'/newsletter-einschreiben/'`) = live. Siehe `docs/NEWSLETTER-BREVO.md` |

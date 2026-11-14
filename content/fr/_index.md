@@ -14,7 +14,7 @@ hero:
   cta_secondary: "S'abonner à la newsletter"
   bild: "testsimulationen/testsimulation-2023.jpg"
   bild_alt: "Auditoire plein lors d'une simulation de test NCWiki, au premier plan une feuille de réponses trilingue avec le logo NCWiki"
-  countdown_label: "Temps restant avant l'AMS du 9 juillet 2027"
+  countdown_label: "Temps restant avant l'AMS du {datum}"
 news:
   eyebrow: "Actualité"
   heading: "Actualités"

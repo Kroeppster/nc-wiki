@@ -1006,7 +1006,7 @@ Sous `[params]` :
 
 | Champ | Effet |
 | --- | --- |
-| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | cible du compte à rebours de l'accueil (fuseau obligatoire). Une fois la date passée, le compte à rebours disparaît et la construction avertit jusqu'à ce que la prochaine date soit saisie. |
+| `ems_exam_date = '2027-07-09T08:00:00+02:00'` | cible du compte à rebours de l'accueil (fuseau obligatoire). Une fois la date passée, le compte à rebours disparaît et la construction avertit jusqu'à ce que la prochaine date soit saisie. Le texte au-dessus du compte à rebours reprend la date d'ici : s'il contient `{datum}` (classeur, page d'accueil, « Compte à rebours »), elle y est insérée en toutes lettres. La frise, les Q&R et la page « AMS » citent la date séparément – à adapter à la main. |
 | `google_analytics_id` | Google Analytics ; vide = désactivé |
 | `social_instagram`, `social_discord`, `social_linkedin` | boutons du pied de page ; vide = pas de bouton |
 | `newsletter_url` | interrupteur de la newsletter : vide = masquée (pas de bloc dans le pied de page, pas de bouton sur la page d'accueil, pages newsletter absentes de la recherche et du sitemap) ; rempli (par ex. `'/newsletter-einschreiben/'`) = en ligne. Voir `docs/NEWSLETTER-BREVO.md` |
