@@ -2104,6 +2104,10 @@ body.pm-aktiv{overflow:hidden;}
 .ab-richtig td:last-child{color:var(--color-erfolg,#137333);}
 .ab-falsch td:last-child{color:var(--color-fehler,#c5221f);}
 .ab-unsicher{background:rgba(232,113,10,.12);}
+.ab-ausschnitt-zeile{background:rgba(232,113,10,.12);}
+.ab-ausschnitt-zeile td{padding-top:0;}
+.ab-ausschnitt{display:block;width:100%;max-width:26rem;height:auto;border:1px solid var(--color-line-strong);border-radius:var(--radius-sm);background:#fff;}
+#ab-unsicher p{margin:0 0 var(--space-2);}
 .ab-pruefen{font-size:var(--text-xs);color:#b45309;white-space:nowrap;}
 @media (max-width:560px){ .ab{padding:var(--space-4);} }
 

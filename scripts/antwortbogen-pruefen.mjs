@@ -101,6 +101,23 @@ console.log('\n=== Korrigieren ===');
     pruef('Block bleibt offen, Fokus bleibt auf dem Feld', danach.offen && danach.fokus, JSON.stringify(danach));
     pruef('Ergebnis steht in der Ansage fuer Screenreader', danach.ansage);
   }
+  // Unsichere Zeilen: je ein Bildausschnitt darunter, und der Knopf springt
+  // von einer zur naechsten (hier ein Foto mit unsicheren Zeilen).
+  await p.setInputFiles('#ab-datei', join(ORDNER, 'foto-radiert.jpg'));
+  await p.waitForFunction(() => !document.getElementById('ab-ergebnis').hidden, null, { timeout: 60000 });
+  const un = await p.evaluate(() => { const z = [...document.querySelectorAll('#ab-zeilen tr.ab-unsicher')];
+    const c = [...document.querySelectorAll('#ab-zeilen canvas.ab-ausschnitt')];
+    // der Ausschnitt zeigt wirklich Bild (nicht nur Weiss): dunkle Bildpunkte vorhanden
+    const dunkel = c.length ? [...c[0].getContext('2d').getImageData(0, 0, c[0].width, c[0].height).data].filter((v, i) => i % 4 === 0 && v < 120).length : 0;
+    return { zeilen: z.length, bilder: c.length, breite: c.length ? c[0].width : 0, dunkel, knopf: !document.getElementById('ab-unsicher').hidden }; });
+  pruef('je unsichere Zeile ein Bildausschnitt (' + un.zeilen + ')', un.zeilen > 0 && un.bilder === un.zeilen && un.breite > 300 && un.dunkel > 50, JSON.stringify(un));
+  if (un.zeilen > 1) {
+    await p.click('#ab-naechste');
+    const a = await p.evaluate(() => { const e = document.activeElement; return e && e.matches('tr.ab-unsicher select') ? [+e.dataset.nr, e.closest('details').open] : null; });
+    await p.click('#ab-naechste');
+    const b2 = await p.evaluate(() => { const e = document.activeElement; return e && e.matches('tr.ab-unsicher select') ? [+e.dataset.nr, e.closest('details').open] : null; });
+    pruef('Knopf springt zur naechsten unsicheren Zeile und klappt ihren Block auf', !!a && !!b2 && a[1] && b2[1] && a[0] !== b2[0], JSON.stringify([a, b2]));
+  }
 }
 // Eigener Loesungsschluessel (wie aus dem Tool): erst der Bogen, dann der
 // Schluessel; Aufgaben ohne Loesung zaehlen nicht mit.

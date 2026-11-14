@@ -101,7 +101,10 @@
        sich in seinem Rahmen seitlich schieben. */ -}}
 <label class="ab-schalter"><input type="checkbox" id="ab-gross"> {{ i18n "bl_gross" }}</label>
 <div class="ab-bild-rahmen" id="ab-bild-rahmen"><canvas class="ab-bild" id="ab-bild"></canvas></div>
-<p class="ab-hinweis" id="ab-unsicher" hidden></p>
+<div class="ab-hinweis" id="ab-unsicher" hidden>
+<p id="ab-unsicher-text"></p>
+<button type="button" class="btn btn-ghost" id="ab-naechste">{{ i18n "ab_naechste_unsicher" }}</button>
+</div>
 <div class="ab-zeilen" id="ab-zeilen"></div>
 </div>
 </div>
@@ -136,6 +139,7 @@
     mehrfach: {{ i18n "ab_mehrfach" | jsonify | safeJS }},
     pruefen: {{ i18n "ab_pruefen" | jsonify | safeJS }},
     unsicher: {{ i18n "ab_unsicher" | jsonify | safeJS }},
+    ausschnitt: {{ i18n "ab_ausschnitt" | jsonify | safeJS }},
     pdfLaedt: {{ i18n "ab_pdf_laedt" | jsonify | safeJS }},
     fehlerPdf: {{ i18n "ab_fehler_pdf" | jsonify | safeJS }},
     schluesselFehlt: {{ i18n "ab_schluessel_fehlt" | jsonify | safeJS }},
@@ -1021,6 +1025,11 @@
           + '<td>' + (n + 1) + '</td><td><select data-nr="' + n + '" aria-label="' + T.deine + ' ' + (n + 1) + '">' + wahl + '</select></td>'
           + '<td>' + (mit ? l[n] : '–') + '</td><td>' + (!mit ? T.ohneLoesung : ok ? '✓' : '✗')
           + (stand.unsicher[n] ? ' <span class="ab-pruefen">' + T.pruefen + '</span>' : '') + '</td></tr>';
+        // Unter einer unsicheren Zeile gleich das Stueck Foto dazu: Sonst muss
+        // man zwischen Liste und Bild hin- und herscrollen und die Zeile im
+        // Bild erst suchen.
+        if (stand.unsicher[n]) h += '<tr class="ab-ausschnitt-zeile"><td colspan="4"><canvas class="ab-ausschnitt" data-nr="' + n
+          + '" role="img" aria-label="' + T.ausschnitt.replace('{n}', n + 1) + '"></canvas></td></tr>';
       }
       richtig += r; von += m;
       if (!m) return;   // ein Block ohne jede Loesung (eigener Schluessel) faellt weg
@@ -1036,11 +1045,44 @@
     el('ab-punkte').innerHTML = '<thead><tr><th>' + T.untertest + '</th><th>' + T.punkte + '</th></tr></thead><tbody>' + tabelle
       + '<tr class="ab-total"><td>' + T.total + '</td><td>' + richtig + ' / ' + von + '</td></tr></tbody>';
     el('ab-zeilen').innerHTML = zeilen;
+    Array.prototype.forEach.call(el('ab-zeilen').querySelectorAll('canvas.ab-ausschnitt'), function(c){ ausschnitt(c, +c.getAttribute('data-nr')); });
     var offen = stand.unsicher.filter(Boolean).length;
     el('ab-unsicher').hidden = !offen;
-    el('ab-unsicher').textContent = T.unsicher.replace('{n}', offen);
+    el('ab-unsicher-text').textContent = T.unsicher.replace('{n}', offen);
     el('ab-meldungen').innerHTML = stand.hinweise.map(function(h){ return '<li>' + h + '</li>'; }).join('');
     zeichnen(l);
+  }
+  // Eine Zeile des Bogens als gerader Ausschnitt aus dem Foto: Nummer,
+  // Buchstaben und die fuenf Kaestchen, entzerrt ueber die Abbildung (das Foto
+  // selbst ist gedreht und schraeg), 3 Bildpunkte je pt.
+  function ausschnitt(c, n){
+    var k = Math.floor(n / ZEILEN), i = n % ZEILEN, e0 = feldEcke(k, i, 0), e4 = feldEcke(k, i, 4), M = 3;
+    var x0 = e0[0] - 26, x1 = e4[0] + FELD_B + 5, y0 = e0[1] - 4, y1 = e0[1] + FELD_H + 4;
+    var w = Math.round((x1 - x0) * M), h = Math.round((y1 - y0) * M), b = stand.bild;
+    c.width = w; c.height = h;
+    var ctx = c.getContext('2d'), aus = ctx.createImageData(w, h), d = aus.data;
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++){
+      var p = stand.abb(x0 + (x + 0.5) / M, y0 + (y + 0.5) / M), px = Math.round(p[0]), py = Math.round(p[1]), o = (y * w + x) * 4;
+      if (px < 0 || py < 0 || px >= b.w || py >= b.h){ d[o] = d[o + 1] = d[o + 2] = 255; d[o + 3] = 255; continue; }
+      var q = (py * b.w + px) * 4;
+      d[o] = b.rgba[q]; d[o + 1] = b.rgba[q + 1]; d[o + 2] = b.rgba[q + 2]; d[o + 3] = 255;
+    }
+    ctx.putImageData(aus, 0, 0);
+  }
+  // Zur naechsten unsicheren Zeile: ihren Block aufklappen, hinrollen, das
+  // Auswahlfeld in den Fokus. Weiter von der zuletzt angesprungenen oder
+  // bedienten Zeile aus (der Klick auf den Knopf nimmt den Fokus weg, darum
+  // gemerkt), nach der letzten wieder die erste.
+  var zuletztNr = -1;
+  function naechsteUnsichere(){
+    var felder = Array.prototype.slice.call(el('ab-zeilen').querySelectorAll('tr.ab-unsicher select[data-nr]'));
+    if (!felder.length) return;
+    var ziel = felder.filter(function(f){ return +f.getAttribute('data-nr') > zuletztNr; })[0] || felder[0];
+    zuletztNr = +ziel.getAttribute('data-nr');
+    var block = ziel.closest('details'); if (block) block.open = true;
+    var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    ziel.closest('tr').scrollIntoView({ block: 'center', behavior: ruhig ? 'auto' : 'smooth' });
+    ziel.focus({ preventScroll: true });
   }
   // Das Bild mit dem, was gelesen wurde: gruen richtig, rot falsch, blau
   // die Loesung, orange um eine Zeile, die bitte angesehen werden soll.
@@ -1163,6 +1205,7 @@
     var w = ev.target;
     if (!w.matches('select[data-nr]')) return;
     var n = +w.getAttribute('data-nr');
+    zuletztNr = n;
     stand.antworten[n] = w.value;
     // Wer die Antwort selbst gesetzt hat, hat sie angesehen: nicht mehr «bitte pruefen»
     stand.unsicher[n] = false;
@@ -1176,6 +1219,7 @@
     if (feld) feld.focus({ preventScroll: true });
   });
   el('ab-original').addEventListener('change', function(){ if (stand) zeigen(); });
+  el('ab-naechste').addEventListener('click', naechsteUnsichere);
   el('ab-gross').addEventListener('change', function(){ el('ab-bild-rahmen').classList.toggle('ist-gross', this.checked); });
   el('ab-testsim').addEventListener('change', function(){
     el('ab-schluessel').hidden = !eigen();
