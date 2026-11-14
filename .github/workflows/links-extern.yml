@@ -53,9 +53,14 @@ jobs:
       - name: Build with Hugo
         run: hugo --minify
 
-      # Ohne die Adresse der Website gebaut, stehen in den Seiten einige
-      # Verweise auf "localhost" (die eigene Adresse der Seite) - die gehören
-      # nicht zu den externen Links und werden ausgelassen.
+      # Geprüft werden nur Adressen, die mit http:// oder https:// beginnen
+      # ("--scheme") - also keine Dateien der Website selbst (die prüft
+      # hugo.yml). Ausgelassen werden ausserdem:
+      #  - "localhost": Ohne die Adresse der Website gebaut, steht die eigene
+      #    Adresse der Seite so in den Seiten.
+      #  - die Empfänger der Formulare (Formspree, Brevo): Sie nehmen nur
+      #    abgeschickte Formulare an und antworten auf einen blossen Aufruf
+      #    mit einem Fehler (405), obwohl alles in Ordnung ist.
       - name: Check external links
         uses: lycheeverse/lychee-action@v2
         timeout-minutes: 20
@@ -64,8 +69,11 @@ jobs:
             --no-progress
             --timeout 10
             --max-retries 1
+            --scheme https
+            --scheme http
             --exclude "^https?://localhost"
-            --root-dir "${{ github.workspace }}/public"
+            --exclude "^https://formspree\\.io/"
+            --exclude "sibforms\\.com"
             "./public/**/*.html"
           fail: true
           jobSummary: true
