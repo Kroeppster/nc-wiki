@@ -34,6 +34,35 @@ dabei.
 
 ---
 
+## Was kann ich ohne Vorkenntnisse?
+
+Fast alles hier geht im Browser auf github.com, so wie in der
+[Kurzanleitung, Abschnitt 11](WARTUNG.md#11-eine-datei-direkt-auf-github-ändern)
+beschrieben: Datei öffnen, Stift, ändern, speichern. Die Tabelle zeigt, wo das genügt.
+
+| Abschnitt | Ohne Vorkenntnisse im Browser | Dafür braucht es jemanden mit Technik-Kenntnissen |
+| --- | --- | --- |
+| 2 Seiten und Menü | Seite anlegen, ins Menü nehmen, umbenennen | – |
+| 3 Textmappen | Mappe holen, ausfüllen, hochladen, Vorschlag übernehmen | Mappen am eigenen Rechner erzeugen, die Skripte ändern |
+| 4 Web-Editor | Texte ändern, News anlegen | einrichten, `.pages.yml` ändern |
+| 5 Links und Bausteine | Links setzen, Bausteine verschieben | neue Bausteine bauen |
+| 6 Startseite, 7 Team, 8 Unterstützen | alles (am einfachsten über die Textmappe) | neue Abschnitte auf der Startseite |
+| 9 FAQ, Uniguide, Untertests | alles (FAQ und Uniguide über die Textmappe) | – |
+| 10 Simulationsmodus | Zeiten und Texte | Ansagen neu aufnehmen und schneiden, das Verhalten ändern |
+| 11 Generatoren, Alpha-Seite | Wortliste des Fakten-Generators (Excel) | alles andere: Auswertungs-Tools, Lösungen einlesen, Kamera-Labor |
+| 12 Mitgliederbereich | geschützte Seite anlegen; Passwort wechseln (braucht Verwalter-Rechte auf GitHub) | – |
+| 13 Formulare | einen eingesandten Erfahrungsbericht anlegen | neue Formulare, neue Felder, anderer Empfänger |
+| 14 Einstellungen, 15 feste Texte | einen Wert oder Text ändern (in allen drei Sprachen) | neue Einstellungen oder Schlüssel einführen |
+| 16 Design | eine Farbe ändern (hell **und** dunkel) | Schrift, Logo, Layout |
+| 17 Bereich löschen | ja, mit Vorsicht (alle drei Sprachen) | – |
+| 18 Automatisierungen, 19 Prüfen | einen Lauf ansehen oder von Hand starten | Abläufe ändern, Prüfungen am eigenen Rechner |
+
+Unsicher? Unter *Issues → New issue* beschreiben, was du vorhast. Und: Eine Änderung lässt
+sich immer zurücknehmen
+([Kurzanleitung, Abschnitt 12](WARTUNG.md#12-kontrollieren-und-rückgängig-machen)).
+
+---
+
 ## 1. Aufbau des Projekts
 
 Die Website wird mit [Hugo](https://gohugo.io/) aus Textdateien gebaut. Jede Änderung auf
@@ -1082,6 +1111,13 @@ Fassung. Hugo-Version: in `hugo.yml` fest eingetragen – beim Erhöhen auch lok
 ---
 
 ## 19. Die Website prüfen
+
+**Ohne eigenen Rechner:** Der Ablauf «Prüfstand» baut die Website jede Nacht und klickt
+sie in einem Browser durch (Dunkelmodus, Sprachwahl, Suche, Formulare, Simulationsmodus,
+Auswertungs-Tools). Ist er rot, steht im Log des roten Schritts eine Zeile mit «FEHLT».
+Von Hand starten: *Actions → Prüfstand → Run workflow*. «Externe Links prüfen» geht einmal
+pro Woche alle Links auf fremde Websites durch; ist er rot, nennt er den toten Link und
+die Seite, auf der er steht. Was folgt, ist nur für die Arbeit am eigenen Rechner.
 
 Der Bau prüft interne Links und die fertige Website (`scripts/ausgabe-pruefen.py`, siehe
 Kopf der Datei) selbst. Zusätzlich gibt es Prüfskripte (lokal, mit gebauter

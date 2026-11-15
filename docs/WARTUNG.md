@@ -9,6 +9,40 @@ steht in der **[ausführlichen Anleitung](WARTUNG-DETAILLIERT.md)**.
 
 ---
 
+## Bevor du anfängst
+
+**Was du brauchst**
+
+- Ein kostenloses Konto auf [github.com](https://github.com) und eine Einladung zum
+  Repository `Kroeppster/nc-wiki`. Die Einladung vergibt, wer die Website betreut; ohne
+  sie kannst du alles lesen, aber nichts ändern.
+- Für die Textmappe: Excel.
+- Sonst nichts. Du musst kein Programm installieren und nicht programmieren können.
+
+**Kaputt machen kannst du fast nichts.** GitHub merkt sich zu jeder Änderung den Stand
+davor; er lässt sich zurückholen ([Abschnitt 12](#12-kontrollieren-und-rückgängig-machen)).
+Findet die automatische Prüfung in deiner Änderung einen Fehler, bleibt die bisherige
+Website einfach online.
+
+**Wörter, die immer wieder vorkommen**
+
+| Wort | Was es heisst |
+| --- | --- |
+| Repository | der Ordner mit allen Dateien der Website, auf GitHub |
+| `main` | der gültige Stand. Was auf `main` liegt, wird veröffentlicht |
+| Commit, «Commit changes» | Speichern. Jede gespeicherte Änderung bekommt eine kurze Beschreibung, damit andere sehen, was sich geändert hat |
+| Pull Request | ein Änderungsvorschlag, der noch nicht gilt (so kommen die Textmappen herein) |
+| Merge | den Vorschlag übernehmen. Erst danach liegt er auf `main` |
+| Bau, «Actions» | Nach jedem Speichern baut GitHub die Website neu und prüft sie. Grüner Haken: live. Rotes Kreuz: [Abschnitt 10](#10-wenn-der-bau-rot-ist) |
+| Markdown, `.md` | einfache Textdateien, aus denen die Seiten entstehen ([Abschnitt 14](#14-schreibhilfe-für-texte)) |
+| Seitenkopf | die Zeilen zwischen den beiden `---` ganz oben in einer `.md`-Datei: Titel, Datum, Beschreibung |
+
+**Die Adressen:** Website [kroeppster.github.io/nc-wiki](https://kroeppster.github.io/nc-wiki/) ·
+Dateien [github.com/Kroeppster/nc-wiki](https://github.com/Kroeppster/nc-wiki) ·
+Web-Editor [app.pagescms.org](https://app.pagescms.org)
+
+---
+
 ## 1. Welcher Weg wofür?
 
 | Du willst … | Weg | Abschnitt |
@@ -17,6 +51,10 @@ steht in der **[ausführlichen Anleitung](WARTUNG-DETAILLIERT.md)**.
 | schnell einen Tippfehler auf einer Seite korrigieren | **Web-Editor** (Pages CMS) | [3](#3-kleine-korrekturen-im-web-editor) |
 | einen News-Beitrag schreiben | Web-Editor oder GitHub | [4](#4-einen-news-beitrag-schreiben) |
 | ein PDF oder Bild hochladen, eine Datei löschen | **GitHub** | [5](#5-ein-pdf-hochladen) – [8](#8-eine-datei-oder-seite-löschen) |
+| eine bestehende Seite direkt auf GitHub ändern | **GitHub** | [11](#11-eine-datei-direkt-auf-github-ändern) |
+| sehen, ob die Änderung live ist, oder etwas rückgängig machen | **GitHub** | [12](#12-kontrollieren-und-rückgängig-machen) |
+| das Datum des nächsten EMS ändern, die Website aufs neue Jahr umstellen | mehrere | [13](#13-checkliste-für-das-neue-jahr) |
+| wissen, wie man fett schreibt, eine Liste oder einen Link setzt | – | [14](#14-schreibhilfe-für-texte) |
 
 Alle Wege ändern dieselben Dateien. Nach jeder Änderung auf `main` baut GitHub die
 Website neu, nach ein bis zwei Minuten ist sie live.
@@ -62,6 +100,12 @@ jede Seite auf einem eigenen Blatt, vorne eine Anleitung und ein Inhaltsverzeich
    Upload files* → *Commit changes*. Nach ein, zwei Minuten gibt es unter *Pull requests*
    einen Vorschlag mit einem Bericht (was übernommen, was übersprungen wurde).
    **Live ist es erst, wenn jemand den Vorschlag übernimmt (Merge).**
+   **So übernimmst du den Vorschlag:** oben auf *Pull requests* → den neuen Vorschlag
+   anklicken → den Bericht lesen. Der Reiter *Files changed* zeigt rot, was wegfällt, und
+   grün, was dazukommt. Stimmt alles: zurück auf *Conversation*, ganz unten **Merge pull
+   request** → **Confirm merge**. Steht im Bericht ein ❌ (die Website baut nicht oder
+   die Prüfung meldet Funde), noch nicht übernehmen: erst die genannte Stelle in einer
+   frischen Mappe korrigieren und neu hochladen.
 
 Französisch und Italienisch zeigen den deutschen Text als Vorlage daneben; fehlende
 Übersetzungen stehen als leere Zeilen da und müssen nur ausgefüllt werden. Das Team auf
@@ -109,6 +153,15 @@ Die ersten Sätze erscheinen automatisch als Vorschau auf der News-Übersicht un
 Startseite. Solange im Kopf `draft: true` steht, bleibt der Beitrag unsichtbar.
 Denselben Beitrag bitte auch auf Französisch und Italienisch anlegen (gleicher Dateiname
 unter `content/fr/news/` bzw. `content/it/news/`).
+
+Zwei Dinge, die oft übersehen werden:
+
+- **Gleicher Dateiname in allen Sprachen.** Der Web-Editor schlägt den Dateinamen aus dem
+  Titel vor, und der lautet in jeder Sprache anders. Trag beim Anlegen in allen drei
+  Sprachen denselben Namen ein (z. B. `testsimulation-2027.md`), sonst führt die
+  Sprachwahl oben rechts nicht zur anderen Fassung.
+- **Ein Datum in der Zukunft** hält den Beitrag zurück: Er erscheint erst, wenn der Tag
+  erreicht ist und die Website danach das nächste Mal gebaut wird.
 
 ---
 
@@ -256,10 +309,119 @@ dort heisst: noch nicht mergen.
 
 ---
 
-## 11. Die wichtigsten Regeln
+## 11. Eine Datei direkt auf GitHub ändern
+
+Für alles, was der Web-Editor nicht anbietet, oder wenn du lieber auf GitHub arbeitest.
+
+1. [github.com/Kroeppster/nc-wiki](https://github.com/Kroeppster/nc-wiki) öffnen und
+   anmelden.
+2. **Die Datei finden.** Die Seiten liegen unter `content/de/` (Französisch: `content/fr/`,
+   Italienisch: `content/it/`), aufgebaut wie die Adressen der Website:
+
+   | Adresse der Seite | Datei |
+   | --- | --- |
+   | `…/nc-wiki/impressum/` | `content/de/impressum.md` |
+   | `…/nc-wiki/ems/` | `content/de/ems/_index.md` (Übersichtsseite eines Ordners) |
+   | `…/nc-wiki/fr/ems/uniguide/` | `content/fr/ems/uniguide/_index.md` |
+
+   Schneller: oben im Feld *Go to file* einen Teil des Namens tippen.
+3. Datei anklicken → oben rechts das **Stift-Symbol** (*Edit this file*).
+4. Text ändern. Im Seitenkopf (zwischen den `---`) nur das ändern, was in
+   Anführungszeichen steht; die Wörter vor dem Doppelpunkt und die Einrückung bleiben.
+5. Oben rechts **Commit changes…** → in einem Satz beschreiben, was du geändert hast →
+   **Commit changes**.
+6. Ein bis zwei Minuten warten und die Seite neu laden
+   ([Abschnitt 12](#12-kontrollieren-und-rückgängig-machen)).
+
+---
+
+## 12. Kontrollieren und rückgängig machen
+
+**Ist meine Änderung live?** Auf GitHub oben **Actions**. Der oberste Lauf «Deploy Hugo
+site to GitHub Pages» zeigt den Stand:
+
+| Zeichen | Bedeutung |
+| --- | --- |
+| gelber Kreis | der Bau läuft noch (etwa zwei Minuten) |
+| grüner Haken | fertig, die Änderung ist live |
+| rotes Kreuz | ein Fehler, die Änderung ist **nicht** live ([Abschnitt 10](#10-wenn-der-bau-rot-ist)) |
+
+Danach die Seite im Browser neu laden, am besten ohne Zwischenspeicher: Ctrl+F5
+(Windows) oder Cmd+Shift+R (Mac).
+
+**Die Änderung erscheint nicht?** Der Reihe nach prüfen:
+
+1. Ist der Bau grün? (siehe oben)
+2. Textmappe hochgeladen: Wurde der Vorschlag unter *Pull requests* schon übernommen?
+3. Steht im Seitenkopf `draft: true`, oder liegt das Datum in der Zukunft? Dann bleibt
+   die Seite verborgen.
+4. Schaust du die richtige Sprache an? Eine Änderung unter `content/de/` zeigt sich nur
+   auf der deutschen Seite.
+5. Liegt die Datei im richtigen Ordner und endet auf `.md`?
+
+**Etwas rückgängig machen**
+
+- **Eine übernommene Textmappe (Pull Request):** *Pull requests* → *Closed* → den
+  Vorschlag öffnen → unten **Revert** → es entsteht ein neuer Vorschlag, der alles
+  zurücknimmt → diesen übernehmen (Merge).
+- **Eine einzelne Datei:** Datei öffnen → oben rechts **History**. Dort steht jede
+  Fassung mit Datum und Beschreibung. Die Fassung anklicken, die noch gestimmt hat →
+  oben rechts **…** → *View file* → den Text kopieren. Zurück zur heutigen Datei,
+  Stift-Symbol, alles durch den kopierten Text ersetzen, **Commit changes**.
+- **Eine gelöschte Datei oder wenn du unsicher bist:** unter *Issues → New issue*
+  beschreiben, was passiert ist. Es geht nichts verloren; jemand mit mehr Erfahrung holt
+  es zurück.
+
+---
+
+## 13. Checkliste für das neue Jahr
+
+Einmal im Jahr, sobald das Datum des nächsten EMS feststeht.
+
+| Was | Wo | Wie |
+| --- | --- | --- |
+| Datum des nächsten EMS (Countdown auf der Startseite) | Datei `hugo.toml`, Zeile `ems_exam_date` | wie in [Abschnitt 11](#11-eine-datei-direkt-auf-github-ändern): nur das Datum zwischen den Anführungszeichen ändern. Form: `2027-07-09T08:00:00+02:00` heisst 9. Juli 2027, 8 Uhr, Schweizer Sommerzeit. Der Text über dem Countdown übernimmt das Datum von selbst |
+| Termine im Zeitstrahl der Startseite | Textmappe, Blatt «Startseite – Ansicht» | [Abschnitt 2](#2-texte-ändern-mit-der-excel-textmappe) |
+| Datum in den Häufigen Fragen | Textmappe, Blatt «Häufige Fragen – Ansicht» | Abschnitt 2 |
+| Datum auf der Seite «EMS» | Web-Editor, Seite «EMS» | [Abschnitt 3](#3-kleine-korrekturen-im-web-editor) |
+| Fristen und «Stand» im Uniguide | Textmappe, Blatt «Uniguide – Ansicht» | Abschnitt 2; nur eintragen, was auf einer offiziellen Seite steht |
+| neue Saison im Team | Textmappe, Blatt «Team – Ansicht», «Neue Saison starten» | Abschnitt 2 |
+| neue Testsimulation, neue Übungsserien | PDFs hochladen | [Abschnitt 5](#5-ein-pdf-hochladen) |
+| Lösungen für «Antwortbogen auswerten» und «Konztest auswerten» | braucht jemanden mit Technik-Kenntnissen | [ausführliche Anleitung, Abschnitt 11](WARTUNG-DETAILLIERT.md#11-lern-generatoren-und-alpha-seite) |
+
+Zum Schluss auf der Website mit der Lupe nach dem alten Jahr suchen: Was noch
+auftaucht und kein Rückblick ist, wurde vergessen.
+
+---
+
+## 14. Schreibhilfe für Texte
+
+So schreibst du in einer `.md`-Datei und in der Spalte «Text» der Textmappe. Im
+Web-Editor gibt es dafür Knöpfe.
+
+| Du willst | Du schreibst |
+| --- | --- |
+| eine Zwischenüberschrift | `## Titel` (kleinere: `### Titel`). Nie nur ein `#`, die oberste Überschrift ist schon der Seitentitel |
+| fett | `**wichtig**` |
+| eine Aufzählung | jede Zeile beginnt mit `- ` |
+| eine nummerierte Liste | jede Zeile beginnt mit `1. `, `2. ` … |
+| einen neuen Absatz | eine Leerzeile dazwischen |
+| einen Link auf eine eigene Seite | `[Uniguide](/ems/uniguide)` ([Abschnitt 9](#9-links-und-bausteine-im-text)) |
+| einen Link auf eine fremde Seite | `[swissuniversities](https://www.swissuniversities.ch/)` |
+| den Genderstern | `Tutor\*innen`, mit einem Rückstrich vor dem Stern. Ohne ihn macht Markdown aus zwei Sternen im selben Absatz Kursivschrift, und der Bau bricht mit einem Hinweis ab. Im Web-Editor einfach `*` tippen |
+| Anführungszeichen | «so», nicht "so" |
+
+Wie wir schreiben (du-Anrede, Begriffe, Datum «9. Juli 2027»), steht im
+[Styleguide](STYLEGUIDE.md).
+
+---
+
+## 15. Die wichtigsten Regeln
 
 - **Alles dreisprachig.** Neue sichtbare Texte immer auf Deutsch, Französisch und
   Italienisch.
+- **Gleicher Dateiname in allen Sprachen.** Nur so findet die Sprachwahl die anderen
+  Fassungen einer Seite.
 - **Das Repository ist öffentlich.** Keine Passwörter, Personendaten oder internen Notizen
   in Dateien oder Textmappen. Zugänge gehören in den Passwort-Manager des Vereins.
 - **Keine Zahlen erfinden.** Im Uniguide nur eintragen, was auf einer offiziellen Seite

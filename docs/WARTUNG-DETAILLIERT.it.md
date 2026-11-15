@@ -36,6 +36,35 @@ repository.
 
 ---
 
+## Che cosa posso fare senza conoscenze preliminari?
+
+Quasi tutto qui si fa nel browser su github.com, come descritto nella
+[guida breve, sezione 11](WARTUNG.it.md#11-modificare-un-file-direttamente-su-github):
+aprire il file, matita, modificare, salvare. La tabella mostra dove questo basta.
+
+| Sezione | Senza conoscenze, nel browser | Serve qualcuno con conoscenze tecniche |
+| --- | --- | --- |
+| 2 Pagine e menu | creare una pagina, metterla nel menu, rinominarla | – |
+| 3 Cartelle Excel | scaricare la cartella, compilarla, caricarla, accettare la proposta | generare le cartelle sul proprio computer, modificare gli script |
+| 4 Editor web | modificare testi, creare una notizia | configurarlo, modificare `.pages.yml` |
+| 5 Link e blocchi | inserire link, spostare blocchi | creare nuovi blocchi |
+| 6 Pagina iniziale, 7 Team, 8 Sostenere | tutto (il modo più semplice: la cartella Excel) | nuove sezioni sulla pagina iniziale |
+| 9 FAQ, Uniguide, sottotest | tutto (FAQ e Uniguide con la cartella Excel) | – |
+| 10 Modalità simulazione | durate e testi | registrare e tagliare di nuovo gli annunci, cambiare il comportamento |
+| 11 Generatori, pagina alpha | elenco di parole del generatore di fatti (Excel) | tutto il resto: strumenti di valutazione, lettura delle soluzioni, laboratorio fotocamera |
+| 12 Area membri | creare una pagina protetta; cambiare la password (servono i diritti di amministrazione su GitHub) | – |
+| 13 Moduli | creare una testimonianza arrivata dal modulo | nuovi moduli, nuovi campi, altro destinatario |
+| 14 Impostazioni, 15 testi fissi | cambiare un valore o un testo (nelle tre lingue) | introdurre nuove impostazioni o chiavi |
+| 16 Design | cambiare un colore (chiaro **e** scuro) | carattere, logo, impaginazione |
+| 17 Eliminare un'area | sì, con prudenza (le tre lingue) | – |
+| 18 Automazioni, 19 Verificare | guardare un'esecuzione o avviarla a mano | modificare le esecuzioni, verifiche sul proprio computer |
+
+Un dubbio? Descrivere che cosa vuoi fare sotto *Issues → New issue*. E: una modifica si
+può sempre annullare
+([guida breve, sezione 12](WARTUNG.it.md#12-controllare-e-annullare)).
+
+---
+
 ## 1. Struttura del progetto
 
 Il sito è costruito con [Hugo](https://gohugo.io/) a partire da file di testo. Ogni
@@ -1087,6 +1116,14 @@ di Hugo: fissata in `hugo.yml` – aumentandola, testare anche in locale.
 ---
 
 ## 19. Verificare il sito
+
+**Senza un proprio computer:** l'esecuzione «Prüfstand» costruisce il sito ogni notte e
+lo percorre in un browser (modalità scura, scelta della lingua, ricerca, moduli, modalità
+simulazione, strumenti di valutazione). Se è rossa, nel registro del passo rosso c'è una
+riga con «FEHLT». Avviarla a mano: *Actions → Prüfstand → Run workflow*. «Externe Links
+prüfen» verifica una volta alla settimana tutti i link verso altri siti; se è rossa,
+indica il link morto e la pagina in cui si trova. Ciò che segue riguarda solo il lavoro
+sul proprio computer.
 
 La costruzione verifica da sé i link interni e il sito finito (`scripts/ausgabe-pruefen.py`,
 vedi l'intestazione del file). In più ci sono script di verifica (in locale,

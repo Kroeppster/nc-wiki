@@ -37,6 +37,35 @@ noms dans le dépôt.
 
 ---
 
+## Que puis-je faire sans connaissances préalables ?
+
+Presque tout ici se fait dans le navigateur sur github.com, comme décrit dans le
+[guide rapide, section 11](WARTUNG.fr.md#11-modifier-un-fichier-directement-sur-github) :
+ouvrir le fichier, crayon, modifier, enregistrer. Le tableau montre où cela suffit.
+
+| Section | Sans connaissances, dans le navigateur | Demande quelqu'un avec des connaissances techniques |
+| --- | --- | --- |
+| 2 Pages et menu | créer une page, l'ajouter au menu, la renommer | – |
+| 3 Classeurs | récupérer le classeur, le remplir, le téléverser, accepter la proposition | générer les classeurs sur son ordinateur, modifier les scripts |
+| 4 Éditeur web | modifier des textes, créer une actualité | l'installer, modifier `.pages.yml` |
+| 5 Liens et blocs | poser des liens, déplacer des blocs | créer de nouveaux blocs |
+| 6 Accueil, 7 Équipe, 8 Soutenir | tout (le plus simple : par le classeur) | de nouvelles sections sur l'accueil |
+| 9 FAQ, Uniguide, sous-tests | tout (FAQ et Uniguide par le classeur) | – |
+| 10 Mode simulation | durées et textes | réenregistrer et découper les annonces, changer le comportement |
+| 11 Générateurs, page alpha | liste de mots du générateur de faits (Excel) | tout le reste : outils d'évaluation, lecture des solutions, laboratoire caméra |
+| 12 Espace membres | créer une page protégée ; changer le mot de passe (demande les droits d'administration sur GitHub) | – |
+| 13 Formulaires | créer un témoignage reçu par le formulaire | nouveaux formulaires, nouveaux champs, autre destinataire |
+| 14 Réglages, 15 textes fixes | changer une valeur ou un texte (dans les trois langues) | introduire de nouveaux réglages ou de nouvelles clés |
+| 16 Design | changer une couleur (clair **et** sombre) | police, logo, mise en page |
+| 17 Supprimer une rubrique | oui, avec prudence (les trois langues) | – |
+| 18 Automatisations, 19 Vérifier | consulter un déroulement ou le lancer à la main | modifier les déroulements, vérifications sur son ordinateur |
+
+Un doute ? Décrire ce que tu veux faire sous *Issues → New issue*. Et : une modification
+peut toujours être annulée
+([guide rapide, section 12](WARTUNG.fr.md#12-vérifier-et-annuler)).
+
+---
+
 ## 1. Structure du projet
 
 Le site est construit avec [Hugo](https://gohugo.io/) à partir de fichiers texte. Chaque
@@ -1111,6 +1140,14 @@ Version de Hugo : fixée dans `hugo.yml` – en l'augmentant, tester aussi en lo
 ---
 
 ## 19. Vérifier le site
+
+**Sans ordinateur à soi :** le déroulement « Prüfstand » construit le site chaque nuit et
+le parcourt dans un navigateur (mode sombre, choix de langue, recherche, formulaires, mode
+simulation, outils d'évaluation). S'il est rouge, le journal de l'étape rouge contient une
+ligne avec « FEHLT ». Le lancer à la main : *Actions → Prüfstand → Run workflow*.
+« Externe Links prüfen » vérifie une fois par semaine tous les liens vers d'autres sites ;
+s'il est rouge, il indique le lien mort et la page où il se trouve. La suite ne concerne
+que le travail sur son propre ordinateur.
 
 La construction vérifie elle-même les liens internes et le site terminé (`scripts/ausgabe-pruefen.py`,
 voir l'en-tête du fichier). Il existe en plus des scripts de
