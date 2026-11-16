@@ -206,6 +206,10 @@ const pruefung = () => {
     const r = img.getBoundingClientRect();
     const nah = r.top < innerHeight * 2 && r.bottom > -innerHeight;
     if (img.loading === 'lazy' && !nah) return;
+    // Ein nachladendes Bild in einem ausgeblendeten Kasten (display:none) laedt
+    // der Browser gar nicht erst - so die neun Uebungsseiten der Startseite,
+    // die es nur auf breiten Bildschirmen gibt. Kein Fehler, nichts zu sehen.
+    if (img.loading === 'lazy' && r.width === 0 && r.height === 0 && !img.offsetParent) return;
     funde.push({ art: 'bild-laedt-nicht', src: img.getAttribute('src') });
   });
 
