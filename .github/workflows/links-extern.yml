@@ -27,6 +27,11 @@ on:
   schedule:
     - cron: "17 5 * * 1"
   workflow_dispatch:
+    inputs:
+      adressen:
+        description: "Adressen zum Ausprobieren (durch Leerzeichen getrennt, darf leer bleiben)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -38,7 +43,7 @@ concurrency:
 jobs:
   pruefen:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,34 +58,12 @@ jobs:
       - name: Build with Hugo
         run: hugo --minify
 
-      # Geprüft werden nur Adressen, die mit http:// oder https:// beginnen
-      # ("--scheme") - also keine Dateien der Website selbst (die prüft
-      # hugo.yml). "--root-dir" braucht es trotzdem: Ohne den Ordner kann das
-      # Werkzeug Verweise wie "/news/" nicht einordnen und meldet jeden als
-      # Fehler, statt ihn zu überspringen. Ausgelassen werden ausserdem:
-      #  - "localhost": Ohne die Adresse der Website gebaut, steht die eigene
-      #    Adresse der Seite so in den Seiten.
-      #  - die Empfänger der Formulare (Formspree, Brevo): Sie nehmen nur
-      #    abgeschickte Formulare an und antworten auf einen blossen Aufruf
-      #    mit einem Fehler (405), obwohl alles in Ordnung ist.
-      #  - die Università della Svizzera italiana (usi.ch): Sie weist
-      #    automatische Abrufe von GitHub mit 403 ab, im Browser gehen die
-      #    Seiten. Diese Links ab und zu von Hand anklicken.
+      # Was geprüft, was ausgelassen und was nur aufgelistet wird, steht oben
+      # in scripts/links-extern-pruefen.py. Bis November 2026 prüfte hier das
+      # Werkzeug "lychee"; es blieb einmal 20 Minuten hängen und wurde ohne
+      # Ergebnis abgebrochen. Das Skript hat je Adresse eine feste Obergrenze.
       - name: Check external links
-        uses: lycheeverse/lychee-action@v2
-        timeout-minutes: 20
-        with:
-          args: >-
-            --no-progress
-            --timeout 10
-            --max-retries 1
-            --scheme https
-            --scheme http
-            --exclude "^https?://localhost"
-            --exclude "^https://formspree\.io/"
-            --exclude "sibforms\.com"
-            --exclude "^https://(www\.biomed\.|www\.)usi\.ch/"
-            --root-dir "${{ github.workspace }}/public"
-            "./public/**/*.html"
-          fail: true
-          jobSummary: true
+        timeout-minutes: 6
+        env:
+          PROBE: ${{ inputs.adressen }}
+        run: python3 scripts/links-extern-pruefen.py public
