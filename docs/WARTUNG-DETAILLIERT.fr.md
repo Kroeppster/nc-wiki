@@ -523,6 +523,10 @@ supprimer la ligne dès qu'un outil est validé. Cible et symbole par `key` :
 
 ### Tuiles du matériel (`material:`)
 
+La tuile « Séries d'exercices » ne figure pas avec les trois autres mais dans la section
+suivante, à côté des huit sous-tests (sur mobile, il n'en reste que la phrase avec le nombre) –
+elle se gère quand même ici, dans le bloc `material:`.
+
 ```yaml
 material:
   items:

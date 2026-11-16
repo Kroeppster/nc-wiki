@@ -1156,11 +1156,33 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 .material-stueck p{margin:0;font-size:var(--text-sm);color:var(--color-ink-soft);}
 .material-stueck a:hover h3{color:var(--color-signal);}
 
+/* Sektion "Material": Titel links, drei Kacheln rechts (die Kachel
+   Übungsserien steht bei den Untertests, siehe .subtests-zeile). */
+.material-zeile{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:var(--space-6);align-items:start;}
+.material-zeile .material{grid-template-columns:repeat(3,1fr);margin-top:0;}
+.material-kopf h2{margin-bottom:0;}
+/* Sektion "Untertests": links die Kachel Übungsserien, rechts die acht Karten */
+.subtests-zeile{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:var(--space-6);align-items:start;margin-top:var(--space-8);}
+.subtests-zeile .material{grid-template-columns:1fr;margin-top:0;}
+.subtests-zeile .subtest-grid{margin-top:0;}
 @media (max-width:900px){
-  .material{grid-template-columns:repeat(2,1fr);}
+  .material-zeile{grid-template-columns:1fr;}
+  .material-zeile .material{margin-top:var(--space-2);}
+  /* Von der Kachel bleibt der Satz mit der Anzahl - die neun Seiten und der
+     Titel "Übungsserien" stünden sonst gross über den acht Karten. */
+  .subtests-zeile{grid-template-columns:1fr;gap:var(--space-4);margin-top:var(--space-3);}
+  .subtests-bild .material-flaeche,.subtests-bild h3{display:none;}
+  .subtests-bild a{pointer-events:none;}
+  .subtests-bild p{font-size:var(--text-base);}
 }
-@media (max-width:460px){
-  .material{grid-template-columns:1fr;gap:var(--space-8);}
+/* Handy: jede Kachel als flache Zeile (Bild links, Text rechts). Untereinander
+   in voller Breite war jede fast bildschirmhoch - vier Kacheln, vier Bildschirme. */
+@media (max-width:560px){
+  .material-zeile .material{grid-template-columns:1fr;gap:var(--space-4);}
+  .material-zeile .material-stueck a{display:grid;grid-template-columns:6.5rem minmax(0,1fr);column-gap:var(--space-4);align-items:center;}
+  .material-zeile .material-flaeche{grid-row:1 / span 2;}
+  .material-zeile .material-stueck h3{margin:0 0 var(--space-1);align-self:end;}
+  .material-zeile .material-stueck p{align-self:start;}
 }
 
 /* Mission + Feature-Grid (kein Sequenz-Bezug → dezente Markierung statt Nummern) */

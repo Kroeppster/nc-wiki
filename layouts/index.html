@@ -191,10 +191,15 @@
   {{ end }}
 
   <section id="material" class="section-surface">
-    <div class="wrap">
-      <p class="eyebrow">{{ .Params.material.eyebrow }}</p>
-      <h2>{{ .Params.material.heading }}</h2>
-      {{ partial "material-grid.html" . }}
+    {{/* Titel links, drei Kacheln rechts. Die vierte Kachel (Übungsserien)
+         steht seit November 2026 bei den acht Untertests gleich darunter -
+         vorher kamen die Übungsserien zweimal direkt nacheinander. */}}
+    <div class="wrap material-zeile">
+      <div class="material-kopf">
+        <p class="eyebrow">{{ .Params.material.eyebrow }}</p>
+        <h2>{{ .Params.material.heading }}</h2>
+      </div>
+      {{ partial "material-grid.html" (dict "page" . "ohne" (slice "uebungsaufgaben")) }}
     </div>
   </section>
 
@@ -206,7 +211,13 @@
       {{/* Das Raster mit den 10 nummerierten Kacheln kommt aus einer eigenen
            Datei, siehe layouts/partials/subtest-grid.html - die Reihenfolge/
            Namen der Untertests stehen in data/subtests.yaml. */}}
-      {{ partial "subtest-grid.html" . }}
+      {{/* Links die Kachel "Übungsserien" (neun echte Seiten, Anzahl der
+           Serien), rechts die acht Untertests. Auf schmalen Bildschirmen
+           bleibt von der Kachel nur der Satz mit der Anzahl. */}}
+      <div class="subtests-zeile">
+        <div class="subtests-bild">{{ partial "material-grid.html" (dict "page" . "nur" (slice "uebungsaufgaben")) }}</div>
+        {{ partial "subtest-grid.html" . }}
+      </div>
     </div>
   </section>
 

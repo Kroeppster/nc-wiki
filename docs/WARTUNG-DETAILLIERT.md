@@ -513,6 +513,10 @@ Werkzeug freigegeben ist. Ziel und Symbol je `key` stehen in
 
 ### Material-Kacheln (`material:`)
 
+Die Kachel «Übungsserien» steht nicht bei den drei anderen, sondern im Abschnitt darunter neben
+den acht Untertests (auf dem Handy bleibt davon nur der Satz mit der Anzahl) – gepflegt wird
+sie trotzdem hier im Block `material:`.
+
 ```yaml
 material:
   items:

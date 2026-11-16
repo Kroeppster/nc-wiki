@@ -34,7 +34,13 @@
   niemand muss sie von Hand nachführen.
   ============================================================================
 */ -}}
-{{- $zahlen := partial "angebot-zahlen.html" . }}
+{{- /* AUFRUF: mit der Seite selbst (alle Kacheln) oder mit
+       (dict "page" . "nur" (slice "uebungsaufgaben")) bzw. "ohne" (slice ...).
+       So steht die Kachel "Übungsserien" bei den acht Untertests (index.html,
+       Sektion "subtests") und nicht ein zweites Mal direkt darüber. */ -}}
+{{- $seite := . }}{{ $nur := slice }}{{ $ohne := slice }}
+{{- if reflect.IsMap . }}{{ $seite = .page }}{{ with .nur }}{{ $nur = . }}{{ end }}{{ with .ohne }}{{ $ohne = . }}{{ end }}{{ end }}
+{{- $zahlen := partial "angebot-zahlen.html" $seite }}
 
 {{- /* Zu jedem "key": wohin verlinkt wird und welche Bilder die Fläche füllt.
        Mehr als ein Bild = Collage.
@@ -59,7 +65,8 @@
 }}
 
 <ul class="material">
-  {{- range .Params.material.items }}
+  {{- range $seite.Params.material.items }}
+  {{- if and (or (not $nur) (in $nur .key)) (not (in $ohne .key)) }}
   {{- $eintrag := . }}
   {{- $quelle := index $quellen .key }}
 
@@ -87,7 +94,7 @@
         {{- $pfad := printf "images/angebot/%s.png" . }}
         {{- /* Gibt es das Bild in der Sprache der Seite (testheft.fr.png), gilt
                dieses - sonst das deutsche. */ -}}
-        {{- $eigen := printf "images/angebot/%s.%s.png" . $.Site.Language.Lang }}
+        {{- $eigen := printf "images/angebot/%s.%s.png" . $seite.Site.Language.Lang }}
         {{- if resources.Get $eigen }}{{ $pfad = $eigen }}{{ end }}
         {{- if strings.Contains . "." }}{{ $pfad = printf "images/%s" . }}{{ end }}
         {{- with resources.Get $pfad }}
@@ -108,5 +115,6 @@
       <p>{{ $text }}</p>
     </a>
   </li>
+  {{- end }}
   {{- end }}
 </ul>

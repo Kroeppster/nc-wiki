@@ -516,6 +516,10 @@ Destinazione e simbolo per `key`: `layouts/partials/werkzeuge-grid.html`.
 
 ### Riquadri del materiale (`material:`)
 
+Il riquadro «Serie di esercizi» non sta con gli altri tre ma nella sezione successiva, accanto
+agli otto sottotest (su smartphone ne resta solo la frase con il numero) – si gestisce comunque
+qui, nel blocco `material:`.
+
 ```yaml
 material:
   items:
