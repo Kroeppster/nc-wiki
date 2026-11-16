@@ -44,6 +44,7 @@
 {{- partial "bausteine/konztest-lesen.html" . }}
 <div class="ab kt" id="kt-wurzel" data-pagefind-ignore>
 <script type="application/json" id="kt-daten">{{ $d | jsonify | safeJS }}</script>
+<p class="note" id="kt-beta">{{ i18n "bl_beta" }}</p>
 <p class="ab-intro">{{ i18n "kt_intro" }}</p>
 <p class="ab-privat">{{ i18n "kt_privat" }}</p>
 <div class="ab-eingabe">

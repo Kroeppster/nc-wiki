@@ -529,7 +529,10 @@ bianco, `object-fit: contain`) – i PDF di origine sono in parte A4, in parte U
 foto possono essere ritagliate. Un nome con estensione si cerca sotto `assets/images/`,
 senza estensione sotto `assets/images/angebot/`. Rigenerare con
 `python3 scripts/angebot-bilder-erzeugen.py` (serve `pip install pymupdf`; in cima allo
-script ci sono PDF e pagina di ogni immagine). Il campo Discord non è
+script ci sono PDF e pagina di ogni immagine). Fascicolo del test, script del corso, tabella
+Uniguide e testimonianza esistono per lingua (`testheft.fr.png` …); la pagina prende
+l'immagine della sua lingua, altrimenti quella tedesca. I due screenshot si creano con
+`node scripts/angebot-bildschirmfotos.mjs` (server di prova sulla porta 8123). Il campo Discord non è
 un'immagine ma testo: tre fumetti inventati (`mat_chat_1` – `mat_chat_3` in `i18n/`), di
 proposito non uno screenshot del vero server.
 

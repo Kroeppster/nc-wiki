@@ -50,6 +50,7 @@
 {{- partial "bausteine/bild-lesen.html" . }}
 <div class="ab" id="ab-wurzel" data-pagefind-ignore>
 <script type="application/json" id="ab-daten">{{ $d | jsonify | safeJS }}</script>
+<p class="note" id="ab-beta">{{ i18n "bl_beta" }}</p>
 <p class="ab-intro">{{ i18n "ab_intro" }}</p>
 <p class="ab-privat">{{ i18n "ab_privat" }}</p>
 <div class="ab-eingabe">

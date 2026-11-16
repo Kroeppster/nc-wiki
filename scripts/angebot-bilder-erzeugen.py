@@ -19,8 +19,8 @@ die Anzeigegrösse verkleinert - die Quelldateien dürfen also grosszügig sein.
 
 NICHT ENTHALTEN sind zwei Bilder der Collage "Orientierung und Austausch":
 uniguide.png (vier Zeilen der Vergleichstabelle) und berichte.png (EINE
-Erfahrungsbericht-Karte) sind Bildschirmfotos der eigenen Website. Sie
-entstehen mit Playwright; wie, steht in docs/WARTUNG-DETAILLIERT.md.
+Erfahrungsbericht-Karte) sind Bildschirmfotos der eigenen Website, je
+Sprache eines. Sie entstehen mit scripts/angebot-bildschirmfotos.mjs.
 Das dritte Feld (Discord) ist kein Bild mehr, sondern Text in der Seite
 (material-grid.html): drei erfundene Sprechblasen, je Sprache uebersetzt.
 Aus dem echten Discord-Server gibt es bewusst KEIN Bild - dort stehen Namen
@@ -81,6 +81,18 @@ SEITEN = [
     ('kursskript', 'assets/downloads/kursskripte/NCWiki_Kursskript_2026_deutsch.pdf', 0),
 ]
 
+# DIESELBEN SEITEN AUF FRANZÖSISCH UND ITALIENISCH: "testheft.fr.png" usw.
+# material-grid.html nimmt für eine Sprache zuerst das Bild mit ihrem Kürzel
+# und sonst das deutsche. Die neun kleinen Übungsseiten gibt es nur einmal:
+# In der Kachel sind sie 85 px breit (die Sprache ist nicht zu erkennen), und
+# die Serien sind nicht in allen Sprachen dieselben.
+SEITEN_SPRACHEN = [
+    ('testheft.fr', 'assets/downloads/testsimulationen/fr/2026_testsimulationen_Testsimulation.pdf', 2),
+    ('testheft.it', 'assets/downloads/testsimulationen/it/2026_testsimulationen_Testsimulation.pdf', 2),
+    ('kursskript.fr', 'assets/downloads/kursskripte/fr/2026_Kursskript.pdf', 0),
+    ('kursskript.it', 'assets/downloads/kursskripte/it/2026_Kursskript.pdf', 0),
+]
+
 
 def ganze_seite(name, pfad, seite_nr):
     voll = os.path.join(WURZEL, pfad)
@@ -100,7 +112,7 @@ def main():
     for eintrag in TEILE:
         ganze_seite(*eintrag)
     print('Weitere ganze Seiten:')
-    for eintrag in SEITEN:
+    for eintrag in SEITEN + SEITEN_SPRACHEN:
         ganze_seite(*eintrag)
     print('\nFertig. Die drei Bilder der Collage "Orientierung und Austausch"')
     print('(uniguide, berichte) entstehen separat - siehe Kopf dieser Datei.')

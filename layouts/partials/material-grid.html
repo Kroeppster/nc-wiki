@@ -85,6 +85,10 @@
                gedruckten Skripte im Hörsaal, also mehr als die Titelseite der
                PDF-Datei je zeigen könnte. */ -}}
         {{- $pfad := printf "images/angebot/%s.png" . }}
+        {{- /* Gibt es das Bild in der Sprache der Seite (testheft.fr.png), gilt
+               dieses - sonst das deutsche. */ -}}
+        {{- $eigen := printf "images/angebot/%s.%s.png" . $.Site.Language.Lang }}
+        {{- if resources.Get $eigen }}{{ $pfad = $eigen }}{{ end }}
         {{- if strings.Contains . "." }}{{ $pfad = printf "images/%s" . }}{{ end }}
         {{- with resources.Get $pfad }}
         {{- /* Zwei Grössen: In der Neunerkachel (Übungsserien) ist jedes Bild nur

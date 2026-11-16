@@ -20,6 +20,14 @@ Dies ist der einzige Untertest, bei dem eine Rangliste zwischen allen Kandidiere
 
 Für jedes richtig markierte Zeichen gibt es einen Punkt, für jedes falsch markierte oder bis zum letzten markierten Zeichen ausgelassene Zeichen wird ein Punkt abgezogen. Da ein übersprungenes Zeichen dich zusätzlich um die Chance auf einen Punkt bringt, ist Auslassen tendenziell schlechter als ein falsch gesetzter Strich. Insgesamt gibt es 40 Zeilen mit ungefähr gleichmässig verteilten Zeichen – im Schnitt lassen sich etwa zehn pro Zeile markieren, das kann als grobe Orientierung dienen.
 
+## Konzentrationstest auswerten
+
+Fotografiere dein bearbeitetes Blatt, und die Markierungen werden nach der Regel oben gezählt: richtig markiert minus falsch markiert minus ausgelassen. Geht für die Konzentrationstests unserer Testsimulationen und Übungsserien mit Lösungsblatt. Das Foto bleibt auf deinem Gerät.
+
+```baustein
+konztest-auswertung
+```
+
 ## Bedeutung für das Studium
 
 Als Ärztin oder Arzt ist es wichtig, auch unter Stress konzentriert und genau arbeiten zu können. Genau das prüft dieser Untertest.

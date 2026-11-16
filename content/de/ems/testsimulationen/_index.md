@@ -23,3 +23,11 @@ Hier findest du alle Informationen zu unseren Testsimulationen.
 ## Testhefte zum Herunterladen
 
 Die Testhefte unserer bisherigen Testsimulationen kannst du hier kostenlos herunterladen. Am meisten bringen sie dir, wenn du sie am Stück und auf Zeit löst, zum Beispiel mit dem Simulationsmodus weiter unten.
+
+## Antwortbogen auswerten
+
+Testsimulation auf Papier gelöst? Fotografiere deinen Antwortbogen, und du siehst deine Punkte je Untertest – ohne die Lösungen von Hand abzugleichen. Das Foto bleibt auf deinem Gerät.
+
+```baustein
+antwortbogen-auswertung
+```

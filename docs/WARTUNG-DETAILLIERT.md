@@ -525,7 +525,10 @@ Welche Bilder eine Kachel zeigt, steht in `layouts/partials/material-grid.html` 
 `object-fit: contain`) – die Quell-PDFs sind teils A4, teils US Letter. Fotos dürfen
 angeschnitten werden. Ein Name mit Endung wird unter `assets/images/` gesucht, einer ohne
 unter `assets/images/angebot/`. Neu erzeugen mit `python3 scripts/angebot-bilder-erzeugen.py`
-(braucht `pip install pymupdf`; oben im Skript stehen PDF und Seite je Bild). Das
+(braucht `pip install pymupdf`; oben im Skript stehen PDF und Seite je Bild). Testheft, Kursskript,
+Uniguide-Tabelle und Erfahrungsbericht gibt es je Sprache (`testheft.fr.png` …); die Seite nimmt
+das Bild ihrer Sprache und sonst das deutsche. Die beiden Bildschirmfotos erzeugt
+`node scripts/angebot-bildschirmfotos.mjs` (Testserver auf Port 8123). Das
 Discord-Feld ist kein Bild, sondern Text: drei erfundene Sprechblasen (`mat_chat_1` bis
 `mat_chat_3` in `i18n/`), bewusst kein Screenshot des echten Servers.
 

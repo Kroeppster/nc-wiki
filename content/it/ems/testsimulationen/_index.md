@@ -23,3 +23,11 @@ Qui trovi tutte le informazioni sulle nostre simulazioni del test.
 ## Fascicoli del test da scaricare
 
 Qui puoi scaricare gratuitamente i fascicoli del test delle nostre simulazioni precedenti. Ti saranno più utili se li risolvi tutti di fila e a tempo, per esempio con la modalità simulazione più in basso.
+
+## Valutare il foglio delle risposte
+
+Hai svolto la simulazione su carta? Fotografa il tuo foglio delle risposte e vedi i tuoi punti per sottotest – senza confrontare a mano le soluzioni. La foto resta sul tuo dispositivo.
+
+```baustein
+antwortbogen-auswertung
+```

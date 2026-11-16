@@ -396,6 +396,7 @@ blaettern_weiter: "Page suivante"
 blaettern_seite: "Page {n}"
 
 # Antwortbogen auswerten (Alpha-Seite, layouts/partials/bausteine/antwortbogen-auswertung.html)
+bl_beta: "Phase bêta : cet outil est encore testé avec de vraies photos. Vérifie sur l’image ce qui a été lu avant de te fier au nombre de points."
 ab_intro: "Photographie ta feuille de réponses remplie d’une simulation de test ou charge un scan (image ou PDF). Les marques sont lues et comparées aux solutions – tu obtiens tes points par sous-test."
 ab_privat: "La photo ne quitte pas ton appareil : la lecture et l’évaluation se font directement dans ton navigateur, rien n’est envoyé ni enregistré."
 ab_testsim: "Simulation de test"

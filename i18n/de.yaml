@@ -405,6 +405,7 @@ blaettern_weiter: "Nächste Seite"
 blaettern_seite: "Seite {n}"
 
 # Antwortbogen auswerten (Alpha-Seite, layouts/partials/bausteine/antwortbogen-auswertung.html)
+bl_beta: "Beta-Phase: Dieses Werkzeug wird noch mit echten Fotos getestet. Kontrolliere im Bild, was gelesen wurde, bevor du dich auf die Punktzahl verlässt."
 ab_intro: "Fotografiere deinen ausgefüllten Antwortbogen einer Testsimulation oder lade einen Scan hoch (Bild oder PDF). Die Markierungen werden gelesen und mit den Lösungen verglichen – heraus kommen deine Punkte je Untertest."
 ab_privat: "Das Foto verlässt dein Gerät nicht: Gelesen und ausgewertet wird direkt in deinem Browser, nichts wird hochgeladen oder gespeichert."
 ab_testsim: "Testsimulation"

@@ -537,7 +537,10 @@ blanc, `object-fit: contain`) – les PDF sources sont en partie A4, en partie U
 photos peuvent être recadrées. Un nom avec extension est cherché sous `assets/images/`,
 sans extension sous `assets/images/angebot/`. Regénérer avec
 `python3 scripts/angebot-bilder-erzeugen.py` (nécessite `pip install pymupdf` ; en haut du
-script figurent le PDF et la page de chaque image). Le champ Discord n'est pas une
+script figurent le PDF et la page de chaque image). Le cahier de test, le script du cours, le
+tableau Uniguide et le témoignage existent par langue (`testheft.fr.png` …) ; la page prend
+l'image de sa langue, sinon l'allemande. Les deux captures d'écran sont créées par
+`node scripts/angebot-bildschirmfotos.mjs` (serveur de test sur le port 8123). Le champ Discord n'est pas une
 image mais du texte : trois bulles inventées (`mat_chat_1` à `mat_chat_3` dans `i18n/`),
 volontairement pas une capture du vrai serveur.
 

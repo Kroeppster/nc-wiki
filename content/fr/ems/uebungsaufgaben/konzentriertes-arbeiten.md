@@ -20,6 +20,14 @@ C'est le seul sous-test pour lequel un classement est établi entre tous les can
 
 Chaque caractère correctement marqué rapporte un point, chaque caractère marqué à tort ou omis jusqu'au dernier caractère marqué en retire un. Comme un caractère sauté te prive en plus de la chance d'un point, omettre est plutôt pire qu'un trait mal placé. Il y a au total 40 lignes avec des caractères répartis à peu près uniformément – on peut en moyenne marquer environ 10 caractères par ligne, ce qui peut servir de repère approximatif.
 
+## Évaluer le test de concentration
+
+Photographie ta feuille travaillée, et les marques sont comptées selon la règle ci-dessus : marques justes moins marques fausses moins signes omis. Fonctionne pour les tests de concentration de nos simulations et séries d'exercices avec corrigé. La photo reste sur ton appareil.
+
+```baustein
+konztest-auswertung
+```
+
 ## Importance pour les études
 
 En tant que médecin, il est important de pouvoir travailler de façon concentrée et précise, même sous stress. C'est exactement ce que teste ce sous-test.

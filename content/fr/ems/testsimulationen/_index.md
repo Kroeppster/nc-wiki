@@ -23,3 +23,11 @@ Tu trouveras ici toutes les informations sur nos simulations de test.
 ## Cahiers de test à télécharger
 
 Tu peux télécharger gratuitement ici les cahiers de test de nos simulations précédentes. Ils te seront le plus utiles si tu les résous d'une traite et en temps limité, par exemple avec le mode simulation plus bas.
+
+## Évaluer la feuille de réponses
+
+Tu as fait la simulation sur papier ? Photographie ta feuille de réponses et tu vois tes points par sous-test – sans comparer les solutions à la main. La photo reste sur ton appareil.
+
+```baustein
+antwortbogen-auswertung
+```

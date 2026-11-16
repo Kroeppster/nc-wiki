@@ -20,6 +20,14 @@ Il foglio è così lungo che difficilmente si riesce a completarlo.
 
 Per ogni simbolo marcato correttamente c'è un punto, per ogni simbolo marcato per errore o tralasciato fino all'ultimo simbolo marcato se ne toglie uno. Siccome un simbolo saltato ti toglie in più la possibilità di un punto, tralasciare è tendenzialmente peggio di un segno sbagliato. In tutto ci sono 40 righe con simboli distribuiti in modo più o meno uniforme – in media se ne possono marcare circa 10 per riga, il che può servire da orientamento approssimativo.
 
+## Valutare il test di concentrazione
+
+Fotografa il tuo foglio compilato, e i segni vengono contati secondo la regola qui sopra: segni giusti meno segni sbagliati meno segni omessi. Funziona per i test di concentrazione delle nostre simulazioni e serie di esercizi con foglio delle soluzioni. La foto resta sul tuo dispositivo.
+
+```baustein
+konztest-auswertung
+```
+
 ## Importanza per gli studi
 
 Come medico è importante riuscire a lavorare in modo concentrato e preciso anche sotto stress. È proprio ciò che verifica questo sottotest.

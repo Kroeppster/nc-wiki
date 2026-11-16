@@ -289,7 +289,19 @@
     dazu(null, [{ inhalt: H.loesungsblatt(titel, auswahl.map(function(u){ return { titel: u.m.titelAbfrage, loesungen: u.m.loesungen() }; })) }]);
     H.drucken(seiten);
   }
-  el('lg-drucken').addEventListener('click', function(){ drucken(true); });
+  // «Set als PDF» wuerfelt erst ein neues Set - dieselbe Wartezeit wie beim
+  // Start, darum dieselbe Rueckmeldung: Knopf auf «wird erzeugt», den Browser
+  // das zeichnen lassen, dann rechnen.
+  el('lg-drucken').addEventListener('click', function(){
+    var knopf = this, text = knopf.textContent;
+    if (knopf.disabled) return;
+    if (!gewaehlt().length){ el('lg-fehler').hidden = false; return; }
+    knopf.disabled = true; knopf.textContent = T.erzeugt; knopf.setAttribute('aria-busy', 'true');
+    setTimeout(function(){
+      try { drucken(true); }
+      finally { knopf.disabled = false; knopf.textContent = text; knopf.removeAttribute('aria-busy'); }
+    }, 50);
+  });
   el('lg-drucken-ende').addEventListener('click', function(){ drucken(false); });
 })();
 </script>
