@@ -14,13 +14,20 @@ Zusammenfassung des Laufs.
 WARUM EIN EIGENES SKRIPT: Bis November 2026 prüfte das Werkzeug "lychee". Bei
 rund 45 Adressen blieb es einmal 20 Minuten hängen und wurde abgebrochen, ohne
 ein einziges Ergebnis zu zeigen. Hier hat jeder Abruf eine feste Obergrenze
-(ZEIT Sekunden, ein zweiter Versuch), der ganze Lauf dauert höchstens ein paar
+(ZEIT Sekunden, bis zu drei Versuche), der ganze Lauf dauert höchstens ein paar
 Minuten, und was nicht prüfbar ist, wird trotzdem aufgelistet.
 
-DREI ERGEBNISSE je Adresse:
+VIER ERGEBNISSE je Adresse:
   in Ordnung       Antwort 200-399.
-  kaputt           404/410 und andere Fehler, kein Server, Zeitüberschreitung
-                   (auch beim zweiten Versuch). Der Lauf wird rot.
+  kaputt           Die Seite gibt es nicht mehr (404/410) oder die Adresse
+                   der Website ist unbekannt (kein solcher Server). Nur das
+                   macht den Lauf rot.
+  gestört          Die andere Website antwortet mit einem Serverfehler (5xx)
+                   oder gar nicht - auch nach drei Versuchen mit Pausen. Das
+                   ist fast immer vorübergehend (am 16. November 2026 gab
+                   www.unibas.ch einmal 502 und machte den Lauf rot, obwohl
+                   der Link stimmt). Wird nur aufgelistet; steht dieselbe
+                   Adresse zwei Wochen hintereinander hier, nachsehen.
   nicht prüfbar    401/403/405/429: Die Website weist automatische Abrufe ab
                    (z.B. usi.ch, Instagram), im Browser geht der Link meist.
                    Wird nur aufgelistet - ab und zu von Hand anklicken.
@@ -42,12 +49,15 @@ import glob
 import html
 import os
 import re
+import socket
 import sys
+import time
 import urllib.error
 import urllib.request
 
 ZEIT = 12          # Sekunden je Versuch
 GLEICHZEITIG = 8
+PAUSEN = (0, 5, 20)  # Sekunden vor dem ersten, zweiten und dritten Versuch
 AUSLASSEN = re.compile(r'^https?://(localhost|127\.0\.0\.1)|^https://formspree\.io/|sibforms\.com')
 NICHT_PRUEFBAR = {401, 403, 405, 429, 999}
 KOPF = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
@@ -69,9 +79,10 @@ def sammeln(ordner):
 
 
 def abrufen(adresse):
-    """-> ('ok' | 'kaputt' | 'unklar', Begründung)"""
+    """-> ('ok' | 'kaputt' | 'gestoert' | 'unklar', Begründung)"""
     grund = ''
-    for _ in range(2):
+    for pause in PAUSEN:
+        time.sleep(pause)
         try:
             anfrage = urllib.request.Request(urllib.request.quote(adresse, safe=':/?&=%#@+,;~!$*()\''), headers=KOPF)
             with urllib.request.urlopen(anfrage, timeout=ZEIT) as antwort:
@@ -81,11 +92,14 @@ def abrufen(adresse):
             if e.code in NICHT_PRUEFBAR:
                 return 'unklar', 'Antwort %d' % e.code
             grund = 'Antwort %d' % e.code
-            if e.code in (404, 410):
+            if e.code < 500:      # 404, 410 und andere endgültige Antworten
                 return 'kaputt', grund
         except Exception as e:  # kein Server, Zeitüberschreitung, Zertifikat ...
-            grund = type(e).__name__ + ': ' + str(getattr(e, 'reason', e))[:80]
-    return 'kaputt', grund
+            ursache = getattr(e, 'reason', e)
+            grund = type(e).__name__ + ': ' + str(ursache)[:80]
+            if isinstance(ursache, socket.gaierror):   # diese Website gibt es nicht (mehr)
+                return 'kaputt', grund
+    return 'gestoert', grund
 
 
 def main():
@@ -100,10 +114,12 @@ def main():
         ergebnisse = dict(zip(adressen, becken.map(abrufen, adressen)))
     kaputt = [a for a in adressen if ergebnisse[a][0] == 'kaputt']
     unklar = [a for a in adressen if ergebnisse[a][0] == 'unklar']
+    gestoert = [a for a in adressen if ergebnisse[a][0] == 'gestoert']
     z = ['## Externe Links', '',
-         '%d Adressen geprüft: **%d in Ordnung, %d kaputt, %d nicht prüfbar.**' % (
-             len(adressen), len(adressen) - len(kaputt) - len(unklar), len(kaputt), len(unklar)), '']
+         '%d Adressen geprüft: **%d in Ordnung, %d kaputt, %d gestört, %d nicht prüfbar.**' % (
+             len(adressen), len(adressen) - len(kaputt) - len(unklar) - len(gestoert), len(kaputt), len(gestoert), len(unklar)), '']
     for titel, liste in (('Kaputt – bitte ersetzen', kaputt),
+                         ('Gestört – die andere Website antwortet im Moment nicht richtig; nur nachsehen, wenn es nächste Woche wieder hier steht', gestoert),
                          ('Nicht prüfbar – die Website weist automatische Abrufe ab, von Hand anklicken', unklar)):
         if liste:
             z += ['### ' + titel, '']
