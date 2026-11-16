@@ -29,8 +29,7 @@ distinguono abbastanza l'una dall'altra? Nomi, professioni, caratteristiche e
 diagnosi suonano come in un vero fascicolo del test, e le domande sono chiare?
 In italiano in particolare: concordanze («la paziente nervosa», «lo
 psicologo», «l'avvocata») e formulazione delle domande sono corrette? E in
-stampa: foglio delle risposte e soluzioni sembrano quelli dello strumento di
-formattazione?
+stampa: foglio delle risposte e soluzioni sembrano quelli del fascicolo del test?
 
 ```baustein
 lern-generator
@@ -40,12 +39,12 @@ lern-generator
 
 Chi ha risolto a casa su carta una simulazione del test fotografa il foglio delle
 risposte e ottiene i punti per sottotest – senza confrontare a mano le 144
-soluzioni. La lettura avviene come nello strumento di formattazione
-(valutazione), ma direttamente nel browser: la foto non lascia il
+soluzioni. La lettura avviene
+direttamente nel browser: la foto non lascia il
 dispositivo. Funziona per le simulazioni del test dal 2022 al 2026, che hanno
-tutte lo stesso foglio delle risposte – e per ogni simulazione dello strumento di
-formattazione: sotto «Chiave di correzione propria» scegliere il PDF delle soluzioni
-dello strumento (con il foglio delle risposte in cui le caselle giuste sono
+tutte lo stesso foglio delle risposte – e per ogni altra simulazione con lo stesso
+foglio: sotto «Chiave di correzione propria» scegliere il PDF delle soluzioni
+(con il foglio delle risposte in cui le caselle giuste sono
 annerite). «Fotocamera dal vivo» cerca i quattro angoli neri già
 nell'inquadratura e scatta da sola appena il foglio è fermo nell'immagine;
 «Scatta una foto» apre la fotocamera del telefono, «Scegli immagine o PDF» usa una foto o una scansione esistente.
@@ -55,7 +54,7 @@ all'ombra, con matita dura o morbida, con tratti cancellati (si segna come
 richiesto in alto sul foglio: un tratto obliquo per casella)? I segni letti
 sono giusti? Le righe incerte (in arancione) sono segnalate in modo
 sensato e facili da correggere? La pagina legge correttamente un test di
-concentrazione proprio dello strumento? E: le indicazioni sono comprensibili
+concentrazione proprio? E: le indicazioni sono comprensibili
 quando una foto non va bene?
 
 ```baustein
@@ -68,11 +67,9 @@ Lo stesso per il test di concentrazione: foto (o fotocamera dal vivo,
 scansione, PDF) del foglio svolto, contata secondo la regola delle
 istruzioni – segni giusti meno segni sbagliati meno segni bersaglio omessi
 prima dell'ultimo segno marcato. Il foglio non ha angoli neri; è la griglia
-dei 1600 segni stessa a servire da riferimento (procedimento dello strumento
-di formattazione). Si possono scegliere tutti i test di concentrazione del
+dei 1600 segni stessa a servire da riferimento. Si possono scegliere tutti i test di concentrazione del
 sito con foglio delle soluzioni (simulazioni del test 2022, 2023, 2026 e serie
-di esercizi) – oppure uno proprio: caricare esercizio e soluzioni in PDF, per
-esempio dallo strumento di formattazione.
+di esercizi) – oppure uno proprio: caricare esercizio e soluzioni in PDF.
 
 Da valutare: **funziona con vere foto e penne diverse?** I segni barrati,
 cerchiati o appena toccati vengono riconosciuti bene? Un segno letto male si

@@ -22,7 +22,7 @@ Exemple (abrégé) : *Maier, 20 ans, meunier, marié, Covid-19* – *Keller, 30 
 
 ## Générateur d'exercices : toujours de nouveaux jeux
 
-Le matériel d'entraînement de ces deux sous-tests est épuisé après un seul apprentissage. Le générateur tire donc à chaque fois un nouveau jeu : 18 figures, 15 patient·e·s avec 18 questions – séparément ou les deux ensemble comme le jour du test, avec phase d'apprentissage, distraction et reproduction. Choisis la difficulté (« moyenne » correspond à l'AMS), entraîne-toi à l'écran ou imprime le jeu comme cahier de test avec feuille de réponses et corrigé.
+Le matériel d'entraînement de ces deux sous-tests est épuisé après un seul apprentissage. Le générateur tire donc à chaque fois un nouveau jeu : 18 figures, 15 patient·e·s avec 18 questions – séparément ou les deux ensemble comme le jour du test, avec phase d'apprentissage, distraction et reproduction. Choisis la difficulté, entraîne-toi à l'écran ou imprime le jeu comme cahier de test avec feuille de réponses et corrigé.
 
 ```baustein
 lern-generator

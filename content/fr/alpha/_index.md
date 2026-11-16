@@ -31,7 +31,7 @@ caractéristiques et diagnostics sonnent-ils comme dans un vrai cahier de test,
 et les questions sont-elles claires ? En français en particulier : les
 accords (« la patiente nerveuse », « l'avocate ») et les tournures des
 questions sont-ils corrects ? Et à l'impression : la feuille de réponses et
-le corrigé ressemblent-ils à ceux de l'outil de formatage ?
+le corrigé ressemblent-ils à ceux du cahier de test ?
 
 ```baustein
 lern-generator
@@ -41,12 +41,12 @@ lern-generator
 
 Qui a résolu une simulation de test à la maison sur papier photographie la
 feuille de réponses et obtient ses points par sous-test – sans comparer à la
-main les 144 solutions. La lecture se fait comme dans l'outil de formatage
-(évaluation), mais directement dans le navigateur : la photo ne quitte pas
+main les 144 solutions. La lecture se fait
+directement dans le navigateur : la photo ne quitte pas
 l'appareil. Fonctionne pour les simulations de test 2022 à 2026, qui ont
-toutes la même feuille de réponses – et pour chaque simulation de l'outil de
-formatage : sous « Propre grille de correction », choisir le PDF du corrigé de
-l'outil (avec la feuille de réponses dont les bonnes cases sont noircies).
+toutes la même feuille de réponses – et pour toute autre simulation avec la même
+feuille : sous « Propre grille de correction », choisir le PDF du corrigé
+(avec la feuille de réponses dont les bonnes cases sont noircies).
 « Caméra en direct » cherche les quatre coins noirs déjà dans le viseur et
 déclenche toute seule dès que la feuille est immobile dans l'image ;
 « Prendre une photo » ouvre l'appareil photo du téléphone, « Choisir une image
@@ -57,8 +57,8 @@ téléphone** – de travers, à l'ombre, au crayon dur ou tendre, avec des trai
 gommés (on marque comme demandé en haut de la feuille : un trait oblique par
 case) ? Les marques lues sont-elles correctes ? Les lignes
 incertaines (en orange) sont-elles marquées de façon sensée, et faciles à
-corriger ? La page lit-elle correctement un test de concentration personnel
-de l'outil ? Et : les indications sont-elles compréhensibles quand une photo
+corriger ? La page lit-elle correctement un test de concentration personnel ?
+Et : les indications sont-elles compréhensibles quand une photo
 ne convient pas ?
 
 ```baustein
@@ -71,11 +71,10 @@ La même chose pour le test de concentration : photo (ou caméra en direct,
 scan, PDF) de la feuille travaillée, comptée selon la règle de la consigne –
 marques correctes moins marques fausses moins signes cibles omis avant le
 dernier signe marqué. La feuille n'a pas de coins noirs ; c'est la grille des
-1600 signes elle-même qui sert de repère (procédé de l'outil de formatage).
+1600 signes elle-même qui sert de repère.
 On peut choisir tous les tests de concentration du site avec corrigé
 (simulations de test 2022, 2023, 2026 et séries d'exercices) – ou un test
-personnel : charger l'exercice et le corrigé en PDF, par exemple issus de
-l'outil de formatage.
+personnel : charger l'exercice et le corrigé en PDF.
 
 À évaluer : **est-ce que ça marche avec de vraies photos et différents
 stylos ?** Les signes barrés, entourés ou à peine touchés sont-ils bien

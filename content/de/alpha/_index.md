@@ -26,7 +26,7 @@ Zu beurteilen: **Schwierigkeit und Realismus.** Sind die Figuren
 unterscheidbar genug, um sie sich in vier Minuten zu merken – und unterscheiden
 sich die Serien genug voneinander? Klingen Namen, Berufe, Merkmale und
 Diagnosen wie im echten Testheft, und sind die Fragen eindeutig? Und gedruckt:
-Sehen Antwortbogen und Lösungen aus wie aus dem Formatierungstool?
+Sehen Antwortbogen und Lösungen aus wie im Testheft?
 
 ```baustein
 lern-generator
@@ -36,11 +36,11 @@ lern-generator
 
 Wer eine Testsimulation zu Hause auf Papier gelöst hat, fotografiert den
 Antwortbogen und bekommt seine Punkte je Untertest – ohne die 144 Lösungen
-von Hand abzugleichen. Gelesen wird wie im Formatierungstool (Auswertung),
-aber direkt im Browser: Das Foto verlässt das Gerät nicht. Geht für die
+von Hand abzugleichen. Gelesen wird
+direkt im Browser: Das Foto verlässt das Gerät nicht. Geht für die
 Testsimulationen 2022 bis 2026, alle haben denselben Antwortbogen – und für
-jede Simulation aus dem Formatierungstool: unter «Eigener Lösungsschlüssel»
-das Lösungs-PDF aus dem Tool wählen (darin der Antwortbogen mit den richtigen
+jede andere Simulation mit demselben Bogen: unter «Eigener Lösungsschlüssel»
+das Lösungs-PDF wählen (darin der Antwortbogen mit den richtigen
 Kästchen schwarz). «Live-Kamera» sucht die vier schwarzen Ecken schon im
 Sucher und löst selbst aus, sobald der Bogen ruhig im Bild liegt; «Foto
 aufnehmen» öffnet die Kamera-App des Handys, «Bild oder PDF wählen» nimmt ein
@@ -50,7 +50,7 @@ Zu beurteilen ist vor allem, **ob es mit echten Handyfotos klappt**: schräg,
 im Schatten, mit hartem und weichem Bleistift, mit radierten Strichen (markiert
 wird wie oben auf dem Bogen verlangt: ein schräger Strich je Kästchen). Stimmen
 die gelesenen Markierungen? Werden unsichere Zeilen (orange)
-sinnvoll markiert, und lassen sie sich leicht korrigieren? Liest die Seite einen eigenen Konztest aus dem Tool richtig ein? Und: Sind die
+sinnvoll markiert, und lassen sie sich leicht korrigieren? Liest die Seite einen eigenen Konztest richtig ein? Und: Sind die
 Hinweise verständlich, wenn ein Foto nicht taugt?
 
 ```baustein
@@ -63,10 +63,10 @@ Dasselbe für den Konzentrationstest: Foto (oder Live-Kamera, Scan, PDF) des
 bearbeiteten Blatts, gezählt nach der Regel der Anleitung – richtig markiert
 minus falsch markiert minus ausgelassene Zielzeichen vor dem letzten
 markierten Zeichen. Der Bogen hat keine schwarzen Ecken; das Raster der 1600
-Zeichen selbst dient als Marke (Verfahren aus dem Formatierungstool). Zur Wahl
+Zeichen selbst dient als Marke. Zur Wahl
 stehen alle Konztests der Webseite mit Lösungsblatt (Testsimulationen 2022,
 2023, 2026 und die Übungsserien) – oder ein eigener: Aufgabe und Lösungsblatt
-als PDF hochladen, etwa aus dem Formatierungstool.
+als PDF hochladen.
 
 Zu beurteilen: **Klappt es mit echten Fotos und verschiedenen Stiften?**
 Werden durchgestrichene, eingekreiste oder nur angetippte Zeichen richtig

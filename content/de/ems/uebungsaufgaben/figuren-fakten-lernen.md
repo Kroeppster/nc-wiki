@@ -22,7 +22,7 @@ Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Kel
 
 ## Lern-Generator: immer neue Sets
 
-Übungsmaterial für diese beiden Untertests ist nach einmal Lernen verbraucht. Der Lern-Generator würfelt dir deshalb jedes Mal ein neues Set: 18 Figuren, 15 Patient\*innen mit 18 Fragen – einzeln oder beides zusammen wie am Testtag, mit Einprägephase, Ablenkung und Abfrage. Wähle die Schwierigkeit («mittel» entspricht dem EMS), übe am Bildschirm oder drucke das Set als Testheft mit Antwortbogen und Lösungen.
+Übungsmaterial für diese beiden Untertests ist nach einmal Lernen verbraucht. Der Lern-Generator würfelt dir deshalb jedes Mal ein neues Set: 18 Figuren, 15 Patient\*innen mit 18 Fragen – einzeln oder beides zusammen wie am Testtag, mit Einprägephase, Ablenkung und Abfrage. Wähle die Schwierigkeit, übe am Bildschirm oder drucke das Set als Testheft mit Antwortbogen und Lösungen.
 
 ```baustein
 lern-generator

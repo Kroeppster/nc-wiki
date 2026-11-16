@@ -22,7 +22,7 @@ Esempio (abbreviato): *Maier, 20 anni, mugnaio, sposato, Covid-19* – *Keller, 
 
 ## Generatore di esercizi: sempre nuovi gruppi
 
-Il materiale di esercizio di questi due sottotest è esaurito dopo averlo imparato una volta. Il generatore estrae quindi ogni volta un nuovo gruppo: 18 figure, 15 pazienti con 18 domande – separatamente o entrambi insieme come il giorno del test, con fase di apprendimento, distrazione e riproduzione. Scegli la difficoltà («media» corrisponde all'AMS), esercitati sullo schermo o stampa il gruppo come fascicolo del test con foglio delle risposte e soluzioni.
+Il materiale di esercizio di questi due sottotest è esaurito dopo averlo imparato una volta. Il generatore estrae quindi ogni volta un nuovo gruppo: 18 figure, 15 pazienti con 18 domande – separatamente o entrambi insieme come il giorno del test, con fase di apprendimento, distrazione e riproduzione. Scegli la difficoltà, esercitati sullo schermo o stampa il gruppo come fascicolo del test con foglio delle risposte e soluzioni.
 
 ```baustein
 lern-generator
