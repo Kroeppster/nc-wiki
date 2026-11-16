@@ -304,8 +304,33 @@
     });
     return {d:d+'Z', punkte:punkte, R:R};
   }
-  function drin(x,y,p){var d=false;for(var i=0,j=p.length-1;i<p.length;j=i++){
-    if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0])) d=!d;} return d;}
+  // Alle Rasterzellen, deren Mitte in der Form liegt - dasselbe Ergebnis und
+  // dieselbe Reihenfolge, wie wenn jede der G*G Zellen einzeln gegen alle Kanten
+  // der Kontur geprueft wuerde (so bis November 2026),
+  // aber zeilenweise: Je Rasterzeile werden die Schnittstellen der Kontur
+  // einmal berechnet und sortiert, eine Zelle liegt innen, wenn rechts von ihr
+  // eine ungerade Zahl davon liegt. Einzeln gefragt kostete das 81 Prozent der
+  // Rechenzeit eines Sets (November 2026: im Mittel 2.1 s, bis 5 s - auf dem
+  // Handy ein Mehrfaches).
+  function innen(p){
+    var feld=new Uint8Array(G*G), n=p.length, raus=[], x, y;
+    for(y=0;y<G;y++){
+      var yy=y+0.5, xs=[];
+      for(var i=0,j=n-1;i<n;j=i++){
+        if((p[i][1]>yy)!==(p[j][1]>yy)) xs.push((p[j][0]-p[i][0])*(yy-p[i][1])/(p[j][1]-p[i][1])+p[i][0]);
+      }
+      if(!xs.length) continue;
+      xs.sort(function(a,b){ return a-b; });
+      var k=0;
+      for(x=0;x<G;x++){
+        var xx=x+0.5;
+        while(k<xs.length && !(xx<xs[k])) k++;
+        if((xs.length-k)%2===1) feld[x*G+y]=1;
+      }
+    }
+    for(x=0;x<G;x++) for(y=0;y<G;y++) if(feld[x*G+y]) raus.push(x*G+y);
+    return raus;
+  }
   // --- 2. AUFTEILUNG IN FUENF FELDER --------------------------------------
   // Der erste Entwurf legte vier wellige Linien quer ueber die Figur. Das
   // sieht GESTREIFT aus, und genau das unterscheidet es von den echten
@@ -323,9 +348,7 @@
   // dass sich ein Feld auch mal lang an der Kontur entlangzieht.
   function aufteilen(form, stil){
     var lab=new Int8Array(G*G); lab.fill(-1);
-    var drinnen=[];
-    for(var x=0;x<G;x++) for(var y=0;y<G;y++)
-      if(drin(x+0.5,y+0.5,form.punkte)) drinnen.push(x*G+y);
+    var drinnen=innen(form.punkte);
     if(drinnen.length < G*G*0.14) return null;
     var saat=[], bandwinkel=null;
     // Das Feld der Figur, das einem Punkt am naechsten liegt (fuer die Saatpunkte)

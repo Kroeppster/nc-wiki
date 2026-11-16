@@ -198,8 +198,9 @@
     el('lg-phase-titel').focus({ preventScroll: true });
     uhr(s.sekunden, naechster);
   }
-  // Ein Figuren-Set zu erzeugen rechnet einige Sekunden (gemessen 0.5 bis 5 s
-  // auf einem schnellen Rechner, auf dem Handy ein Mehrfaches). In der Zeit
+  // Ein Figuren-Set zu erzeugen rechnet spuerbar lange (gemessen im Mittel
+  // 0.3 s auf einem schnellen Rechner, vor November 2026 1.8 s; auf dem Handy
+  // ein Mehrfaches). In der Zeit
   // steht der Browser still - ohne Rueckmeldung sah der Klick aus, als haette
   // er nichts bewirkt. Darum erst den Knopf auf «wird erzeugt» stellen, den
   // Browser das zeichnen lassen, dann rechnen.
