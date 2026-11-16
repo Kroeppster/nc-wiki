@@ -1917,7 +1917,11 @@ body.pm-aktiv{overflow:hidden;}
 .ems-kasten > .ems-beispielbild-2{margin-top:35.065pt;}
 .ems-kasten > .ems-beispielbild-2 + *{margin-top:33.435pt;}
 /* Einpraegeliste: drei Spalten, fuenf Gruppen */
-.ems-zeile{display:grid;grid-template-columns:77.95pt 103.46pt 1fr;}
+/* Namensspalte 88 pt statt der 77.95 pt des Hefts: Der laengste Name der
+   Wortlisten («Valsangiacomo:») misst 80.5 pt, «Papadopoulos:» 76.2 pt und
+   stiess an das Alter. Die zweite Spalte gibt die 10 pt ab (das Alter braucht
+   hoechstens 65 pt) - die dritte beginnt weiter bei 181.41 pt wie im Heft. */
+.ems-zeile{display:grid;grid-template-columns:88pt 93.41pt 1fr;}
 .ems-zeile + .ems-zeile{margin-top:5.67pt;}
 .ems-gruppe + .ems-gruppe{margin-top:41.01pt;}
 .ems-seite .ems-lernliste{margin-top:-6.89pt;}
