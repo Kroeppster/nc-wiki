@@ -863,7 +863,9 @@ ihm – sonst sähen alle Serien gleich aus. Drei **Schwierigkeitsstufen** (Ausw
 Lern-Generator, `STUFEN` und `serienstil` im Skript): «mittel» ist der an den echten Serien
 gemessene Stand, «leicht» nimmt markante Umrisse und ungleich grosse Felder, «schwer»
 glatte Kiesel mit fast gleich grossen Feldern. Die Stufen sind an diesen Massen gemessen,
-nicht an Menschen geeicht. Messen statt schätzen:
+nicht an Menschen geeicht. (Die Fakten haben dieselben drei Stufen, ohne eigene Wortlisten:
+Namen, Altersabstand, Diagnosen je Gruppe und Ablenker – Tabelle im Kopf von
+`fakten-generator.html`.) Messen statt schätzen:
 `python3 scripts/figuren-vergleichen.py 30 [--original <PDF>] [--stufe=leicht|schwer]` (braucht `pymupdf numpy
 scipy pillow`; das offizielle Beispiel-PDF von swissuniversities liegt nicht im Repo).
 Vor Änderungen am Zeichnen den Kommentarkopf in

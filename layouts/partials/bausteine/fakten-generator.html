@@ -82,6 +82,7 @@
   var NR = 1;
   var T = {
     heftEinpraegen: {{ i18n "fg_heft_einpraegen" | jsonify | safeJS }},
+    stufe: { leicht: {{ i18n "lg_stufe_leicht" | jsonify | safeJS }}, schwer: {{ i18n "lg_stufe_schwer" | jsonify | safeJS }} },
     heftAbfrage:    {{ i18n "fg_heft_abfrage" | jsonify | safeJS }},
     e1: {{ i18n "fg_anl_e1" | jsonify | safeJS }},
     e2: {{ i18n "fg_anl_e2" | jsonify | safeJS }},
@@ -132,8 +133,29 @@
   // Namensgruppe (Meier, Meister, Mettler). Siehe die Erklaerung in
   // data/fakten-generator/de.yaml - zufaelliges Ziehen ergaebe schwerere Sets
   // als die Pruefung, aehnliche Namen machen sie so schwer wie die Pruefung.
+  // --- SCHWIERIGKEITSSTUFEN ----------------------------------------------------
+  // «mittel» ist der Nachbau der echten Serien (siehe oben) und bleibt, wie er
+  // war. Die beiden anderen Stufen drehen an dem, was eine Serie schwer macht:
+  // WIE LEICHT SICH ZWEI PERSONEN VERWECHSELN LASSEN.
+  //              leicht                 mittel               schwer
+  //   Namen      alle 15 mit anderem    je Gruppe aehnlich   wie mittel
+  //              Anfangsbuchstaben      (Meier/Meister/...)
+  //   Alter      mind. 10 Jahre         mind. 5 Jahre        eng beieinander
+  //              auseinander                                 (4 bis 6 Jahre)
+  //   Diagnosen  drei Arten je Gruppe   drei Arten je Gruppe EINE Art je Gruppe
+  //   Ablenker   aus anderen Gruppen    Name/Beruf aus der   alles aus der
+  //                                     eigenen Gruppe       eigenen Gruppe
+  // Die Stufen sind NICHT an Menschen geeicht. Sie brauchen keine eigenen
+  // Wortlisten und gelten deshalb fuer alle drei Sprachen.
+  var stufe = 'mittel', stufeDesSets = 'mittel';
   function altersgruppen(){
-    var vorrat = W.altersgruppen_wahl, abstand = W.altersgruppen_abstand || 5;
+    var vorrat = W.altersgruppen_wahl, abstand = stufe === 'leicht' ? 10 : (W.altersgruppen_abstand || 5);
+    if (stufe === 'schwer' && vorrat && vorrat.length >= 9){
+      // Jeder zweite Wert aus einem Fenster von neun aufeinanderfolgenden
+      var sortiert = vorrat.slice().sort(function(a, b){ return a - b; });
+      var start = Math.floor(Math.random() * (sortiert.length - 8));
+      return [0, 2, 4, 6, 8].map(function(k){ return sortiert[start + k]; });
+    }
     if (vorrat && vorrat.length >= 5){
       for (var v = 0; v < 200; v++){
         var z = zieh(vorrat, 5).sort(function(a, b){ return a - b; });
@@ -156,6 +178,20 @@
   function zuletztMerken(z){
     zuletztHier = z;
     try { localStorage.setItem(ZULETZT, JSON.stringify(z)); } catch(e){}
+  }
+  // Stufe «leicht»: 15 Namen, die sich schon am Anfangsbuchstaben
+  // unterscheiden (so viele die Listen hergeben; sonst wird aufgefuellt).
+  function namenVerschieden(n){
+    var alle = [], nachBuchstabe = {};
+    W.namen.concat([].concat.apply([], W.namensgruppen || [])).forEach(function(x){ if (alle.indexOf(x) < 0) alle.push(x); });
+    alle.forEach(function(x){ var b = x.charAt(0).toUpperCase(); (nachBuchstabe[b] = nachBuchstabe[b] || []).push(x); });
+    var gezogen = misch(Object.keys(nachBuchstabe)).slice(0, n * 3).map(function(b){ return eins(nachBuchstabe[b]); });
+    var rest = misch(alle.filter(function(x){ return gezogen.indexOf(x) < 0; }));
+    while (gezogen.length < n * 3) gezogen.push(rest.shift());
+    gezogen = misch(gezogen);
+    var raus = [];
+    for (var i = 0; i < n; i++) raus.push(gezogen.slice(i * 3, i * 3 + 3));
+    return raus;
   }
   function namenJeGruppe(n){
     var alle = (W.namensgruppen || []).filter(function(g){ return g.length >= 3; });
@@ -191,7 +227,11 @@
     var gruppen = altersgruppen();
     var felder  = misch(Object.keys(W.berufe)).filter(function(f){ return W.berufe[f].length >= 3; });
     var arten   = Object.keys(W.krankheiten);
-    var namen   = namenJeGruppe(gruppen.length);
+    var namen   = stufe === 'leicht' ? namenVerschieden(gruppen.length) : namenJeGruppe(gruppen.length);
+    stufeDesSets = stufe;
+    // Stufe «schwer»: jede Gruppe bekommt EINE Krankheitsart (drei Zahn-
+    // diagnosen in derselben Gruppe) statt dreier verschiedener.
+    var artJeGruppe = misch(arten.filter(function(a){ return W.krankheiten[a].length >= 3; }));
     // Nur Adjektive (klein geschrieben): Ein Nomen wie "Notfall" passt weder
     // in "Der Urologe ist …" noch waere es unter lauter Adjektiven als
     // Antwort zu verstecken.
@@ -211,6 +251,7 @@
       var feld = felder[g % felder.length];
       var berufe = zieh(W.berufe[feld], 3);
       var dreiArten = zieh(arten, 3);
+      if (stufe === 'schwer' && artJeGruppe.length){ var eine = artJeGruppe[g % artJeGruppe.length]; dreiArten = [eine, eine, eine]; }
       berufe.forEach(function(b, k){
         // Jeder Beruf steht in beiden Formen in der Liste ({ m: "Apotheker", w: "Apothekerin" });
         // gezogen wird der Beruf, die Form wuerfelt - so kommt er nie doppelt im Set vor.
@@ -295,8 +336,13 @@
     var andere = leute.filter(function(q){ return q !== p && (!nenntGeschlecht(t) || q.geschlecht === p.geschlecht); });
     // Namen und Berufe: zuerst die beiden aus derselben Gruppe. "Meier,
     // Meister oder Mettler?" ist die eigentliche Frage des Untertests.
-    var nah = (t.fragt === 'name' || t.fragt === 'beruf') ? misch(andere.filter(function(q){ return q.gruppe === p.gruppe; })) : [];
-    var fern = misch(andere.filter(function(q){ return nah.indexOf(q) < 0; }));
+    // Stufen: schwer nimmt bei JEDER Frage zuerst die eigene Gruppe, leicht
+    // nimmt sie zuletzt (dann stehen fast nur Personen anderer Gruppen da).
+    var eigene = misch(andere.filter(function(q){ return q.gruppe === p.gruppe; }));
+    var fremde = misch(andere.filter(function(q){ return eigene.indexOf(q) < 0; })), nah, fern;
+    if (stufeDesSets === 'schwer' || (stufeDesSets === 'mittel' && (t.fragt === 'name' || t.fragt === 'beruf'))){ nah = eigene; fern = fremde; }
+    else if (stufeDesSets === 'leicht'){ nah = []; fern = fremde.concat(eigene); }
+    else { nah = []; fern = misch(andere); }
     var ablenker = nah.concat(fern).slice(0, 4).map(function(q){ return antwortText(q, t.fragt, p.geschlecht); });
     var liste = misch([antwortText(p, t.fragt, p.geschlecht)].concat(ablenker));
     return { liste: liste, richtig: liste.indexOf(antwortText(p, t.fragt, p.geschlecht)) };
@@ -372,11 +418,17 @@
   // zweispaltig (ems.typ: FL-ERSTE-SEITE, PRO-SEITE). Nummer und Testteil
   // vergibt der Lern-Generator.
   var leute = [], fragen = [];
+  // Die Stufe steht im Kopf der Einpraegeseite, ausser bei «mittel».
+  function titelEinpraegen(){ return T.heftEinpraegen + (T.stufe[stufeDesSets] ? ' (' + T.stufe[stufeDesSets] + ')' : ''); }
   window.NCWikiFakten = {
+    stufen: ['leicht', 'mittel', 'schwer'],
+    stufeSetzen: function(s){ if (['leicht', 'mittel', 'schwer'].indexOf(s) >= 0) stufe = s; return stufe; },
+    // fuer die Pruefstaende: das Set selbst
+    set: function(){ return { stufe: stufeDesSets, leute: leute, fragen: fragen }; },
     titelEinpraegen: T.heftEinpraegen, titelAbfrage: T.heftAbfrage,
     minLern: {{ $lern }}, minAbfrage: {{ $abfrage }}, von: NR, anzahl: 18,
     neu: function(){ leute = baueSet(); fragen = baueFragen(leute); },
-    lernen: function(min){ return H.kopf(T.heftEinpraegen, H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) + lernliste(leute) + H.marke('stopp'); },
+    lernen: function(min){ return H.kopf(titelEinpraegen(), H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) + lernliste(leute) + H.marke('stopp'); },
     abfrage: function(min){ return H.kopf(T.heftAbfrage, H.zeit('bearb', min)) + H.kasten([T.a1, T.a2]) + fragenHtml(fragen, 0, 'wahl') + H.marke('stopp'); },
     antworten: function(){ return fragen.map(function(_, i){
       var g = document.querySelector('input[name="fg-f' + i + '"]:checked'); return g ? +g.value : null; }); },
@@ -386,7 +438,7 @@
       + '<div class="fg-set-nochmal">' + H.kopf(T.heftEinpraegen, '') + lernliste(leute) + '</div>'; },
     loesungen: function(){ return fragen.map(function(f){ return BST[f.richtig]; }); },
     seitenA: function(min){ return [
-      { inhalt: H.kopf(T.heftEinpraegen, H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) },
+      { inhalt: H.kopf(titelEinpraegen(), H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) },
       { inhalt: lernliste(leute), marke: 'stopp' }]; },
     seitenB: function(min){ return [
       { inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', min)) + H.kasten([T.a1, T.a2]) + druckFragen(fragen.slice(0, 8), 0, false), marke: 'weiter' },

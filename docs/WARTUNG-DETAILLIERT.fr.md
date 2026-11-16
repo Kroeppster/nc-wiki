@@ -886,7 +886,9 @@ difficulté** (choix dans le générateur d'apprentissage, `STUFEN` et `serienst
 script) : « moyenne » est l'état mesuré sur les vraies séries, « facile » prend des
 contours marquants et des champs de tailles inégales, « difficile » des galets lisses aux
 champs presque égaux. Les niveaux sont mesurés sur ces grandeurs, pas étalonnés sur des
-personnes. Mesurer plutôt qu'estimer :
+personnes. (Les faits ont les mêmes trois niveaux, sans listes de mots propres : noms,
+écart d'âge, diagnostics par groupe et distracteurs – tableau dans `fakten-generator.html`.)
+Mesurer plutôt qu'estimer :
 `python3 scripts/figuren-vergleichen.py 30 [--original <PDF>] [--stufe=leicht|schwer]` (nécessite
 `pymupdf numpy scipy pillow` ; le PDF d'exemple officiel de swissuniversities n'est pas
 dans le dépôt). Avant de toucher au dessin, lire l'en-tête de commentaires de

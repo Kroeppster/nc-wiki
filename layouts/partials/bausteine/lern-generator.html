@@ -61,7 +61,13 @@
 </select></label></p>
 <p class="lg-zeile" id="lg-zeile-fakten"><b>{{ i18n "lg_fakten" }}</b>
 <label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-fakten-lernen" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
-<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-fakten-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label></p>
+<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-fakten-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
+{{- /* Schwierigkeitsstufe der Fakten (fakten-generator.html, SCHWIERIGKEITSSTUFEN) */}}
+<label>{{ i18n "lg_stufe" }} <select id="lg-fakten-stufe">
+<option value="leicht">{{ i18n "lg_stufe_leicht" }}</option>
+<option value="mittel" selected>{{ i18n "lg_stufe_mittel" }}</option>
+<option value="schwer">{{ i18n "lg_stufe_schwer" }}</option>
+</select></label></p>
 <p class="lg-zeile"><label>{{ i18n "fg_zeit_pause" }} <input type="number" id="lg-pause" min="0" max="120"> {{ i18n "fg_minuten" }}</label></p>
 </div>
 <p class="fg-fehler" id="lg-fehler" hidden>{{ i18n "lg_keine_auswahl" }}</p>
@@ -181,8 +187,7 @@
   function neu(){
     auswahl = gewaehlt();
     if (!auswahl.length){ el('lg-fehler').hidden = false; return false; }
-    window.NCWikiFiguren.stufeSetzen(el('lg-figuren-stufe').value);
-    auswahl.forEach(function(u){ u.m.neu(); });
+    auswahl.forEach(function(u){ u.m.stufeSetzen(el('lg-' + u.name + '-stufe').value); u.m.neu(); });
     return true;
   }
   // Beim Wechsel von einer Abfrage zur naechsten verschwindet ihr Blatt -

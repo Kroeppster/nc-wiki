@@ -868,7 +868,9 @@ lo seguono – altrimenti tutte le serie si somiglierebbero. Tre **livelli di di
 (scelta nel generatore di apprendimento, `STUFEN` e `serienstil` nello script): «media» è
 lo stato misurato sulle serie vere, «facile» usa contorni marcati e campi di grandezza
 diversa, «difficile» ciottoli lisci con campi quasi uguali. I livelli sono misurati su
-queste grandezze, non tarati su persone. Misurare invece di stimare:
+queste grandezze, non tarati su persone. (I fatti hanno gli stessi tre livelli, senza liste
+di parole proprie: nomi, distanza d'età, diagnosi per gruppo e distrattori – tabella in
+`fakten-generator.html`.) Misurare invece di stimare:
 `python3 scripts/figuren-vergleichen.py 30 [--original <PDF>] [--stufe=leicht|schwer]` (serve `pymupdf numpy scipy
 pillow`; il PDF di esempio ufficiale di swissuniversities non è nel repository). Prima di
 toccare il disegno, leggere l'intestazione di commenti di

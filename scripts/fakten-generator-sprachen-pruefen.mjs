@@ -199,6 +199,38 @@ for (const sprache of SPRACHEN) {
   await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(300);
   const fig = await p.evaluate(() => document.getElementById('lg-wurzel').innerText);
   pruef('Figuren-Einpraegephase ohne deutsche Woerter', !DEUTSCH.test(fig), (fig.match(DEUTSCH) || [])[0]);
+  await p.reload({ waitUntil: 'networkidle' }); await p.uncheck('#lg-mit-figuren');
+  // Schwierigkeitsstufen (fakten-generator.html, SCHWIERIGKEITSSTUFEN): «mittel»
+  // ist vorgewaehlt; je Stufe das, woran man sie erkennt, ueber 20 Sets.
+  console.log('=== Schwierigkeitsstufen ===');
+  pruef('Vorgabe: Stufe mittel', await p.inputValue('#lg-fakten-stufe') === 'mittel');
+  {
+    const st = await p.evaluate(() => { const M = window.NCWikiFakten, r = {};
+      for (const s of ['leicht', 'mittel', 'schwer']) { M.stufeSetzen(s);
+        let ini = 0, spanne = 0, minAbst = 99, eigen = 0, opt = 0, ok18 = 0, eindeutig = 0; const n = 20;
+        for (let i = 0; i < n; i++) { M.neu(); const L = M.set().leute, F = M.set().fragen;
+          ini += new Set(L.map(q => q.name[0].toUpperCase())).size;
+          const alter = [...new Set(L.map(q => q.alter))].sort((a, b) => a - b);
+          spanne += alter[4] - alter[0]; for (let k = 1; k < 5; k++) minAbst = Math.min(minAbst, alter[k] - alter[k - 1]);
+          if (F.length === 18 && F.every(f => f.optionen.length === 5 && new Set(f.optionen).size === 5)) ok18++;
+          if (new Set(L.map(q => q.krankheit)).size === 15 && new Set(L.map(q => q.name)).size === 15 && alter.length === 5) eindeutig++;
+          F.forEach(f => { if (/^alter/.test(f.typ)) return; const feld = { name: 'name', beruf: 'beruf', merkmal: 'merkmal', diagnose: 'krankheit' }[f.typ.split('_')[0]];
+            const pers = L.find(q => q[feld] === f.optionen[f.richtig]); if (!pers) return;
+            f.optionen.forEach((o, k) => { if (k === f.richtig) return; opt++; const q = L.find(x => x[feld] === o); if (q && q.gruppe === pers.gruppe) eigen++; }); }); }
+        r[s] = { ini: ini / n, spanne: spanne / n, minAbst, eigen: eigen / opt, ok18, eindeutig }; }
+      M.stufeSetzen('mittel'); return r; });
+    const j = JSON.stringify(st);
+    pruef('jede Stufe: 20 von 20 Sets mit 18 Fragen, je 5 verschiedenen Antworten, 15 Namen und Diagnosen ohne Doppel',
+      Object.values(st).every(s => s.ok18 === 20 && s.eindeutig === 20), j);
+    pruef('leicht: 15 verschiedene Anfangsbuchstaben, Alter mindestens 10 Jahre auseinander, fast keine Ablenker aus der eigenen Gruppe',
+      st.leicht.ini === 15 && st.leicht.minAbst >= 10 && st.leicht.eigen < 0.02, j);
+    pruef('schwer: Alter eng beieinander, mehr Ablenker aus der eigenen Gruppe als bei mittel',
+      st.schwer.spanne <= 26 && st.schwer.spanne < st.mittel.spanne - 10 && st.schwer.eigen > st.mittel.eigen + 0.08, j);
+    await p.selectOption('#lg-fakten-stufe', 'schwer');
+    await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 });
+    const kopf = await p.evaluate(() => document.querySelector('#lg-blatt .ems-kopf').textContent);
+    pruef('gewaehlte Stufe steht im Kopf der Einpraegeseite', /\) \((schwer|difficile)\)/.test(kopf), kopf);
+  }
   pruef('keine JS-Fehler', js.length === 0, js.join(' | '));
   await ctx.close();
 }
