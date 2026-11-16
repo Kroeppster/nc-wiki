@@ -20,11 +20,11 @@ Questa pagina ti guida attraverso il test attitudinale per gli studi di medicina
 
 Le informazioni ufficiali sull'AMS le ricevi da swissuniversities in aprile, una volta iscritto·a. Se trovi informazioni contraddittorie, attieniti al «Test Info» ufficiale.
 
-[Questo è il sito ufficiale di swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina), dove puoi iscriverti agli studi di medicina e trovare gli opuscoli informativi sul test e degli esempi di esercizi (sotto «Documenti»). Qui trovi il sito del [Centro per lo sviluppo di test e la diagnostica (ZTD)](https://www.unifr.ch/ztd/de/ems), con altre informazioni ufficiali.
+[Questo è il sito ufficiale di swissuniversities](https://www.swissuniversities.ch/it/servizi/translate-to-italienisch-anmeldung-zum-medizinstudium), dove puoi iscriverti agli studi di medicina e trovare gli opuscoli informativi sul test e degli esempi di esercizi (sotto «Documenti»). Qui trovi il sito del [Centro per lo sviluppo di test e la diagnostica (ZTD)](https://www.unifr.ch/ztd/de/ems), con altre informazioni ufficiali.
 
 ### Iscrizione
 
-Ricorda che devi **preiscriverti entro il 15 febbraio 2027** presso [swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina) (MEDON). L'iscrizione all'AMS vera e propria avviene in primavera, vedi il calendario qui sotto. Pensa anche alle scadenze degli altri corsi di studio, se sono il tuo piano B.
+Ricorda che devi **preiscriverti entro il 15 febbraio 2027** presso [swissuniversities](https://www.swissuniversities.ch/it/servizi/translate-to-italienisch-anmeldung-zum-medizinstudium) (MEDON). L'iscrizione all'AMS vera e propria avviene in primavera, vedi il calendario qui sotto. Pensa anche alle scadenze degli altri corsi di studio, se sono il tuo piano B.
 
 Il calendario di swissuniversities per l'inizio degli studi nell'autunno 2027:
 

@@ -16,7 +16,7 @@ E-mail: info@nc-wiki.ch
 
 Abbiamo preparato tutti i consigli e gli esercizi in buona fede e con la massima cura. Non possiamo tuttavia garantire il superamento del test attitudinale per gli studi di medicina (AMS).
 
-Teniamo molto alla correttezza delle nostre informazioni sull'AMS. Fanno comunque sempre fede le indicazioni ufficiali di [swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina) e del [Centro per lo sviluppo di test e la diagnostica (ZTD)](https://www.unifr.ch/ztd/de/ems).
+Teniamo molto alla correttezza delle nostre informazioni sull'AMS. Fanno comunque sempre fede le indicazioni ufficiali di [swissuniversities](https://www.swissuniversities.ch/it/servizi/translate-to-italienisch-anmeldung-zum-medizinstudium) e del [Centro per lo sviluppo di test e la diagnostica (ZTD)](https://www.unifr.ch/ztd/de/ems).
 
 Le testimonianze riflettono le esperienze e le opinioni personali di chi le ha scritte.
 

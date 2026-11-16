@@ -9,4 +9,4 @@ Cinque studenti di medicina – Morgan (Basilea), Erich (Berna), Jonas (Friburgo
 
 Alcuni consigli ricorrenti nelle interviste: trovare presto una propria strategia di studio invece di continuare a studiare come al liceo, confrontarsi regolarmente con i compagni e sfruttare i gruppi di studio, non lasciarsi intimidire dalla quantità di materia e pianificare consapevolmente pause e tempo libero – soprattutto nel periodo degli esami.
 
-Maggiori informazioni sull'iscrizione agli studi di medicina si trovano sul sito ufficiale di [swissuniversities](https://www.swissuniversities.ch/it/servizi/iscrizione-agli-studi-di-medicina).
+Maggiori informazioni sull'iscrizione agli studi di medicina si trovano sul sito ufficiale di [swissuniversities](https://www.swissuniversities.ch/it/servizi/translate-to-italienisch-anmeldung-zum-medizinstudium).
