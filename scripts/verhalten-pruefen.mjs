@@ -285,7 +285,16 @@ console.log('\n=== Lern-Generator: Auswahl, Doppelklick, Minuten ===');
   pruef('gewaehlt: Zeitzeile Fakten sichtbar', await p.isVisible('#lg-zeile-fakten'));
   await p.check('#lg-mit-figuren');
   await p.fill('#lg-figuren-lernen', '-5');
-  await p.click('#lg-los'); await p.waitForTimeout(700);
+  // Figuren erzeugen rechnet Sekunden: Der Knopf muss sofort zeigen, dass
+  // etwas passiert (gesperrt, anderer Text), nicht erst danach.
+  const beschaeftigt = await p.evaluate(() => { const k = document.getElementById('lg-los'), vor = k.textContent; k.click();
+    return k.disabled && k.textContent !== vor && k.getAttribute('aria-busy') === 'true'; });
+  pruef('«Set erzeugen»: Knopf zeigt sofort, dass gerechnet wird', beschaeftigt);
+  await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 });
+  pruef('danach wieder frei und mit altem Text', await p.evaluate(() => { const k = document.getElementById('lg-los'); return !k.disabled && !k.hasAttribute('aria-busy'); }));
+  await p.click('#lg-weiter'); await p.click('#lg-weiter'); await p.click('#lg-weiter'); await p.click('#lg-weiter'); await p.click('#lg-weiter');
+  await p.click('#lg-nochmal');
+  await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(700);
   const t1 = await p.$eval('#lg-phase-titel', e => e.textContent);
   const uhr = await p.$eval('#lg-uhr', e => e.textContent.trim());
   pruef('negative Minuten: Phase laeuft trotzdem', uhr !== '0:00', uhr);

@@ -85,7 +85,7 @@ for (const sprache of SPRACHEN) {
 
   // Ein Durchlauf mit Ablenkung: Texte auf Deutsch?
   await p.uncheck('#lg-mit-figuren'); await p.fill('#lg-pause', '0');
-  await p.click('#lg-los'); await p.waitForTimeout(150);
+  await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(150);
   const blattLernen = await p.evaluate(() => document.getElementById('lg-wurzel').innerText);
   pruef('Einpraegephase ohne deutsche Woerter', !DEUTSCH.test(blattLernen), (blattLernen.match(DEUTSCH) || [])[0]);
   await p.click('#lg-weiter'); await p.waitForTimeout(150);
@@ -196,7 +196,7 @@ for (const sprache of SPRACHEN) {
   console.log('=== Figuren (nur Sprache) ===');
   await p.click('#lg-nochmal').catch(() => {});
   await p.check('#lg-mit-figuren'); await p.uncheck('#lg-mit-fakten');
-  await p.click('#lg-los'); await p.waitForTimeout(300);
+  await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(300);
   const fig = await p.evaluate(() => document.getElementById('lg-wurzel').innerText);
   pruef('Figuren-Einpraegephase ohne deutsche Woerter', !DEUTSCH.test(fig), (fig.match(DEUTSCH) || [])[0]);
   pruef('keine JS-Fehler', js.length === 0, js.join(' | '));

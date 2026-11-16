@@ -88,6 +88,7 @@
     abfrage: {{ i18n "fg_phase_abfrage" | jsonify | safeJS }},
     auswerten: {{ i18n "fg_auswerten" | jsonify | safeJS }},
     weiter: {{ i18n "fg_weiter" | jsonify | safeJS }},
+    erzeugt: {{ i18n "fg_erzeugt" | jsonify | safeJS }},
     punkte: {{ i18n "fg_punkte_von" | jsonify | safeJS }},
     gesamt: {{ i18n "lg_gesamt" | jsonify | safeJS }},
     figuren: {{ i18n "lg_figuren" | jsonify | safeJS }},
@@ -197,7 +198,23 @@
     el('lg-phase-titel').focus({ preventScroll: true });
     uhr(s.sekunden, naechster);
   }
+  // Ein Figuren-Set zu erzeugen rechnet einige Sekunden (gemessen 0.5 bis 5 s
+  // auf einem schnellen Rechner, auf dem Handy ein Mehrfaches). In der Zeit
+  // steht der Browser still - ohne Rueckmeldung sah der Klick aus, als haette
+  // er nichts bewirkt. Darum erst den Knopf auf «wird erzeugt» stellen, den
+  // Browser das zeichnen lassen, dann rechnen.
   el('lg-los').addEventListener('click', function(){
+    var knopf = this;
+    if (knopf.disabled) return;
+    if (!gewaehlt().length){ el('lg-fehler').hidden = false; return; }
+    var text = knopf.textContent;
+    knopf.disabled = true; knopf.textContent = T.erzeugt; knopf.setAttribute('aria-busy', 'true');
+    setTimeout(function(){
+      try { starten(); }
+      finally { knopf.disabled = false; knopf.textContent = text; knopf.removeAttribute('aria-busy'); }
+    }, 50);
+  });
+  function starten(){
     if (!neu()) return;
     antworten = {};
     schritte = [];
@@ -209,7 +226,7 @@
       schritte.push({ titel: T.abfrage + ' – ' + u.titel, sekunden: min * 60, abfrage: u, blatt: u.m.abfrage(min) }); });
     jetzt = -1;
     naechster();
-  });
+  }
   // Der Knopf bleibt beim Wechsel an derselben Stelle: Ein Doppelklick
   // uebersprang sonst eine ganze Phase. Die Uhr ruft naechster() direkt auf.
   // Erkannt wird der Doppelklick selbst (der Browser zaehlt die Klicks einer

@@ -15,6 +15,8 @@
 #                                        Newsletter (es geht nie etwas hinaus)
 #   - scripts/seiten-pruefen.mjs         jede Seite in zwei Breiten: läuft etwas
 #                                        über den Rand, fehlt ein Bild?
+#   - scripts/fakten-generator-pruefen.mjs, fakten-generator-sprachen-pruefen.mjs,
+#     scripts/figuren-generator-pruefen.mjs   die Lern-Generatoren, viele Sets
 #   - scripts/antwortbogen-pruefen.mjs   «Antwortbogen auswerten» mit Testbildern
 #   - scripts/konztest-pruefen.mjs       «Konztest auswerten» mit Testbildern
 #
@@ -109,6 +111,16 @@ jobs:
 
       - name: Rendering (every page, two widths)
         run: node scripts/seiten-pruefen.mjs
+
+      # Die Lern-Generatoren wuerfeln jedes Mal neu - geprueft wird deshalb
+      # ueber viele Sets (Fakten: jede Frage inhaltlich gegen die
+      # Einpraegeliste, deutsch, franzoesisch, italienisch; Figuren: kein
+      # Buchstabe beruehrt einen anderen, keine Figur abgeschnitten).
+      - name: Learning generators (facts in three languages, figures)
+        run: |
+          node scripts/fakten-generator-pruefen.mjs "$RUNNER_TEMP/fakten.pdf"
+          node scripts/fakten-generator-sprachen-pruefen.mjs
+          node scripts/figuren-generator-pruefen.mjs
 
       - name: Answer sheet evaluation (test images)
         run: |

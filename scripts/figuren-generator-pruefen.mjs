@@ -57,7 +57,7 @@ pruef('Vorgabe: Abfrage 5 Min', vor.a === 5, String(vor.a));
 pruef('Vorgabe: echte Pause (51 Min)', vor.p === 51, String(vor.p));
 
 await p.fill('#lg-figuren-lernen', '1'); await p.fill('#lg-pause', '0'); await p.fill('#lg-figuren-abfrage', '9');
-await p.click('#lg-los'); await p.waitForTimeout(2500);
+await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(2500);
 const lern = await p.evaluate(() => {
   // Nur das Raster - im Anleitungskasten darueber stehen zwei Beispielfiguren.
   const svgs = [...document.querySelectorAll('#lg-blatt .fig-raster .fig-svg')];
@@ -142,7 +142,7 @@ let schlimmste = 0, faelle = 0, figuren = 0, abgeschnitten = 0, knappste = 99;
 for (let runde = 0; runde < RUNDEN; runde++) {
   await p.reload({ waitUntil: 'networkidle' }); await p.uncheck('#lg-mit-fakten');
   await p.fill('#lg-figuren-lernen', '1'); await p.fill('#lg-pause', '0'); await p.fill('#lg-figuren-abfrage', '9');
-  await p.click('#lg-los'); await p.waitForTimeout(400);
+  await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(400);
   await p.click('#lg-weiter'); await p.waitForTimeout(400);
   const r = await p.evaluate(() => {
     const raus = [];

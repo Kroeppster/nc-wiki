@@ -55,7 +55,7 @@ console.log('=== Ein Durchlauf ===');
 const W = await p.evaluate(() => JSON.parse(document.getElementById('fg-daten').textContent));
 // Seit Oktober 2026 im Lern-Generator: nur Fakten anhaken, ohne Ablenkung
 await p.uncheck('#lg-mit-figuren'); await p.fill('#lg-pause', '0');
-await p.click('#lg-los'); await p.waitForTimeout(200);
+await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(200);
 const lern = await p.evaluate(() => {
   const b = document.getElementById('lg-blatt');
   return { kopf: b.querySelector('.ems-kopf')?.textContent, kasten: b.querySelector('.ems-kasten')?.textContent,
