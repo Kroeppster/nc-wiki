@@ -212,10 +212,16 @@
   });
   // Der Knopf bleibt beim Wechsel an derselben Stelle: Ein Doppelklick
   // uebersprang sonst eine ganze Phase. Die Uhr ruft naechster() direkt auf.
+  // Erkannt wird der Doppelklick selbst (der Browser zaehlt die Klicks einer
+  // Folge in "detail"), nicht ein Zeitabstand: Eine feste Sperre von 600 ms
+  // schluckte auch zwei getrennte, schnelle Klicks - so in den Pruefstaenden
+  // des Fakten-Generators, die danach haengen blieben. Nur beim Tippen mit dem
+  // Finger zaehlt der Browser nicht zuverlaessig, dort gilt zusaetzlich eine
+  // kurze Sperre.
   var letzterKlick = 0;
-  el('lg-weiter').addEventListener('click', function(){
-    var t = Date.now();
-    if (t - letzterKlick < 600) return;
+  el('lg-weiter').addEventListener('click', function(ev){
+    var t = Date.now(), finger = ev.pointerType === 'touch';
+    if (ev.detail > 1 || (finger && t - letzterKlick < 400)) return;
     letzterKlick = t;
     naechster();
   });

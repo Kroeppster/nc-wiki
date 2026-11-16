@@ -640,7 +640,7 @@
     f.linien.forEach(function(d){ s+='<path d="'+d+'" fill="none" stroke="#000" stroke-width="'+f.strich.toFixed(2)+'" stroke-linecap="round"/>'; });
     s+='</g>';
     if(mitBuchstaben) f.mitten.forEach(function(m,i){
-      s+='<text x="'+m[0].toFixed(1)+'" y="'+(m[1]+f.schrift/3).toFixed(1)+'" font-size="'+f.schrift.toFixed(1)+'" text-anchor="middle" fill="#000">'+'ABCDE'[i]+'</text>'; });
+      s+='<text x="'+m[0].toFixed(1)+'" y="'+(m[1]+f.schrift/3).toFixed(1)+'" font-size="'+f.schrift.toFixed(1)+'" text-anchor="middle" fill="'+(i===schwarz?'#fff':'#000')+'">'+'ABCDE'[i]+'</text>'; });
     s+='<path d="'+f.form+'" fill="none" stroke="#000" stroke-width="'+f.kontur.toFixed(2)+'" stroke-linejoin="round"/></svg>';
     return s;
   }
@@ -742,7 +742,10 @@
     var liste = art === 'lernen' ? figuren.map(function(_,i){ return i; }) : reihenfolge;
     return '<div class="fig-raster">' + liste.map(function(idx,n){
       if (art === 'lernen') return '<div class="fig-feld">'+svg(figuren[idx],schwarz[idx],false)+'</div>';
-      var h='<div class="fig-feld"><p class="fig-nr">'+(NR+n)+')</p>'+svg(figuren[idx],-1,true)+'<ul class="fig-wahl">';
+      // In der Auswertung mit der geschwaerzten Flaeche (ihr Buchstabe steht
+      // weiss darin): Wer daneben lag, will sehen, was zu merken war - nur
+      // der gruene Buchstabe sagte das nicht.
+      var h='<div class="fig-feld"><p class="fig-nr">'+(NR+n)+')</p>'+svg(figuren[idx], art === 'loesung' ? schwarz[idx] : -1, true)+'<ul class="fig-wahl">';
       for(var k=0;k<5;k++){
         if (art === 'loesung'){
           var kl = k===schwarz[idx] ? 'fg-ist-richtig' : (antworten[n]===k ? 'fg-ist-falsch' : '');

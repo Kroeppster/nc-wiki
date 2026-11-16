@@ -1844,6 +1844,9 @@ body.pm-aktiv{overflow:hidden;}
 /* Die fuenf Antworten in EINER Zeile, Buchstabe ueber dem Kreis wie auf dem
    Antwortbogen - nebeneinander brachen sie in der schmalen Spalte um (4 + 1). */
 .fig-wahl{list-style:none;display:grid;grid-template-columns:repeat(5,auto);justify-content:center;gap:0 .45rem;margin:.35rem 0 0;padding:0;}
+/* Auswertung: nicht nur die Farbe unterscheidet - richtig unterstrichen, die eigene falsche Wahl durchgestrichen */
+.fig-wahl .fg-ist-richtig{text-decoration:underline;text-underline-offset:.15em;}
+.fig-wahl .fg-ist-falsch{text-decoration:line-through;}
 .fig-wahl label{cursor:pointer;display:flex;flex-direction:column-reverse;align-items:center;line-height:1.1;}
 .fig-wahl input{margin:.15rem 0 0;}
 /* Am Bildschirm ist jede Antwort mindestens 24px breit (WCAG 2.2, Zielgrösse):
