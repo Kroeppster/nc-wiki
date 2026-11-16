@@ -1067,6 +1067,38 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
 }
 
 /* ---------------------------------------------------------------------------
+   "WERKZEUGE" - vier Karten auf der Startseite (partials/werkzeuge-grid.html)
+   ---------------------------------------------------------------------------
+   Breit vier Karten nebeneinander, ab 900px zwei, auf dem Handy vier flache
+   Zeilen (Symbol links) - zusammen knapp ein Bildschirm. */
+.werkzeuge-lead{margin:var(--space-2) 0 0;max-width:60ch;color:var(--color-ink-soft);}
+.werkzeuge{list-style:none;margin:var(--space-8) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5);}
+.werkzeuge a{display:flex;flex-direction:column;height:100%;padding:var(--space-5);background:var(--color-surface);
+  border:1px solid var(--color-line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;
+  transition:transform .2s,box-shadow .2s;}
+.werkzeuge a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.werkzeug-symbol{display:grid;place-items:center;width:2.75rem;height:2.75rem;margin-bottom:var(--space-4);border-radius:var(--radius-md);
+  background:var(--color-signal-soft);color:var(--color-signal);}
+.werkzeug-symbol svg{width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.werkzeuge h3{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .5rem;margin:0 0 var(--space-2);font-size:var(--text-md);line-height:var(--leading-snug);}
+.werkzeug-beta{font-family:var(--font-body);font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:.1rem .5rem;border-radius:var(--radius-full);background:var(--color-warn-bg);color:var(--color-warn-text);}
+.werkzeuge p{margin:0 0 var(--space-4);font-size:var(--text-sm);color:var(--color-ink-soft);}
+.werkzeug-los{margin-top:auto;font-size:var(--text-sm);font-weight:600;color:var(--color-signal);}
+.werkzeuge a:hover h3{color:var(--color-signal);}
+@media (max-width:900px){ .werkzeuge{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:520px){
+  .werkzeuge{grid-template-columns:1fr;gap:var(--space-3);}
+  .werkzeuge a{display:grid;grid-template-columns:2.75rem minmax(0,1fr);gap:.15rem var(--space-4);padding:var(--space-4);}
+  .werkzeug-symbol{grid-row:1 / span 3;margin:0;}
+  .werkzeuge h3{margin:0;font-size:var(--text-base);}
+  .werkzeuge p{margin:0 0 .2rem;}
+  .werkzeug-los{margin:0;}
+}
+/* Sprungziele der Karten: die Bausteine selbst, unter der festen Kopfzeile */
+#lg-wurzel,#ab-wurzel,#kt-wurzel{scroll-margin-top:var(--sprung-abstand,5.5rem);}
+
+/* ---------------------------------------------------------------------------
    "DAS MATERIAL SELBST" - echte Seiten statt Symbolbilder
    (siehe layouts/partials/material-grid.html)
    ---------------------------------------------------------------------------

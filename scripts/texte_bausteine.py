@@ -41,7 +41,7 @@ KOPFFELDER = (('title', 'titel'), ('description', 'beschreibung'),
 # (ressorts) und die Karten der Seite Mitmachen (aufgaben). Sie stehen in der Mappe als Zeilen vom Typ "Feld" mit ihrem
 # Pfad (z. B. "hero › title", "ressorts 2 › mitglieder 1 › rolle"). Nur
 # Text wird angeboten - Adressen, Bilder und Schluessel nicht.
-FELD_WURZELN = ('hero', 'news', 'weg', 'material', 'subtests', 'mission', 'support', 'ressorts', 'aufgaben')
+FELD_WURZELN = ('hero', 'news', 'weg', 'werkzeuge', 'material', 'subtests', 'mission', 'support', 'ressorts', 'aufgaben')
 FELD_NICHT = ('url', 'bild', 'key', 'zahlen', 'identifier', 'weight')
 
 

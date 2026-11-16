@@ -506,6 +506,14 @@ delle righe vuote in basso, necessari titolo e inizio; eliminare con `!Eliminare
 date solo se così figurano presso swissuniversities. Su smartphone le fasi stanno una sotto l'altra, solo quella in corso è aperta.
 Calcolo: `layouts/partials/weg-positionen.html`, visualizzazione `weg-grid.html`.
 
+### Strumenti (`werkzeuge:`)
+
+Quattro schede sulla pagina iniziale che portano direttamente agli strumenti (generatore di
+esercizi, modalità simulazione, valutazione del foglio delle risposte e del test di
+concentrazione). Testi nell'intestazione della pagina iniziale e nella cartella Excel;
+`beta: true` mostra il marchio «Beta» – eliminare la riga quando uno strumento è approvato.
+Destinazione e simbolo per `key`: `layouts/partials/werkzeuge-grid.html`.
+
 ### Riquadri del materiale (`material:`)
 
 ```yaml

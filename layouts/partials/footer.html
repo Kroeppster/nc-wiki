@@ -668,3 +668,24 @@
     });
   })();
 </script>
+<script>
+  /* SPRUNGMARKE NACH DEM LADEN NOCHMALS ANFAHREN. Der Browser springt zu
+     "#ab-wurzel", sobald er das Ziel kennt - Seiten, die danach noch etwas
+     aufbauen (Simulationsmodus, nachgeladene Bilder), schieben es dann wieder
+     aus dem Bild: Von den Werkzeug-Karten der Startseite landete man 600 bis
+     1200 px zu weit oben. Nur wenn das Ziel nicht schon oben steht und
+     niemand inzwischen selbst gescrollt hat. */
+  (function(){
+    var marke = location.hash.length > 1 ? decodeURIComponent(location.hash.slice(1)) : '';
+    if(!marke) return;
+    var selbst = false;
+    ['wheel','touchmove','keydown'].forEach(function(e){ window.addEventListener(e, function(){ selbst = true; }, { passive:true, once:true }); });
+    function hin(){
+      if(selbst) return;
+      var ziel = document.getElementById(marke); if(!ziel) return;
+      var oben = ziel.getBoundingClientRect().top;
+      if(oben < 0 || oben > window.innerHeight * 0.3) ziel.scrollIntoView();
+    }
+    window.addEventListener('load', function(){ hin(); setTimeout(hin, 400); });
+  })();
+</script>

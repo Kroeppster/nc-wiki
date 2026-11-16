@@ -503,6 +503,14 @@ Link). Code: `scripts/texte_zeitstrahl.py`. Die Termine nur ändern, wenn sie be
 stehen. Auf dem Handy stehen die Phasen untereinander, nur die laufende ist aufgeklappt. Berechnung:
 `layouts/partials/weg-positionen.html`, Darstellung `weg-grid.html`.
 
+### Werkzeuge (`werkzeuge:`)
+
+Vier Karten auf der Startseite, die direkt zu den Werkzeugen springen (Lern-Generator,
+Simulationsmodus, Antwortbogen und Konzentrationstest auswerten). Texte im Seitenkopf der
+Startseite und in der Textmappe; `beta: true` zeigt die Marke «Beta» – Zeile löschen, sobald ein
+Werkzeug freigegeben ist. Ziel und Symbol je `key` stehen in
+`layouts/partials/werkzeuge-grid.html`.
+
 ### Material-Kacheln (`material:`)
 
 ```yaml

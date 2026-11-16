@@ -159,6 +159,32 @@ weg:
         - titel: "Erfahrungsberichte"
           url: "ems/erfahrungsberichte/"
 
+werkzeuge:
+  eyebrow: "Zum Üben und Auswerten"
+  heading: "Werkzeuge"
+  text: "Läuft alles direkt in deinem Browser – ohne Anmeldung, und deine Fotos bleiben auf deinem Gerät."
+  beta: "Beta"
+  items:
+    - key: lern-generator
+      beta: true
+      titel: "Lern-Generator"
+      text: "Immer neue Sets für Figuren und Fakten lernen, in drei Schwierigkeitsstufen."
+      cta: "Set würfeln"
+    - key: simulationsmodus
+      titel: "Simulationsmodus"
+      text: "Der ganze Testtag mit Uhr und vorgelesenen Anweisungen – oder einzelne Untertests auf Zeit."
+      cta: "Simulation starten"
+    - key: antwortbogen
+      beta: true
+      titel: "Antwortbogen auswerten"
+      text: "Antwortbogen fotografieren und die Punkte je Untertest sehen."
+      cta: "Bogen auswerten"
+    - key: konztest
+      beta: true
+      titel: "Konzentrationstest auswerten"
+      text: "Bearbeitetes Blatt fotografieren, die Markierungen werden gezählt."
+      cta: "Blatt auswerten"
+
 material:
   eyebrow: "Was du hier findest"
   heading: "Kostenloses Angebot von Studierenden"

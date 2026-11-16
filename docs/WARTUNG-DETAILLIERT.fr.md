@@ -513,6 +513,14 @@ lien). Code : `scripts/texte_zeitstrahl.py`. Ne modifier les dates que si elles 
 Sur mobile, les phases sont l'une sous l'autre, seule celle en cours est dépliée. Calcul :
 `layouts/partials/weg-positionen.html`, affichage `weg-grid.html`.
 
+### Outils (`werkzeuge:`)
+
+Quatre cartes sur la page d'accueil qui mènent directement aux outils (générateur d'exercices,
+mode simulation, évaluation de la feuille de réponses et du test de concentration). Textes dans
+l'en-tête de la page d'accueil et dans le classeur ; `beta: true` affiche la marque « Bêta » –
+supprimer la ligne dès qu'un outil est validé. Cible et symbole par `key` :
+`layouts/partials/werkzeuge-grid.html`.
+
 ### Tuiles du matériel (`material:`)
 
 ```yaml

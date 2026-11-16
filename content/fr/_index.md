@@ -159,6 +159,32 @@ weg:
         - titel: "Témoignages"
           url: "ems/erfahrungsberichte/"
 
+werkzeuge:
+  eyebrow: "Pour s’entraîner et évaluer"
+  heading: "Outils"
+  text: "Tout fonctionne directement dans ton navigateur – sans inscription, et tes photos restent sur ton appareil."
+  beta: "Bêta"
+  items:
+    - key: lern-generator
+      beta: true
+      titel: "Générateur d’exercices"
+      text: "Toujours de nouveaux jeux pour la mémorisation de figures et de faits, en trois niveaux de difficulté."
+      cta: "Tirer un jeu"
+    - key: simulationsmodus
+      titel: "Mode simulation"
+      text: "Toute la journée de test avec horloge et consignes lues à voix haute – ou des sous-tests isolés, chronométrés."
+      cta: "Lancer la simulation"
+    - key: antwortbogen
+      beta: true
+      titel: "Évaluer la feuille de réponses"
+      text: "Photographier la feuille de réponses et voir les points par sous-test."
+      cta: "Évaluer la feuille"
+    - key: konztest
+      beta: true
+      titel: "Évaluer le test de concentration"
+      text: "Photographier la feuille travaillée, les marques sont comptées."
+      cta: "Évaluer le test"
+
 material:
   eyebrow: "Ce que tu trouves ici"
   heading: "Une offre gratuite d'étudiant·e·s"

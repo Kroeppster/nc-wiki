@@ -174,7 +174,23 @@
        Startseite wechselt zwischen heller Kartenfläche und Seitenhintergrund,
        damit nicht zwei gleich getönte Blöcke aufeinanderfolgen. Wer hier eine
        Sektion einfügt oder verschiebt, muss die Klassen mitziehen. */}}
-  <section id="material">
+  {{/* ================= WERKZEUGE =================
+       Lern-Generator, Simulationsmodus, Auswertungs-Tools: Sie stehen tief in
+       langen Seiten, hier ist ihr Einstieg. Siehe partials/werkzeuge-grid.html.
+       Ohne "section-surface" (die Sektion darüber hat sie) - die drei
+       folgenden Sektionen sind deshalb umgekehrt getönt als bis November 2026. */}}
+  {{ with .Params.werkzeuge }}
+  <section id="werkzeuge">
+    <div class="wrap">
+      <p class="eyebrow">{{ .eyebrow }}</p>
+      <h2>{{ .heading }}</h2>
+      {{ with .text }}<p class="werkzeuge-lead">{{ . }}</p>{{ end }}
+      {{ partial "werkzeuge-grid.html" $ }}
+    </div>
+  </section>
+  {{ end }}
+
+  <section id="material" class="section-surface">
     <div class="wrap">
       <p class="eyebrow">{{ .Params.material.eyebrow }}</p>
       <h2>{{ .Params.material.heading }}</h2>
@@ -183,7 +199,7 @@
   </section>
 
   {{/* ================= DIE 10 UNTERTESTS ================= */}}
-  <section id="subtests" class="section-surface">
+  <section id="subtests">
     <div class="wrap">
       <p class="eyebrow">{{ .Params.subtests.eyebrow }}</p>
       <h2>{{ .Params.subtests.heading }}</h2>
@@ -195,7 +211,7 @@
   </section>
 
   {{/* ================= MISSION / "WARUM ES UNS GIBT" ================= */}}
-  <section id="mission">
+  <section id="mission" class="section-surface">
     <div class="wrap">
       <p class="eyebrow">{{ .Params.mission.eyebrow }}</p>
       <h2 class="mission-lede">{{ .Params.mission.heading }}</h2>
