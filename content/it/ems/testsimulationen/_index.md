@@ -31,3 +31,11 @@ Hai svolto la simulazione su carta? Fotografa il tuo foglio delle risposte e ved
 ```baustein
 antwortbogen-auswertung
 ```
+
+## Valutare il test di concentrazione
+
+Il test di concentrazione ha un foglio proprio e si conta in modo diverso: segni giusti meno segni sbagliati meno segni omessi. Fotografa il tuo foglio compilato, e i segni vengono contati per te.
+
+```baustein
+konztest-auswertung
+```

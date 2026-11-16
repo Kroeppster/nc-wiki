@@ -31,3 +31,11 @@ Tu as fait la simulation sur papier ? Photographie ta feuille de réponses et tu
 ```baustein
 antwortbogen-auswertung
 ```
+
+## Évaluer le test de concentration
+
+Le test de concentration a sa propre feuille et se compte autrement : marques justes moins marques fausses moins signes omis. Photographie ta feuille travaillée, et les marques sont comptées pour toi.
+
+```baustein
+konztest-auswertung
+```

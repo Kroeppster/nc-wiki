@@ -31,3 +31,11 @@ Testsimulation auf Papier gelöst? Fotografiere deinen Antwortbogen, und du sieh
 ```baustein
 antwortbogen-auswertung
 ```
+
+## Konzentrationstest auswerten
+
+Der Konzentrationstest hat ein eigenes Blatt und wird anders gezählt: richtig markiert minus falsch markiert minus ausgelassen. Fotografiere dein bearbeitetes Blatt, und die Markierungen werden für dich gezählt.
+
+```baustein
+konztest-auswertung
+```
