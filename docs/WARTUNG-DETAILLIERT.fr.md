@@ -496,10 +496,13 @@ weg:
           url: "ems/uniguide/"
 ```
 
-Un axe du temps continu d'octobre à septembre : **chaque entrée se place automatiquement là où
-se trouve sa date** (`von`/`bis`). En haut les dates officielles de swissuniversities, en
-dessous notre offre ; les textes qui se chevaucheraient passent d'eux-mêmes sur une autre
-ligne. Un sélecteur bascule entre les dates pour les universités avec et sans EMS (`fuer`), aussi pour notre offre : ce qui ne vaut qu'avec
+Quatre phases côte à côte (entrées avec `art: angebot`), et **chaque date officielle se place
+automatiquement dans la phase pendant laquelle elle commence** (`von`). La page connaît la date
+du jour : en haut « Prochaine échéance », la phase en cours porte « maintenant », l'axe des
+mois montre un repère « Aujourd'hui ». Peu avant un délai, on lit « se termine dans … jours » –
+une période ne compte comme délai que si son « moment » nomme un jour (« Déc. au 15 fév. », pas
+« Sept. à nov. »). Pour essayer un autre jour, ajouter `?heute=2027-03-01` à l'adresse. Un
+sélecteur bascule entre les dates pour les universités avec et sans EMS (`fuer`), aussi pour notre offre : ce qui ne vaut qu'avec
 l'EMS (techniques, conditions du test, jour du test) est sur `mit` ; une entrée avec son propre
 texte pour « sans EMS » figure deux fois, une fois `mit`, une fois `ohne`.
 Nouvelle saison : modifier `start`, `ende` et les années des dates, dans les trois langues.
@@ -507,7 +510,7 @@ Tout se trouve dans le classeur, feuille « Accueil – Vue », sous forme de ta
 par entrée ; **nouvelles entrées** : remplir une des lignes vides en bas, titre et début requis ;
 suppression avec `!Supprimer!` dans le titre ; liens « Titre | ems/uniguide/ », une ligne par
 lien). Code : `scripts/texte_zeitstrahl.py`. Ne modifier les dates que si elles figurent ainsi chez swissuniversities.
-Sur mobile, cela devient une liste verticale par date. Calcul :
+Sur mobile, les phases sont l'une sous l'autre, seule celle en cours est dépliée. Calcul :
 `layouts/partials/weg-positionen.html`, affichage `weg-grid.html`.
 
 ### Tuiles du matériel (`material:`)

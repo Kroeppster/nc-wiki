@@ -154,7 +154,7 @@ weg:
       art: "angebot"
       fuer: "mit"
       mittel:
-        - titel: "EMS"
+        - titel: "Tipps zum Testtag"
           url: "ems/"
         - titel: "Erfahrungsberichte"
           url: "ems/erfahrungsberichte/"

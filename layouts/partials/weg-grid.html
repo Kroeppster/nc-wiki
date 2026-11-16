@@ -2,15 +2,32 @@
   ============================================================================
   "WAS DU WANN BRAUCHST" - ein Zeitstrahl von Oktober bis September
   ============================================================================
-  Eine durchgehende Zeitachse (Oktober bis September). Jeder Eintrag steht
-  genau dort, wo sein Datum liegt - die Lage rechnet weg-positionen.html aus
-  "von" und "bis" aus. Über der Achse stehen die offiziellen Termine von
-  swissuniversities, darunter unser Angebot dazu. Ein Umschalter wechselt
-  zwischen den Terminen für Universitäten mit und ohne EMS (ohne JavaScript
-  bleibt "mit EMS" stehen).
+  VIER PHASEN NEBENEINANDER (unser Angebot), und in jeder Phase stehen die
+  offiziellen Termine, die in ihre Zeit fallen - zuerst die Termine, dann
+  "Unser Angebot dazu". Bis November 2026 standen die Termine frei über einer
+  Zeitachse auf fünf verschiedenen Höhen und das Angebot darunter; man musste
+  hin- und herspringen und sah nicht, was als Nächstes kommt.
 
-  Auf dem Handy wird daraus eine senkrechte Liste in der Reihenfolge der
-  Daten - eine waagrechte Achse mit Zeitbalken wäre dort unlesbar.
+  Ein Termin gehört zur letzten Phase, die vor ihm oder mit ihm beginnt
+  (gleiche Fassung mit/ohne EMS). Darüber liegt eine schmale Monatsachse: Sie
+  zeigt, wie lang die Phasen wirklich sind.
+
+  DAS SKRIPT UNTEN KENNT DAS HEUTIGE DATUM und ergänzt (ohne JavaScript fehlt
+  nur das, der Zeitplan steht trotzdem ganz da):
+    - "Nächster Termin": der nächste offizielle Termin - oder eine Frist, die
+      in den nächsten 30 Tagen abläuft ("endet in 12 Tagen"). Als Frist gilt
+      ein Zeitraum nur, wenn sein "wann" einen Tag nennt ("Dez. bis 15. Feb.");
+      "Sept. bis Nov." ist ein ungefährer Zeitraum und läuft nicht "ab".
+    - die Heute-Marke auf der Achse, die laufende Phase ("jetzt") und
+      laufende Termine ("läuft"); Vergangenes wird blasser.
+    - auf dem Handy bleibt nur die laufende Phase aufgeklappt, die anderen
+      zeigen Zeitraum und Titel und öffnen sich beim Antippen. (Ausserhalb
+      der Saison bleibt alles offen.)
+  Zum Ausprobieren eines anderen Tages: ?heute=2027-03-01 an die Adresse
+  hängen. Die festen Wörter dazu stehen in i18n (wg_...).
+
+  Ein Umschalter wechselt zwischen den Terminen für Universitäten mit und
+  ohne EMS (ohne JavaScript bleibt "mit EMS" stehen).
 
   GEPFLEGT WIRD ALLES IM FRONTMATTER der Startseite (content/de|fr|it/
   _index.md, Block "weg:"), auch in der Textmappe (Blatt "Startseite –
@@ -30,14 +47,12 @@
 
   Die Achse reicht von weg.start bis weg.ende (z. B. 2026-10-01 bis
   2027-09-30). Für eine neue Saison dort und bei den Daten das Jahr ändern.
-  Hier steht kein einziger übersetzbarer Satz.
+  Übersetzbares steht im Frontmatter und in i18n (wg_...).
   ============================================================================
 */ -}}
 {{- $w := .Params.weg }}
 {{- $p := partial "weg-positionen.html" $w }}
-{{- $oben := slice }}{{ $unten := slice }}
-{{- range $p.items }}{{ if eq .art "offiziell" }}{{ $oben = $oben | append . }}{{ else }}{{ $unten = $unten | append . }}{{ end }}{{ end }}
-<div class="weg-wrap" id="weg-wrap" data-modus="mit" style="--n-mit:{{ $p.n_mit }};--n-ohne:{{ $p.n_ohne }};--n-angebot-mit:{{ $p.n_angebot_mit }};--n-angebot-ohne:{{ $p.n_angebot_ohne }}">
+<div class="weg-wrap" id="weg-wrap" data-modus="mit" data-start="{{ $w.start }}" data-ende="{{ $w.ende }}" data-lang="{{ .Site.Language.Lang }}">
   {{- if $w.modus_mit }}
   <div class="weg-modus" id="weg-modus" hidden>
     <span class="weg-modus-label">{{ $w.modus_label }}</span>
@@ -47,62 +62,54 @@
     </div>
   </div>
   {{- end }}
-  <ul class="weg-legende" aria-hidden="true">
-    <li class="weg-legende-offiziell">{{ $w.legende_offiziell }}</li>
-    <li class="weg-legende-angebot">{{ $w.legende_angebot }}</li>
-  </ul>
+  <p class="weg-naechster" id="weg-naechster" hidden><span class="weg-naechster-label">{{ i18n "wg_naechster" }}</span><strong></strong><span class="weg-naechster-wann"></span></p>
 
-  {{- /* ===== Breite Bildschirme: Zeitachse ===== */}}
-  <div class="weg-achse-wrap" aria-hidden="false">
-    <div class="weg-raster" aria-hidden="true">
-      {{- range $p.monate }}<span style="left:{{ printf "%.2f" .l }}%"></span>{{ end }}
-    </div>
-
-    <div class="weg-ebene weg-oben">
-      {{- range $oben }}
-      <div class="weg-eintrag weg-f-{{ .fuer }}" style="--s-mit:{{ .spur_mit }};--s-ohne:{{ .spur_ohne }}">
-        <span class="weg-balken" style="left:{{ printf "%.2f" .l }}%;width:{{ printf "%.2f" .w }}%"></span>
-        <p class="weg-label" style="left:{{ printf "%.2f" .boxl }}%;width:{{ printf "%.2f" .boxw }}%">
-          <span class="weg-datum">{{ .wann }}</span>{{ .titel }}{{ with .text }}<span class="weg-zusatz">{{ . }}</span>{{ end }}
-        </p>
-      </div>
-      {{- end }}
-    </div>
-
-    <div class="weg-achse" aria-hidden="true">
-      {{- range $p.monate }}<span class="weg-monat" style="left:{{ printf "%.2f" .l }}%">{{ .name }}</span>{{ end }}
-    </div>
-
-    <div class="weg-ebene weg-unten">
-      {{- range $unten }}
-      <div class="weg-eintrag weg-f-{{ .fuer }}" style="--s-mit:{{ .spur_angebot_mit }};--s-ohne:{{ .spur_angebot_ohne }}">
-        <span class="weg-balken weg-balken-angebot" style="left:{{ printf "%.2f" .l }}%;width:{{ printf "%.2f" .w }}%"></span>
-        <div class="weg-label weg-label-angebot" style="left:{{ printf "%.2f" .boxl }}%;width:{{ printf "%.2f" .boxw }}%">
-          <span class="weg-datum">{{ .wann }}</span>
-          <h3>{{ .titel }}</h3>
-          {{- with .text }}<p class="weg-text">{{ . }}</p>{{ end }}
-          {{- with .mittel }}
-          <ul class="weg-mittel">{{ range . }}<li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>{{ end }}</ul>
-          {{- end }}
-        </div>
-      </div>
-      {{- end }}
-    </div>
+  {{- /* Monatsachse (nur breite Bildschirme): Monate, je Phase ein Strich in
+         ihrer wahren Länge, und die Heute-Marke (setzt das Skript). */}}
+  <div class="weg-achse" aria-hidden="true">
+    {{- range $p.monate }}<span class="weg-monat" style="left:{{ printf "%.2f" .l }}%">{{ .name }}</span>{{ end }}
+    {{- range $p.items }}{{ if eq .art "angebot" }}<span class="weg-strich weg-f-{{ .fuer }}" data-von="{{ .von }}" data-bis="{{ .bis | default .von }}" style="left:{{ printf "%.2f" .l }}%;width:{{ printf "%.2f" .w }}%"></span>{{ end }}{{ end }}
+    <span class="weg-heute" id="weg-heute" hidden><b></b></span>
   </div>
 
-  {{- /* ===== Schmale Bildschirme: senkrechte Liste nach Datum ===== */}}
-  <ol class="weg-liste">
-    {{- range sort $p.items "von" }}
-    <li class="weg-punkt weg-f-{{ .fuer }} weg-art-{{ .art }}">
-      <span class="weg-datum">{{ .wann }}</span>
-      <h3>{{ .titel }}</h3>
-      {{- with .text }}<p class="weg-text">{{ . }}</p>{{ end }}
-      {{- with .mittel }}
-      <ul class="weg-mittel">{{ range . }}<li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>{{ end }}</ul>
-      {{- end }}
+  {{- range $fuer := slice "mit" "ohne" }}
+  {{- $phasen := slice }}{{ $termine := slice }}
+  {{- range $p.items }}{{ if in (slice $fuer "beide") .fuer }}
+    {{- if eq .art "angebot" }}{{ $phasen = $phasen | append . }}{{ else }}{{ $termine = $termine | append . }}{{ end }}
+  {{- end }}{{ end }}
+  {{- if $phasen }}
+  <ol class="weg-phasen weg-f-{{ $fuer }}">
+    {{- range $i, $ph := $phasen }}
+    {{- /* Die Termine dieser Phase: jene, deren letzte vorher oder gleichzeitig
+           beginnende Phase diese hier ist (vor der ersten Phase: die erste). */}}
+    {{- $eigene := slice }}
+    {{- range $t := $termine }}
+      {{- $ziel := 0 }}
+      {{- range $j, $q := $phasen }}{{ if le $q.von $t.von }}{{ $ziel = $j }}{{ end }}{{ end }}
+      {{- if eq $ziel $i }}{{ $eigene = $eigene | append $t }}{{ end }}
+    {{- end }}
+    <li class="weg-phase" data-von="{{ $ph.von }}" data-bis="{{ $ph.bis | default $ph.von }}" style="--w:{{ printf "%.1f" (math.Max 17.0 (math.Min 34.0 $ph.w)) }}">
+      <h3 class="weg-phase-kopf"><button type="button" class="weg-phase-knopf" aria-expanded="true"><span class="weg-datum">{{ $ph.wann }}</span><span class="weg-phase-titel">{{ $ph.titel }}</span></button></h3>
+      <div class="weg-phase-inhalt">
+        {{- with $ph.text }}<p class="weg-text">{{ . }}</p>{{ end }}
+        {{- with $eigene }}
+        <p class="weg-lab">{{ $w.legende_offiziell }}</p>
+        <ul class="weg-termine">
+          {{- range . }}
+          <li data-von="{{ .von }}" data-bis="{{ .bis | default .von }}"{{ if .bis }} data-spanne{{ end }}><span class="weg-wann">{{ .wann }}</span><span class="weg-termin-titel">{{ .titel }}</span>{{ with .text }}<small>{{ . }}</small>{{ end }}</li>
+          {{- end }}
+        </ul>
+        {{- end }}
+        {{- with $ph.mittel }}
+        <p class="weg-lab">{{ $w.legende_angebot }}</p>
+        <ul class="weg-mittel">{{ range . }}<li><a href="{{ relLangURL .url }}">{{ .titel }}</a></li>{{ end }}</ul>
+        {{- end }}
+      </div>
     </li>
     {{- end }}
   </ol>
+  {{- end }}
+  {{- end }}
 
   {{- if $w.hinweis_mit }}
   <p class="weg-hinweis weg-f-mit">{{ $w.hinweis_mit }}</p>
@@ -113,37 +120,76 @@
 (function(){
   var wrap = document.getElementById('weg-wrap'), modus = document.getElementById('weg-modus');
   if(!wrap) return;
-
-  /* Die Beschriftungen stehen frei positioniert über bzw. unter der Achse; die
-     Spurhöhen in style.css (--spur-oben, --spur-unten) sind nur Richtwerte. Je
-     nach Sprache und Bildschirmbreite brechen die Texte öfter um und ragten
-     sonst in die Legende oben oder in die Quellenangabe unten (gemessen auf
-     Französisch: 44 px, bei 900 px Breite 71 px). Deshalb hier nachmessen und
-     die Spur nur wenn nötig höher machen. Unter 900 px gilt die Liste, dort
-     bleibt alles beim CSS. */
-  var oben = wrap.querySelector('.weg-oben'), unten = wrap.querySelector('.weg-unten');
-  function hoehe(){
-    if(!oben || !unten) return;
-    oben.style.height = ''; unten.style.height = '';
-    if(!window.matchMedia('(min-width:900px)').matches) return;
-    var o = oben.getBoundingClientRect(), u = unten.getBoundingClientRect();
-    var oberkante = o.top, unterkante = u.bottom;
-    oben.querySelectorAll('.weg-label').forEach(function(e){
-      var r = e.getBoundingClientRect(); if(r.height) oberkante = Math.min(oberkante, r.top - 8);
-    });
-    unten.querySelectorAll('.weg-label-angebot').forEach(function(e){
-      var r = e.getBoundingClientRect(); if(r.height) unterkante = Math.max(unterkante, r.bottom + 8);
-    });
-    if(oberkante < o.top) oben.style.height = Math.ceil(o.bottom - oberkante) + 'px';
-    if(unterkante > u.bottom) unten.style.height = Math.ceil(unterkante - u.top) + 'px';
+  var T = {
+    beginnt: {{ i18n "wg_beginnt" | jsonify | safeJS }}, inTagen: {{ i18n "wg_in" | jsonify | safeJS }},
+    endet: {{ i18n "wg_endet" | jsonify | safeJS }}, morgen: {{ i18n "wg_morgen" | jsonify | safeJS }},
+    heuteIst: {{ i18n "wg_heute_ist" | jsonify | safeJS }}, endetMorgen: {{ i18n "wg_endet_morgen" | jsonify | safeJS }},
+    endetHeute: {{ i18n "wg_endet_heute" | jsonify | safeJS }}, laeuft: {{ i18n "wg_laeuft" | jsonify | safeJS }},
+    jetzt: {{ i18n "wg_jetzt" | jsonify | safeJS }}, heute: {{ i18n "wg_heute" | jsonify | safeJS }}
+  };
+  // Tage seit 1970, ohne Uhrzeit und Zeitzone: "2027-02-15" -> Zahl
+  function tag(s){ var m = /^(\d{4})-(\d\d)-(\d\d)/.exec(s || ''); return m ? Math.round(Date.UTC(+m[1], m[2] - 1, +m[3]) / 864e5) : NaN; }
+  var jetzt = new Date(), probe = /[?&]heute=(\d{4}-\d\d-\d\d)/.exec(location.search);
+  var heute = probe ? tag(probe[1]) : Math.round(Date.UTC(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate()) / 864e5);
+  var start = tag(wrap.getAttribute('data-start')), ende = tag(wrap.getAttribute('data-ende'));
+  function stand(e){
+    var von = tag(e.getAttribute('data-von')), bis = tag(e.getAttribute('data-bis'));
+    return heute > bis ? 'vorbei' : (heute >= von ? 'jetzt' : 'kommt');
   }
-  hoehe();
-  var geplant = false;
-  window.addEventListener('resize', function(){
-    if(geplant) return; geplant = true;
-    requestAnimationFrame(function(){ geplant = false; hoehe(); });
+  function marke(e, s){ e.classList.toggle('ist-vorbei', s === 'vorbei'); e.classList.toggle('ist-jetzt', s === 'jetzt'); }
+
+  // Heute-Marke auf der Achse
+  var hm = document.getElementById('weg-heute');
+  if(hm && heute >= start && heute <= ende){
+    var anteil = (heute - start) / (ende - start) * 100;
+    hm.style.left = anteil.toFixed(2) + '%';
+    hm.classList.toggle('weg-heute-links', anteil > 82);
+    var d = new Date(heute * 864e5);
+    hm.firstChild.textContent = T.heute + ' · ' + d.toLocaleDateString(wrap.getAttribute('data-lang'), { day: 'numeric', month: 'short', timeZone: 'UTC' });
+    hm.hidden = false;
+  }
+  wrap.querySelectorAll('.weg-strich').forEach(function(e){ marke(e, stand(e)); });
+
+  // Phasen und Termine einfärben; auf dem Handy nur die laufende Phase offen
+  wrap.querySelectorAll('.weg-phasen').forEach(function(liste){
+    var phasen = [].slice.call(liste.querySelectorAll('.weg-phase'));
+    var staende = phasen.map(stand), laeuft = staende.indexOf('jetzt') >= 0;
+    phasen.forEach(function(ph, i){
+      marke(ph, staende[i]);
+      var knopf = ph.querySelector('.weg-phase-knopf');
+      if(staende[i] === 'jetzt'){ var j = document.createElement('span'); j.className = 'weg-jetzt'; j.textContent = T.jetzt; ph.querySelector('.weg-datum').appendChild(j); }
+      function zu(z){ ph.classList.toggle('zu', z); knopf.setAttribute('aria-expanded', z ? 'false' : 'true'); }
+      if(laeuft && staende[i] !== 'jetzt') zu(true);
+      knopf.addEventListener('click', function(){ zu(!ph.classList.contains('zu')); });
+      ph.querySelectorAll('.weg-termine li').forEach(function(t){
+        var s = stand(t); marke(t, s);
+        if(s === 'jetzt' && t.hasAttribute('data-spanne')){ var l = document.createElement('span'); l.className = 'weg-laeuft'; l.textContent = ' · ' + T.laeuft; t.querySelector('.weg-termin-titel').appendChild(l); }
+      });
+    });
   });
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(hoehe);
+
+  // "Naechster Termin" fuer die gewaehlte Fassung
+  var zeile = document.getElementById('weg-naechster');
+  function naechster(){
+    if(!zeile) return;
+    var liste = wrap.querySelector('.weg-phasen.weg-f-' + wrap.getAttribute('data-modus')), frist = null, kommt = null;
+    if(liste) liste.querySelectorAll('.weg-termine li').forEach(function(t){
+      var von = tag(t.getAttribute('data-von')), bis = tag(t.getAttribute('data-bis'));
+      // Eine Frist ist nur, was einen Tag nennt ("Dez. bis 15. Feb."), nicht "Sept. bis Nov."
+      var genau = /\d/.test(t.querySelector('.weg-wann').textContent);
+      if(genau && t.hasAttribute('data-spanne') && von <= heute && bis >= heute && bis - heute <= 30 && (!frist || bis < frist.bis)) frist = { t: t, bis: bis };
+      if(von > heute && (!kommt || von < kommt.von)) kommt = { t: t, von: von };
+    });
+    var wahl = frist || kommt;
+    if(!wahl){ zeile.hidden = true; return; }
+    var n = frist ? frist.bis - heute : kommt.von - heute, text;
+    if(frist) text = n === 0 ? T.endetHeute : (n === 1 ? T.endetMorgen : T.endet.replace('{n}', n));
+    else text = n === 1 ? T.morgen : (wahl.t.hasAttribute('data-spanne') ? T.beginnt : T.inTagen).replace('{n}', n);
+    zeile.querySelector('strong').textContent = wahl.t.querySelector('.weg-termin-titel').firstChild.textContent;
+    zeile.querySelector('.weg-naechster-wann').textContent = wahl.t.querySelector('.weg-wann').textContent + ' · ' + text;
+    zeile.hidden = false;
+  }
+  naechster();
 
   if(!modus) return;
   modus.hidden = false;
@@ -155,7 +201,7 @@
         x.classList.toggle('is-active', an);
         x.setAttribute('aria-pressed', an ? 'true' : 'false');
       });
-      hoehe();
+      naechster();
     });
   });
 })();

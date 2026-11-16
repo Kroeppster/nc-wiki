@@ -316,6 +316,44 @@ console.log('\n=== Zeitstrahl: Umschalter ohne JavaScript ===');
   await p.goto(B+'/',{waitUntil:'load'});
   const da = await p.$('#weg-modus');
   pruef('Umschalter ohne JavaScript verborgen', !da || !(await da.isVisible()));
+  // Ohne JavaScript steht der ganze Zeitplan da: alle Phasen offen, keine leere Zeile "Naechster Termin"
+  const ohne = await p.evaluate(() => ({ phasen: [...document.querySelectorAll('.weg-f-mit .weg-phase-inhalt')].filter(e => e.offsetHeight > 0).length,
+    naechster: document.getElementById('weg-naechster').offsetHeight }));
+  pruef('ohne JavaScript: alle vier Phasen offen, kein leerer Kasten', ohne.phasen === 4 && ohne.naechster === 0, JSON.stringify(ohne));
+  await ctx.close();
+}
+
+// Der Zeitplan kennt das heutige Datum (zum Pruefen: ?heute=JJJJ-MM-TT).
+console.log('\n=== Zeitplan: heute, naechster Termin, Handy ===');
+{
+  const {ctx,p,js}=await neu();
+  const lage = async (pfad, breite) => { await p.setViewportSize({ width: breite, height: 900 }); await p.goto(B+pfad,{waitUntil:'networkidle'});
+    return p.evaluate(() => { const sichtbar = e => e.offsetHeight > 0; return {
+      naechster: sichtbar(document.getElementById('weg-naechster')) ? document.getElementById('weg-naechster').innerText.replace(/\s+/g,' ') : '',
+      phasen: [...document.querySelectorAll('.weg-phasen.weg-f-mit .weg-phase')].map(e => (e.classList.contains('ist-jetzt')?'J':e.classList.contains('ist-vorbei')?'v':'k') + (sichtbar(e.querySelector('.weg-phase-inhalt'))?'+':'-') + e.querySelectorAll('.weg-termine li').length).join(' '),
+      heute: sichtbar(document.getElementById('weg-heute')), quer: document.documentElement.scrollWidth > innerWidth }; }); };
+  let r = await lage('/?heute=2026-11-16', 1280);
+  pruef('16. Nov.: naechster Termin ist die Voranmeldung, beginnt in 15 Tagen', /Voranmeldung.*beginnt in 15 Tagen/.test(r.naechster), r.naechster);
+  pruef('breit: alle Phasen offen, erste laeuft, jeder Termin in seiner Phase (3 1 1 3), Heute-Marke', r.phasen === 'J+3 k+1 k+1 k+3' && r.heute, JSON.stringify(r));
+  r = await lage('/?heute=2027-02-01', 1280);
+  pruef('1. Feb.: die Frist der Voranmeldung endet in 14 Tagen', /Voranmeldung.*endet in 14 Tagen/.test(r.naechster), r.naechster);
+  r = await lage('/?heute=2027-05-10', 390);
+  pruef('Handy, 10. Mai: nur die laufende dritte Phase offen, nichts laeuft seitlich ueber', r.phasen === 'v-3 v-1 J+1 k-3' && !r.quer, JSON.stringify(r));
+  await p.click('.weg-phasen.weg-f-mit .weg-phase:nth-child(4) .weg-phase-knopf');
+  const auf = await p.evaluate(() => { const ph = document.querySelector('.weg-phasen.weg-f-mit .weg-phase:nth-child(4)');
+    return ph.querySelector('.weg-phase-inhalt').offsetHeight > 0 && ph.querySelector('.weg-phase-knopf').getAttribute('aria-expanded') === 'true'; });
+  pruef('Handy: Antippen klappt eine Phase auf', auf);
+  r = await lage('/?heute=2028-01-01', 390);
+  pruef('ausserhalb der Saison: alles offen, kein naechster Termin, keine Heute-Marke', r.phasen === 'v+3 v+1 v+1 v+3' && r.naechster === '' && !r.heute, JSON.stringify(r));
+  await p.setViewportSize({ width: 1280, height: 900 }); await p.goto(B+'/?heute=2027-02-01',{waitUntil:'networkidle'});
+  await p.click('#weg-modus [data-modus="ohne"]');
+  const o = await p.evaluate(() => ({ n: document.getElementById('weg-naechster').innerText.replace(/\s+/g,' '), mit: document.querySelector('.weg-phasen.weg-f-mit').offsetHeight, ohne: document.querySelector('.weg-phasen.weg-f-ohne').offsetHeight }));
+  pruef('«Ohne EMS»: eigene Phasen und eigener naechster Termin', o.mit === 0 && o.ohne > 0 && /endet in 14 Tagen/.test(o.n), JSON.stringify(o));
+  for (const [l, wort] of [['/fr/', 'commence dans 15 jours'], ['/it/', 'inizia tra 15 giorni']]) {
+    r = await lage(l + '?heute=2026-11-16', 1280);
+    pruef('naechster Termin uebersetzt ' + l, r.naechster.includes(wort), r.naechster);
+  }
+  pruef('keine JS-Fehler', js.length===0, js.join(' | '));
   await ctx.close();
 }
 

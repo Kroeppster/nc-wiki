@@ -490,9 +490,12 @@ weg:
           url: "ems/uniguide/"
 ```
 
-Un asse del tempo continuo da ottobre a settembre: **ogni voce si colloca automaticamente dove
-cade la sua data** (`von`/`bis`). In alto le date ufficiali di swissuniversities, sotto la
-nostra offerta; i testi che si sovrapporrebbero passano da soli su un'altra riga. Un selettore
+Quattro fasi affiancate (voci con `art: angebot`), e **ogni data ufficiale si colloca
+automaticamente nella fase in cui inizia** (`von`). La pagina conosce la data di oggi: in alto
+«Prossima scadenza», la fase in corso porta «adesso», sull'asse dei mesi c'è un segno «Oggi».
+Poco prima di un termine si legge «termina tra … giorni» – un periodo vale come termine solo se
+il suo «momento» indica un giorno («Dic. – 15 feb.», non «Sett. – nov.»). Per provare un altro
+giorno, aggiungere `?heute=2027-03-01` all'indirizzo. Un selettore
 passa dalle date per le università con EMS a quelle senza (`fuer`), anche per la nostra offerta: ciò che vale solo con
 l'EMS (tecniche, condizioni del test, giorno del test) è su `mit`; una voce con un testo proprio
 per «senza EMS» compare due volte, una volta `mit`, una volta `ohne`. Nuova stagione: modificare
@@ -500,8 +503,8 @@ per «senza EMS» compare due volte, una volta `mit`, una volta `ohne`. Nuova st
 foglio «Pagina iniziale – Vista», come tabella (una riga per voce; **nuove voci**: compilare una
 delle righe vuote in basso, necessari titolo e inizio; eliminare con `!Eliminare!` nel titolo; link
 «Titolo | ems/uniguide/», una riga per link). Codice: `scripts/texte_zeitstrahl.py`. Modificare le
-date solo se così figurano presso swissuniversities. Su smartphone diventa un elenco verticale
-per data. Calcolo: `layouts/partials/weg-positionen.html`, visualizzazione `weg-grid.html`.
+date solo se così figurano presso swissuniversities. Su smartphone le fasi stanno una sotto l'altra, solo quella in corso è aperta.
+Calcolo: `layouts/partials/weg-positionen.html`, visualizzazione `weg-grid.html`.
 
 ### Riquadri del materiale (`material:`)
 
