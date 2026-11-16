@@ -522,8 +522,9 @@ Welche Bilder eine Kachel zeigt, steht in `layouts/partials/material-grid.html` 
 `object-fit: contain`) – die Quell-PDFs sind teils A4, teils US Letter. Fotos dürfen
 angeschnitten werden. Ein Name mit Endung wird unter `assets/images/` gesucht, einer ohne
 unter `assets/images/angebot/`. Neu erzeugen mit `python3 scripts/angebot-bilder-erzeugen.py`
-(braucht `pip install pymupdf`; oben im Skript stehen PDF und Seite je Bild). Die
-Discord-Karte ist bewusst kein nachgemachter Screenshot.
+(braucht `pip install pymupdf`; oben im Skript stehen PDF und Seite je Bild). Das
+Discord-Feld ist kein Bild, sondern Text: drei erfundene Sprechblasen (`mat_chat_1` bis
+`mat_chat_3` in `i18n/`), bewusst kein Screenshot des echten Servers.
 
 Etappen und Kacheln entfernen oder umsortieren: Eintrag in allen drei Dateien löschen bzw.
 verschieben. Eine ganz neue Kachel braucht einen Eintrag in `$quellen` (Entwickler-Schritt).

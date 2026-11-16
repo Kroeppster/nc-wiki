@@ -534,8 +534,9 @@ blanc, `object-fit: contain`) – les PDF sources sont en partie A4, en partie U
 photos peuvent être recadrées. Un nom avec extension est cherché sous `assets/images/`,
 sans extension sous `assets/images/angebot/`. Regénérer avec
 `python3 scripts/angebot-bilder-erzeugen.py` (nécessite `pip install pymupdf` ; en haut du
-script figurent le PDF et la page de chaque image). La carte Discord n'est volontairement
-pas une fausse capture d'écran.
+script figurent le PDF et la page de chaque image). Le champ Discord n'est pas une
+image mais du texte : trois bulles inventées (`mat_chat_1` à `mat_chat_3` dans `i18n/`),
+volontairement pas une capture du vrai serveur.
 
 Retirer ou réordonner étapes et tuiles : supprimer ou déplacer l'entrée dans les trois
 fichiers. Une tuile entièrement nouvelle nécessite une entrée dans `$quellen` (étape de

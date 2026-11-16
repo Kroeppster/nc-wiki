@@ -1131,6 +1131,21 @@ section{padding-block:var(--space-20);border-bottom:1px solid var(--color-line);
    hochkant, und die drei Bilder (Uniguide-Tabelle, Berichte-Karten, Discord-
    Karte) sind alle im Querformat - sie würden an den Seiten abgeschnitten. */
 .material-3{grid-template-columns:1fr;grid-template-rows:repeat(3,1fr);}
+/* Das Discord-Feld: drei erfundene Sprechblasen als Text (material-grid.html).
+   Weiss und mit festen Farben wie die Papierseiten und Bildschirmfotos
+   daneben - auch im Dunkelmodus. Die Schrift waechst mit der Kachel (cqw =
+   Hundertstel ihrer Breite), sonst liefen die Blasen in der schmalen
+   Vierer-Reihe ueber und waeren in der breiten Handy-Kachel winzig. */
+.material-flaeche{container-type:inline-size;}
+.material-3 > *{min-height:0;}
+.material-chat{display:flex;flex-direction:column;justify-content:center;gap:2.2cqw;padding:3cqw 4.5cqw;background:#fff;overflow:hidden;font-size:10px;font-size:4.1cqw;}
+.material-chat > span{display:flex;align-items:flex-end;gap:2.2cqw;}
+.material-chat > .material-chat-r{flex-direction:row-reverse;}
+.material-chat i{flex:none;width:6cqw;height:6cqw;border-radius:50%;background:#F59E0B;}
+.material-chat > span:nth-child(2) i{background:#10B981;}
+.material-chat > span:nth-child(3) i{background:#8B5CF6;}
+.material-chat b{font-weight:400;line-height:1.3;padding:1.8cqw 3cqw;border-radius:4cqw;background:#EEF1FB;color:#101A33;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.material-chat > .material-chat-r b{background:#223FCB;color:#fff;}
 .material-stueck a:hover .material-flaeche{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
 .material-stueck h3{margin:var(--space-4) 0 var(--space-1);font-size:var(--text-md);}
 .material-stueck p{margin:0;font-size:var(--text-sm);color:var(--color-ink-soft);}

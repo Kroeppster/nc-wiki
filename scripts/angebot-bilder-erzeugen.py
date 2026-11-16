@@ -17,11 +17,12 @@ stattdessen das Skript neu.
 Die Bilder landen in assets/images/angebot/ und werden von Hugo beim Bauen auf
 die Anzeigegrösse verkleinert - die Quelldateien dürfen also grosszügig sein.
 
-NICHT ENTHALTEN sind drei Bilder der Collage "Orientierung und Austausch":
+NICHT ENTHALTEN sind zwei Bilder der Collage "Orientierung und Austausch":
 uniguide.png (vier Zeilen der Vergleichstabelle) und berichte.png (EINE
-Erfahrungsbericht-Karte) sind Bildschirmfotos der eigenen Website,
-discord.png ist eine gesetzte Einladungskarte in der Schrift der Website.
-Die drei entstehen mit Playwright; wie, steht in docs/WARTUNG-DETAILLIERT.md.
+Erfahrungsbericht-Karte) sind Bildschirmfotos der eigenen Website. Sie
+entstehen mit Playwright; wie, steht in docs/WARTUNG-DETAILLIERT.md.
+Das dritte Feld (Discord) ist kein Bild mehr, sondern Text in der Seite
+(material-grid.html): drei erfundene Sprechblasen, je Sprache uebersetzt.
 Aus dem echten Discord-Server gibt es bewusst KEIN Bild - dort stehen Namen
 und Nachrichten von Leuten.
 
@@ -71,12 +72,13 @@ TEILE = [
     ('k9-konztest',     'assets/downloads/uebungsaufgaben/konzentriertes-arbeiten/2025_konzentriertes-arbeiten_S19.pdf', 0),
 ]
 
-# Ganze Seiten (kein Ausschnitt). Das Kursskript steht hier NICHT: Für die
-# Kurs-Kachel wird das Foto aus assets/images/vorbereitungskurse/ verwendet -
-# die gedruckten Skripte auf den Hörsaalpulten zeigen mehr vom Kurs als die
-# Titelseite der PDF-Datei.
+# Ganze Seiten (kein Ausschnitt). Die Kurs-Kachel zeigt seit November 2026
+# die Titelseite des Kursskripts - wie die Testsimulation ihr Deckblatt -
+# statt des Fotos aus dem Hörsaal (dort lag das Skript schräg im Bild, der
+# Titel war auf der kleinen Kachel nicht zu lesen).
 SEITEN = [
     ('testheft', 'assets/downloads/testsimulationen/2026_testsimulationen_Testsimulation.pdf', 2),
+    ('kursskript', 'assets/downloads/kursskripte/NCWiki_Kursskript_2026_deutsch.pdf', 0),
 ]
 
 
@@ -101,7 +103,7 @@ def main():
     for eintrag in SEITEN:
         ganze_seite(*eintrag)
     print('\nFertig. Die drei Bilder der Collage "Orientierung und Austausch"')
-    print('(uniguide, berichte, discord) entstehen separat - siehe Kopf dieser Datei.')
+    print('(uniguide, berichte) entstehen separat - siehe Kopf dieser Datei.')
 
 
 if __name__ == '__main__':

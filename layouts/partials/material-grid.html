@@ -14,10 +14,11 @@
   erzeugt, NICHT von Hand geschnitten. Ändert sich das Layout der PDFs, lässt
   man das Skript neu laufen. Details stehen dort im Kopf.
 
-  DIE DISCORD-KARTE IST EINE GESETZTE EINLADUNG, kein nachgebautes
-  Discord-Fenster: hell wie die beiden Streifen darüber, in der Schrift der
-  Website, mit einem Satz statt eines Logos. Aus dem echten Server gibt es
-  bewusst kein Bild - dort stehen Namen und Nachrichten von Leuten.
+  DAS DISCORD-FELD IST TEXT, KEIN BILD: drei erfundene Sprechblasen
+  (i18n: mat_chat_1 bis mat_chat_3), ohne Namen. Als Bild stand der deutsche
+  Text auch auf den französischen und italienischen Seiten. Aus dem echten
+  Server gibt es bewusst kein Bild - dort stehen Namen und Nachrichten von
+  Leuten. Der Name "discord" in der Bilderliste unten steht für dieses Feld.
 
   GEPFLEGT WIRD IM FRONTMATTER der Startseite (Block "material:") - hier steht
   kein übersetzbarer Satz. Ein Eintrag sieht so aus:
@@ -53,7 +54,7 @@
 {{- $quellen := dict
   "uebungsaufgaben"    (dict "url" "ems/uebungsaufgaben/"    "papier" true  "bilder" (slice "k1-antwortblatt" "k2-muster" "k3-mednat" "k4-objekte" "k5-quantitativ" "k6-figuren" "k7-text" "k8-diagramme" "k9-konztest"))
   "testsimulationen"   (dict "url" "ems/testsimulationen/"   "papier" true  "bilder" (slice "testheft"))
-  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "papier" false "bilder" (slice "vorbereitungskurse/vorbereitungskurs-2024.jpg"))
+  "vorbereitungskurse" (dict "url" "ems/vorbereitungskurse/" "papier" true  "bilder" (slice "kursskript"))
   "community"          (dict "url" "ems/uniguide/"           "papier" false "bilder" (slice "uniguide" "berichte" "discord"))
 }}
 
@@ -74,6 +75,9 @@
     <a href="{{ relLangURL $quelle.url }}">
       <span class="material-flaeche material-{{ len $quelle.bilder }}{{ if $quelle.papier }} material-papier{{ end }}">
         {{- range $quelle.bilder }}
+        {{- if eq . "discord" }}
+        <span class="material-chat" aria-hidden="true"><span><i></i><b>{{ i18n "mat_chat_1" }}</b></span><span class="material-chat-r"><i></i><b>{{ i18n "mat_chat_2" }}</b></span><span><i></i><b>{{ i18n "mat_chat_3" }}</b></span></span>
+        {{- else }}
         {{- /* Ein Name ohne Endung liegt in images/angebot/ und stammt aus
                scripts/angebot-bilder-erzeugen.py. Ein Name MIT Endung ist ein
                Bild, das es schon gibt - das Kursfoto zum Beispiel lag lange
@@ -92,6 +96,7 @@
                style.css: bis 460px eine Spalte, bis 900px zwei, sonst vier). */ -}}
         {{- $sizes := cond (ge (len $quelle.bilder) 4) "(max-width: 460px) 30vw, (max-width: 900px) 16vw, 85px" "(max-width: 460px) 90vw, (max-width: 900px) 47vw, 260px" }}
         <img src="{{ $gross.RelPermalink }}" srcset="{{ $klein.RelPermalink }} 200w, {{ $gross.RelPermalink }} 420w" sizes="{{ $sizes }}" width="{{ $gross.Width }}" height="{{ $gross.Height }}" alt="" loading="lazy" decoding="async">
+        {{- end }}
         {{- end }}
         {{- end }}
       </span>

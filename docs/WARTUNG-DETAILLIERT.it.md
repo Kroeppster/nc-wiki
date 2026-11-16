@@ -526,8 +526,9 @@ bianco, `object-fit: contain`) – i PDF di origine sono in parte A4, in parte U
 foto possono essere ritagliate. Un nome con estensione si cerca sotto `assets/images/`,
 senza estensione sotto `assets/images/angebot/`. Rigenerare con
 `python3 scripts/angebot-bilder-erzeugen.py` (serve `pip install pymupdf`; in cima allo
-script ci sono PDF e pagina di ogni immagine). La scheda Discord di proposito non è un
-finto screenshot.
+script ci sono PDF e pagina di ogni immagine). Il campo Discord non è
+un'immagine ma testo: tre fumetti inventati (`mat_chat_1` – `mat_chat_3` in `i18n/`), di
+proposito non uno screenshot del vero server.
 
 Togliere o riordinare tappe e riquadri: eliminare o spostare la voce nei tre file. Un
 riquadro del tutto nuovo richiede una voce in `$quellen` (passo di sviluppo).
