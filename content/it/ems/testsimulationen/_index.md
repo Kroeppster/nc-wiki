@@ -12,6 +12,15 @@ simulationsmodus: true
 aliases: ["/ems/pruefungsmodus/"]
 featured_image: "testsimulationen/testsimulation-2023.jpg"
 featured_image_alt: "Foglio delle risposte AMS compilato in primo piano, sullo sfondo un'aula magna piena durante una simulazione del test NCWiki"
+# Die beiden Auswertungs-Tools stehen UNTER dem Simulationsmodus (herunterladen,
+# simulieren, auswerten) - layouts/_default/list.html setzt sie dort ein.
+auswertung:
+  - baustein: "antwortbogen-auswertung"
+    titel: "Valutare il foglio delle risposte"
+    text: "Hai svolto la simulazione su carta? Fotografa il tuo foglio delle risposte e vedi i tuoi punti per sottotest – senza confrontare a mano le soluzioni. La foto resta sul tuo dispositivo."
+  - baustein: "konztest-auswertung"
+    titel: "Valutare il test di concentrazione"
+    text: "Il test di concentrazione ha un foglio proprio e si conta in modo diverso: segni giusti meno segni sbagliati meno segni omessi. Fotografa il tuo foglio compilato, e i segni vengono contati per te."
 ---
 
 Qui trovi tutte le informazioni sulle nostre simulazioni del test.
@@ -23,19 +32,3 @@ Qui trovi tutte le informazioni sulle nostre simulazioni del test.
 ## Fascicoli del test da scaricare
 
 Qui puoi scaricare gratuitamente i fascicoli del test delle nostre simulazioni precedenti. Ti saranno più utili se li risolvi tutti di fila e a tempo, per esempio con la modalità simulazione più in basso.
-
-## Valutare il foglio delle risposte
-
-Hai svolto la simulazione su carta? Fotografa il tuo foglio delle risposte e vedi i tuoi punti per sottotest – senza confrontare a mano le soluzioni. La foto resta sul tuo dispositivo.
-
-```baustein
-antwortbogen-auswertung
-```
-
-## Valutare il test di concentrazione
-
-Il test di concentrazione ha un foglio proprio e si conta in modo diverso: segni giusti meno segni sbagliati meno segni omessi. Fotografa il tuo foglio compilato, e i segni vengono contati per te.
-
-```baustein
-konztest-auswertung
-```

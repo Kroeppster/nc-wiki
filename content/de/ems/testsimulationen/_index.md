@@ -12,6 +12,15 @@ simulationsmodus: true
 aliases: ["/ems/pruefungsmodus/"]
 featured_image: "testsimulationen/testsimulation-2023.jpg"
 featured_image_alt: "Ausgefüllter EMS-Antwortbogen im Vordergrund, dahinter ein voller Hörsaal während einer NCWiki-Testsimulation"
+# Die beiden Auswertungs-Tools stehen UNTER dem Simulationsmodus (herunterladen,
+# simulieren, auswerten) - layouts/_default/list.html setzt sie dort ein.
+auswertung:
+  - baustein: "antwortbogen-auswertung"
+    titel: "Antwortbogen auswerten"
+    text: "Testsimulation auf Papier gelöst? Fotografiere deinen Antwortbogen, und du siehst deine Punkte je Untertest – ohne die Lösungen von Hand abzugleichen. Das Foto bleibt auf deinem Gerät."
+  - baustein: "konztest-auswertung"
+    titel: "Konzentrationstest auswerten"
+    text: "Der Konzentrationstest hat ein eigenes Blatt und wird anders gezählt: richtig markiert minus falsch markiert minus ausgelassen. Fotografiere dein bearbeitetes Blatt, und die Markierungen werden für dich gezählt."
 ---
 
 Hier findest du alle Informationen zu unseren Testsimulationen.
@@ -23,19 +32,3 @@ Hier findest du alle Informationen zu unseren Testsimulationen.
 ## Testhefte zum Herunterladen
 
 Die Testhefte unserer bisherigen Testsimulationen kannst du hier kostenlos herunterladen. Am meisten bringen sie dir, wenn du sie am Stück und auf Zeit löst, zum Beispiel mit dem Simulationsmodus weiter unten.
-
-## Antwortbogen auswerten
-
-Testsimulation auf Papier gelöst? Fotografiere deinen Antwortbogen, und du siehst deine Punkte je Untertest – ohne die Lösungen von Hand abzugleichen. Das Foto bleibt auf deinem Gerät.
-
-```baustein
-antwortbogen-auswertung
-```
-
-## Konzentrationstest auswerten
-
-Der Konzentrationstest hat ein eigenes Blatt und wird anders gezählt: richtig markiert minus falsch markiert minus ausgelassen. Fotografiere dein bearbeitetes Blatt, und die Markierungen werden für dich gezählt.
-
-```baustein
-konztest-auswertung
-```

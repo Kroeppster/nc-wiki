@@ -12,6 +12,15 @@ simulationsmodus: true
 aliases: ["/ems/pruefungsmodus/"]
 featured_image: "testsimulationen/testsimulation-2023.jpg"
 featured_image_alt: "Feuille de réponses AMS remplie au premier plan, avec en arrière-plan un amphithéâtre plein pendant une simulation de test NCWiki"
+# Die beiden Auswertungs-Tools stehen UNTER dem Simulationsmodus (herunterladen,
+# simulieren, auswerten) - layouts/_default/list.html setzt sie dort ein.
+auswertung:
+  - baustein: "antwortbogen-auswertung"
+    titel: "Évaluer la feuille de réponses"
+    text: "Tu as fait la simulation sur papier ? Photographie ta feuille de réponses et tu vois tes points par sous-test – sans comparer les solutions à la main. La photo reste sur ton appareil."
+  - baustein: "konztest-auswertung"
+    titel: "Évaluer le test de concentration"
+    text: "Le test de concentration a sa propre feuille et se compte autrement : marques justes moins marques fausses moins signes omis. Photographie ta feuille travaillée, et les marques sont comptées pour toi."
 ---
 
 Tu trouveras ici toutes les informations sur nos simulations de test.
@@ -23,19 +32,3 @@ Tu trouveras ici toutes les informations sur nos simulations de test.
 ## Cahiers de test à télécharger
 
 Tu peux télécharger gratuitement ici les cahiers de test de nos simulations précédentes. Ils te seront le plus utiles si tu les résous d'une traite et en temps limité, par exemple avec le mode simulation plus bas.
-
-## Évaluer la feuille de réponses
-
-Tu as fait la simulation sur papier ? Photographie ta feuille de réponses et tu vois tes points par sous-test – sans comparer les solutions à la main. La photo reste sur ton appareil.
-
-```baustein
-antwortbogen-auswertung
-```
-
-## Évaluer le test de concentration
-
-Le test de concentration a sa propre feuille et se compte autrement : marques justes moins marques fausses moins signes omis. Photographie ta feuille travaillée, et les marques sont comptées pour toi.
-
-```baustein
-konztest-auswertung
-```

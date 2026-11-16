@@ -103,7 +103,14 @@
              sie weiter unten an ihrer gewohnten Stelle. */ -}}
       {{- $simulation := "" }}{{ if .Params.simulationsmodus }}{{ $simulation = partial "simulationsmodus.html" . }}{{ end }}
       {{- $faq := "" }}{{ if eq .Path "/ems/qa" }}{{ $faq = partial "faq.html" . }}{{ end }}
-      {{- .Store.Set "vorlagen-html" (slice $simulation $faq) }}
+      {{- /* Auswertungs-Tools (Seitenkopf "auswertung:", je Eintrag Baustein,
+             Titel und Text): stehen unter dem Simulationsmodus. */ -}}
+      {{- $auswertung := "" }}
+      {{- range .Params.auswertung }}
+        {{- $auswertung = printf "%s<h2 id=\"%s\">%s</h2>\n<p>%s</p>\n%s" $auswertung (anchorize .titel) (htmlEscape .titel) (htmlEscape .text) (partial (printf "bausteine/%s.html" .baustein) $) }}
+      {{- end }}
+      {{- $auswertung = safeHTML $auswertung }}
+      {{- .Store.Set "vorlagen-html" (slice $simulation $faq $auswertung) }}
       <div class="seite-raster{{ if ge (len (partial "abschnitte.html" .)) 2 }} mit-liste{{ end }}">
         {{ partial "seiten-uebersicht.html" . }}
         <div class="seite-inhalt">
@@ -159,6 +166,10 @@
            Heft herunterladen, dann hier starten. Eingeschaltet über
            "simulationsmodus: true" im Seitenkopf. */}}
       {{ $simulation }}
+
+      {{/* Auswerten kommt zuletzt: erst herunterladen, dann simulieren, dann
+           den Bogen fotografieren. */}}
+      {{ $auswertung }}
 
       {{/* Vier Übersichtsseiten haben einen komplett eigenen Aufbau statt der
            normalen Kartenliste weiter unten: Erfahrungsberichte (Filterbare
