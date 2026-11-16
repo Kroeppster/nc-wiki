@@ -32,6 +32,10 @@ on:
         description: "Adressen zum Ausprobieren (durch Leerzeichen getrennt, darf leer bleiben)"
         required: false
         default: ""
+      suche:
+        description: "Auf den ausprobierten Seiten Links mit diesem Wortteil auflisten (darf leer bleiben)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -66,4 +70,5 @@ jobs:
         timeout-minutes: 6
         env:
           PROBE: ${{ inputs.adressen }}
+          SUCHE: ${{ inputs.suche }}
         run: python3 scripts/links-extern-pruefen.py public
