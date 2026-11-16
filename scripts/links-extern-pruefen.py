@@ -127,7 +127,8 @@ def main():
             except Exception as e:
                 z.append('- %s: nicht lesbar (%s)' % (a, type(e).__name__))
                 continue
-            gefunden = sorted({html.unescape(m.group(1)) for m in re.finditer(r'href="([^"]+)"', text) if suche in m.group(1).lower()})
+            alle = (m.group(1) or m.group(2) or m.group(3) for m in re.finditer(r'href=(?:"([^"]+)"|\'([^\']+)\'|([^\s>]+))', text))
+            gefunden = sorted({html.unescape(g) for g in alle if suche in g.lower()})
             z += ['- %s:' % a] + ['  - %s' % g for g in gefunden[:40]] if gefunden else ['- %s: nichts gefunden' % a]
         z.append('')
     bericht = '\n'.join(z)
