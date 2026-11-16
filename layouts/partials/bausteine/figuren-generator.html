@@ -84,6 +84,7 @@
     punkte: {{ i18n "fg_punkte_von" | jsonify | safeJS }},
     heftEinpraegen: {{ i18n "fig_heft_einpraegen" | jsonify | safeJS }},
     heftAbfrage:    {{ i18n "fig_heft_abfrage" | jsonify | safeJS }},
+    stufe: { leicht: {{ i18n "lg_stufe_leicht" | jsonify | safeJS }}, schwer: {{ i18n "lg_stufe_schwer" | jsonify | safeJS }} },
     e1: {{ i18n "fig_anl_e1" | jsonify | safeJS }},
     e2: {{ i18n "fig_anl_e2" | jsonify | safeJS }},
     beispiel: {{ i18n "fig_anl_beispiel" | jsonify | safeJS }},
@@ -110,7 +111,7 @@
   // duerfen und sollen dagegen deutlich anders aussehen, genau wie unsere
   // echten Serien 2022, 2025 und 2026 untereinander.
   var FAMILIEN=['kiesel','kiesel','kantig','laenglich','zerklueftet','gemischt'];
-  function serienstil(gewaehlt){
+  function serienstil(gewaehlt, stufe){
     // Die Bereiche sind bewusst weit. Gemessen wurde nicht der Mittelwert
     // einer Serie, sondern wie weit die SERIENWERTE auseinanderliegen: Bei
     // elf echten Serien schwankt der Fuellgrad von 0.63 bis 0.79, die
@@ -197,6 +198,25 @@
       stil.rundungSpiel=true;
     }
     stil.familie=familie;
+    // SCHWIERIGKEITSSTUFE (siehe STUFEN weiter unten). «mittel» laesst alles,
+    // wie es ist - das ist der an den echten Serien gemessene Stand. Die
+    // beiden anderen verschieben, WORAN man eine Figur wiedererkennt:
+    //   leicht  Felder deutlich verschieden gross (ein grosses, ein kleines),
+    //           dazu nur Familien mit markantem Umriss - jede Figur hat ein
+    //           Merkmal zum Festhalten.
+    //   schwer  glatte, fast gleiche Kiesel mit fuenf fast gleich grossen
+    //           Feldern - weder Umriss noch Feldgroesse helfen.
+    // Die Stufen sind NICHT an Menschen geeicht, nur an diesen Massen
+    // (gemessen mit scripts/figuren-vergleichen.py --stufe, Zahlen dort).
+    if (stufe==='leicht'){
+      stil.mindest=Z(0.04,0.06); stil.hoechst=Z(0.40,0.46); stil.gewicht=Z(16,28);
+      stil.spanne=0.20;              // groesstes minus kleinstes Feld, mindestens
+    } else if (stufe==='schwer'){
+      stil.mindest=Z(0.13,0.145); stil.hoechst=Z(0.25,0.27); stil.gewicht=Z(0.5,3);
+      stil.radiusSpiel=Z(0.03,0.10); stil.buchtAnteil=0; stil.eckenAnteil=0;
+      stil.rundung=Z(0.9,1.1); stil.eckenSpiel=Math.floor(Z(0,2)); stil.seiten=[0.93,1.08];
+      stil.groessenSpiel=Z(0.02,0.04); stil.dehnung=Z(0.03,0.25);
+    }
     return stil;
   }
   function aussenform(stil){
@@ -461,7 +481,10 @@
     }
     var anteile=[0,0,0,0,0];
     drinnen.forEach(function(k){ anteile[lab[k]]++; });
-    for(var i=0;i<5;i++){ var a=anteile[i]/drinnen.length; if(a<stil.mindest||a>stil.hoechst) return null; }
+    var kleinstes=1, groesstes=0;
+    for(var i=0;i<5;i++){ var a=anteile[i]/drinnen.length; if(a<stil.mindest||a>stil.hoechst) return null;
+      if(a<kleinstes) kleinstes=a; if(a>groesstes) groesstes=a; }
+    if(stil.spanne && groesstes-kleinstes<stil.spanne) return null;
     return lab;
   }
   // --- 3. GRENZEN ALS GEMEINSAME BOEGEN -----------------------------------
@@ -669,16 +692,25 @@
   }
   var el=function(id){ return document.getElementById(id); };
   var figuren=[], schwarz=[], reihenfolge=[], beispiel=null, beispielSchwarz=0;
+  // Welche Formfamilien eine Stufe zulaesst (siehe serienstil): leicht nur
+  // die mit markantem Umriss, schwer nur die glatten Kiesel.
+  var STUFEN={ leicht:['zerklueftet','kantig','gemischt','gemischt','laenglich'], mittel:FAMILIEN, schwer:['kiesel'] };
+  var stufe='mittel', stufeDesSets='mittel';
+  // Die Stufe steht im Kopf der Einpraegeseite (am Bildschirm und gedruckt),
+  // ausser bei «mittel» - das ist der Normalfall wie im Heft.
+  function titelEinpraegen(){ return T.heftEinpraegen + (T.stufe[stufeDesSets] ? ' (' + T.stufe[stufeDesSets] + ')' : ''); }
   function baueSet(){
     // Ein Stil FUER DIE GANZE SERIE (siehe Abschnitt 0). Kommt ein Stil mit
     // seinen eigenen Grenzwerten nicht auf 18 Figuren - etwa weil er sehr
     // unterschiedlich grosse Felder verlangt, die in eine zackige Form kaum
     // passen -, wird ein neuer Stil gewuerfelt statt endlos weiterzuprobieren.
     figuren=[];
+    stufeDesSets=stufe;
+    var wahl=STUFEN[stufe];
     var familie = window.NCWikiFigurenFamilie ||   // (zum Testen fest vorgeben)
-      FAMILIEN[Math.floor(Math.random()*FAMILIEN.length)];
-    for(var anlauf=0; anlauf<10 && figuren.length<18; anlauf++){
-      var stil=serienstil(familie);
+      wahl[Math.floor(Math.random()*wahl.length)];
+    for(var anlauf=0; anlauf<16 && figuren.length<18; anlauf++){
+      var stil=serienstil(familie, stufe);
       figuren=[];
       for(var i=0;i<18;i++){
         var f=figur(stil);
@@ -687,10 +719,10 @@
       }
     }
     // fuer scripts/figuren-generator-pruefen.mjs: welche Familie, wie viele Anlaeufe
-    window.NCWikiFigurenSerie = { familie: stil && stil.familie, anlaeufe: anlauf, voll: figuren.length };
+    window.NCWikiFigurenSerie = { familie: stil && stil.familie, anlaeufe: anlauf, voll: figuren.length, stufe: stufe };
     // Sollte auch das nicht reichen, mit gutmuetigen Werten auffuellen.
     while(figuren.length<18){
-      var notstil=serienstil();
+      var notstil=serienstil(familie);
       notstil.bauart='frei'; notstil.mindest=0.06; notstil.hoechst=0.34; notstil.gewicht=7;
       var f2=figur(notstil);
       if(f2) figuren.push(f2);
@@ -714,6 +746,7 @@
     // ein festes Bild; ein erzeugtes passt zu jeder Serie.
     beispiel=null;
     for(var b=0; b<20 && !beispiel; b++) beispiel=figur(stil||serienstil());
+    for(var b2=0; b2<20 && !beispiel; b2++) beispiel=figur(serienstil());
     beispielSchwarz=Math.floor(Math.random()*5);
     schwarz=figuren.map(function(){ return Math.floor(Math.random()*5); });
     // Abfrage in ANDERER Reihenfolge - so ist es im echten Test auch.
@@ -814,7 +847,10 @@
     titelEinpraegen: T.heftEinpraegen, titelAbfrage: T.heftAbfrage,
     minLern: {{ $lern }}, minAbfrage: {{ $abfrage }}, von: NR, anzahl: 18,
     neu: baueSet,
-    lernen: function(min){ return H.kopf(T.heftEinpraegen, H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) + raster('lernen') + H.marke('stopp'); },
+    // Schwierigkeitsstufe des naechsten Sets: 'leicht', 'mittel' oder 'schwer'
+    stufen: ['leicht','mittel','schwer'],
+    stufeSetzen: function(s){ if (STUFEN[s]) stufe = s; return stufe; },
+    lernen: function(min){ return H.kopf(titelEinpraegen(), H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) + raster('lernen') + H.marke('stopp'); },
     abfrage: function(min){ return H.kopf(T.heftAbfrage, H.zeit('bearb', min)) + H.kasten(T.a1) + raster('wahl') + H.marke('stopp'); },
     antworten: function(){ return reihenfolge.map(function(_, n){
       var g = document.querySelector('input[name="fig-' + n + '"]:checked'); return g ? +g.value : null; }); },
@@ -822,7 +858,7 @@
     loesung: function(a){ return H.kopf(T.heftAbfrage, '') + raster('loesung', a); },
     loesungen: function(){ return reihenfolge.map(function(idx){ return BST[schwarz[idx]]; }); },
     seitenA: function(min){ return [
-      { inhalt: H.kopf(T.heftEinpraegen, H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) },
+      { inhalt: H.kopf(titelEinpraegen(), H.zeit('lern', min)) + H.kasten(anleitungEinpraegen()) },
       { frei: druckRaster(false), marke: 'stopp' }]; },
     seitenB: function(min){ return [
       { inhalt: H.kopf(T.heftAbfrage, H.zeit('bearb', min)) + H.kasten(T.a1), marke: 'weiter' },

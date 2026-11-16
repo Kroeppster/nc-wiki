@@ -23,6 +23,8 @@ import { writeFileSync, unlinkSync } from 'node:fs';
 const ziel = process.argv[2];
 if (!ziel) { console.error('Kein Zielpfad angegeben.'); process.exit(2); }
 const jeSerie = process.argv.includes('--je-serie');
+// --stufe leicht|mittel|schwer: die Schwierigkeitsstufe des Generators
+const stufe = (process.argv.find(a => a.startsWith('--stufe=')) || '--stufe=mittel').slice(8);
 const wunsch = Number(process.argv[3] || 54);
 const ADRESSE = (process.env.ADRESSE || 'http://127.0.0.1:8123') + '/alpha/';
 const b = await pw.chromium.launch();
@@ -59,12 +61,13 @@ let geladen = false;
 async function eineSerie() {
   if (!geladen) { await p.goto(ADRESSE, { waitUntil: 'networkidle' }); geladen = true; }
   else if (!p.url().startsWith(ADRESSE)) await p.goto(ADRESSE, { waitUntil: 'networkidle' });
-  const svgs = await p.evaluate(() => {
+  const svgs = await p.evaluate(stufe => {
+    window.NCWikiFiguren.stufeSetzen(stufe);
     window.NCWikiFiguren.neu();
     const d = document.createElement('div');
     d.innerHTML = window.NCWikiFiguren.lernen(window.NCWikiFiguren.minLern);
     return [...d.querySelectorAll('.fig-raster .fig-svg')].map(s => s.outerHTML);
-  });
+  }, stufe);
   if (svgs.length !== 18) throw new Error('Erwartet 18 Figuren, erhalten ' + svgs.length);
   return svgs;
 }

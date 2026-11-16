@@ -864,8 +864,12 @@ tipo nasce inserendo un nuovo nome (corto, minuscolo, senza spazi; «Technik und
 
 Nessun file di dati, etichette in `i18n` (prefisso `fig_`). Ogni **serie** estrae prima il
 suo stile (angoli, frastagliatura, grandezza, costruzione libera/mozzo/fasce), le 18 figure
-lo seguono – altrimenti tutte le serie si somiglierebbero. Misurare invece di stimare:
-`python3 scripts/figuren-vergleichen.py 30 [--original <PDF>]` (serve `pymupdf numpy scipy
+lo seguono – altrimenti tutte le serie si somiglierebbero. Tre **livelli di difficoltà**
+(scelta nel generatore di apprendimento, `STUFEN` e `serienstil` nello script): «media» è
+lo stato misurato sulle serie vere, «facile» usa contorni marcati e campi di grandezza
+diversa, «difficile» ciottoli lisci con campi quasi uguali. I livelli sono misurati su
+queste grandezze, non tarati su persone. Misurare invece di stimare:
+`python3 scripts/figuren-vergleichen.py 30 [--original <PDF>] [--stufe=leicht|schwer]` (serve `pymupdf numpy scipy
 pillow`; il PDF di esempio ufficiale di swissuniversities non è nel repository). Prima di
 toccare il disegno, leggere l'intestazione di commenti di
 `layouts/partials/bausteine/figuren-generator.html` – lì ci sono gli errori passati

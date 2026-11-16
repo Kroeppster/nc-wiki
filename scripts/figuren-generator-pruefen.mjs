@@ -137,10 +137,31 @@ await p.emulateMedia({ media: 'screen' });
 }
 await p.evaluate(() => window.dispatchEvent(new Event('afterprint')));
 
+// Schwierigkeitsstufen: «mittel» ist vorgewaehlt; die Stufe steht im Kopf
+// (ausser bei «mittel»), und der Stil kommt ohne Notbehelf auf 18 Figuren -
+// sonst faellt die Serie still auf gewoehnliche Figuren zurueck.
+console.log('\n=== Schwierigkeitsstufen ===');
+await p.reload({ waitUntil: 'networkidle' }); await p.uncheck('#lg-mit-fakten');
+pruef('Vorgabe: Stufe mittel', await p.inputValue('#lg-figuren-stufe') === 'mittel');
+for (const [stufe, wort] of [['leicht', 'leicht'], ['schwer', 'schwer']]) {
+  await p.reload({ waitUntil: 'networkidle' }); await p.uncheck('#lg-mit-fakten');
+  await p.selectOption('#lg-figuren-stufe', stufe);
+  await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 });
+  const s = await p.evaluate(() => ({ kopf: document.querySelector('#lg-blatt .ems-kopf').textContent, serie: window.NCWikiFigurenSerie }));
+  pruef(`Stufe ${stufe}: steht im Kopf`, s.kopf.includes('(Einprägephase) (' + wort + ')'), s.kopf);
+  pruef(`Stufe ${stufe}: Familie passt`, s.serie.stufe === stufe && (stufe === 'schwer') === (s.serie.familie === 'kiesel'), JSON.stringify(s.serie));
+}
+const voll = await p.evaluate(() => { const r = {};
+  for (const st of ['leicht', 'mittel', 'schwer']) { window.NCWikiFiguren.stufeSetzen(st); let n = 0;
+    for (let i = 0; i < 10; i++) { window.NCWikiFiguren.neu(); if (window.NCWikiFigurenSerie.voll === 18) n++; } r[st] = n; }
+  window.NCWikiFiguren.stufeSetzen('mittel'); return r; });
+pruef('jede Stufe: mindestens 9 von 10 Serien ohne Notbehelf', Object.values(voll).every(n => n >= 9), JSON.stringify(voll));
+
 console.log(`\n=== Buchstaben-Abstaende ueber ${RUNDEN} Runden ===`);
 let schlimmste = 0, faelle = 0, figuren = 0, abgeschnitten = 0, knappste = 99;
 for (let runde = 0; runde < RUNDEN; runde++) {
   await p.reload({ waitUntil: 'networkidle' }); await p.uncheck('#lg-mit-fakten');
+  await p.selectOption('#lg-figuren-stufe', ['mittel', 'leicht', 'schwer'][runde % 3]);
   await p.fill('#lg-figuren-lernen', '1'); await p.fill('#lg-pause', '0'); await p.fill('#lg-figuren-abfrage', '9');
   await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(400);
   await p.click('#lg-weiter'); await p.waitForTimeout(400);

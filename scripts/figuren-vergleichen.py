@@ -17,7 +17,9 @@ klar genuegt (+-0.13 bis 0.18 gegen 0.17 echt). Stand November 2026, zwei
 Laeufe mit 30 Serien: Kleinstes und groesstes Feld unterscheiden sich
 zwischen den Serien nur etwa halb so stark wie in den echten (+-0.008 bis
 0.011 gegen 0.017, +-0.010 bis 0.016 gegen 0.029) - sie liegen an der
-Warngrenze und schlagen je nach Lauf an. Das ist offen. Das Skript holt sich die Figuren selbst (ueber
+Warngrenze und schlagen je nach Lauf an. Das ist offen.
+
+Das Skript holt sich die Figuren selbst (ueber
 scripts/figuren-abbild.mjs) und braucht dafuer den laufenden Testserver.
 
 Mit --original <pfad.pdf> kommt zusaetzlich die Seite "Figuren lernen
@@ -263,7 +265,8 @@ def main():
     ordner = tempfile.mkdtemp()
     print(f'Erzeuge {serien} Serien ...')
     r = subprocess.run(['node', os.path.join(PROJEKT, 'scripts/figuren-abbild.mjs'),
-                        os.path.join(ordner, 'serie.png'), str(serien), '--je-serie'])
+                        os.path.join(ordner, 'serie.png'), str(serien), '--je-serie']
+                       + [a for a in sys.argv[1:] if a.startswith('--stufe=')])
     if r.returncode:
         sys.exit('Die Serien konnten nicht erzeugt werden. Laeuft der Testserver auf Port 8123?')
     print('Messe die echten Serien ...')

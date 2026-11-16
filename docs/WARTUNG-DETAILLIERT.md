@@ -859,8 +859,12 @@ nach Änderungen am Skript `python3 scripts/wortliste-pruefen.py`.
 
 Braucht keine Datendatei, Beschriftungen in `i18n` (Präfix `fig_`). Jede **Serie** würfelt
 zuerst ihren Stil (Ecken, Zackigkeit, Grösse, Bauart frei/Nabe/Band), die 18 Figuren folgen
-ihm – sonst sähen alle Serien gleich aus. Messen statt schätzen:
-`python3 scripts/figuren-vergleichen.py 30 [--original <PDF>]` (braucht `pymupdf numpy
+ihm – sonst sähen alle Serien gleich aus. Drei **Schwierigkeitsstufen** (Auswahl im
+Lern-Generator, `STUFEN` und `serienstil` im Skript): «mittel» ist der an den echten Serien
+gemessene Stand, «leicht» nimmt markante Umrisse und ungleich grosse Felder, «schwer»
+glatte Kiesel mit fast gleich grossen Feldern. Die Stufen sind an diesen Massen gemessen,
+nicht an Menschen geeicht. Messen statt schätzen:
+`python3 scripts/figuren-vergleichen.py 30 [--original <PDF>] [--stufe=leicht|schwer]` (braucht `pymupdf numpy
 scipy pillow`; das offizielle Beispiel-PDF von swissuniversities liegt nicht im Repo).
 Vor Änderungen am Zeichnen den Kommentarkopf in
 `layouts/partials/bausteine/figuren-generator.html` lesen – dort stehen die bisherigen

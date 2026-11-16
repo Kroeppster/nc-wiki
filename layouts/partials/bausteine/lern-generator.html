@@ -51,7 +51,14 @@
 <div class="fg-regler">
 <p class="lg-zeile" id="lg-zeile-figuren"><b>{{ i18n "lg_figuren" }}</b>
 <label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-figuren-lernen" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
-<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-figuren-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label></p>
+<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-figuren-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
+{{- /* Schwierigkeitsstufe der Figuren (figuren-generator.html, STUFEN):
+       «mittel» ist der an den echten Serien gemessene Stand und vorgewaehlt. */}}
+<label>{{ i18n "lg_stufe" }} <select id="lg-figuren-stufe">
+<option value="leicht">{{ i18n "lg_stufe_leicht" }}</option>
+<option value="mittel" selected>{{ i18n "lg_stufe_mittel" }}</option>
+<option value="schwer">{{ i18n "lg_stufe_schwer" }}</option>
+</select></label></p>
 <p class="lg-zeile" id="lg-zeile-fakten"><b>{{ i18n "lg_fakten" }}</b>
 <label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-fakten-lernen" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
 <label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-fakten-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label></p>
@@ -174,6 +181,7 @@
   function neu(){
     auswahl = gewaehlt();
     if (!auswahl.length){ el('lg-fehler').hidden = false; return false; }
+    window.NCWikiFiguren.stufeSetzen(el('lg-figuren-stufe').value);
     auswahl.forEach(function(u){ u.m.neu(); });
     return true;
   }

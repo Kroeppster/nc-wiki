@@ -881,8 +881,13 @@ modifications du script `python3 scripts/wortliste-pruefen.py`.
 
 Pas de fichier de données, libellés dans `i18n` (préfixe `fig_`). Chaque **série** tire
 d'abord son style (angles, dentelure, taille, construction libre/moyeu/bandes), les 18
-figures le suivent – sinon toutes les séries se ressembleraient. Mesurer plutôt
-qu'estimer : `python3 scripts/figuren-vergleichen.py 30 [--original <PDF>]` (nécessite
+figures le suivent – sinon toutes les séries se ressembleraient. Trois **niveaux de
+difficulté** (choix dans le générateur d'apprentissage, `STUFEN` et `serienstil` dans le
+script) : « moyenne » est l'état mesuré sur les vraies séries, « facile » prend des
+contours marquants et des champs de tailles inégales, « difficile » des galets lisses aux
+champs presque égaux. Les niveaux sont mesurés sur ces grandeurs, pas étalonnés sur des
+personnes. Mesurer plutôt qu'estimer :
+`python3 scripts/figuren-vergleichen.py 30 [--original <PDF>] [--stufe=leicht|schwer]` (nécessite
 `pymupdf numpy scipy pillow` ; le PDF d'exemple officiel de swissuniversities n'est pas
 dans le dépôt). Avant de toucher au dessin, lire l'en-tête de commentaires de
 `layouts/partials/bausteine/figuren-generator.html` – les erreurs passées y figurent
