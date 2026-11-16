@@ -865,7 +865,7 @@ tipo nasce inserendo un nuovo nome (corto, minuscolo, senza spazi; «Technik und
 Nessun file di dati, etichette in `i18n` (prefisso `fig_`). Ogni **serie** estrae prima il
 suo stile (angoli, frastagliatura, grandezza, costruzione libera/mozzo/fasce), le 18 figure
 lo seguono – altrimenti tutte le serie si somiglierebbero. Misurare invece di stimare:
-`python3 scripts/figuren-vergleichen.py 14 [--original <PDF>]` (serve `pymupdf numpy scipy
+`python3 scripts/figuren-vergleichen.py 30 [--original <PDF>]` (serve `pymupdf numpy scipy
 pillow`; il PDF di esempio ufficiale di swissuniversities non è nel repository). Prima di
 toccare il disegno, leggere l'intestazione di commenti di
 `layouts/partials/bausteine/figuren-generator.html` – lì ci sono gli errori passati

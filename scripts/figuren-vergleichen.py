@@ -10,8 +10,14 @@ aehnlich" aussehen, sondern in denselben Zahlenbereichen liegen.
     ~/bin/hugo --minify && (Server auf public/, Port 8123)
     python3 scripts/figuren-vergleichen.py [anzahl-serien]
 
-Vorgabe sind 10 Serien zu je 18 Figuren; mehr wird genauer und dauert
-laenger. Das Skript holt sich die Figuren selbst (ueber
+Vorgabe sind 30 Serien zu je 18 Figuren (rund zwei Minuten). Weniger ist
+zu ungenau fuer Teil 2: Mit 10 Serien meldete derselbe Stand drei Zeilen
+"zu wenig Unterschied", darunter das laenglichste Feld, das mit 30 Serien
+klar genuegt (+-0.13 bis 0.18 gegen 0.17 echt). Stand November 2026, zwei
+Laeufe mit 30 Serien: Kleinstes und groesstes Feld unterscheiden sich
+zwischen den Serien nur etwa halb so stark wie in den echten (+-0.008 bis
+0.011 gegen 0.017, +-0.010 bis 0.016 gegen 0.029) - sie liegen an der
+Warngrenze und schlagen je nach Lauf an. Das ist offen. Das Skript holt sich die Figuren selbst (ueber
 scripts/figuren-abbild.mjs) und braucht dafuer den laufenden Testserver.
 
 Mit --original <pfad.pdf> kommt zusaetzlich die Seite "Figuren lernen
@@ -244,7 +250,7 @@ def original_lesen(pfad):
 
 
 def main():
-    serien = int(next((a for a in sys.argv[1:] if a.isdigit()), '10'))
+    serien = int(next((a for a in sys.argv[1:] if a.isdigit()), '30'))
     orig, original_quelle = None, '2026'
     if '--original' in sys.argv:
         pfad = sys.argv[sys.argv.index('--original') + 1]
@@ -320,6 +326,12 @@ def main():
         e = np.array([w[feld] for w in echt_serien])
         n = np.array([w[feld] for w in neu_serien])
         warnung = '  <-- zu wenig Unterschied' if n.std() < e.std() * 0.55 else ''
+        # Die Groessenstreuung ist mit Absicht kleiner als in unseren Serien:
+        # Massstab ist dort das Original (2.7 Prozent), siehe groessenSpiel
+        # in figuren-generator.html. Kein Befund, solange die erzeugten
+        # Serien um diesen Wert liegen.
+        if feld == 'groessenspiel' and warnung and n.min() < ORIGINAL_2026['Groesse CV'][0] < n.max():
+            warnung = '  (gewollt: Massstab ist das Original)'
         print(f'  {name:<26} {e.min():7.2f}..{e.max():<6.2f} +-{e.std():.3f}   '
               f'{n.min():7.2f}..{n.max():<6.2f} +-{n.std():.3f}{warnung}')
     o = ORIGINAL_2026['Groesse CV']

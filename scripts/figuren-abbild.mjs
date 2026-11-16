@@ -52,13 +52,21 @@ async function ablegen(svgs, datei) {
   await p.screenshot({ path: datei, fullPage: true });
   unlinkSync(zwischen);
 }
+// Die Figuren kommen ueber die Schnittstelle des Generators (NCWikiFiguren),
+// nicht ueber Knoepfe der Seite: Seit der Figuren-Generator im Lern-Generator
+// aufgegangen ist, gibt es die frueheren Knoepfe (#fig-los) nicht mehr.
+let geladen = false;
 async function eineSerie() {
-  await p.goto(ADRESSE, { waitUntil: 'networkidle' });
-  await p.fill('#fig-min-pause', '0');
-  await p.click('#fig-los');
-  await p.waitForSelector('#fig-blatt-lernen .fig-raster .fig-svg');
-  await p.waitForTimeout(400);
-  return p.evaluate(() => [...document.querySelectorAll('#fig-blatt-lernen .fig-raster .fig-svg')].map(s => s.outerHTML));
+  if (!geladen) { await p.goto(ADRESSE, { waitUntil: 'networkidle' }); geladen = true; }
+  else if (!p.url().startsWith(ADRESSE)) await p.goto(ADRESSE, { waitUntil: 'networkidle' });
+  const svgs = await p.evaluate(() => {
+    window.NCWikiFiguren.neu();
+    const d = document.createElement('div');
+    d.innerHTML = window.NCWikiFiguren.lernen(window.NCWikiFiguren.minLern);
+    return [...d.querySelectorAll('.fig-raster .fig-svg')].map(s => s.outerHTML);
+  });
+  if (svgs.length !== 18) throw new Error('Erwartet 18 Figuren, erhalten ' + svgs.length);
+  return svgs;
 }
 if (jeSerie) {
   const ohne = ziel.replace(/\.png$/, '');
