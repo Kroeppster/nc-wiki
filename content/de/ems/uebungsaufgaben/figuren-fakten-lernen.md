@@ -20,6 +20,14 @@ Beispiel (verkürzt): *Maier, 20 Jahre, Müller, verheiratet, Covid-19* – *Kel
 - **Umfang:** Figuren 18 Aufgaben, 18 Punkte; Fakten 18 Aufgaben, 18 Punkte
 - **Zeit:** Figuren 4 Minuten Einprägen und 5 Minuten Reproduktion; Fakten je 6 Minuten
 
+## Lern-Generator: immer neue Sets
+
+Übungsmaterial für diese beiden Untertests ist nach einmal Lernen verbraucht. Der Lern-Generator würfelt dir deshalb jedes Mal ein neues Set: 18 Figuren, 15 Patient\*innen mit 18 Fragen – einzeln oder beides zusammen wie am Testtag, mit Einprägephase, Ablenkung und Abfrage. Wähle die Schwierigkeit («mittel» entspricht dem EMS), übe am Bildschirm oder drucke das Set als Testheft mit Antwortbogen und Lösungen.
+
+```baustein
+lern-generator
+```
+
 ## Bedeutung für das Studium
 
 Bei beiden geht es um deine Gedächtnisleistung. Im Medizinstudium musst du dir nicht nur Fakten, sondern gerade in Anatomie und Histopathologie auch viele bildliche Strukturen merken können – und später stellst du Patient\*innen anderen Fachpersonen kurz und präzise vor, mit den wichtigsten Merkmalen, Diagnose und Prozedere. Eine gute Merktechnik hilft dir bei beidem enorm.

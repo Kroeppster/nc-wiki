@@ -20,6 +20,14 @@ Esempio (abbreviato): *Maier, 20 anni, mugnaio, sposato, Covid-19* – *Keller, 
 - **Volume:** figure 18 domande, 18 punti; fatti 18 domande, 18 punti
 - **Tempo:** figure 4 minuti di apprendimento e 5 minuti di riproduzione; fatti 6 minuti ciascuna
 
+## Generatore di esercizi: sempre nuovi gruppi
+
+Il materiale di esercizio di questi due sottotest è esaurito dopo averlo imparato una volta. Il generatore estrae quindi ogni volta un nuovo gruppo: 18 figure, 15 pazienti con 18 domande – separatamente o entrambi insieme come il giorno del test, con fase di apprendimento, distrazione e riproduzione. Scegli la difficoltà («media» corrisponde all'AMS), esercitati sullo schermo o stampa il gruppo come fascicolo del test con foglio delle risposte e soluzioni.
+
+```baustein
+lern-generator
+```
+
 ## Importanza per gli studi
 
 In entrambi i casi si tratta della tua memoria. Durante gli studi di medicina devi ricordare non solo fatti, ma soprattutto in anatomia e istopatologia anche molte strutture visive – e più tardi presenti pazienti ad altri professionisti in modo breve e preciso, con le caratteristiche principali, la diagnosi e la gestione. Una buona tecnica di memorizzazione ti aiuta moltissimo in entrambi i casi.

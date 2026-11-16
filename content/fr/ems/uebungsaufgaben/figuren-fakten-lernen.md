@@ -20,6 +20,14 @@ Exemple (abrégé) : *Maier, 20 ans, meunier, marié, Covid-19* – *Keller, 30 
 - **Volume :** figures 18 questions, 18 points ; faits 18 questions, 18 points
 - **Temps :** figures 4 minutes d'apprentissage et 5 minutes de reproduction ; faits 6 minutes chacune
 
+## Générateur d'exercices : toujours de nouveaux jeux
+
+Le matériel d'entraînement de ces deux sous-tests est épuisé après un seul apprentissage. Le générateur tire donc à chaque fois un nouveau jeu : 18 figures, 15 patient·e·s avec 18 questions – séparément ou les deux ensemble comme le jour du test, avec phase d'apprentissage, distraction et reproduction. Choisis la difficulté (« moyenne » correspond à l'AMS), entraîne-toi à l'écran ou imprime le jeu comme cahier de test avec feuille de réponses et corrigé.
+
+```baustein
+lern-generator
+```
+
 ## Importance pour les études
 
 Dans les deux cas, il s'agit de ta mémoire. Pendant les études de médecine, tu dois retenir non seulement des faits, mais aussi, surtout en anatomie et en histopathologie, de nombreuses structures visuelles – et plus tard, tu présentes des patient·e·s à d'autres professionnel·le·s de façon brève et précise, avec les caractéristiques principales, le diagnostic et la prise en charge. Une bonne technique de mémorisation t'aide énormément dans les deux cas.
