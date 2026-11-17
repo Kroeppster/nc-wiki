@@ -35,6 +35,7 @@ table_scroll_label: "Tabelle, seitlich verschiebbar"
 lang_switch_aria_label: "Sprache"
 lang_switch_toggle_aria_label: "Sprachauswahl öffnen"
 site_tagline: "Kostenlose EMS-Vorbereitung von Studierenden für Studierende."
+site_title_home: "Kostenlose EMS-Vorbereitung (Eignungstest Medizinstudium)"
 read_more: "Mehr erfahren →"
 
 error_404_eyebrow: "Fehler 404"

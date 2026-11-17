@@ -506,6 +506,14 @@ delle righe vuote in basso, necessari titolo e inizio; eliminare con `!Eliminare
 date solo se così figurano presso swissuniversities. Su smartphone le fasi stanno una sotto l'altra, solo quella in corso è aperta.
 Calcolo: `layouts/partials/weg-positionen.html`, visualizzazione `weg-grid.html`.
 
+### Motori di ricerca (titoli, dati strutturati)
+
+Tutto in `layouts/partials/head.html`: il titolo della pagina precede il nome («Simulazioni del
+test – NCWiki»), la pagina iniziale si chiama «NCWiki – …» (`site_title_home` in `i18n/`), le
+pagine successive di un elenco portano «(Pagina 2)». Dati strutturati (schema.org): associazione
+e sito sulla pagina iniziale, il percorso su tutte le altre pagine, e per le news l'articolo con
+la data. Da verificare con il «Rich Results Test» di Google.
+
 ### Strumenti (`werkzeuge:`)
 
 Quattro schede sulla pagina iniziale che portano direttamente agli strumenti (generatore di

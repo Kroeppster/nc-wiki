@@ -503,6 +503,14 @@ Link). Code: `scripts/texte_zeitstrahl.py`. Die Termine nur ändern, wenn sie be
 stehen. Auf dem Handy stehen die Phasen untereinander, nur die laufende ist aufgeklappt. Berechnung:
 `layouts/partials/weg-positionen.html`, Darstellung `weg-grid.html`.
 
+### Suchmaschinen (Titel, strukturierte Daten)
+
+Alles in `layouts/partials/head.html`: Der Seitentitel steht vor dem Namen («Testsimulationen –
+NCWiki»), die Startseite heisst «NCWiki – …» (`site_title_home` in `i18n/`), Folgeseiten von Listen
+tragen «(Seite 2)». Strukturierte Daten (schema.org): Verein und Website auf der Startseite, der
+Pfad auf allen anderen Seiten, bei News zusätzlich der Beitrag mit Datum. Prüfen mit dem
+«Rich Results Test» von Google.
+
 ### Werkzeuge (`werkzeuge:`)
 
 Vier Karten auf der Startseite, die direkt zu den Werkzeugen springen (Lern-Generator,

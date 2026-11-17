@@ -513,6 +513,14 @@ lien). Code : `scripts/texte_zeitstrahl.py`. Ne modifier les dates que si elles 
 Sur mobile, les phases sont l'une sous l'autre, seule celle en cours est dépliée. Calcul :
 `layouts/partials/weg-positionen.html`, affichage `weg-grid.html`.
 
+### Moteurs de recherche (titres, données structurées)
+
+Tout est dans `layouts/partials/head.html` : le titre de la page précède le nom (« Simulations
+de test – NCWiki »), la page d'accueil s'appelle « NCWiki – … » (`site_title_home` dans `i18n/`),
+les pages suivantes d'une liste portent « (Page 2) ». Données structurées (schema.org) :
+association et site sur la page d'accueil, le chemin sur toutes les autres pages, et l'article
+avec sa date pour les actualités. À vérifier avec le « Rich Results Test » de Google.
+
 ### Outils (`werkzeuge:`)
 
 Quatre cartes sur la page d'accueil qui mènent directement aux outils (générateur d'exercices,

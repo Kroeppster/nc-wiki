@@ -53,7 +53,24 @@
 {{- if eq .Kind "taxonomy" }}{{ $pageTitle = i18n "schlagwoerter" }}{{ end }}
 {{- /* Fehlerseite: Hugo nennt sie auf Englisch "404 Page not found". */ -}}
 {{- if eq .Kind "404" }}{{ $pageTitle = i18n "error_404_title" }}{{ end }}
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Site.Title }} — {{ $pageTitle }}{{ end }}</title>
+{{- /* TITEL FÜR SUCHMASCHINEN: zuerst, worum es auf der Seite geht, dann der
+       Name ("Testsimulationen – NCWiki"). Bis November 2026 stand "NCWiki —"
+       vorn - in den Suchergebnissen begannen alle Seiten gleich, und bei
+       langen Titeln fiel das Wichtige hinten weg. Die Startseite hiess in
+       allen drei Sprachen nur "NCWiki"; jetzt sagt sie, was es hier gibt
+       (i18n: site_title_home). */ -}}
+{{- /* FOLGESEITEN EINER LISTE (News-Archiv Seite 2, Schlagwörter Seite 3 ...)
+       hiessen genau wie die erste. Ab der zweiten steht "Seite 2" im Titel.
+       Der Aufruf ist DERSELBE wie in list.html (".Paginate .Pages", dieselben
+       Ausnahmen) - Hugo merkt sich das Ergebnis je Seite, ein abweichender
+       Aufruf hier würde dort still gewinnen oder neue Folgeseiten erzeugen.
+       Wer in list.html etwas am Blättern ändert, zieht es hier nach. */ -}}
+{{- $folgeseite := "" }}
+{{- if and .IsNode (not .IsHome) (not (in (slice "/ems/erfahrungsberichte" "/ems/uniguide" "/ems/qa" "/ems/uebungsaufgaben") .Path)) }}
+  {{- $bl := .Paginate .Pages }}
+  {{- if gt $bl.PageNumber 1 }}{{ $folgeseite = printf " (%s)" (replace (i18n "blaettern_seite") "{n}" (string $bl.PageNumber)) }}{{ end }}
+{{- end }}
+<title>{{ if .IsHome }}{{ .Site.Title }} – {{ i18n "site_title_home" }}{{ else }}{{ $pageTitle }}{{ $folgeseite }} – {{ .Site.Title }}{{ end }}</title>
 
 {{/* Das Aussehen der ganzen Website kommt aus GENAU dieser einen CSS-Datei -
      alle Farben/Schriftgrössen/Abstände sind dort ganz oben als Variablen
@@ -191,6 +208,40 @@
 <meta name="twitter:title" content="{{ $ogTitle }}">
 <meta name="twitter:description" content="{{ $ogDescription }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
+
+{{- /* ============================================================================
+       STRUKTURIERTE DATEN (schema.org als JSON-LD)
+       ============================================================================
+       Sagen Suchmaschinen, WAS eine Seite ist - nicht nur, welche Wörter
+       darauf stehen. Daraus entstehen in den Suchergebnissen der Pfad statt
+       der nackten Adresse, das Logo und der Name des Vereins, bei News das
+       Datum. (Die Häufigen Fragen haben ihre eigenen Daten in faq.html.)
+         Startseite   der Verein (Organization) und die Website (WebSite)
+         sonst        der Pfad zur Seite (BreadcrumbList)
+         News         zusätzlich der Beitrag mit Datum (NewsArticle)
+       Geschützte und nicht auffindbare Seiten bekommen nichts. */ -}}
+{{- if not (or .Params.geschuetzt .Params.noindex (eq .Kind "404")) }}
+{{- $verein := dict "@type" "Organization" "@id" (printf "%s#verein" site.Home.Permalink) "name" .Site.Title "url" site.Home.Permalink "logo" ("images/logo.webp" | absURL) "description" (i18n "site_tagline") }}
+{{- $profile := slice }}
+{{- range slice .Site.Params.social_instagram .Site.Params.social_discord .Site.Params.social_linkedin }}{{ with . }}{{ $profile = $profile | append . }}{{ end }}{{ end }}
+{{- with $profile }}{{ $verein = merge $verein (dict "sameAs" .) }}{{ end }}
+{{- $daten := slice }}
+{{- if .IsHome }}
+  {{- $daten = $daten | append $verein }}
+  {{- $daten = $daten | append (dict "@type" "WebSite" "name" .Site.Title "url" .Permalink "inLanguage" .Site.Language.Locale "publisher" (dict "@id" (index $verein "@id"))) }}
+{{- else }}
+  {{- $pfad := slice }}
+  {{- range $i, $v := .Ancestors.Reverse }}
+    {{- $pfad = $pfad | append (dict "@type" "ListItem" "position" (add $i 1) "name" (cond $v.IsHome $.Site.Title ($v.LinkTitle | default $v.Title)) "item" $v.Permalink) }}
+  {{- end }}
+  {{- $pfad = $pfad | append (dict "@type" "ListItem" "position" (add (len $pfad) 1) "name" $pageTitle "item" .Permalink) }}
+  {{- $daten = $daten | append (dict "@type" "BreadcrumbList" "itemListElement" $pfad) }}
+  {{- if and .IsPage (eq .Section "news") (not .Date.IsZero) }}
+    {{- $daten = $daten | append (dict "@type" "NewsArticle" "headline" $pageTitle "description" $ogDescription "datePublished" (.Date.Format "2006-01-02") "dateModified" ((.Lastmod | default .Date).Format "2006-01-02") "inLanguage" .Site.Language.Locale "image" $ogImage "mainEntityOfPage" .Permalink "author" (dict "@id" (index $verein "@id") "@type" "Organization" "name" .Site.Title) "publisher" $verein) }}
+  {{- end }}
+{{- end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $daten | jsonify | safeJS }}</script>
+{{- end }}
 
 {{- /* ============================================================================
        CANONICAL + HREFLANG + og:locale:alternate
