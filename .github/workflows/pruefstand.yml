@@ -110,6 +110,11 @@ jobs:
         run: node scripts/verhalten-pruefen.mjs
 
       - name: Rendering (every page, two widths)
+        # Hell UND dunkel: Im November 2026 war die Marke «jetzt» im Zeitplan
+        # nur im Dunkelmodus zu schwach lesbar - die Prüfung lief nur hell und
+        # merkte es nicht.
+        env:
+          MODI: light,dark
         run: node scripts/seiten-pruefen.mjs
 
       # Die Lern-Generatoren wuerfeln jedes Mal neu - geprueft wird deshalb
