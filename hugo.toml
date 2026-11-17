@@ -63,6 +63,18 @@ enableRobotsTXT = true
   # (+02:00 = Schweizer Sommerzeit).
   ems_exam_date = '2027-07-09T08:00:00+02:00'
 
+  # PDFs AUSSERHALB DER WEBSITE (GitHub-Releases): Die Dateien dieser Ordner
+  # bleiben im Repo und werden wie alle anderen hochgeladen, die Website
+  # verlinkt sie aber auf ein GitHub-Release statt sie selbst auszuliefern.
+  # Das schont die Grenzen von GitHub Pages (1 GB Website, rund 100 GB
+  # Datenverkehr im Monat) bei grossem Andrang. Vor jeder Veröffentlichung
+  # gleicht scripts/downloads-release.py das Release mit dem Ordner ab
+  # (.github/workflows/hugo.yml, Job «pdf-release»). Ordner = Release-Tag.
+  # Eine Zeile entfernen = die Dateien liegen wieder auf der Website.
+  # Siehe docs/WARTUNG-DETAILLIERT.md.
+  downloads_repo = 'Kroeppster/nc-wiki'
+  downloads_release = { 'downloads/testsimulationen' = 'testsimulationen', 'downloads/archiv-kursskripte' = 'kursskript-archiv' }
+
   # Google Analytics Measurement-ID (Format "G-XXXXXXXXXX", zu finden in
   # Google Analytics unter Verwaltung -> Datenstreams -> [Datenstream
   # auswählen]). Wird NUR geladen, wenn im Cookie-Banner aktiv "Akzeptieren"

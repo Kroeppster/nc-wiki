@@ -165,6 +165,14 @@ jobs:
             "./public/**/*.html"
           fail: true
 
+      # Testsimulationen und Kursskript-Archiv liegen nicht auf der Website,
+      # sondern in GitHub-Releases (params.downloads_release in hugo.toml,
+      # Job «pdf-release» unten). lychee prüft diese Links nicht (--offline);
+      # das macht dieser Schritt ohne Netz: Jeder Release-Link zeigt auf eine
+      # Datei im Repo, jede Datei ist verlinkt, keine liegt doppelt in public/.
+      - name: Check release download links
+        run: python3 scripts/downloads-release.py links public
+
       # Links zu ANDEREN Websites (z.B. zu swissuniversities.ch) werden hier
       # NICHT mehr geprüft: Das fragt echte fremde Websites an, dauerte bei
       # jeder Veröffentlichung gegen zehn Minuten und durfte sie doch nie
@@ -245,19 +253,48 @@ jobs:
   # war UND es sich um einen echten Push auf main handelt - bei einem Pull
   # Request wird nur geprüft/gebaut, nie veröffentlicht).
   # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------
+  # SCHRITT 1b: PDFs in die GitHub-Releases legen (nur bei Push auf main)
+  # ---------------------------------------------------------------------------
+  # Testsimulationen und Kursskript-Archiv verlinkt die Website auf
+  # GitHub-Releases statt sie selbst auszuliefern (schont die Grenzen von
+  # GitHub Pages bei grossem Andrang, siehe hugo.toml, downloads_release).
+  # Hier werden neue oder geänderte PDFs hochgeladen und gelöschte entfernt,
+  # danach wird nachgeprüft. Erst wenn alles da ist, wird veröffentlicht -
+  # so zeigt die Website nie auf eine Datei, die es noch nicht gibt. Schlägt
+  # das fehl, bleibt die bisherige Website online.
+  pdf-release:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    concurrency:
+      group: pdf-release
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Abgleichen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/downloads-release.py abgleichen
+
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, pdf-release]
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          # Die Website ist mit allen PDFs (DE/FR/IT) gut 700 MB gross; das
+          # Die Website ist mit allen PDFs (DE/FR/IT) gut 500 MB gross; das
           # Verteilen bei GitHub Pages dauert dann länger als die Vorgabe von
           # 10 Minuten. 30 Minuten lassen genug Luft.
           timeout: 1800000

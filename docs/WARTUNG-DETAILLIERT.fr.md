@@ -199,6 +199,30 @@ construction indique chaque endroit.
 listes intégrées. Pour un nom d'affichage plus joli que le nom de fichier :
 `data/downloads.yaml` (le format y est expliqué, avec traductions).
 
+### Simulations et archives des scripts dans une release GitHub
+
+Les PDF de `assets/downloads/testsimulationen/` et `assets/downloads/archiv-kursskripte/`
+se téléversent dans le dépôt comme tous les autres. Le site ne les sert toutefois pas
+lui-même : les boutons pointent vers les releases GitHub « testsimulationen » et
+« kursskript-archiv » (à droite sur la page d'accueil du dépôt, sous *Releases*). Cela
+ménage les limites de GitHub Pages (site de 1 Go, environ 100 Go de trafic par mois)
+lorsque beaucoup de monde télécharge la simulation en même temps avant l'EMS.
+
+- **Mise à jour automatique :** avant chaque publication, le job « pdf-release » de
+  `.github/workflows/hugo.yml` téléverse les PDF nouveaux ou modifiés, supprime ceux qui
+  ont été retirés et vérifie le résultat (`scripts/downloads-release.py abgleichen`). Le
+  site n'est publié qu'ensuite. En cas d'échec, la version précédente reste en ligne.
+- **Ne jamais modifier les releases à la main.** Le passage suivant les remet à l'état du
+  dépôt.
+- **Noms dans la release :** les fichiers français et italiens reçoivent `_fr` ou `_it`
+  avant `.pdf`. Noms de fichiers uniquement avec lettres, chiffres, point, `_` et `-`
+  (sinon la construction s'arrête avec un message).
+- **Contrôle à la construction :** `scripts/downloads-release.py links public` signale
+  les liens morts, les fichiers non liés et les PDF qui se trouveraient quand même sur le
+  site. `… liste` montre quel fichier va où et sous quel nom.
+- **Interrupteur :** `downloads_release` dans `hugo.toml`. Supprimer une ligne remet les
+  PDF de ce dossier sur le site. On peut ajouter un autre dossier de la même manière.
+
 ---
 
 ## 3. Classeurs Excel en détail

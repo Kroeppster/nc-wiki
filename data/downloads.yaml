@@ -12,6 +12,10 @@
 #   der Website zeigt nur die Dateien ihrer Sprache. Gilt für Übungsserien,
 #   Testsimulationen, Kursskripte und das Kursskript-Archiv.
 #
+# AUSLIEFERUNG: Testsimulationen und Kursskript-Archiv verlinkt die Website auf
+#   GitHub-Releases statt sie selbst auszuliefern (hugo.toml, downloads_release;
+#   docs/WARTUNG-DETAILLIERT.md, Abschnitt 2). Hochladen wie alle anderen.
+#
 # ÜBUNGSSERIEN (assets/downloads/uebungsaufgaben/<untertest>/):
 #   Dateiname "<Jahr>_<Untertest-Ordnername>_S<Nummer>.pdf" - daraus entsteht
 #   automatisch "Serie 2" unter der Überschrift des Jahres. Eigene Lösungsdatei:

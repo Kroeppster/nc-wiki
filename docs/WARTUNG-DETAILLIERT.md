@@ -195,6 +195,31 @@ nennt jede Stelle.
 haben ihre Listen fest eingebaut. Schönere Anzeigenamen als den Dateinamen: in
 `data/downloads.yaml` (dort steht das Format, mit Übersetzungen).
 
+### Testsimulationen und Kursskript-Archiv als GitHub-Release
+
+Die PDFs unter `assets/downloads/testsimulationen/` und `assets/downloads/archiv-kursskripte/`
+lädt man wie alle anderen ins Repo hoch. Die Website liefert sie aber nicht selbst aus:
+Die Knöpfe zeigen auf die GitHub-Releases «testsimulationen» und «kursskript-archiv»
+(rechts auf der Repo-Startseite unter *Releases*). Das schont die Grenzen von GitHub Pages
+(1 GB Website, rund 100 GB Datenverkehr im Monat), wenn vor dem EMS viele gleichzeitig
+die Testsimulation laden.
+
+- **Nachgeführt wird automatisch:** Vor jeder Veröffentlichung lädt der Job «pdf-release»
+  in `.github/workflows/hugo.yml` neue und geänderte PDFs hoch, löscht entfernte und prüft
+  nach (`scripts/downloads-release.py abgleichen`). Erst danach geht die Website online.
+  Schlägt das fehl, bleibt die bisherige Website stehen.
+- **Die Releases nie von Hand ändern.** Der nächste Lauf stellt sie wieder auf den Stand
+  des Repos.
+- **Namen im Release:** Französische und italienische Dateien bekommen `_fr` bzw. `_it`
+  vor `.pdf`. Dateinamen nur mit Buchstaben, Ziffern, Punkt, `_` und `-` (sonst bricht
+  der Bau mit einer Meldung ab).
+- **Prüfung beim Bauen:** `scripts/downloads-release.py links public` meldet Links ins
+  Leere, nicht verlinkte Dateien und PDFs, die doch auf der Website liegen.
+  `… liste` zeigt, welche Datei unter welchem Namen wohin gehört.
+- **Schalter:** `downloads_release` in `hugo.toml`. Eine Zeile entfernen, und die PDFs
+  dieses Ordners liegen wieder auf der Website. Ein weiterer Ordner lässt sich ebenso
+  ergänzen.
+
 ---
 
 ## 3. Textmappen (Excel) im Detail

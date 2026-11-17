@@ -198,6 +198,30 @@ ogni punto.
 integrati. Per un nome più bello del nome del file: `data/downloads.yaml` (il formato è
 spiegato lì, con traduzioni).
 
+### Simulazioni e archivio delle dispense in una release GitHub
+
+I PDF in `assets/downloads/testsimulationen/` e `assets/downloads/archiv-kursskripte/`
+si caricano nel repo come tutti gli altri. Il sito però non li distribuisce direttamente:
+i pulsanti puntano alle release GitHub «testsimulationen» e «kursskript-archiv» (a destra
+nella pagina iniziale del repo, sotto *Releases*). Così si rispettano i limiti di GitHub
+Pages (sito di 1 GB, circa 100 GB di traffico al mese) quando prima dell'EMS molte persone
+scaricano la simulazione contemporaneamente.
+
+- **Aggiornamento automatico:** prima di ogni pubblicazione il job «pdf-release» in
+  `.github/workflows/hugo.yml` carica i PDF nuovi o modificati, elimina quelli rimossi e
+  verifica il risultato (`scripts/downloads-release.py abgleichen`). Solo dopo il sito va
+  online. Se fallisce, resta online la versione precedente.
+- **Non modificare mai le release a mano.** L'esecuzione successiva le riporta allo stato
+  del repo.
+- **Nomi nella release:** i file francesi e italiani ricevono `_fr` o `_it` prima di
+  `.pdf`. Nomi di file solo con lettere, cifre, punto, `_` e `-` (altrimenti la
+  compilazione si interrompe con un messaggio).
+- **Controllo durante la compilazione:** `scripts/downloads-release.py links public`
+  segnala link interrotti, file non collegati e PDF che si trovano comunque sul sito.
+  `… liste` mostra quale file va dove e con quale nome.
+- **Interruttore:** `downloads_release` in `hugo.toml`. Togliendo una riga, i PDF di
+  quella cartella tornano sul sito. Allo stesso modo si può aggiungere un'altra cartella.
+
 ---
 
 ## 3. Cartelle Excel nel dettaglio

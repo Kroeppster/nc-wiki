@@ -136,7 +136,7 @@
         {{- end }}
         <li class="download-item">
           <div class="download-buttons">
-            <a class="download-link" href="{{ $aufgabeRes.RelPermalink }}" download>
+            <a class="download-link" href="{{ partial "download-adresse.html" $aufgabeRes }}" download>
               <span class="download-label">{{ $displayName }}</span>
               <span class="download-size">{{ $sizeStr }}</span>
             </a>
@@ -145,7 +145,7 @@
                    gibt (siehe Gruppierung oben) - dezenter gestaltet als der
                    Haupt-Knopf (siehe .download-link-solution in style.css),
                    damit man nicht aus Versehen zuerst auf die Lösung klickt. */}}
-            <a class="download-link download-link-solution" href="{{ .RelPermalink }}" download>
+            <a class="download-link download-link-solution" href="{{ partial "download-adresse.html" . }}" download>
               <span class="download-label">{{ i18n "downloads_solution_label" }}</span>
             </a>
             {{- end }}

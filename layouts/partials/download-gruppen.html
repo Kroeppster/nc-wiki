@@ -99,15 +99,15 @@
         <span class="download-titel">{{ $titel }}</span>
         <div class="download-buttons">
           {{- if $einp }}
-          <a class="download-link" href="{{ $einp.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_einpraegephase" }}</span></a>
-          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_reproduktionsphase" }}</span></a>
+          <a class="download-link" href="{{ partial "download-adresse.html" $einp }}" download><span class="download-label">{{ i18n "downloads_einpraegephase" }}</span></a>
+          <a class="download-link" href="{{ partial "download-adresse.html" $main }}" download><span class="download-label">{{ i18n "downloads_reproduktionsphase" }}</span></a>
           {{- else if in $mitLoesung (printf "%s%s" $vorsatz $stem) }}
-          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_aufgaben_loesung" }}</span><span class="download-size">{{ $sizeStr }}</span></a>
+          <a class="download-link" href="{{ partial "download-adresse.html" $main }}" download><span class="download-label">{{ i18n "downloads_aufgaben_loesung" }}</span><span class="download-size">{{ $sizeStr }}</span></a>
           {{- else }}
-          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ i18n "downloads_aufgaben" }}</span><span class="download-size">{{ $sizeStr }}</span></a>
+          <a class="download-link" href="{{ partial "download-adresse.html" $main }}" download><span class="download-label">{{ i18n "downloads_aufgaben" }}</span><span class="download-size">{{ $sizeStr }}</span></a>
           {{- end }}
           {{- with $loes }}
-          <a class="download-link download-link-solution" href="{{ .RelPermalink }}" download><span class="download-label">{{ i18n "downloads_solution_label" }}</span></a>
+          <a class="download-link download-link-solution" href="{{ partial "download-adresse.html" . }}" download><span class="download-label">{{ i18n "downloads_solution_label" }}</span></a>
           {{- end }}
         </div>
       </li>
@@ -118,7 +118,7 @@
       {{- if not $name }}{{ $name = title (replaceRE "[_-]" " " $stem) }}{{ end }}
       <li class="download-item">
         <div class="download-buttons">
-          <a class="download-link" href="{{ $main.RelPermalink }}" download><span class="download-label">{{ $name }}</span><span class="download-size">{{ $sizeStr }}</span></a>
+          <a class="download-link" href="{{ partial "download-adresse.html" $main }}" download><span class="download-label">{{ $name }}</span><span class="download-size">{{ $sizeStr }}</span></a>
         </div>
       </li>
       {{- end }}

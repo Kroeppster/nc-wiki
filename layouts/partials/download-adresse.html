@@ -1,0 +1,38 @@
+{{- /*
+  ADRESSE EINES DOWNLOADS (Rückgabe: die Adresse als Text)
+  Aufruf: {{ partial "download-adresse.html" $resource }}
+
+  Normalfall: die Datei liegt auf der Website (.RelPermalink, Hugo kopiert
+  sie dabei nach public/). Liegt sie in einem Ordner aus
+  params.downloads_release (hugo.toml), zeigt der Link stattdessen auf das
+  GitHub-Release dieses Ordners, und Hugo kopiert die Datei NICHT auf die
+  Website (eine Datei landet nur in public/, wenn man ihre Adresse abfragt).
+
+  Name im Release: Dateiname, bei französischen bzw. italienischen Dateien
+  (Unterordner fr/ bzw. it/) mit «_fr» bzw. «_it» vor «.pdf», z.B.
+  downloads/testsimulationen/fr/2026_testsimulationen_Testsimulation.pdf
+  -> 2026_testsimulationen_Testsimulation_fr.pdf.
+  Dieselbe Regel steht in scripts/downloads-release.py (name_im_release) -
+  beide immer zusammen ändern.
+*/ -}}
+{{- $res := . }}
+{{- $adresse := "" }}
+{{- $teile := split (strings.TrimPrefix "/" $res.Name) "/" }}
+{{- if ge (len $teile) 3 }}
+  {{- $ordner := printf "%s/%s" (index $teile 0) (index $teile 1) }}
+  {{- with index (site.Params.downloads_release | default dict) $ordner }}
+    {{- $tag := . }}
+    {{- $datei := path.Base $res.Name }}
+    {{- if eq (len $teile) 4 }}
+      {{- $sprache := index $teile 2 }}
+      {{- if not (in (slice "fr" "it") $sprache) }}{{ errorf "download-adresse: unerwarteter Unterordner %q in %s" $sprache $res.Name }}{{ end }}
+      {{- $datei = printf "%s_%s.pdf" (strings.TrimSuffix ".pdf" $datei) $sprache }}
+    {{- else if gt (len $teile) 4 }}
+      {{- errorf "download-adresse: zu tief verschachtelt: %s" $res.Name }}
+    {{- end }}
+    {{- if not (findRE `^[A-Za-z0-9._-]+$` $datei 1) }}{{ errorf "download-adresse: Dateiname %q nur mit Buchstaben, Ziffern, Punkt, _ und - (sonst ändert GitHub ihn im Release)" $datei }}{{ end }}
+    {{- $adresse = printf "https://github.com/%s/releases/download/%s/%s" site.Params.downloads_repo $tag $datei }}
+  {{- end }}
+{{- end }}
+{{- if not $adresse }}{{ $adresse = $res.RelPermalink }}{{ end }}
+{{- return $adresse }}
