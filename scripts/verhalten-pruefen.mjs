@@ -292,12 +292,18 @@ console.log('\n=== Lern-Generator: Auswahl, Doppelklick, Minuten ===');
   pruef('«Set erzeugen»: Knopf zeigt sofort, dass gerechnet wird', beschaeftigt);
   await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 });
   pruef('danach wieder frei und mit altem Text', await p.evaluate(() => { const k = document.getElementById('lg-los'); return !k.disabled && !k.hasAttribute('aria-busy'); }));
-  await p.click('#lg-weiter'); await p.click('#lg-weiter'); await p.click('#lg-weiter'); await p.click('#lg-weiter'); await p.click('#lg-weiter');
+  // Negative Minuten gelten als 0 = Phase auslassen (November 2026: 0 ist
+  // erlaubt, um eine Phase zu ueberspringen), und das Feld zeigt das an.
+  pruef('negative Minuten: Feld zeigt 0', await p.inputValue('#lg-figuren-lernen') === '0', await p.inputValue('#lg-figuren-lernen'));
+  const erste = await p.$eval('#lg-phase-titel', e => e.textContent);
+  pruef('0 Minuten: Einpraegen Figuren ausgelassen', /Fakten|faits|fatti/i.test(erste), erste);
+  for (let i = 0; i < 4; i++) await p.click('#lg-weiter');
   await p.click('#lg-nochmal');
+  await p.fill('#lg-figuren-lernen', '4');
   await p.click('#lg-los'); await p.waitForSelector('#lg-phase:not([hidden])', { timeout: 60000 }); await p.waitForTimeout(700);
   const t1 = await p.$eval('#lg-phase-titel', e => e.textContent);
   const uhr = await p.$eval('#lg-uhr', e => e.textContent.trim());
-  pruef('negative Minuten: Phase laeuft trotzdem', uhr !== '0:00', uhr);
+  pruef('Phase laeuft mit Uhr', uhr !== '0:00', uhr);
   await p.dblclick('#lg-weiter'); await p.waitForTimeout(700);
   const t2 = await p.$eval('#lg-phase-titel', e => e.textContent);
   await p.click('#lg-weiter'); await p.waitForTimeout(300);

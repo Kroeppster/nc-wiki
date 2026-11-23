@@ -51,8 +51,8 @@
 </fieldset>
 <div class="fg-regler">
 <p class="lg-zeile" id="lg-zeile-figuren"><b>{{ i18n "lg_figuren" }}</b>
-<label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-figuren-lernen" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
-<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-figuren-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-figuren-lernen" min="0" max="20"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-figuren-abfrage" min="0" max="20"> {{ i18n "fg_minuten" }}</label>
 {{- /* Schwierigkeitsstufe der Figuren (figuren-generator.html, STUFEN):
        «mittel» ist der an den echten Serien gemessene Stand und vorgewaehlt. */}}
 <label>{{ i18n "lg_stufe" }} <select id="lg-figuren-stufe">
@@ -61,15 +61,15 @@
 <option value="schwer">{{ i18n "lg_stufe_schwer" }}</option>
 </select></label></p>
 <p class="lg-zeile" id="lg-zeile-fakten"><b>{{ i18n "lg_fakten" }}</b>
-<label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-fakten-lernen" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
-<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-fakten-abfrage" min="1" max="20"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_einpraegen" }} <input type="number" id="lg-fakten-lernen" min="0" max="20"> {{ i18n "fg_minuten" }}</label>
+<label>{{ i18n "fg_zeit_abfrage" }} <input type="number" id="lg-fakten-abfrage" min="0" max="20"> {{ i18n "fg_minuten" }}</label>
 {{- /* Schwierigkeitsstufe der Fakten (fakten-generator.html, SCHWIERIGKEITSSTUFEN) */}}
 <label>{{ i18n "lg_stufe" }} <select id="lg-fakten-stufe">
 <option value="leicht">{{ i18n "lg_stufe_leicht" }}</option>
 <option value="mittel" selected>{{ i18n "lg_stufe_mittel" }}</option>
 <option value="schwer">{{ i18n "lg_stufe_schwer" }}</option>
 </select></label></p>
-<p class="lg-zeile"><label>{{ i18n "fg_zeit_pause" }} <input type="number" id="lg-pause" min="0" max="120"> {{ i18n "fg_minuten" }}</label></p>
+<p class="lg-zeile"><label>{{ i18n "fg_zeit_pause" }} <input type="number" id="lg-pause" min="0"> {{ i18n "fg_minuten" }}</label></p>
 </div>
 <p class="fg-fehler" id="lg-fehler" hidden>{{ i18n "lg_keine_auswahl" }}</p>
 <div class="fg-knoepfe">
@@ -143,17 +143,31 @@
   el('lg-mit-figuren').addEventListener('change', wahlGeaendert);
   el('lg-mit-fakten').addEventListener('change', wahlGeaendert);
   wahlGeaendert();
-  // Was im Feld steht, gilt nur innerhalb seiner Grenzen (min/max): Mit «-5»
-  // war die Phase sofort vorbei und wurde stillschweigend uebersprungen.
-  function minuten(u, art){
-    var feld = el('lg-' + u.name + '-' + art);
-    var wert = +feld.value || u.m[art === 'lernen' ? 'minLern' : 'minAbfrage'];
-    return Math.min(+feld.max || wert, Math.max(+feld.min || 1, wert));
+  // Zeitfelder: Was im Feld steht, gilt innerhalb seiner Grenzen (min/max),
+  // gerundet auf ganze Minuten; ein leeres Feld gilt als Vorgabe. Das Feld
+  // zeigt danach genau den Wert, mit dem gerechnet wird (vorher lief «-5» als
+  // 1 Minute, «0» als Vorgabe, obwohl das Feld etwas anderes zeigte).
+  // 0 Minuten = diese Phase auslassen (z. B. nur die Abfrage ueben).
+  // Die Ablenkung hat keine Obergrenze.
+  function feldWert(feld, vorgabe){
+    var roh = String(feld.value).trim(), n = Math.round(+roh);
+    if (roh === '' || !isFinite(n)) n = vorgabe;
+    n = Math.max(+feld.min || 0, n);
+    if (feld.max) n = Math.min(+feld.max, n);
+    feld.value = n;
+    return n;
   }
+  function minuten(u, art){
+    return feldWert(el('lg-' + u.name + '-' + art), u.m[art === 'lernen' ? 'minLern' : 'minAbfrage']);
+  }
+  ALLE.forEach(function(u){ if (!u.m) return;
+    ['lernen', 'abfrage'].forEach(function(art){
+      el('lg-' + u.name + '-' + art).addEventListener('change', function(){ minuten(u, art); }); }); });
+  el('lg-pause').addEventListener('change', function(){ feldWert(this, vorgabePause()); });
   // --- Der getaktete Durchlauf -------------------------------------------------
   // Eine Liste von Schritten (einpraegen, Ablenkung, abfragen), abgearbeitet
   // mit einer Uhr; "Weiter" springt zum naechsten Schritt.
-  var laufend = null, schritte = [], jetzt = -1, auswahl = [];
+  var laufend = null, schritte = [], jetzt = -1, auswahl = [], gefragt = [];
   // Die Restzeit wird aus der Endzeit gerechnet, nicht Sekunde fuer Sekunde
   // heruntergezaehlt: Im Hintergrund (Handy gesperrt, anderer Tab) bremst der
   // Browser den Takt auf einmal pro Minute - die Uhr ging dann nach.
@@ -233,12 +247,14 @@
     if (!neu()) return;
     antworten = {};
     schritte = [];
+    gefragt = [];
     auswahl.forEach(function(u){ var min = minuten(u, 'lernen');
-      schritte.push({ titel: T.einpraegen + ' – ' + u.titel, sekunden: min * 60, blatt: u.m.lernen(min) }); });
-    var p = +el('lg-pause').value || 0;
+      if (min > 0) schritte.push({ titel: T.einpraegen + ' – ' + u.titel, sekunden: min * 60, blatt: u.m.lernen(min) }); });
+    var p = feldWert(el('lg-pause'), vorgabePause());
     if (p > 0) schritte.push({ titel: T.pause, sekunden: p * 60 });
     auswahl.forEach(function(u){ var min = minuten(u, 'abfrage');
-      schritte.push({ titel: T.abfrage + ' – ' + u.titel, sekunden: min * 60, abfrage: u, blatt: u.m.abfrage(min) }); });
+      if (min > 0) { gefragt.push(u);
+        schritte.push({ titel: T.abfrage + ' – ' + u.titel, sekunden: min * 60, abfrage: u, blatt: u.m.abfrage(min) }); } });
     jetzt = -1;
     naechster();
   }
@@ -259,14 +275,15 @@
   });
   function auswerten(){
     clearInterval(laufend);
+    // Nur Untertests, deren Abfrage lief (0 Minuten = ausgelassen).
     var summe = 0, von = 0, h = '';
-    auswahl.forEach(function(u){
+    gefragt.forEach(function(u){
       var a = antworten[u.name] || [], r = u.m.richtig(a);
       summe += r; von += u.m.anzahl;
       h += '<h4>' + u.titel + ': ' + T.punkte.replace('{n}', r).replace('{von}', u.m.anzahl) + '</h4>'
         + '<div class="ems-blatt">' + u.m.loesung(a) + '</div>';
     });
-    el('lg-punkte').textContent = auswahl.length > 1 ? T.gesamt.replace('{n}', summe).replace('{von}', von)
+    el('lg-punkte').textContent = !gefragt.length ? '' : gefragt.length > 1 ? T.gesamt.replace('{n}', summe).replace('{von}', von)
       : T.punkte.replace('{n}', summe).replace('{von}', von);
     el('lg-loesungen').innerHTML = h;
     zeige('lg-ergebnis');

@@ -1661,6 +1661,8 @@ body.pm-aktiv{overflow:hidden;}
 .form-consent input[type="checkbox"]{margin-top:.2rem;flex-shrink:0;width:auto;}
 .form-consent a{color:var(--color-signal);text-decoration:underline;}
 .visually-hidden-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+/* Nur für Screenreader sichtbar (z. B. Überschrift einer Symbol-Spalte) */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 .form-success,.form-error{border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);}
 .form-success strong,.form-error strong{display:block;margin-bottom:.3rem;}
 .form-success p,.form-error p{margin:0;}
@@ -2150,15 +2152,26 @@ body.pm-aktiv{overflow:hidden;}
 .ab-block th{text-align:left;font-weight:600;font-size:var(--text-xs);color:var(--color-ink-soft);}
 .ab-block td,.ab-block th{padding:.15rem .4rem .15rem 0;}
 .ab-block select{font-size:var(--text-sm);padding:0 .2rem;}
-.ab-richtig td:last-child{color:var(--color-erfolg,#137333);}
-.ab-falsch td:last-child{color:var(--color-fehler,#c5221f);}
+/* Richtig/falsch-Zeichen und «bitte prüfen»: eigene Farben je Modus, damit sie auch auf der
+   orange hinterlegten Zeile («bitte prüfen») genug Kontrast haben (≥ 4.5:1). */
+.ab{--ab-richtig:#0f6b2e;--ab-falsch:#a31919;--ab-pruefen:#9a3f06;}
+:root[data-theme="dark"] .ab{--ab-richtig:#7fd49a;--ab-falsch:#ff9a8f;--ab-pruefen:#ffb26b;}
+.ab-richtig td:last-child{color:var(--ab-richtig);}
+.ab-falsch td:last-child{color:var(--ab-falsch);}
 .ab-unsicher{background:rgba(232,113,10,.12);}
 .ab-ausschnitt-zeile{background:rgba(232,113,10,.12);}
 .ab-ausschnitt-zeile td{padding-top:0;}
 .ab-ausschnitt{display:block;width:100%;max-width:26rem;height:auto;border:1px solid var(--color-line-strong);border-radius:var(--radius-sm);background:#fff;}
 #ab-unsicher p{margin:0 0 var(--space-2);}
-.ab-pruefen{font-size:var(--text-xs);color:#b45309;white-space:nowrap;}
-@media (max-width:560px){ .ab{padding:var(--space-4);} }
+.ab-pruefen{font-size:var(--text-xs);color:var(--ab-pruefen);white-space:nowrap;}
+@media (max-width:560px){
+  .ab{padding:var(--space-4);}
+  /* Handy: Antwort-Auswahl und Häkchen gross genug für den Finger (44 px),
+     16 px Schrift (kleiner zoomt iOS beim Antippen hinein). */
+  .ab-block select{min-height:44px;min-width:4.5rem;font-size:16px;}
+  .ab-schalter{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;}
+  .ab-schalter input[type="checkbox"]{width:22px;height:22px;}
+}
 
 /* Baustein "sponsoring-kontakt" (Seite Sponsoren): E-Mail-/Telefon-Knopf */
 .sponsoring-kontakt{margin:var(--space-5) 0 var(--space-8);}

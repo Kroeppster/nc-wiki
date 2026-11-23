@@ -18,6 +18,7 @@
     unklar: {{ i18n "kt_unklar" | jsonify | safeJS }},
     verdeckt: {{ i18n "kt_verdeckt" | jsonify | safeJS }},
     unplausibel: {{ i18n "kt_unplausibel" | jsonify | safeJS }},
+    kaumMarkiert: {{ i18n "kt_kaum_markiert" | jsonify | safeJS }},
     grau: {{ i18n "kt_grau" | jsonify | safeJS }},
     verzerrt: {{ i18n "ab_hinweis_verzerrt" | jsonify | safeJS }},
     summe: {{ i18n "kt_summe" | jsonify | safeJS }},
@@ -774,7 +775,10 @@
       if (K.ziele[R][C] !== '1') return false;
       return e.markiert[i] ? roh[i] < KNAPP_ZIEL * e.schwelle : (i < letzt && roh[i] >= FAST_ZIEL * e.schwelle);
     };
-    if (warnung) r.hinweise.unshift(T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
+    // (Kaum Markierungen: eigener Text - «fehlen … (0 von 0)» sah nach einem
+    // Programmfehler aus, Test November 2026)
+    if (warnung) r.hinweise.unshift(e.anzahl < 10 ? T.kaumMarkiert.replace('{n}', e.anzahl)
+      : T.unplausibel.replace('{n}', aus).replace('{m}', vorher));
     for (R = 0; R < N; R++){
       var zeile = [];
       for (C = 0; C < N; C++){
@@ -1192,7 +1196,7 @@
     if (!K){ melden(T.eigenFehlt, true); return; }
     el('kt-ergebnis').hidden = true;
     melden(B.istPdf(d) ? T.pdfLaedt : T.liest);
-    B.quellen(d).then(function(liste){ return auswerten(liste, !B.istPdf(d)); }, function(f){ melden(typeof f === 'string' ? f : T.fehlerBild, true); });
+    B.quellen(d).then(function(liste){ return auswerten(liste, B.messengerFoto(d)); }, function(f){ melden(typeof f === 'string' ? f : T.fehlerBild, true); });
   }
   ['kt-kamera', 'kt-datei'].forEach(function(id){
     el(id).addEventListener('change', function(){ datei(this.files && this.files[0]); this.value = ''; });

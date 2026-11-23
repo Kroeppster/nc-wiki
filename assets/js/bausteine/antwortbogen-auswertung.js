@@ -28,6 +28,7 @@
     nr: {{ i18n "ab_nr" | jsonify | safeJS }},
     deine: {{ i18n "ab_deine" | jsonify | safeJS }},
     loesung: {{ i18n "ab_loesung" | jsonify | safeJS }},
+    ergebnis: {{ i18n "ab_spalte_ergebnis" | jsonify | safeJS }},
     leer: {{ i18n "ab_leer" | jsonify | safeJS }},
     mehrfach: {{ i18n "ab_mehrfach" | jsonify | safeJS }},
     pruefen: {{ i18n "ab_pruefen" | jsonify | safeJS }},
@@ -929,7 +930,7 @@
       tabelle += '<tr><td>' + name(b) + '</td><td>' + r + ' / ' + m + '</td></tr>';
       zeilen += '<details class="ab-block"' + (stand.unsicher.slice(k * ZEILEN, (k + 1) * ZEILEN).some(Boolean) ? ' open' : '') + '><summary>'
         + name(b) + ' <span>' + r + ' / ' + m + '</span></summary><table><thead><tr><th>' + T.nr + '</th><th>' + T.deine
-        + '</th><th>' + T.loesung + '</th><th></th></tr></thead><tbody>' + h + '</tbody></table></details>';
+        + '</th><th>' + T.loesung + '</th><th><span class="visually-hidden">' + T.ergebnis + '</span></th></tr></thead><tbody>' + h + '</tbody></table></details>';
     });
     el('ab-summe').textContent = T.summe.replace('{n}', richtig).replace('{von}', von);
     // Das Ergebnis auch ansagen: Die Statuszeile wird geleert, ein
@@ -1023,7 +1024,7 @@
     el('ab-ergebnis').hidden = true;
     el('ab-ansage').textContent = '';
     melden('ab-status', istPdf(datei) ? T.pdfLaedt : T.liest);
-    return quellen(datei).then(function(liste){ return bogenAus(liste, !istPdf(datei)); }, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
+    return quellen(datei).then(function(liste){ return bogenAus(liste, B.messengerFoto(datei)); }, function(fehler){ melden('ab-status', typeof fehler === 'string' ? fehler : T.fehlerBild, true); });
   }
   function bogenAus(liste, hochgeladen){
     melden('ab-status', T.liest);

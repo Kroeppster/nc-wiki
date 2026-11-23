@@ -321,6 +321,11 @@ window.NCWikiBild = (function(){
     });
   }
   function istPdf(datei){ return datei.type === 'application/pdf' || /\.pdf$/i.test(datei.name); }
+  // Nur ein JPEG oder WebP kann ein ueber einen Messenger verkleinertes Foto
+  // sein (Messenger verschicken Fotos so). Ein Scan als PNG oder PDF mit
+  // 1754 Bildpunkten (A4 bei 150 dpi) bekam sonst den Messenger-Hinweis,
+  // obwohl die Groesse dort nicht das Problem war (Test November 2026).
+  function messengerFoto(datei){ return /^image\/(jpeg|webp)$/i.test(datei.type || '') || /\.(jpe?g|webp)$/i.test(datei.name || ''); }
   // Eine Datei -> Liste von Quellen (eine bei einem Bild, je Seite bei einem PDF)
   // Ein Foto, das hochgeladen nicht zu lesen war, mit weniger als 1800
   // Bildpunkten auf der langen Seite: oft ueber einen Messenger verschickt
@@ -734,6 +739,6 @@ window.NCWikiBild = (function(){
   return { stapelTeile: { grauKlein: grauKlein, grauKleinAus: grauKleinAus, ausrichtung: ausrichtung },
            scan: scan, A4: A4, LANGE_SEITE: LANGE_SEITE, Bild: Bild, magenta: magenta, loesen: loesen, abbildung: abbildung,
            ausgleichend: ausgleichend, laden: laden, bildAus: bildAus, istPdf: istPdf, quellen: quellen,
-           pdfOeffnen: pdfOeffnen, pdfSeite: pdfSeite, kleinesFoto: kleinesFoto,
+           pdfOeffnen: pdfOeffnen, pdfSeite: pdfSeite, kleinesFoto: kleinesFoto, messengerFoto: messengerFoto,
            kameraMoeglich: kameraMoeglich, kamera: kamera };
 })();
