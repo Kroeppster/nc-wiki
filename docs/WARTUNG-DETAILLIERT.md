@@ -887,8 +887,8 @@ echte Serie gibt jeder Altersgruppe drei Berufe aus **einem** Feld und drei Kran
 `dativ`, `nicht_attributiv`. Zuletzt gezogene Namensgruppen merkt sich der Browser und nimmt
 sie erst wieder, wenn die anderen durch sind (bei 42 Gruppen: acht Sets ohne Wiederholung) –
 je mehr Gruppen, desto mehr Abwechslung. `scripts/fakten-listen-auslesen.py` liest Wörter aus den PDFs,
-überschreibt die YAML aber nicht. Offen: Kategorien noch nicht menschlich freigegeben; ~40
-statt ~80 Einträge je Kategorie.
+überschreibt die YAML aber nicht. Die Kategorien sind freigegeben (November 2026). Noch
+dünn: ~40 statt ~80 Einträge je Kategorie.
 
 **Pflege per Excel** (eigene Datei, nicht die Textmappen): `ncwiki-wortliste-fakten-generator.xlsx`,
 immer frisch unter *Releases → Textmappen* (https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-wortliste-fakten-generator.xlsx).

@@ -892,7 +892,7 @@ domande nascono da modelli di frase (`fragen`), più `namensgruppen`, `dativ`,
 `nicht_attributiv`. Il browser ricorda i gruppi di nomi estratti per ultimi e li riprende solo
 quando gli altri sono esauriti (con 42 gruppi: otto set senza ripetizioni) – più gruppi,
 più varietà. `scripts/fakten-listen-auslesen.py` estrae parole dai PDF ma non
-sovrascrive lo YAML. In sospeso: categorie non ancora approvate da una persona; ~40 invece
+sovrascrive lo YAML. Le categorie sono approvate (novembre 2026). Ancora poche: ~40 invece
 di ~80 voci per categoria.
 
 **Gestione con Excel** (file a sé, non le cartelle di testi): `ncwiki-wortliste-fakten-generator.xlsx`,

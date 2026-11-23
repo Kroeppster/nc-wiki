@@ -32,17 +32,16 @@
 # pro Altersgruppe aus je einer.
 #
 # ------------------------------------------------------------------------------
-# NOCH ZU PRÜFEN (Stand: erste Fassung)
+# HINWEISE
 # ------------------------------------------------------------------------------
-#  - Die Kategorien sind VORSORTIERT und von keinem Menschen freigegeben.
+#  - Die Kategorien sind freigegeben (November 2026).
 #  - Jeder Beruf steht in BEIDEN Formen: { m: "Apotheker", w: "Apothekerin" }.
 #    Der Generator zieht den Beruf und würfelt die Form; sie steuert auch die
 #    Formulierung der Fragen ("Die Tierärztin", "Herr Walz"). Beide Formen sind
 #    Pflicht, und ein Beruf kommt nie in beiden Formen im selben Set vor.
 #  - Merkmale sind bewusst NICHT medizinisch (kein "stationär", "ambulant",
 #    "privatversichert"): Das würde zur Diagnose passen und sie verraten.
-#  - Französisch und Italienisch fehlen noch ganz. Solange sie fehlen, zeigt
-#    der Generator dort einen Hinweis statt eines Sets.
+#  - Französisch und Italienisch stehen in eigenen Listen (fr.yaml, it.yaml).
 #  - Für echte Abwechslung wären ~80 Einträge je Kategorie gut; aktuell sind
 #    es rund 40. Neue Wörter einfach unten in der passenden Kategorie ergänzen.
 #  - Die "namensgruppen" sind nach dem Muster des Testhefts 2026 neu

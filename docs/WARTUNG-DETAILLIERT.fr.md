@@ -907,9 +907,9 @@ domaine et trois maladies de **trois** sortes. Les questions naissent de modèle
 (`fragen`), plus `namensgruppen`, `dativ`, `nicht_attributiv`. Le navigateur retient les
 groupes de noms tirés en dernier et ne les reprend qu'une fois les autres épuisés (avec 42
 groupes : huit sets sans répétition) – plus il y a de groupes, plus il y a de variété.
-`scripts/fakten-listen-auslesen.py` extrait des mots des PDF mais n'écrase pas le YAML. En
-suspens : catégories pas encore validées par un humain ; ~40 au lieu de ~80 entrées par
-catégorie.
+`scripts/fakten-listen-auslesen.py` extrait des mots des PDF mais n'écrase pas le YAML. Les
+catégories sont validées (novembre 2026). Encore peu fournies : ~40 au lieu de ~80 entrées
+par catégorie.
 
 **Gestion par Excel** (fichier propre, pas les classeurs de textes) : `ncwiki-wortliste-fakten-generator.xlsx`,
 toujours à jour sous *Releases → Textmappen* (https://github.com/Kroeppster/nc-wiki/releases/download/textmappen/ncwiki-wortliste-fakten-generator.xlsx).
